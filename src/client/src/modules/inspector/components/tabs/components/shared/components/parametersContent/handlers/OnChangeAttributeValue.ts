@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../../../../../helpers/IsType";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../../types";
+import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../../../../types";
 import {
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
@@ -11,8 +11,8 @@ import {
   changeTransportTerminalAttributeValue,
 } from "../../../../../../../../../redux/store/project/actions";
 
-export const OnChangeParameterValue = (
-  element: InspectorParametersElement,
+export const OnChangeAttributeValue = (
+  element: InspectorAttributesElement,
   inspectorParentElement: InspectorElement,
   terminalParentElement: InspectorTerminalsElement,
   attributeId: string,

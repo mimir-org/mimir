@@ -1,11 +1,11 @@
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
-import { TerminalsBox, TerminalsParametersBox } from "./TerminalsComponent.styled";
+import { TerminalsBox, TerminalsAttributesBox } from "./TerminalsAttributesComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
 import { Terminal } from "@mimirorg/modelbuilder-types";
 import { PopulateTerminalCategories } from "./components/selector/components/helpers/PopulateTerminalCategories";
-import { ParametersComponent } from "../parameters/ParametersComponent";
+import { AttributesComponent } from "../parameters/AttributesComponent";
 
 interface Props {
   element: InspectorElement;
@@ -13,11 +13,11 @@ interface Props {
 }
 
 /**
- * Component for the Terminals tab in the Inspector
+ * Component for the TerminalsAttributes tab in the Inspector
  * @param props
  * @returns a search field for terminals, and a list over a Node's terminals sorted by category.
  */
-export const TerminalsComponent = ({ element, terminals }: Props) => {
+export const TerminalsAttributesComponent = ({ element, terminals }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
 
@@ -37,14 +37,14 @@ export const TerminalsComponent = ({ element, terminals }: Props) => {
         onSelectTerminal={(id: string) => setSelectedTerminalId(id)}
       />
       {selectedTerminal && (
-        <TerminalsParametersBox>
-          <ParametersComponent
-            parametersElem={selectedTerminal}
+        <TerminalsAttributesBox>
+          <AttributesComponent
+            attributesElem={selectedTerminal}
             inspectorParentElem={element}
             terminalParentElem={terminalParentElement}
             attributeItems={selectedTerminal.attributes}
           />
-        </TerminalsParametersBox>
+        </TerminalsAttributesBox>
       )}
     </TerminalsBox>
   );

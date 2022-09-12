@@ -4,14 +4,14 @@ import { Attribute, Project, Simple, Terminal } from "@mimirorg/modelbuilder-typ
 import { changeInspectorTab } from "../../redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
 import { InspectorElement } from "../../types";
-import { GetParametersElement } from "./components/parameters/helpers/GetParametersElement";
+import { GetAttributesElement } from "./components/parameters/helpers/GetAttributesElement";
 import {
   InspectorTabWrapper,
   AdminComponent,
-  ParametersComponent,
+  AttributesComponent,
   RelationsComponent,
   SimpleTypesComponent,
-  TerminalsComponent,
+  TerminalsAttributesComponent,
 } from "./components";
 
 interface Props {
@@ -43,13 +43,13 @@ export const InspectorTabs = ({
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
-    <ParametersComponent
+    <AttributesComponent
       key={1}
-      parametersElem={GetParametersElement(element)}
+      attributesElem={GetAttributesElement(element)}
       inspectorParentElem={element}
       attributeItems={attributes}
     />,
-    <TerminalsComponent key={2} element={element} terminals={terminals} />,
+    <TerminalsAttributesComponent key={2} element={element} terminals={terminals} />,
     <RelationsComponent key={3} element={element} />,
     <SimpleTypesComponent key={4} element={element} simpleItems={simpleItems} />,
   ];

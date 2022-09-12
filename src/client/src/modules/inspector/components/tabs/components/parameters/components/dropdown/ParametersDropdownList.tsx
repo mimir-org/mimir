@@ -9,11 +9,11 @@ interface Props {
 }
 
 /**
- * The expanded menu in the ParameterDropdown component.
+ * The expanded menu in the AttributesDropdown component.
  * @param interface
  * @returns a menu with selectable units.
  */
-export const ParametersDropdownList = ({ units, handleChange }: Props) => (
+export const AttributesDropdownList = ({ units, handleChange }: Props) => (
   <DropdownListBox borderRadius={2} borderColor={Color.BATTLESHIP_GREY} top={27}>
     {units?.map((unit) => {
       return (

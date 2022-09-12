@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
-import { ParameterDescriptorsWrapper } from "./ParameterDescriptor.styled";
+import { AttributesDescriptorsWrapper } from "./AttributeDescriptor.styled";
 
 interface Props {
   qualifier: string;
@@ -7,8 +7,8 @@ interface Props {
   condition: string;
 }
 
-export const ParameterDescriptor = ({ qualifier, source, condition }: Props) => (
-  <ParameterDescriptorsWrapper>
+export const AttributesDescriptor = ({ qualifier, source, condition }: Props) => (
+  <AttributesDescriptorsWrapper>
     <div className="descriptors-top">
       <div>{TextResources.QUALIFIER}</div>
       <div>{TextResources.SOURCE}</div>
@@ -19,5 +19,5 @@ export const ParameterDescriptor = ({ qualifier, source, condition }: Props) => 
       <div>{source}</div>
       <div>{condition}</div>
     </div>
-  </ParameterDescriptorsWrapper>
+  </AttributesDescriptorsWrapper>
 );

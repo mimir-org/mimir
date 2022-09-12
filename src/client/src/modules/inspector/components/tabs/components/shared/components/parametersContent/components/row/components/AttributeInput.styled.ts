@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ParameterInputBox = styled.div`
+export const AttributeInputBox = styled.div`
   width: 100%;
   display: flex;
   gap: 16px;

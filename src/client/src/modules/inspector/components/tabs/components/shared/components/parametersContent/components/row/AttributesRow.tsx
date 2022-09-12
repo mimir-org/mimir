@@ -1,18 +1,18 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../../../../../../models";
-import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
-import { Body, Box } from "./ParameterRow.styled";
+import { PARAMETER_ENTITY_WIDTH, AttributeObject } from "./components/AttributeObject";
+import { Body, Box } from "./AttributesRow.styled";
 import { Entity } from "./styled/Entity";
 import { CombinationDropdown } from "./components/CombinationDropdown";
 import { RemoveIconComponent } from "../../../../../../../../../../assets/icons/close";
 import { OnChangeFilterChoice } from "../../handlers/OnChangeFilterChoice";
-import { OnChangeParameterValue } from "../../handlers/OnChangeParameterValue";
+import { OnChangeAttributeValue } from "../../handlers/OnChangeAttributeValue";
 import { OnLockParameter } from "../../handlers/OnLockParameter";
 import { useMemo, useState } from "react";
 import { GetAttributes } from "../../helpers/GetAttributes";
 import { DoesCombinationMatchAttribute } from "../../helpers/GetAttributeCombinations";
 import { OnChangeAttributeCombinationChoice } from "../../handlers/OnChangeAttributeCombinationChoice";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../../../types";
+import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../../../../../types";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import {
   projectIdSelector,
@@ -23,7 +23,7 @@ import {
 const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
-  element: InspectorParametersElement;
+  element: InspectorAttributesElement;
   inspectorParentElem?: InspectorElement;
   terminalParentElem?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
@@ -38,11 +38,11 @@ interface Props {
 }
 
 /**
- * Component for one row to display one Paramter horizontally with it's attributes.
+ * Component for a row to display one AttributesFilter object horizontally with it's attributes.
  * @param props
- * @returns a row for an Parameter
+ * @returns a row for Attributes.
  */
-export const ParameterRow = ({
+export const AttributesRow = ({
   element: elem,
   inspectorParentElem,
   terminalParentElem,
@@ -91,7 +91,7 @@ export const ParameterRow = ({
         />
       </Entity>
       {selectedCombinations.map((comb) => (
-        <Parameter
+        <AttributeObject
           key={comb.combined}
           attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(comb, attr))}
           combination={comb}
@@ -100,7 +100,7 @@ export const ParameterRow = ({
           isGloballyLocking={isGlobalLocking}
           lockingAttribute={lockingAttribute}
           onChange={(id, val, unitId) =>
-            OnChangeParameterValue(elem, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
+            OnChangeAttributeValue(elem, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
           }
           onLock={(attr, isLocked) =>
             OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)

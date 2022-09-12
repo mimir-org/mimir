@@ -31,7 +31,7 @@ export const TransportInterfaceAdminContent = ({ edge, project }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.ID}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={element.id ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly value={element?.id} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.ADMIN_RDS}</div>

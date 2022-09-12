@@ -4,7 +4,7 @@ import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
-import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
+import { AttributeButton, AttributeLockSpinner } from "../../../styled/AttributeButton";
 
 interface Props {
   attribute: Attribute;
@@ -17,11 +17,11 @@ interface Props {
 }
 
 /**
- * Component for the row of buttons in the Parameter's header
+ * Component for the row of buttons in the Attribute's header
  * @param props
- * @returns parameter buttons.
+ * @returns attribute buttons.
  */
-export const ParameterButtonsComponent = ({
+export const AttributeButtonsComponent = ({
   attribute,
   headerColor,
   isAttribute,
@@ -36,20 +36,20 @@ export const ParameterButtonsComponent = ({
 
   return (
     <>
-      <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
+      <AttributeButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
         <VisuallyHidden>{lockDescription}</VisuallyHidden>
         {attributeIsLocking ? (
-          <ParameterLockSpinner>
+          <AttributeLockSpinner>
             <Spinner variant="small" />
-          </ParameterLockSpinner>
+          </AttributeLockSpinner>
         ) : (
           LockComponent
         )}
-      </ParameterButton>
-      <ParameterButton onClick={() => onClose(attribute.id)}>
+      </AttributeButton>
+      <AttributeButton onClick={() => onClose(attribute.id)}>
         <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
         <img src={CloseIcon} alt="x mark" />
-      </ParameterButton>
+      </AttributeButton>
     </>
   );
 };

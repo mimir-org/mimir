@@ -73,6 +73,7 @@ export const InspectorHeader = ({
             isInspectorOpen={isInspectorOpen}
             isOffPage={isOffPage}
           />
+
           {GetInspectorHeaderText(element)}
         </>
       )}

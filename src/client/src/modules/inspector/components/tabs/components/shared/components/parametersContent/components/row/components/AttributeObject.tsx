@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { ParameterDescriptor } from "./ParameterDescriptor";
+import { AttributesDescriptor } from "./AttributeDescriptor";
 import { Entity } from "../styled/Entity";
-import { ParameterHeader } from "./Parameter.styled";
+import { AttributeHeader } from "./AttributeObject.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { Attribute } from "@mimirorg/modelbuilder-types";
-import { ParameterInput } from "./ParameterInput";
-import { ParameterNameComponent } from "./ParameterNameComponent";
-import { ParameterButtonsComponent } from "./ParameterButtonsComponent";
+import { AttributeInput } from "./AttributeInput";
+import { AttributeObjectNameComponent } from "./AttributeObjectNameComponent";
+import { AttributeButtonsComponent } from "./AttributeButtonsComponent";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -24,11 +24,11 @@ interface Props {
 }
 
 /**
- * Component for a single Parameter used in the Inspector.
- * @param params
- * @returns a parameter with data for qualifier, source, condition, an input field and a dropdown for units.
+ * Component for a single Attribute used in the Inspector.
+ * @param parameter
+ * @returns an attribute with data for qualifier, source, condition, an input field and a dropdown for units.
  */
-export const Parameter = ({
+export const AttributeObject = ({
   attribute,
   combination,
   headerColor,
@@ -52,9 +52,9 @@ export const Parameter = ({
 
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
-      <ParameterHeader color={bodyColor}>
-        <ParameterNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
-        <ParameterButtonsComponent
+      <AttributeHeader color={bodyColor}>
+        <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
+        <AttributeButtonsComponent
           attribute={attribute}
           headerColor={headerColor}
           isAttribute={isAttribute}
@@ -63,9 +63,9 @@ export const Parameter = ({
           onClose={(id: string) => onClose(id)}
           onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
         />
-      </ParameterHeader>
-      <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
-      <ParameterInput
+      </AttributeHeader>
+      <AttributesDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
+      <AttributeInput
         attribute={attribute}
         value={value}
         setValue={setValue}

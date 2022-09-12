@@ -7,11 +7,11 @@ interface Props {
 }
 
 /**
- * Component to display a Parameter's name.
+ * Component to display a AttributeObject's name.
  * @param props
- * @returns the name of the Parameter, a clickable link is visisble if the Parameter has a TypeReference.
+ * @returns the name of the Attribute, a clickable link is visisble if the Attribute has a TypeReference.
  */
-export const ParameterNameComponent = ({ attribute, hasTypeReference }: Props) => {
+export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Props) => {
   return hasTypeReference ? (
     <span>
       <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">

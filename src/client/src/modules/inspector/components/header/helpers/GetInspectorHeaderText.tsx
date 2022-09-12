@@ -17,7 +17,7 @@ export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsEdge(element)) {
     return (
       <InspectorHeaderNodeInfo>
-        <InspectorHeaderNodeInfoText>{element?.id}</InspectorHeaderNodeInfoText>
+        <InspectorHeaderNodeInfoText>{element?.transport?.name ?? element?.id}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );
   }

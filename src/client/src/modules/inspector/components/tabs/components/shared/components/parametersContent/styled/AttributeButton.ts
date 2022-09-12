@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ParameterButton = styled.button`
+export const AttributeButton = styled.button`
   background: transparent;
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@ export const ParameterButton = styled.button`
   }
 `;
 
-export const ParameterLockSpinner = styled.span`
+export const AttributeLockSpinner = styled.span`
   width: 15px;
   height: 15px;
   position: absolute;

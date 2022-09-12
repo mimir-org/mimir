@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
-interface ParameterComponentProps {
+interface AttributeObjectProps {
   color: string;
 }
 
-export const ParameterHeader = styled.div<ParameterComponentProps>`
+export const AttributeHeader = styled.div<AttributeObjectProps>`
   display: flex;
   gap: 8px;
   height: 30px;

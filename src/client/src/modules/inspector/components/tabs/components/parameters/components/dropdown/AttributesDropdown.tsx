@@ -1,8 +1,8 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { useEffect, useState } from "react";
 import { DropdownBox } from "../../../../../../../../compLibrary/dropdown/mimir/Dropdown.styled";
-import { ParametersDropdownHeader } from "./ParametersDropdownHeader";
-import { ParametersDropdownList } from "./ParametersDropdownList";
+import { AttributesDropdownHeader } from "./AttributesDropdownHeader";
+import { AttributesDropdownList } from "./ParametersDropdownList";
 
 interface Props {
   label: string;
@@ -10,15 +10,15 @@ interface Props {
   onChange: (unitId: string) => void;
   defaultUnitId: string;
   disabled?: boolean;
-  isParameterDropdown?: boolean;
+  isAttributeDropdown?: boolean;
 }
 
 /**
- * Component for a drop-down menu for parameters in the Inspector.
+ * Component for a drop-down menu for attributes in the Inspector.
  * @param interface
  * @returns a drop-down menu.
  */
-export const ParametersDropdown = ({ label, units, onChange, defaultUnitId, disabled, isParameterDropdown }: Props) => {
+export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disabled, isAttributeDropdown }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState<string>(null);
 
@@ -43,19 +43,19 @@ export const ParametersDropdown = ({ label, units, onChange, defaultUnitId, disa
     <DropdownBox
       disabled={disabled}
       tabIndex={0}
-      isParameterDropdown={isParameterDropdown}
+      isAttributeDropdown={isAttributeDropdown}
       onBlur={() => {
         setIsListOpen(false);
       }}
     >
       <label htmlFor={label} />
-      <ParametersDropdownHeader
+      <AttributesDropdownHeader
         disabled={disabled}
         isListOpen={isListOpen}
         setIsListOpen={setIsListOpen}
         selectedUnit={selectedUnit}
       />
-      {isListOpen && <ParametersDropdownList units={units} handleChange={(item: Unit) => handleChange(item)} />}
+      {isListOpen && <AttributesDropdownList units={units} handleChange={(item: Unit) => handleChange(item)} />}
     </DropdownBox>
   ) : null;
 };
