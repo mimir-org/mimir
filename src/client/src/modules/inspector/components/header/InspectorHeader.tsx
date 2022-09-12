@@ -1,5 +1,5 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { InspectorTabs } from "../tabs/InspectorTabs";
+import { InspectorTabsComponent } from "../tabs/InspectorTabsComponent";
 import { MutableRefObject } from "react";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
@@ -61,7 +61,7 @@ export const InspectorHeader = ({
     <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
       {tabsVisible && (
         <>
-          <InspectorTabs
+          <InspectorTabsComponent
             project={project}
             element={element}
             activeTabIndex={activeTabIndex}

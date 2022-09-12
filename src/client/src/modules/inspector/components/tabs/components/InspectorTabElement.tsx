@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../../../../redux/store";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
 import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
-import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabWrapper.styled";
+import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabElement.styled";
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
@@ -22,7 +22,12 @@ interface Props {
   nodes: Node[];
 }
 
-export const InspectorTabWrapper = ({
+/**
+ * Component for one single tab in the Inspector Module.
+ * @param props
+ * @returns one tab in the Inspector.
+ */
+export const InspectorTabElement = ({
   element,
   index,
   activeTabIndex,

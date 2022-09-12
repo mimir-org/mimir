@@ -1,6 +1,6 @@
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
-import { TerminalsBox, TerminalsAttributesBox } from "./TerminalsAttributesComponent.styled";
+import { TerminalsBox, TerminalAttributesBox } from "./TerminalAttributesComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
 import { Terminal } from "@mimirorg/modelbuilder-types";
@@ -13,11 +13,11 @@ interface Props {
 }
 
 /**
- * Component for the TerminalsAttributes tab in the Inspector
+ * Component for the TerminalAttributes tab in the Inspector
  * @param props
  * @returns a search field for terminals, and a list over a Node's terminals sorted by category.
  */
-export const TerminalsAttributesComponent = ({ element, terminals }: Props) => {
+export const TerminalAttributesComponent = ({ element, terminals }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
   const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
 
@@ -37,14 +37,14 @@ export const TerminalsAttributesComponent = ({ element, terminals }: Props) => {
         onSelectTerminal={(id: string) => setSelectedTerminalId(id)}
       />
       {selectedTerminal && (
-        <TerminalsAttributesBox>
+        <TerminalAttributesBox>
           <AttributesComponent
             attributesElem={selectedTerminal}
             inspectorParentElem={element}
             terminalParentElem={terminalParentElement}
             attributeItems={selectedTerminal.attributes}
           />
-        </TerminalsAttributesBox>
+        </TerminalAttributesBox>
       )}
     </TerminalsBox>
   );
