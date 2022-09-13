@@ -6,7 +6,7 @@ import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/";
+import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
@@ -15,10 +15,10 @@ import { IsBlockView } from "../../../../../helpers";
 import { isProjectStateGloballyLockingSelector, useAppSelector } from "../../../../../redux/store";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
-  InspectorButtonRowContainer,
-  InspectorButtonRowToggleTitle,
-  InspectorButtonRowToggleContainer,
-} from "./InspectorButtonRow.styled";
+  InspectorButtonsContainer,
+  InspectorButtonsToggleTitle,
+  InspectorButtonsToggleContainer,
+} from "./InspectorButtonsComponent.styled";
 
 interface Props {
   nodes: Node[];
@@ -33,7 +33,12 @@ interface Props {
   dispatch: Dispatch;
 }
 
-export const InspectorButtonRow = ({
+/**
+ * Component for the buttons in the Inspector Header.
+ * @param props
+ * @returns a container for the row of buttons.
+ */
+export const InspectorButtonsComponent = ({
   nodes,
   edges,
   element,
@@ -63,7 +68,7 @@ export const InspectorButtonRow = ({
   }, [isGlobalLocking, onLock]);
 
   return (
-    <InspectorButtonRowContainer>
+    <InspectorButtonsContainer>
       {isElementSelected && (
         <>
           <InspectorButton
@@ -82,17 +87,17 @@ export const InspectorButtonRow = ({
       )}
       <Tooltip content={inspectorToggleText}>
         <span tabIndex={isElementSelected ? -1 : 0}>
-          <InspectorButtonRowToggleContainer
+          <InspectorButtonsToggleContainer
             disabled={!isElementSelected || !tabsVisible}
             onClick={() =>
               OnToggleInspectorClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           >
-            <InspectorButtonRowToggleTitle>{TextResources.INSPECTOR}</InspectorButtonRowToggleTitle>
+            <InspectorButtonsToggleTitle>{TextResources.INSPECTOR}</InspectorButtonsToggleTitle>
             <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
-          </InspectorButtonRowToggleContainer>
+          </InspectorButtonsToggleContainer>
         </span>
       </Tooltip>
-    </InspectorButtonRowContainer>
+    </InspectorButtonsContainer>
   );
 };

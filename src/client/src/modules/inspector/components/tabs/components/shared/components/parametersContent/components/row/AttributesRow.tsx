@@ -38,9 +38,9 @@ interface Props {
 }
 
 /**
- * Component for a row to display one AttributesFilter object horizontally with it's attributes.
+ * Component for a row to display the combinations of an Attribute horizontally.
  * @param props
- * @returns a row for Attributes.
+ * @returns a row for an Attribute.
  */
 export const AttributesRow = ({
   element: elem,

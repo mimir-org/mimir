@@ -9,7 +9,7 @@ interface Props {
 /**
  * Component to display a AttributeObject's name.
  * @param props
- * @returns the name of the Attribute, a clickable link is visisble if the Attribute has a TypeReference.
+ * @returns the name of the Attribute. A clickable link is visisble if the Attribute has a TypeReference.
  */
 export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Props) => {
   return hasTypeReference ? (

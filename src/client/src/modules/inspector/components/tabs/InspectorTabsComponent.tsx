@@ -2,7 +2,7 @@ import { MutableRefObject } from "react";
 import { Action } from "redux";
 import { Attribute, Project, Simple, Terminal } from "@mimirorg/modelbuilder-types";
 import { changeInspectorTab } from "../../redux/inspectorSlice";
-import { ShouldShowTabs } from "./helpers";
+import { ShouldShowTabs, GetInspectorHeaderText } from "./helpers";
 import { InspectorElement } from "../../types";
 import { GetAttributesElement } from "./components/parameters/helpers/GetAttributesElement";
 import {
@@ -30,7 +30,7 @@ interface Props {
 /**
  * Component for all the tabs showed in the Inspector Module.
  * @param props
- * @returns all available tabs.
+ * @returns all available tabs elements.
  */
 export const InspectorTabsComponent = ({
   project,
@@ -46,6 +46,7 @@ export const InspectorTabsComponent = ({
 }: Props) => {
   const shouldShowTabs = ShouldShowTabs(element);
   const elements = GetAttributesElement(element);
+  const headerText = GetInspectorHeaderText(element);
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
@@ -76,6 +77,7 @@ export const InspectorTabsComponent = ({
               </InspectorTabElement>
             )
         )}
+      {headerText}
     </>
   );
 };

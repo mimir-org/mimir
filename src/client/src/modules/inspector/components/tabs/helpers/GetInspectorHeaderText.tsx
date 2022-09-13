@@ -1,8 +1,8 @@
 import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorHeader.styled";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Symbol } from "../../../../../compLibrary/symbol";
+import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorTabsComponent.styled";
 
 export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsNode(element)) {

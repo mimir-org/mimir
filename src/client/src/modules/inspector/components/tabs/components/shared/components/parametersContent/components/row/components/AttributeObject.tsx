@@ -25,7 +25,7 @@ interface Props {
 
 /**
  * Component for a single Attribute used in the Inspector.
- * @param parameter
+ * @param props
  * @returns an attribute with data for qualifier, source, condition, an input field and a dropdown for units.
  */
 export const AttributeObject = ({

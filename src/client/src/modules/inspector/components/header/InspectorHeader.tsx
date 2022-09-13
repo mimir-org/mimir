@@ -2,9 +2,8 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { InspectorTabsComponent } from "../tabs/InspectorTabsComponent";
 import { MutableRefObject } from "react";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
-import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
-import { InspectorHeaderContainer } from "./InspectorHeader.styled";
-import { InspectorButtonRow } from "./components/InspectorButtonRow";
+import { InspectorHeaderBox } from "./InspectorHeader.styled";
+import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
 import { Aspect, Project, Terminal, Simple, Attribute } from "@mimirorg/modelbuilder-types";
@@ -36,6 +35,11 @@ interface Props {
   selectedFlowNodes: FlowNode[];
 }
 
+/**
+ * The header component for the Inspector Module.
+ * @param props
+ * @returns a container for the tabs and the buttons in the Inspector Header.
+ */
 export const InspectorHeader = ({
   project,
   element,
@@ -58,27 +62,23 @@ export const InspectorHeader = ({
   const isOffPage = IsNode(element) ? element.aspect === Aspect.None : false;
 
   return (
-    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
+    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
       {tabsVisible && (
-        <>
-          <InspectorTabsComponent
-            project={project}
-            element={element}
-            activeTabIndex={activeTabIndex}
-            attributes={attributes}
-            terminals={terminals}
-            simpleItems={simpleItems}
-            changeInspectorTabAction={changeInspectorTabAction}
-            inspectorRef={inspectorRef}
-            isInspectorOpen={isInspectorOpen}
-            isOffPage={isOffPage}
-          />
-
-          {GetInspectorHeaderText(element)}
-        </>
+        <InspectorTabsComponent
+          project={project}
+          element={element}
+          activeTabIndex={activeTabIndex}
+          attributes={attributes}
+          terminals={terminals}
+          simpleItems={simpleItems}
+          changeInspectorTabAction={changeInspectorTabAction}
+          inspectorRef={inspectorRef}
+          isInspectorOpen={isInspectorOpen}
+          isOffPage={isOffPage}
+        />
       )}
 
-      <InspectorButtonRow
+      <InspectorButtonsComponent
         nodes={project?.nodes}
         edges={project?.edges}
         element={element}
@@ -90,6 +90,6 @@ export const InspectorHeader = ({
         changeInspectorHeightAction={changeInspectorHeightAction}
         dispatch={dispatch}
       />
-    </InspectorHeaderContainer>
+    </InspectorHeaderBox>
   );
 };

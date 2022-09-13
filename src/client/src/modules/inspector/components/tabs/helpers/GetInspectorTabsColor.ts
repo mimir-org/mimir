@@ -19,6 +19,6 @@ export const GetInspectorTabsColor = (nodes: Node[], element: InspectorElement, 
     return GetAspectColor(offPageParent, AspectColorType.Tab);
   }
 
-  if (IsNode(element)) return GetAspectColor(element as Node, AspectColorType.Tab);
+  if (IsNode(element)) return GetAspectColor(element, AspectColorType.Tab);
   if (IsEdge(element)) return GetAspectColor(element.fromNode, AspectColorType.Tab);
 };
