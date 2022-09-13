@@ -104,12 +104,10 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri,
-                projectConverter.Project, _commonRepository.GetDomain());
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
             var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
             if (project == null)
-                throw new MimirorgNullReferenceException(
-                    $"Couldn't save project with id: {projectConverter.Project.Id}");
+                throw new MimirorgNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(project);
             var projectFile = new ProjectFileAm
