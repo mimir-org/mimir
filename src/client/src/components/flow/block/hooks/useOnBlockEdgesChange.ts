@@ -10,7 +10,7 @@ import { OnEdgeDelete } from "../../handlers";
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as selected, HandleSelect dispatches the edge to be selected.
  * If an edge is marked as removed, HandleRemove validates the changes and the component OnEdgeDelete handles the removal.
- * The other types of changes are executed automatically.
+ * The other types of changes are executed automatically by the Flow framework.
  * @param project
  * @param changes
  * @param selectedBlockNode
