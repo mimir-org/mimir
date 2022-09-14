@@ -29,9 +29,9 @@ export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disa
       setSelectedUnitId(null);
       return;
     }
-
     setSelectedUnitId(defaultUnitId);
-  }, [defaultUnitId, units]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (unit: Unit) => {
     setSelectedUnitId(unit.id);

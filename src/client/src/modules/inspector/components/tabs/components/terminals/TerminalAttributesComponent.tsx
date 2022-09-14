@@ -13,7 +13,7 @@ interface Props {
 }
 
 /**
- * Component for the TerminalAttributes tab in the Inspector
+ * Component for the TerminalAttributes tab in the Inspector.
  * @param props
  * @returns a search field for terminals, and a list over a Node's terminals sorted by category.
  */

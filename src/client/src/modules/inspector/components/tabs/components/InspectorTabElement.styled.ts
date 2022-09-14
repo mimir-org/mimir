@@ -18,7 +18,7 @@ export const InspectorTabHeader = styled.div<InspectorTabHeaderProps>`
   height: ${(props) => (props.active ? 44 : 35)}px;
   margin-top: ${(props) => (props.active ? 0 : 9)}px;
   background-color: ${(props) => (props.active ? Color.GHOST_WHITE : props.color)};
-  padding: ${(props) => (props.active ? "17px 12px 0px 12px;" : "8px 12px 0px 12px")};
+  padding: ${(props) => (props.active ? "17px 14px 0px 14px;" : "8px 14px 0px 14px")};
   box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4), 4px 0 3px -5px rgba(0, 0, 0, 0.4);
 
   :hover {
