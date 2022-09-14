@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using Mb.Models.Application;
 using Mb.Models.Client;
+using Mb.Models.Common;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -317,7 +318,7 @@ namespace Mb.Core.Controllers.V1
                 if (fileParserExtension != submissionFileExtension)
                     return BadRequest($"Invalid file extension. The file must be {fileParserExtension}");
 
-                await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
+                await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser), fileParser.GetFileFormat());
                 return StatusCode(StatusCodes.Status201Created);
             }
             catch (MimirorgBadRequestException e)

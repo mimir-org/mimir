@@ -36,6 +36,7 @@ namespace ModelBuilder.Rdf.Extensions
             transport.CreatedBy = ontologyService.GetValue(iri, Resources.CreatedBy, false);
             transport.Created = ontologyService.GetDateTimeValue(iri, Resources.Created, false);
             transport.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
+            transport.TypeReferences.ResolveTypeReferences(transport.Iri, ontologyService);
 
             transport.Attributes = new List<AttributeAm>();
             var attributes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();

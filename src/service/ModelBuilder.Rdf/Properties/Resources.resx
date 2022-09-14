@@ -141,6 +141,9 @@
   <data name="DatumValue" xml:space="preserve">
     <value>lis:datumValue</value>
   </data>
+  <data name="DefaultUom" xml:space="preserve">
+    <value>http://rds.posccaesar.org/ontology/plm/rdl/PCA_100000510</value>
+  </data>
   <data name="Desc" xml:space="preserve">
     <value>rdfs:comment</value>
   </data>
@@ -225,6 +228,9 @@
   <data name="HasSimpleType" xml:space="preserve">
     <value>imf:hasSimpleType</value>
   </data>
+  <data name="HasSource" xml:space="preserve">
+    <value>mimir:hasSource</value>
+  </data>
   <data name="HasSymbol" xml:space="preserve">
     <value>mimir:symbol</value>
   </data>
@@ -278,6 +284,9 @@
   </data>
   <data name="RDS" xml:space="preserve">
     <value>imf:rds</value>
+  </data>
+  <data name="SameAs" xml:space="preserve">
+    <value>owl:sameAs</value>
   </data>
   <data name="ScalarQuantityDatum" xml:space="preserve">
     <value>lis:ScalarQuantityDatum</value>

@@ -136,7 +136,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
 
     case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+      };
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+      };
     case Types.LOCK_ENTITY:
       return {
         ...state,
