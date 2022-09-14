@@ -10,11 +10,11 @@ const OnExportProjectFileClick = (dispatch: Dispatch, project: Project, fileName
 
   const convertedProject = ConvertProjectToProjectAm(project);
 
-  const converter = {
+  const converter: ProjectConverterAm = {
     project: convertedProject,
-    filename: fileName,
+    fileName: fileName,
     parserId: parserId,
-  } as ProjectConverterAm;
+  };
 
   dispatch(exportProjectToFile(converter));
   dispatch(changeActiveMenu(null));

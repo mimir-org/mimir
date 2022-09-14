@@ -1,6 +1,6 @@
-export { InspectorTabWrapper } from "./InspectorTabWrapper";
+export { InspectorTabElement } from "./InspectorTabElement";
 export { AdminComponent } from "./admin/AdminComponent";
-export { ParametersComponent } from "./parameters/ParametersComponent";
+export { AttributesComponent } from "./parameters/AttributesComponent";
 export { RelationsComponent } from "./relations/RelationsComponent";
 export { SimpleTypesComponent } from "./simpleTypes/SimpleTypesComponent";
-export { TerminalsComponent } from "./terminals/TerminalsComponent";
+export { TerminalAttributesComponent } from "./terminals/TerminalAttributesComponent";

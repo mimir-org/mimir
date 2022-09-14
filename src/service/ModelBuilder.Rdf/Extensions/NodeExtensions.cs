@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
@@ -39,6 +38,7 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(node.Iri, Resources.HasPositionY, ontologyService.CreateLiteralNode($"{node.PositionY}", Resources.Float));
             ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionX, ontologyService.CreateLiteralNode($"{node.PositionBlockX}", Resources.Float));
             ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionY, ontologyService.CreateLiteralNode($"{node.PositionBlockY}", Resources.Float));
+            node.TypeReferences.AssertTypeReference(node.Iri, ontologyService);
 
             if (node.Width != null)
                 ontologyService.AssertNode(node.Iri, Resources.HasWidth, ontologyService.CreateLiteralNode($"{node.Width}", Resources.Integer));
@@ -193,6 +193,8 @@ namespace ModelBuilder.Rdf.Extensions
 
             node.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
             node.IsRoot = isRootNode;
+
+            node.TypeReferences.ResolveTypeReferences(node.Iri, ontologyService);
 
             // Resolve Attributes
             node.Attributes = new List<AttributeAm>();

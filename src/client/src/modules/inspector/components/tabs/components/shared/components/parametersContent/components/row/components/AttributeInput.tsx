@@ -1,7 +1,7 @@
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
-import { ParameterInputBox } from "./ParameterInput.styled";
-import { ParametersDropdown } from "../../../../../../parameters/components/dropdown/ParametersDropdown";
+import { AttributeInputBox } from "./AttributeInput.styled";
+import { AttributesDropdown } from "../../../../../../parameters/components/dropdown/AttributesDropdown";
 
 interface Props {
   attribute: Attribute;
@@ -11,11 +11,11 @@ interface Props {
 }
 
 /**
- * Component for the input of a single parameter.
- * @param params
+ * Component for the input of a single Attribute.
+ * @param props
  * @returns an input field for adding a value, and a drop-down list for units.
  */
-export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) => {
+export const AttributeInput = ({ attribute, value, setValue, onChange }: Props) => {
   if (!attribute) return null;
 
   const isAttribute = IsAttribute(attribute);
@@ -24,23 +24,23 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
   const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0]?.id;
 
   return (
-    <ParameterInputBox>
+    <AttributeInputBox>
       <input
-        name="parameterInput"
+        name="attributeInput"
         disabled={isLocked || !isAttribute}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onBlur={() => onChange(attribute.id, value, null)}
       />
 
-      <ParametersDropdown
+      <AttributesDropdown
         label="combinationDropdown"
         units={attribute.units}
         disabled={isLocked}
         onChange={(_unitId: string) => onChange(attribute.id, value, _unitId)}
         defaultUnitId={defaultValueForDropDown}
-        isParameterDropdown
+        isAttributeDropdown
       />
-    </ParameterInputBox>
+    </AttributeInputBox>
   );
 };

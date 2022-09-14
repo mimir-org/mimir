@@ -1,7 +1,7 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeSelectionChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
-import { removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
+import { removeSelectedEdge, removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
 import { OnEdgeDelete } from "../../handlers";
 
 /**
@@ -10,7 +10,7 @@ import { OnEdgeDelete } from "../../handlers";
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as selected, HandleSelect dispatches the edge to be selected.
  * If an edge is marked as removed, HandleRemove validates the changes and the component OnEdgeDelete handles the removal.
- * The other types of changes are executed automatically.
+ * The other types of changes are executed automatically by the Flow framework.
  * @param project
  * @param changes
  * @param selectedBlockNode
@@ -54,6 +54,7 @@ const useOnBlockEdgesChange = (
  */
 function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedFlowChanges: EdgeChange[], dispatch: Dispatch) {
   if (change.id === selectedEdge?.id) return;
+  dispatch(removeSelectedEdge());
   dispatch(removeSelectedNode());
   dispatch(setSelectedEdge(change.id));
   verifiedFlowChanges.push(change);

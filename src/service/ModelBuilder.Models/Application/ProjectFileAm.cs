@@ -1,5 +1,4 @@
 using Mb.Models.Common;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
@@ -12,6 +11,10 @@ namespace Mb.Models.Application
         [Required]
         public string FileContent { get; set; }
 
+        [Required]
         public FileFormat FileFormat { get; set; }
+
+        [Required]
+        public string Filename { get; set; }
     }
 }

@@ -73,7 +73,7 @@ export const Dropdown = ({
     <DropdownBox
       disabled={disabled}
       tabIndex={0}
-      isParameterDropdown={isParameterDropdown}
+      isAttributeDropdown={isParameterDropdown}
       onBlur={() => {
         setIsListOpen(false);
       }}

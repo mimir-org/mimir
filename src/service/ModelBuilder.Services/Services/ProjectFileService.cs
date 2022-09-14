@@ -12,6 +12,7 @@ using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
 using Mb.Models.Application;
+using Mb.Models.Common;
 
 namespace Mb.Services.Services
 {
@@ -59,7 +60,7 @@ namespace Mb.Services.Services
 
             if (_moduleService.Modules.All(x =>
                     x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
-                        x.ModuleDescription.Id.ToString(), projectFile.ParserId.ToString(),
+                        x.ModuleDescription.Id.ToString(), projectFile.ParserId,
                         StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
 
@@ -76,14 +77,15 @@ namespace Mb.Services.Services
         /// <param name="file"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="id"></param>
+        /// <param name="fileFormat"></param>
         /// <returns></returns>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public async Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id)
+        public async Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id, FileFormat fileFormat)
         {
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            await ImportProject(new ProjectFileAm { ParserId = id.ToString(), FileContent = fileContent });
+            await ImportProject(new ProjectFileAm { ParserId = id.ToString(), FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
         }
 
         /// <summary>
@@ -104,12 +106,10 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri,
-                projectConverter.Project, _commonRepository.GetDomain());
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
             var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
             if (project == null)
-                throw new MimirorgNullReferenceException(
-                    $"Couldn't save project with id: {projectConverter.Project.Id}");
+                throw new MimirorgNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(project);
             var projectFile = new ProjectFileAm

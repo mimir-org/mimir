@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import { ProjectFileAm, WebSocket } from "../../../models";
-import { Project } from "@mimirorg/modelbuilder-types";
+import { WebSocket } from "../../../models";
+import { Project, ProjectFileAm } from "@mimirorg/modelbuilder-types";
 import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
@@ -227,13 +227,10 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       return;
     }
 
-    const data = response.data as ProjectFileAm;
+    const data: ProjectFileAm = response.data;
     const blob = new Blob([data.fileContent], { type: data.fileFormat.contentType });
 
-    // TODO: fix filname, does not exist in model
-    // saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
-    saveAs(blob);
-
+    saveAs(blob, action.payload.fileName + "." + data.fileFormat.fileExtension);
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
       payload: { apiError: null },

@@ -2,16 +2,16 @@ import { MutableRefObject } from "react";
 import { Action } from "redux";
 import { Attribute, Project, Simple, Terminal } from "@mimirorg/modelbuilder-types";
 import { changeInspectorTab } from "../../redux/inspectorSlice";
-import { ShouldShowTabs } from "./helpers";
+import { ShouldShowTabs, GetInspectorHeaderText } from "./helpers";
 import { InspectorElement } from "../../types";
-import { GetParametersElement } from "./components/parameters/helpers/GetParametersElement";
+import { GetAttributesElement } from "./components/parameters/helpers/GetAttributesElement";
 import {
-  InspectorTabWrapper,
+  InspectorTabElement,
   AdminComponent,
-  ParametersComponent,
+  AttributesComponent,
   RelationsComponent,
   SimpleTypesComponent,
-  TerminalsComponent,
+  TerminalAttributesComponent,
 } from "./components";
 
 interface Props {
@@ -27,7 +27,12 @@ interface Props {
   isOffPage: boolean;
 }
 
-export const InspectorTabs = ({
+/**
+ * Component for all the tabs showed in the Inspector Module.
+ * @param props
+ * @returns all available tabs elements.
+ */
+export const InspectorTabsComponent = ({
   project,
   element,
   activeTabIndex,
@@ -40,16 +45,13 @@ export const InspectorTabs = ({
   isOffPage,
 }: Props) => {
   const shouldShowTabs = ShouldShowTabs(element);
+  const elements = GetAttributesElement(element);
+  const headerText = GetInspectorHeaderText(element);
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
-    <ParametersComponent
-      key={1}
-      parametersElement={GetParametersElement(element)}
-      inspectorParentElement={element}
-      attributeItems={attributes}
-    />,
-    <TerminalsComponent key={2} element={element} terminals={terminals} />,
+    <AttributesComponent key={1} attributesElem={elements} inspectorParentElem={element} attributeItems={attributes} />,
+    <TerminalAttributesComponent key={2} element={element} terminals={terminals} />,
     <RelationsComponent key={3} element={element} />,
     <SimpleTypesComponent key={4} element={element} simpleItems={simpleItems} />,
   ];
@@ -60,7 +62,7 @@ export const InspectorTabs = ({
         tabs.map(
           (tab, i) =>
             shouldShowTabs[i] && (
-              <InspectorTabWrapper
+              <InspectorTabElement
                 key={i}
                 element={element}
                 index={i}
@@ -72,9 +74,10 @@ export const InspectorTabs = ({
                 nodes={project?.nodes}
               >
                 {tab}
-              </InspectorTabWrapper>
+              </InspectorTabElement>
             )
         )}
+      {headerText}
     </>
   );
 };

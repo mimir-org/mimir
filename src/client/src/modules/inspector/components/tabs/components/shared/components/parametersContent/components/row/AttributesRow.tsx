@@ -1,18 +1,18 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../../../../../../models";
-import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
-import { Body, Box } from "./ParameterRow.styled";
+import { PARAMETER_ENTITY_WIDTH, AttributeObject } from "./components/AttributeObject";
+import { Body, Box } from "./AttributesRow.styled";
 import { Entity } from "./styled/Entity";
 import { CombinationDropdown } from "./components/CombinationDropdown";
 import { RemoveIconComponent } from "../../../../../../../../../../assets/icons/close";
 import { OnChangeFilterChoice } from "../../handlers/OnChangeFilterChoice";
-import { OnChangeParameterValue } from "../../handlers/OnChangeParameterValue";
+import { OnChangeAttributeValue } from "../../handlers/OnChangeAttributeValue";
 import { OnLockParameter } from "../../handlers/OnLockParameter";
 import { useMemo, useState } from "react";
 import { GetAttributes } from "../../helpers/GetAttributes";
 import { DoesCombinationMatchAttribute } from "../../helpers/GetAttributeCombinations";
 import { OnChangeAttributeCombinationChoice } from "../../handlers/OnChangeAttributeCombinationChoice";
-import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../../../types";
+import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../../../../../types";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import {
   projectIdSelector,
@@ -23,9 +23,9 @@ import {
 const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
-  element: InspectorParametersElement;
-  inspectorParentElement?: InspectorElement;
-  terminalParentElement?: InspectorTerminalsElement;
+  element: InspectorAttributesElement;
+  inspectorParentElem?: InspectorElement;
+  terminalParentElem?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeItems?: Attribute[];
@@ -37,10 +37,15 @@ interface Props {
   dispatch: Dispatch;
 }
 
-export const ParameterRow = ({
-  element,
-  inspectorParentElement,
-  terminalParentElement,
+/**
+ * Component for a row to display the combinations of an Attribute horizontally.
+ * @param props
+ * @returns a row for an Attribute.
+ */
+export const AttributesRow = ({
+  element: elem,
+  inspectorParentElem,
+  terminalParentElem,
   combinations,
   selectedCombinations,
   attributeItems,
@@ -54,7 +59,7 @@ export const ParameterRow = ({
   const projectId = useAppSelector(projectIdSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const attributes = attributeItems ?? GetAttributes(element);
+  const attributes = attributeItems ?? GetAttributes(elem);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -71,7 +76,7 @@ export const ParameterRow = ({
               height={26}
               fill={headerColor}
               stroke={headerColor}
-              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+              onClick={() => OnChangeFilterChoice(elem.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
@@ -80,29 +85,27 @@ export const ParameterRow = ({
           items={combinations}
           selectedItems={selectedCombinations}
           keyProp="combined"
-          onChange={(combination, selected) =>
-            OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
-          }
+          onChange={(comb, selected) => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, selected, dispatch)}
           headerColor={headerColor}
           bodyColor={bodyColor}
         />
       </Entity>
-      {selectedCombinations.map((combination) => (
-        <Parameter
-          key={combination.combined}
-          attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
-          combination={combination}
+      {selectedCombinations.map((comb) => (
+        <AttributeObject
+          key={comb.combined}
+          attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(comb, attr))}
+          combination={comb}
           headerColor={headerColor}
           bodyColor={bodyColor}
           isGloballyLocking={isGlobalLocking}
           lockingAttribute={lockingAttribute}
-          onChange={(id, value, unitId) =>
-            OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
+          onChange={(id, val, unitId) =>
+            OnChangeAttributeValue(elem, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
           }
-          onLock={(attribute, isLocked) =>
-            OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
+          onLock={(attr, isLocked) =>
+            OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
           }
-          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
+          onClose={() => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, true, dispatch)}
         />
       ))}
     </Body>

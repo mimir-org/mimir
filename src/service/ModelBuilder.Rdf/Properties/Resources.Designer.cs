@@ -133,6 +133,15 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://rds.posccaesar.org/ontology/plm/rdl/PCA_100000510.
+        /// </summary>
+        public static string DefaultUom {
+            get {
+                return ResourceManager.GetString("DefaultUom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to rdfs:comment.
         /// </summary>
         public static string Desc {
@@ -385,6 +394,15 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasSource.
+        /// </summary>
+        public static string HasSource {
+            get {
+                return ResourceManager.GetString("HasSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mimir:symbol.
         /// </summary>
         public static string HasSymbol {
@@ -543,6 +561,15 @@ namespace ModelBuilder.Rdf.Properties {
         public static string RDS {
             get {
                 return ResourceManager.GetString("RDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to owl:sameAs.
+        /// </summary>
+        public static string SameAs {
+            get {
+                return ResourceManager.GetString("SameAs", resourceCulture);
             }
         }
         

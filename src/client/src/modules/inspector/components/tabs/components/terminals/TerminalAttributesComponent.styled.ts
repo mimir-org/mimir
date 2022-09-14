@@ -8,7 +8,7 @@ export const TerminalsBox = styled.div`
 `;
 
 const TERMINALS_WIDTH_OFFSET: number = TERMINALS_COLUMN_WIDTH + 2 * TERMINALS_COLUMN_HORIZONTAL_PADDING;
-export const TerminalsParametersBox = styled.div`
+export const TerminalAttributesBox = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

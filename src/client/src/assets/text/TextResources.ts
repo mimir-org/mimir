@@ -56,9 +56,9 @@ export const TextResources = {
   // InspectorModule
   ADMIN_INFO: "Admin",
   OBJECT: "Object",
-  PARAMETERS: "Parameters",
+  ATTRIBUTES: "Attributes",
   SIMPLE_TYPES: "Simple Types",
-
+  TERMINAL_ATTRIBUTES: "Terminal Attributes",
   RELATIONS_NAME: "Relation name",
   RELATIONS_UPDATED_BY: "Updated by",
   RELATIONS_CONNECTED_TO: "Connected to",

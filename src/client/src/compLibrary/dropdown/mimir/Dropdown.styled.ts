@@ -5,13 +5,13 @@ import { FontWeight } from "../../../assets/font";
 interface DropdownBoxProps {
   disabled: boolean;
   fontSize?: string;
-  isParameterDropdown?: boolean;
+  isAttributeDropdown?: boolean;
 }
 
 export const DropdownBox = styled.div<DropdownBoxProps>`
   display: flex;
   flex-direction: column;
-  flex: ${(props) => props.isParameterDropdown && 1};
+  flex: ${(props) => props.isAttributeDropdown && 1};
   position: relative;
   width: 100%;
   margin-bottom: 10px;

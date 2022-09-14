@@ -37,6 +37,8 @@ namespace ModelBuilder.Rdf.Extensions
             inter.Created = ontologyService.GetDateTimeValue(iri, Resources.Created, false);
             inter.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
+            inter.TypeReferences.ResolveTypeReferences(inter.Iri, ontologyService);
+
             inter.Attributes = new List<AttributeAm>();
             var attributes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
 

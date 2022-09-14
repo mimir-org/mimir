@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
@@ -10,5 +9,8 @@ namespace Mb.Models.Application
 
         [Required]
         public ProjectAm Project { get; set; }
+
+        [Required]
+        public string FileName { get; set; }
     }
 }

@@ -23,29 +23,12 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
         {
-            // Asserts_libra
-            ontologyService.AssertNode(attribute.Iri, Resources.Domain, attribute.Domain, true);
+            #region None Mimir specific data
+
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
             ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
-            ontologyService.AssertNode(attribute.Iri, Resources.HasDiscipline, $"mimir:{attribute.Discipline}");
-            ontologyService.AssertNode(attribute.Iri, Resources.SelectType, $"mimir:{attribute.SelectType}");
-
-            if (attribute.SelectValues != null && attribute.SelectValues.Any())
-                foreach (var value in attribute.SelectValues)
-                    ontologyService.AssertNode(attribute.Iri, Resources.SelectValue, $"mimir:{value}");
-
-
-            if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
-            {
-                ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.Label, attribute.Entity, true);
-                ontologyService.AssertNode(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
-            }
-
-            var allowedUnits = attribute.GetAllowedUnits();
-            if (allowedUnits != null && allowedUnits.Any())
-                foreach (var value in allowedUnits)
-                    ontologyService.AssertNode(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+            attribute.TypeReferences.AssertTypeReference(attribute.Iri, ontologyService);
 
             var ado = attribute.AttributeDatumObject();
             var adp = attribute.Iri.AttributeDatumPredicate();
@@ -55,6 +38,27 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(attribute.IriDatum(), adp.FormatPredicate, ado.FormatObject);
 
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
+
+            #endregion None Mimir specific data
+
+            #region Mimir specific data
+
+            ontologyService.AssertNode(attribute.Iri, Resources.HasDiscipline, $"mimir:{attribute.Discipline}");
+            ontologyService.AssertNode(attribute.Iri, Resources.SelectType, $"mimir:{attribute.SelectType}");
+
+            if (attribute.SelectValues != null && attribute.SelectValues.Any())
+                foreach (var value in attribute.SelectValues)
+                    ontologyService.AssertNode(attribute.Iri, Resources.SelectValue, $"mimir:{value}");
+
+            if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
+                ontologyService.AssertNode(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
+
+            var allowedUnits = attribute.GetAllowedUnits();
+            if (allowedUnits != null && allowedUnits.Any())
+                foreach (var value in allowedUnits)
+                    ontologyService.AssertNode(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+
+            #endregion Mimir specific data
         }
 
         /// <summary>
@@ -164,12 +168,18 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="simpleIri"></param>
         public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
         {
+            #region None Mimir specific data
+
             attribute.Iri = iri;
+            attribute.NodeIri = nodeIri;
+            attribute.InterfaceIri = interfaceIri;
+            attribute.TerminalIri = terminalIri;
+            attribute.TransportIri = transportIri;
+            attribute.SimpleIri = simpleIri;
+
             attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
             attribute.SelectedUnitId = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
-            attribute.AttributeTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
-            attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
             var adp = iri.AttributeDatumPredicate();
             attribute.Qualifier = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
@@ -177,18 +187,15 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Condition = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
             attribute.Format = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
 
-            attribute.Qualifier = string.IsNullOrWhiteSpace(attribute.Qualifier) ? "NotSet" : projectData.AttributeQualifiers[attribute.Qualifier]?.Name ?? attribute.Qualifier;
-            attribute.Source = string.IsNullOrWhiteSpace(attribute.Source) ? "NotSet" : projectData.AttributeSources[attribute.Source]?.Name ?? attribute.Source;
-            attribute.Condition = string.IsNullOrWhiteSpace(attribute.Condition) ? "NotSet" : projectData.AttributeConditions[attribute.Condition]?.Name ?? attribute.Condition;
-            attribute.Format = string.IsNullOrWhiteSpace(attribute.Format) ? "NotSet" : projectData.AttributeFormats[attribute.Format]?.Name ?? attribute.Format;
+            attribute.TypeReferences.ResolveTypeReferences(attribute.Iri, ontologyService);
 
-            attribute.NodeIri = nodeIri;
-            attribute.InterfaceIri = interfaceIri;
-            attribute.TerminalIri = terminalIri;
-            attribute.TransportIri = transportIri;
-            attribute.SimpleIri = simpleIri;
+            #endregion None Mimir specific data
 
-            // TODO: AttributeAm should have a list of attribute id's
+            #region None Mimir specific data
+
+            attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
+            //attribute.AttributeTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false); // Resolve from Iri, last segment
+
             var allowedUnitNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
             attribute.Units = allowedUnitNodes.Select(x =>
             {
@@ -205,6 +212,7 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.SelectType = ontologyService.GetEnumValue<Select>(iri, Resources.SelectType, false);
             attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
 
+            #endregion None Mimir specific data
         }
     }
 }

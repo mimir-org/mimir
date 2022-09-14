@@ -5,6 +5,7 @@ using Mb.Models.Data;
 using Mb.Models.Extensions;
 using Mimirorg.Common.Attributes;
 using Mimirorg.TypeLibrary.Enums;
+using Mimirorg.TypeLibrary.Models.Application;
 
 namespace Mb.Models.Application
 {

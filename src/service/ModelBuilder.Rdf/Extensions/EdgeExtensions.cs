@@ -5,7 +5,6 @@ using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
-using System.Linq;
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -39,6 +38,7 @@ namespace ModelBuilder.Rdf.Extensions
                 ontologyService.AssertNode(edge.Transport.Iri, Resources.HasAspect, $"imf:{edge.FromNode.Aspect}");
                 ontologyService.AssertNode(edge.Transport.Iri, Resources.Version, edge.Transport.Version, true);
                 ontologyService.AssertNode(edge.Transport.Iri, Resources.MimirRds, edge.Transport.Rds, true);
+                edge.Transport.TypeReferences.AssertTypeReference(edge.Transport.Iri, ontologyService);
 
                 if (edge.Transport.Updated != null && !string.IsNullOrWhiteSpace(edge.Transport.UpdatedBy))
                 {
@@ -79,6 +79,7 @@ namespace ModelBuilder.Rdf.Extensions
                 ontologyService.AssertNode(edge.Interface.Iri, Resources.HasAspect, $"imf:{edge.FromNode.Aspect}");
                 ontologyService.AssertNode(edge.Interface.Iri, Resources.Version, edge.Interface.Version, true);
                 ontologyService.AssertNode(edge.Interface.Iri, Resources.MimirRds, edge.Interface.Rds, true);
+                edge.Interface.TypeReferences.AssertTypeReference(edge.Interface.Iri, ontologyService);
 
                 if (edge.Interface.Updated != null && !string.IsNullOrWhiteSpace(edge.Interface.UpdatedBy))
                 {

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Types from "./types";
-import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
-import { BlockNodeSize } from "../../../models/project";
+import { BlockNodeSize, OffPageObject } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
 import {
   Project,

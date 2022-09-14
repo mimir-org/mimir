@@ -5,7 +5,6 @@ import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./HandleComponent.styled";
 import { BlockNodeConnector } from "./components/BlockNodeConnector";
 import { ShowHandle } from "./helpers";
-import { IsProduct } from "../../../../helpers/Aspects";
 import { Project, Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
@@ -37,7 +36,7 @@ export const HandleComponent = ({ node, project, connectors, isElectro, isOffPag
   return (
     <HandleContainer isElectro={isElectro}>
       {connectors.map((conn) => {
-        if (!ShowHandle(conn, isInput, IsProduct(node))) return null;
+        if (!ShowHandle(conn, isInput)) return null;
         return (
           <BlockNodeConnector
             key={`handle-${conn.id}`}

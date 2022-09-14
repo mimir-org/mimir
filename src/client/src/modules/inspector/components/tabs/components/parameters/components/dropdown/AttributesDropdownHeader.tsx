@@ -12,11 +12,11 @@ interface Props {
 }
 
 /**
- * The header of the ParametersDropdownMenu.
+ * The header of the AttributesDropdownMenu.
  * @param interface
  * @returns a clickable header with a value and expand/collapse icon.
  */
-export const ParametersDropdownHeader = ({ disabled, isListOpen, setIsListOpen, selectedUnit }: Props) => (
+export const AttributesDropdownHeader = ({ disabled, isListOpen, setIsListOpen, selectedUnit }: Props) => (
   <DropdownHeaderBox
     borderRadius={2}
     borderColor={Color.BATTLESHIP_GREY}

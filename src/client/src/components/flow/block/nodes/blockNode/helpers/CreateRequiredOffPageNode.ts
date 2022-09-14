@@ -1,6 +1,6 @@
 import { createRequiredOffPageNode } from "../../../../../../redux/store/project/actions";
-import { CreateOffPageObject, OffPageData } from "./CreateOffPageObject";
-import { Position } from "../../../../../../models/project";
+import { CreateOffPageObject } from "./CreateOffPageObject";
+import { OffPageData, Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
 import { Node, Terminal } from "@mimirorg/modelbuilder-types";
 

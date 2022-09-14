@@ -38,6 +38,7 @@ namespace ModelBuilder.Rdf.Extensions
                     ontologyService.AssertNode(terminal.Iri, Resources.HasColor, terminal.Color, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.Visibility, terminal.ConnectorVisibility.ToString(), true);
                     ontologyService.AssertNode(terminal.Iri, Resources.IsRequired, terminal.IsRequired.ToString(), true);
+                    terminal.TypeReferences.AssertTypeReference(terminal.Iri, ontologyService);
 
                     switch (terminal.Type)
                     {
@@ -130,6 +131,7 @@ namespace ModelBuilder.Rdf.Extensions
             terminal.Name = ontologyService.GetValue(iri, Resources.Label, false);
             terminal.Type = ontologyService.GetEnumValue<ConnectorDirection>(iri, Resources.TerminalDirectionType, false);
             terminal.ConnectorVisibility = ontologyService.GetEnumValue<ConnectorVisibility>(iri, Resources.Visibility, false);
+            terminal.TypeReferences.ResolveTypeReferences(terminal.Iri, ontologyService);
 
             var isRequiredString = ontologyService.GetValue(iri, Resources.IsRequired, false);
             if (bool.TryParse(isRequiredString, out var isRequired))

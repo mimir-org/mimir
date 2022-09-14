@@ -2,9 +2,9 @@ import { SimpleTypesSelector } from "./components/SimpleTypesSelector";
 import { useState } from "react";
 import { InspectorElement } from "../../../../types";
 import { GetSimpleTypes } from "./helpers/GetSimpleTypes";
-import { TerminalsParametersBox, TerminalsBox } from "../terminals/TerminalsComponent.styled";
+import { TerminalAttributesBox, TerminalsBox } from "../terminals/TerminalAttributesComponent.styled";
 import { Simple } from "@mimirorg/modelbuilder-types";
-import { ParametersComponent } from "../parameters/ParametersComponent";
+import { AttributesComponent } from "../parameters/AttributesComponent";
 
 interface Props {
   element: InspectorElement;
@@ -26,9 +26,9 @@ export const SimpleTypesComponent = ({ element, simpleItems }: Props) => {
     <TerminalsBox>
       <SimpleTypesSelector simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />
       {selectedSimpleType && (
-        <TerminalsParametersBox>
-          <ParametersComponent parametersElement={selectedSimpleType} inspectorParentElement={element} />
-        </TerminalsParametersBox>
+        <TerminalAttributesBox>
+          <AttributesComponent attributesElem={selectedSimpleType} inspectorParentElem={element} />
+        </TerminalAttributesBox>
       )}
     </TerminalsBox>
   );

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FontSize } from "../../../../../assets/font";
 import { Color } from "../../../../../assets/color/Color";
 
-export const InspectorButtonRowContainer = styled.div`
+export const InspectorButtonsContainer = styled.div`
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;
@@ -11,7 +11,7 @@ export const InspectorButtonRowContainer = styled.div`
   position: relative;
 `;
 
-export const InspectorButtonRowToggleContainer = styled.button`
+export const InspectorButtonsToggleContainer = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@ export const InspectorButtonRowToggleContainer = styled.button`
   }
 `;
 
-export const InspectorButtonRowToggleTitle = styled.span`
+export const InspectorButtonsToggleTitle = styled.span`
   pointer-events: initial;
   font-size: ${FontSize.HEADER};
   height: 100%;
