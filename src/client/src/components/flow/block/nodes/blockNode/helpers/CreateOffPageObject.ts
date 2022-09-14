@@ -1,6 +1,6 @@
 import { IsInputConnector, IsOutputConnector, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
-import { Position } from "../../../../../../models/project";
+import { OffPageData, OffPageObject } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import {
@@ -14,19 +14,6 @@ import {
   Relation,
   RelationType,
 } from "@mimirorg/modelbuilder-types";
-
-export interface OffPageObject {
-  offPageNode: Node;
-  partOfEdge: Edge;
-  transportEdge: Edge;
-}
-
-export interface OffPageData {
-  sourceNode: Node;
-  sourceConnector: Terminal;
-  position: Position;
-  isRequired: boolean;
-}
 
 /**
  * Component to create an OffPage object in BlockView.
