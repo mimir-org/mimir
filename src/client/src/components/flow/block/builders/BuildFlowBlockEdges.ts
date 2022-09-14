@@ -1,5 +1,4 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
-import { IsProduct } from "../../../../helpers/Aspects";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../helpers/Connectors";
 import { GetBlockEdgeType } from "../helpers";
@@ -27,7 +26,7 @@ const BuildFlowBlockEdges = (
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
-    if (IsPartOfRelation(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
+    if (IsPartOfRelation(edge.fromConnector)) return;
     const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
     const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
     if (blockEdge) flowEdges.push(blockEdge);
@@ -35,14 +34,5 @@ const BuildFlowBlockEdges = (
 
   return flowEdges;
 };
-
-/**
- * A partOf edge should only be visible between Product nodes.
- * @param edge
- * @returns a boolean value.
- */
-function ValidatePartOfEdge(edge: Edge) {
-  return IsProduct(edge.fromNode) && IsProduct(edge.toNode);
-}
 
 export default BuildFlowBlockEdges;

@@ -32,8 +32,7 @@ function ValidateLocation(sourceConn: Connector, targetConn: Connector) {
 
 function ValidateProduct(secondaryNode: Node, sourceConn: Connector, targetConn: Connector) {
   if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
-  if (IsFunction(secondaryNode)) return IsTransportConnection(sourceConn, targetConn);
-  if (IsProduct(secondaryNode)) return IsTransportConnection(sourceConn, targetConn);
+  return IsTransportConnection(sourceConn, targetConn);
 }
 
 function ValidateFunction(secondaryNode: Node, sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {

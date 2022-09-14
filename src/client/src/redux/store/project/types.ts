@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiError } from "../../../models/webclient";
-import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
-import { BlockNodeSize } from "../../../models/project";
+import { BlockNodeSize, OffPageObject } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
 import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm } from "@mimirorg/modelbuilder-types";
 

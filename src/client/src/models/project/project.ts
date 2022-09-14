@@ -1,4 +1,4 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
@@ -76,4 +76,17 @@ export interface TerminalCategoryObject {
 export interface ViewportData {
   setViewport: SetViewport;
   setCenter: SetCenter;
+}
+
+export interface OffPageObject {
+  offPageNode: Node;
+  partOfEdge: Edge;
+  transportEdge: Edge;
+}
+
+export interface OffPageData {
+  sourceNode: Node;
+  sourceConnector: Terminal;
+  position: Position;
+  isRequired: boolean;
 }

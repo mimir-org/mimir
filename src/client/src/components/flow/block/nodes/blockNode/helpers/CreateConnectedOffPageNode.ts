@@ -1,7 +1,7 @@
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { createConnectedOffPageNode } from "../../../../../../redux/store/project/actions";
-import { OffPageData, CreateOffPageObject } from "./CreateOffPageObject";
-import { Position } from "../../../../../../models/project";
+import { CreateOffPageObject } from "./CreateOffPageObject";
+import { OffPageData, Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
 
 /**

@@ -6,7 +6,6 @@ import {
   IsInputConnector,
   IsLocationRelation,
   IsOutputConnector,
-  IsPartOfRelation,
   IsProductRelation,
   IsTerminal,
 } from "../../../helpers/Connectors";
@@ -33,7 +32,6 @@ export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Nod
 function FilterConnector(selectedNode: Node, secondaryNode: Node, connector: Connector) {
   if (secondaryNode != null) return FilterSplitViewConnector(selectedNode, secondaryNode, connector);
   if (IsLocation(selectedNode)) return IsLocationRelation(connector);
-  if (IsProduct(selectedNode)) return IsTerminal(connector) || IsPartOfRelation(connector);
   return IsTerminal(connector);
 }
 
