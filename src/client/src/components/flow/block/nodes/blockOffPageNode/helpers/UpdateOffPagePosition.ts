@@ -11,7 +11,7 @@ const UpdateOffPagePosition = (
   size: BlockNodeSize,
   dispatch: Dispatch
 ) => {
-  const margin = 35;
+  const margin = 105;
   const inputTerminalPos = parentBlockNode?.positionBlockX + size.width;
   const outputTerminalPos = parentBlockNode?.positionBlockX - margin;
 
