@@ -15,9 +15,17 @@ import { IsOffPageEdge } from "../../../helpers/IsOffPageEdge";
  * @param nodes
  * @param edges
  * @param size
+ * @param isElectroView
  * @param dispatch
  */
-export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+export const HandleConnectedOffPageNode = (
+  node: Node,
+  nodes: Node[],
+  edges: Edge[],
+  size: BlockNodeSize,
+  isElectroView: boolean,
+  dispatch: Dispatch
+) => {
   if (!node || !nodes.length || !edges.length) return;
 
   edges.forEach((edge) => {
@@ -32,7 +40,7 @@ export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edg
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
 
-    CreateConnectedOffPageNode(node, connector, position, dispatch);
+    CreateConnectedOffPageNode(node, connector, position, isElectroView, dispatch);
   });
 };
 

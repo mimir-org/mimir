@@ -32,14 +32,14 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  const isElectroView = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, dispatch);
-    HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
+    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, isElectroView, dispatch);
+    HandleRequiredOffPageNode(data, project?.edges, size, isElectroView, dispatch);
   }, [secondaryNode]);
 
   // Handle connectors
@@ -49,18 +49,18 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Update node size based on active connectors
   useEffect(() => {
-    setSize(SetChildNodeSize(connectors, isElectro));
-  }, [isElectro, connectors]);
+    setSize(SetChildNodeSize(connectors, isElectroView));
+  }, [isElectroView, connectors]);
 
   if (!data) return null;
 
   return (
-    <BoxWrapper isElectro={isElectro}>
+    <BoxWrapper isElectro={isElectroView}>
       <HandleComponent
         node={data}
         project={project}
         connectors={connectors.inputs}
-        isElectro={isElectro}
+        isElectro={isElectroView}
         dispatch={dispatch}
         isInput
       />
@@ -72,7 +72,13 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} project={project} connectors={connectors.outputs} isElectro={isElectro} dispatch={dispatch} />
+      <HandleComponent
+        node={data}
+        project={project}
+        connectors={connectors.outputs}
+        isElectro={isElectroView}
+        dispatch={dispatch}
+      />
     </BoxWrapper>
   );
 };

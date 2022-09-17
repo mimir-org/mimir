@@ -2,7 +2,7 @@ import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "@mimirorg/modelbuilder-types";
-import { useAppSelector, electroSelector } from "../../../../../redux/store";
+import { useAppSelector, electroViewSelector } from "../../../../../redux/store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
@@ -21,7 +21,7 @@ export const BlockRelationEdge = ({
   data,
 }: EdgeProps) => {
   const visible = !data?.edge?.hidden;
-  const isElectro = useAppSelector(electroSelector);
+  const isElectro = useAppSelector(electroViewSelector);
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
   const arrowId = `arrow-${id}`;

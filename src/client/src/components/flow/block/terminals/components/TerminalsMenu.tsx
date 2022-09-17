@@ -2,7 +2,7 @@ import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
-import { electroSelector, useAppSelector } from "../../../../../redux/store";
+import { electroViewSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
@@ -22,7 +22,7 @@ interface Props {
  * @returns a drop-down menu with a node's input or output terminals.
  */
 export const TerminalsMenu = ({ node, isInput, connectors, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
-  const isElectroViewEnabled = useAppSelector(electroSelector);
+  const isElectroViewEnabled = useAppSelector(electroViewSelector);
   const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
 
   return (

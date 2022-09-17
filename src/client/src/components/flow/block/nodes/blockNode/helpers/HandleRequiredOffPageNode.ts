@@ -12,9 +12,16 @@ import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
  * @param node
  * @param edges
  * @param size
+ * @param isElectroView
  * @param dispatch
  */
-export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+export const HandleRequiredOffPageNode = (
+  node: Node,
+  edges: Edge[],
+  size: BlockNodeSize,
+  isElectroView: boolean,
+  dispatch: Dispatch
+) => {
   if (!edges.length || !node) return;
 
   node.connectors.forEach((conn) => {
@@ -22,7 +29,7 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
 
     const isRequired = true;
     const position = { x: size.width, y: node.positionBlockY };
-    CreateRequiredOffPageNode(node, conn, position, isRequired, dispatch);
+    CreateRequiredOffPageNode(node, conn, position, isRequired, isElectroView, dispatch);
   });
 };
 

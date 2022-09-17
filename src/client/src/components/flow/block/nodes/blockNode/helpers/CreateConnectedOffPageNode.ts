@@ -11,12 +11,14 @@ import { Dispatch } from "redux";
  * @param sourceNode
  * @param sourceConnector
  * @param position
+ * @param isElectroView
  * @param dispatch
  */
 export const CreateConnectedOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,
   position: Position,
+  isElectroView: boolean,
   dispatch: Dispatch
 ) => {
   const isRequired = false;
@@ -28,6 +30,6 @@ export const CreateConnectedOffPageNode = (
     isRequired,
   } as OffPageData;
 
-  const offPageObject = CreateOffPageObject(data);
+  const offPageObject = CreateOffPageObject(data, isElectroView);
   dispatch(createConnectedOffPageNode(offPageObject));
 };

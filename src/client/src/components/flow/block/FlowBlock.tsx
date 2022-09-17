@@ -53,6 +53,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
   const selectedEdge = mimirEdges.find((e) => e.selected);
   const library = useAppSelector(selectors.librarySelector);
+  const isElectroView = useAppSelector(selectors.electroViewSelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -63,7 +64,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, mimirNodes, mimirEdges, selectedNode, secondaryNode, getViewport, dispatch);
+    return hooks.useOnConnectStop(e, mimirNodes, mimirEdges, selectedNode, secondaryNode, getViewport, isElectroView, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {

@@ -12,6 +12,7 @@ import { Node, Terminal } from "@mimirorg/modelbuilder-types";
  * @param sourceConnector
  * @param position
  * @param isRequired
+ * @param isElectroView
  * @param dispatch
  */
 export const CreateRequiredOffPageNode = (
@@ -19,6 +20,7 @@ export const CreateRequiredOffPageNode = (
   sourceConnector: Terminal,
   position: Position,
   isRequired: boolean,
+  isElectroView: boolean,
   dispatch: Dispatch
 ) => {
   const data = {
@@ -28,6 +30,6 @@ export const CreateRequiredOffPageNode = (
     isRequired,
   } as OffPageData;
 
-  const offPageObject = CreateOffPageObject(data);
+  const offPageObject = CreateOffPageObject(data, isElectroView);
   dispatch(createRequiredOffPageNode(sourceNode.id, sourceConnector.id, isRequired, offPageObject));
 };

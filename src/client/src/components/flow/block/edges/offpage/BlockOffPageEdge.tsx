@@ -1,7 +1,7 @@
 import { Connector, Terminal } from "@mimirorg/modelbuilder-types";
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { electroSelector, useAppSelector } from "../../../../../redux/store";
+import { electroViewSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers/Connectors";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
@@ -11,7 +11,7 @@ import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
  * @returns an OffPageEdge in BlockView.
  */
 export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
-  const isElectro = useAppSelector(electroSelector);
+  const isElectro = useAppSelector(electroViewSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Terminal;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Terminal;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);

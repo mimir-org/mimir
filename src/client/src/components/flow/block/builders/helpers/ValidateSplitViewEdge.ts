@@ -27,7 +27,7 @@ const ValidateSplitViewEdge = (
 };
 
 function ValidateLocation(sourceConn: Connector, targetConn: Connector) {
-  return IsLocationConnection(sourceConn, targetConn); // TODO: fix
+  return IsLocationConnection(sourceConn, targetConn);
 }
 
 function ValidateProduct(secondaryNode: Node, sourceConn: Connector, targetConn: Connector) {

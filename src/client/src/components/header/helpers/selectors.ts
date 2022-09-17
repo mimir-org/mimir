@@ -1,5 +1,5 @@
 export {
-  electroSelector,
+  electroViewSelector as electroSelector,
   explorerSelector,
   filterSelector,
   libOpenSelector,

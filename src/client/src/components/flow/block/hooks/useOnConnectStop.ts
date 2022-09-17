@@ -21,6 +21,7 @@ import { TextResources } from "../../../../assets/text/TextResources";
  * @param primaryNode
  * @param secondaryNode
  * @param getViewport
+ * @param isElectroView
  * @param dispatch
  */
 const useOnConnectStop = (
@@ -30,6 +31,7 @@ const useOnConnectStop = (
   primaryNode: Node,
   secondaryNode: Node,
   getViewport: GetViewport,
+  isElectroView: boolean,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -55,7 +57,7 @@ const useOnConnectStop = (
   if (!ValidateOffPageDrop(nodes, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn)) return;
 
   const position = { x: e.clientX, y: e.clientY };
-  CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, dispatch);
+  CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, isElectroView, dispatch);
   SaveEventData(null, "edgeEvent");
 };
 
