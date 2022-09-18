@@ -64,7 +64,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, mimirNodes, mimirEdges, selectedNode, secondaryNode, getViewport, isElectroView, dispatch);
+    return hooks.useOnConnectStop(e, project, selectedBlockNode, secondaryNode, getViewport, isElectroView, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -122,7 +122,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
       setHasRendered(true);
@@ -133,8 +133,8 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
-  }, [mimirNodes, secondaryNode]);
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
+  }, [mimirNodes, secondaryNode, isElectroView]);
 
   // Rerender edges
   useEffect(() => {

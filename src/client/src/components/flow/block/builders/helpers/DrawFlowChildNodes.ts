@@ -12,13 +12,15 @@ import { IsInputConnector, IsOutputConnector, IsTerminal, IsPartOfRelation } fro
  * @param selectedBlockNode
  * @param secondaryNode
  * @param flowNodes
+ * @param isElectroView
  */
 const DrawFlowChildNodes = (
   nodes: Node[],
   edges: Edge[],
   selectedBlockNode: Node,
   secondaryNode: Node,
-  flowNodes: FlowNode[]
+  flowNodes: FlowNode[],
+  isElectroView: boolean
 ) => {
   edges.forEach((edge) => {
     if (!ValidateEdge(edge, selectedBlockNode)) return;
@@ -26,7 +28,7 @@ const DrawFlowChildNodes = (
     const targetNode = nodes.find((n) => n.id === edge.toNodeId);
     if (!targetNode) return;
 
-    const childNode = BuildFlowChildNode(targetNode, selectedBlockNode, secondaryNode, nodes);
+    const childNode = BuildFlowChildNode(targetNode, selectedBlockNode, secondaryNode, nodes, isElectroView);
     if (!childNode) return;
     let isValid = true;
 

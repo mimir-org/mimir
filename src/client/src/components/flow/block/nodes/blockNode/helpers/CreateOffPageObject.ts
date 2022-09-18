@@ -1,7 +1,6 @@
 import { IsInputConnector, IsOutputConnector, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
-import { OffPageData, OffPageObject, Position } from "../../../../../../models/project";
-import { Size } from "../../../../../../assets/size/Size";
+import { OffPageData, OffPageObject } from "../../../../../../models/project";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import {
   Connector,
@@ -19,10 +18,9 @@ import {
  * Component to create an OffPage object in BlockView.
  * The component is called from either the CreateRequiredOffPageNode component or the CreateConnectedOffPageNode component.
  * @param data
- * @param isElectroView
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
-export const CreateOffPageObject = (data: OffPageData, isElectroView: boolean) => {
+export const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
 
@@ -30,15 +28,14 @@ export const CreateOffPageObject = (data: OffPageData, isElectroView: boolean) =
 
   const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputConnector(c) && IsPartOfRelation(c));
   const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
-  const position = SetOffPageNodePosition(data, sourceNode, isElectroView);
 
   const offPageNode = {
     id: CreateId(),
     name: `OffPage-${sourceNode.name}`,
     label: `OffPage-${sourceNode.label}`,
     aspect: Aspect.None,
-    positionBlockX: position.x,
-    positionBlockY: position.y,
+    positionBlockX: data.position.x,
+    positionBlockY: data.position.y,
     connectors: [],
     attributes: [],
     hidden: false,
@@ -118,14 +115,3 @@ export const CreateOffPageObject = (data: OffPageData, isElectroView: boolean) =
 
   return { offPageNode, partOfEdge, transportEdge } as OffPageObject;
 };
-
-function SetOffPageNodePosition(data: OffPageData, sourceNode: Node, isElectroView: boolean) {
-  const position = { x: data.position.x, y: sourceNode.positionBlockY + Size.NODE_HEIGHT } as Position; // Adjust relative to parent
-
-  if (isElectroView) {
-    position.x = 0;
-    position.y = 0;
-  }
-
-  return position;
-}

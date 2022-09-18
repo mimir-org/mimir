@@ -38,8 +38,8 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, isElectroView, dispatch);
-    HandleRequiredOffPageNode(data, project?.edges, size, isElectroView, dispatch);
+    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, dispatch);
+    HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
   }, [secondaryNode]);
 
   // Handle connectors

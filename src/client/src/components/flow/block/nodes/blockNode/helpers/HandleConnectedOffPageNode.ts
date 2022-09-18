@@ -15,23 +15,15 @@ import { IsOffPageEdge } from "../../../helpers/IsOffPageEdge";
  * @param nodes
  * @param edges
  * @param size
- * @param isElectroView
  * @param dispatch
  */
-export const HandleConnectedOffPageNode = (
-  node: Node,
-  nodes: Node[],
-  edges: Edge[],
-  size: BlockNodeSize,
-  isElectroView: boolean,
-  dispatch: Dispatch
-) => {
+export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   if (!node || !nodes.length || !edges.length) return;
 
   edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget) || HasConnectedOffPageNode(edges, edge, isTarget)) return;
+    if (!OnlyOneNodeIsVisible(edge, isTarget) || HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
     const nodeParent = nodes.find((n) => n.id === node.parentNodeId);
     if (!nodeParent) return;
@@ -40,7 +32,7 @@ export const HandleConnectedOffPageNode = (
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
 
-    CreateConnectedOffPageNode(node, connector, position, isElectroView, dispatch);
+    CreateConnectedOffPageNode(node, connector, position, dispatch);
   });
 };
 
@@ -81,7 +73,7 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
  * @param isTarget
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
+function OnlyOneNodeIsVisible(edge: Edge, isTarget: boolean) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 

@@ -11,23 +11,24 @@ import { IsOffPage } from "../../../../helpers/Aspects";
  * @param parentNode
  * @param secondaryNode
  * @param nodes
+ * @param isElectroView
  * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node, nodes: Node[]) => {
+const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node, nodes: Node[], isElectroView: boolean) => {
   if (!childNode) return null;
 
   const type = GetNodeTypeString(childNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
 
   const position = IsOffPage(childNode)
-    ? SetOffPageNodePos(childNode, parentNode, secondaryNode, nodes)
+    ? SetOffPageNodePos(childNode, parentNode, secondaryNode, nodes, isElectroView)
     : SetChildNodePos(nodePos, parentNode);
 
   return {
     id: childNode.id,
-    type: type,
+    type,
     data: childNode,
-    position: position,
+    position,
     hidden: false,
     selected: childNode.selected,
     draggable: true,

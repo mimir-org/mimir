@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
-import { BlockNodeSize } from "../../../../../../models/project";
+import { BlockNodeSize, OffPageData } from "../../../../../../models/project";
 import { IsInputConnector, IsInputVisible, IsTerminal } from "../../../../helpers/Connectors";
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 
@@ -12,24 +12,23 @@ import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
  * @param node
  * @param edges
  * @param size
- * @param isElectroView
  * @param dispatch
  */
-export const HandleRequiredOffPageNode = (
-  node: Node,
-  edges: Edge[],
-  size: BlockNodeSize,
-  isElectroView: boolean,
-  dispatch: Dispatch
-) => {
+export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   if (!edges.length || !node) return;
 
   node.connectors.forEach((conn) => {
     if (!IsTerminal(conn) || !conn.isRequired || HasRequiredOffPageNode(edges, conn)) return;
 
-    const isRequired = true;
     const position = { x: size.width, y: node.positionBlockY };
-    CreateRequiredOffPageNode(node, conn, position, isRequired, isElectroView, dispatch);
+    const offPageData = {
+      sourceNode: node,
+      sourceConnector: conn,
+      position,
+      isRequired: true,
+    } as OffPageData;
+
+    CreateRequiredOffPageNode(offPageData, dispatch);
   });
 };
 

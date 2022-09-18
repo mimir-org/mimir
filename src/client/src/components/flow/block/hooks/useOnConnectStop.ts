@@ -1,8 +1,8 @@
 import { GetViewport } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { EdgeEvent } from "../../../../models/project";
+import { EdgeEvent, OffPageData, Position } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
-import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { IsOutputConnector, IsOutputVisible, IsTerminal } from "../../helpers/Connectors";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
@@ -16,8 +16,7 @@ import { TextResources } from "../../../../assets/text/TextResources";
  * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
  * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
  * @param e
- * @param nodes
- * @param edges
+ * @param project
  * @param primaryNode
  * @param secondaryNode
  * @param getViewport
@@ -26,8 +25,7 @@ import { TextResources } from "../../../../assets/text/TextResources";
  */
 const useOnConnectStop = (
   e: MouseEvent,
-  nodes: Node[],
-  edges: Edge[],
+  project: Project,
   primaryNode: Node,
   secondaryNode: Node,
   getViewport: GetViewport,
@@ -38,15 +36,18 @@ const useOnConnectStop = (
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
   if (!edgeEvent) return;
 
-  const sourceNode = nodes.find((n) => n.id === edgeEvent.nodeId);
-  const sourceConn = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
+  const nodes = project?.nodes ?? [];
+  const edges = project?.edges ?? [];
 
-  if (!IsTerminal(sourceConn) || IsOffPage(sourceNode)) return;
+  const sourceNode = nodes.find((n) => n.id === edgeEvent.nodeId);
+  const sourceConnector = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
+
+  if (!IsTerminal(sourceConnector) || IsOffPage(sourceNode)) return;
 
   const existingEdge = edges.find(
     (edge) =>
-      (edge.fromConnectorId === sourceConn.id && IsTerminal(edge.fromConnector)) ||
-      (edge.toConnectorId === sourceConn.id && IsTerminal(edge.toConnector))
+      (edge.fromConnectorId === sourceConnector.id && IsTerminal(edge.fromConnector)) ||
+      (edge.toConnectorId === sourceConnector.id && IsTerminal(edge.toConnector))
   );
 
   if (existingEdge) {
@@ -54,10 +55,12 @@ const useOnConnectStop = (
     return;
   }
 
-  if (!ValidateOffPageDrop(nodes, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn)) return;
+  if (!ValidateOffPageDrop(nodes, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConnector)) return;
 
-  const position = { x: e.clientX, y: e.clientY };
-  CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, isElectroView, dispatch);
+  const position = SetInitialOffPageNodePosition(primaryNode, sourceNode, e.clientX, isElectroView);
+  const offPageData = { sourceNode, sourceConnector, position, isRequired: true } as OffPageData;
+
+  CreateRequiredOffPageNode(offPageData, dispatch);
   SaveEventData(null, "edgeEvent");
 };
 
@@ -143,6 +146,29 @@ function CalculateDropZone(
   }
 
   return dropZone;
+}
+
+/**
+ * Function to give an OffPage node a position on the creation of an OffPageNode.
+ * If Mimir is in ElectroView mode the OffPage node will be placed at the top or bottom on the ParentNode,
+ * else it is placed at the left or right of the ParentNode.
+ * Note: this function is only used once, when the OffPageNode is created.
+ * When a position is updated it is handled by the component SetOffPageNodePos component.
+ * @param primaryNode
+ * @param sourceNode
+ * @param clientX
+ * @param isElectroView
+ * @returns a Position object.
+ */
+function SetInitialOffPageNodePosition(primaryNode: Node, sourceNode: Node, clientX: number, isElectroView: boolean) {
+  const position = { x: clientX, y: sourceNode.positionBlockY + Size.NODE_HEIGHT } as Position; // Adjust relative to parent
+
+  if (isElectroView) {
+    position.x = sourceNode.positionBlockX;
+    position.y = primaryNode.positionBlockY + primaryNode.height;
+  }
+
+  return position;
 }
 
 export default useOnConnectStop;
