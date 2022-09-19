@@ -18,8 +18,8 @@ const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: N
   const sourceNode = GetParentNode(offPageNode.id);
 
   // Handle OffPageNodes from the SecondaryNode
-  if (secondaryNode !== undefined) {
-    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, nodes);
+  if (secondaryNode != undefined) {
+    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, nodes, isElectroView);
     if (splitOffPagePos != null) return splitOffPagePos;
   }
 
@@ -33,8 +33,7 @@ const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: N
 
 /**
  * Function to force a source OffPageNode to have the correct position.
- * If ElectroView is enabled the OffPageNode will be placed on the top of the parent block,
- * otherwise it will be placed at the left of the parent block.
+ * The OffPageNode will be placed at the left of the parent block.
  * @param parentNode
  * @param sourceNode
  * @returns a Position object.
@@ -79,8 +78,7 @@ function HandleElectroSourceOffPagePos(parentNode: Node, sourceNode: Node) {
 
 /**
  * Function to force a target OffPageNode to have the correct position.
- * If ElectroView is enabled the OffPageNode will be placed on the bottom of the parent block,
- * otherwise it will be placed at the right of the parent block.
+ * The OffPageNode will be placed at the right of the parent block.
  * @param parentNode
  * @param sourceNode
  * @returns a Position object.
@@ -128,16 +126,23 @@ function HandleElectroTargetOffPagePos(parentNode: Node, sourceNode: Node) {
  * @param secondaryNode
  * @param offPageNode
  * @param nodes
+ * @param isElectroView
  * @returns a Position object.
  */
-function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, nodes: Node[]) {
+function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, nodes: Node[], isElectroView: boolean) {
   const parentNode = nodes.find((n) => n.id === offPageNode.parentNodeId);
   const grandParentNode = nodes.find((n) => n.id === parentNode.parentNodeId);
 
   if (grandParentNode?.id !== secondaryNode.id) return null;
 
-  if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(grandParentNode, offPageNode);
-  return HandleSourceOffPagePos(grandParentNode, offPageNode);
+  if (offPageNode.isOffPageTarget)
+    return isElectroView
+      ? HandleElectroTargetOffPagePos(grandParentNode, offPageNode)
+      : HandleTargetOffPagePos(grandParentNode, offPageNode);
+
+  return isElectroView
+    ? HandleElectroSourceOffPagePos(grandParentNode, offPageNode)
+    : HandleSourceOffPagePos(grandParentNode, offPageNode);
 }
 
 export default SetOffPageNodePos;
