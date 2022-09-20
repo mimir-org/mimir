@@ -46,14 +46,14 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const terminals = useAppSelector(selectors.terminalsSelector);
+  const library = useAppSelector(selectors.librarySelector);
+  const isElectroView = useAppSelector(selectors.electroViewSelector);
   const mimirNodes = project?.nodes ?? [];
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);
   const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
   const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
   const selectedEdge = mimirEdges.find((e) => e.selected);
-  const library = useAppSelector(selectors.librarySelector);
-  const isElectroView = useAppSelector(selectors.electroViewSelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -64,7 +64,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, selectedBlockNode, secondaryNode, getViewport, isElectroView, dispatch);
+    return hooks.useOnConnectStop(e, project, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {

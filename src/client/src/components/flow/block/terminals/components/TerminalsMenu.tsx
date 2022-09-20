@@ -12,7 +12,7 @@ interface Props {
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
-  onClick: (conn: Connector, isInput: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
   onBlur: () => void;
 }
 
@@ -35,7 +35,7 @@ export const TerminalsMenu = ({ node, isInput, connectors, hasActiveTerminals, i
       menuOffset={menuOffset}
     >
       {connectors.map((conn) => (
-        <TerminalsMenuElement key={conn.id} conn={conn} isInput={isInput} onClick={onClick} />
+        <TerminalsMenuElement key={conn.id} connector={conn} isInput={isInput} onClick={onClick} />
       ))}
     </TerminalsBox>
   );

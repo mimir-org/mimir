@@ -8,7 +8,7 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
 interface Props {
   node: Node;
   connectors: Connector[];
-  onClick: (conn: Connector, isInput: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
   isParent?: boolean;
   isInput?: boolean;
   showMenuButton?: boolean;

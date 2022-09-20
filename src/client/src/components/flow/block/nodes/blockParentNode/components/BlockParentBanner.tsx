@@ -14,7 +14,7 @@ interface Props {
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector, isInput: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
 }
 
 /**
@@ -36,7 +36,7 @@ export const BlockParentBanner = ({
       <TerminalsMenuComponent
         node={node}
         connectors={inputConnectors}
-        onClick={(c, isInput) => onConnectorClick(c, isInput)}
+        onClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
         isInput
         isParent
       />
@@ -61,7 +61,7 @@ export const BlockParentBanner = ({
     <TerminalsMenuComponent
       node={node}
       connectors={outputConnectors}
-      onClick={(c, isInput) => onConnectorClick(c, isInput)}
+      onClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
       isParent
     />
   </HeaderContainer>

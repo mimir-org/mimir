@@ -31,7 +31,9 @@ export const TerminalsElementBox = styled.label`
   }
 `;
 
-export const BidirectionalBox = styled.div`
+export const TerminalCheckboxWrapper = styled.div``;
+
+export const TerminalIconBox = styled.div`
   display: flex;
   white-space: nowrap;
   overflow: hidden;
@@ -47,18 +49,17 @@ export const BidirectionalBox = styled.div`
   }
 `;
 
-interface ColorTagProps {
-  color: string;
-}
-
-export const ColorTag = styled.span<ColorTagProps>`
-  width: 100%;
+export const OffPageIconBox = styled.div`
+  display: flex;
+  align-items: center;
   height: 100%;
-  border-left: 12px solid ${(props) => props.color};
-  padding-left: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  line-height: 2.5;
+  width: 45px;
+  padding: 4px 0px 0px 5px;
+  margin-right: 5px;
+  border-left: 1px solid ${Color.LIGHT_SILVER};
+`;
+
+export const OffPageCheckboxWrapper = styled.div`
+  position: relative;
+  right: 5px;
 `;

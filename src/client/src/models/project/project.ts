@@ -85,6 +85,7 @@ export interface OffPageObject {
 }
 
 export interface OffPageData {
+  offPageNodeId: string;
   sourceNode: Node;
   sourceConnector: Terminal;
   position: Position;

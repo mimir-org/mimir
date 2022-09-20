@@ -51,8 +51,8 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
 };
 
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
-  const margin = 20;
-  const marginSmall = 15;
+  const margin = -30;
+  const marginSmall = 5;
 
   const start = `M${sourceX} ${sourceY}`;
   const pathSource = `S${sourceX} ${sourceY - margin * 3} ${sourceX} ${sourceY + marginSmall}`;

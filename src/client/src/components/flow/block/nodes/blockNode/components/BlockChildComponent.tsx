@@ -12,7 +12,7 @@ interface Props {
   colorSelected: string;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
 }
 
 /**
@@ -43,7 +43,7 @@ export const BlockChildComponent = ({
         node={node}
         inputConnectors={inputConnectors}
         outputConnectors={outputConnectors}
-        onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
+        onConnectorClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
         showMenuButton={showMenuButton}
       />
       <SymbolBox>

@@ -4,6 +4,7 @@ import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { BlockNodeSize, OffPageData } from "../../../../../../models/project";
 import { IsInputConnector, IsInputVisible, IsTerminal } from "../../../../helpers/Connectors";
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { CreateId } from "../../../../helpers";
 
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.
@@ -17,23 +18,25 @@ import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   if (!edges.length || !node) return;
 
-  node.connectors.forEach((conn) => {
-    if (!IsTerminal(conn) || !conn.isRequired || HasRequiredOffPageNode(edges, conn)) return;
+  node.connectors.forEach((connector) => {
+    if (!IsTerminal(connector) || !connector.isRequired || HasRequiredOffPageNode(edges, connector)) return;
 
     const position = { x: size.width, y: node.positionBlockY };
-    const offPageData = {
+
+    const data = {
+      offPageNodeId: CreateId(),
       sourceNode: node,
-      sourceConnector: conn,
+      sourceConnector: connector,
       position,
       isRequired: true,
     } as OffPageData;
 
-    CreateRequiredOffPageNode(offPageData, dispatch);
+    CreateRequiredOffPageNode(data, dispatch);
   });
 };
 
 /**
- * Function to check if connector already has a required OffPageNode.
+ * Function to check if a connector already has a required OffPageNode.
  * @param edges
  * @param connector
  * @returns a boolean value.
@@ -45,7 +48,7 @@ function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
     ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector.id === connector.id)
     : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector.id === connector.id);
 
-  return existingEdge !== undefined;
+  return existingEdge != undefined;
 }
 
 export default HandleRequiredOffPageNode;

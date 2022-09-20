@@ -6,6 +6,7 @@ import {
   IsInputConnector,
   IsLocationRelation,
   IsOutputConnector,
+  IsPartOfRelation,
   IsProductRelation,
   IsTerminal,
 } from "../../../helpers/Connectors";
@@ -23,8 +24,10 @@ export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Nod
     ?.filter((c) => FilterConnector(selectedBlockNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 
-  const inputs = sortedConnectors?.filter((t) => IsInputConnector(t) || IsBidirectionalTerminal(t)) ?? [];
-  const outputs = sortedConnectors?.filter((t) => IsOutputConnector(t) || IsBidirectionalTerminal(t)) ?? [];
+  const inputs =
+    sortedConnectors?.filter((t) => !IsPartOfRelation(t) && (IsInputConnector(t) || IsBidirectionalTerminal(t))) ?? [];
+  const outputs =
+    sortedConnectors?.filter((t) => !IsPartOfRelation(t) && (IsOutputConnector(t) || IsBidirectionalTerminal(t))) ?? [];
 
   return { inputs, outputs } as Connectors;
 };

@@ -30,7 +30,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
-    id: CreateId(),
+    id: data.offPageNodeId,
     name: `OffPage-${sourceNode.name}`,
     label: `OffPage-${sourceNode.label}`,
     aspect: Aspect.None,

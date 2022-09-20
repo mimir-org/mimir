@@ -1,37 +1,65 @@
-import { BidirectionalIcon } from "../../../../../assets/icons/bidirectional";
 import { Color } from "../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../compLibrary/input/checkbox/common/Checkbox";
-import { IsBidirectionalTerminal, IsConnectorVisible } from "../../../helpers/Connectors";
+import { IsConnectorVisible } from "../../../helpers/Connectors";
 import { GetConnectorColor } from "../../helpers";
-import { BidirectionalBox, ColorTag, TerminalsElementBox } from "./TerminalsMenuElement.styled";
 import { Connector } from "@mimirorg/modelbuilder-types";
+import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { TextResources } from "../../../../../assets/text/TextResources";
+import { TerminalIcon } from "./helpers/TerminalIcon";
+import { OffPageRequiredInputIcon } from "../../../../../assets/icons/offpage";
+import {
+  TerminalIconBox,
+  OffPageCheckboxWrapper,
+  TerminalsElementBox,
+  OffPageIconBox,
+  TerminalCheckboxWrapper,
+} from "./TerminalsMenuElement.styled";
 
 interface Props {
-  conn: Connector;
+  connector: Connector;
   isInput: boolean;
-  onClick: (conn: Connector, isInput: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
 }
 
 /**
  * Component for a single terminal in the TerminalsMenu.
  * @param interface
- * @returns a clickable terminal with a checkbox.
+ * @returns a clickable terminal with two checkboxex, one for a terminal, and for an OffPageNode.
  */
-export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
-  <TerminalsElementBox key={conn.id}>
-    <Checkbox
-      isChecked={IsConnectorVisible(conn)}
-      onChange={() => onClick(conn, isInput)}
-      color={Color.LIGHT_SILVER}
-      id={conn.id}
-    />
-    {IsBidirectionalTerminal(conn) ? (
-      <BidirectionalBox>
-        <BidirectionalIcon fill={GetConnectorColor(conn)} className="icon" />
-        {conn.name}
-      </BidirectionalBox>
-    ) : (
-      <ColorTag color={GetConnectorColor(conn)}>{conn.name}</ColorTag>
-    )}
-  </TerminalsElementBox>
-);
+export const TerminalsMenuElement = ({ connector, isInput, onClick }: Props) => {
+  const color = GetConnectorColor(connector);
+  const connectorIsVisible = IsConnectorVisible(connector);
+  const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
+
+  return (
+    <TerminalsElementBox key={connector.id}>
+      <TerminalCheckboxWrapper>
+        <Checkbox
+          isChecked={connectorIsVisible}
+          onChange={() => onClick(connector, isInput, false)}
+          color={Color.LIGHT_SILVER}
+          id={connector.id}
+        />
+      </TerminalCheckboxWrapper>
+
+      <TerminalIconBox>
+        <TerminalIcon conn={connector} color={color} />
+        {connector.name}
+      </TerminalIconBox>
+      <OffPageIconBox>
+        <OffPageRequiredInputIcon style={{ fill: color }} />
+      </OffPageIconBox>
+
+      <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
+        <OffPageCheckboxWrapper>
+          <Checkbox
+            isChecked={connectorIsVisible}
+            onChange={() => onClick(connector, isInput, true)}
+            color={Color.LIGHT_SILVER}
+            id={connector.id}
+          />
+        </OffPageCheckboxWrapper>
+      </Tooltip>
+    </TerminalsElementBox>
+  );
+};

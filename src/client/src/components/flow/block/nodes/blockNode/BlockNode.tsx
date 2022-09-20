@@ -16,7 +16,6 @@ import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { IsPartOfRelation } from "../../../helpers/Connectors";
 import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -68,9 +67,9 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
-        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
+        inputConnectors={connectors.inputs}
+        outputConnectors={connectors.outputs}
+        onConnectorClick={(conn, isInput, isOffPage) => OnConnectorClick(conn, isInput, isOffPage, data, dispatch)}
       />
       <HandleComponent
         node={data}

@@ -304,4 +304,8 @@ export const TextResources = {
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
   GABBI: "gabbi",
+
+  // OffPage
+  OFFPAGE_ADD: "This will create an offpage node from the terminal.",
+  OFFPAGE_REMOVE: "This will remove the offpage node.",
 };
