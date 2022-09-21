@@ -2,7 +2,7 @@ import * as Types from "./types";
 import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
-import { Edge, Node, Simple, Terminal } from "@mimirorg/modelbuilder-types";
+import { Edge, Node, Terminal } from "@mimirorg/modelbuilder-types";
 import { IsTerminal } from "../../../components/flow/helpers/Connectors";
 import {
   getEdgeInterfaceAttributeMap,
@@ -11,7 +11,6 @@ import {
   getEdgeTransportTerminalAttributeMap,
   getNodeAttributeMap,
   getNodeConnectorAttributeMap,
-  getNodeSimpleAttributeMap,
   GetUpdatedEdgeInnerWithTerminalAttributeValue,
   setLockEdge,
   setLockInterfaceAttribute,
@@ -19,7 +18,6 @@ import {
   setLockNode,
   setLockNodeAttribute,
   setLockNodeTerminalAttribute,
-  setLockSimpleAttribute,
   setLockTransportAttribute,
   setLockTransportTerminalAttribute,
   TraverseTree,
@@ -505,23 +503,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
-      const { id, simpleId, nodeId, value, unitId: selectedUnitId } = action.payload;
-
-      const getAttr = (s: Simple) => {
-        return s.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
-      };
-
-      const getSimples = (n: Node) => {
-        return n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttr(s) } : s));
-      };
-
-      return {
-        ...state,
-        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)) },
-      };
-    }
-
     case Types.CHANGE_ACTIVE_CONNECTOR: {
       const { nodeId, connectorId, connectorVisibility } = action.payload;
 
@@ -582,11 +563,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         return setLockNodeTerminalAttribute({ ...nodeConnectorAttributeMapTarget, ...action.payload }, state);
       }
 
-      const nodeSimpleAttributeMapTarget = getNodeSimpleAttributeMap(state.project.nodes)[id];
-      if (nodeSimpleAttributeMapTarget) {
-        return setLockSimpleAttribute({ ...nodeSimpleAttributeMapTarget, ...action.payload }, state);
-      }
-
       const edgeTransportAttributeMapTarget = getEdgeTransportAttributeMap(state.project.edges)[id];
       if (edgeTransportAttributeMapTarget) {
         return setLockTransportAttribute({ ...edgeTransportAttributeMapTarget, ...action.payload }, state);
@@ -615,7 +591,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       const nodeAttributeMap = getNodeAttributeMap(state.project.nodes);
       const nodeConnectorAttributeMap = getNodeConnectorAttributeMap(state.project.nodes);
-      const nodeSimpleAttributeMap = getNodeSimpleAttributeMap(state.project.nodes);
       const edgeTransportAttributeMap = getEdgeTransportAttributeMap(state.project.edges);
       const edgeTransportTerminalAttributeMap = getEdgeTransportTerminalAttributeMap(state.project.edges);
       const edgeInterfaceAttributeMap = getEdgeInterfaceAttributeMap(state.project.edges);
@@ -632,11 +607,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         const nodeConnectorAttributeMapTarget = nodeConnectorAttributeMap[attributeLock.id];
         if (nodeConnectorAttributeMapTarget) {
           modifiedState = setLockNodeTerminalAttribute({ ...nodeConnectorAttributeMapTarget, ...attributeLock }, modifiedState);
-        }
-
-        const nodeSimpleAttributeMapTarget = nodeSimpleAttributeMap[attributeLock.id];
-        if (nodeSimpleAttributeMapTarget) {
-          modifiedState = setLockSimpleAttribute({ ...nodeSimpleAttributeMapTarget, ...attributeLock }, modifiedState);
         }
 
         const edgeTransportAttributeMapTarget = edgeTransportAttributeMap[attributeLock.id];

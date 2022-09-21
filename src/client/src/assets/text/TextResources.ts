@@ -57,7 +57,6 @@ export const TextResources = {
   ADMIN_INFO: "Admin",
   OBJECT: "Object",
   ATTRIBUTES: "Attributes",
-  SIMPLE_TYPES: "Simple Types",
   TERMINAL_ATTRIBUTES: "Terminal Attributes",
   RELATIONS_NAME: "Relation name",
   RELATIONS_UPDATED_BY: "Updated by",
@@ -125,7 +124,6 @@ export const TextResources = {
   PARAMS_LOCK: "Lock parameter",
   PARAMS_UNLOCK: "Unlock parameter",
   TERMINALS_SEARCH: "Search Terminal Type",
-  SIMPLETYPES_SEARCH: "Search Simple Types",
 
   QUALIFIER: "Qualifier",
   SOURCE: "Source",
@@ -293,7 +291,6 @@ export const TextResources = {
   KIND_EDGE: "Edge",
   KIND_TRANSPORT: "Transport",
   KIND_INTERFACE: "Interface",
-  KIND_SIMPLE: "Simple",
   KIND_TERMINAL: "Terminal",
   KIND_RELATION: "Relation",
   KIND_CONNECTOR: "Connector",

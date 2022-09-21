@@ -8,8 +8,6 @@ import {
   AttributeAm,
   Connector,
   Interface,
-  Simple,
-  SimpleAm,
   ConnectorAm,
   Terminal,
   InterfaceAm,
@@ -59,7 +57,6 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       version: node.version,
       label: node.label,
       rds: node.rds,
-
       description: node.description,
       positionX: node.positionX,
       positionY: node.positionY,
@@ -72,7 +69,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       symbol: node.symbol,
       connectors: ConvertConnectorsToConnectorsAm(node.connectors),
       attributes: ConvertAttributesToAttributesAm(node.attributes),
-      simples: ConvertSimplesToSimplesAm(node.simples),
+      simples: [],
       aspect: node.aspect,
       isRoot: node.isRoot,
       purpose: node.purposeString,
@@ -200,8 +197,8 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
       interfaceIri: attr.interfaceIri,
       attributeTypeId: attr.attributeTypeId,
       attributeTypeIri: attr.attributeTypeIri,
-      simpleId: attr.simpleId,
-      simpleIri: attr.simpleIri,
+      simpleId: null,
+      simpleIri: null,
       units: attr.units,
       selectValues: attr.selectValues,
       selectType: attr.selectType,
@@ -214,24 +211,6 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
   });
 
   return convertedAttributes;
-}
-
-function ConvertSimplesToSimplesAm(simples: Simple[]) {
-  const converted = [] as SimpleAm[];
-  if (!simples?.length) return converted;
-
-  simples.forEach((simple) => {
-    converted.push({
-      id: simple.id,
-      iri: simple.iri,
-      name: simple.name,
-      nodeId: simple.nodeId,
-      nodeIri: simple.nodeIri,
-      attributes: ConvertAttributesToAttributesAm(simple.attributes),
-    });
-  });
-
-  return converted;
 }
 
 function ConvertTransportToTransportAm(data: Transport) {

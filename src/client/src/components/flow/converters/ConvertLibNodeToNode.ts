@@ -4,7 +4,7 @@ import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
-import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
+import { ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 import { Node } from "@mimirorg/modelbuilder-types";
@@ -34,7 +34,6 @@ const ConvertLibNodeToNode = (
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, allTerminals, id, libNode.iri);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
-  const simples = ConvertSimpleLibCmToSimple(libNode.simples, id);
 
   return {
     id,
@@ -48,7 +47,6 @@ const ConvertLibNodeToNode = (
     positionBlockY: blockPosition.y,
     connectors,
     attributes,
-    simples,
     aspect: libNode.aspect,
     version: libNode.version,
     masterProjectId: projectId,

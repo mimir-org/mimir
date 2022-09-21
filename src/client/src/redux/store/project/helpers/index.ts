@@ -7,7 +7,6 @@ export { setLockInterfaceAttribute } from "./setLockInterfaceAttribute";
 export { setLockInterfaceTerminalAttribute } from "./setLockInterfaceTerminalAttribute";
 export { setLockNodeAttribute } from "./setLockNodeAttribute";
 export { setLockNodeTerminalAttribute } from "./setLockNodeTerminalAttribute";
-export { setLockSimpleAttribute } from "./setLockSimpleAttribute";
 export { setLockTransportAttribute } from "./setLockTransportAttribute";
 export { setLockTransportTerminalAttribute } from "./setLockTransportTerminalAttribute";
 
@@ -17,4 +16,3 @@ export { getEdgeTransportAttributeMap } from "./getEdgeTransportAttributeMap";
 export { getEdgeTransportTerminalAttributeMap } from "./getEdgeTransportTerminalAttributeMap";
 export { getNodeAttributeMap } from "./getNodeAttributeMap";
 export { GetNodeConnectorAttributeMap as getNodeConnectorAttributeMap } from "./getNodeConnectorAttributeMap";
-export { getNodeSimpleAttributeMap } from "./getNodeSimpleAttributeMap";

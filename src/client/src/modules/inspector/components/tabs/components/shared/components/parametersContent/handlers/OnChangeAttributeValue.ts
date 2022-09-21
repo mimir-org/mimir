@@ -1,12 +1,11 @@
 import { Dispatch } from "redux";
-import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../../../../../helpers/IsType";
+import { IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../../../../../helpers/IsType";
 import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../../../../types";
 import {
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
   changeNodeAttributeValue,
   changeNodeTerminalAttributeValue,
-  changeSimpleAttributeValue,
   changeTransportAttributeValue,
   changeTransportTerminalAttributeValue,
 } from "../../../../../../../../../redux/store/project/actions";
@@ -32,7 +31,5 @@ export const OnChangeAttributeValue = (
     dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
     dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
-  } else if (IsSimple(element) && IsNode(inspectorParentElement)) {
-    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   }
 };
