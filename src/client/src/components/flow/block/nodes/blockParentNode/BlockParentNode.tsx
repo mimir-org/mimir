@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
-import { IsPartOfRelation } from "../../../helpers/Connectors";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
@@ -54,12 +53,12 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <BlockParentComponent
         node={data}
         splitView={secondaryNode != null}
-        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
-        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
+        inputConnectors={connectors.inputs}
+        outputConnectors={connectors.outputs}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
-        onConnectorClick={(conn, isInput, isOffPage) => OnConnectorClick(conn, isInput, isOffPage, data, dispatch)}
+        onConnectorClick={(conn, isInput, isOffPage) => OnConnectorClick(conn, isInput, data, dispatch, isOffPage)}
       />
       <HandleComponent
         node={data}

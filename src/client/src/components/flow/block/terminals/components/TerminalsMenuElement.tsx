@@ -6,7 +6,7 @@ import { Connector } from "@mimirorg/modelbuilder-types";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { TerminalIcon } from "./helpers/TerminalIcon";
-import { OffPageRequiredInputIcon } from "../../../../../assets/icons/offpage";
+import { OffPageRequiredInputIcon, OffPageRequiredOutputIcon } from "../../../../../assets/icons/offpage";
 import {
   TerminalIconBox,
   OffPageCheckboxWrapper,
@@ -18,7 +18,7 @@ import {
 interface Props {
   connector: Connector;
   isInput: boolean;
-  onClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isOffPage?: boolean) => void;
 }
 
 /**
@@ -43,17 +43,17 @@ export const TerminalsMenuElement = ({ connector, isInput, onClick }: Props) => 
       </TerminalCheckboxWrapper>
 
       <TerminalIconBox>
-        <TerminalIcon conn={connector} color={color} />
+        <TerminalIcon conn={connector} color={color} isInput={isInput} />
         {connector.name}
       </TerminalIconBox>
       <OffPageIconBox>
-        <OffPageRequiredInputIcon style={{ fill: color }} />
+        {isInput ? <OffPageRequiredInputIcon style={{ fill: color }} /> : <OffPageRequiredOutputIcon style={{ fill: color }} />}
       </OffPageIconBox>
 
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <OffPageCheckboxWrapper>
           <Checkbox
-            isChecked={connectorIsVisible}
+            isChecked={connectorIsVisible && connector.isRequired}
             onChange={() => onClick(connector, isInput, true)}
             color={Color.LIGHT_SILVER}
             id={connector.id}

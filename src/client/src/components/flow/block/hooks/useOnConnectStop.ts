@@ -6,15 +6,6 @@ import { IsTerminal } from "../../helpers/Connectors";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
 
-/**
- * Hook that runs when a user drags a connection line from a terminal and releases the mouse button in BlockView.
- * If a connection is completed between two terminals, the hook useOnConnect runs.
- * An OffPageNode is created if the connection line is released within the dropzone for an OffPageNode.
- * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
- * @param e
- * @param project
- * @param dispatch
- */
 const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;

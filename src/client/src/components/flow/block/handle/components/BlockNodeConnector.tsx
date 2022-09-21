@@ -19,6 +19,7 @@ interface Props {
   isParent: boolean;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isInput: boolean;
 }
 
 /**
@@ -27,7 +28,17 @@ interface Props {
  * @param interface
  * @returns a JSX Element containing a Handle component from Flow.
  */
-export const BlockNodeConnector = ({ project, node, connector, dispatch, isElectro, isParent, visible, setVisible }: Props) => {
+export const BlockNodeConnector = ({
+  project,
+  node,
+  connector,
+  dispatch,
+  isElectro,
+  isParent,
+  visible,
+  setVisible,
+  isInput,
+}: Props) => {
   const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
   const color = GetConnectorColor(connector);
   const isOffPage = IsOffPage(node);
@@ -42,7 +53,7 @@ export const BlockNodeConnector = ({ project, node, connector, dispatch, isElect
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >
-      <HandleIcon conn={connector} color={color} className={"react-flow__handle-block"} />
+      <HandleIcon conn={connector} color={color} isInput={isInput} className={"react-flow__handle-block"} />
       <Handle
         type={type}
         position={pos}

@@ -7,6 +7,7 @@ import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOf
 import { OffPageData } from "../../../../../models/project";
 import { CreateId } from "../../../helpers";
 import { DeleteRequiredOffPageNode } from "../blockNode/helpers/DeleteRequiredOffPageNode";
+import { IsOffPage } from "../../../../../helpers/Aspects";
 
 /**
  *
@@ -17,7 +18,7 @@ import { DeleteRequiredOffPageNode } from "../blockNode/helpers/DeleteRequiredOf
  * @param dispatch
  * @returns
  */
-export const OnConnectorClick = (conn: Connector, isInput: boolean, isOffPage: boolean, node: Node, dispatch: Dispatch) => {
+export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, isOffPage?: boolean) => {
   const visible = IsConnectorVisible(conn);
   const connectorVisibility = SetConnectorVisibility(conn, isInput);
 
@@ -48,9 +49,8 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
  * @returns
  */
 function HandleOffPageCheckBoxClick(sourceNode: Node, sourceConnector: Connector, dispatch: Dispatch, visible: boolean) {
-  const offPageNodeId = CreateId();
-
   if (!visible) {
+    const offPageNodeId = CreateId();
     const data = {
       offPageNodeId,
       sourceConnector,
@@ -61,7 +61,17 @@ function HandleOffPageCheckBoxClick(sourceNode: Node, sourceConnector: Connector
     CreateRequiredOffPageNode(data, dispatch);
   } else {
     // Remove OffPage node
-    const offPageNodeToRemove = red.store.getState().projectState.project.nodes.find((n) => n.id === offPageNodeId);
-    DeleteRequiredOffPageNode(offPageNodeToRemove.id, sourceNode.id, sourceConnector.id, dispatch);
+    const offPageEdge = red.store
+      .getState()
+      .projectState.project.edges.find((e) => e.fromConnectorId === sourceConnector.id && IsOffPage(e.toNode));
+
+    // Fix target/source
+
+    const offPageNodeId = offPageEdge.toNodeId;
+    const offPageNodeToDelete = red.store.getState().projectState.project.nodes.find((n) => n.id === offPageNodeId);
+
+    if (offPageNodeToDelete != undefined) {
+      DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnector.id, dispatch);
+    }
   }
 }
