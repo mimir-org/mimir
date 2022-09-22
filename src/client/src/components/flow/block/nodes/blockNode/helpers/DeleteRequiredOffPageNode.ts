@@ -15,6 +15,7 @@ export const DeleteRequiredOffPageNode = (
   dispatch: Dispatch
 ) => {
   const isRequired = false;
+
   dispatch(deleteNode(offPageNodeToDeleteId));
   dispatch(setOffPageStatus(sourceNodeId, sourceConnectorId, isRequired));
 };

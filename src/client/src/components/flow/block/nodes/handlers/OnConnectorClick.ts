@@ -1,7 +1,7 @@
 import red from "../../../../../redux/store";
 import { Dispatch } from "redux";
-import { changeActiveConnector } from "../../../../../redux/store/project/actions";
-import { IsConnectorVisible } from "../../../helpers/Connectors";
+import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/project/actions";
+import { IsConnectorVisible, IsPartOfRelation } from "../../../helpers/Connectors";
 import { Connector, ConnectorVisibility, Node } from "@mimirorg/modelbuilder-types";
 import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOffPageNode";
 import { OffPageData } from "../../../../../models/project";
@@ -61,16 +61,21 @@ function HandleOffPageCheckBoxClick(sourceNode: Node, sourceConnector: Connector
     CreateRequiredOffPageNode(data, dispatch);
   } else {
     // Remove OffPage node
-    const offPageEdge = red.store
+    // Fix target/source
+
+    const offPageTransportEdge = red.store
       .getState()
       .projectState.project.edges.find((e) => e.fromConnectorId === sourceConnector.id && IsOffPage(e.toNode));
 
-    // Fix target/source
+    const offPagePartOfEdge = red.store
+      .getState()
+      .projectState.project.edges.find((e) => e.toNodeId === offPageTransportEdge.toNodeId && IsPartOfRelation(e.fromConnector));
 
-    const offPageNodeId = offPageEdge.toNodeId;
-    const offPageNodeToDelete = red.store.getState().projectState.project.nodes.find((n) => n.id === offPageNodeId);
+    const offPageNodeId = offPageTransportEdge.toNodeId;
 
-    if (offPageNodeToDelete != undefined) {
+    if (offPageNodeId != undefined) {
+      dispatch(deleteEdge(offPageTransportEdge?.id));
+      dispatch(deleteEdge(offPagePartOfEdge?.id));
       DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnector.id, dispatch);
     }
   }
