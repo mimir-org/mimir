@@ -43,7 +43,7 @@ export const TerminalsMenuElement = ({ connector, isInput, onClick }: Props) => 
       </TerminalCheckboxWrapper>
 
       <TerminalIconBox>
-        <TerminalIcon conn={connector} color={color} isInput={isInput} />
+        <TerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
         {connector.name}
       </TerminalIconBox>
       <OffPageIconBox>

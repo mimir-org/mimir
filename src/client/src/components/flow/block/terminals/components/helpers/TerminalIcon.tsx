@@ -6,19 +6,20 @@ import { IsBidirectionalTerminal } from "../../../../helpers/Connectors";
 interface Props {
   conn: Connector;
   color: string;
+  className: string;
   isInput: boolean;
 }
 
 /**
- * Component for the terminal icon in the drop-down menu for a Node in BlockView.
+ * Component for a terminal icon in BlockView.
  * @param interface
  * @returns an icon.
  */
-export const TerminalIcon = ({ conn, color, isInput }: Props) => {
-  if (IsBidirectionalTerminal(conn)) return <BidirectionalIcon style={{ fill: color }} className={"icon"} />;
+export const TerminalIcon = ({ conn, color, className, isInput }: Props) => {
+  if (IsBidirectionalTerminal(conn)) return <BidirectionalIcon style={{ fill: color }} className={className} />;
   return isInput ? (
-    <InputConnectorIcon style={{ fill: color }} className={"icon"} />
+    <InputConnectorIcon style={{ fill: color }} className={className} />
   ) : (
-    <OutputConnectorIcon style={{ fill: color }} className={"icon"} />
+    <OutputConnectorIcon style={{ fill: color }} className={className} />
   );
 };
