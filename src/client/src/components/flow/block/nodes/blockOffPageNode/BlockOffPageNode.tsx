@@ -20,7 +20,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  const isElectro = useAppSelector(selectors.electroViewSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
