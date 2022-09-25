@@ -8,7 +8,7 @@ interface Props {
   node: Node;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, isElectroView: boolean, isOffPage: boolean) => void;
   showMenuButton?: boolean;
 }
 
@@ -25,7 +25,7 @@ export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onCo
       <TerminalsMenuComponent
         node={node}
         connectors={inputConnectors}
-        onClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
+        onClick={(c, isInput, isElectroView, isOffPage) => onConnectorClick(c, isInput, isElectroView, isOffPage)}
         showMenuButton={showMenuButton}
         isInput
       />
@@ -37,7 +37,7 @@ export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onCo
       <TerminalsMenuComponent
         node={node}
         connectors={outputConnectors}
-        onClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
+        onClick={(c, isInput, isElectroView, isOffPage) => onConnectorClick(c, isInput, isElectroView, isOffPage)}
         showMenuButton={showMenuButton}
       />
     </NodeBoxHeader>

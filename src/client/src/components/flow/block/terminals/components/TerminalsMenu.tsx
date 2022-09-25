@@ -12,7 +12,7 @@ interface Props {
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
-  onClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isElectroView: boolean, isOffPage: boolean) => void;
   onBlur: () => void;
 }
 

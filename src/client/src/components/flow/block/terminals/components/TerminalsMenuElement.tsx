@@ -13,12 +13,14 @@ import {
   TerminalsElementBox,
   OffPageIconBox,
   TerminalCheckboxWrapper,
+  TerminalOffPageBox,
+  TerminalsMenuElementWrapper,
 } from "./TerminalsMenuElement.styled";
 
 interface Props {
   connector: Connector;
   isInput: boolean;
-  onClick: (conn: Connector, isInput: boolean, isOffPage?: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, isElectroView: boolean, isOffPage?: boolean) => void;
 }
 
 /**
@@ -32,34 +34,38 @@ export const TerminalsMenuElement = ({ connector, isInput, onClick }: Props) => 
   const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
 
   return (
-    <TerminalsElementBox key={connector.id}>
-      <TerminalCheckboxWrapper>
-        <Checkbox
-          isChecked={connectorIsVisible}
-          onChange={() => onClick(connector, isInput, false)}
-          color={Color.LIGHT_SILVER}
-          id={connector.id}
-        />
-      </TerminalCheckboxWrapper>
-
-      <TerminalIconBox>
-        <TerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
-        {connector.name}
-      </TerminalIconBox>
-      <OffPageIconBox>
-        {isInput ? <OffPageRequiredInputIcon style={{ fill: color }} /> : <OffPageRequiredOutputIcon style={{ fill: color }} />}
-      </OffPageIconBox>
-
-      <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
-        <OffPageCheckboxWrapper>
+    <TerminalsMenuElementWrapper>
+      <TerminalsElementBox key={connector.id}>
+        <TerminalCheckboxWrapper>
           <Checkbox
-            isChecked={connectorIsVisible && connector.isRequired}
-            onChange={() => onClick(connector, isInput, true)}
+            isChecked={connectorIsVisible}
+            onChange={() => onClick(connector, isInput, false)}
             color={Color.LIGHT_SILVER}
             id={connector.id}
           />
-        </OffPageCheckboxWrapper>
-      </Tooltip>
-    </TerminalsElementBox>
+        </TerminalCheckboxWrapper>
+
+        <TerminalIconBox>
+          <TerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
+          {connector.name}
+        </TerminalIconBox>
+      </TerminalsElementBox>
+
+      <TerminalOffPageBox>
+        <OffPageIconBox>
+          {isInput ? <OffPageRequiredInputIcon style={{ fill: color }} /> : <OffPageRequiredOutputIcon style={{ fill: color }} />}
+        </OffPageIconBox>
+        <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
+          <OffPageCheckboxWrapper>
+            <Checkbox
+              isChecked={connectorIsVisible && connector.isRequired}
+              onChange={() => onClick(connector, isInput, true)}
+              color={Color.LIGHT_SILVER}
+              id={connector.id}
+            />
+          </OffPageCheckboxWrapper>
+        </Tooltip>
+      </TerminalOffPageBox>
+    </TerminalsMenuElementWrapper>
   );
 };

@@ -2,10 +2,14 @@ import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
 import { FontSize } from "../../../../../assets/font";
 
+export const TerminalsMenuElementWrapper = styled.div`
+  display: flex;
+`;
+
 export const TerminalsElementBox = styled.label`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  min-width: 170px;
   gap: 5px;
   padding-left: 5px;
   height: 25px;
@@ -20,19 +24,30 @@ export const TerminalsElementBox = styled.label`
   }
 
   :first-child {
-    border-top-right-radius: 4px;
     border-top-left-radius: 4px;
   }
 
   :last-child {
-    border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
     border-bottom: none;
   }
 `;
 
-export const TerminalCheckboxWrapper = styled.div``;
+export const TerminalOffPageBox = styled.span`
+  display: flex;
+  justify-content: flex-end;
+  flex: auto;
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
+  max-width: 60px;
 
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+export const TerminalCheckboxWrapper = styled.div``;
 export const TerminalIconBox = styled.div`
   display: flex;
   white-space: nowrap;
@@ -60,6 +75,8 @@ export const OffPageIconBox = styled.div`
 `;
 
 export const OffPageCheckboxWrapper = styled.div`
+  display: flex;
   position: relative;
+  align-items: center;
   right: 5px;
 `;

@@ -69,7 +69,9 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
-        onConnectorClick={(conn, isInput, isOffPage) => OnConnectorClick(conn, isInput, data, dispatch, isOffPage)}
+        onConnectorClick={(conn, isInput, isElectroView, isOffPage) =>
+          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage)
+        }
       />
       <HandleComponent
         node={data}
