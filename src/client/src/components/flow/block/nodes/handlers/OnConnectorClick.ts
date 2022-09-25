@@ -30,11 +30,13 @@ export const OnConnectorClick = (
   isElectroView: boolean,
   isOffPage?: boolean
 ) => {
+  console.log("KLIKK: ", sourceConnector);
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
 
   if (isOffPage) {
+    console.log("HER");
     visible
       ? RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch)
       : AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, isElectroView, dispatch);

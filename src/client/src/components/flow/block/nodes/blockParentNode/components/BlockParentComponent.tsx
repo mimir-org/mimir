@@ -19,7 +19,7 @@ interface Props {
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector, isInput: boolean, isOffPage: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
 }
 
 /**
@@ -54,7 +54,9 @@ export const BlockParentComponent = ({
         isNavigationActive={isNavigationActive}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}
-        onConnectorClick={(c, isInput, isOffPage) => onConnectorClick(c, isInput, isOffPage)}
+        onConnectorClick={(c, isInput, node, isElectroView, isOffPage) =>
+          onConnectorClick(c, isInput, node, isElectroView, isOffPage)
+        }
       />
       <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
         <ResizeButton ref={resizePanelRef} visible={!splitView}>

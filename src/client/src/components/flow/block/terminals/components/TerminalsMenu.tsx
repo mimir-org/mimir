@@ -12,7 +12,8 @@ interface Props {
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
-  onClick: (conn: Connector, isInput: boolean, isElectroView: boolean, isOffPage: boolean) => void;
+  isElectroView: boolean;
+  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
   onBlur: () => void;
 }
 
@@ -21,7 +22,16 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-export const TerminalsMenu = ({ node, isInput, connectors, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
+export const TerminalsMenu = ({
+  node,
+  isInput,
+  connectors,
+  hasActiveTerminals,
+  isParent,
+  isElectroView,
+  onClick,
+  onBlur,
+}: Props) => {
   const isElectroViewEnabled = useAppSelector(electroViewSelector);
   const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
 
@@ -35,7 +45,14 @@ export const TerminalsMenu = ({ node, isInput, connectors, hasActiveTerminals, i
       menuOffset={menuOffset}
     >
       {connectors.map((conn) => (
-        <TerminalsMenuElement key={conn.id} connector={conn} isInput={isInput} onClick={onClick} />
+        <TerminalsMenuElement
+          key={conn.id}
+          connector={conn}
+          isInput={isInput}
+          node={node}
+          isElectroView={isElectroView}
+          onClick={onClick}
+        />
       ))}
     </TerminalsBox>
   );

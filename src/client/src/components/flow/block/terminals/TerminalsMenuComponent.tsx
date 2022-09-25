@@ -8,7 +8,7 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
 interface Props {
   node: Node;
   connectors: Connector[];
-  onClick: (conn: Connector, isInput: boolean, isElectroView: boolean, isOffPage: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
   isParent?: boolean;
   isInput?: boolean;
   showMenuButton?: boolean;
@@ -39,6 +39,7 @@ export const TerminalsMenuComponent = ({ node, connectors, onClick, isParent, is
           connectors={connectors}
           hasActiveTerminals={connectors.some((conn) => IsConnectorVisible(conn))}
           isParent={isParent}
+          isElectroView={false}
           onClick={onClick}
           onBlur={() => OnBlur(setShowMenu, showMenu)}
         />
