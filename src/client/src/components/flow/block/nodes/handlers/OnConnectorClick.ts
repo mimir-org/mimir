@@ -30,13 +30,14 @@ export const OnConnectorClick = (
 ) => {
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
-
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
 
   if (isOffPage) {
-    if (!visible) AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, dispatch);
-    else RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch);
+    visible
+      ? RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch)
+      : AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, dispatch);
   }
+
   if (!visible) return;
 
   // TODO: what to do with edges for hidden connectors
@@ -52,6 +53,12 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
   return ConnectorVisibility.OutputVisible;
 }
 
+/**
+ * Function to add a new OffPageNode by a click in the drop-down menu for a Node.
+ * @param sourceConnector
+ * @param sourceNode
+ * @param dispatch
+ */
 function AddOffPageNodeFromDropdownMenu(sourceConnector: Connector, sourceNode: Node, dispatch: Dispatch) {
   const offPageNodeId = CreateId();
   const position = { x: 0, y: 150 } as Position;
@@ -61,6 +68,12 @@ function AddOffPageNodeFromDropdownMenu(sourceConnector: Connector, sourceNode: 
   CreateRequiredOffPageNode(data, dispatch);
 }
 
+/**
+ * Function to remove an OffPageNode and related edges by a click in the drop-down menu for a Node.
+ * @param sourceConnectorId
+ * @param sourceNode
+ * @param dispatch
+ */
 function RemoveOffPageNodeFromDropdownMenu(sourceConnectorId: string, sourceNode: Node, dispatch: Dispatch) {
   const edges = red.store.getState().projectState.project.edges;
 
@@ -72,11 +85,12 @@ function RemoveOffPageNodeFromDropdownMenu(sourceConnectorId: string, sourceNode
   const offPageNodeId = sourceTransportEdge != undefined ? sourceTransportEdge.fromNodeId : targetTransportEdge.toNodeId;
   const offPageTransportEdge = sourceTransportEdge != undefined ? sourceTransportEdge : targetTransportEdge;
 
-  if (offPageNodeId != undefined) {
-    const offPagePartOfEdge = GetOffPagePartOfEdge(offPageNodeId, sourceNode.id, edges);
-    if (offPagePartOfEdge == undefined || offPagePartOfEdge == null) return;
-    dispatch(deleteEdge(offPagePartOfEdge.id));
-    dispatch(deleteEdge(offPageTransportEdge.id));
-    DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnectorId, dispatch);
-  }
+  if (offPageNodeId != undefined) return;
+
+  const offPagePartOfEdge = GetOffPagePartOfEdge(offPageNodeId, sourceNode.id, edges);
+  if (offPagePartOfEdge == undefined || offPagePartOfEdge == null) return;
+
+  dispatch(deleteEdge(offPagePartOfEdge.id));
+  dispatch(deleteEdge(offPageTransportEdge.id));
+  DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnectorId, dispatch);
 }
