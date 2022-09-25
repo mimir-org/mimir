@@ -4,27 +4,39 @@ import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/pr
 import { IsConnectorVisible } from "../../../helpers/Connectors";
 import { Connector, ConnectorVisibility, Node } from "@mimirorg/modelbuilder-types";
 import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOffPageNode";
-import { OffPageData } from "../../../../../models/project";
+import { OffPageData, Position } from "../../../../../models/project";
 import { CreateId } from "../../../helpers";
 import { DeleteRequiredOffPageNode } from "../blockNode/helpers/DeleteRequiredOffPageNode";
-import { IsOffPage } from "../../../../../helpers/Aspects";
-import { GetOffPagePartOfEdge } from "../../../handlers/helpers/OffPageDeleteFunctions";
+import {
+  GetOffPagePartOfEdge,
+  GetOffPageSourceTransportEdge,
+  GetOffPageTargetTransportEdge,
+} from "../../../handlers/helpers/OffPageDeleteFunctions";
 
 /**
  * Component to handle a click on a terminal in the drop-down menu for a Node in BlockView.
- * @param conn
+ * @param sourceConnector
  * @param isInput
  * @param isOffPage
- * @param node
+ * @param sourceNode
  * @param dispatch
  */
-export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, isOffPage?: boolean) => {
-  const visible = IsConnectorVisible(conn);
-  const connectorVisibility = SetConnectorVisibility(conn, isInput);
+export const OnConnectorClick = (
+  sourceConnector: Connector,
+  isInput: boolean,
+  sourceNode: Node,
+  dispatch: Dispatch,
+  isOffPage?: boolean
+) => {
+  const visible = IsConnectorVisible(sourceConnector);
+  const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
 
-  dispatch(changeActiveConnector(node.id, conn.id, connectorVisibility));
+  dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
 
-  if (isOffPage) HandleOffPageCheckBoxClick(node, conn, dispatch, visible);
+  if (isOffPage) {
+    if (!visible) AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, dispatch);
+    else RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch);
+  }
   if (!visible) return;
 
   // TODO: what to do with edges for hidden connectors
@@ -40,51 +52,31 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
   return ConnectorVisibility.OutputVisible;
 }
 
-/**
- * Component to handle a click on the OffPageNode option in the drop-down menu for terminals in BlockView.
- * This component either creates an OffPageNode or removes one.
- * @param sourceNode
- * @param sourceConnector
- * @param dispatch
- * @param visible
- */
-function HandleOffPageCheckBoxClick(sourceNode: Node, sourceConnector: Connector, dispatch: Dispatch, visible: boolean) {
-  if (!visible) {
-    AddOffPageNode(sourceConnector, sourceNode, dispatch);
-  } else {
-    RemoveOffPageNode(sourceConnector, sourceNode, dispatch);
-  }
-}
-
-function AddOffPageNode(sourceConnector: Connector, sourceNode: Node, dispatch: Dispatch) {
+function AddOffPageNodeFromDropdownMenu(sourceConnector: Connector, sourceNode: Node, dispatch: Dispatch) {
   const offPageNodeId = CreateId();
-  const data = {
-    offPageNodeId,
-    sourceConnector,
-    sourceNode,
-    isRequired: true,
-    position: { x: 0, y: 150 },
-  } as OffPageData;
+  const position = { x: 0, y: 150 } as Position;
+  const isRequired = true;
+  const data = { offPageNodeId, sourceConnector, sourceNode, isRequired, position } as OffPageData;
+
   CreateRequiredOffPageNode(data, dispatch);
 }
 
-function RemoveOffPageNode(sourceConnector: Connector, sourceNode: Node, dispatch: Dispatch) {
+function RemoveOffPageNodeFromDropdownMenu(sourceConnectorId: string, sourceNode: Node, dispatch: Dispatch) {
   const edges = red.store.getState().projectState.project.edges;
 
-  const offPageSourceTransportEdge = edges.find((e) => e.toConnectorId === sourceConnector.id && IsOffPage(e.fromNode));
-  const offPageTargetTransportEdge = edges.find((e) => e.fromConnectorId === sourceConnector.id && IsOffPage(e.toNode));
+  const sourceTransportEdge = GetOffPageSourceTransportEdge(sourceConnectorId, edges);
+  const targetTransportEdge = GetOffPageTargetTransportEdge(sourceConnectorId, edges);
 
-  if (offPageTargetTransportEdge == undefined && offPageSourceTransportEdge == undefined) return;
+  if (sourceTransportEdge == undefined && targetTransportEdge == undefined) return;
 
-  const offPageNodeId =
-    offPageSourceTransportEdge != undefined ? offPageSourceTransportEdge.fromNodeId : offPageTargetTransportEdge.toNodeId;
-
-  const offPageTransportEdge = offPageSourceTransportEdge != undefined ? offPageSourceTransportEdge : offPageTargetTransportEdge;
+  const offPageNodeId = sourceTransportEdge != undefined ? sourceTransportEdge.fromNodeId : targetTransportEdge.toNodeId;
+  const offPageTransportEdge = sourceTransportEdge != undefined ? sourceTransportEdge : targetTransportEdge;
 
   if (offPageNodeId != undefined) {
     const offPagePartOfEdge = GetOffPagePartOfEdge(offPageNodeId, sourceNode.id, edges);
-    dispatch(deleteEdge(offPagePartOfEdge?.id));
-    dispatch(deleteEdge(offPageTransportEdge?.id));
-    DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnector.id, dispatch);
+    if (offPagePartOfEdge == undefined || offPagePartOfEdge == null) return;
+    dispatch(deleteEdge(offPagePartOfEdge.id));
+    dispatch(deleteEdge(offPageTransportEdge.id));
+    DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnectorId, dispatch);
   }
 }

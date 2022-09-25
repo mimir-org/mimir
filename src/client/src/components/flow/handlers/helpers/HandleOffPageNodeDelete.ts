@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { HandleRequiredOffPageDelete } from "./HandleRequiredOffPageDelete";
 import { HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
-import { GetOffPageTransportEdge } from "./OffPageDeleteFunctions";
+import { GetTransportEdgeFromOffPageId } from "./OffPageDeleteFunctions";
 
 /**
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
@@ -17,7 +17,7 @@ export const HandleOffPageNodeDelete = (offPageNode: Node, nodes: Node[], edges:
   const parentNodeId = offPageNode?.parentNodeId;
   if (!parentNodeId) return;
 
-  const transportEdge = GetOffPageTransportEdge(offPageNode.id, parentNodeId, edges);
+  const transportEdge = GetTransportEdgeFromOffPageId(offPageNode.id, parentNodeId, edges);
 
   return offPageNode.isOffPageRequired
     ? HandleRequiredOffPageDelete(offPageNode, transportEdge, parentNodeId, edges, dispatch)
