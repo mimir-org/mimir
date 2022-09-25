@@ -17,7 +17,7 @@ export const TreeHandleBox = styled.div<Props>`
     height: 19px;
     background: url(${(props) => (props.isInput ? TreeViewInputConnectorIcon : TreeViewOutputConnectorIcon)});
     border-radius: 0;
-    bottom: -18px;
+    bottom: -19px;
     z-index: 1;
     right: ${(props) => props.position === Position.Right && 50}%;
     left: ${(props) => props.position === Position.Left && 50}%;

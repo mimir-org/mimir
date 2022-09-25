@@ -38,14 +38,14 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [timer]);
 
   const GetTerminal = useCallback(
-    (conn: Connector) => {
+    (connector: Connector) => {
       return (
         <TreeNodeTerminal
-          key={`handle-${conn.id}`}
+          key={`handle-${connector.id}`}
           node={data}
-          connector={conn}
+          connector={connector}
           isHover={isHover}
-          isInput={IsInputConnector(conn)}
+          isInput={IsInputConnector(connector)}
           setIsHover={setIsHover}
           dispatch={dispatch}
         />
@@ -76,8 +76,8 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       onMouseDown={() => mouseDown()}
     >
       {renderTerminals &&
-        terminals.map((conn) => {
-          return GetTerminal(conn);
+        terminals.map((connector) => {
+          return GetTerminal(connector);
         })}
       <TreeLogoComponent node={data} />
     </TreeNodeBox>
