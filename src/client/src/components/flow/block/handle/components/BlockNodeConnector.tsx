@@ -15,7 +15,7 @@ interface Props {
   node: Node;
   connector: Connector;
   dispatch: Dispatch;
-  isElectro: boolean;
+  isElectroView: boolean;
   isParent: boolean;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,13 +33,13 @@ export const BlockNodeConnector = ({
   node,
   connector,
   dispatch,
-  isElectro,
+  isElectroView,
   isParent,
   visible,
   setVisible,
   isInput,
 }: Props) => {
-  const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
+  const [type, pos] = GetBlockHandleType(connector, isElectroView, isParent);
   const color = GetConnectorColor(connector);
   const isOffPage = IsOffPage(node);
   const className = "react-flow__handle-block";
@@ -48,13 +48,13 @@ export const BlockNodeConnector = ({
     <HandleBox
       id={`handle-${connector.id}`}
       visible={visible}
-      top={GetHandleTopPosition(node, connector, isElectro, isParent)}
-      left={GetHandleLeftPosition(node, connector, isElectro, isParent)}
+      top={GetHandleTopPosition(node, connector, isElectroView, isParent)}
+      left={GetHandleLeftPosition(node, connector, isElectroView, isParent)}
       isPartOf={IsPartOfRelation(connector)}
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >
-      <TerminalIcon conn={connector} color={color} isInput={isInput} className={className} />
+      <TerminalIcon connector={connector} color={color} isInput={isInput} className={className} isElectroView={isElectroView} />
       <Handle
         type={type}
         position={pos}

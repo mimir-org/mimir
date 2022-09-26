@@ -45,7 +45,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         project={project}
         connectors={connectors.inputs}
-        isElectro={isElectro}
+        isElectroView={isElectro}
         dispatch={dispatch}
         isInput
         isParent
@@ -66,7 +66,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         project={project}
         connectors={connectors.outputs}
-        isElectro={isElectro}
+        isElectroView={isElectro}
         dispatch={dispatch}
         isInput={false}
         isParent

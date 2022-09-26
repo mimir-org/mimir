@@ -11,7 +11,7 @@ interface Props {
   node: Node;
   project: Project;
   connectors: Connector[];
-  isElectro: boolean;
+  isElectroView: boolean;
   dispatch: Dispatch;
   isInput: boolean;
   isOffPage?: boolean;
@@ -23,7 +23,7 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the connector type.
  */
-export const HandleComponent = ({ node, project, connectors, isElectro, isOffPage, isInput, dispatch, isParent }: Props) => {
+export const HandleComponent = ({ node, project, connectors, isElectroView, isOffPage, isInput, dispatch, isParent }: Props) => {
   const [visible, setVisible] = useState(!isOffPage);
   const updateNodeInternals = useUpdateNodeInternals();
 
@@ -31,10 +31,10 @@ export const HandleComponent = ({ node, project, connectors, isElectro, isOffPag
     setTimeout(() => {
       updateNodeInternals(node?.id);
     }, 200);
-  }, [isElectro, connectors]);
+  }, [isElectroView, connectors]);
 
   return (
-    <HandleContainer isElectro={isElectro}>
+    <HandleContainer isElectro={isElectroView}>
       {connectors.map((conn) => {
         if (!ShowHandle(conn, isInput)) return null;
         return (
@@ -44,7 +44,7 @@ export const HandleComponent = ({ node, project, connectors, isElectro, isOffPag
             node={node}
             connector={conn}
             dispatch={dispatch}
-            isElectro={isElectro}
+            isElectroView={isElectroView}
             isParent={isParent}
             visible={visible}
             setVisible={setVisible}

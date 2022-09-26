@@ -46,7 +46,7 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           />
         </TerminalCheckboxWrapper>
         <TerminalIconBox>
-          <TerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
+          <TerminalIcon connector={connector} color={color} className={"icon"} isInput={isInput} isElectroView={isElectroView} />
           {connector.name}
         </TerminalIconBox>
       </TerminalElementBox>

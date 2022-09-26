@@ -58,7 +58,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={inputConnectors}
-          isElectro={isElectro}
+          isElectroView={isElectro}
           dispatch={dispatch}
           isInput
           isOffPage
@@ -68,7 +68,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={outputConnectors}
-          isElectro={isElectro}
+          isElectroView={isElectro}
           dispatch={dispatch}
           isInput={false}
           isOffPage
