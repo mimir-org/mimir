@@ -49,7 +49,7 @@ jobs:
 
       - name: Package typescript interfaces
         run: dotnet run
-        working-directory: src/server/Mimirorg.Package
+        working-directory: src/service/Mimirorg.Package
 
       - name: Generate npm package
         run: |
