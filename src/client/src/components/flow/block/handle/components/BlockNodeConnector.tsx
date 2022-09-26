@@ -42,6 +42,7 @@ export const BlockNodeConnector = ({
   const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
   const color = GetConnectorColor(connector);
   const isOffPage = IsOffPage(node);
+  const className = "react-flow__handle-block";
 
   return (
     <HandleBox
@@ -53,12 +54,12 @@ export const BlockNodeConnector = ({
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >
-      <TerminalIcon conn={connector} color={color} isInput={isInput} className={"react-flow__handle-block"} />
+      <TerminalIcon conn={connector} color={color} isInput={isInput} className={className} />
       <Handle
         type={type}
         position={pos}
         id={connector.id}
-        className={"react-flow__handle-block"}
+        className={className}
         isValidConnection={(connection) => IsValidBlockConnection(connection, project.nodes, project.edges, dispatch)}
       />
     </HandleBox>

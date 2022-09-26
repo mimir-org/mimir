@@ -79,6 +79,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         connectors={connectors.outputs}
         isElectro={isElectroView}
         dispatch={dispatch}
+        isInput={false}
       />
     </BoxWrapper>
   );

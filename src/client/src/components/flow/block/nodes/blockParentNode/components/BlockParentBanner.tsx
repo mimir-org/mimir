@@ -62,6 +62,7 @@ export const BlockParentBanner = ({
       node={node}
       connectors={outputConnectors}
       onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
+      isInput={false}
       isParent
     />
   </HeaderContainer>

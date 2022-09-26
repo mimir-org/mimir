@@ -39,6 +39,7 @@ export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onCo
         connectors={outputConnectors}
         onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
         showMenuButton={showMenuButton}
+        isInput={false}
       />
     </NodeBoxHeader>
   );

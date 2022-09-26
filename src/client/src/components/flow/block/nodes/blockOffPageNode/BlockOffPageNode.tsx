@@ -60,6 +60,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           connectors={inputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
+          isInput
           isOffPage
         />
         <OffPageIcon style={{ fill: iconColor }} className="icon" />
@@ -69,6 +70,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           connectors={outputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
+          isInput={false}
           isOffPage
         />
       </OffPageBox>

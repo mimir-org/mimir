@@ -10,7 +10,7 @@ interface Props {
   connectors: Connector[];
   onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
   isParent?: boolean;
-  isInput?: boolean;
+  isInput: boolean;
   showMenuButton?: boolean;
 }
 

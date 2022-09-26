@@ -68,6 +68,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         connectors={connectors.outputs}
         isElectro={isElectro}
         dispatch={dispatch}
+        isInput={false}
         isParent
       />
     </BoxWrapper>

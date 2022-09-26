@@ -13,8 +13,8 @@ interface Props {
   connectors: Connector[];
   isElectro: boolean;
   dispatch: Dispatch;
+  isInput: boolean;
   isOffPage?: boolean;
-  isInput?: boolean;
   isParent?: boolean;
 }
 
@@ -23,7 +23,7 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the connector type.
  */
-export const HandleComponent = ({ node, project, connectors, isElectro, isOffPage, isInput, isParent, dispatch }: Props) => {
+export const HandleComponent = ({ node, project, connectors, isElectro, isOffPage, isInput, dispatch, isParent }: Props) => {
   const [visible, setVisible] = useState(!isOffPage);
   const updateNodeInternals = useUpdateNodeInternals();
 

@@ -8,7 +8,7 @@ import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
-  isInput?: boolean;
+  isInput: boolean;
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
