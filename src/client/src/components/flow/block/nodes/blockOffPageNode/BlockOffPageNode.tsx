@@ -6,10 +6,16 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { IsInputConnector, IsOutputConnector, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
-import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
+import { UpdateOffPagePosition } from "./helpers";
 import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { Node, Terminal } from "@mimirorg/modelbuilder-types";
+import { Connector, Node, Terminal } from "@mimirorg/modelbuilder-types";
+import {
+  OffPageConnectedIcon,
+  OffPageConnectedVerticalIcon,
+  OffPageRequiredIcon,
+  OffPageRequiredVerticalIcon,
+} from "../../../../../assets/icons/connectors";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -46,7 +52,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   if (!data || !offPageParent || !offPageGrandParent) return null;
 
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
-  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal, isElectroView);
+  const OffPageIcon = GetOffPageIcon(parentNodeTerminal, isElectroView);
 
   const inputConnectors = data.connectors.filter((c) => IsInputConnector(c));
   const outputConnectors = data.connectors.filter((c) => IsOutputConnector(c));
@@ -77,5 +83,17 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
     </Tooltip>
   );
 };
+
+function GetOffPageIcon(sourceTerminal: Connector, isElectroView: boolean) {
+  if (isElectroView) return GetOffPageVerticalIcon(sourceTerminal);
+
+  if (sourceTerminal?.isRequired) return OffPageRequiredIcon;
+  return OffPageConnectedIcon;
+}
+
+function GetOffPageVerticalIcon(sourceTerminal: Connector) {
+  if (sourceTerminal?.isRequired) return OffPageRequiredVerticalIcon;
+  return OffPageConnectedVerticalIcon;
+}
 
 export default memo(BlockOffPageNode);

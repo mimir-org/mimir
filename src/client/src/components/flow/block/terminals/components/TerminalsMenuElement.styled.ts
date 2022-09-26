@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
 
-export const MainShit = styled.div`
+/**
+ * Main wrapper for entire component
+ */
+export const TerminalElementBox = styled.div`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
@@ -18,7 +21,7 @@ export const MainShit = styled.div`
 /**
  * Wrapper for the terminal element in the menu
  */
-export const TerminalsElementBox = styled.div`
+export const TerminalBox = styled.div`
   display: flex;
   align-items: center;
   border-right: 1px solid ${Color.LIGHT_SILVER};

@@ -5,14 +5,14 @@ import { GetConnectorColor } from "../../helpers";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { TerminalIcon, OffPageTerminalIcon } from "./helpers/";
+import { OffPageTerminalIcon, TerminalIcon } from "./helpers/TerminalIcon";
 import {
   TerminalIconBox,
   OffPageCheckboxWrapper,
   OffPageIconBox,
   TerminalOffPageBox,
-  TerminalsElementBox,
-  MainShit,
+  TerminalBox,
+  TerminalElementBox,
 } from "./TerminalsMenuElement.styled";
 
 interface Props {
@@ -34,8 +34,8 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
   const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
 
   return (
-    <MainShit>
-      <TerminalsElementBox key={connector.id} onClick={() => onClick(connector, isInput, node, isElectroView, false)}>
+    <TerminalElementBox>
+      <TerminalBox key={connector.id} onClick={() => onClick(connector, isInput, node, isElectroView, false)}>
         <div>
           <Checkbox
             isChecked={connectorIsVisible}
@@ -48,12 +48,12 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           <TerminalIcon connector={connector} color={color} className={"icon"} isElectroView={isElectroView} />
           {connector.name}
         </TerminalIconBox>
-      </TerminalsElementBox>
+      </TerminalBox>
 
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <TerminalOffPageBox>
           <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
-            <OffPageTerminalIcon conn={connector} color={color} className={"icon"} isElectroView={isElectroView} />
+            <OffPageTerminalIcon connector={connector} color={color} className={"icon"} isElectroView={isElectroView} />
           </OffPageIconBox>
           <OffPageCheckboxWrapper>
             <Checkbox
@@ -65,6 +65,6 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           </OffPageCheckboxWrapper>
         </TerminalOffPageBox>
       </Tooltip>
-    </MainShit>
+    </TerminalElementBox>
   );
 };
