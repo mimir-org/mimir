@@ -31,7 +31,7 @@ jobs:
     needs: get-latest-release
     if: needs.get-latest-release.outputs.tag_name!=''
     with:
-      repository: typelibrary-client
+      repository: mimir-client
       tags: |
         latest
         ${{needs.get-latest-release.outputs.tag_name}}
@@ -52,7 +52,7 @@ jobs:
     needs: get-latest-release
     if: needs.get-latest-release.outputs.tag_name!=''
     with:
-      repository: typelibrary-server
+      repository: mimir-server
       tags: |
         latest
         ${{needs.get-latest-release.outputs.tag_name}}
