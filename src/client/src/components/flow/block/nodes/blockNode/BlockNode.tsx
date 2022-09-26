@@ -65,6 +65,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       />
       <BlockChildComponent
         node={data}
+        isElectroView={isElectroView}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputConnectors={connectors.inputs}

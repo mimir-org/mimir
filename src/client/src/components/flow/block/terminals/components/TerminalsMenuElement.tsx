@@ -54,7 +54,13 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <TerminalOffPageBox>
           <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
-            <OffPageTerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
+            <OffPageTerminalIcon
+              conn={connector}
+              color={color}
+              className={"icon"}
+              isInput={isInput}
+              isElectroView={isElectroView}
+            />
           </OffPageIconBox>
           <OffPageCheckboxWrapper>
             <Checkbox

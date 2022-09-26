@@ -26,7 +26,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  const isElectroView = useAppSelector(selectors.electroSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {
@@ -40,18 +40,19 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   if (!data) return null;
 
   return (
-    <BoxWrapper isElectro={isElectro}>
+    <BoxWrapper isElectro={isElectroView}>
       <HandleComponent
         node={data}
         project={project}
         connectors={connectors.inputs}
-        isElectroView={isElectro}
+        isElectroView={isElectroView}
         dispatch={dispatch}
         isInput
         isParent
       />
       <BlockParentComponent
         node={data}
+        isElectroView={isElectroView}
         splitView={secondaryNode != null}
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
@@ -66,7 +67,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         project={project}
         connectors={connectors.outputs}
-        isElectroView={isElectro}
+        isElectroView={isElectroView}
         dispatch={dispatch}
         isInput={false}
         isParent

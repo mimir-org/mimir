@@ -20,7 +20,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const isElectro = useAppSelector(selectors.electroViewSelector);
+  const isElectroView = useAppSelector(selectors.electroViewSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
@@ -40,13 +40,13 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, isElectro, dispatch);
-  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode, isElectro]);
+    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, isElectroView, dispatch);
+  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode, isElectroView]);
 
   if (!data || !offPageParent || !offPageGrandParent) return null;
 
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
-  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
+  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal, isElectroView);
 
   const inputConnectors = data.connectors.filter((c) => IsInputConnector(c));
   const outputConnectors = data.connectors.filter((c) => IsOutputConnector(c));
@@ -58,7 +58,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={inputConnectors}
-          isElectroView={isElectro}
+          isElectroView={isElectroView}
           dispatch={dispatch}
           isInput
           isOffPage
@@ -68,7 +68,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={outputConnectors}
-          isElectroView={isElectro}
+          isElectroView={isElectroView}
           dispatch={dispatch}
           isInput={false}
           isOffPage

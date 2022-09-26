@@ -50,12 +50,16 @@ export const TerminalIconBox = styled.div`
   }
 `;
 
+/**
+ * Box to wrap the OffPageIcon and the OffPage checkbox
+ */
 export const TerminalOffPageBox = styled.span`
   display: flex;
   justify-content: flex-end;
   flex: auto;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   max-width: 60px;
+  max-height: 25px;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
@@ -64,16 +68,22 @@ export const TerminalOffPageBox = styled.span`
   }
 `;
 
+/**
+ * Box for the OffPageIcon
+ */
 export const OffPageIconBox = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
   width: 45px;
-  padding: 4px 0px 0px 5px;
+  padding: 4px 0px 0px 8px;
   margin-right: 5px;
   border-left: 1px solid ${Color.LIGHT_SILVER};
 `;
 
+/**
+ * Box for the OffPage checkbox
+ */
 export const OffPageCheckboxWrapper = styled.div`
   display: flex;
   position: relative;
