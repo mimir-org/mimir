@@ -31,7 +31,8 @@ interface Props {
 export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, onClick }: Props) => {
   const color = GetConnectorColor(connector);
   const connectorIsVisible = IsConnectorVisible(connector);
-  const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
+  const terminalHasOffPageNode = connector.isRequired && connectorIsVisible;
+  const toolTipText = terminalHasOffPageNode ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
 
   return (
     <TerminalElementBox>
@@ -57,7 +58,7 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           </OffPageIconBox>
           <OffPageCheckboxWrapper>
             <Checkbox
-              isChecked={connectorIsVisible && connector.isRequired}
+              isChecked={terminalHasOffPageNode}
               onChange={() => onClick(connector, isInput, node, isElectroView, true)}
               color={Color.LIGHT_SILVER}
               id={connector.id}

@@ -35,9 +35,10 @@ export const OnConnectorClick = (
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
+  const hasOffPageNode = visible && sourceConnector.isRequired;
 
   if (isOffPage) {
-    visible
+    hasOffPageNode
       ? RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch)
       : AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, isElectroView, dispatch);
   }

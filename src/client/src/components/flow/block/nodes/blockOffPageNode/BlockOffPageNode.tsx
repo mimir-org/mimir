@@ -86,7 +86,6 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
 function GetOffPageIcon(sourceTerminal: Connector, isElectroView: boolean) {
   if (isElectroView) return GetOffPageVerticalIcon(sourceTerminal);
-
   if (sourceTerminal?.isRequired) return OffPageRequiredIcon;
   return OffPageConnectedIcon;
 }

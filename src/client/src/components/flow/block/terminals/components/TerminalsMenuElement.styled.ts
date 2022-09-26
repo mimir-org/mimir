@@ -19,7 +19,7 @@ export const TerminalElementBox = styled.div`
 `;
 
 /**
- * Wrapper for the terminal element in the menu
+ * Box to wrap the TerminalIcon and the terminal checkbox
  */
 export const TerminalBox = styled.div`
   display: flex;
