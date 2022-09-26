@@ -8,6 +8,8 @@ import { FontSize } from "../../../../../assets/font";
 export const TerminalElementBox = styled.div`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
+  /* background: #000; */
+  /* width: 300px; */
 
   &:first-child {
     border-top-left-radius: 4px;
@@ -65,10 +67,9 @@ export const TerminalNameBox = styled.span`
  */
 export const TerminalOffPageBox = styled.span`
   display: flex;
-  justify-content: flex-end;
-  flex: auto;
-  max-width: 60px;
-  height: inherit;
+  gap: 5px;
+  height: 20px;
+  margin-top: 3px;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
@@ -83,10 +84,9 @@ export const TerminalOffPageBox = styled.span`
 export const OffPageIconBox = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
-  width: 45px;
-  padding: 4px 0px 0px 8px;
-  margin-right: 5px;
+  width: 25px;
+  padding-top: 4px;
+  margin: 0px 4px;
 `;
 
 /**
