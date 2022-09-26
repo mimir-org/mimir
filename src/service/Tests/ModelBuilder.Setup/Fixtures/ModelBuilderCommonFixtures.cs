@@ -41,8 +41,7 @@ namespace ModelBuilder.Setup.Fixtures
                     Id = "c1e04a15-c41b-4066-99ea-16f0e1a7312c",
                     FirstName = "Anna",
                     LastName = "Bond",
-                    Email = "anna.bond@runir.net",
-                    PhoneNumber = "12345678"
+                    Email = "anna.bond@runir.net"
                 },
                 DisplayName = "Mimirorg Company",
                 Domain = "runir.net",
@@ -65,8 +64,7 @@ namespace ModelBuilder.Setup.Fixtures
                     Id = "c1e04a15-c41b-4066-99ea-16f0e1a7312c",
                     FirstName = "Anna",
                     LastName = "Bond",
-                    Email = "anna.bond@runir.net",
-                    PhoneNumber = "12345678"
+                    Email = "anna.bond@runir.net"
                 },
                 DisplayName = "Hansaborg",
                 Domain = "hansa.no",

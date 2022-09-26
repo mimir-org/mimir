@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
+using Microsoft.SqlServer.Server;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 using Mimirorg.TypeLibrary.Enums;
@@ -63,10 +64,10 @@ namespace Mb.Models.Data
         [TSExclude]
         public string UnitString { get; set; }
 
-        public string Qualifier { get; set; }
-        public string Source { get; set; }
-        public string Condition { get; set; }
-        public string Format { get; set; }
+        public string SpecifiedScope { get; set; }
+        public string SpecifiedProvenance { get; set; }
+        public string RangeSpecifying { get; set; }
+        public string RegularitySpecified { get; set; }
 
         [JsonIgnore]
         [TSExclude]
@@ -140,10 +141,10 @@ namespace Mb.Models.Data
                    SelectedUnitId == other.SelectedUnitId &&
                    UnitString == other.UnitString &&
                    TypeReferenceString == other.TypeReferenceString &&
-                   Qualifier == other.Qualifier &&
-                   Source == other.Source &&
-                   Condition == other.Condition &&
-                   Format == other.Format &&
+                   SpecifiedScope == other.SpecifiedScope &&
+                   SpecifiedProvenance == other.SpecifiedProvenance &&
+                   RangeSpecifying == other.RangeSpecifying &&
+                   RegularitySpecified == other.RegularitySpecified &&
                    TerminalId == other.TerminalId &&
                    TerminalIri == other.TerminalIri &&
                    NodeId == other.NodeId &&
@@ -178,10 +179,10 @@ namespace Mb.Models.Data
             hashCode.Add(SelectedUnitId);
             hashCode.Add(UnitString);
             hashCode.Add(TypeReferenceString);
-            hashCode.Add(Qualifier);
-            hashCode.Add(Source);
-            hashCode.Add(Condition);
-            hashCode.Add(Format);
+            hashCode.Add(SpecifiedScope);
+            hashCode.Add(SpecifiedProvenance);
+            hashCode.Add(RangeSpecifying);
+            hashCode.Add(RegularitySpecified);
             hashCode.Add(TerminalId);
             hashCode.Add(TerminalIri);
             hashCode.Add(NodeId);

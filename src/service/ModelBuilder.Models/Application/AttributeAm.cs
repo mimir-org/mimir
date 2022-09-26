@@ -37,17 +37,10 @@ namespace Mb.Models.Application
         public virtual ICollection<Unit> Units { get; set; }
 
         // Qualifiers
-        [Required]
-        public string Qualifier { get; set; }
-
-        [Required]
-        public string Source { get; set; }
-
-        [Required]
-        public string Condition { get; set; }
-
-        [Required]
-        public string Format { get; set; }
+        public string SpecifiedScope { get; set; }
+        public string SpecifiedProvenance { get; set; }
+        public string RangeSpecifying { get; set; }
+        public string RegularitySpecified { get; set; }
 
         // References
         public string TerminalId { get; set; }

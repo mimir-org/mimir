@@ -7,10 +7,7 @@ namespace Mb.Data.Contracts
 {
     public interface ILibraryRepository
     {
-        Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers();
-        Task<List<AttributeSourceLibCm>> GetAttributeSources();
-        Task<List<AttributeFormatLibCm>> GetAttributeFormats();
-        Task<List<AttributeConditionLibCm>> GetAttributeConditions();
+        Task<List<QuantityDatumCm>> GetQuantityDatums();
         Task<List<PurposeLibCm>> GetPurposes();
         Task<List<UnitLibCm>> GetUnits();
         Task<List<AttributeLibCm>> GetAttributes();
