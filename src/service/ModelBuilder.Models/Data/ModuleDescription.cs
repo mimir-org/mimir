@@ -1,5 +1,3 @@
-using System;
-
 namespace Mb.Models.Data
 {
     public class ModuleDescription

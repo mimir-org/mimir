@@ -20,18 +20,13 @@ namespace Mb.Data.Repositories
     {
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
-        private readonly ISimpleRepository _simpleRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository,
-            IAttributeRepository attributeRepository, ISimpleRepository simpleRepository,
-            ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(
-            dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
-            _simpleRepository = simpleRepository;
             _commonRepository = commonRepository;
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
@@ -64,7 +59,7 @@ namespace Mb.Data.Repositories
                     node.Version = _commonRepository.GetDomain() != node.Domain
                         ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version
                         : "1.0";
-                    _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Added);
+
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
 
                     yield return (node, WorkerStatus.Create);
@@ -93,7 +88,6 @@ namespace Mb.Data.Repositories
 
                     SetNodeVersion(original?.FirstOrDefault(x => x.Id == node.Id), node);
 
-                    _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Modified);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
                     yield return (node, WorkerStatus.Update);
                     Attach(node, EntityState.Modified);
@@ -119,7 +113,6 @@ namespace Mb.Data.Repositories
                 }
 
                 _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
-                _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
                 Attach(node, EntityState.Deleted);
 
@@ -340,12 +333,6 @@ namespace Mb.Data.Repositories
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;
-            }
-
-            //Simples
-            if (originalNode.Simples?.Count != node.Simples?.Count)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
             }
 
             //FromEdges

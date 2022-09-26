@@ -14,7 +14,6 @@ namespace Mb.Models.Records
         public List<Interface> Interfaces { get; init; } = new();
         public List<Terminal> Terminals { get; init; } = new();
         public List<Relation> Relations { get; init; } = new();
-        public List<Simple> Simples { get; init; } = new();
 
         /// <summary>
         /// Deconstruct and flatten edges 
@@ -26,7 +25,6 @@ namespace Mb.Models.Records
             var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<Terminal>().SelectMany(y => y.Attributes).ToList();
             var transportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).SelectMany(y => y.Attributes).ToList();
             var interfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).SelectMany(y => y.Attributes).ToList();
-            var simpleAttributes = project.Nodes.Where(x => x.Simples != null).SelectMany(y => y.Simples).Where(y => y != null).SelectMany(z => z.Attributes).ToList();
 
             var inputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
             var outputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
@@ -37,7 +35,6 @@ namespace Mb.Models.Records
                 .Union(interfaceAttributes)
                 .Union(inputTerminalAttributes)
                 .Union(outputTerminalAttributes)
-                .Union(simpleAttributes)
                 .ToList();
 
             Attributes.AddRange(allAttributes);
@@ -122,21 +119,6 @@ namespace Mb.Models.Records
             var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
 
             Transports.AddRange(transports);
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Deconstruct and flatten simples
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructSimples(Project project)
-        {
-            if (project.Nodes == null || !project.Nodes.Any())
-                return Task.CompletedTask;
-
-            var simples = project.Nodes.Where(x => x.Simples != null).SelectMany(y => y.Simples).ToList();
-
-            Simples.AddRange(simples);
             return Task.CompletedTask;
         }
 

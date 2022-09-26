@@ -1,7 +1,6 @@
 using Mb.Models.Abstract;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
 using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Common

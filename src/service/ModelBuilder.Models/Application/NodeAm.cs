@@ -87,8 +87,6 @@ namespace Mb.Models.Application
 
         public ICollection<AttributeAm> Attributes { get; set; }
 
-        public ICollection<SimpleAm> Simples { get; set; }
-
         #region Validate
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -121,18 +119,6 @@ namespace Mb.Models.Application
                 foreach (var attribute in Attributes)
                 {
                     var result = attribute.Validate(validationContext);
-                    foreach (var validationResult in result)
-                    {
-                        validations.Add(validationResult);
-                    }
-                }
-            }
-
-            if (Simples != null)
-            {
-                foreach (var simple in Simples)
-                {
-                    var result = simple.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
                         validations.Add(validationResult);

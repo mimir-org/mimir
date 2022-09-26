@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
-using Microsoft.SqlServer.Server;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 using Mimirorg.TypeLibrary.Enums;
@@ -97,13 +96,6 @@ namespace Mb.Models.Data
         public virtual string InterfaceId { get; set; }
         public virtual string InterfaceIri { get; set; }
 
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Simple Simple { get; set; }
-
-        public virtual string SimpleId { get; set; }
-        public virtual string SimpleIri { get; set; }
-
         [NotMapped]
         public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
 
@@ -153,8 +145,6 @@ namespace Mb.Models.Data
                    TransportIri == other.TransportIri &&
                    InterfaceId == other.InterfaceId &&
                    InterfaceIri == other.InterfaceIri &&
-                   SimpleId == other.SimpleId &&
-                   SimpleIri == other.SimpleIri &&
                    SelectValuesString == other.SelectValuesString &&
                    SelectType == other.SelectType &&
                    Discipline == other.Discipline;
@@ -191,8 +181,6 @@ namespace Mb.Models.Data
             hashCode.Add(TransportIri);
             hashCode.Add(InterfaceId);
             hashCode.Add(InterfaceIri);
-            hashCode.Add(SimpleId);
-            hashCode.Add(SimpleIri);
             hashCode.Add(SelectValuesString);
             hashCode.Add((int) SelectType);
             hashCode.Add((int) Discipline);

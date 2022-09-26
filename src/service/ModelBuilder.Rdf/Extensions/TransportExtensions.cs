@@ -44,7 +44,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), null, null, null, iri, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), null, null, null, iri);
                 transport.Attributes.Add(attribute);
             }
 

@@ -33,14 +33,13 @@ namespace Mb.Data.Repositories
         private readonly ITransportRepository _transportRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IInterfaceRepository _interfaceRepository;
-        private readonly ISimpleRepository _simpleRepository;
         private readonly ICacheRepository _cacheRepository;
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
             IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
             IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository,
             IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository,
-            ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
+            ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
@@ -50,7 +49,6 @@ namespace Mb.Data.Repositories
             _transportRepository = transportRepository;
             _connectorRepository = connectorRepository;
             _interfaceRepository = interfaceRepository;
-            _simpleRepository = simpleRepository;
             _cacheRepository = cacheRepository;
         }
 
@@ -146,7 +144,6 @@ namespace Mb.Data.Repositories
                     _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                     _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
                     _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
-                    _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
                     _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
                     _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
 
@@ -155,7 +152,6 @@ namespace Mb.Data.Repositories
                     _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
                     _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
                     _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
-                    _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
                     _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
@@ -205,7 +201,6 @@ namespace Mb.Data.Repositories
                     _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
                     _transportRepository.BulkUpsert(bulk, conn, data.Transports);
                     _interfaceRepository.BulkUpsert(bulk, conn, data.Interfaces);
-                    _simpleRepository.BulkUpsert(bulk, conn, data.Simples);
                     _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
                     _edgeRepository.BulkUpsert(bulk, conn, data.Edges);
                 }
@@ -235,7 +230,6 @@ namespace Mb.Data.Repositories
                     _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
                     _transportRepository.BulkDelete(bulk, conn, data.Transports);
                     _interfaceRepository.BulkDelete(bulk, conn, data.Interfaces);
-                    _simpleRepository.BulkDelete(bulk, conn, data.Simples);
                     _connectorRepository.BulkDelete(bulk, conn, data.Relations);
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
                     _nodeRepository.BulkDelete(bulk, conn, data.Nodes);
@@ -289,8 +283,6 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Attributes")
                     .Include("Nodes.Connectors")
                     .Include("Nodes.Connectors.Attributes")
-                    .Include("Nodes.Simples")
-                    .Include("Nodes.Simples.Attributes")
                     .AsNoTracking()
                     .AsSplitQuery()
                     .FirstOrDefault();

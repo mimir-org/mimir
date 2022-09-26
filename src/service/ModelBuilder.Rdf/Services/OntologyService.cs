@@ -406,14 +406,6 @@ namespace ModelBuilder.Rdf.Services
                         connector.AssertConnector(this, node.Iri, projectData, null, DefaultFlowDirection.NotSet);
                     }
                 }
-
-                if (node.Simples != null && node.Simples.Any())
-                {
-                    foreach (var simple in node.Simples)
-                    {
-                        simple.AssertSimple(this, node.Iri, projectData);
-                    }
-                }
             }
         }
 

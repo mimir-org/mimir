@@ -225,9 +225,6 @@
   <data name="HasPurpose" xml:space="preserve">
     <value>mimir:hasPurpose</value>
   </data>
-  <data name="HasSimpleType" xml:space="preserve">
-    <value>imf:hasSimpleType</value>
-  </data>
   <data name="HasSource" xml:space="preserve">
     <value>mimir:hasSource</value>
   </data>
@@ -299,9 +296,6 @@
   </data>
   <data name="SelectValue" xml:space="preserve">
     <value>mimir:selectValue</value>
-  </data>
-  <data name="SimpleType" xml:space="preserve">
-    <value>imf:simpleType</value>
   </data>
   <data name="StreamTerminal" xml:space="preserve">
     <value>imf:streamTerminal</value>

@@ -203,7 +203,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null, null, null, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null, null, null);
                 node.Attributes.Add(attribute);
             }
 
@@ -235,17 +235,6 @@ namespace ModelBuilder.Rdf.Extensions
             var bidirectionalTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasBidirectionalTerminal).Select(x => x.Object).ToList();
             var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalNodes, projectData, iri, ontologyService).ToList();
             node.Connectors = node.Connectors.Union(bidirectionalTerminals).ToList();
-
-            // Resolve simples
-            node.Simples = new List<SimpleAm>();
-            var simples = ontologyService.GetTriplesWithSubjectPredicate(node.Iri, Resources.HasSimpleType).Select(x => x.Object).ToList();
-
-            foreach (var s in simples)
-            {
-                var simple = new SimpleAm();
-                simple.ResolveSimple(ontologyService, projectData, s.ToString(), node.Iri);
-                node.Simples.Add(simple);
-            }
         }
 
         /// <summary>
