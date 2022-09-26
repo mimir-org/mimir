@@ -45,7 +45,7 @@ namespace ModelBuilder.Rdf.Extensions
                 var typeReferenceSubIri = ontologyService
                     .GetTriplesWithSubjectPredicate(typeReferenceIri, Resources.DefaultUom)?.FirstOrDefault()?.Object
                     ?.ToString();
-                
+
                 // TODO: Resolve this
                 //var typeReferenceSubName = !string.IsNullOrWhiteSpace(typeReferenceSubIri)
                 //    ? ontologyService.GetValue(typeReferenceSubIri, Resources.Label, false)

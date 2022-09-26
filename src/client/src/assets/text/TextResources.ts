@@ -125,9 +125,10 @@ export const TextResources = {
   PARAMS_UNLOCK: "Unlock parameter",
   TERMINALS_SEARCH: "Search Terminal Type",
 
-  QUALIFIER: "Qualifier",
-  SOURCE: "Source",
-  CONDITION: "Condition",
+  SPECIFIED_SCOPE: "GABBI",
+  SPECIFIED_PROVENANCE: "GABBI",
+  RANGE_SPECIFYING: "GABBI",
+  REGULARITY_SPECIFIED: "GABBI",
 
   DELETE_OBJECT: "Delete object from drawing board",
   RESIZE: "Click/drag to resize",
