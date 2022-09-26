@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
+import { FontSize } from "../../../../../assets/font";
 
 /**
  * Main wrapper for entire component
@@ -29,6 +30,7 @@ export const TerminalBox = styled.div`
   width: 170px;
   height: 25px;
   gap: 5px;
+  font-size: ${FontSize.SMALL};
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
