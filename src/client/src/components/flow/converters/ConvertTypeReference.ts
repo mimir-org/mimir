@@ -14,8 +14,7 @@ export const ConvertTypeReference = (typeReferences: TypeReferenceCm[]) => {
       name: t.name,
       iri: t.iri,
       source: t.source,
-      subIri: t.subIri,
-      subName: t.subName,
+      subs: t.subs,
       kind: "TypeReference",
     } as TypeReference;
   });
