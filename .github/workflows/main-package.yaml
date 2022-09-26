@@ -39,7 +39,7 @@ jobs:
           echo "Tag: ${{ steps.release.outputs.new_tag }}"
           echo "Version: ${{ steps.release.outputs.new_version }}"
 
-  npm-Typelibrary:
+  npm-Modelbuilder:
     runs-on: ubuntu-latest
     needs: create-release
     if: needs.create-release.outputs.raw_tag != ''
@@ -48,7 +48,7 @@ jobs:
 
       - name: Package typescript interfaces
         run: dotnet run
-        working-directory: src/server/Mimirorg.Package
+        working-directory: src/service/Mimirorg.Package
 
       - name: Generate npm package
         run: |
@@ -57,7 +57,7 @@ jobs:
 
           cd modelbuilder-types
 
-          cp -a ../src/server/Mimirorg.Package/template/. ./
+          cp -a ../src/service/Mimirorg.Package/template/. ./
           
           npx tsc index.ts --declaration
 
