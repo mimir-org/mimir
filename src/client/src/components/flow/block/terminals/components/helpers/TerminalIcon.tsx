@@ -1,5 +1,5 @@
 import { Connector } from "@mimirorg/modelbuilder-types";
-import { BidirectionalIcon } from "../../../../../../assets/icons/bidirectional";
+import { BidirectionalIcon, BidirectionalVerticalIcon } from "../../../../../../assets/icons/bidirectional";
 import { IsBidirectionalTerminal } from "../../../../helpers/Connectors";
 import {
   InputConnectorIcon,
@@ -33,7 +33,7 @@ const TerminalIcon = ({ connector, color, className, isInput, isElectroView }: P
 };
 
 function VerticalIcon(connector: Connector, isInput: boolean, color: string, className: string) {
-  if (IsBidirectionalTerminal(connector)) return <BidirectionalIcon style={{ fill: color }} className={className} />;
+  if (IsBidirectionalTerminal(connector)) return <BidirectionalVerticalIcon style={{ fill: color }} className={className} />;
   return isInput ? (
     <InputConnectorVerticalIcon style={{ fill: color }} className={className} />
   ) : (
