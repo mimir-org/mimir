@@ -6,7 +6,7 @@ export const TerminalsMenuElementWrapper = styled.div`
   display: flex;
 `;
 
-export const TerminalsElementBox = styled.label`
+export const TerminalElementBox = styled.label`
   display: flex;
   align-items: center;
   min-width: 170px;
@@ -32,22 +32,8 @@ export const TerminalsElementBox = styled.label`
     border-bottom: none;
   }
 `;
-
-export const TerminalOffPageBox = styled.span`
-  display: flex;
-  justify-content: flex-end;
-  flex: auto;
-  border-bottom: 1px solid ${Color.LIGHT_SILVER};
-  max-width: 60px;
-
-  &:hover {
-    background-color: ${Color.LAVANDER_WEB_HOVER};
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
-
 export const TerminalCheckboxWrapper = styled.div``;
+
 export const TerminalIconBox = styled.div`
   display: flex;
   white-space: nowrap;
@@ -61,6 +47,20 @@ export const TerminalIconBox = styled.div`
   .icon {
     height: auto;
     margin-right: 12px;
+  }
+`;
+
+export const TerminalOffPageBox = styled.span`
+  display: flex;
+  justify-content: flex-end;
+  flex: auto;
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
+  max-width: 60px;
+
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
   }
 `;
 

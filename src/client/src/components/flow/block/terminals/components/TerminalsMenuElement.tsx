@@ -10,7 +10,7 @@ import { OffPageRequiredInputIcon, OffPageRequiredOutputIcon } from "../../../..
 import {
   TerminalIconBox,
   OffPageCheckboxWrapper,
-  TerminalsElementBox,
+  TerminalElementBox,
   OffPageIconBox,
   TerminalCheckboxWrapper,
   TerminalOffPageBox,
@@ -37,7 +37,7 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
 
   return (
     <TerminalsMenuElementWrapper>
-      <TerminalsElementBox key={connector.id}>
+      <TerminalElementBox key={connector.id}>
         <TerminalCheckboxWrapper>
           <Checkbox
             isChecked={connectorIsVisible}
@@ -46,18 +46,22 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
             id={connector.id}
           />
         </TerminalCheckboxWrapper>
-
         <TerminalIconBox>
           <TerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
           {connector.name}
         </TerminalIconBox>
-      </TerminalsElementBox>
+      </TerminalElementBox>
 
-      <TerminalOffPageBox>
-        <OffPageIconBox>
-          {isInput ? <OffPageRequiredInputIcon style={{ fill: color }} /> : <OffPageRequiredOutputIcon style={{ fill: color }} />}
-        </OffPageIconBox>
-        <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
+      <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
+        <TerminalOffPageBox>
+          <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
+            {isInput ? (
+              <OffPageRequiredInputIcon style={{ fill: color }} />
+            ) : (
+              <OffPageRequiredOutputIcon style={{ fill: color }} />
+            )}
+          </OffPageIconBox>
+
           <OffPageCheckboxWrapper>
             <Checkbox
               isChecked={connectorIsVisible && connector.isRequired}
@@ -66,8 +70,8 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
               id={connector.id}
             />
           </OffPageCheckboxWrapper>
-        </Tooltip>
-      </TerminalOffPageBox>
+        </TerminalOffPageBox>
+      </Tooltip>
     </TerminalsMenuElementWrapper>
   );
 };

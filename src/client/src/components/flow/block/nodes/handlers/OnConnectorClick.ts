@@ -4,9 +4,11 @@ import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/pr
 import { IsConnectorVisible } from "../../../helpers/Connectors";
 import { Connector, ConnectorVisibility, Node } from "@mimirorg/modelbuilder-types";
 import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOffPageNode";
-import { OffPageData } from "../../../../../models/project";
+import { OffPageData, Position } from "../../../../../models/project";
 import { CreateId } from "../../../helpers";
 import { DeleteRequiredOffPageNode } from "../blockNode/helpers/DeleteRequiredOffPageNode";
+import { GetParentNode } from "../../../../../helpers/Family";
+import { Size } from "../../../../../assets/size/Size";
 import {
   GetOffPagePartOfEdge,
   GetOffPageSourceTransportEdge,
@@ -30,13 +32,11 @@ export const OnConnectorClick = (
   isElectroView: boolean,
   isOffPage?: boolean
 ) => {
-  console.log("KLIKK: ", sourceConnector);
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
 
   if (isOffPage) {
-    console.log("HER");
     visible
       ? RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch)
       : AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, isElectroView, dispatch);
@@ -70,9 +70,8 @@ function AddOffPageNodeFromDropdownMenu(
   isElectroView: boolean,
   dispatch: Dispatch
 ) {
-  console.log({ sourceConnector });
   const offPageNodeId = CreateId();
-  const position = { x: 0, y: 0 }; //  SetInitialOffPageNodePosition(sourceNode, isElectroView);
+  const position = SetInitialOffPageNodePosition(sourceNode, isElectroView);
   const isRequired = true;
   const data = { offPageNodeId, sourceConnector, sourceNode, isRequired, position } as OffPageData;
 
@@ -106,20 +105,20 @@ function RemoveOffPageNodeFromDropdownMenu(sourceConnectorId: string, sourceNode
   DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnectorId, dispatch);
 }
 
-// function SetInitialOffPageNodePosition(sourceNode: Node, isElectroView: boolean) {
-//   const adjustment = 1.8;
-//   const marginX = Size.NODE_WIDTH / adjustment;
-//   const marginY = Size.NODE_HEIGHT / adjustment;
+function SetInitialOffPageNodePosition(sourceNode: Node, isElectroView: boolean) {
+  const adjustment = 1.8;
+  const marginX = Size.NODE_WIDTH / adjustment;
+  const marginY = Size.NODE_HEIGHT / adjustment;
 
-//   const parentNode = GetParentNode(sourceNode.id);
+  const parentNode = GetParentNode(sourceNode.id);
 
-//   if (isElectroView) {
-//     const x = sourceNode.positionBlockX + marginX;
-//     const y = parentNode?.height;
-//     return { x, y } as Position;
-//   }
+  if (isElectroView) {
+    const x = sourceNode.positionBlockX + marginX;
+    const y = parentNode?.height;
+    return { x, y } as Position;
+  }
 
-//   const x = 0;
-//   const y = sourceNode.positionBlockY + marginY;
-//   return { x, y } as Position;
-// }
+  const x = sourceNode.positionBlockX + parentNode.width;
+  const y = sourceNode.positionBlockY + marginY;
+  return { x, y } as Position;
+}
