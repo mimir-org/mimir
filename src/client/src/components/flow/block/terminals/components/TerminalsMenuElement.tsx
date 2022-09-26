@@ -13,7 +13,7 @@ import {
   OffPageIconBox,
   TerminalCheckboxWrapper,
   TerminalOffPageBox,
-  TerminalsMenuElementWrapper,
+  TerminalsMenuElementContainer,
 } from "./TerminalsMenuElement.styled";
 
 interface Props {
@@ -35,8 +35,8 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
   const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
 
   return (
-    <TerminalsMenuElementWrapper>
-      <TerminalElementBox key={connector.id}>
+    <TerminalsMenuElementContainer>
+      <TerminalElementBox key={connector.id} onClick={() => onClick(connector, isInput, node, isElectroView, false)}>
         <TerminalCheckboxWrapper>
           <Checkbox
             isChecked={connectorIsVisible}
@@ -72,6 +72,6 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           </OffPageCheckboxWrapper>
         </TerminalOffPageBox>
       </Tooltip>
-    </TerminalsMenuElementWrapper>
+    </TerminalsMenuElementContainer>
   );
 };

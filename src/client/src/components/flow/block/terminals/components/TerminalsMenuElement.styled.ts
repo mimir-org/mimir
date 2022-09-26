@@ -2,8 +2,29 @@ import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
 import { FontSize } from "../../../../../assets/font";
 
-export const TerminalsMenuElementWrapper = styled.div`
+/**
+ * Wrapper for the entire terminal element in the menu
+ */
+export const TerminalsMenuElementContainer = styled.div`
   display: flex;
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
+  width: 170px;
+  height: 25px;
+
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &:first-child {
+    border-top-left-radius: 4px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom: none;
+  }
 `;
 
 export const TerminalElementBox = styled.label`
@@ -13,25 +34,10 @@ export const TerminalElementBox = styled.label`
   gap: 5px;
   padding-left: 5px;
   height: 25px;
-  border-bottom: 1px solid ${Color.LIGHT_SILVER};
   font-size: ${FontSize.TINY};
   color: ${Color.BLACK};
-
-  &:hover {
-    background-color: ${Color.LAVANDER_WEB_HOVER};
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  :first-child {
-    border-top-left-radius: 4px;
-  }
-
-  :last-child {
-    border-bottom-left-radius: 4px;
-    border-bottom: none;
-  }
 `;
+
 export const TerminalCheckboxWrapper = styled.div``;
 
 export const TerminalIconBox = styled.div`
@@ -57,9 +63,9 @@ export const TerminalOffPageBox = styled.span`
   display: flex;
   justify-content: flex-end;
   flex: auto;
-  border-bottom: 1px solid ${Color.LIGHT_SILVER};
   max-width: 60px;
-  max-height: 25px;
+  height: inherit;
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
