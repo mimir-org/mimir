@@ -48,7 +48,6 @@ export const HandleComponent = ({ node, project, connectors, isElectroView, isOf
             isParent={isParent}
             visible={visible}
             setVisible={setVisible}
-            isInput={isInput}
           />
         );
       })}

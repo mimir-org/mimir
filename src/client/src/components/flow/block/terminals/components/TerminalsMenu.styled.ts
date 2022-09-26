@@ -14,7 +14,7 @@ export const TerminalsBox = styled.div<TerminalsBoxProps>`
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 235px;
+  width: 238px;
   top: -2px;
   right: ${(props) => (props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   left: ${(props) => (!props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};

@@ -9,8 +9,9 @@ interface Props {
   node: Node;
   connectors: Connector[];
   onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
-  isParent?: boolean;
   isInput: boolean;
+  isElectroView: boolean;
+  isParent?: boolean;
   showMenuButton?: boolean;
 }
 
@@ -19,7 +20,15 @@ interface Props {
  * @param interface
  * @returns a button to activate the menu, and a drop-down menu containing available terminals.
  */
-export const TerminalsMenuComponent = ({ node, connectors, onClick, isParent, isInput, showMenuButton = true }: Props) => {
+export const TerminalsMenuComponent = ({
+  node,
+  connectors,
+  onClick,
+  isInput,
+  isElectroView,
+  isParent,
+  showMenuButton = true,
+}: Props) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -39,7 +48,7 @@ export const TerminalsMenuComponent = ({ node, connectors, onClick, isParent, is
           connectors={connectors}
           hasActiveTerminals={connectors.some((conn) => IsConnectorVisible(conn))}
           isParent={isParent}
-          isElectroView={false}
+          isElectroView={isElectroView}
           onClick={onClick}
           onBlur={() => OnBlur(setShowMenu, showMenu)}
         />

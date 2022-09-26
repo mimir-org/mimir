@@ -17,6 +17,7 @@ interface Props {
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   isNavigationActive: boolean;
+  isElectroView: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
   onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
@@ -34,6 +35,7 @@ export const BlockParentComponent = ({
   inputConnectors,
   outputConnectors,
   isNavigationActive,
+  isElectroView,
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
@@ -49,6 +51,7 @@ export const BlockParentComponent = ({
       <BlockParentBanner
         node={node}
         company={company}
+        isElectroView={isElectroView}
         inputConnectors={inputConnectors}
         outputConnectors={outputConnectors}
         isNavigationActive={isNavigationActive}

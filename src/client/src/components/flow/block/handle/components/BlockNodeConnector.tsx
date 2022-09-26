@@ -8,7 +8,7 @@ import { IsOffPage } from "../../../../../helpers/Aspects";
 import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetConnectorPosition";
 import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
-import { TerminalIcon } from "../../terminals/components/helpers";
+import { TerminalIcon } from "../../terminals/components/helpers/TerminalIcon";
 
 interface Props {
   project: Project;
@@ -19,7 +19,6 @@ interface Props {
   isParent: boolean;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isInput: boolean;
 }
 
 /**
@@ -37,7 +36,6 @@ export const BlockNodeConnector = ({
   isParent,
   visible,
   setVisible,
-  isInput,
 }: Props) => {
   const [type, pos] = GetBlockHandleType(connector, isElectroView, isParent);
   const color = GetConnectorColor(connector);
@@ -54,7 +52,7 @@ export const BlockNodeConnector = ({
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >
-      <TerminalIcon connector={connector} color={color} isInput={isInput} className={className} isElectroView={isElectroView} />
+      <TerminalIcon connector={connector} color={color} className={className} isElectroView={isElectroView} />
       <Handle
         type={type}
         position={pos}

@@ -5,15 +5,15 @@ import { GetConnectorColor } from "../../helpers";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { TerminalIcon, OffPageTerminalIcon } from "./helpers/";
+import { OffPageTerminalIcon, TerminalIcon } from "./helpers/TerminalIcon";
 import {
   TerminalIconBox,
   OffPageCheckboxWrapper,
-  TerminalElementBox,
   OffPageIconBox,
-  TerminalCheckboxWrapper,
   TerminalOffPageBox,
-  TerminalsMenuElementWrapper,
+  TerminalBox,
+  TerminalElementBox,
+  TerminalNameBox,
 } from "./TerminalsMenuElement.styled";
 
 interface Props {
@@ -27,38 +27,38 @@ interface Props {
 /**
  * Component for a single terminal in the TerminalsMenu.
  * @param interface
- * @returns a clickable terminal with two checkboxex, one for a terminal, and for an OffPageNode.
+ * @returns a clickable terminal with two checkboxes, one for a terminal, and for an OffPageNode.
  */
 export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, onClick }: Props) => {
   const color = GetConnectorColor(connector);
   const connectorIsVisible = IsConnectorVisible(connector);
-  const toolTipText = connectorIsVisible ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
+  const terminalHasOffPageNode = connector.isRequired && connectorIsVisible;
+  const toolTipText = terminalHasOffPageNode ? TextResources.OFFPAGE_REMOVE : TextResources.OFFPAGE_ADD;
 
   return (
-    <TerminalsMenuElementWrapper>
-      <TerminalElementBox key={connector.id}>
-        <TerminalCheckboxWrapper>
+    <TerminalElementBox>
+      <TerminalBox key={connector.id} onClick={() => onClick(connector, isInput, node, isElectroView, false)}>
+        <div>
           <Checkbox
             isChecked={connectorIsVisible}
             onChange={() => onClick(connector, isInput, node, isElectroView, false)}
             color={Color.LIGHT_SILVER}
             id={connector.id}
           />
-        </TerminalCheckboxWrapper>
+        </div>
         <TerminalIconBox>
-          <TerminalIcon connector={connector} color={color} className={"icon"} isInput={isInput} isElectroView={isElectroView} />
-          {connector.name}
+          <TerminalIcon connector={connector} color={color} className={""} isElectroView={isElectroView} />
         </TerminalIconBox>
-      </TerminalElementBox>
-
+        <TerminalNameBox>{connector.name}</TerminalNameBox>
+      </TerminalBox>
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <TerminalOffPageBox>
           <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
-            <OffPageTerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
+            <OffPageTerminalIcon connector={connector} color={color} className={"icon"} isElectroView={isElectroView} />
           </OffPageIconBox>
           <OffPageCheckboxWrapper>
             <Checkbox
-              isChecked={connectorIsVisible && connector.isRequired}
+              isChecked={terminalHasOffPageNode}
               onChange={() => onClick(connector, isInput, node, isElectroView, true)}
               color={Color.LIGHT_SILVER}
               id={connector.id}
@@ -66,6 +66,6 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           </OffPageCheckboxWrapper>
         </TerminalOffPageBox>
       </Tooltip>
-    </TerminalsMenuElementWrapper>
+    </TerminalElementBox>
   );
 };

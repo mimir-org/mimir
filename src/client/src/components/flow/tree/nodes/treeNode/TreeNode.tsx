@@ -9,7 +9,6 @@ import { GetAspectColor } from "../../../../../helpers";
 import { TreeNodeTerminal } from "./components/TreeNodeTerminal";
 import { useAppDispatch } from "../../../../../redux/store";
 import { FilterTreeTerminals } from "./helpers/FilterTreeTerminals";
-import { IsInputConnector } from "../../../helpers/Connectors";
 
 /**
  * Component to display a node in TreeView.
@@ -45,7 +44,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           connector={connector}
           isHover={isHover}
-          isInput={IsInputConnector(connector)}
           setIsHover={setIsHover}
           dispatch={dispatch}
         />

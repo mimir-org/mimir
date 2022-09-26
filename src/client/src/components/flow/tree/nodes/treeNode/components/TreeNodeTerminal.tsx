@@ -13,7 +13,6 @@ interface Props {
   isHover: boolean;
   setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
   dispatch: Dispatch;
-  isInput: boolean;
 }
 
 /**
@@ -22,7 +21,7 @@ interface Props {
  * @param interface
  * @returns a JSX Element containing a Handle component from Flow.
  */
-export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatch, isInput }: Props) => {
+export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatch }: Props) => {
   const [type, pos] = GetHandleType(connector);
 
   return (
@@ -32,7 +31,6 @@ export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatc
       visible={IsPartOfRelation(connector) && isHover}
       position={pos}
       topPos={SetTopPos(pos)}
-      isInput={isInput}
     >
       <Handle
         type={type}

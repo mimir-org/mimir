@@ -9,6 +9,7 @@ interface Props {
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
+  isElectroView: boolean;
   showMenuButton?: boolean;
 }
 
@@ -16,7 +17,14 @@ interface Props {
  * Component for the top banner menu on a ChildNode in BlockView.
  * @returns a banner with terminal menus and name.
  */
-export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onConnectorClick, showMenuButton }: Props) => {
+export const BlockChildHeader = ({
+  node,
+  inputConnectors,
+  outputConnectors,
+  onConnectorClick,
+  isElectroView,
+  showMenuButton,
+}: Props) => {
   const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
   const name = node.label ?? node.name;
 
@@ -27,6 +35,7 @@ export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onCo
         connectors={inputConnectors}
         onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
         showMenuButton={showMenuButton}
+        isElectroView={isElectroView}
         isInput
       />
       <Tooltip content={name} disabled={!isOverflowing} offset={[0, 10]}>
@@ -39,6 +48,7 @@ export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onCo
         connectors={outputConnectors}
         onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
         showMenuButton={showMenuButton}
+        isElectroView={isElectroView}
         isInput={false}
       />
     </NodeBoxHeader>

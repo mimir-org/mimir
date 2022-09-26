@@ -2,60 +2,40 @@ import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
 import { FontSize } from "../../../../../assets/font";
 
-export const TerminalsMenuElementWrapper = styled.div`
+/**
+ * Main wrapper for entire component
+ */
+export const TerminalElementBox = styled.div`
   display: flex;
-`;
-
-export const TerminalElementBox = styled.label`
-  display: flex;
-  align-items: center;
-  min-width: 170px;
-  gap: 5px;
-  padding-left: 5px;
-  height: 25px;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
-  font-size: ${FontSize.TINY};
-  color: ${Color.BLACK};
+  /* background: #000; */
+  /* width: 300px; */
 
-  &:hover {
-    background-color: ${Color.LAVANDER_WEB_HOVER};
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  :first-child {
+  &:first-child {
     border-top-left-radius: 4px;
   }
 
-  :last-child {
+  &:last-child {
     border-bottom-left-radius: 4px;
     border-bottom: none;
   }
 `;
-export const TerminalCheckboxWrapper = styled.div``;
 
-export const TerminalIconBox = styled.div`
+/**
+ * Box to wrap the TerminalIcon and the terminal checkbox
+ */
+export const TerminalBox = styled.div`
   display: flex;
+  align-items: center;
+  border-right: 1px solid ${Color.LIGHT_SILVER};
+  padding-left: 5px;
+  width: 180px;
+  height: 25px;
+  gap: 5px;
+  font-size: ${FontSize.SMALL};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
-  line-height: 2.5;
-  width: 100%;
-  height: 100%;
-
-  .icon {
-    height: auto;
-    margin-right: 12px;
-  }
-`;
-
-export const TerminalOffPageBox = styled.span`
-  display: flex;
-  justify-content: flex-end;
-  flex: auto;
-  border-bottom: 1px solid ${Color.LIGHT_SILVER};
-  max-width: 60px;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
@@ -64,16 +44,54 @@ export const TerminalOffPageBox = styled.span`
   }
 `;
 
+/**
+ * Box for a terminal icon
+ */
+export const TerminalIconBox = styled.div`
+  display: flex;
+  width: 20px;
+`;
+
+/**
+ * Box for the terminal name
+ */
+export const TerminalNameBox = styled.span`
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+/**
+ * Box to wrap the OffPageIcon and the OffPage checkbox
+ */
+export const TerminalOffPageBox = styled.span`
+  display: flex;
+  gap: 5px;
+  height: 20px;
+  margin-top: 3px;
+
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+/**
+ * Box for the OffPageIcon
+ */
 export const OffPageIconBox = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
-  width: 45px;
-  padding: 4px 0px 0px 5px;
-  margin-right: 5px;
-  border-left: 1px solid ${Color.LIGHT_SILVER};
+  width: 25px;
+  padding-top: 4px;
+  margin: 0px 4px;
 `;
 
+/**
+ * Box for the OffPage checkbox
+ */
 export const OffPageCheckboxWrapper = styled.div`
   display: flex;
   position: relative;
