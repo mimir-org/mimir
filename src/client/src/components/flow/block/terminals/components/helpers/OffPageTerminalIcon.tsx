@@ -1,18 +1,12 @@
 import { Connector } from "@mimirorg/modelbuilder-types";
 import { BidirectionalIcon, BidirectionalVerticalIcon } from "../../../../../../assets/icons/connectors";
 import { IsBidirectionalTerminal } from "../../../../helpers/Connectors";
-import {
-  OffPageRequiredInputIcon,
-  OffPageRequiredOutputIcon,
-  OffPageRequiredVerticalInputIcon,
-  OffPageRequiredVerticalOutputIcon,
-} from "../../../../../../assets/icons/offpage";
+import { OffPageRequiredIcon, OffPageRequiredVerticalIcon } from "../../../../../../assets/icons/offpage";
 
 interface Props {
   conn: Connector;
   color: string;
   className: string;
-  isInput: boolean;
   isElectroView: boolean;
 }
 
@@ -21,25 +15,16 @@ interface Props {
  * @param interface
  * @returns an icon.
  */
-const OffPageTerminalIcon = ({ conn, color, className, isInput, isElectroView }: Props) => {
-  if (isElectroView) return OffPageVerticalTerminalIcon(conn, color, className, isInput);
+const OffPageTerminalIcon = ({ conn, color, className, isElectroView }: Props) => {
+  if (isElectroView) return OffPageVerticalTerminalIcon(conn, color, className);
   if (IsBidirectionalTerminal(conn)) return <BidirectionalIcon style={{ fill: color }} className={className} />;
 
-  return isInput ? (
-    <OffPageRequiredInputIcon style={{ fill: color }} className={className} />
-  ) : (
-    <OffPageRequiredOutputIcon style={{ fill: color }} className={className} />
-  );
+  return <OffPageRequiredIcon style={{ fill: color }} className={className} />;
 };
 
-function OffPageVerticalTerminalIcon(connector: Connector, color: string, className: string, isInput: boolean) {
+function OffPageVerticalTerminalIcon(connector: Connector, color: string, className: string) {
   if (IsBidirectionalTerminal(connector)) return <BidirectionalVerticalIcon style={{ fill: color }} className={className} />;
-
-  return isInput ? (
-    <OffPageRequiredVerticalInputIcon style={{ fill: color }} className={className} />
-  ) : (
-    <OffPageRequiredVerticalOutputIcon style={{ fill: color }} className={className} />
-  );
+  return <OffPageRequiredVerticalIcon style={{ fill: color }} className={className} />;
 }
 
 export default OffPageTerminalIcon;

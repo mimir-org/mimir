@@ -1,6 +1,5 @@
 import * as icons from "../../../../../../assets/icons/offpage";
 import { Connector } from "@mimirorg/modelbuilder-types";
-import { IsInputConnector } from "../../../../helpers/Connectors";
 
 /**
  * Component to get the correct icon for an OffPageNode.
@@ -10,25 +9,15 @@ import { IsInputConnector } from "../../../../helpers/Connectors";
  * @returns an icon.
  */
 const GetOffPageIcon = (offPageTerminal: Connector, sourceTerminal: Connector, isElectroView: boolean) => {
-  if (isElectroView) return GetOffPageVerticalIcon(offPageTerminal, sourceTerminal);
+  if (isElectroView) return GetOffPageVerticalIcon(sourceTerminal);
 
-  if (IsInputConnector(offPageTerminal)) {
-    if (sourceTerminal?.isRequired) return icons.OffPageRequiredInputIcon;
-    return icons.OffPageConnectedInputIcon;
-  }
-
-  if (sourceTerminal?.isRequired) return icons.OffPageRequiredOutputIcon;
-  return icons.OffPageConnectedOutputIcon;
+  if (sourceTerminal?.isRequired) return icons.OffPageRequiredIcon;
+  return icons.OffPageConnectedIcon;
 };
 
-function GetOffPageVerticalIcon(offPageTerminal: Connector, sourceTerminal: Connector) {
-  if (IsInputConnector(offPageTerminal)) {
-    if (sourceTerminal?.isRequired) return icons.OffPageRequiredVerticalInputIcon;
-    return icons.OffPageConnectedVerticalInputIcon;
-  }
-
-  if (sourceTerminal?.isRequired) return icons.OffPageRequiredVerticalOutputIcon;
-  return icons.OffPageConnectedVerticalOutputIcon;
+function GetOffPageVerticalIcon(sourceTerminal: Connector) {
+  if (sourceTerminal?.isRequired) return icons.OffPageRequiredVerticalIcon;
+  return icons.OffPageConnectedIcon;
 }
 
 export default GetOffPageIcon;
