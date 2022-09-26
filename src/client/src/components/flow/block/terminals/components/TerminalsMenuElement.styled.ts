@@ -27,10 +27,13 @@ export const TerminalBox = styled.div`
   align-items: center;
   border-right: 1px solid ${Color.LIGHT_SILVER};
   padding-left: 5px;
-  width: 170px;
+  width: 180px;
   height: 25px;
   gap: 5px;
   font-size: ${FontSize.SMALL};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
@@ -39,20 +42,22 @@ export const TerminalBox = styled.div`
   }
 `;
 
+/**
+ * Box for a terminal icon
+ */
 export const TerminalIconBox = styled.div`
   display: flex;
+  width: 20px;
+`;
+
+/**
+ * Box for the terminal name
+ */
+export const TerminalNameBox = styled.span`
+  max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
-  line-height: 2.5;
-  width: 100%;
-  height: 100%;
-
-  .icon {
-    height: auto;
-    margin-right: 12px;
-  }
 `;
 
 /**

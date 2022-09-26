@@ -13,6 +13,7 @@ import {
   TerminalOffPageBox,
   TerminalBox,
   TerminalElementBox,
+  TerminalNameBox,
 } from "./TerminalsMenuElement.styled";
 
 interface Props {
@@ -26,7 +27,7 @@ interface Props {
 /**
  * Component for a single terminal in the TerminalsMenu.
  * @param interface
- * @returns a clickable terminal with two checkboxex, one for a terminal, and for an OffPageNode.
+ * @returns a clickable terminal with two checkboxes, one for a terminal, and for an OffPageNode.
  */
 export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, onClick }: Props) => {
   const color = GetConnectorColor(connector);
@@ -46,11 +47,10 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
           />
         </div>
         <TerminalIconBox>
-          <TerminalIcon connector={connector} color={color} className={"icon"} isElectroView={isElectroView} />
-          {connector.name}
+          <TerminalIcon connector={connector} color={color} className={""} isElectroView={isElectroView} />
         </TerminalIconBox>
+        <TerminalNameBox>{connector.name}</TerminalNameBox>
       </TerminalBox>
-
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <TerminalOffPageBox>
           <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
