@@ -7,9 +7,9 @@ updates:
       interval: "daily"
       time: "09:30"
       timezone: "Europe/Oslo"
-    target-branch: "julesprint"
+    target-branch: "dev"
     reviewers:
-      - "henrik-knudsen"
+      - "reliaboe"
 
   - package-ecosystem: "nuget"
     directory: "/src/service"
@@ -17,9 +17,9 @@ updates:
       interval: "daily"
       time: "07:00"
       timezone: "Europe/Oslo"
-    target-branch: "julesprint"
+    target-branch: "dev"
     reviewers:
-      - "kahovden"
+      - "reliaboe"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -27,6 +27,6 @@ updates:
       interval: "daily"
       time: "09:30"
       timezone: "Europe/Oslo"
-    target-branch: "julesprint"
+    target-branch: "dev"
     reviewers:
-      - "henrik-knudsen"
+      - "reliaboe"
