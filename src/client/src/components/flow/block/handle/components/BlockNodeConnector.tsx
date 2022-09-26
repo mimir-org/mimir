@@ -8,7 +8,7 @@ import { IsOffPage } from "../../../../../helpers/Aspects";
 import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetConnectorPosition";
 import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
-import { TerminalIcon } from "../../terminals/components/helpers/TerminalIcon";
+import { TerminalIcon } from "../../terminals/components/helpers";
 
 interface Props {
   project: Project;

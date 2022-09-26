@@ -3,7 +3,7 @@ import * as selectors from "./helpers/OffPageSelectors";
 import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { HandleComponent } from "../../handle";
+import { HandleComponent } from "../../handle/HandleComponent";
 import { IsInputConnector, IsOutputConnector, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";

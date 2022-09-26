@@ -4,7 +4,7 @@ import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { AspectColorType } from "../../../../../models";
-import { HandleComponent } from "../../handle";
+import { HandleComponent } from "../../handle/HandleComponent";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterConnectors } from "../helpers/FilterConnectors";
@@ -79,7 +79,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         connectors={connectors.outputs}
         isElectro={isElectroView}
         dispatch={dispatch}
-        isInput={false}
+        isInput
       />
     </BoxWrapper>
   );

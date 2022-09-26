@@ -15,7 +15,7 @@ interface Props {
  * @param interface
  * @returns an icon.
  */
-export const TerminalIcon = ({ conn, color, className, isInput }: Props) => {
+const TerminalIcon = ({ conn, color, className, isInput }: Props) => {
   if (IsBidirectionalTerminal(conn)) return <BidirectionalIcon style={{ fill: color }} className={className} />;
   return isInput ? (
     <InputConnectorIcon style={{ fill: color }} className={className} />
@@ -23,3 +23,5 @@ export const TerminalIcon = ({ conn, color, className, isInput }: Props) => {
     <OutputConnectorIcon style={{ fill: color }} className={className} />
   );
 };
+
+export default TerminalIcon;

@@ -5,8 +5,7 @@ import { GetConnectorColor } from "../../helpers";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { TerminalIcon } from "./helpers/TerminalIcon";
-import { OffPageRequiredInputIcon, OffPageRequiredOutputIcon } from "../../../../../assets/icons/offpage";
+import { TerminalIcon, OffPageTerminalIcon } from "./helpers/";
 import {
   TerminalIconBox,
   OffPageCheckboxWrapper,
@@ -55,11 +54,7 @@ export const TerminalsMenuElement = ({ connector, isInput, node, isElectroView, 
       <Tooltip content={toolTipText} placement={"top"} offset={[0, 10]}>
         <TerminalOffPageBox>
           <OffPageIconBox onClick={() => onClick(connector, isInput, node, isElectroView, true)}>
-            {!isInput ? (
-              <OffPageRequiredInputIcon style={{ fill: color }} />
-            ) : (
-              <OffPageRequiredOutputIcon style={{ fill: color }} />
-            )}
+            <OffPageTerminalIcon conn={connector} color={color} className={"icon"} isInput={isInput} />
           </OffPageIconBox>
           <OffPageCheckboxWrapper>
             <Checkbox
