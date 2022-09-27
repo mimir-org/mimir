@@ -89,7 +89,6 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Connector> Connectors { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
-        public virtual ICollection<Simple> Simples { get; set; }
         public virtual string ProjectId { get; set; }
         public virtual string ProjectIri { get; set; }
 

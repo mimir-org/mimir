@@ -385,15 +385,6 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasSimpleType.
-        /// </summary>
-        public static string HasSimpleType {
-            get {
-                return ResourceManager.GetString("HasSimpleType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to mimir:hasSource.
         /// </summary>
         public static string HasSource {
@@ -606,15 +597,6 @@ namespace ModelBuilder.Rdf.Properties {
         public static string SelectValue {
             get {
                 return ResourceManager.GetString("SelectValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:simpleType.
-        /// </summary>
-        public static string SimpleType {
-            get {
-                return ResourceManager.GetString("SimpleType", resourceCulture);
             }
         }
         

@@ -37,8 +37,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.TransportIri).HasColumnName("TransportIri").IsRequired(false);
             builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false);
             builder.Property(p => p.InterfaceIri).HasColumnName("InterfaceIri").IsRequired(false);
-            builder.Property(p => p.SimpleId).HasColumnName("SimpleId").IsRequired(false);
-            builder.Property(p => p.SimpleIri).HasColumnName("SimpleIri").IsRequired(false);
 
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
@@ -51,7 +49,6 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Transport).WithMany(y => y.Attributes).HasForeignKey(x => x.TransportId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Interface).WithMany(y => y.Attributes).HasForeignKey(x => x.InterfaceId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Simple).WithMany(y => y.Attributes).HasForeignKey(x => x.SimpleId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

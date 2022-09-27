@@ -83,16 +83,6 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<SimpleLibCm>> GetSimpleTypes()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("librarysimple");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.SimpleType.ToString(),
-                async () => await _httpRepository.GetData<List<SimpleLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
         public async Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes()
         {
             // ReSharper disable once StringLiteralTypo

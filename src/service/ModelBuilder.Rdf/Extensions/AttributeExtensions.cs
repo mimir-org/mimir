@@ -153,8 +153,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="interfaceIri"></param>
         /// <param name="terminalIri"></param>
         /// <param name="transportIri"></param>
-        /// <param name="simpleIri"></param>
-        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri)
         {
             #region None Mimir specific data
 
@@ -163,7 +162,6 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.InterfaceIri = interfaceIri;
             attribute.TerminalIri = terminalIri;
             attribute.TransportIri = transportIri;
-            attribute.SimpleIri = simpleIri;
 
             attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);

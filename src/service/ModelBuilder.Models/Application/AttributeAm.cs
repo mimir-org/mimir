@@ -5,7 +5,6 @@ using Mb.Models.Data;
 using Mb.Models.Extensions;
 using Mimirorg.Common.Attributes;
 using Mimirorg.TypeLibrary.Enums;
-using Mimirorg.TypeLibrary.Models.Application;
 
 namespace Mb.Models.Application
 {
@@ -63,11 +62,6 @@ namespace Mb.Models.Application
         [ValidIri]
         public string InterfaceIri { get; set; }
 
-        public string SimpleId { get; set; }
-
-        [ValidIri]
-        public string SimpleIri { get; set; }
-
         public ICollection<TypeReference> TypeReferences { get; set; }
 
         public ICollection<string> SelectValues { get; set; }
@@ -93,9 +87,7 @@ namespace Mb.Models.Application
                 string.IsNullOrEmpty(TransportId) &&
                 string.IsNullOrEmpty(TransportIri) &&
                 string.IsNullOrEmpty(InterfaceId) &&
-                string.IsNullOrEmpty(InterfaceIri) &&
-                string.IsNullOrEmpty(SimpleId) &&
-                string.IsNullOrEmpty(SimpleIri)
+                string.IsNullOrEmpty(InterfaceIri)
                )
             {
                 validations.Add(new ValidationResult("One of this fields is required", new[]
@@ -107,9 +99,7 @@ namespace Mb.Models.Application
                     nameof(TransportId),
                     nameof(TransportIri),
                     nameof(InterfaceId),
-                    nameof(InterfaceIri),
-                    nameof(SimpleId),
-                    nameof(SimpleIri)
+                    nameof(InterfaceIri)
                 }));
             }
 
