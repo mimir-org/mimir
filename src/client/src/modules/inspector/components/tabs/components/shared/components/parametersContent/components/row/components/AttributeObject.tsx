@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AttributesDescriptor } from "./AttributeDescriptor";
+import { AttributeDescriptor } from "./AttributeDescriptor";
 import { AttributeHeaderBox, AttributeObjectBox } from "./AttributeObject.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
@@ -63,7 +63,7 @@ export const AttributeObject = ({
           onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
         />
       </AttributeHeaderBox>
-      <AttributesDescriptor
+      <AttributeDescriptor
         specifiedScope={combination.specifiedScope}
         specifiedProvenance={combination.specifiedProvenance}
         rangeSpecifying={combination.rangeSpecifying}

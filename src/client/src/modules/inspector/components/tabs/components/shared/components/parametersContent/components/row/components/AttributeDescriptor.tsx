@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
-import { AttributesDescriptorsWrapper } from "./AttributeDescriptor.styled";
+import { AttributeDescriptorsWrapper } from "./AttributeDescriptor.styled";
 
 interface Props {
   specifiedScope: string;
@@ -10,7 +10,7 @@ interface Props {
   bodyColor: string;
 }
 
-export const AttributesDescriptor = ({
+export const AttributeDescriptor = ({
   specifiedScope,
   specifiedProvenance,
   rangeSpecifying,
@@ -18,34 +18,26 @@ export const AttributesDescriptor = ({
   headerColor,
   bodyColor,
 }: Props) => (
-  <AttributesDescriptorsWrapper bodyColor={bodyColor} headerColor={headerColor}>
+  <AttributeDescriptorsWrapper bodyColor={bodyColor} headerColor={headerColor}>
     <div className="tjof">
       <div className="descriptors-top">
         <div className="gabbi">{TextResources.SPECIFIED_SCOPE}</div>
         <div className="gabbi">{TextResources.SPECIFIED_PROVENANCE}</div>
-        {/* <div className="gabbi">{TextResources.RANGE_SPECIFYING}</div> */}
-        {/* <div className="gabbi">{TextResources.REGULARITY_SPECIFIED}</div> */}
       </div>
       <div className="descriptors-bottom">
         <div className="gabbi-bottom">{specifiedScope + " test "}</div>
         <div className="gabbi-bottom">{specifiedProvenance + " test"}</div>
-        {/* <div className="gabbi-bottom">{rangeSpecifying + " test"}</div> */}
-        {/* <div className="gabbi-bottom">{regularitySpecified + " test"}</div> */}
       </div>
     </div>
     <div className="tjof">
       <div className="descriptors-top">
-        <div className="gabbi">{TextResources.SPECIFIED_SCOPE}</div>
-        <div className="gabbi">{TextResources.SPECIFIED_PROVENANCE}</div>
-        {/* <div className="gabbi">{TextResources.RANGE_SPECIFYING}</div> */}
-        {/* <div className="gabbi">{TextResources.REGULARITY_SPECIFIED}</div> */}
+        <div className="gabbi">{TextResources.RANGE_SPECIFYING}</div>
+        <div className="gabbi">{TextResources.REGULARITY_SPECIFIED}</div>
       </div>
       <div className="descriptors-bottom">
-        <div className="gabbi-bottom">{specifiedScope + " test "}</div>
-        <div className="gabbi-bottom">{specifiedProvenance + " test"}</div>
-        {/* <div className="gabbi-bottom">{rangeSpecifying + " test"}</div> */}
-        {/* <div className="gabbi-bottom">{regularitySpecified + " test"}</div> */}
+        <div className="gabbi-bottom">{rangeSpecifying + " test"}</div>
+        <div className="gabbi-bottom">{regularitySpecified + " test"}</div>
       </div>
     </div>
-  </AttributesDescriptorsWrapper>
+  </AttributeDescriptorsWrapper>
 );

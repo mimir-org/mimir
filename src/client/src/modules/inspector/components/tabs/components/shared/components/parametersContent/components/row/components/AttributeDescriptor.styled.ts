@@ -7,7 +7,7 @@ interface Props {
   bodyColor: string;
 }
 
-export const AttributesDescriptorsWrapper = styled.div<Props>`
+export const AttributeDescriptorsWrapper = styled.div<Props>`
   padding: 12px 35px 8px 12px;
 
   .tjof {

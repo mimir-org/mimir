@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../assets/font";
 
-interface AttributesBodyProps {
+interface AttributesRowBodyProps {
   width: number;
 }
 
-export const AttributesRowBody = styled.div<AttributesBodyProps>`
+export const AttributesRowBody = styled.div<AttributesRowBodyProps>`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   width: max(100%, ${(props) => props.width}px);
@@ -14,19 +14,15 @@ export const AttributesRowBody = styled.div<AttributesBodyProps>`
   align-items: center;
 `;
 
-interface AttributeCombinationProps {
-  width: number;
-}
-
-export const AttributeCombinationContainer = styled.div<AttributeCombinationProps>`
-  width: ${(props) => props.width}px;
+export const AttributeCombinationContainer = styled.div`
+  width: 191px;
   height: 70px;
 `;
 
 /**
- * The body for a combination object
+ * The header for a combination object
  */
-export const AttributeCombinationBody = styled.div`
+export const AttributeCombinationHeader = styled.div`
   display: flex;
   flex-direction: column;
   height: 71px;

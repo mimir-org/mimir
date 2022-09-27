@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, AttributeObject } from "./components/AttributeObject";
-import { AttributesRowBody, AttributeCombinationBody, AttributeCombinationContainer } from "./AttributesRow.styled";
+import { AttributesRowBody, AttributeCombinationHeader, AttributeCombinationContainer } from "./AttributesRow.styled";
 import { CombinationDropdown } from "./components/CombinationDropdown";
 import { RemoveIconComponent } from "../../../../../../../../../../assets/icons/close";
 import { OnChangeFilterChoice } from "../../handlers/OnChangeFilterChoice";
@@ -42,7 +42,7 @@ interface Props {
  * @returns a row for an Attribute.
  */
 export const AttributesRow = ({
-  element: elem,
+  element,
   inspectorParentElem,
   terminalParentElem,
   combinations,
@@ -58,7 +58,7 @@ export const AttributesRow = ({
   const projectId = useAppSelector(projectIdSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const attributes = attributeItems ?? GetAttributes(elem);
+  const attributes = attributeItems ?? GetAttributes(element);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -67,24 +67,24 @@ export const AttributesRow = ({
 
   return (
     <AttributesRowBody width={bodyWidth}>
-      <AttributeCombinationContainer width={FILTER_ENTITY_WIDTH}>
-        <AttributeCombinationBody color={bodyColor} id="ParametersBox">
+      <AttributeCombinationContainer>
+        <AttributeCombinationHeader color={bodyColor} id="ParametersBox">
           <div className={`icon`}>
             <RemoveIconComponent
               width={26}
               height={26}
               fill={headerColor}
               stroke={headerColor}
-              onClick={() => OnChangeFilterChoice(elem.id, filterName, true, dispatch)}
+              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
-        </AttributeCombinationBody>
+        </AttributeCombinationHeader>
         <CombinationDropdown
           items={combinations}
           selectedItems={selectedCombinations}
           keyProp="combined"
-          onChange={(comb, selected) => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, selected, dispatch)}
+          onChange={(comb, selected) => OnChangeAttributeCombinationChoice(element.id, filterName, comb, selected, dispatch)}
           headerColor={headerColor}
           bodyColor={bodyColor}
         />
@@ -99,12 +99,12 @@ export const AttributesRow = ({
           isGloballyLocking={isGlobalLocking}
           lockingAttribute={lockingAttribute}
           onChange={(id, val, unitId) =>
-            OnChangeAttributeValue(elem, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
+            OnChangeAttributeValue(element, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
           }
           onLock={(attr, isLocked) =>
             OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
           }
-          onClose={() => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, true, dispatch)}
+          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, comb, true, dispatch)}
         />
       ))}
     </AttributesRowBody>
