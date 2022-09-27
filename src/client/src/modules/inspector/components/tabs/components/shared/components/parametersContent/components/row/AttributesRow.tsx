@@ -1,8 +1,7 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, AttributeObject } from "./components/AttributeObject";
-import { Body, Box } from "./AttributesRow.styled";
-import { Entity } from "./styled/Entity";
+import { AttributesRowBody, AttributeCombinationBody, AttributeCombinationContainer } from "./AttributesRow.styled";
 import { CombinationDropdown } from "./components/CombinationDropdown";
 import { RemoveIconComponent } from "../../../../../../../../../../assets/icons/close";
 import { OnChangeFilterChoice } from "../../handlers/OnChangeFilterChoice";
@@ -67,9 +66,9 @@ export const AttributesRow = ({
   );
 
   return (
-    <Body width={bodyWidth}>
-      <Entity width={FILTER_ENTITY_WIDTH}>
-        <Box color={bodyColor} id="ParametersBox">
+    <AttributesRowBody width={bodyWidth}>
+      <AttributeCombinationContainer width={FILTER_ENTITY_WIDTH}>
+        <AttributeCombinationBody color={bodyColor} id="ParametersBox">
           <div className={`icon`}>
             <RemoveIconComponent
               width={26}
@@ -80,7 +79,7 @@ export const AttributesRow = ({
             />
           </div>
           <div className="text">{filterName}</div>
-        </Box>
+        </AttributeCombinationBody>
         <CombinationDropdown
           items={combinations}
           selectedItems={selectedCombinations}
@@ -89,7 +88,7 @@ export const AttributesRow = ({
           headerColor={headerColor}
           bodyColor={bodyColor}
         />
-      </Entity>
+      </AttributeCombinationContainer>
       {selectedCombinations.map((comb) => (
         <AttributeObject
           key={comb.combined}
@@ -108,6 +107,6 @@ export const AttributesRow = ({
           onClose={() => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, true, dispatch)}
         />
       ))}
-    </Body>
+    </AttributesRowBody>
   );
 };

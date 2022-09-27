@@ -2,25 +2,38 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../assets/font";
 
-interface BodyProps {
+interface AttributesBodyProps {
   width: number;
 }
 
-export const Body = styled.div<BodyProps>`
+export const AttributesRowBody = styled.div<AttributesBodyProps>`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   width: max(100%, ${(props) => props.width}px);
   min-height: 196px;
+  align-items: center;
 `;
 
-export const Box = styled.div`
+interface AttributeCombinationProps {
+  width: number;
+}
+
+export const AttributeCombinationContainer = styled.div<AttributeCombinationProps>`
+  width: ${(props) => props.width}px;
+  height: 70px;
+`;
+
+/**
+ * The body for a combination object
+ */
+export const AttributeCombinationBody = styled.div`
   display: flex;
   flex-direction: column;
   height: 71px;
   width: 151px;
   background-color: ${(props) => props.color};
   border-radius: 9px;
-  margin: 20px;
+  margin-left: 20px;
   font-size: ${FontSize.SMALL};
 
   .text {

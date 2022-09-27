@@ -4,7 +4,7 @@ import { Color } from "../../../../../../../../../../../assets/color/Color";
 
 export const MenuWrapper = styled.div`
   position: relative;
-  margin-top: -46px;
+  bottom: 26px;
   width: 250px;
   left: 20px;
   border-bottom-left-radius: 5px;

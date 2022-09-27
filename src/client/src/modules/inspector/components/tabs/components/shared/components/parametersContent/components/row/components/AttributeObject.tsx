@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { AttributesDescriptor } from "./AttributeDescriptor";
-import { Entity } from "../styled/Entity";
-import { AttributeHeader } from "./AttributeObject.styled";
+import { AttributeHeaderBox, AttributeObjectBox } from "./AttributeObject.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { Attribute } from "@mimirorg/modelbuilder-types";
@@ -26,7 +25,7 @@ interface Props {
 /**
  * Component for a single Attribute used in the Inspector.
  * @param props
- * @returns an attribute with data for qualifier, source, condition, an input field and a dropdown for units.
+ * @returns an attribute with data, an input field and a dropdown for units.
  */
 export const AttributeObject = ({
   attribute,
@@ -51,8 +50,8 @@ export const AttributeObject = ({
   }, [attribute, attributeValue]);
 
   return (
-    <Entity width={430}>
-      <AttributeHeader color={bodyColor}>
+    <AttributeObjectBox width={430}>
+      <AttributeHeaderBox color={bodyColor}>
         <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
         <AttributeButtonsComponent
           attribute={attribute}
@@ -63,7 +62,7 @@ export const AttributeObject = ({
           onClose={(id: string) => onClose(id)}
           onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
         />
-      </AttributeHeader>
+      </AttributeHeaderBox>
       <AttributesDescriptor
         specifiedScope={combination.specifiedScope}
         specifiedProvenance={combination.specifiedProvenance}
@@ -78,6 +77,6 @@ export const AttributeObject = ({
         setValue={setValue}
         onChange={(id, value, unitId) => onChange(id, value, unitId)}
       />
-    </Entity>
+    </AttributeObjectBox>
   );
 };
