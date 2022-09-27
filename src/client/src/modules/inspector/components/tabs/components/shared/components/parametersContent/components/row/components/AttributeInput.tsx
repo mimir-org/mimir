@@ -39,7 +39,6 @@ export const AttributeInput = ({ attribute, value, setValue, onChange }: Props) 
         disabled={isLocked}
         onChange={(_unitId: string) => onChange(attribute.id, value, _unitId)}
         defaultUnitId={defaultValueForDropDown}
-        isAttributeDropdown
       />
     </AttributeInputBox>
   );

@@ -10,7 +10,7 @@ export const Body = styled.div<BodyProps>`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   width: max(100%, ${(props) => props.width}px);
-  min-height: 120px;
+  min-height: 235px;
 `;
 
 export const Box = styled.div`

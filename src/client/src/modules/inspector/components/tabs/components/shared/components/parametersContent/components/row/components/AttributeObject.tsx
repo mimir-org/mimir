@@ -51,7 +51,7 @@ export const AttributeObject = ({
   }, [attribute, attributeValue]);
 
   return (
-    <Entity width={PARAMETER_ENTITY_WIDTH}>
+    <Entity width={430}>
       <AttributeHeader color={bodyColor}>
         <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
         <AttributeButtonsComponent
@@ -69,6 +69,8 @@ export const AttributeObject = ({
         specifiedProvenance={combination.specifiedProvenance}
         rangeSpecifying={combination.rangeSpecifying}
         regularitySpecified={combination.regularitySpecified}
+        headerColor={headerColor}
+        bodyColor={bodyColor}
       />
       <AttributeInput
         attribute={attribute}

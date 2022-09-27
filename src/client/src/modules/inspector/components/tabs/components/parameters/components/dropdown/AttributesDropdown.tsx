@@ -1,6 +1,6 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { useEffect, useState } from "react";
-import { DropdownBox } from "../../../../../../../../compLibrary/dropdown/mimir/Dropdown.styled";
+import { AttributesDropdownBox } from "./AttributesDropdown.styled";
 import { AttributesDropdownHeader } from "./AttributesDropdownHeader";
 import { AttributesDropdownList } from "./ParametersDropdownList";
 
@@ -10,7 +10,6 @@ interface Props {
   onChange: (unitId: string) => void;
   defaultUnitId: string;
   disabled?: boolean;
-  isAttributeDropdown?: boolean;
 }
 
 /**
@@ -18,7 +17,7 @@ interface Props {
  * @param interface
  * @returns a drop-down menu.
  */
-export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disabled, isAttributeDropdown }: Props) => {
+export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disabled }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState<string>(null);
 
@@ -40,10 +39,9 @@ export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disa
   };
 
   return units?.length ? (
-    <DropdownBox
+    <AttributesDropdownBox
       disabled={disabled}
       tabIndex={0}
-      isAttributeDropdown={isAttributeDropdown}
       onBlur={() => {
         setIsListOpen(false);
       }}
@@ -56,6 +54,6 @@ export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disa
         selectedUnit={selectedUnit}
       />
       {isListOpen && <AttributesDropdownList units={units} handleChange={(item: Unit) => handleChange(item)} />}
-    </DropdownBox>
+    </AttributesDropdownBox>
   ) : null;
 };

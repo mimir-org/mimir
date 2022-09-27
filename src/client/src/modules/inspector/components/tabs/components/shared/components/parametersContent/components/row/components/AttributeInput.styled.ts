@@ -4,7 +4,8 @@ export const AttributeInputBox = styled.div`
   width: 100%;
   display: flex;
   gap: 16px;
-  padding: 10px 35px 0 20px;
+  padding: 0 35px 0 25px;
+  background: #000;
 
   input {
     flex: 1;
