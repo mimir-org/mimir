@@ -342,10 +342,7 @@ namespace ModelBuilder.Rdf.Services
         {
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
             var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == projectIri).ToList();
-            var attributeFormats = _libRepository.GetAttributeFormats().Result;
-            var attributeConditions = _libRepository.GetAttributeConditions().Result;
-            var attributeSources = _libRepository.GetAttributeSources().Result;
-            var attributeQualifiers = _libRepository.GetAttributeQualifiers().Result;
+            var quantityDatums = _libRepository.GetQuantityDatums().Result;
             var units = _libRepository.GetUnits().Result;
 
             var projectData = new ProjectData
@@ -353,10 +350,7 @@ namespace ModelBuilder.Rdf.Services
                 Edges = _mapper.Map<List<EdgeAm>>(edges),
                 Nodes = _mapper.Map<List<NodeAm>>(nodes),
                 Units = units,
-                AttributeFormats = attributeFormats?.ToDictionary(x => x.Name, x => x),
-                AttributeConditions = attributeConditions?.ToDictionary(x => x.Name, x => x),
-                AttributeSources = attributeSources?.ToDictionary(x => x.Name, x => x),
-                AttributeQualifiers = attributeQualifiers?.ToDictionary(x => x.Name, x => x)
+                QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
             };
 
             _edgeRepository.Context.ChangeTracker.Clear();

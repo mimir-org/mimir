@@ -24,10 +24,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
             builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
 
-            builder.Property(p => p.Qualifier).HasColumnName("Qualifier").HasMaxLength(127);
-            builder.Property(p => p.Source).HasColumnName("Source").HasMaxLength(127);
-            builder.Property(p => p.Condition).HasColumnName("Condition").HasMaxLength(127);
-            builder.Property(p => p.Format).HasColumnName("Format").HasMaxLength(127);
+            builder.Property(p => p.SpecifiedScope).HasColumnName("SpecifiedScope").HasMaxLength(127).IsRequired(false);
+            builder.Property(p => p.SpecifiedProvenance).HasColumnName("SpecifiedProvenance").HasMaxLength(127).IsRequired(false);
+            builder.Property(p => p.RangeSpecifying).HasColumnName("RangeSpecifying").HasMaxLength(127).IsRequired(false);
+            builder.Property(p => p.RegularitySpecified).HasColumnName("RegularitySpecified").HasMaxLength(127).IsRequired(false);
 
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);

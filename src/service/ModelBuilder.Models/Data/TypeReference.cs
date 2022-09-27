@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Mb.Models.Data
 {
     public class TypeReference
@@ -5,8 +7,7 @@ namespace Mb.Models.Data
         public string Name { get; set; }
         public string Iri { get; set; }
         public string Source { get; set; }
-        public string SubName { get; set; }
-        public string SubIri { get; set; }
+        public ICollection<TypeReferenceSub> Subs { get; set; }
         public string Kind => nameof(TypeReference);
     }
 }

@@ -27,15 +27,28 @@ const GetCombinedAttributeFilters = (attributes: Attribute[]): CombinedAttribute
   }
 
   for (const element of attributes) {
-    const attributeCombined = "(" + element.qualifier + ")," + "(" + element.source + ")," + "(" + element.condition + ")";
+    const attributeCombined =
+      "(" +
+      element.specifiedScope +
+      ")," +
+      "(" +
+      element.specifiedProvenance +
+      ")," +
+      "(" +
+      element.rangeSpecifying +
+      ")" +
+      "(" +
+      element.regularitySpecified +
+      ")";
     const actualFilter = filters.filter((f) => f.name === element.entity)[0];
 
     if (actualFilter) {
       if (!actualFilter.combinedAttributes.some((x) => x.combined === attributeCombined)) {
         actualFilter.combinedAttributes.push({
-          qualifier: element.qualifier,
-          source: element.source,
-          condition: element.condition,
+          specifiedScope: element.specifiedScope,
+          specifiedProvenance: element.specifiedProvenance,
+          rangeSpecifying: element.rangeSpecifying,
+          regularitySpecified: element.regularitySpecified,
           combined: attributeCombined,
         });
       }
@@ -44,9 +57,10 @@ const GetCombinedAttributeFilters = (attributes: Attribute[]): CombinedAttribute
         name: element.entity,
         combinedAttributes: [
           {
-            qualifier: element.qualifier,
-            source: element.source,
-            condition: element.condition,
+            specifiedScope: element.specifiedScope,
+            specifiedProvenance: element.specifiedProvenance,
+            rangeSpecifying: element.rangeSpecifying,
+            regularitySpecified: element.regularitySpecified,
             combined: attributeCombined,
           },
         ],
@@ -58,8 +72,9 @@ const GetCombinedAttributeFilters = (attributes: Attribute[]): CombinedAttribute
 };
 
 const DoesCombinationMatchAttribute = (combination: CombinedAttribute, attribute: Attribute) =>
-  combination.qualifier === attribute.qualifier &&
-  combination.source === attribute.source &&
-  combination.condition === attribute.condition;
+  combination.specifiedScope === attribute.specifiedScope &&
+  combination.specifiedProvenance === attribute.specifiedProvenance &&
+  combination.rangeSpecifying === attribute.rangeSpecifying &&
+  combination.regularitySpecified === attribute.regularitySpecified;
 
 export { GetAttributeCombinations, DoesCombinationMatchAttribute, GetCombinedAttributeFilters };

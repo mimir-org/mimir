@@ -64,7 +64,12 @@ export const AttributeObject = ({
           onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
         />
       </AttributeHeader>
-      <AttributesDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
+      <AttributesDescriptor
+        specifiedScope={combination.specifiedScope}
+        specifiedProvenance={combination.specifiedProvenance}
+        rangeSpecifying={combination.rangeSpecifying}
+        regularitySpecified={combination.regularitySpecified}
+      />
       <AttributeInput
         attribute={attribute}
         value={value}

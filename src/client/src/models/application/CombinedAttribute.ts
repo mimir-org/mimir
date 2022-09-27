@@ -1,6 +1,7 @@
 export interface CombinedAttribute {
-  qualifier: string;
-  source: string;
-  condition: string;
+  specifiedScope: string;
+  specifiedProvenance: string;
+  rangeSpecifying: string;
+  regularitySpecified: string;
   combined: string;
 }

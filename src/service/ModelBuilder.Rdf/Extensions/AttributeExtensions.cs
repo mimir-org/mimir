@@ -25,6 +25,11 @@ namespace ModelBuilder.Rdf.Extensions
         {
             #region None Mimir specific data
 
+            if (attribute.Entity == "RDF Attribute")
+            {
+                var t = string.Empty;
+            }
+
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
             ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
@@ -32,10 +37,10 @@ namespace ModelBuilder.Rdf.Extensions
 
             var ado = attribute.AttributeDatumObject();
             var adp = attribute.Iri.AttributeDatumPredicate();
-            ontologyService.AssertNode(attribute.IriDatum(), adp.QualifierPredicate, ado.QualifierObject);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.SourcePredicate, ado.SourceObject);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.ConditionPredicate, ado.ConditionObject);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.FormatPredicate, ado.FormatObject);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
 
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
 
@@ -73,7 +78,6 @@ namespace ModelBuilder.Rdf.Extensions
                 return;
 
             var selectedUnit = attribute.GetSelectedUnit(projectData);
-            attribute.AssertAttributeFormat(ontologyService, projectData);
 
             ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
@@ -84,22 +88,6 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
             ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnitId}");
-        }
-
-        /// <summary>
-        /// Assert attribute format
-        /// </summary>
-        /// <param name="attribute">Attribute that should have asserted value</param>
-        /// <param name="ontologyService">Ontology Service</param>
-        /// <param name="projectData">Record of ICollections</param>
-        public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
-        {
-            var attributeFormat = projectData.AttributeFormats[attribute.Format];
-
-            if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.Name))
-                return;
-
-            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, attributeFormat.Name));
         }
 
         /// <summary>
@@ -144,13 +132,13 @@ namespace ModelBuilder.Rdf.Extensions
         public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
         {
             var rootIri = attribute.Iri.RootIri();
-
+            // TODO: This need rewrite logic
             return new AttributeDatumObject
             {
-                QualifierObject = $"{rootIri}/qualifier/{HttpUtility.UrlEncode(attribute.Qualifier)}",
-                SourceObject = $"{rootIri}/source/{HttpUtility.UrlEncode(attribute.Source)}",
-                ConditionObject = $"{rootIri}/condition/{HttpUtility.UrlEncode(attribute.Condition)}",
-                FormatObject = $"{rootIri}/format/{HttpUtility.UrlEncode(attribute.Format)}"
+                SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attribute.SpecifiedScope)}",
+                SpecifiedProvenance = $"{rootIri}/provenance/{HttpUtility.UrlEncode(attribute.SpecifiedProvenance)}",
+                RangeSpecifying = $"{rootIri}/specifying/{HttpUtility.UrlEncode(attribute.RangeSpecifying)}",
+                RegularitySpecified = $"{rootIri}/specified/{HttpUtility.UrlEncode(attribute.RegularitySpecified)}"
             };
         }
 
@@ -181,11 +169,12 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
             attribute.SelectedUnitId = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
 
+            // TODO: This must be rewritten
             var adp = iri.AttributeDatumPredicate();
-            attribute.Qualifier = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
-            attribute.Source = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
-            attribute.Condition = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
-            attribute.Format = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+            attribute.SpecifiedScope = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false);
+            attribute.SpecifiedProvenance = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false);
+            attribute.RangeSpecifying = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false);
+            attribute.RegularitySpecified = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false);
 
             attribute.TypeReferences.ResolveTypeReferences(attribute.Iri, ontologyService);
 

@@ -1,5 +1,6 @@
 using Mb.Models.Extensions;
 using ModelBuilder.Rdf.Models;
+// ReSharper disable StringLiteralTypo
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -54,13 +55,13 @@ namespace ModelBuilder.Rdf.Extensions
         public static AttributeDatumPredicate AttributeDatumPredicate(this string iri)
         {
             var rootIri = iri.RootIri();
-
+            // TODO: This should be rewritten
             return new AttributeDatumPredicate
             {
-                QualifierPredicate = $"{rootIri}/qualifier",
-                SourcePredicate = $"{rootIri}/source",
-                ConditionPredicate = $"{rootIri}/condition",
-                FormatPredicate = $"{rootIri}/format"
+                SpecifiedScopePredicate = $"{rootIri}/specifiedscopesredicate",
+                SpecifiedProvenancePredicate = $"{rootIri}/specifiedprovenancepredicate",
+                RangeSpecifyingPredicate = $"{rootIri}/rangespecifyingpredicate",
+                RegularitySpecifiedPredicate = $"{rootIri}/regularityspecifiedpredicate"
             };
         }
 
