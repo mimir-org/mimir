@@ -7,10 +7,12 @@ export const AttributeInputBox = styled.div`
   width: 250px;
   display: flex;
   gap: 4px;
-  margin-left: 59px;
+  margin-left: 112px;
 
   input {
     flex: 1;
-    width: 70%;
+    max-width: 40%;
+    height: 60%;
+    margin-right: 4px;
   }
 `;

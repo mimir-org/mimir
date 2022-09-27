@@ -32,7 +32,7 @@ export const AttributesDropdownHeaderBox = styled.div<AttributesDropdownHeaderPr
   width: 100%;
   max-width: 90px;
   border: 1px solid ${(props) => props.borderColor};
-  border-radius: 2;
+  border-radius: 2px;
   font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
 
@@ -76,7 +76,7 @@ interface AttributesDropdownListItemProps {
 
 export const AttributesDropdownListItem = styled.div<AttributesDropdownListItemProps>`
   display: flex;
-  height: 22px;
+  height: 19px;
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
