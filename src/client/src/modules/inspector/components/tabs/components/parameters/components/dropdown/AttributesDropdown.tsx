@@ -1,8 +1,13 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { useEffect, useState } from "react";
-import { AttributesDropdownBox } from "./AttributesDropdown.styled";
-import { AttributesDropdownHeader } from "./AttributesDropdownHeader";
-import { AttributesDropdownList } from "./ParametersDropdownList";
+import { Color } from "../../../../../../../../assets/color/Color";
+import { CollapseIcon, ExpandIcon } from "../../../../../../../../assets/icons/chevron";
+import {
+  AttributesDropdownBox,
+  AttributesDropdownHeaderBox,
+  AttributesDropdownListBox,
+  AttributesDropdownListItem,
+} from "./AttributesDropdown.styled";
 
 interface Props {
   label: string;
@@ -20,7 +25,6 @@ interface Props {
 export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disabled }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedUnitId, setSelectedUnitId] = useState<string>(null);
-
   const selectedUnit = units.find((u) => u.id === selectedUnitId);
 
   useEffect(() => {
@@ -38,7 +42,9 @@ export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disa
     onChange(unit.id);
   };
 
-  return units?.length ? (
+  if (!units?.length) return null;
+
+  return (
     <AttributesDropdownBox
       disabled={disabled}
       tabIndex={0}
@@ -47,13 +53,28 @@ export const AttributesDropdown = ({ label, units, onChange, defaultUnitId, disa
       }}
     >
       <label htmlFor={label} />
-      <AttributesDropdownHeader
-        disabled={disabled}
-        isListOpen={isListOpen}
-        setIsListOpen={setIsListOpen}
-        selectedUnit={selectedUnit}
-      />
-      {isListOpen && <AttributesDropdownList units={units} handleChange={(item: Unit) => handleChange(item)} />}
+      <AttributesDropdownHeaderBox
+        borderColor={Color.BATTLESHIP_GREY}
+        onClick={disabled ? null : () => setIsListOpen(!isListOpen)}
+      >
+        {selectedUnit && (
+          <>
+            <p>{selectedUnit.symbol}</p>
+            <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+          </>
+        )}
+      </AttributesDropdownHeaderBox>
+      {isListOpen && (
+        <AttributesDropdownListBox borderColor={Color.BATTLESHIP_GREY}>
+          {units?.map((unit) => {
+            return (
+              <AttributesDropdownListItem onClick={() => handleChange(unit)} key={unit.id}>
+                <p>{unit.symbol ?? ""}</p>
+              </AttributesDropdownListItem>
+            );
+          })}
+        </AttributesDropdownListBox>
+      )}
     </AttributesDropdownBox>
-  ) : null;
+  );
 };

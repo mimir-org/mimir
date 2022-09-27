@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
+/**
+ * A wrapper for the input field and the drop-down menu for units
+ */
 export const AttributeInputBox = styled.div`
-  width: 100%;
+  width: 250px;
   display: flex;
-  gap: 16px;
-  padding: 0 35px 0 25px;
-  background: #000;
+  gap: 4px;
+  margin-left: 59px;
 
   input {
     flex: 1;
-    height: 100%;
-    width: 0;
+    width: 70%;
   }
 `;
