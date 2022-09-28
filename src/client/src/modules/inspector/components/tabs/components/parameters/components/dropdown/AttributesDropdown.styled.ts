@@ -12,7 +12,7 @@ export const AttributesDropdownBox = styled.div<AttributesDropdownProps>`
   flex: 1;
   position: relative;
   width: 100%;
-  max-width: 90px;
+  max-width: 62px;
   background-color: ${Color.WHITE};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${FontSize.SMALL};

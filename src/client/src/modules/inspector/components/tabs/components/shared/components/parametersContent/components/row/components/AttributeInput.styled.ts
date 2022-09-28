@@ -11,12 +11,14 @@ export const AttributeInputBox = styled.div<Props>`
   width: ${(props) => (props.singleColumn ? 170 : 250)}px;
   display: flex;
   gap: 4px;
-  margin-left: ${(props) => (props.singleColumn ? 30 : 112)}px;
+  margin-left: ${(props) => (props.singleColumn ? 47 : 142)}px;
   margin-bottom: 8px;
   height: 20px;
 
   input {
-    max-width: 40%;
+    width: 35%;
+    max-width: 70px;
     margin-right: 4px;
+    font-size: 80%;
   }
 `;

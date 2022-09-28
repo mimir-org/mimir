@@ -15,6 +15,6 @@ interface Props {
 export const AttributeDescriptorElement = ({ headerText, text, color, isEven }: Props) => (
   <AttributeDescriptorBody isEven={isEven}>
     <AttributeDescriptorHeader headerColor={color}>{headerText}</AttributeDescriptorHeader>
-    <AttributeDescriptorText headerColor={color}>{text}</AttributeDescriptorText>
+    <AttributeDescriptorText headerColor={color}>{text + "test"}</AttributeDescriptorText>
   </AttributeDescriptorBody>
 );

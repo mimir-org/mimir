@@ -32,6 +32,7 @@ export const AttributeInput = ({ attribute, value, singleColumn, setValue, onCha
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onBlur={() => onChange(attribute.id, value, null)}
+        size={1}
       />
 
       <AttributesDropdown

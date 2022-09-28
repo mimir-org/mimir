@@ -94,9 +94,9 @@ export const AttributeObject = ({
 
 function GetDescriptorAmount(combination: CombinedAttribute) {
   let count = 0;
-  if (combination.specifiedScope != undefined) count++;
-  if (combination.specifiedProvenance != undefined) count++;
-  if (combination.rangeSpecifying != undefined) count++;
-  if (combination.regularitySpecified != undefined) count++;
-  return 3;
+  if (combination.specifiedScope != undefined && combination.specifiedScope != null) count++;
+  if (combination.specifiedProvenance != undefined && combination.specifiedProvenance != null) count++;
+  if (combination.rangeSpecifying != undefined && combination.rangeSpecifying != null) count++;
+  if (combination.regularitySpecified != undefined && combination.regularitySpecified != null) count++;
+  return count;
 }
