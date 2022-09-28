@@ -33,18 +33,18 @@ interface HeaderProps {
 }
 
 export const AttributeDescriptorHeader = styled.div<HeaderProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: ${(props) => props.headerColor};
   color: ${Color.WHITE};
   font-size: ${FontSize.MEDIUM};
-  min-width: 200px;
+  padding: 4px 2px 0 6px;
   border: 1px solid #65a8ad;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   height: 27px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 interface TextProps {
