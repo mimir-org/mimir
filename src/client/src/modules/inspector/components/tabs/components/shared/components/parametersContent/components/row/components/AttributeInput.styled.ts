@@ -1,18 +1,22 @@
 import styled from "styled-components";
 
+interface Props {
+  singleColumn: boolean;
+}
+
 /**
  * A wrapper for the input field and the drop-down menu for units
  */
-export const AttributeInputBox = styled.div`
-  width: 250px;
+export const AttributeInputBox = styled.div<Props>`
+  width: ${(props) => (props.singleColumn ? 170 : 250)}px;
   display: flex;
   gap: 4px;
-  margin-left: 112px;
+  margin-left: ${(props) => (props.singleColumn ? 30 : 112)}px;
+  margin-bottom: 8px;
+  height: 20px;
 
   input {
-    flex: 1;
     max-width: 40%;
-    height: 60%;
     margin-right: 4px;
   }
 `;

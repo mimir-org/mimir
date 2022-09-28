@@ -10,13 +10,13 @@ export const AttributesRowBody = styled.div<AttributesRowBodyProps>`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   width: max(100%, ${(props) => props.width}px);
-  min-height: 196px;
+  height: 190px;
   align-items: center;
 `;
 
 export const AttributeCombinationContainer = styled.div`
   width: 191px;
-  height: 70px;
+  height: 70px; ;
 `;
 
 /**

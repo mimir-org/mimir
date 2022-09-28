@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
-import { AttributeDescriptorsWrapper } from "./AttributeDescriptor.styled";
+import { AttributeDescriptorBox, AttributeDescriptorColumn, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
+import { AttributeDescriptorElement } from "./AttributeDescriptorElement";
 
 interface Props {
   specifiedScope: string;
@@ -8,6 +10,8 @@ interface Props {
   regularitySpecified: string;
   headerColor: string;
   bodyColor: string;
+  descriptorsAmount: number;
+  singleColumn: boolean;
 }
 
 export const AttributeDescriptor = ({
@@ -17,27 +21,45 @@ export const AttributeDescriptor = ({
   regularitySpecified,
   headerColor,
   bodyColor,
-}: Props) => (
-  <AttributeDescriptorsWrapper bodyColor={bodyColor} headerColor={headerColor}>
-    <div className="tjof">
-      <div className="descriptors-top">
-        <div className="gabbi">{TextResources.SPECIFIED_SCOPE}</div>
-        <div className="gabbi">{TextResources.SPECIFIED_PROVENANCE}</div>
-      </div>
-      <div className="descriptors-bottom">
-        <div className="gabbi-bottom">{specifiedScope + " test "}</div>
-        <div className="gabbi-bottom">{specifiedProvenance + " test"}</div>
-      </div>
-    </div>
-    <div className="tjof">
-      <div className="descriptors-top">
-        <div className="gabbi">{TextResources.RANGE_SPECIFYING}</div>
-        <div className="gabbi">{TextResources.REGULARITY_SPECIFIED}</div>
-      </div>
-      <div className="descriptors-bottom">
-        <div className="gabbi-bottom">{rangeSpecifying + " test"}</div>
-        <div className="gabbi-bottom">{regularitySpecified + " test"}</div>
-      </div>
-    </div>
-  </AttributeDescriptorsWrapper>
-);
+  descriptorsAmount,
+  singleColumn,
+}: Props) => {
+  if (singleColumn) {
+    return (
+      <AttributeDescriptorBox>
+        <AttributeDescriptorColumn>
+          {[...Array(descriptorsAmount)].map(() => {
+            return (
+              <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} />
+            );
+          })}
+        </AttributeDescriptorColumn>
+      </AttributeDescriptorBox>
+    );
+  }
+
+  return (
+    <AttributeDescriptorBox>
+      <AttributeDescriptorRow>
+        <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} isEven />
+        <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} />
+      </AttributeDescriptorRow>
+      <AttributeDescriptorRow>
+        <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} isEven />
+      </AttributeDescriptorRow>
+
+      {[...Array(descriptorsAmount - 3)].map((_, index) => {
+        return index % 2 === 0 ? (
+          <AttributeDescriptorElement
+            headerText={TextResources.SPECIFIED_SCOPE}
+            text={specifiedScope}
+            color={headerColor}
+            isEven
+          />
+        ) : (
+          <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} />
+        );
+      })}
+    </AttributeDescriptorBox>
+  );
+};

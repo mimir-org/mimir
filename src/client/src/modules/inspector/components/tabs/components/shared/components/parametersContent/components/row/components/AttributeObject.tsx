@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AttributeDescriptor } from "./AttributeDescriptor";
-import { AttributeHeaderBox, AttributeObjectBox } from "./AttributeObject.styled";
+import { AttributeHeaderBox, AttributeObjectBody, AttributeObjectBox } from "./AttributeObject.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { Attribute } from "@mimirorg/modelbuilder-types";
@@ -24,7 +24,7 @@ interface Props {
 
 /**
  * Component for a single Attribute used in the Inspector.
- * @param props
+ * @param interface
  * @returns an attribute with data, an input field and a dropdown for units.
  */
 export const AttributeObject = ({
@@ -45,12 +45,16 @@ export const AttributeObject = ({
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
   const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
 
+  const descriptorsAmount = GetDescriptorAmount(combination);
+  const hasDescriptors = descriptorsAmount > 0;
+  const singleColumn = descriptorsAmount < 3;
+
   useEffect(() => {
     IsAttribute(attribute) && setValue(attributeValue);
   }, [attribute, attributeValue]);
 
   return (
-    <AttributeObjectBox width={430}>
+    <AttributeObjectBox singleColumn={singleColumn}>
       <AttributeHeaderBox color={bodyColor}>
         <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
         <AttributeButtonsComponent
@@ -63,20 +67,36 @@ export const AttributeObject = ({
           onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
         />
       </AttributeHeaderBox>
-      <AttributeDescriptor
-        specifiedScope={combination.specifiedScope}
-        specifiedProvenance={combination.specifiedProvenance}
-        rangeSpecifying={combination.rangeSpecifying}
-        regularitySpecified={combination.regularitySpecified}
-        headerColor={headerColor}
-        bodyColor={bodyColor}
-      />
+      <AttributeObjectBody>
+        {hasDescriptors && (
+          <AttributeDescriptor
+            specifiedScope={combination.specifiedScope}
+            specifiedProvenance={combination.specifiedProvenance}
+            rangeSpecifying={combination.rangeSpecifying}
+            regularitySpecified={combination.regularitySpecified}
+            headerColor={headerColor}
+            bodyColor={bodyColor}
+            descriptorsAmount={descriptorsAmount}
+            singleColumn={singleColumn}
+          />
+        )}
+      </AttributeObjectBody>
       <AttributeInput
         attribute={attribute}
         value={value}
+        singleColumn={singleColumn}
         setValue={setValue}
         onChange={(id, value, unitId) => onChange(id, value, unitId)}
       />
     </AttributeObjectBox>
   );
 };
+
+function GetDescriptorAmount(combination: CombinedAttribute) {
+  let count = 0;
+  if (combination.specifiedScope != undefined) count++;
+  if (combination.specifiedProvenance != undefined) count++;
+  if (combination.rangeSpecifying != undefined) count++;
+  if (combination.regularitySpecified != undefined) count++;
+  return 3;
+}
