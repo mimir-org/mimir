@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   singleColumn: boolean;
+  hasDescriptors: boolean;
 }
 
 /**
@@ -12,7 +13,7 @@ export const AttributeInputBox = styled.div<Props>`
   display: flex;
   gap: 4px;
   margin-left: ${(props) => (props.singleColumn ? 47 : 142)}px;
-  margin-bottom: 8px;
+  margin-bottom: ${(props) => (props.hasDescriptors ? 78 : 8)}px;
   height: 20px;
 
   input {

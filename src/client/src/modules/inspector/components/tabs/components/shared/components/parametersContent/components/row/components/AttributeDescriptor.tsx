@@ -46,9 +46,17 @@ export const AttributeDescriptor = ({
       </AttributeDescriptorRow>
       <AttributeDescriptorRow>
         <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} isEven />
+        {descriptorsAmount === 4 && (
+          <AttributeDescriptorElement
+            headerText={TextResources.SPECIFIED_SCOPE}
+            text={specifiedScope}
+            color={headerColor}
+            isEven
+          />
+        )}
       </AttributeDescriptorRow>
 
-      {[...Array(descriptorsAmount - 3)].map((_, index) => {
+      {/* {[...Array(descriptorsAmount - 3)].map((_, index) => {
         return index % 2 === 0 ? (
           <AttributeDescriptorElement
             headerText={TextResources.SPECIFIED_SCOPE}
@@ -59,7 +67,7 @@ export const AttributeDescriptor = ({
         ) : (
           <AttributeDescriptorElement headerText={TextResources.SPECIFIED_SCOPE} text={specifiedScope} color={headerColor} />
         );
-      })}
+      })} */}
     </AttributeDescriptorBox>
   );
 };

@@ -7,6 +7,7 @@ interface Props {
   attribute: Attribute;
   value: string;
   singleColumn: boolean;
+  hasDescriptors: boolean;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   onChange: (id: string, value: string, unitId: string) => void;
 }
@@ -16,7 +17,7 @@ interface Props {
  * @param props
  * @returns an input field for adding a value, and a drop-down list for units.
  */
-export const AttributeInput = ({ attribute, value, singleColumn, setValue, onChange }: Props) => {
+export const AttributeInput = ({ attribute, value, singleColumn, hasDescriptors, setValue, onChange }: Props) => {
   if (!attribute) return null;
 
   const isAttribute = IsAttribute(attribute);
@@ -25,7 +26,7 @@ export const AttributeInput = ({ attribute, value, singleColumn, setValue, onCha
   const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0]?.id;
 
   return (
-    <AttributeInputBox singleColumn={singleColumn}>
+    <AttributeInputBox singleColumn={singleColumn} hasDescriptors={hasDescriptors}>
       <input
         name="attributeInput"
         disabled={isLocked || !isAttribute}

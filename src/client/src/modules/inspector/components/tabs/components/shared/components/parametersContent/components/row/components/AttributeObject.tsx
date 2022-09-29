@@ -85,6 +85,7 @@ export const AttributeObject = ({
         attribute={attribute}
         value={value}
         singleColumn={singleColumn}
+        hasDescriptors={hasDescriptors}
         setValue={setValue}
         onChange={(id, value, unitId) => onChange(id, value, unitId)}
       />
