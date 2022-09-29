@@ -1,44 +1,39 @@
 import styled from "styled-components";
-import { Color } from "../../../assets/color/Color";
-import { FontWeight } from "../../../assets/font";
+import { Color } from "../../../../../../../../assets/color/Color";
+import { FontSize, FontWeight } from "../../../../../../../../assets/font";
 
-interface DropdownBoxProps {
+interface AttributesDropdownProps {
   disabled: boolean;
-  fontSize?: string;
-  isAttributeDropdown?: boolean;
 }
 
-export const DropdownBox = styled.div<DropdownBoxProps>`
+export const AttributesDropdownBox = styled.div<AttributesDropdownProps>`
   display: flex;
   flex-direction: column;
-  flex: ${(props) => props.isAttributeDropdown && 1};
+  flex: 1;
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
+  max-width: 62px;
   background-color: ${Color.WHITE};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
-  font-size: ${(props) => props.fontSize};
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
 `;
 
-interface DropdownHeaderBoxProps {
-  height: number;
+interface AttributesDropdownHeaderProps {
   borderColor: string;
-  borderRadius: number;
-  fontSize: string;
 }
 
-export const DropdownHeaderBox = styled.div<DropdownHeaderBoxProps>`
+export const AttributesDropdownHeaderBox = styled.div<AttributesDropdownHeaderProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: ${(props) => props.height}px;
-  width: inherit;
-  background: ${Color.WHITE};
+  height: 100%;
+  width: 100%;
+  max-width: 90px;
   border: 1px solid ${(props) => props.borderColor};
-  border-radius: ${(props) => props.borderRadius}px;
-  font-size: ${(props) => props.fontSize};
+  border-radius: 2px;
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
 
   p {
@@ -52,47 +47,42 @@ export const DropdownHeaderBox = styled.div<DropdownHeaderBoxProps>`
   }
 `;
 
-interface DropdownListBoxProps {
-  top: number;
+interface AttributesDropdownListBoxProps {
   borderColor: string;
-  borderRadius: number;
 }
 
-export const DropdownListBox = styled.div<DropdownListBoxProps>`
+export const AttributesDropdownListBox = styled.div<AttributesDropdownListBoxProps>`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: ${(props) => props.top}px;
+  top: 27px;
   left: 0;
-  width: inherit;
+  width: 100%;
+  max-width: 90px;
   max-height: 250px;
   border-width: 1px;
   border-style: solid;
   border-color: ${(props) => props.borderColor};
-  border-radius: ${(props) => props.borderRadius}px;
-  background-color: inherit;
+  border-radius: 2px;
+  background-color: ${Color.WHITE};
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
   z-index: 1;
 `;
 
-interface DropdownListItemProps {
-  height: number;
-  borderRadius: number;
-  fontSize: string;
+interface AttributesDropdownListItemProps {
   hasCategory?: boolean;
 }
 
-export const DropdownListItem = styled.div<DropdownListItemProps>`
+export const AttributesDropdownListItem = styled.div<AttributesDropdownListItemProps>`
   display: flex;
-  height: ${(props) => props.height}px;
+  height: 19px;
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: ${Color.LIGHT_SILVER};
-  font-size: ${(props) => props.fontSize};
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
-  background-color: ${Color.CHOCOLATE};
   cursor: pointer;
   z-index: 1;
 

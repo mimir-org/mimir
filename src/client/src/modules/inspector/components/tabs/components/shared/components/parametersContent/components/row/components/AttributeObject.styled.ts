@@ -2,11 +2,28 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
-interface AttributeObjectProps {
+interface AttributeObjectBoxProps {
+  singleColumn: boolean;
+}
+
+export const AttributeObjectBox = styled.div<AttributeObjectBoxProps>`
+  display: flex;
+  flex-direction: column;
+  width: ${(props) => (props.singleColumn ? 225 : 430)}px;
+  height: 100%;
+  border-right: 1px solid ${Color.LIGHT_SILVER};
+  border-left: 1px solid ${Color.LIGHT_SILVER};
+`;
+
+export const AttributeObjectBody = styled.div`
+  flex: 1;
+`;
+
+interface AttributeHeaderBoxProps {
   color: string;
 }
 
-export const AttributeHeader = styled.div<AttributeObjectProps>`
+export const AttributeHeaderBox = styled.div<AttributeHeaderBoxProps>`
   display: flex;
   gap: 8px;
   height: 30px;

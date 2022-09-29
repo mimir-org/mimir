@@ -2,44 +2,72 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
-export const AttributesDescriptorsWrapper = styled.div`
-  padding: 8px 35px 8px 20px;
+export const AttributeDescriptorBox = styled.div`
+  padding: 12px 35px 5px 12px;
+  display: flex;
+  flex-direction: row;
+`;
 
-  .descriptors-top {
-    display: flex;
-    justify-content: space-between;
-    font-size: ${FontSize.TINY};
-    color: ${Color.DAVYS_GREY};
-  }
+export const AttributeDescriptorBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+  margin-bottom: 5px;
+  /* right: 2px; */
+  width: 100px;
+  /* background: #000; */
+`;
 
-  .descriptors-bottom {
-    display: flex;
-    font-size: ${FontSize.SMALL};
-    justify-content: space-between;
-    margin-top: 1px;
-    border-top: 1px solid ${Color.CORNFLOWER_BLUE};
+export const AttributeDescriptorRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* margin-right: 10px; */
+  /* width: 200px; */
+  /* background: #000; */
+`;
 
-    div:not(:first-child)::after {
-      content: "";
-      width: 1px;
-      height: 6px;
-      background: ${Color.CORNFLOWER_BLUE};
-      border-radius: 1px;
-      position: absolute;
-      top: -1.5px;
-      left: -3px;
-    }
-  }
+export const AttributeDescriptorColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  width: 200px;
+`;
 
-  div > div {
-    position: relative;
-  }
+interface HeaderProps {
+  headerColor: string;
+}
 
-  div > div:nth-child(odd) {
-    width: 55px;
-  }
+export const AttributeDescriptorHeader = styled.div<HeaderProps>`
+  background-color: ${(props) => props.headerColor};
+  color: ${Color.WHITE};
+  font-size: ${FontSize.MEDIUM};
+  padding: 4px 2px 0 6px;
+  border: 1px solid #65a8ad;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: 27px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
-  div > div:nth-child(2) {
-    width: 82.5px;
-  }
+interface TextProps {
+  headerColor: string;
+}
+
+export const AttributeDescriptorText = styled.div<TextProps>`
+  display: flex;
+  font-size: ${FontSize.SMALL};
+  display: flex;
+  border: 1px solid ${(props) => props.headerColor};
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 23px;
+  min-width: 200px;
+  color: ${Color.BLACK};
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  margin-right: 7px;
 `;
