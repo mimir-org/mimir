@@ -90,3 +90,8 @@ export interface OffPageData {
   position: Position;
   isRequired: boolean;
 }
+
+export interface Descriptor {
+  header: string;
+  value: string;
+}

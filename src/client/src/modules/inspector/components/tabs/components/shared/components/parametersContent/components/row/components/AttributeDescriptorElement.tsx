@@ -2,9 +2,8 @@ import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptor
 
 interface Props {
   headerText: string;
-  text: string;
+  value: string;
   color: string;
-  isEven?: boolean;
 }
 
 /**
@@ -12,9 +11,9 @@ interface Props {
  * @param interface
  * @returns a box with header text and text.
  */
-export const AttributeDescriptorElement = ({ headerText, text, color, isEven }: Props) => (
-  <AttributeDescriptorBody isEven={isEven}>
+export const AttributeDescriptorElement = ({ headerText, value, color }: Props) => (
+  <AttributeDescriptorBody>
     <AttributeDescriptorHeader headerColor={color}>{headerText}</AttributeDescriptorHeader>
-    <AttributeDescriptorText headerColor={color}>{text + "test"}</AttributeDescriptorText>
+    <AttributeDescriptorText headerColor={color}>{value}</AttributeDescriptorText>
   </AttributeDescriptorBody>
 );

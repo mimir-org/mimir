@@ -7,6 +7,7 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeInput } from "./AttributeInput";
 import { AttributeObjectNameComponent } from "./AttributeObjectNameComponent";
 import { AttributeButtonsComponent } from "./AttributeButtonsComponent";
+import { GetAttributeDescriptors } from "./helpers/GetAttributeDesciptors";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -44,10 +45,10 @@ export const AttributeObject = ({
   const isLocked = isAttribute ? attribute.isLocked : false;
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
   const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
+  const descriptors = GetAttributeDescriptors(combination);
 
-  const descriptorsAmount = GetDescriptorAmount(combination);
-  const hasDescriptors = descriptorsAmount > 0;
-  const singleColumn = descriptorsAmount < 3;
+  const hasDescriptors = descriptors.length > 0;
+  const singleColumn = descriptors.length < 3;
 
   useEffect(() => {
     IsAttribute(attribute) && setValue(attributeValue);
@@ -69,16 +70,7 @@ export const AttributeObject = ({
       </AttributeHeaderBox>
       <AttributeObjectBody>
         {hasDescriptors && (
-          <AttributeDescriptor
-            specifiedScope={combination.specifiedScope}
-            specifiedProvenance={combination.specifiedProvenance}
-            rangeSpecifying={combination.rangeSpecifying}
-            regularitySpecified={combination.regularitySpecified}
-            headerColor={headerColor}
-            bodyColor={bodyColor}
-            descriptorsAmount={descriptorsAmount}
-            singleColumn={singleColumn}
-          />
+          <AttributeDescriptor headerColor={headerColor} singleColumn={singleColumn} descriptors={descriptors} />
         )}
       </AttributeObjectBody>
       <AttributeInput
@@ -92,12 +84,3 @@ export const AttributeObject = ({
     </AttributeObjectBox>
   );
 };
-
-function GetDescriptorAmount(combination: CombinedAttribute) {
-  let count = 0;
-  if (combination.specifiedScope != undefined && combination.specifiedScope != null) count++;
-  if (combination.specifiedProvenance != undefined && combination.specifiedProvenance != null) count++;
-  if (combination.rangeSpecifying != undefined && combination.rangeSpecifying != null) count++;
-  if (combination.regularitySpecified != undefined && combination.regularitySpecified != null) count++;
-  return count;
-}

@@ -2,23 +2,28 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
-interface BodyProps {
-  isEven: boolean;
-}
+export const AttributeDescriptorBox = styled.div`
+  padding: 12px 35px 5px 12px;
+  display: flex;
+  flex-direction: row;
+`;
 
-export const AttributeDescriptorBody = styled.div<BodyProps>`
+export const AttributeDescriptorBody = styled.div`
   display: flex;
   flex-direction: column;
+  /* position: relative; */
   margin-bottom: 5px;
-  margin-right: 10px;
-  width: 200px;
+  /* right: 2px; */
+  width: 100px;
+  /* background: #000; */
 `;
 
 export const AttributeDescriptorRow = styled.div`
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
-  width: 200px;
+  /* margin-right: 10px; */
+  /* width: 200px; */
+  /* background: #000; */
 `;
 
 export const AttributeDescriptorColumn = styled.div`
@@ -65,10 +70,4 @@ export const AttributeDescriptorText = styled.div<TextProps>`
   justify-content: center;
   padding: 4px;
   margin-right: 7px;
-`;
-
-export const AttributeDescriptorBox = styled.div`
-  padding: 12px 35px 5px 12px;
-  display: flex;
-  flex-direction: row;
 `;
