@@ -1,11 +1,11 @@
-import { Descriptor } from "../../../../../../../../../../../models/project";
+import { AttributeDescriptor } from "../../../../../../../../../../../models/project";
 import { AttributeDescriptorBox, AttributeDescriptorColumn, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
 import { AttributeDescriptorElement } from "./AttributeDescriptorElement";
 
 interface Props {
   headerColor: string;
   singleColumn: boolean;
-  descriptors: Descriptor[];
+  descriptors: AttributeDescriptor[];
 }
 
 /**
@@ -15,7 +15,7 @@ interface Props {
  * @param interface
  * @returns existing descriptors for a single Attribute.
  */
-export const AttributeDescriptor = ({ headerColor, singleColumn, descriptors }: Props) => {
+export const AttributeDescriptorComponent = ({ headerColor, singleColumn, descriptors }: Props) => {
   // The return of 1 or 2 descriptors
   if (singleColumn) {
     return (

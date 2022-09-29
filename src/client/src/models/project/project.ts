@@ -91,7 +91,7 @@ export interface OffPageData {
   isRequired: boolean;
 }
 
-export interface Descriptor {
+export interface AttributeDescriptor {
   header: string;
   value: string;
 }

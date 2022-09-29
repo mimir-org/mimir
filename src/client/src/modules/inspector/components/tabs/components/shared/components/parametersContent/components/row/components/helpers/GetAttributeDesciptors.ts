@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../../../../../../../../../assets/text/TextResources";
 import { CombinedAttribute } from "../../../../../../../../../../../../models";
-import { Descriptor } from "../../../../../../../../../../../../models/project";
+import { AttributeDescriptor } from "../../../../../../../../../../../../models/project";
 
 /**
  * Component to populate a list of Descriptors for an Attribute.
@@ -8,7 +8,7 @@ import { Descriptor } from "../../../../../../../../../../../../models/project";
  * @returns a list of Desciptors.
  */
 export const GetAttributeDescriptors = (combination: CombinedAttribute) => {
-  const descriptors = [] as Descriptor[];
+  const descriptors = [] as AttributeDescriptor[];
 
   if (combination.specifiedScope != undefined) {
     descriptors.push({ header: TextResources.SPECIFIED_SCOPE, value: combination.specifiedScope });

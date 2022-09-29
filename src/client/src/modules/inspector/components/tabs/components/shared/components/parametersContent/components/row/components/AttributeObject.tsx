@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AttributeDescriptor } from "./AttributeDescriptor";
+import { AttributeDescriptorComponent } from "./AttributeDescriptorComponent";
 import { AttributeHeaderBox, AttributeObjectBody, AttributeObjectBox } from "./AttributeObject.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
@@ -70,7 +70,7 @@ export const AttributeObject = ({
       </AttributeHeaderBox>
       <AttributeObjectBody>
         {hasDescriptors && (
-          <AttributeDescriptor headerColor={headerColor} singleColumn={singleColumn} descriptors={descriptors} />
+          <AttributeDescriptorComponent headerColor={headerColor} singleColumn={singleColumn} descriptors={descriptors} />
         )}
       </AttributeObjectBody>
       <AttributeInput
