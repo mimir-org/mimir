@@ -48,7 +48,7 @@ export const AttributeDescriptorHeader = styled.div<HeaderProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align:center;
+  text-align: center;
 `;
 
 interface ValueProps {
@@ -62,12 +62,12 @@ export const AttributeDescriptorValue = styled.div<ValueProps>`
   border-bottom-right-radius: 4px;
   height: 23px;
   min-width: 200px;
-  max-width:190px;
+  max-width: 190px;
   color: ${Color.BLACK};
   margin-right: 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 3px 4px 0px 4px;
-  text-align:center;
+  text-align: center;
 `;
