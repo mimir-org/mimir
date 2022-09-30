@@ -11,19 +11,17 @@ export const AttributeDescriptorBox = styled.div`
 export const AttributeDescriptorBody = styled.div`
   display: flex;
   flex-direction: column;
-  /* position: relative; */
+  position: relative;
   margin-bottom: 5px;
-  /* right: 2px; */
-  width: 100px;
-  /* background: #000; */
+  right: 2px;
+  width: 200px;
 `;
 
 export const AttributeDescriptorRow = styled.div`
   display: flex;
   flex-direction: column;
-  /* margin-right: 10px; */
-  /* width: 200px; */
-  /* background: #000; */
+  margin-right: 10px;
+  width: 200px;
 `;
 
 export const AttributeDescriptorColumn = styled.div`
@@ -50,24 +48,26 @@ export const AttributeDescriptorHeader = styled.div<HeaderProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align:center;
 `;
 
-interface TextProps {
+interface ValueProps {
   headerColor: string;
 }
 
-export const AttributeDescriptorText = styled.div<TextProps>`
-  display: flex;
+export const AttributeDescriptorValue = styled.div<ValueProps>`
   font-size: ${FontSize.SMALL};
-  display: flex;
   border: 1px solid ${(props) => props.headerColor};
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   height: 23px;
   min-width: 200px;
+  max-width:190px;
   color: ${Color.BLACK};
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
   margin-right: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 3px 4px 0px 4px;
+  text-align:center;
 `;

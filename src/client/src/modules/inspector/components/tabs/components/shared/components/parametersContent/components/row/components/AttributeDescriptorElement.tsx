@@ -1,4 +1,4 @@
-import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptorText } from "./AttributeDescriptor.styled";
+import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptorValue } from "./AttributeDescriptor.styled";
 
 interface Props {
   headerText: string;
@@ -14,6 +14,6 @@ interface Props {
 export const AttributeDescriptorElement = ({ headerText, value, color }: Props) => (
   <AttributeDescriptorBody>
     <AttributeDescriptorHeader headerColor={color}>{headerText}</AttributeDescriptorHeader>
-    <AttributeDescriptorText headerColor={color}>{value}</AttributeDescriptorText>
+    <AttributeDescriptorValue headerColor={color}>{value}</AttributeDescriptorValue>
   </AttributeDescriptorBody>
 );
