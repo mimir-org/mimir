@@ -6,7 +6,6 @@ import {
   Project,
   Node,
   Edge,
-  Simple,
   ConnectorVisibility,
   EntityType,
   Connector,
@@ -195,16 +194,6 @@ export function changeInterfaceTerminalAttributeValue(
     type: Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE,
     payload: { id, value, unitId, terminalId: terminal.id, edgeId: edge.id },
   };
-}
-
-export function changeSimpleAttributeValue(
-  id: string,
-  simple: Simple,
-  node: Node,
-  value: string,
-  unitId: string
-): Types.ChangeSimpleAttributeValue {
-  return { type: Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE, payload: { id, value, unitId, simpleId: simple.id, nodeId: node.id } };
 }
 
 export function deleteProjectError(key: string) {

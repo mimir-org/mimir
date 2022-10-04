@@ -10,7 +10,6 @@ export const OffPageBox = styled.div<OffPageBoxProps>`
   position: relative;
   align-items: center;
   z-index: 5 !important;
-  bottom: 45px;
   border: 1.5px solid;
   border-radius: 5px;
   border-color: ${(props) => (props.selected ? props.color : "transparent")};

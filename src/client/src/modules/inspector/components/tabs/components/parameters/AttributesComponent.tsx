@@ -33,7 +33,7 @@ interface Props {
 
 /**
  * Component for the Attributes in the Inspector. This component is used in the Attributes tab,
- * but also under Terminal Attributes to display a Terminal's attributes, and under SimpleTypes for Product nodes.
+ * but also under Terminal Attributes to display a Terminal's attributes.
  * @param props
  * @returns a drop-down menu to select combinations of attributes, and buttons for hiding/showing all entities.
  */

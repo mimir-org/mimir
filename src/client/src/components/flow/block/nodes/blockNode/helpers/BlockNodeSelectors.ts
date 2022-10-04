@@ -1,6 +1,6 @@
 export {
   projectSelector,
-  electroSelector,
+  electroViewSelector as electroSelector,
   nodeSelector,
   secondaryNodeSelector,
   selectedNodeSelector,

@@ -12,8 +12,6 @@ import { ConvertTypeReference } from "./ConvertTypeReference";
  * @param sourceTerminal
  * @param targetTerminal
  * @param library
- * @param nodeId
- * @param nodeIri
  * @returns a Transport.
  */
 const ConvertTerminalToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal, library: LibraryState) => {
@@ -59,7 +57,7 @@ const ConvertTerminalToTransport = (sourceTerminal: Terminal, targetTerminal: Te
 };
 
 export function UpdateAttributesId(terminal: Terminal) {
-  if (!terminal?.attributes.length) return;
+  if (!terminal?.attributes?.length) return;
 
   terminal.attributes.forEach((a) => {
     a.id = CreateId();

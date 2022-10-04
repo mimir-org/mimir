@@ -2,63 +2,99 @@ import styled from "styled-components";
 import { Color } from "../../../../../assets/color/Color";
 import { FontSize } from "../../../../../assets/font";
 
-export const TerminalsElementBox = styled.label`
+/**
+ * Main wrapper for entire component
+ */
+export const TerminalElementBox = styled.div`
+  display: flex;
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
+  /* background: #000; */
+  /* width: 300px; */
+
+  &:first-child {
+    border-top-left-radius: 4px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom: none;
+  }
+`;
+
+/**
+ * Box to wrap the TerminalIcon and the terminal checkbox
+ */
+export const TerminalBox = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 5px;
+  border-right: 1px solid ${Color.LIGHT_SILVER};
   padding-left: 5px;
+  width: 180px;
   height: 25px;
-  border-bottom: 1px solid ${Color.LIGHT_SILVER};
-  font-size: ${FontSize.TINY};
-  color: ${Color.BLACK};
+  gap: 5px;
+  font-size: ${FontSize.SMALL};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
     cursor: pointer;
   }
-
-  :first-child {
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-  }
-
-  :last-child {
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-bottom: none;
-  }
 `;
 
-export const BidirectionalBox = styled.div`
+/**
+ * Box for a terminal icon
+ */
+export const TerminalIconBox = styled.div`
   display: flex;
+  width: 20px;
+`;
+
+/**
+ * Box for the terminal name
+ */
+export const TerminalNameBox = styled.span`
+  max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
-  line-height: 2.5;
-  width: 100%;
-  height: 100%;
+`;
 
-  .icon {
-    height: auto;
-    margin-right: 12px;
+/**
+ * Box to wrap the OffPageIcon and the OffPage checkbox
+ */
+export const TerminalOffPageBox = styled.span`
+  display: flex;
+  gap: 5px;
+  height: 20px;
+  margin-top: 3px;
+
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
   }
 `;
 
-interface ColorTagProps {
-  color: string;
-}
+/**
+ * Box for the OffPageIcon
+ */
+export const OffPageIconBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 25px;
+  padding-top: 4px;
+  margin: 0px 4px;
+`;
 
-export const ColorTag = styled.span<ColorTagProps>`
-  width: 100%;
-  height: 100%;
-  border-left: 12px solid ${(props) => props.color};
-  padding-left: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-  line-height: 2.5;
+/**
+ * Box for the OffPage checkbox
+ */
+export const OffPageCheckboxWrapper = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  right: 5px;
 `;

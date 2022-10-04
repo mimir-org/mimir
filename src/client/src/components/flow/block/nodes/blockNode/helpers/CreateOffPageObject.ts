@@ -1,7 +1,6 @@
 import { IsInputConnector, IsOutputConnector, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { OffPageData, OffPageObject } from "../../../../../../models/project";
-import { Size } from "../../../../../../assets/size/Size";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import {
   Connector,
@@ -31,12 +30,12 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
-    id: CreateId(),
+    id: data.offPageNodeId,
     name: `OffPage-${sourceNode.name}`,
     label: `OffPage-${sourceNode.label}`,
     aspect: Aspect.None,
     positionBlockX: data.position.x,
-    positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
+    positionBlockY: data.position.y,
     connectors: [],
     attributes: [],
     hidden: false,

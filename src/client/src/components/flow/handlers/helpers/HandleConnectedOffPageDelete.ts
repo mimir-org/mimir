@@ -20,14 +20,14 @@ export const HandleConnectedOffPageDelete = (
   edges: Edge[],
   dispatch: Dispatch
 ) => {
-  const partOfEdge = helpers.GetPartOfEdge(offPageNode.id, offPageNode.parentNodeId, edges);
+  const partOfEdge = helpers.GetOffPagePartOfEdge(offPageNode.id, offPageNode.parentNodeId, edges);
   const parentConnectorId = helpers.GetParentConnectorId(transportEdge, offPageNode.id);
 
   const mainEdge = helpers.GetConnectedEdge(parentConnectorId, edges);
   const counterTransportEdge = helpers.GetCounterTransportEdge(edges, mainEdge, transportEdge);
   const counterOffPageNode = helpers.GetCounterOffPageNode(nodes, counterTransportEdge);
   const counterParentId = counterOffPageNode?.parentNodeId;
-  const counterPartOfEdge = helpers.GetPartOfEdge(counterOffPageNode?.id, counterParentId, edges);
+  const counterPartOfEdge = helpers.GetOffPagePartOfEdge(counterOffPageNode?.id, counterParentId, edges);
 
   DeleteConnectedOffPageElements(offPageNode, partOfEdge, transportEdge, mainEdge, dispatch);
   DeleteConnectedCounterOffPageElements(counterPartOfEdge, counterTransportEdge, counterOffPageNode, dispatch);

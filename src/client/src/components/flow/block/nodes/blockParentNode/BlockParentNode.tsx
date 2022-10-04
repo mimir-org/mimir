@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent } from "../../handle";
+import { HandleComponent } from "../../handle/HandleComponent";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterConnectors } from "../helpers/FilterConnectors";
@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
-import { IsPartOfRelation } from "../../../helpers/Connectors";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
@@ -27,7 +26,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  const isElectroView = useAppSelector(selectors.electroSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {
@@ -41,32 +40,36 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   if (!data) return null;
 
   return (
-    <BoxWrapper isElectro={isElectro}>
+    <BoxWrapper isElectro={isElectroView}>
       <HandleComponent
         node={data}
         project={project}
         connectors={connectors.inputs}
-        isElectro={isElectro}
+        isElectroView={isElectroView}
         dispatch={dispatch}
         isInput
         isParent
       />
       <BlockParentComponent
         node={data}
+        isElectroView={isElectroView}
         splitView={secondaryNode != null}
-        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
-        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
+        inputConnectors={connectors.inputs}
+        outputConnectors={connectors.outputs}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
+        onConnectorClick={(conn, isInput, node, isElectroView, isOffPage) =>
+          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage)
+        }
       />
       <HandleComponent
         node={data}
         project={project}
         connectors={connectors.outputs}
-        isElectro={isElectro}
+        isElectroView={isElectroView}
         dispatch={dispatch}
+        isInput={false}
         isParent
       />
     </BoxWrapper>

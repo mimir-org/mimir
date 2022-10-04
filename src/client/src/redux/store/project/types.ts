@@ -45,7 +45,6 @@ export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALU
 export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE";
-export const CHANGE_SIMPLE_ATTRIBUTE_VALUE = "CHANGE_SIMPLE_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
 export const CHANGE_ACTIVE_CONNECTOR = "CHANGE_ACTIVE_CONNECTOR";
 export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
@@ -260,11 +259,6 @@ export interface ChangeInterfaceTerminalAttributeValue {
   payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
 }
 
-export interface ChangeSimpleAttributeValue {
-  type: typeof CHANGE_SIMPLE_ATTRIBUTE_VALUE;
-  payload: { id: string; value: string; unitId: string; nodeId: string; simpleId: string };
-}
-
 export interface DeleteProjectErrorAction {
   type: typeof DELETE_PROJECT_ERROR;
   payload: { key: string };
@@ -422,7 +416,6 @@ export type ProjectActionTypes =
   | ChangeNodeTerminalAttributeValue
   | ChangeTransportTerminalAttributeValue
   | ChangeInterfaceTerminalAttributeValue
-  | ChangeSimpleAttributeValue
   | DeleteProjectErrorAction
   | ChangeActiveConnector
   | ExportProjectFileAction

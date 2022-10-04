@@ -18,7 +18,6 @@ export interface CreateLibraryType {
   predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   symbolId: string;
-  simpleTypes: string[];
   kind: string;
 }
 
@@ -36,7 +35,6 @@ export const defaultCreateLibraryType: CreateLibraryType = {
   predefinedAttributes: [] as PredefinedAttribute[],
   terminalTypeId: "",
   symbolId: "",
-  simpleTypes: [] as string[],
   kind: CREATE_LIBRARY_KIND,
 };
 
@@ -48,7 +46,6 @@ function ensureValidState(newCreateLibraryType: CreateLibraryType) {
   const createLibraryTypeState = { ...newCreateLibraryType };
 
   if (!createLibraryTypeState.attributeTypes) createLibraryTypeState.attributeTypes = [];
-  if (!createLibraryTypeState.simpleTypes) createLibraryTypeState.simpleTypes = [];
 
   // TODO: fix
 

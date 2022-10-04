@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mimirorg.Common.Extensions;
 using SqlBulkTools;
-using Mimirorg.TypeLibrary.Enums;
 using Mimirorg.Common.Exceptions;
 using Mb.Models.Common;
 

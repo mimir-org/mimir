@@ -5,7 +5,6 @@ using Mb.Models.Data;
 using Mb.Models.Extensions;
 using Mimirorg.Common.Attributes;
 using Mimirorg.TypeLibrary.Enums;
-using Mimirorg.TypeLibrary.Models.Application;
 
 namespace Mb.Models.Application
 {
@@ -37,17 +36,10 @@ namespace Mb.Models.Application
         public virtual ICollection<Unit> Units { get; set; }
 
         // Qualifiers
-        [Required]
-        public string Qualifier { get; set; }
-
-        [Required]
-        public string Source { get; set; }
-
-        [Required]
-        public string Condition { get; set; }
-
-        [Required]
-        public string Format { get; set; }
+        public string SpecifiedScope { get; set; }
+        public string SpecifiedProvenance { get; set; }
+        public string RangeSpecifying { get; set; }
+        public string RegularitySpecified { get; set; }
 
         // References
         public string TerminalId { get; set; }
@@ -69,11 +61,6 @@ namespace Mb.Models.Application
 
         [ValidIri]
         public string InterfaceIri { get; set; }
-
-        public string SimpleId { get; set; }
-
-        [ValidIri]
-        public string SimpleIri { get; set; }
 
         public ICollection<TypeReference> TypeReferences { get; set; }
 
@@ -100,9 +87,7 @@ namespace Mb.Models.Application
                 string.IsNullOrEmpty(TransportId) &&
                 string.IsNullOrEmpty(TransportIri) &&
                 string.IsNullOrEmpty(InterfaceId) &&
-                string.IsNullOrEmpty(InterfaceIri) &&
-                string.IsNullOrEmpty(SimpleId) &&
-                string.IsNullOrEmpty(SimpleIri)
+                string.IsNullOrEmpty(InterfaceIri)
                )
             {
                 validations.Add(new ValidationResult("One of this fields is required", new[]
@@ -114,9 +99,7 @@ namespace Mb.Models.Application
                     nameof(TransportId),
                     nameof(TransportIri),
                     nameof(InterfaceId),
-                    nameof(InterfaceIri),
-                    nameof(SimpleId),
-                    nameof(SimpleIri)
+                    nameof(InterfaceIri)
                 }));
             }
 

@@ -9,11 +9,17 @@ const UpdateOffPagePosition = (
   parentBlockNode: Node,
   terminal: Connector,
   size: BlockNodeSize,
+  isElectroView: boolean,
   dispatch: Dispatch
 ) => {
-  const margin = 35;
-  const inputTerminalPos = parentBlockNode?.positionBlockX + size.width;
-  const outputTerminalPos = parentBlockNode?.positionBlockX - margin;
+  const margin = 105;
+  let inputTerminalPos = parentBlockNode?.positionBlockX + size.width;
+  let outputTerminalPos = parentBlockNode?.positionBlockX - margin;
+
+  if (isElectroView) {
+    inputTerminalPos = parentBlockNode?.positionBlockY;
+    outputTerminalPos = parentBlockNode?.positionBlockY;
+  }
 
   const xPos = IsInputConnector(terminal) ? inputTerminalPos : outputTerminalPos;
   let yPos = node?.positionBlockY;

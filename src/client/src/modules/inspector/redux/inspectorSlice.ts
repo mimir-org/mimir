@@ -9,7 +9,6 @@ const initialInspectorState = {
     { type: ATTRIBUTE_TAB.PARAMETERS, visible: false },
     { type: ATTRIBUTE_TAB.RELATIONS, visible: false },
     { type: ATTRIBUTE_TAB.TERMINALS, visible: false },
-    { type: ATTRIBUTE_TAB.SIMPLE_TYPES, visible: false },
   ],
 };
 

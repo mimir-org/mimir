@@ -16,12 +16,13 @@ namespace ModelBuilder.Rdf.Extensions
                 ontologyService.AssertNode(parentIri, Resources.SameAs, typeReference.Iri);
                 ontologyService.AssertNode(typeReference.Iri, Resources.Label, typeReference.Name, true);
 
-                ontologyService.AssertNode(typeReference.Iri, Resources.HasSource, typeReference.Source, true);
-                if (string.IsNullOrWhiteSpace(typeReference.SubIri))
-                    continue;
+                // TODO: Resolve this
+                //ontologyService.AssertNode(typeReference.Iri, Resources.HasSource, typeReference.Source, true);
+                //if (string.IsNullOrWhiteSpace(typeReference.SubIri))
+                //    continue;
 
-                ontologyService.AssertNode(typeReference.Iri, Resources.DefaultUom, typeReference.SubIri);
-                ontologyService.AssertNode(typeReference.SubIri, Resources.Label, typeReference.SubName, true);
+                //ontologyService.AssertNode(typeReference.Iri, Resources.DefaultUom, typeReference.SubIri);
+                //ontologyService.AssertNode(typeReference.SubIri, Resources.Label, typeReference.SubName, true);
             }
 
         }
@@ -44,17 +45,20 @@ namespace ModelBuilder.Rdf.Extensions
                 var typeReferenceSubIri = ontologyService
                     .GetTriplesWithSubjectPredicate(typeReferenceIri, Resources.DefaultUom)?.FirstOrDefault()?.Object
                     ?.ToString();
-                var typeReferenceSubName = !string.IsNullOrWhiteSpace(typeReferenceSubIri)
-                    ? ontologyService.GetValue(typeReferenceSubIri, Resources.Label, false)
-                    : null;
 
+                // TODO: Resolve this
+                //var typeReferenceSubName = !string.IsNullOrWhiteSpace(typeReferenceSubIri)
+                //    ? ontologyService.GetValue(typeReferenceSubIri, Resources.Label, false)
+                //    : null;
+
+                // TODO: Resolve this
                 references.Add(new TypeReference
                 {
                     Iri = typeReferenceIri,
                     Name = typeReferenceName,
                     Source = ontologyService.GetValue(typeReferenceIri, Resources.HasSource, false),
-                    SubIri = typeReferenceSubIri,
-                    SubName = typeReferenceSubName
+                    //SubIri = typeReferenceSubIri,
+                    //SubName = typeReferenceSubName
                 });
             }
         }

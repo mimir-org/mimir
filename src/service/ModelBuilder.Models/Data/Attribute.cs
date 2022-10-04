@@ -63,10 +63,10 @@ namespace Mb.Models.Data
         [TSExclude]
         public string UnitString { get; set; }
 
-        public string Qualifier { get; set; }
-        public string Source { get; set; }
-        public string Condition { get; set; }
-        public string Format { get; set; }
+        public string SpecifiedScope { get; set; }
+        public string SpecifiedProvenance { get; set; }
+        public string RangeSpecifying { get; set; }
+        public string RegularitySpecified { get; set; }
 
         [JsonIgnore]
         [TSExclude]
@@ -95,13 +95,6 @@ namespace Mb.Models.Data
 
         public virtual string InterfaceId { get; set; }
         public virtual string InterfaceIri { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Simple Simple { get; set; }
-
-        public virtual string SimpleId { get; set; }
-        public virtual string SimpleIri { get; set; }
 
         [NotMapped]
         public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
@@ -140,10 +133,10 @@ namespace Mb.Models.Data
                    SelectedUnitId == other.SelectedUnitId &&
                    UnitString == other.UnitString &&
                    TypeReferenceString == other.TypeReferenceString &&
-                   Qualifier == other.Qualifier &&
-                   Source == other.Source &&
-                   Condition == other.Condition &&
-                   Format == other.Format &&
+                   SpecifiedScope == other.SpecifiedScope &&
+                   SpecifiedProvenance == other.SpecifiedProvenance &&
+                   RangeSpecifying == other.RangeSpecifying &&
+                   RegularitySpecified == other.RegularitySpecified &&
                    TerminalId == other.TerminalId &&
                    TerminalIri == other.TerminalIri &&
                    NodeId == other.NodeId &&
@@ -152,8 +145,6 @@ namespace Mb.Models.Data
                    TransportIri == other.TransportIri &&
                    InterfaceId == other.InterfaceId &&
                    InterfaceIri == other.InterfaceIri &&
-                   SimpleId == other.SimpleId &&
-                   SimpleIri == other.SimpleIri &&
                    SelectValuesString == other.SelectValuesString &&
                    SelectType == other.SelectType &&
                    Discipline == other.Discipline;
@@ -178,10 +169,10 @@ namespace Mb.Models.Data
             hashCode.Add(SelectedUnitId);
             hashCode.Add(UnitString);
             hashCode.Add(TypeReferenceString);
-            hashCode.Add(Qualifier);
-            hashCode.Add(Source);
-            hashCode.Add(Condition);
-            hashCode.Add(Format);
+            hashCode.Add(SpecifiedScope);
+            hashCode.Add(SpecifiedProvenance);
+            hashCode.Add(RangeSpecifying);
+            hashCode.Add(RegularitySpecified);
             hashCode.Add(TerminalId);
             hashCode.Add(TerminalIri);
             hashCode.Add(NodeId);
@@ -190,8 +181,6 @@ namespace Mb.Models.Data
             hashCode.Add(TransportIri);
             hashCode.Add(InterfaceId);
             hashCode.Add(InterfaceIri);
-            hashCode.Add(SimpleId);
-            hashCode.Add(SimpleIri);
             hashCode.Add(SelectValuesString);
             hashCode.Add((int) SelectType);
             hashCode.Add((int) Discipline);

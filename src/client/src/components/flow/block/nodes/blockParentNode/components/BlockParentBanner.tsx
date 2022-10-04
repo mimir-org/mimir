@@ -12,9 +12,10 @@ interface Props {
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   isNavigationActive: boolean;
+  isElectroView: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector, isInput: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
 }
 
 /**
@@ -27,6 +28,7 @@ export const BlockParentBanner = ({
   inputConnectors,
   outputConnectors,
   isNavigationActive,
+  isElectroView,
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
@@ -36,7 +38,8 @@ export const BlockParentBanner = ({
       <TerminalsMenuComponent
         node={node}
         connectors={inputConnectors}
-        onClick={(c, isInput) => onConnectorClick(c, isInput)}
+        onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
+        isElectroView={isElectroView}
         isInput
         isParent
       />
@@ -61,7 +64,9 @@ export const BlockParentBanner = ({
     <TerminalsMenuComponent
       node={node}
       connectors={outputConnectors}
-      onClick={(c, isInput) => onConnectorClick(c, isInput)}
+      onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
+      isElectroView={isElectroView}
+      isInput={false}
       isParent
     />
   </HeaderContainer>

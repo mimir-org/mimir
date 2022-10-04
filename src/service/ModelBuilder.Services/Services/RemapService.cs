@@ -9,7 +9,6 @@ using Mb.Models.Common;
 using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
 using Mimirorg.TypeLibrary.Enums;
@@ -78,8 +77,7 @@ namespace Mb.Services.Services
                 Task.Run(() => data.DeconstructInterfaces(project)),
                 Task.Run(() => data.DeconstructTransports(project)),
                 Task.Run(() => data.DeconstructRelations(project)),
-                Task.Run(() => data.DeconstructTerminals(project)),
-                Task.Run(() => data.DeconstructSimples(project))
+                Task.Run(() => data.DeconstructTerminals(project))
             };
 
             await Task.WhenAll(tasks);
@@ -169,7 +167,6 @@ namespace Mb.Services.Services
                 if (nodeReplacement.FromId != nodeReplacement.ToId)
                     remap.Add(nodeReplacement.ToId, nodeReplacement.FromId);
 
-                node.Simples = RemapSimples(nodeReplacement, node.Simples, createCopy).ToList();
                 node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, edges, createCopy).ToList();
                 var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy, AttributeParent.Node).ToList();
                 node.Attributes = attr.Any() ? attr : null;
@@ -444,12 +441,6 @@ namespace Mb.Services.Services
                     attribute.TransportIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.SimpleId, replacement.FromId, attribute.SimpleIri, replacement.FromIri) && parent == AttributeParent.Simple)
-                {
-                    attribute.SimpleId = replacement.ToId;
-                    attribute.SimpleIri = replacement.ToIri;
-                }
-
                 if (ShouldReplace(attribute.InterfaceId, replacement.FromId, attribute.InterfaceIri, replacement.FromIri) && parent == AttributeParent.Interface)
                 {
                     attribute.InterfaceId = replacement.ToId;
@@ -465,32 +456,6 @@ namespace Mb.Services.Services
                 }
 
                 yield return attribute;
-            }
-        }
-
-        // Remap simple
-        private IEnumerable<SimpleAm> RemapSimples(ReplacementId replacement, ICollection<SimpleAm> simples, bool createCopy)
-        {
-            if (simples == null || !simples.Any())
-                yield break;
-
-            foreach (var simple in simples)
-            {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id, FromIri = simple.Iri };
-                var simpleReplacement = _commonRepository.CreateOrUseIdAndIri(r);
-
-                // Need to set this if there is a clone after new Id and Iri is created
-                simpleReplacement.FromId = simple.Id;
-                simpleReplacement.FromIri = simple.Iri;
-
-                var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy, AttributeParent.Simple).ToList();
-                simple.Attributes = attr.Any() ? attr : null;
-                simple.Id = simpleReplacement.ToId;
-                simple.Iri = simpleReplacement.ToIri;
-                simple.NodeId = replacement.ToId;
-                simple.NodeIri = replacement.ToIri;
-
-                yield return simple;
             }
         }
 

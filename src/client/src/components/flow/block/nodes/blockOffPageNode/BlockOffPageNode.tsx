@@ -3,13 +3,19 @@ import * as selectors from "./helpers/OffPageSelectors";
 import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { HandleComponent } from "../../handle";
+import { HandleComponent } from "../../handle/HandleComponent";
 import { IsInputConnector, IsOutputConnector, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
-import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
+import { UpdateOffPagePosition } from "./helpers";
 import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { Node, Terminal } from "@mimirorg/modelbuilder-types";
+import { Connector, Node, Terminal } from "@mimirorg/modelbuilder-types";
+import {
+  OffPageConnectedIcon,
+  OffPageConnectedVerticalIcon,
+  OffPageRequiredIcon,
+  OffPageRequiredVerticalIcon,
+} from "../../../../../assets/icons/connectors";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -20,7 +26,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  const isElectroView = useAppSelector(selectors.electroViewSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
@@ -40,13 +46,13 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, dispatch);
-  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode]);
+    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, isElectroView, dispatch);
+  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode, isElectroView]);
 
   if (!data || !offPageParent || !offPageGrandParent) return null;
 
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
-  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
+  const OffPageIcon = GetOffPageIcon(parentNodeTerminal, isElectroView);
 
   const inputConnectors = data.connectors.filter((c) => IsInputConnector(c));
   const outputConnectors = data.connectors.filter((c) => IsOutputConnector(c));
@@ -58,8 +64,9 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={inputConnectors}
-          isElectro={isElectro}
+          isElectroView={isElectroView}
           dispatch={dispatch}
+          isInput
           isOffPage
         />
         <OffPageIcon style={{ fill: iconColor }} className="icon" />
@@ -67,13 +74,25 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           node={data}
           project={project}
           connectors={outputConnectors}
-          isElectro={isElectro}
+          isElectroView={isElectroView}
           dispatch={dispatch}
+          isInput={false}
           isOffPage
         />
       </OffPageBox>
     </Tooltip>
   );
 };
+
+function GetOffPageIcon(sourceTerminal: Connector, isElectroView: boolean) {
+  if (isElectroView) return GetOffPageVerticalIcon(sourceTerminal);
+  if (sourceTerminal?.isRequired) return OffPageRequiredIcon;
+  return OffPageConnectedIcon;
+}
+
+function GetOffPageVerticalIcon(sourceTerminal: Connector) {
+  if (sourceTerminal?.isRequired) return OffPageRequiredVerticalIcon;
+  return OffPageConnectedVerticalIcon;
+}
 
 export default memo(BlockOffPageNode);

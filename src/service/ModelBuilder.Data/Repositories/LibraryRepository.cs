@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Settings;
@@ -23,44 +24,23 @@ namespace Mb.Data.Repositories
             _applicationSetting = applicationSetting?.Value;
         }
 
-        public async Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers()
+        public async Task<List<QuantityDatumCm>> GetQuantityDatums()
         {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/qualifier");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeQualifier.ToString(),
-                async () => await _httpRepository.GetData<List<AttributeQualifierLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+            var quantityDatumSpecifiedScope = new List<QuantityDatumCm>();
+            var quantityDatumSpecifiedProvenance = new List<QuantityDatumCm>();
+            var quantityDatumRangeSpecifying = new List<QuantityDatumCm>();
+            var quantityDatumRegularitySpecified = new List<QuantityDatumCm>();
 
-            return data;
-        }
+            var tasks = new List<Task>
+            {
+                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedScope, quantityDatumSpecifiedScope)),
+                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedProvenance, quantityDatumSpecifiedProvenance)),
+                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRangeSpecifying, quantityDatumRangeSpecifying)),
+                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRegularitySpecified, quantityDatumRegularitySpecified))
+            };
 
-        public async Task<List<AttributeSourceLibCm>> GetAttributeSources()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/source");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeSource.ToString(),
-                async () => await _httpRepository.GetData<List<AttributeSourceLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
-        public async Task<List<AttributeFormatLibCm>> GetAttributeFormats()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/format");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeFormat.ToString(),
-                async () => await _httpRepository.GetData<List<AttributeFormatLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
-        public async Task<List<AttributeConditionLibCm>> GetAttributeConditions()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/condition");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeCondition.ToString(),
-                async () => await _httpRepository.GetData<List<AttributeConditionLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
+            await Task.WhenAll(tasks);
+            return quantityDatumSpecifiedScope.Union(quantityDatumSpecifiedProvenance).Union(quantityDatumRangeSpecifying).Union(quantityDatumRegularitySpecified).ToList();
         }
 
         public async Task<List<PurposeLibCm>> GetPurposes()
@@ -99,16 +79,6 @@ namespace Mb.Data.Repositories
             var url = _applicationSetting.ApiUrl("librarysymbol");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Symbol.ToString(),
                 async () => await _httpRepository.GetData<List<SymbolLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
-        public async Task<List<SimpleLibCm>> GetSimpleTypes()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("librarysimple");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.SimpleType.ToString(),
-                async () => await _httpRepository.GetData<List<SimpleLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
             return data;
         }
@@ -242,6 +212,16 @@ namespace Mb.Data.Repositories
             var url = _applicationSetting.ApiUrl($"libraryinterface/{id}");
             var data = await _httpRepository.DeleteDataStruct<bool>(url);
             return data;
+        }
+
+        private async Task GetQuantityDatumAsync(QuantityDatumType type, List<QuantityDatumCm> list)
+        {
+            list ??= new List<QuantityDatumCm>();
+
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"libraryattribute/datum/{(int) type}");
+            list = await _cacheRepository.GetOrCreateAsync(type.ToString(),
+                async () => await _httpRepository.GetData<List<QuantityDatumCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
         }
     }
 }

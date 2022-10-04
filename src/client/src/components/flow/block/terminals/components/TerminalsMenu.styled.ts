@@ -7,9 +7,14 @@ interface TerminalsBoxProps {
   color: string;
 }
 
+/**
+ * Styled component for the main box in the terminals menu.
+ */
 export const TerminalsBox = styled.div<TerminalsBoxProps>`
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  width: 175px;
+  width: 238px;
   top: -2px;
   right: ${(props) => (props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   left: ${(props) => (!props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};

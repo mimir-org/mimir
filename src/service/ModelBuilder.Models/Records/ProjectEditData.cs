@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Data;
-using Mb.Models.Extensions;
 using Mimirorg.Common.Extensions;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -38,10 +37,6 @@ namespace Mb.Models.Records
         public List<Terminal> TerminalUpdate { get; init; } = new();
         public List<Terminal> TerminalDelete { get; init; } = new();
 
-        public List<Simple> SimpleCreate { get; init; } = new();
-        public List<Simple> SimpleUpdate { get; init; } = new();
-        public List<Simple> SimpleDelete { get; init; } = new();
-
         public List<Edge> EdgeCreateAndDelete => EdgeCreate.Union(EdgeDelete).ToList();
         public List<Node> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
         public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
@@ -49,14 +44,12 @@ namespace Mb.Models.Records
         public List<Interface> InterfaceCreateAndDelete => InterfaceCreate.Union(InterfaceDelete).ToList();
         public List<Relation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
         public List<Terminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
-        public List<Simple> SimpleCreateAndDelete => SimpleCreate.Union(SimpleDelete).ToList();
 
         public List<Node> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
         public List<Terminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
         public List<Relation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
         public List<Transport> TransportUpdateInsert => TransportUpdate.Union(TransportCreate).ToList();
         public List<Interface> InterfaceUpdateInsert => InterfaceUpdate.Union(InterfaceCreate).ToList();
-        public List<Simple> SimpleUpdateInsert => SimpleUpdate.Union(SimpleCreate).ToList();
         public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
         public List<Edge> EdgeUpdateInsert => EdgeUpdate.Union(EdgeCreate).ToList();
 
@@ -70,8 +63,7 @@ namespace Mb.Models.Records
                 Task.Run(() => ResolveTransports(original, updated)),
                 Task.Run(() => ResolveInterfaces(original, updated)),
                 Task.Run(() => ResolveRelations(original, updated)),
-                Task.Run(() => ResolveTerminals(original, updated)),
-                Task.Run(() => ResolveSimples(original, updated))
+                Task.Run(() => ResolveTerminals(original, updated))
             };
 
             await Task.WhenAll(tasks);
@@ -271,34 +263,6 @@ namespace Mb.Models.Records
         private Task FindCreatedTerminals(ProjectData original, ProjectData updated)
         {
             TerminalCreate.AddRange(updated.Terminals.Exclude(original.Terminals, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        #endregion
-
-        #region Simples
-
-        private async Task ResolveSimples(ProjectData original, ProjectData updated)
-        {
-            var tasks = new List<Task>
-            {
-                Task.Run(() => FindDeletedSimples(original, updated)),
-                Task.Run(() => FindCreatedSimples(original, updated))
-            };
-            await Task.WhenAll(tasks);
-            var dict = updated.Simples.ToDictionary(x => x.Id, x => x);
-            SimpleUpdate.AddRange(original.Simples.Exclude(SimpleCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
-        }
-
-        private Task FindDeletedSimples(ProjectData original, ProjectData updated)
-        {
-            SimpleDelete.AddRange(original.Simples.Exclude(updated.Simples, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        private Task FindCreatedSimples(ProjectData original, ProjectData updated)
-        {
-            SimpleCreate.AddRange(updated.Simples.Exclude(original.Simples, x => x.Id));
             return Task.CompletedTask;
         }
 

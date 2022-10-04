@@ -1,7 +1,6 @@
 import { Handle } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { GetConnectorColor } from "../../helpers";
-import { HandleIcon } from "./HandleIcon";
 import { HandleBox } from "../HandleComponent.styled";
 import { OnMouseEnter, OnMouseLeave } from "../handlers/OnMouseHandler";
 import { GetBlockHandleType, IsValidBlockConnection } from "../helpers";
@@ -9,13 +8,14 @@ import { IsOffPage } from "../../../../../helpers/Aspects";
 import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetConnectorPosition";
 import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
+import { TerminalIcon } from "../../terminals/components/helpers/TerminalIcon";
 
 interface Props {
   project: Project;
   node: Node;
   connector: Connector;
   dispatch: Dispatch;
-  isElectro: boolean;
+  isElectroView: boolean;
   isParent: boolean;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,27 +27,37 @@ interface Props {
  * @param interface
  * @returns a JSX Element containing a Handle component from Flow.
  */
-export const BlockNodeConnector = ({ project, node, connector, dispatch, isElectro, isParent, visible, setVisible }: Props) => {
-  const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
+export const BlockNodeConnector = ({
+  project,
+  node,
+  connector,
+  dispatch,
+  isElectroView,
+  isParent,
+  visible,
+  setVisible,
+}: Props) => {
+  const [type, pos] = GetBlockHandleType(connector, isElectroView, isParent);
   const color = GetConnectorColor(connector);
   const isOffPage = IsOffPage(node);
+  const className = "react-flow__handle-block";
 
   return (
     <HandleBox
       id={`handle-${connector.id}`}
       visible={visible}
-      top={GetHandleTopPosition(node, connector, isElectro, isParent)}
-      left={GetHandleLeftPosition(node, connector, isElectro, isParent)}
+      top={GetHandleTopPosition(node, connector, isElectroView, isParent)}
+      left={GetHandleLeftPosition(node, connector, isElectroView, isParent)}
       isPartOf={IsPartOfRelation(connector)}
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >
-      <HandleIcon conn={connector} color={color} className={"react-flow__handle-block"} />
+      <TerminalIcon connector={connector} color={color} className={className} isElectroView={isElectroView} />
       <Handle
         type={type}
         position={pos}
         id={connector.id}
-        className={"react-flow__handle-block"}
+        className={className}
         isValidConnection={(connection) => IsValidBlockConnection(connection, project.nodes, project.edges, dispatch)}
       />
     </HandleBox>

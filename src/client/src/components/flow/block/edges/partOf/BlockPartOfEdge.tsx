@@ -1,7 +1,7 @@
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
-import { electroSelector, useAppSelector } from "../../../../../redux/store";
+import { electroViewSelector, useAppSelector } from "../../../../../redux/store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
@@ -10,7 +10,7 @@ import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
  * @returns an edge between two nodes in BlockView.
  */
 export const BlockPartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
-  const isElectro = useAppSelector(electroSelector);
+  const isElectro = useAppSelector(electroViewSelector);
 
   const visible = !data?.edge?.hidden;
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);

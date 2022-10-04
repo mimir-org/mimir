@@ -57,7 +57,6 @@ export const TextResources = {
   ADMIN_INFO: "Admin",
   OBJECT: "Object",
   ATTRIBUTES: "Attributes",
-  SIMPLE_TYPES: "Simple Types",
   TERMINAL_ATTRIBUTES: "Terminal Attributes",
   RELATIONS_NAME: "Relation name",
   RELATIONS_UPDATED_BY: "Updated by",
@@ -125,11 +124,11 @@ export const TextResources = {
   PARAMS_LOCK: "Lock parameter",
   PARAMS_UNLOCK: "Unlock parameter",
   TERMINALS_SEARCH: "Search Terminal Type",
-  SIMPLETYPES_SEARCH: "Search Simple Types",
 
-  QUALIFIER: "Qualifier",
-  SOURCE: "Source",
-  CONDITION: "Condition",
+  SPECIFIED_SCOPE: "Qty. Datum w/Spec. Scope",
+  SPECIFIED_PROVENANCE: "Qty. Datum w/Spec. Provenance",
+  RANGE_SPECIFYING: "Range Specifying Qty. Datum",
+  REGULARITY_SPECIFIED: "Regularity Specified Qty. Datum",
 
   DELETE_OBJECT: "Delete object from drawing board",
   RESIZE: "Click/drag to resize",
@@ -293,7 +292,6 @@ export const TextResources = {
   KIND_EDGE: "Edge",
   KIND_TRANSPORT: "Transport",
   KIND_INTERFACE: "Interface",
-  KIND_SIMPLE: "Simple",
   KIND_TERMINAL: "Terminal",
   KIND_RELATION: "Relation",
   KIND_CONNECTOR: "Connector",
@@ -304,4 +302,8 @@ export const TextResources = {
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
   GABBI: "gabbi",
+
+  // OffPage
+  OFFPAGE_ADD: "This will create an offpage node from the terminal.",
+  OFFPAGE_REMOVE: "This will remove the offpage node.",
 };

@@ -7,7 +7,6 @@ export const ATTRIBUTE_TAB = {
   PARAMETERS: "Parameters",
   TERMINALS: "Terminals",
   RELATIONS: "Relations",
-  SIMPLE_TYPES: "SimpleTypes",
 };
 
 export type EdgeType = keyof typeof EDGE_TYPE;
@@ -85,8 +84,14 @@ export interface OffPageObject {
 }
 
 export interface OffPageData {
+  offPageNodeId: string;
   sourceNode: Node;
   sourceConnector: Terminal;
   position: Position;
   isRequired: boolean;
+}
+
+export interface AttributeDescriptor {
+  header: string;
+  value: string;
 }

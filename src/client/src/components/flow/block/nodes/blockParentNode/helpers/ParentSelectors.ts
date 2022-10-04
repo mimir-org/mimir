@@ -1,1 +1,6 @@
-export { projectSelector, electroSelector, secondaryNodeSelector, selectedNodeSelector } from "../../../../../../redux/store";
+export {
+  projectSelector,
+  electroViewSelector as electroSelector,
+  secondaryNodeSelector,
+  selectedNodeSelector,
+} from "../../../../../../redux/store";

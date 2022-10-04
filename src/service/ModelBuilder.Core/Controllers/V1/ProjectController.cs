@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using Mb.Models.Application;
 using Mb.Models.Client;
-using Mb.Models.Common;
 
 namespace Mb.Core.Controllers.V1
 {

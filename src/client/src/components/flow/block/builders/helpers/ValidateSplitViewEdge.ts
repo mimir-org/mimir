@@ -4,7 +4,7 @@ import { IsLocationConnection, IsProductConnection, IsTransportConnection } from
 
 /**
  * Validator for an edge in SplitView.
- * If an edge should be displayed is defined by the nature of the nodes visible on the canvas.
+ * If an edge should be displayed is defined by the type of the nodes visible on the canvas.
  * @param selectedBlockNode
  * @param secondaryNode
  * @param sourceNode
@@ -27,7 +27,7 @@ const ValidateSplitViewEdge = (
 };
 
 function ValidateLocation(sourceConn: Connector, targetConn: Connector) {
-  return IsLocationConnection(sourceConn, targetConn); // TODO: fix
+  return IsLocationConnection(sourceConn, targetConn);
 }
 
 function ValidateProduct(secondaryNode: Node, sourceConn: Connector, targetConn: Connector) {

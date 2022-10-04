@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
-import { ConnectorTreeViewIcon } from "../../../../../assets/icons/connectors";
+import { TreeViewConnectorIcon } from "../../../../../assets/icons/connectors";
 
 interface Props {
   visible: boolean;
@@ -14,9 +14,9 @@ export const TreeHandleBox = styled.div<Props>`
     visibility: ${(props) => (props.visible ? "visible" : "hidden")};
     width: 19px;
     height: 19px;
-    background: url(${ConnectorTreeViewIcon});
+    background: url(${TreeViewConnectorIcon});
     border-radius: 0;
-    bottom: -18px;
+    bottom: -19px;
     z-index: 1;
     right: ${(props) => props.position === Position.Right && 50}%;
     left: ${(props) => props.position === Position.Left && 50}%;

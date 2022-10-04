@@ -12,9 +12,16 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  * @param mimirEdges
  * @param primaryNode
  * @param secondaryNode
+ * @param isElectroView
  * @returns all validated FlowNodes.
  */
-const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode: Node, secondaryNode: Node) => {
+const BuildFlowBlockNodes = (
+  mimirNodes: Node[],
+  mimirEdges: Edge[],
+  primaryNode: Node,
+  secondaryNode: Node,
+  isElectroView: boolean
+) => {
   const flowNodes: FlowNode[] = [];
   const splitView = secondaryNode != undefined;
 
@@ -31,7 +38,7 @@ const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode
     DrawFlowSecondaryChildren(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes);
   }
 
-  DrawFlowChildNodes(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes);
+  DrawFlowChildNodes(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes, isElectroView);
 
   return flowNodes;
 };

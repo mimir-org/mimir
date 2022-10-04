@@ -10,9 +10,10 @@ interface Props {
   node: Node;
   colorMain: string;
   colorSelected: string;
+  isElectroView: boolean;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
 }
 
 /**
@@ -23,6 +24,7 @@ export const BlockChildComponent = ({
   node,
   colorMain,
   colorSelected,
+  isElectroView,
   inputConnectors,
   outputConnectors,
   onConnectorClick,
@@ -41,9 +43,12 @@ export const BlockChildComponent = ({
     >
       <BlockChildHeader
         node={node}
+        isElectroView={isElectroView}
         inputConnectors={inputConnectors}
         outputConnectors={outputConnectors}
-        onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
+        onConnectorClick={(c, isInput, node, isElectroView, isOffPage) =>
+          onConnectorClick(c, isInput, node, isElectroView, isOffPage)
+        }
         showMenuButton={showMenuButton}
       />
       <SymbolBox>

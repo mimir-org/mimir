@@ -23,7 +23,7 @@ export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edg
   edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget) || HasConnectedOffPageNode(edges, edge, isTarget)) return;
+    if (!IsOnlyOneNodeVisible(edge, isTarget) || HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
     const nodeParent = nodes.find((n) => n.id === node.parentNodeId);
     if (!nodeParent) return;
@@ -73,7 +73,7 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
  * @param isTarget
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
+function IsOnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 

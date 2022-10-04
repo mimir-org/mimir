@@ -6,7 +6,7 @@ import { InspectorHeaderBox } from "./InspectorHeader.styled";
 import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
-import { Aspect, Project, Terminal, Simple, Attribute } from "@mimirorg/modelbuilder-types";
+import { Aspect, Project, Terminal, Attribute } from "@mimirorg/modelbuilder-types";
 import {
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
@@ -31,7 +31,6 @@ interface Props {
   onToggle?: OnToogleHandler;
   attributes?: Attribute[];
   terminals: Terminal[];
-  simpleItems?: Simple[];
   selectedFlowNodes: FlowNode[];
 }
 
@@ -55,7 +54,6 @@ export const InspectorHeader = ({
   changeInspectorTabAction,
   attributes,
   terminals,
-  simpleItems,
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
@@ -70,7 +68,6 @@ export const InspectorHeader = ({
           activeTabIndex={activeTabIndex}
           attributes={attributes}
           terminals={terminals}
-          simpleItems={simpleItems}
           changeInspectorTabAction={changeInspectorTabAction}
           inspectorRef={inspectorRef}
           isInspectorOpen={isInspectorOpen}

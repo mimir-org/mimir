@@ -9,9 +9,6 @@ namespace ModelBuilder.Rdf.Models
         public ICollection<EdgeAm> Edges { get; init; } = default!;
 
         public ICollection<UnitLibCm> Units { get; init; } = default!;
-        public IDictionary<string, AttributeFormatLibCm> AttributeFormats { get; init; } = default!;
-        public IDictionary<string, AttributeQualifierLibCm> AttributeQualifiers { get; init; } = default!;
-        public IDictionary<string, AttributeSourceLibCm> AttributeSources { get; init; } = default!;
-        public IDictionary<string, AttributeConditionLibCm> AttributeConditions { get; init; } = default!;
+        public Dictionary<string, QuantityDatumCm> QuantityDatums { get; init; } = default!;
     }
 }

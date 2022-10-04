@@ -6,7 +6,6 @@ export function* nodeSaga() {
   yield all([
     takeEvery(type.CHANGE_NODE_ATTRIBUTE_VALUE, func.changeNodeUpdated),
     takeEvery(type.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE, func.changeNodeUpdated),
-    takeEvery(type.CHANGE_SIMPLE_ATTRIBUTE_VALUE, func.changeNodeUpdated),
     takeEvery(type.CHANGE_NODE_PROP_VALUE, func.changeNodeUpdated),
   ]);
 }

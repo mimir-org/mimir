@@ -16,7 +16,6 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Terminal> Terminals { get; set; }
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Interface> Interfaces { get; set; }
-        public virtual DbSet<Simple> Simples { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -37,7 +36,6 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new TerminalConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());
-            modelBuilder.ApplyConfiguration(new SimpleConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
         }
     }

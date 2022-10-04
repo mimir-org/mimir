@@ -220,7 +220,7 @@ export const selectedNodeSelector = createAppSelector(
   (node) => node
 );
 
-export const electroSelector = createAppSelector(
+export const electroViewSelector = createAppSelector(
   (state) => state.electro.visible,
   (visible) => visible
 );
