@@ -15,6 +15,7 @@ namespace Mb.Models.Data
         public string TerminalTypeIri { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public string Discriminator => nameof(Terminal);
+        public bool IsProxy { get; set; }
 
         [NotMapped]
         public virtual ICollection<TypeReference> TypeReferences
@@ -61,7 +62,8 @@ namespace Mb.Models.Data
                    Color == other.Color &&
                    TerminalCategory == other.TerminalCategory &&
                    TerminalTypeId == other.TerminalTypeId &&
-                   TerminalTypeIri == other.TerminalTypeIri;
+                   TerminalTypeIri == other.TerminalTypeIri &&
+                   IsProxy == other.IsProxy;
         }
 
         public override bool Equals(object obj)
@@ -73,7 +75,7 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString);
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString, IsProxy);
         }
 
         #endregion IEquatable

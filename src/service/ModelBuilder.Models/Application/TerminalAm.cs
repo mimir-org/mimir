@@ -11,6 +11,9 @@ namespace Mb.Models.Application
         public string Color { get; set; }
         public string TerminalCategory { get; set; }
 
+        [Required]
+        public bool IsProxy { get; set; }
+
         [RequiredOne(nameof(TerminalTypeIri))]
         public string TerminalTypeId { get; set; }
 
