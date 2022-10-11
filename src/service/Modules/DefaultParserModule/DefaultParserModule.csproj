@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.244" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.247" />
     <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.244" />
   </ItemGroup>
 
