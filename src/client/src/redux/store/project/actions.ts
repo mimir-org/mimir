@@ -10,6 +10,7 @@ import {
   EntityType,
   Connector,
   ProjectConverterAm,
+  Terminal,
 } from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -254,6 +255,10 @@ export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
 
 export function setOffPageStatus(nodeId: string, connectorId: string, isRequired: boolean): Types.ProjectActionTypes {
   return { type: Types.SET_OFFPAGE_STATUS, payload: { nodeId, connectorId, isRequired } };
+}
+
+export function addTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.ADD_TERMINAL, payload: { terminal: terminal } };
 }
 
 export function createRequiredOffPageNode(

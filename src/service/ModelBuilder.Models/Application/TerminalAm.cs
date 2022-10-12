@@ -5,7 +5,7 @@ using Mb.Models.Data;
 
 namespace Mb.Models.Application
 {
-    public class TerminalAm : ConnectorAm
+    public class TerminalAm : ConnectorAm, IValidatableObject
     {
         [Required]
         public string Color { get; set; }
@@ -13,6 +13,9 @@ namespace Mb.Models.Application
 
         [Required]
         public bool IsProxy { get; set; }
+
+        public string ProxyParent { get; set; }
+        public string ProxySibling { get; set; }
 
         [RequiredOne(nameof(TerminalTypeIri))]
         public string TerminalTypeId { get; set; }
@@ -22,5 +25,34 @@ namespace Mb.Models.Application
         public string TerminalTypeIri { get; set; }
 
         public ICollection<TypeReference> TypeReferences { get; set; }
+
+        public ICollection<AttributeAm> Attributes { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var validations = new List<ValidationResult>();
+
+            if (IsProxy)
+            {
+                if (string.IsNullOrWhiteSpace(ProxyParent))
+                    validations.Add(new ValidationResult($"{nameof(ProxyParent)} is required when {IsProxy} is true.", new List<string> { nameof(ProxyParent) }));
+                if (string.IsNullOrWhiteSpace(ProxySibling))
+                    validations.Add(new ValidationResult($"{nameof(ProxySibling)} is required when {IsProxy} is true.", new List<string> { nameof(ProxySibling) }));
+            }
+
+            if (Attributes != null)
+            {
+                foreach (var attributeAm in Attributes)
+                {
+                    var validationResults = attributeAm.Validate(validationContext);
+                    foreach (var validationResult in validationResults)
+                    {
+                        validations.Add(validationResult);
+                    }
+                }
+            }
+
+            return validations;
+        }
     }
 }

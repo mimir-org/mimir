@@ -17,6 +17,7 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
 import { Node } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../../../helpers/Connectors";
 
 /**
  * Component for a child Node in BlockView.
@@ -58,7 +59,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.inputs}
+        connectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput
@@ -77,7 +78,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.outputs}
+        connectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput={false}

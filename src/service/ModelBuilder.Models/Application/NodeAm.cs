@@ -106,7 +106,10 @@ namespace Mb.Models.Application
             {
                 foreach (var connector in Connectors)
                 {
-                    var result = connector.Validate(validationContext);
+                    if (!(connector is TerminalAm t))
+                        continue;
+
+                    var result = t.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
                         validations.Add(validationResult);

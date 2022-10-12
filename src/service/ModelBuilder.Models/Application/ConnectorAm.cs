@@ -7,7 +7,7 @@ using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
-    public class ConnectorAm : IValidatableObject
+    public class ConnectorAm
     {
         [RequiredOne(nameof(Iri))]
         public string Id { get; set; }
@@ -33,26 +33,5 @@ namespace Mb.Models.Application
         public string NodeIri { get; set; }
 
         public bool IsRequired { get; set; }
-
-        public ICollection<AttributeAm> Attributes { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var validations = new List<ValidationResult>();
-
-            if (Attributes != null)
-            {
-                foreach (var attributeAm in Attributes)
-                {
-                    var validationResults = attributeAm.Validate(validationContext);
-                    foreach (var validationResult in validationResults)
-                    {
-                        validations.Add(validationResult);
-                    }
-                }
-            }
-
-            return validations;
-        }
     }
 }

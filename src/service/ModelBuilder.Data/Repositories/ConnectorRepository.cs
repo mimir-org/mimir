@@ -101,6 +101,9 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.TerminalTypeIri)
                 .AddColumn(x => x.Discriminator)
                 .AddColumn(x => x.TypeReferenceString)
+                .AddColumn(x => x.IsProxy)
+                .AddColumn(x => x.ProxyParent)
+                .AddColumn(x => x.ProxySibling)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);

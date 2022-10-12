@@ -51,7 +51,6 @@ namespace ModelBuilder.Unit.Tests.Models
                             {
                                 Id = "runir.net_FF21C487-F075-4073-AF50-B6B5E7620CDF",
                                 Iri = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
-                                Attributes = null,
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
                                 NodeId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
@@ -64,7 +63,6 @@ namespace ModelBuilder.Unit.Tests.Models
                             {
                                 Id = "runir.net_6560A3CC-0499-4A55-8590-1453060A1498",
                                 Iri = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
-                                Attributes = null,
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
                                 NodeId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
@@ -114,7 +112,6 @@ namespace ModelBuilder.Unit.Tests.Models
                             {
                                 Id = "runir.net_95479872-2249-4E46-8E9F-305589F946CC",
                                 Iri = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
-                                Attributes = null,
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
                                 NodeId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
@@ -127,7 +124,6 @@ namespace ModelBuilder.Unit.Tests.Models
                             {
                                 Id = "runir.net_B9972C41-C136-4B61-AE3F-7B5181E49B70",
                                 Iri = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
-                                Attributes = null,
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
                                 NodeId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",

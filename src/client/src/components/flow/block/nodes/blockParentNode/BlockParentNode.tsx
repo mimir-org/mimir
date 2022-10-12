@@ -11,6 +11,7 @@ import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../../../helpers/Connectors";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
@@ -44,7 +45,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.inputs}
+        connectors={connectors.outputs.filter((x) => IsTerminal(x) && x.isProxy)}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput
@@ -66,7 +67,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.outputs}
+        connectors={connectors.inputs.filter((x) => IsTerminal(x) && x.isProxy)}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput={false}

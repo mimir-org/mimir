@@ -16,6 +16,8 @@ namespace Mb.Models.Data
         public virtual ICollection<Attribute> Attributes { get; set; }
         public string Discriminator => nameof(Terminal);
         public bool IsProxy { get; set; }
+        public string ProxyParent { get; set; }
+        public string ProxySibling { get; set; }
 
         [NotMapped]
         public virtual ICollection<TypeReference> TypeReferences
@@ -63,7 +65,9 @@ namespace Mb.Models.Data
                    TerminalCategory == other.TerminalCategory &&
                    TerminalTypeId == other.TerminalTypeId &&
                    TerminalTypeIri == other.TerminalTypeIri &&
-                   IsProxy == other.IsProxy;
+                   IsProxy == other.IsProxy &&
+                   ProxyParent == other.ProxyParent &&
+                   ProxySibling == other.ProxySibling;
         }
 
         public override bool Equals(object obj)
@@ -75,7 +79,8 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString, IsProxy);
+            var proxyString = $"{IsProxy}{ProxyParent}{ProxySibling}";
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString, proxyString);
         }
 
         #endregion IEquatable

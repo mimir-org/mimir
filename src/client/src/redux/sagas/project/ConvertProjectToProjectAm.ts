@@ -143,9 +143,8 @@ function ConvertRelationToRelationAm(relation: Relation) {
     isRequired: relation.isRequired,
     nodeId: relation.nodeId,
     nodeIri: relation.nodeIri,
-    semanticReference: "", // TODO: fix
     type: relation.type,
-    relationType: relation.relationType,
+    relationType: relation.relationType
   } as RelationAm;
 }
 
@@ -167,6 +166,8 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     terminalTypeId: terminal.terminalTypeId,
     terminalTypeIri: terminal.terminalTypeIri,
     isRequired: terminal.isRequired,
+    isProxy: terminal.isProxy,
+    typeReferences: terminal.typeReferences
   } as TerminalAm;
 }
 

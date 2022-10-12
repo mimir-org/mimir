@@ -706,6 +706,21 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.ADD_TERMINAL: {
+      const terminal = action.payload.terminal;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n?.id === terminal.nodeId ? {
+            ...n,
+            connectors: [...n.connectors, terminal]
+          } : n))
+        },
+      };
+    }
+
     default:
       return state;
   }
