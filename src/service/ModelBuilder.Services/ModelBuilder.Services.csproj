@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.10" />
     <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.244" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.244" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.248" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
