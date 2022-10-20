@@ -7,7 +7,7 @@ import {
   IsOutputVisible,
   IsBidirectionalTerminal,
   IsPartOfRelation,
-  IsTerminal
+  IsTerminal,
 } from "../../../helpers/Connectors";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {

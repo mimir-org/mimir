@@ -713,10 +713,52 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n?.id === terminal.nodeId ? {
-            ...n,
-            connectors: [...n.connectors, terminal]
-          } : n))
+          nodes: nodes.map((n) =>
+            n?.id === terminal.nodeId
+              ? {
+                  ...n,
+                  connectors: [...n.connectors, terminal],
+                }
+              : n
+          ),
+        },
+      };
+    }
+
+    case Types.DELETE_TERMINAL: {
+      const terminal = action.payload.terminal;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === terminal.nodeId
+              ? {
+                  ...n,
+                  connectors: n.connectors.filter((c) => c.id !== terminal.id),
+                }
+              : n
+          ),
+        },
+      };
+    }
+
+    case Types.UPDATE_TERMINAL: {
+      const terminal = action.payload.terminal;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === terminal.nodeId
+              ? {
+                  ...n,
+                  connectors: n.connectors.map((c) => (c.id === terminal.id ? { ...terminal } : c)),
+                }
+              : n
+          ),
         },
       };
     }

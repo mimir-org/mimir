@@ -55,13 +55,13 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         isElectroView={isElectroView}
         splitView={secondaryNode != null}
-        inputConnectors={connectors.inputs}
-        outputConnectors={connectors.outputs}
+        inputConnectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
+        outputConnectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput, node, isElectroView, isOffPage) =>
-          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage)
+          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage, project?.edges)
         }
       />
       <HandleComponent

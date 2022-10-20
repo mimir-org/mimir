@@ -3,7 +3,6 @@ import { ApiError } from "../../../models/webclient";
 import { BlockNodeSize, OffPageObject } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
 import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
-import { addTerminal } from "./actions";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const CLOSE_PROJECT = "CLOSE_PROJECT";
@@ -67,6 +66,8 @@ export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 export const CREATE_REQUIRED_OFFPAGE_NODE = "CREATE_REQUIRED_OFFPAGE_NODE";
 export const CREATE_CONNECTED_OFFPAGE_NODE = "CREATE_CONNECTED_OFFPAGE_NODE";
 export const ADD_TERMINAL = "ADD_TERMINAL";
+export const DELETE_TERMINAL = "DELETE_TERMINAL";
+export const UPDATE_TERMINAL = "UPDATE_TERMINAL";
 
 // State types
 export interface ProjectState {
@@ -385,6 +386,16 @@ export interface AddTerminal {
   payload: { terminal: Terminal };
 }
 
+export interface DeleteTerminal {
+  type: typeof DELETE_TERMINAL;
+  payload: { terminal: Terminal };
+}
+
+export interface UpdateTerminal {
+  type: typeof UPDATE_TERMINAL;
+  payload: { terminal: Terminal };
+}
+
 export type ProjectActionTypes =
   | FetchingProjectAction
   | SearchProjectAction
@@ -447,4 +458,6 @@ export type ProjectActionTypes =
   | SetOffPageStatus
   | CreateRequiredOffPageNode
   | CreateConnectedOffPageNode
-  | AddTerminal;
+  | AddTerminal
+  | DeleteTerminal
+  | UpdateTerminal;

@@ -85,6 +85,7 @@ export const InspectorHeader = ({
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeightAction}
+        project={project}
         dispatch={dispatch}
       />
     </InspectorHeaderBox>

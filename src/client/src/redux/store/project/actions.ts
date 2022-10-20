@@ -261,6 +261,14 @@ export function addTerminal(terminal: Terminal): Types.ProjectActionTypes {
   return { type: Types.ADD_TERMINAL, payload: { terminal: terminal } };
 }
 
+export function deleteTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.DELETE_TERMINAL, payload: { terminal: terminal } };
+}
+
+export function updateTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.UPDATE_TERMINAL, payload: { terminal: terminal } };
+}
+
 export function createRequiredOffPageNode(
   nodeId: string,
   connectorId: string,

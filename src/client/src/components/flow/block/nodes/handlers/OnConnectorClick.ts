@@ -2,7 +2,7 @@ import red from "../../../../../redux/store";
 import { Dispatch } from "redux";
 import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/project/actions";
 import { IsConnectorVisible } from "../../../helpers/Connectors";
-import { Connector, ConnectorVisibility, Node } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorVisibility, Edge, Node } from "@mimirorg/modelbuilder-types";
 import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOffPageNode";
 import { OffPageData, Position } from "../../../../../models/project";
 import { CreateId } from "../../../helpers";
@@ -14,6 +14,7 @@ import {
   GetOffPageSourceTransportEdge,
   GetOffPageTargetTransportEdge,
 } from "../../../handlers/helpers/OffPageDeleteFunctions";
+import { FindProxyConnector, CreateProxyTerminals, DeleteProxyTerminal } from "../../hooks/helpers/ProxyTerminals";
 
 /**
  * Component to handle a click on a terminal in the drop-down menu for a Node in BlockView.
@@ -23,6 +24,7 @@ import {
  * @param dispatch
  * @param isElectroView
  * @param isOffPage
+ * @param edges
  */
 export const OnConnectorClick = (
   sourceConnector: Connector,
@@ -30,11 +32,25 @@ export const OnConnectorClick = (
   sourceNode: Node,
   dispatch: Dispatch,
   isElectroView: boolean,
-  isOffPage?: boolean
+  isOffPage?: boolean,
+  edges?: Edge[]
 ) => {
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
+
+  const proxy = FindProxyConnector(sourceConnector.id, sourceNode);
+  if (proxy == null && !visible) {
+    if (isInput) {
+      CreateProxyTerminals(null, sourceConnector, dispatch);
+    } else {
+      CreateProxyTerminals(sourceConnector, null, dispatch);
+    }
+  }
+  if (proxy != null && visible) {
+    DeleteProxyTerminal(proxy, dispatch);
+  }
+
   const hasOffPageNode = visible && sourceConnector.isRequired;
 
   if (isOffPage) {
@@ -45,9 +61,10 @@ export const OnConnectorClick = (
 
   if (!visible) return;
 
-  // TODO: what to do with edges for hidden connectors
-  // const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-  // if (edge) dispatch(deleteEdge(edge.id));
+  if (edges != null) {
+    const edge = edges.find((e) => e.fromConnector.id === sourceConnector.id || e.toConnector.id === sourceConnector.id);
+    if (edge != null) dispatch(deleteEdge(edge.id));
+  }
 };
 
 function SetConnectorVisibility(conn: Connector, isInput: boolean) {

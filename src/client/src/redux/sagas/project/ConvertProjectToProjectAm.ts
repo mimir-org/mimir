@@ -47,7 +47,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
   if (!nodes?.length) return convertedNodes;
 
   nodes.forEach((node) => {
-    const nodeAm = {
+    const nodeAm: NodeAm = {
       id: node.id,
       iri: node.iri,
       domain: node.domain,
@@ -79,8 +79,9 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       libraryTypeId: node.libraryTypeId,
       isLocked: node.isLocked,
       isLockedStatusBy: node.isLockedStatusBy,
-    } as NodeAm;
-
+      typeReferences: node.typeReferences,
+      isLockedStatusDate: undefined,
+    };
     convertedNodes.push(nodeAm);
   });
 
@@ -88,11 +89,11 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
 }
 
 function ConvertEdgesToEdgesAm(edges: Edge[]) {
-  const convertedEdges = [] as EdgeAm[];
+  const convertedEdges: EdgeAm[] = [];
   if (!edges?.length) return convertedEdges;
 
   edges.forEach((edge) => {
-    const edgeAm = {
+    const edgeAm: EdgeAm = {
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
@@ -110,8 +111,10 @@ function ConvertEdgesToEdgesAm(edges: Edge[]) {
       masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransportToTransportAm(edge.transport),
       interface: ConvertInterfaceToInterfaceAm(edge.interface),
-    } as EdgeAm;
-
+      isLocked: edge.isLocked,
+      isLockedStatusBy: edge.isLockedStatusBy,
+      isLockedStatusDate: edge.isLockedStatusDate,
+    };
     convertedEdges.push(edgeAm);
   });
 
@@ -124,7 +127,7 @@ function ConvertConnectorsToConnectorsAm(connectors: Connector[]) {
 
   connectors.forEach((connector) => {
     if (IsRelationConnector(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector as Relation));
-    else if (IsTerminal(connector)) convertedConnectors.push(ConvertTerminalToTerminalAm(connector));
+    else if (IsTerminal(connector)) convertedConnectors.push(ConvertTerminalToTerminalAm(connector as Terminal));
   });
 
   return convertedConnectors;
@@ -132,26 +135,24 @@ function ConvertConnectorsToConnectorsAm(connectors: Connector[]) {
 
 function ConvertRelationToRelationAm(relation: Relation) {
   if (!relation) return {} as RelationAm;
-
-  return {
+  const rel: RelationAm = {
     id: relation.id,
     iri: relation.iri,
     domain: relation.domain,
     name: relation.name,
-    attributes: [], // TODO: what about attributes in Relation?
     connectorVisibility: relation.connectorVisibility,
     isRequired: relation.isRequired,
     nodeId: relation.nodeId,
     nodeIri: relation.nodeIri,
     type: relation.type,
-    relationType: relation.relationType
-  } as RelationAm;
+    relationType: relation.relationType,
+  };
+  return rel;
 }
 
 function ConvertTerminalToTerminalAm(terminal: Terminal) {
   if (!terminal) return {} as TerminalAm;
-
-  return {
+  const term: TerminalAm = {
     id: terminal.id,
     iri: terminal.iri,
     domain: terminal.domain,
@@ -167,8 +168,11 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     terminalTypeIri: terminal.terminalTypeIri,
     isRequired: terminal.isRequired,
     isProxy: terminal.isProxy,
-    typeReferences: terminal.typeReferences
-  } as TerminalAm;
+    typeReferences: terminal.typeReferences,
+    proxyParent: terminal.proxyParent,
+    proxySibling: terminal.proxySibling,
+  };
+  return term;
 }
 
 function ConvertAttributesToAttributesAm(attributes: Attribute[]) {

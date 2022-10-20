@@ -44,7 +44,13 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Handle connectors
   useEffect(() => {
-    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
+    setConnectors(
+      FilterConnectors(
+        data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
+        selectedBlockNode,
+        secondaryNode
+      )
+    );
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
   // Update node size based on active connectors
@@ -59,7 +65,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
+        connectors={connectors.inputs}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput
@@ -72,13 +78,13 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
         onConnectorClick={(conn, isInput, data, isElectroView, isOffPage) =>
-          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage)
+          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage, project?.edges)
         }
       />
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
+        connectors={connectors.outputs}
         isElectroView={isElectroView}
         dispatch={dispatch}
         isInput={false}

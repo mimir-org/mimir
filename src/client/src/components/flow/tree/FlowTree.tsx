@@ -84,7 +84,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
       if (!project) return;
-      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, dispatch);
+      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, project, dispatch);
     },
     [selectedEdge]
   );

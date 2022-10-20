@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { CloseInspector } from "../tree/handlers";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
+import { ResolveSubStreams } from "../block/hooks/helpers/ProxyTerminals";
 
 /**
  * Component that runs when an edge is deleted from Mimir. This component is used both in TreeView and BlockView.
@@ -10,6 +11,7 @@ import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
  * @param nodes
  * @param edges
  * @param inspectorRef
+ * @param project
  * @param dispatch
  */
 const OnEdgeDelete = (
@@ -17,11 +19,13 @@ const OnEdgeDelete = (
   nodes: Node[],
   edges: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  project: Project,
   dispatch: Dispatch
 ) => {
   edgesToDelete.forEach((edge) => {
     if (!edge) return;
     HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);
+    ResolveSubStreams(project, dispatch, edge, null);
   });
 
   CloseInspector(inspectorRef, dispatch);
