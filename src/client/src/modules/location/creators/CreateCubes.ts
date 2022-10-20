@@ -14,8 +14,7 @@ const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
     new THREE.MeshPhongMaterial({
       color: Color.MAGENTA,
       emissive: 0x072534,
-      side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
+      side: THREE.DoubleSide
     })
   );
 
