@@ -12,6 +12,6 @@ namespace Mb.Data.Contracts
         Task<List<InterfaceLibCm>> GetInterfaceTypes();
         Task<List<TransportLibCm>> GetTransportTypes();
         Task<List<TerminalLibCm>> GetTerminalTypes();
-       
+
     }
 }
