@@ -9,8 +9,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.25.3" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.249" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.249" />
+    <PackageReference Include="Mimirorg.Common" Version="0.16.0" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="0.16.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.4.0" />
