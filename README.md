@@ -154,7 +154,6 @@ REACT_APP_SOCKET_BASE_URL = http://localhost:5001/
 REACT_APP_APP_ID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 REACT_APP_CLIENT_ID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 REACT_APP_TENANT_ID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-REACT_APP_COMPANY = company.com
 REACT_APP_MIMIR_VERSION = 2.0
 REACT_APP_APP_INSIGHTS_CONNECTION_STRING = InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;...
 REACT_APP_SILENT = false
@@ -181,6 +180,8 @@ To set environment variables for server in development, edit the appsettings.jso
 `ApplicationSetting__TypeLibraryVersion` - The version used by Type Library
 
 `ApplicationSetting__TypeLibrarySecret` - The secret registered in Type Library. Used to identify and registered hooks
+
+`ApplicationSetting__TypeLibraryDomain` - The type library domain
 
 `AzureActiveDirectoryConfiguration__TenantId` - Azure tenant
 

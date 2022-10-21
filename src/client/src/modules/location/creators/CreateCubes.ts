@@ -15,7 +15,6 @@ const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
       color: Color.MAGENTA,
       emissive: 0x072534,
       side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
     })
   );
 
