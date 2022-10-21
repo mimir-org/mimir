@@ -1,5 +1,5 @@
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
-import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/Connectors";
 
 /**
@@ -38,8 +38,7 @@ function ValidateProduct(secondaryNode: Node, sourceConn: Connector, targetConn:
 function ValidateFunction(secondaryNode: Node, sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
   if (IsProduct(secondaryNode)) return IsProductConnection(sourceConn, targetConn);
   if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
-  if (IsFunction(secondaryNode))
-    return IsTransportConnection(sourceConn, targetConn) || IsOffPage(sourceNode) || IsOffPage(targetNode);
+  if (IsFunction(secondaryNode)) return IsTransportConnection(sourceConn, targetConn);
 }
 
 export default ValidateSplitViewEdge;

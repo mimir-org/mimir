@@ -668,63 +668,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_OFFPAGE_STATUS: {
-      const { nodeId, connectorId, isRequired } = action.payload;
-
-      const getConnectors = (n: Node) => {
-        return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, isRequired } : conn));
-      };
-
-      return {
-        ...state,
-        project: { ...project, nodes: nodes.map((n) => (n?.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
-      };
-    }
-
-    case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
-      const { nodeId, connectorId, isRequired } = action.payload;
-      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
-
-      const getConnectors = (n: Node) => {
-        return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, isRequired } : conn));
-      };
-
-      const nodesWithRequiredStatus = nodes.map((n) => (n?.id === nodeId ? { ...n, connectors: getConnectors(n) } : n));
-
-      return {
-        ...state,
-        project: { ...project, nodes: [...nodesWithRequiredStatus, offPageNode], edges: [...edges, transportEdge, partOfEdge] },
-      };
-    }
-
-    case Types.CREATE_CONNECTED_OFFPAGE_NODE: {
-      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
-
-      return {
-        ...state,
-        project: { ...project, nodes: [...nodes, offPageNode], edges: [...edges, partOfEdge, transportEdge] },
-      };
-    }
-
-    case Types.ADD_TERMINAL: {
-      const terminal = action.payload.terminal;
-
-      return {
-        ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) =>
-            n?.id === terminal.nodeId
-              ? {
-                  ...n,
-                  connectors: [...n.connectors, terminal],
-                }
-              : n
-          ),
-        },
-      };
-    }
-
     case Types.DELETE_TERMINAL: {
       const terminal = action.payload.terminal;
 

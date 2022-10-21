@@ -18,7 +18,6 @@ interface Props {
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  isOffPage: boolean;
   nodes: Node[];
 }
 
@@ -35,7 +34,6 @@ export const InspectorTabElement = ({
   children,
   inspectorRef,
   isInspectorOpen,
-  isOffPage,
   nodes,
 }: PropsWithChildren<Props>) => {
   const dispatch = useAppDispatch();
@@ -52,7 +50,7 @@ export const InspectorTabElement = ({
 
   return (
     <>
-      <InspectorTabHeader active={isTabOpen} onClick={onClick} color={GetInspectorTabsColor(nodes, element, isOffPage)}>
+      <InspectorTabHeader active={isTabOpen} onClick={onClick} color={GetInspectorTabsColor(nodes, element)}>
         <InspectorTabHeaderTitle active={isTabOpen}>{GetInspectorText(index)}</InspectorTabHeaderTitle>
       </InspectorTabHeader>
 

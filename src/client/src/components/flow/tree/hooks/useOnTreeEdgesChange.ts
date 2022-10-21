@@ -40,7 +40,7 @@ const useOnTreeEdgesChange = (
   });
 
   // Execute verified changes
-  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, project, dispatch);
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
 };
 

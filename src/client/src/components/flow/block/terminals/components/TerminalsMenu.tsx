@@ -13,7 +13,7 @@ interface Props {
   hasActiveTerminals: boolean;
   isParent: boolean;
   isElectroView: boolean;
-  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
   onBlur: () => void;
 }
 

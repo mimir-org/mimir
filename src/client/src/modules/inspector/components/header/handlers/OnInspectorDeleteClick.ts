@@ -60,5 +60,5 @@ function HandleInspectorEdgeDelete(
     edgesToDelete.push(edge);
   }
 
-  OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, project, dispatch);
+  OnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
 }

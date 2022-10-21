@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Dispatch } from "redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./HandleComponent.styled";
 import { BlockNodeConnector } from "./components/BlockNodeConnector";
@@ -14,7 +14,6 @@ interface Props {
   isElectroView: boolean;
   dispatch: Dispatch;
   isInput: boolean;
-  isOffPage?: boolean;
   isParent?: boolean;
 }
 
@@ -23,8 +22,7 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the connector type.
  */
-export const HandleComponent = ({ node, project, connectors, isElectroView, isOffPage, isInput, dispatch, isParent }: Props) => {
-  const [visible, setVisible] = useState(!isOffPage);
+export const HandleComponent = ({ node, project, connectors, isElectroView, isInput, dispatch, isParent }: Props) => {
   const updateNodeInternals = useUpdateNodeInternals();
 
   useEffect(() => {
@@ -46,8 +44,7 @@ export const HandleComponent = ({ node, project, connectors, isElectroView, isOf
             dispatch={dispatch}
             isElectroView={isElectroView}
             isParent={isParent}
-            visible={visible}
-            setVisible={setVisible}
+            visible={true}
           />
         );
       })}

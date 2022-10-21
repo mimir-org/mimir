@@ -6,7 +6,6 @@ import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
-import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { useReactFlow } from "react-flow-renderer";
 import { ViewportData } from "../../../models/project";
@@ -25,7 +24,7 @@ export const BlockProjectComponent = () => {
   const username = useAppSelector(selectors.usernameSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const project = projectState?.project;
-  const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const nodes = project?.nodes;
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);

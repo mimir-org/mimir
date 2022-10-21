@@ -1,5 +1,4 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
-import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetTreeEdgeType } from "../helpers";
 import { ConvertEdgeToFlowEdge } from "../../converters";
 import { EdgeType } from "../../../../models/project";
@@ -10,8 +9,6 @@ const BuildFlowTreeEdges = (mimirNodes: Node[], mimirEdges: Edge[], animated: bo
 
   mimirEdges.forEach((edge) => {
     const edgeType = GetTreeEdgeType(edge.fromConnector);
-    if (IsOffPage(edge.toNode)) return;
-
     const treeEdge = BuildTreeEdge(edge, edgeType, mimirNodes, animated);
     if (treeEdge) flowEdges.push(treeEdge);
   });

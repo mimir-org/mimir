@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiError } from "../../../models/webclient";
-import { BlockNodeSize, OffPageObject } from "../../../models/project";
+import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
 import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
 
@@ -62,9 +62,6 @@ export const SET_LOCK_ATTRIBUTES = "SET_LOCK_ATTRIBUTES";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
-export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
-export const CREATE_REQUIRED_OFFPAGE_NODE = "CREATE_REQUIRED_OFFPAGE_NODE";
-export const CREATE_CONNECTED_OFFPAGE_NODE = "CREATE_CONNECTED_OFFPAGE_NODE";
 export const ADD_TERMINAL = "ADD_TERMINAL";
 export const DELETE_TERMINAL = "DELETE_TERMINAL";
 export const UPDATE_TERMINAL = "UPDATE_TERMINAL";
@@ -366,21 +363,6 @@ export interface UpdateEdgeAction {
   payload: Edge;
 }
 
-export interface SetOffPageStatus {
-  type: typeof SET_OFFPAGE_STATUS;
-  payload: { nodeId: string; connectorId: string; isRequired: boolean };
-}
-
-export interface CreateRequiredOffPageNode {
-  type: typeof CREATE_REQUIRED_OFFPAGE_NODE;
-  payload: { nodeId: string; connectorId: string; isRequired: boolean; offPageObject: OffPageObject };
-}
-
-export interface CreateConnectedOffPageNode {
-  type: typeof CREATE_CONNECTED_OFFPAGE_NODE;
-  payload: { offPageObject: OffPageObject };
-}
-
 export interface AddTerminal {
   type: typeof ADD_TERMINAL;
   payload: { terminal: Terminal };
@@ -455,9 +437,6 @@ export type ProjectActionTypes =
   | CreateSubProjectFinished
   | UpdateNodeAction
   | UpdateEdgeAction
-  | SetOffPageStatus
-  | CreateRequiredOffPageNode
-  | CreateConnectedOffPageNode
   | AddTerminal
   | DeleteTerminal
   | UpdateTerminal;

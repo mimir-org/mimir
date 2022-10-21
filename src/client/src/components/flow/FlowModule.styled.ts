@@ -111,29 +111,9 @@ export const FlowModuleContainer = styled.div`
   .path-blockTransportEdge,
   .path-blockRelationSourceEdge,
   .path-blockRelationTargetEdge,
-  .path-blockPartOfEdge,
-  .path-blockOffPageEdge {
-    stroke-width: 2px !important;
-    fill: none;
-    pointer-events: visibleStroke;
-    cursor: grab;
-  }
+  .path-blockPartOfEdge
 
   .react-flow__edge-BlockTransportEdgeType,
   .react-flow__edge-BlockRelationEdgeType,
-  .react-flow__edge-BlockPartOfEdgeType,
-  .react-flow__edge-BlockOffPageEdgeType {
-    &.selected {
-      .path-blockTransportEdge,
-      .path-blockRelationSourceEdge,
-      .path-blockRelationTargetEdge,
-      .path-blockPartOfEdge,
-      .path-blockOffPageEdge {
-        stroke-width: 6px !important;
-      }
-      .path-blockRelationTargetEdge {
-        stroke-dasharray: 5, 15;
-      }
-    }
-  }
+  .react-flow__edge-BlockPartOfEdgeType  
 `;

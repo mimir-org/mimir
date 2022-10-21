@@ -1,5 +1,4 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
-import { IsOffPage } from "../../../helpers/Aspects";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EdgeType } from "../../../models/project";
 import { IsTerminal } from "../helpers/Connectors";
@@ -14,8 +13,7 @@ import { IsTerminal } from "../helpers/Connectors";
  * @returns a FlowEdge.
  */
 const ConvertEdgeToFlowEdge = (edge: Edge, edgeType: EdgeType, source: Node, target: Node, animated: boolean) => {
-  const isOffPage = IsOffPage(edge.fromNode) || IsOffPage(edge.toNode);
-  const isAnimated = animated && !isOffPage && IsTerminal(edge.fromConnector);
+  const isAnimated = animated && IsTerminal(edge.fromConnector);
 
   return {
     id: edge.id,

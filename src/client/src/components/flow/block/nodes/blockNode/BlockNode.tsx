@@ -5,8 +5,6 @@ import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle/HandleComponent";
-import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
-import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterConnectors } from "../helpers/FilterConnectors";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { Size } from "../../../../../assets/size/Size";
@@ -30,17 +28,11 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
-  const [size, setSize] = useState<BlockNodeSize>(initialSize);
+  const [, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
   const isElectroView = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-
-  // Check for elements that require OffPage nodes
-  useEffect(() => {
-    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, dispatch);
-    HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
-  }, [secondaryNode]);
 
   // Handle connectors
   useEffect(() => {
@@ -77,9 +69,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
-        onConnectorClick={(conn, isInput, data, isElectroView, isOffPage) =>
-          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage, project?.edges)
-        }
+        onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
       />
       <HandleComponent
         node={data}

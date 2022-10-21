@@ -122,7 +122,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
       setHasRendered(true);
@@ -133,7 +133,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
   }, [mimirNodes, secondaryNode, isElectroView]);
 
   // Rerender edges
