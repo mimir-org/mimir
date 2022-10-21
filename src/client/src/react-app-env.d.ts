@@ -6,7 +6,6 @@ interface MimirEnv {
   APP_ID: string;
   CLIENT_ID: string;
   TENANT_ID: string;
-  COMPANY: string;
   APP_INSIGHTS_CONNECTION_STRING: string;
   MIMIR_VERSION: string;
   SILENT: string;
