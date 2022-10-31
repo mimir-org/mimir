@@ -24,6 +24,7 @@ export const OnConnectorClick = (
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
 
   const proxy = FindProxyConnector(sourceConnector.id, sourceNode);
+
   if (proxy == null && !visible) {
     if (isInput) {
       CreateProxyTerminals(null, sourceConnector, dispatch);

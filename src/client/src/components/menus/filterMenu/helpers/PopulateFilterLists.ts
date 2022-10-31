@@ -15,12 +15,9 @@ const PopulateFilterLists = (
   nodes: Node[],
   transportItems: Terminal[],
   productAndLocationRelations: Relation[],
-  partOfItems: Relation[],
-  isTreeView: boolean
+  partOfItems: Relation[]
 ) => {
   edges.forEach((edge) => {
-    if (isTreeView) return;
-
     const sourceConn = edge.fromConnector;
 
     if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
