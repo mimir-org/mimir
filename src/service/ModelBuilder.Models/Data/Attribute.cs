@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
-using Mimirorg.TypeLibrary.Enums;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -16,30 +15,11 @@ namespace Mb.Models.Data
 
         public string Id { get; set; }
         public string Iri { get; set; }
-        public string Domain => Id.ResolveDomain();
         public string Kind => nameof(Attribute);
         public string Entity { get; set; }
         public string Value { get; set; }
         public string AttributeTypeId { get; set; }
         public string AttributeTypeIri { get; set; }
-
-        [NotMapped]
-        public virtual ICollection<TypeReference> TypeReferences
-        {
-            get
-            {
-                if (_typeReferences != null)
-                    return _typeReferences;
-
-                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
-            }
-
-            set => _typeReferences = value;
-        }
-
-        [JsonIgnore]
-        [TSExclude]
-        public string TypeReferenceString { get; set; }
 
         // Unit
         public string SelectedUnitId { get; set; }
@@ -96,14 +76,6 @@ namespace Mb.Models.Data
         public virtual string InterfaceId { get; set; }
         public virtual string InterfaceIri { get; set; }
 
-        [NotMapped]
-        public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
-
-        [JsonIgnore]
-        [TSExclude]
-        public string SelectValuesString { get; set; }
-
-        public Select SelectType { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
@@ -131,7 +103,6 @@ namespace Mb.Models.Data
                    AttributeTypeIri == other.AttributeTypeIri &&
                    SelectedUnitId == other.SelectedUnitId &&
                    UnitString == other.UnitString &&
-                   TypeReferenceString == other.TypeReferenceString &&
                    SpecifiedScope == other.SpecifiedScope &&
                    SpecifiedProvenance == other.SpecifiedProvenance &&
                    RangeSpecifying == other.RangeSpecifying &&
@@ -143,9 +114,7 @@ namespace Mb.Models.Data
                    TransportId == other.TransportId &&
                    TransportIri == other.TransportIri &&
                    InterfaceId == other.InterfaceId &&
-                   InterfaceIri == other.InterfaceIri &&
-                   SelectValuesString == other.SelectValuesString &&
-                   SelectType == other.SelectType;
+                   InterfaceIri == other.InterfaceIri;
         }
 
         public override bool Equals(object obj)
@@ -166,7 +135,6 @@ namespace Mb.Models.Data
             hashCode.Add(AttributeTypeIri);
             hashCode.Add(SelectedUnitId);
             hashCode.Add(UnitString);
-            hashCode.Add(TypeReferenceString);
             hashCode.Add(SpecifiedScope);
             hashCode.Add(SpecifiedProvenance);
             hashCode.Add(RangeSpecifying);
@@ -179,18 +147,9 @@ namespace Mb.Models.Data
             hashCode.Add(TransportIri);
             hashCode.Add(InterfaceId);
             hashCode.Add(InterfaceIri);
-            hashCode.Add(SelectValuesString);
-            hashCode.Add((int) SelectType);
             return hashCode.ToHashCode();
         }
 
         #endregion
-
-        #region Private members
-
-        [TSExclude]
-        private ICollection<TypeReference> _typeReferences;
-
-        #endregion Private members
     }
 }
