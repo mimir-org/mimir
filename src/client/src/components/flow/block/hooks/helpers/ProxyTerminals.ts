@@ -1,17 +1,8 @@
-import {
-  Connector,
-  ConnectorDirection,
-  ConnectorVisibility,
-  Terminal,
-  Node,
-  Edge,
-  Project,
-  Aspect,
-} from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorDirection, ConnectorVisibility, Terminal, Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { addTerminal, createEdge, deleteEdge, deleteTerminal, updateTerminal } from "../../../../../redux/store/project/actions";
 import { CreateId } from "../../../helpers";
-import { IsTerminal } from "../../../helpers/Connectors";
+import { IsPartOfConnection, IsTerminal } from "../../../helpers/Connectors";
 import { IsTerminalSiblings } from "../../helpers";
 
 export enum TransportDirection {
@@ -54,12 +45,21 @@ export const ResolveSubStreams = async (project: Project, dispatch: Dispatch, ed
     projectCopy.edges = projectCopy.edges.filter((x) => x.id !== edgeToAdd.id);
   }
 
-  const streams = ResolveTransportDetection(projectCopy);
+  let streams: DetectedEdge[] = [];
+
+  // const rootFunctionNode = project.nodes.filter((x) => x.isRoot && x.aspect === Aspect.Function)[0];
+  projectCopy.nodes.forEach((node) => {
+    streams = streams.concat(ResolveDetectedEdgesRecursive(projectCopy, node));
+  });
+
+  console.log(streams);
 
   streams.forEach((stream) => {
-    const currentEdge = project.edges.find(
+    const currentEdge = projectCopy.edges.find(
       (x) => x.fromConnectorId === stream.edge.fromConnectorId && x.toConnectorId === stream.edge.toConnectorId
     );
+
+    // console.log(currentEdge);
 
     if (stream.resolveType === ResolveType.Add && currentEdge == null) dispatch(createEdge(stream.edge));
 
@@ -68,15 +68,38 @@ export const ResolveSubStreams = async (project: Project, dispatch: Dispatch, ed
 };
 
 /**
+ * Resolve detected edges recursive
+ * @param project
+ * @param rootNode
+ */
+export const ResolveDetectedEdgesRecursive = (project: Project, rootNode: Node): DetectedEdge[] => {
+  let detectedEdges: DetectedEdge[] = [];
+  const topNodeIds = project.edges
+    .filter((x) => x.fromNodeId === rootNode?.id && IsPartOfConnection(x.fromConnector, x.toConnector))
+    .map((x) => x.toNodeId);
+  const topNodes = project.nodes.filter((x) => topNodeIds.some((y) => y == x.id));
+  detectedEdges = detectedEdges.concat(ResolveTransportDetection(project, topNodes));
+  return detectedEdges;
+  // topNodes.forEach((node) => {
+  //   ResolveDetectedEdgesRecursive(project, detectedEdges, node);
+  //   console.log(node.label);
+  //   console.log("Detected", detectedEdges);
+  // });
+
+  // detectedEdges = detectedEdges.concat(ResolveTransportDetection(project, topNodes));
+};
+
+/**
  * Resolve child transport streams when new edges is fulfilled.
  * @param project
  */
-export const ResolveTransportDetection = (project: Project): DetectedEdge[] => {
+export const ResolveTransportDetection = (project: Project, topNodes: Node[]): DetectedEdge[] => {
   // TODO: Must also be implemented for other aspects
-  const rootFunctionNode = project.nodes.filter((x) => x.isRoot && x.aspect === Aspect.Function)[0];
-  const topNodeIds = project.edges.filter((x) => x.fromNodeId === rootFunctionNode?.id).map((x) => x.toNodeId);
-  const topNodes = project.nodes.filter((x) => topNodeIds.some((y) => y == x.id));
+
   let transportDetections: TransportDetection[] = [];
+  const detectedEdges: DetectedEdge[] = [];
+
+  if (topNodes == null || topNodes.length < 1) return detectedEdges;
 
   topNodes.forEach((n) => {
     const proxyConnectors = n.connectors.filter((x) => IsTerminal(x) && x.isProxy) as Terminal[];
@@ -84,7 +107,7 @@ export const ResolveTransportDetection = (project: Project): DetectedEdge[] => {
     transportDetections = transportDetections.concat(transports);
   });
 
-  const detectedEdges: DetectedEdge[] = [];
+  if (transportDetections == null || transportDetections.length < 1) return detectedEdges;
 
   transportDetections
     .filter((d) => d.proxySibling != null && d.direction === TransportDirection.CounterFlow)
@@ -113,10 +136,10 @@ export const ResolveTransportDetection = (project: Project): DetectedEdge[] => {
           toNodeId: sibling.toNode,
           toNodeIri: null,
           toNode: toNode,
-          transportId: null, // Resolve this
-          transport: null, // Resolve this,
-          interfaceId: null, // Resolve this
-          interface: null, // Resolve this
+          transportId: null, // TODO: Resolve this
+          transport: null, // TODO: Resolve this,
+          interfaceId: null, // TODO: Resolve this
+          interface: null, // TODO: Resolve this
           isLocked: false,
           isLockedStatusBy: null,
           isLockedStatusDate: null,
@@ -128,6 +151,11 @@ export const ResolveTransportDetection = (project: Project): DetectedEdge[] => {
           hidden: false,
           blockHidden: false,
         };
+
+        // console.log("LEVEL ", sibling.level === td.level);
+        // console.log("SIBLING ", sibling.isResolved);
+        // console.log("DETECTION ", td.isResolved);
+        // console.log("MAIN STREAM ", HasMainStream(project, td.proxyParent, sibling.proxyParent));
 
         const resolveType: ResolveType =
           sibling.level === td.level &&
@@ -159,7 +187,8 @@ export const HasMainStream = (project: Project, from: string, to: string): boole
   const edge = project.edges.find((x) => x.fromConnectorId === from && x.toConnectorId === to);
   if (edge == null) return false;
 
-  if (edge.transport != null || edge.interface != null) return true;
+  // if (edge.transport != null || edge.interface != null) return true;
+  return true;
 
   return false;
 };

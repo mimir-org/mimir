@@ -9,7 +9,7 @@ interface Props {
  * A wrapper for the input field and the drop-down menu for units
  */
 export const AttributeInputBox = styled.div<Props>`
-  width: ${(props) => (props.singleColumn ? 170 : 250)}px;
+  width: ${(props) => (props.singleColumn ? 100 : 100)}%;
   display: flex;
   gap: 4px;
   margin-left: ${(props) => (props.singleColumn ? 47 : 140)}px;

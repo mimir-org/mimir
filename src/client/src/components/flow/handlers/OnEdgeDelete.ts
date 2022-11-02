@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import { Edge, Project } from "@mimirorg/modelbuilder-types";
 import { CloseInspector } from "../tree/handlers";
 import { ResolveSubStreams } from "../block/hooks/helpers/ProxyTerminals";
+import { deleteEdge } from "../../../redux/store/project/actions";
 
 /**
  * Component that runs when an edge is deleted from Mimir. This component is used both in TreeView and BlockView.
@@ -19,6 +20,7 @@ const OnEdgeDelete = (
 ) => {
   edgesToDelete.forEach((edge) => {
     if (!edge) return;
+    dispatch(deleteEdge(edge.id));
     ResolveSubStreams(project, dispatch, edge, null);
   });
 
