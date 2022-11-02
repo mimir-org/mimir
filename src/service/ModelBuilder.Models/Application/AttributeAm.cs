@@ -69,9 +69,6 @@ namespace Mb.Models.Application
         [EnumDataType(typeof(Select))]
         public Select SelectType { get; set; }
 
-        [EnumDataType(typeof(Discipline))]
-        public Discipline Discipline { get; set; }
-
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }

@@ -41,7 +41,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
@@ -69,8 +68,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences))
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
-                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType));
         }
     }
 }

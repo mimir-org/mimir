@@ -1,4 +1,3 @@
-using Mb.Models.Configurations.Converters;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,9 +8,6 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Attribute> builder)
         {
-            var stringComparer = new StringHashSetValueComparer();
-            var stringConverter = new StringHashSetValueConverter();
-
             builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
@@ -43,7 +39,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
             builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired();
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired();
 
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);

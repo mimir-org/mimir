@@ -25,11 +25,6 @@ namespace ModelBuilder.Rdf.Extensions
         {
             #region None Mimir specific data
 
-            if (attribute.Entity == "RDF Attribute")
-            {
-                var t = string.Empty;
-            }
-
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
             ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
@@ -48,7 +43,6 @@ namespace ModelBuilder.Rdf.Extensions
 
             #region Mimir specific data
 
-            ontologyService.AssertNode(attribute.Iri, Resources.HasDiscipline, $"mimir:{attribute.Discipline}");
             ontologyService.AssertNode(attribute.Iri, Resources.SelectType, $"mimir:{attribute.SelectType}");
 
             if (attribute.SelectValues != null && attribute.SelectValues.Any())
@@ -197,7 +191,6 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue(false)).ToList();
 
             attribute.SelectType = ontologyService.GetEnumValue<Select>(iri, Resources.SelectType, false);
-            attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
 
             #endregion None Mimir specific data
         }
