@@ -14,7 +14,7 @@ interface Props {
 export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Props) => {
   return hasTypeReference ? (
     <span>
-      <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">
+      <a href={attribute.attributeTypeIri} target="_blank" rel="noopener noreferrer">
         {attribute.entity}
         <img src={LinkIcon} alt="link" className="linkIcon" />
       </a>

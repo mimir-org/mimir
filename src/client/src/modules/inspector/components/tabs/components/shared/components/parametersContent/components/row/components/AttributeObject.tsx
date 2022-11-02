@@ -44,7 +44,7 @@ export const AttributeObject = ({
   const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
-  const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
+  const hasTypeReference = attribute?.attributeTypeIri != null && attribute?.attributeTypeIri.length > 0;
   const descriptors = GetAttributeDescriptors(combination);
 
   const hasDescriptors = descriptors.length > 0;

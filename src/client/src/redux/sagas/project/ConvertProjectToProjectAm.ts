@@ -1,5 +1,4 @@
 import { IsRelationConnector, IsTerminal } from "../../../components/flow/helpers/Connectors";
-import { ConvertTypeReference } from "../../../components/flow/converters/ConvertTypeReference";
 import {
   Project,
   Edge,
@@ -183,7 +182,6 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
     convertedAttributes.push({
       id: attr.id,
       iri: attr.iri,
-      domain: attr.domain,
       entity: attr.entity,
       value: attr.value,
       selectedUnitId: attr.selectedUnitId,
@@ -202,13 +200,9 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
       attributeTypeId: attr.attributeTypeId,
       attributeTypeIri: attr.attributeTypeIri,
       units: attr.units,
-      selectValues: attr.selectValues,
-      selectType: attr.selectType,
-      discipline: attr.discipline,
       isLocked: attr.isLocked,
       isLockedStatusBy: attr.isLockedStatusBy,
       isLockedStatusDate: attr.isLockedStatusDate,
-      typeReferences: ConvertTypeReference(attr.typeReferences),
     });
   });
 

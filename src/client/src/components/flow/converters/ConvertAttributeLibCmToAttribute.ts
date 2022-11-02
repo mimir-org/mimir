@@ -3,7 +3,6 @@ import { AttributeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
 import { ConvertUnitLibCmToUnits } from "./";
-import { ConvertTypeReference } from "./ConvertTypeReference";
 
 /**
  * Component to convert Node's AttributeLibCm to the type Attribute.
@@ -17,37 +16,33 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
   if (!attributes || !attributes.length) return [] as Attribute[];
 
   return attributes.map((a) => {
-    return {
+    const attribute: Attribute = {
       id: CreateId(),
       iri: null,
       kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
-      value: "",
+      value: null,
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
-      selectedUnitId: "",
+      selectedUnitId: null,
       units: ConvertUnitLibCmToUnits(a.units),
-      specifiedScope: a.quantityDatumSpecifiedScope,
-      specifiedProvenance: a.quantityDatumSpecifiedProvenance,
-      rangeSpecifying: a.quantityDatumRangeSpecifying,
-      regularitySpecified: a.quantityDatumRegularitySpecified,
-      discipline: a.discipline,
+      specifiedScope: null,
+      specifiedProvenance: null,
+      rangeSpecifying: null,
+      regularitySpecified: null,
       nodeId,
       nodeIri: null,
       terminalId: null,
       transportId: null,
       interfaceId: null,
-      selectValues: a.selectValues,
-      selectType: a.select,
       isLocked: false,
       isLockedStatusBy: null,
       isLockedStatusDate: null,
-      domain: null,
       interfaceIri: null,
       terminalIri: null,
       transportIri: null,
-      typeReferences: ConvertTypeReference(a.typeReferences),
-    } as Attribute;
+    };
+    return attribute;
   });
 };
 
@@ -59,35 +54,36 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
  * @returns a list of Attributes.
  */
 export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLibCm, id: string) => {
-  if (!libTerminal.attributes.length) return [] as Attribute[];
+  if (libTerminal && libTerminal.attributes && !libTerminal.attributes.length) return [] as Attribute[];
 
   return libTerminal.attributes.map((a) => {
-    return {
+    const attribute: Attribute = {
       id: CreateId(),
       iri: null,
       kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
-      value: "",
+      value: null,
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
-      selectedUnitId: "",
+      selectedUnitId: null,
       units: ConvertUnitLibCmToUnits(a.units),
-      specifiedScope: a.quantityDatumSpecifiedScope,
-      specifiedProvenance: a.quantityDatumSpecifiedProvenance,
-      rangeSpecifying: a.quantityDatumRangeSpecifying,
-      regularitySpecified: a.quantityDatumRegularitySpecified,
-      discipline: a.discipline,
+      specifiedScope: null,
+      specifiedProvenance: null,
+      rangeSpecifying: null,
+      regularitySpecified: null,
       nodeId: null,
       nodeIri: null,
       terminalId: id,
       transportId: null,
       interfaceId: null,
-      selectValues: a.selectValues,
-      selectType: a.select,
       isLocked: false,
       isLockedStatusBy: null,
       isLockedStatusDate: null,
-    } as Attribute;
+      terminalIri: null,
+      transportIri: null,
+      interfaceIri: null,
+    };
+    return attribute;
   });
 };
 
@@ -103,37 +99,33 @@ export const ConvertTransportAttributeLibCmToAttribute = (attributes: AttributeL
   if (!attributes || !attributes.length) return [] as Attribute[];
 
   return attributes.map((a) => {
-    return {
+    const attribute: Attribute = {
       id: CreateId(),
       iri: null,
       kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
-      value: "",
+      value: null,
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
-      selectedUnitId: "",
+      selectedUnitId: null,
       units: ConvertUnitLibCmToUnits(a.units),
-      specifiedScope: a.quantityDatumSpecifiedScope,
-      specifiedProvenance: a.quantityDatumSpecifiedProvenance,
-      rangeSpecifying: a.quantityDatumRangeSpecifying,
-      regularitySpecified: a.quantityDatumRegularitySpecified,
-      discipline: a.discipline,
+      specifiedScope: null,
+      specifiedProvenance: null,
+      rangeSpecifying: null,
+      regularitySpecified: null,
       nodeId: null,
       nodeIri: null,
       terminalId: null,
       transportId: transportId,
       interfaceId: null,
-      selectValues: a.selectValues,
-      selectType: a.select,
       isLocked: false,
       isLockedStatusBy: null,
       isLockedStatusDate: null,
-      domain: null,
       interfaceIri: null,
       terminalIri: null,
       transportIri: null,
-      typeReferences: ConvertTypeReference(a.typeReferences),
-    } as Attribute;
+    };
+    return attribute;
   });
 };
 
@@ -149,36 +141,33 @@ export const ConvertInterfaceAttributeLibCmToAttribute = (attributes: AttributeL
   if (!attributes || !attributes.length) return [] as Attribute[];
 
   return attributes.map((a) => {
-    return {
+    const attribute: Attribute = {
       id: CreateId(),
       iri: null,
       kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
-      value: "",
+      value: null,
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
-      selectedUnitId: "",
+      selectedUnitId: null,
       units: ConvertUnitLibCmToUnits(a.units),
-      specifiedScope: a.quantityDatumSpecifiedScope,
-      specifiedProvenance: a.quantityDatumSpecifiedProvenance,
-      rangeSpecifying: a.quantityDatumRangeSpecifying,
-      regularitySpecified: a.quantityDatumRegularitySpecified,
-      discipline: a.discipline,
+      specifiedScope: null,
+      specifiedProvenance: null,
+      rangeSpecifying: null,
+      regularitySpecified: null,
       nodeId: null,
       nodeIri: null,
       terminalId: null,
       transportId: null,
       interfaceId: interfaceId,
-      selectValues: a.selectValues,
-      selectType: a.select,
       isLocked: false,
       isLockedStatusBy: null,
       isLockedStatusDate: null,
-      domain: null,
       interfaceIri: null,
       terminalIri: null,
       transportIri: null,
-      typeReferences: ConvertTypeReference(a.typeReferences),
-    } as Attribute;
+    };
+
+    return attribute;
   });
 };
