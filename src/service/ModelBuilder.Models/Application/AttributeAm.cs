@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data;
-using Mb.Models.Extensions;
 using Mimirorg.Common.Attributes;
-using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
@@ -16,8 +14,6 @@ namespace Mb.Models.Application
         [RequiredOne(nameof(Id))]
         [ValidIri]
         public string Iri { get; set; }
-
-        public string Domain => Id.ResolveDomain();
 
         [Required]
         public string Entity { get; set; }
@@ -61,13 +57,6 @@ namespace Mb.Models.Application
 
         [ValidIri]
         public string InterfaceIri { get; set; }
-
-        public ICollection<TypeReference> TypeReferences { get; set; }
-
-        public ICollection<string> SelectValues { get; set; }
-
-        [EnumDataType(typeof(Select))]
-        public Select SelectType { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }

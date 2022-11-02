@@ -18,7 +18,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
             builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
-            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
 
             builder.Property(p => p.SpecifiedScope).HasColumnName("SpecifiedScope").HasMaxLength(127).IsRequired(false);
             builder.Property(p => p.SpecifiedProvenance).HasColumnName("SpecifiedProvenance").HasMaxLength(127).IsRequired(false);
@@ -37,8 +36,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
-            builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
-            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired();
 
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
