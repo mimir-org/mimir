@@ -30,7 +30,8 @@ export const AttributesDropdownHeaderBox = styled.div<AttributesDropdownHeaderPr
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  max-width: 90px;
+  max-width: 200px;
+  min-width: 130px;
   border: 1px solid ${(props) => props.borderColor};
   border-radius: 2px;
   font-size: ${FontSize.SMALL};
@@ -58,7 +59,8 @@ export const AttributesDropdownListBox = styled.div<AttributesDropdownListBoxPro
   top: 27px;
   left: 0;
   width: 100%;
-  max-width: 90px;
+  min-width: 130px;
+  max-width: 180px;
   max-height: 250px;
   border-width: 1px;
   border-style: solid;

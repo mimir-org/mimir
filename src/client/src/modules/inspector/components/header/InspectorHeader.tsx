@@ -4,9 +4,8 @@ import { MutableRefObject } from "react";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { InspectorHeaderBox } from "./InspectorHeader.styled";
 import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
-import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
-import { Aspect, Project, Terminal, Attribute } from "@mimirorg/modelbuilder-types";
+import { Project, Terminal, Attribute } from "@mimirorg/modelbuilder-types";
 import {
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
@@ -57,10 +56,9 @@ export const InspectorHeader = ({
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
-  const isOffPage = IsNode(element) ? element.aspect === Aspect.None : false;
 
   return (
-    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
+    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, tabsVisible)}>
       {tabsVisible && (
         <InspectorTabsComponent
           project={project}
@@ -71,7 +69,6 @@ export const InspectorHeader = ({
           changeInspectorTabAction={changeInspectorTabAction}
           inspectorRef={inspectorRef}
           isInspectorOpen={isInspectorOpen}
-          isOffPage={isOffPage}
         />
       )}
 
@@ -85,6 +82,7 @@ export const InspectorHeader = ({
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeightAction}
+        project={project}
         dispatch={dispatch}
       />
     </InspectorHeaderBox>

@@ -5,8 +5,6 @@ import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle/HandleComponent";
-import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
-import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterConnectors } from "../helpers/FilterConnectors";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { Size } from "../../../../../assets/size/Size";
@@ -17,6 +15,7 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
 import { Node } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../../../helpers/Connectors";
 
 /**
  * Component for a child Node in BlockView.
@@ -29,21 +28,21 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
-  const [size, setSize] = useState<BlockNodeSize>(initialSize);
+  const [, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
   const isElectroView = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
-  // Check for elements that require OffPage nodes
-  useEffect(() => {
-    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, dispatch);
-    HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
-  }, [secondaryNode]);
-
   // Handle connectors
   useEffect(() => {
-    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
+    setConnectors(
+      FilterConnectors(
+        data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
+        selectedBlockNode,
+        secondaryNode
+      )
+    );
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
   // Update node size based on active connectors
@@ -70,9 +69,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
-        onConnectorClick={(conn, isInput, data, isElectroView, isOffPage) =>
-          OnConnectorClick(conn, isInput, data, dispatch, isElectroView, isOffPage)
-        }
+        onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
       />
       <HandleComponent
         node={data}

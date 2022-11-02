@@ -1,4 +1,4 @@
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";
@@ -13,6 +13,7 @@ import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handl
  * @param edges
  * @param element
  * @param dispatch
+ * @param project
  * @param inspectorRef
  */
 export const OnInspectorDeleteClick = (
@@ -20,10 +21,11 @@ export const OnInspectorDeleteClick = (
   edges: Edge[],
   element: InspectorElement,
   dispatch: Dispatch,
+  project: Project,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
   if (IsNode(element)) return HandleInspectorNodeDelete(element, nodes, edges, inspectorRef, dispatch);
-  if (IsEdge(element)) return HandleInspectorEdgeDelete(element, nodes, edges, inspectorRef, dispatch);
+  if (IsEdge(element)) return HandleInspectorEdgeDelete(element, nodes, edges, inspectorRef, project, dispatch);
 };
 
 function HandleInspectorNodeDelete(
@@ -48,6 +50,7 @@ function HandleInspectorEdgeDelete(
   nodes: Node[],
   edges: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  project: Project,
   dispatch: Dispatch
 ) {
   const edgesToDelete = [] as Edge[];
@@ -57,5 +60,5 @@ function HandleInspectorEdgeDelete(
     edgesToDelete.push(edge);
   }
 
-  OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  OnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
 }

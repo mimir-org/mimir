@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Types from "./types";
-import { BlockNodeSize, OffPageObject } from "../../../models/project";
+import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
 import {
   Project,
@@ -10,6 +10,7 @@ import {
   EntityType,
   Connector,
   ProjectConverterAm,
+  Terminal,
 } from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -252,19 +253,14 @@ export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
   return { type: Types.UPDATE_EDGE, payload: edge };
 }
 
-export function setOffPageStatus(nodeId: string, connectorId: string, isRequired: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_OFFPAGE_STATUS, payload: { nodeId, connectorId, isRequired } };
+export function addTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.ADD_TERMINAL, payload: { terminal: terminal } };
 }
 
-export function createRequiredOffPageNode(
-  nodeId: string,
-  connectorId: string,
-  isRequired: boolean,
-  offPageObject: OffPageObject
-): Types.CreateRequiredOffPageNode {
-  return { type: Types.CREATE_REQUIRED_OFFPAGE_NODE, payload: { nodeId, connectorId, isRequired, offPageObject } };
+export function deleteTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.DELETE_TERMINAL, payload: { terminal: terminal } };
 }
 
-export function createConnectedOffPageNode(offPageObject: OffPageObject): Types.CreateConnectedOffPageNode {
-  return { type: Types.CREATE_CONNECTED_OFFPAGE_NODE, payload: { offPageObject } };
+export function updateTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.UPDATE_TERMINAL, payload: { terminal: terminal } };
 }

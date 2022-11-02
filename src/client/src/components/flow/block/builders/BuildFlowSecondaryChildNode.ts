@@ -1,7 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { GetNodeTypeString, SetSecondaryChildNodePos } from "./helpers";
-import { IsOffPage } from "../../../../helpers/Aspects";
 
 /**
  * Component to create a child node for the SecondaryParentNode in BlockView.
@@ -15,7 +14,7 @@ import { IsOffPage } from "../../../../helpers/Aspects";
 const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, childNode: Node) => {
   const type = GetNodeTypeString(secondaryNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
-  const position = !IsOffPage(secondaryNode) ? SetSecondaryChildNodePos(primaryNode, secondaryNode, nodePos) : nodePos;
+  const position = SetSecondaryChildNodePos(primaryNode, secondaryNode, nodePos);
 
   return {
     id: childNode.id,

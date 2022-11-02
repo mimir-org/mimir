@@ -7,7 +7,7 @@ import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
@@ -30,6 +30,7 @@ interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
   changeInspectorHeightAction: (height: number) => Action;
+  project: Project;
   dispatch: Dispatch;
 }
 
@@ -48,6 +49,7 @@ export const InspectorButtonsComponent = ({
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
+  project,
   dispatch,
 }: Props) => {
   const [onLock, setOnLock] = useState(false);
@@ -78,7 +80,7 @@ export const InspectorButtonsComponent = ({
             disabled={onLock && isGlobalLocking}
           />
           <InspectorButton
-            onClick={() => !deleteDisabled && OnInspectorDeleteClick(nodes, edges, element, dispatch, inspectorRef)}
+            onClick={() => !deleteDisabled && OnInspectorDeleteClick(nodes, edges, element, dispatch, project, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
             description={TextResources.DELETE_OBJECT}
             disabled={deleteDisabled}

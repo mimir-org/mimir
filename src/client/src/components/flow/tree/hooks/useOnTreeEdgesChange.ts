@@ -1,6 +1,6 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { OnEdgeDelete } from "../../handlers/";
 
@@ -16,6 +16,7 @@ import { OnEdgeDelete } from "../../handlers/";
  * @param changes
  * @param setEdges
  * @param inspectorRef
+ * @param project
  * @param dispatch
  */
 
@@ -26,6 +27,7 @@ const useOnTreeEdgesChange = (
   changes: EdgeChange[],
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  project: Project,
   dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
@@ -38,7 +40,7 @@ const useOnTreeEdgesChange = (
   });
 
   // Execute verified changes
-  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
 };
 

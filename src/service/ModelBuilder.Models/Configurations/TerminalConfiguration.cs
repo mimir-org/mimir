@@ -12,6 +12,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.TerminalTypeId).HasColumnName("TerminalTypeId").IsRequired(false);
             builder.Property(p => p.TerminalTypeIri).HasColumnName("TerminalTypeIri").IsRequired(false);
             builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
+            builder.Property(p => p.IsProxy).HasColumnName("IsProxy").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.ProxyParent).HasColumnName("ProxyParent").IsRequired(false);
+            builder.Property(p => p.ProxySibling).HasColumnName("ProxySibling").IsRequired(false);
         }
     }
 }

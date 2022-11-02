@@ -36,7 +36,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const productAndLocationRelations = [] as Relation[];
   const partOfRelations = [] as Relation[];
 
-  PopulateFilterLists(edges, nodes, transportTerminals, productAndLocationRelations, partOfRelations, isTreeView);
+  PopulateFilterLists(edges, nodes, transportTerminals, productAndLocationRelations, partOfRelations);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>

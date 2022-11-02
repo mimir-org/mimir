@@ -25,7 +25,7 @@ export const BlockTransportEdge = ({
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Terminal;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
   const visible = !data?.edge?.hidden;
-  const color = sourceConn?.color;
+  const color = sourceConn?.color ?? Color.BLACK;
   const borderRadius = 20;
   const arrowId = `arrow-${id}`;
 

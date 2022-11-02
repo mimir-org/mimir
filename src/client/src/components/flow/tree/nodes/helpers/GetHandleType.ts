@@ -7,11 +7,17 @@ import {
   IsOutputVisible,
   IsBidirectionalTerminal,
   IsPartOfRelation,
+  IsTerminal,
 } from "../../../helpers/Connectors";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
-  const sourcePosition = IsPartOfRelation(conn) ? Position.Bottom : Position.Right;
-  const targetPosition = IsPartOfRelation(conn) ? Position.Top : Position.Left;
+  let sourcePosition = IsPartOfRelation(conn) ? Position.Bottom : Position.Right;
+  let targetPosition = IsPartOfRelation(conn) ? Position.Top : Position.Left;
+
+  if (IsTerminal(conn) && conn.isProxy) {
+    sourcePosition = Position.Left;
+    targetPosition = Position.Right;
+  }
 
   if (IsInputConnector(conn) || (IsBidirectionalTerminal(conn) && IsInputVisible(conn))) return ["target", targetPosition];
   if (IsOutputConnector(conn) || (IsBidirectionalTerminal(conn) && IsOutputVisible(conn))) return ["source", sourcePosition];

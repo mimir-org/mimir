@@ -372,8 +372,11 @@ namespace Mb.Services.Services
                     }).ToList();
                 }
 
-                var attr = RemapAttributes(connectorReplacement, connector.Attributes, createCopy, AttributeParent.Connector).ToList();
-                connector.Attributes = attr.Any() ? attr : null;
+                if (connector is TerminalAm t)
+                {
+                    var attr = RemapAttributes(connectorReplacement, t.Attributes, createCopy, AttributeParent.Connector).ToList();
+                    t.Attributes = attr.Any() ? attr : null;
+                }
 
                 connector.Id = connectorReplacement.ToId;
                 connector.Iri = connectorReplacement.ToIri;

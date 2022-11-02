@@ -13,7 +13,7 @@ interface Props {
   isElectroView: boolean;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
 }
 
 /**
@@ -46,9 +46,7 @@ export const BlockChildComponent = ({
         isElectroView={isElectroView}
         inputConnectors={inputConnectors}
         outputConnectors={outputConnectors}
-        onConnectorClick={(c, isInput, node, isElectroView, isOffPage) =>
-          onConnectorClick(c, isInput, node, isElectroView, isOffPage)
-        }
+        onConnectorClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
         showMenuButton={showMenuButton}
       />
       <SymbolBox>

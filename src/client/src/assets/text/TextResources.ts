@@ -237,7 +237,6 @@ export const TextResources = {
   BLOCK_FUNCTION: "BlockFunctionNode",
   BLOCK_PRODUCT: "BlockProductNode",
   BLOCK_PARENTNODE: "BlockParentNode",
-  BLOCK_OFFPAGE_NODE: "BlockOffPageNode",
 
   // RDS
   RDS_FUNCTION: "=",
@@ -277,7 +276,6 @@ export const TextResources = {
   VALIDATION_BLOCKVIEW: "Please select a node before opening Block View.",
   VALIDATION_BLOCKVIEW_MULTISELECT: "Please select only one node before opening Block View.",
   VALIDATION_BLOCKVIEW_PROJECT: "Please select a project before opening Block View.",
-  VALIDATION_OFFPAGE: "An off-page node can only be connected with a node of the same type.",
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
 
@@ -301,9 +299,4 @@ export const TextResources = {
   // Company names
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
-  GABBI: "gabbi",
-
-  // OffPage
-  OFFPAGE_ADD: "This will create an offpage node from the terminal.",
-  OFFPAGE_REMOVE: "This will remove the offpage node.",
 };

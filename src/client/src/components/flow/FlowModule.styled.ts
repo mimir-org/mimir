@@ -111,8 +111,7 @@ export const FlowModuleContainer = styled.div`
   .path-blockTransportEdge,
   .path-blockRelationSourceEdge,
   .path-blockRelationTargetEdge,
-  .path-blockPartOfEdge,
-  .path-blockOffPageEdge {
+  .path-blockPartOfEdge {
     stroke-width: 2px !important;
     fill: none;
     pointer-events: visibleStroke;
@@ -121,8 +120,7 @@ export const FlowModuleContainer = styled.div`
 
   .react-flow__edge-BlockTransportEdgeType,
   .react-flow__edge-BlockRelationEdgeType,
-  .react-flow__edge-BlockPartOfEdgeType,
-  .react-flow__edge-BlockOffPageEdgeType {
+  .react-flow__edge-BlockPartOfEdgeType {
     &.selected {
       .path-blockTransportEdge,
       .path-blockRelationSourceEdge,

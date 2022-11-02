@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221011114613_ProxyTerminal")]
+    partial class ProxyTerminal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -759,14 +761,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false)
                         .HasColumnName("IsProxy");
-
-                    b.Property<string>("ProxyParent")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProxyParent");
-
-                    b.Property<string>("ProxySibling")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProxySibling");
 
                     b.Property<string>("TerminalCategory")
                         .IsRequired()

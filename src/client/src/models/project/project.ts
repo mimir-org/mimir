@@ -1,4 +1,4 @@
-import { Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
+import { Terminal } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
@@ -12,7 +12,6 @@ export const ATTRIBUTE_TAB = {
 export type EdgeType = keyof typeof EDGE_TYPE;
 export const EDGE_TYPE = {
   BLOCK_TRANSPORT: "BlockTransportEdgeType",
-  BLOCK_OFFPAGE: "BlockOffPageEdgeType",
   BLOCK_RELATION: "BlockRelationEdgeType",
   BLOCK_PARTOF: "BlockPartOfEdgeType",
   TREE_PARTOF: "TreePartOfEdgeType",
@@ -75,20 +74,6 @@ export interface TerminalCategoryObject {
 export interface ViewportData {
   setViewport: SetViewport;
   setCenter: SetCenter;
-}
-
-export interface OffPageObject {
-  offPageNode: Node;
-  partOfEdge: Edge;
-  transportEdge: Edge;
-}
-
-export interface OffPageData {
-  offPageNodeId: string;
-  sourceNode: Node;
-  sourceConnector: Terminal;
-  position: Position;
-  isRequired: boolean;
 }
 
 export interface AttributeDescriptor {
