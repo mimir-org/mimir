@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.249" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.249" />
+    <PackageReference Include="Mimirorg.Common" Version="0.16.0" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="0.16.0" />
   </ItemGroup>
 
 </Project>
