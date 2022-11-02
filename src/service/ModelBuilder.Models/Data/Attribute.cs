@@ -104,7 +104,6 @@ namespace Mb.Models.Data
         public string SelectValuesString { get; set; }
 
         public Select SelectType { get; set; }
-        public Discipline Discipline { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
@@ -146,8 +145,7 @@ namespace Mb.Models.Data
                    InterfaceId == other.InterfaceId &&
                    InterfaceIri == other.InterfaceIri &&
                    SelectValuesString == other.SelectValuesString &&
-                   SelectType == other.SelectType &&
-                   Discipline == other.Discipline;
+                   SelectType == other.SelectType;
         }
 
         public override bool Equals(object obj)
@@ -183,7 +181,6 @@ namespace Mb.Models.Data
             hashCode.Add(InterfaceIri);
             hashCode.Add(SelectValuesString);
             hashCode.Add((int) SelectType);
-            hashCode.Add((int) Discipline);
             return hashCode.ToHashCode();
         }
 
