@@ -1,4 +1,4 @@
-import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../types";
+import { InspectorElement, InspectorAttributesElement } from "../../../../types";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -28,7 +28,6 @@ interface Props {
   attributesElem: InspectorAttributesElement;
   inspectorParentElem: InspectorElement;
   attributeItems?: Attribute[];
-  terminalParentElem?: InspectorTerminalsElement;
 }
 
 /**
@@ -37,7 +36,7 @@ interface Props {
  * @param props
  * @returns a drop-down menu to select combinations of attributes, and buttons for hiding/showing all entities.
  */
-export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems, terminalParentElem }: Props) => {
+export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems }: Props) => {
   const dispatch = useAppDispatch();
   const attributes = attributeItems ?? GetAttributes(attributesElem);
   const username = useAppSelector(usernameSelector);
@@ -55,7 +54,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
 
   const OnShowAllEntites = () => {
     shouldShowDefaultEntities.current = true;
-    OnShowAllFilters(attributesElem.id, attributeFilters, attributeCombinations, dispatch);
+    OnShowAllFilters(attributesElem?.id, attributeFilters, attributeCombinations, dispatch);
   };
 
   useEffect(() => {
@@ -64,51 +63,54 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   }, [attributesElem]);
 
   return (
-    <AttributesBox>
-      <AttributesHeader>
-        <AttributesMenu>
-          <Dropdown
-            onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
-              OnChangeFilterChoice(attributesElem.id, filter.name, selected, dispatch);
-            }}
-            items={attributeFilters}
-            selectedItems={selectedFilters}
-          />
-
-          <AttributeButton className={`link`} onClick={() => OnClearAllFilters(attributesElem.id, dispatch)}>
-            {TextResources.PARAMS_CLEAR_ALL}
-          </AttributeButton>
-          <AttributeButton className={`link`} onClick={OnShowAllEntites}>
-            {TextResources.PARAMS_DEFAULT}
-          </AttributeButton>
-        </AttributesMenu>
-      </AttributesHeader>
-
-      <AttributesRowBox>
-        {hasFilters &&
-          Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
-            if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
-            const [headerColor, bodyColor] = colorMapping.get(filterName);
-
-            return (
-              <AttributesRow
-                key={filterName}
-                element={attributesElem}
-                inspectorParentElem={inspectorParentElem}
-                terminalParentElem={terminalParentElem}
-                combinations={attributeCombinations[filterName]}
-                selectedCombinations={selectedCombinations}
-                attributeItems={attributes}
-                maxNumSelectedCombinations={maxNumSelectedCombinations}
-                username={username}
-                filterName={filterName}
-                headerColor={headerColor}
-                bodyColor={bodyColor}
-                dispatch={dispatch}
+    <>
+      {attributesElem && (
+        <AttributesBox>
+          <AttributesHeader>
+            <AttributesMenu>
+              <Dropdown
+                onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
+                  OnChangeFilterChoice(attributesElem.id, filter.name, selected, dispatch);
+                }}
+                items={attributeFilters}
+                selectedItems={selectedFilters}
               />
-            );
-          })}
-      </AttributesRowBox>
-    </AttributesBox>
+
+              <AttributeButton className={`link`} onClick={() => OnClearAllFilters(attributesElem.id, dispatch)}>
+                {TextResources.PARAMS_CLEAR_ALL}
+              </AttributeButton>
+              <AttributeButton className={`link`} onClick={OnShowAllEntites}>
+                {TextResources.PARAMS_DEFAULT}
+              </AttributeButton>
+            </AttributesMenu>
+          </AttributesHeader>
+
+          <AttributesRowBox>
+            {hasFilters &&
+              Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
+                if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
+                const [headerColor, bodyColor] = colorMapping.get(filterName);
+
+                return (
+                  <AttributesRow
+                    key={filterName}
+                    element={attributesElem}
+                    inspectorParentElem={inspectorParentElem}
+                    combinations={attributeCombinations[filterName]}
+                    selectedCombinations={selectedCombinations}
+                    attributeItems={attributes}
+                    maxNumSelectedCombinations={maxNumSelectedCombinations}
+                    username={username}
+                    filterName={filterName}
+                    headerColor={headerColor}
+                    bodyColor={bodyColor}
+                    dispatch={dispatch}
+                  />
+                );
+              })}
+          </AttributesRowBox>
+        </AttributesBox>
+      )}
+    </>
   );
 };

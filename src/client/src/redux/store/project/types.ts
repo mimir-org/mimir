@@ -223,7 +223,7 @@ export interface ChangeNodePropValue {
 
 export interface ChangeNodeAttributeValue {
   type: typeof CHANGE_NODE_ATTRIBUTE_VALUE;
-  payload: { id: string; value: string; unitId: string; nodeId: string };
+  payload: { id: string; nodeId: string; property: string; value: string };
 }
 
 export interface ChangeTransportPropValue {

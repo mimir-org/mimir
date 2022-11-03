@@ -83,6 +83,11 @@ export const terminalsSelector = createAppSelector(
   (terminals) => terminals
 );
 
+export const qunatityDatumSelector = createAppSelector(
+  (state) => state.library.quantityDatums,
+  (quantityDatums) => quantityDatums
+);
+
 export const isOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => !!types.find((m) => m.visible)

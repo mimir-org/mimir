@@ -136,8 +136,13 @@ export function changeInterfaceValue(edgeId: string, propName: string, propValue
   return { type: Types.CHANGE_INTERFACE_PROP_VALUE, payload: { edgeId, propName, propValue } };
 }
 
-export function changeNodeAttributeValue(id: string, node: Node, value: string, unitId: string): Types.ChangeNodeAttributeValue {
-  return { type: Types.CHANGE_NODE_ATTRIBUTE_VALUE, payload: { id, value, unitId, nodeId: node.id } };
+export function changeNodeAttributeValue(
+  id: string,
+  nodeId: string,
+  property: string,
+  value: string
+): Types.ChangeNodeAttributeValue {
+  return { type: Types.CHANGE_NODE_ATTRIBUTE_VALUE, payload: { id, nodeId, property, value } };
 }
 
 export function changeTransportAttributeValue(

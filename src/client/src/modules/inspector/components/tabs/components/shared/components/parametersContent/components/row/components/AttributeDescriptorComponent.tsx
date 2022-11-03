@@ -1,47 +1,90 @@
-import { AttributeDescriptor } from "../../../../../../../../../../../models/project";
-import { AttributeDescriptorBox, AttributeDescriptorColumn, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
-import { AttributeDescriptorElement } from "./AttributeDescriptorElement";
+import { Attribute } from "@mimirorg/modelbuilder-types";
+import { QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
+import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
+import { AttributeDescriptorBox, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
+import { AttributeQuantityDatumElement } from "./AttributeQuantityDatumElement";
+import { AttributeInputElement } from "./AttributeInputElement";
+import { AttributeUnitElement } from "./AttributeUnitElement";
+import { nameof } from "../../../../../../../../../../../helpers/ObjectFunctions";
 
 interface Props {
   headerColor: string;
-  singleColumn: boolean;
-  descriptors: AttributeDescriptor[];
+  attribute: Attribute;
+  quantityDatums: QuantityDatumCm[];
+  onChange: (attributeId: string, property: string, value: string) => void;
 }
 
 /**
- * Component to display the AttributesDescriptors in the Inspector.
- * The descriptors are displayed in one or two columns, based on the amount of descriptors.
- * If less than 3 descriptors exist, one column is used.
+ * Component to display the Attribute quantity datums, value and unit in the Inspector.
  * @param interface
- * @returns existing descriptors for a single Attribute.
+ * @returns existing quantity datums, value and unit for a single Attribute.
  */
-export const AttributeDescriptorComponent = ({ headerColor, singleColumn, descriptors }: Props) => {
-  // The return of 1 or 2 descriptors
-  if (singleColumn) {
-    return (
-      <AttributeDescriptorBox>
-        <AttributeDescriptorColumn>
-          {descriptors.map((descriptor) => {
-            return <AttributeDescriptorElement headerText={descriptor.header} value={descriptor.value} color={headerColor} />;
-          })}
-        </AttributeDescriptorColumn>
-      </AttributeDescriptorBox>
-    );
-  }
-
-  // The return of 3 or 4 descriptors
+export const AttributeDescriptorComponent = ({ headerColor, attribute, quantityDatums, onChange }: Props) => {
   return (
-    <AttributeDescriptorBox>
-      <AttributeDescriptorRow>
-        <AttributeDescriptorElement headerText={descriptors[0].header} value={descriptors[0].value} color={headerColor} />
-        <AttributeDescriptorElement headerText={descriptors[1].header} value={descriptors[1].value} color={headerColor} />
-      </AttributeDescriptorRow>
-      <AttributeDescriptorRow>
-        <AttributeDescriptorElement headerText={descriptors[2].header} value={descriptors[2].value} color={headerColor} />
-        {descriptors.length === 4 && (
-          <AttributeDescriptorElement headerText={descriptors[3].header} value={descriptors[3].value} color={headerColor} />
-        )}
-      </AttributeDescriptorRow>
-    </AttributeDescriptorBox>
+    <>
+      {attribute && (
+        <AttributeDescriptorBox>
+          <AttributeDescriptorRow>
+            <AttributeQuantityDatumElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("specifiedScope")}
+              headerText={TextResources.SPECIFIED_SCOPE}
+              value={attribute.specifiedScope}
+              color={headerColor}
+              values={quantityDatums.filter((x) => x.quantityDatumType === QuantityDatumType.QuantityDatumSpecifiedScope)}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+            <AttributeQuantityDatumElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("specifiedProvenance")}
+              headerText={TextResources.SPECIFIED_PROVENANCE}
+              value={attribute.specifiedProvenance}
+              color={headerColor}
+              values={quantityDatums.filter((x) => x.quantityDatumType === QuantityDatumType.QuantityDatumSpecifiedProvenance)}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+            <AttributeInputElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("value")}
+              value={attribute.value}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+          </AttributeDescriptorRow>
+          <AttributeDescriptorRow>
+            <AttributeQuantityDatumElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("rangeSpecifying")}
+              headerText={TextResources.RANGE_SPECIFYING}
+              value={attribute.rangeSpecifying}
+              color={headerColor}
+              values={quantityDatums.filter((x) => x.quantityDatumType === QuantityDatumType.QuantityDatumRangeSpecifying)}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+            <AttributeQuantityDatumElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("regularitySpecified")}
+              headerText={TextResources.REGULARITY_SPECIFIED}
+              value={attribute.regularitySpecified}
+              color={headerColor}
+              values={quantityDatums.filter((x) => x.quantityDatumType === QuantityDatumType.QuantityDatumRegularitySpecified)}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+            <AttributeUnitElement
+              attributeId={attribute.id}
+              property={nameof<Attribute>("selectedUnitId")}
+              value={attribute.selectedUnitId}
+              values={attribute.units}
+              isLocked={attribute.isLocked}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+          </AttributeDescriptorRow>
+        </AttributeDescriptorBox>
+      )}
+    </>
   );
 };

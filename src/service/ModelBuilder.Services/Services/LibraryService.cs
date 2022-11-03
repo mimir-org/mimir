@@ -75,6 +75,16 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Get all quantity datums 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<QuantityDatumCm>> GetQuantityDatums()
+        {
+            var datums = await _libraryRepository.GetQuantityDatums();
+            return datums;
+        }
+
+        /// <summary>
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>

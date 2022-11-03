@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { NodeLibCm, QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
 import Config from "../../../models/Config";
@@ -12,6 +12,7 @@ import {
   fetchLibrarySuccessOrError,
   fetchLibraryTerminalsSuccessOrError,
   fetchLibraryTransportTypesSuccessOrError,
+  fetchQuantityDatumsSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
 
@@ -149,5 +150,37 @@ export function* deleteLibraryItem(action: PayloadAction<string>) {
   } catch (error) {
     const apiError = GetApiErrorForException(error, deleteLibraryItemSuccessOrError.type);
     yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
+  }
+}
+
+export function* getQuantityDatums() {
+  try {
+    const url = `${Config.API_BASE_URL}library/quantity-datums`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchQuantityDatumsSuccessOrError.type);
+      yield put(fetchQuantityDatumsSuccessOrError({ quantityDatums: [], apiError }));
+      return;
+    }
+
+    const createNoneQuantityDatum = (quantityDatumType: QuantityDatumType): QuantityDatumCm => {
+      const noneQuantityDatum: QuantityDatumCm = {
+        name: "None",
+        source: null,
+        iri: null,
+        description: null,
+        quantityDatumType: quantityDatumType,
+      };
+      return noneQuantityDatum;
+    };
+
+    const datums = (response.data != null && [...response.data]) || [];
+    Object.keys(QuantityDatumType).map((key) => datums.unshift(createNoneQuantityDatum(QuantityDatumType[key])));
+
+    yield put(fetchQuantityDatumsSuccessOrError({ quantityDatums: datums, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchQuantityDatumsSuccessOrError.type);
+    yield put(fetchQuantityDatumsSuccessOrError({ quantityDatums: [], apiError }));
   }
 }

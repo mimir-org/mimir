@@ -12,7 +12,7 @@ interface Props {
  * @returns the name of the Attribute. A clickable link is visisble if the Attribute has a TypeReference.
  */
 export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Props) => {
-  return hasTypeReference ? (
+  return attribute && hasTypeReference ? (
     <span>
       <a href={attribute.attributeTypeIri} target="_blank" rel="noopener noreferrer">
         {attribute.entity}
@@ -20,6 +20,6 @@ export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Pr
       </a>
     </span>
   ) : (
-    <span>{attribute.entity}</span>
+    <span>{attribute?.entity}</span>
   );
 };

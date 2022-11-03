@@ -47,22 +47,16 @@ export const ResolveSubStreams = async (project: Project, dispatch: Dispatch, ed
 
   let streams: DetectedEdge[] = [];
 
-  // const rootFunctionNode = project.nodes.filter((x) => x.isRoot && x.aspect === Aspect.Function)[0];
   projectCopy.nodes.forEach((node) => {
     streams = streams.concat(ResolveDetectedEdgesRecursive(projectCopy, node));
   });
-
-  console.log(streams);
 
   streams.forEach((stream) => {
     const currentEdge = projectCopy.edges.find(
       (x) => x.fromConnectorId === stream.edge.fromConnectorId && x.toConnectorId === stream.edge.toConnectorId
     );
 
-    // console.log(currentEdge);
-
     if (stream.resolveType === ResolveType.Add && currentEdge == null) dispatch(createEdge(stream.edge));
-
     if (stream.resolveType === ResolveType.Remove && currentEdge != null) dispatch(deleteEdge(currentEdge.id));
   });
 };
@@ -80,13 +74,6 @@ export const ResolveDetectedEdgesRecursive = (project: Project, rootNode: Node):
   const topNodes = project.nodes.filter((x) => topNodeIds.some((y) => y == x.id));
   detectedEdges = detectedEdges.concat(ResolveTransportDetection(project, topNodes));
   return detectedEdges;
-  // topNodes.forEach((node) => {
-  //   ResolveDetectedEdgesRecursive(project, detectedEdges, node);
-  //   console.log(node.label);
-  //   console.log("Detected", detectedEdges);
-  // });
-
-  // detectedEdges = detectedEdges.concat(ResolveTransportDetection(project, topNodes));
 };
 
 /**
@@ -151,11 +138,6 @@ export const ResolveTransportDetection = (project: Project, topNodes: Node[]): D
           hidden: false,
           blockHidden: false,
         };
-
-        // console.log("LEVEL ", sibling.level === td.level);
-        // console.log("SIBLING ", sibling.isResolved);
-        // console.log("DETECTION ", td.isResolved);
-        // console.log("MAIN STREAM ", HasMainStream(project, td.proxyParent, sibling.proxyParent));
 
         const resolveType: ResolveType =
           sibling.level === td.level &&

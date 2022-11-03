@@ -8,6 +8,7 @@ import {
   deleteLibraryItem,
   exportLibrary,
   getInterfaceTypes,
+  getQuantityDatums,
   getTerminals,
   getTransportTypes,
   importLibrary,
@@ -21,6 +22,7 @@ import {
   importLibrary as importLibraryAction,
   deleteLibraryItem as deleteLibraryAction,
   fetchLibraryTerminals,
+  fetchQuantityDatums,
 } from "../store/library/librarySlice";
 import {
   COMMIT_PROJECT,
@@ -65,6 +67,7 @@ function* sagas() {
     takeEvery(exportLibraryAction, exportLibrary),
     takeEvery(importLibraryAction, importLibrary),
     takeEvery(deleteLibraryAction, deleteLibraryItem),
+    takeEvery(fetchQuantityDatums, getQuantityDatums),
   ]);
 }
 

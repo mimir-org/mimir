@@ -7,6 +7,7 @@ import {
   DeleteLibraryItem,
   FetchInterfaceTypes,
   FetchLibrary,
+  FetchQuantityDatums,
   FetchTerminals,
   FetchTransportTypes,
   LibraryState,
@@ -20,6 +21,7 @@ const initialLibraryState: LibraryState = {
   transportTypes: [],
   interfaceTypes: [],
   terminals: [],
+  quantityDatums: [],
 };
 
 export const librarySlice = createSlice({
@@ -135,6 +137,17 @@ export const librarySlice = createSlice({
         return collection;
       });
     },
+    fetchQuantityDatumsSuccessOrError: (state, action: PayloadAction<FetchQuantityDatums>) => {
+      state.fetching = false;
+      state.quantityDatums = action.payload.quantityDatums;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchQuantityDatums: (state) => {
+      state.fetching = true;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchLibraryTerminalsSuccessOrError.type)
+        : state.apiError;
+    },
   },
 });
 
@@ -158,6 +171,8 @@ export const {
   deleteLibraryItemSuccessOrError,
   addCollection,
   addToCollections,
+  fetchQuantityDatums,
+  fetchQuantityDatumsSuccessOrError,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;

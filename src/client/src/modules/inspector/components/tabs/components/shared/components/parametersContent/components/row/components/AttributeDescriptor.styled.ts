@@ -57,17 +57,16 @@ interface ValueProps {
 
 export const AttributeDescriptorValue = styled.div<ValueProps>`
   font-size: ${FontSize.SMALL};
-  border: 1px solid ${(props) => props.headerColor};
+  border: 0px solid ${(props) => props.headerColor};
+  border-width: ${(props) => props.headerColor && "1px"};
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  height: 23px;
+  height: 40px;
   min-width: 200px;
   max-width: 190px;
   color: ${Color.BLACK};
   margin-right: 7px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   padding: 3px 4px 0px 4px;
   text-align: center;
 `;

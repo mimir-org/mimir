@@ -26,19 +26,24 @@ const GetCombinedAttributeFilters = (attributes: Attribute[]): CombinedAttribute
     return filters;
   }
 
+  const datumName = (datum: string): string => {
+    if (datum == null) return "None";
+    return datum;
+  };
+
   for (const element of attributes) {
     const attributeCombined =
       "(" +
-      element.specifiedScope +
+      datumName(element.specifiedScope) +
       ")," +
       "(" +
-      element.specifiedProvenance +
+      datumName(element.specifiedProvenance) +
       ")," +
       "(" +
-      element.rangeSpecifying +
+      datumName(element.rangeSpecifying) +
       ")" +
       "(" +
-      element.regularitySpecified +
+      datumName(element.regularitySpecified) +
       ")";
     const actualFilter = filters.filter((f) => f.name === element.entity)[0];
 

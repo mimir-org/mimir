@@ -32,6 +32,12 @@ namespace Mb.Services.Contracts
         Task<List<TerminalLibCm>> GetTerminalTypes();
 
         /// <summary>
+        /// Get all quantity datums
+        /// </summary>
+        /// <returns>A collection of quantity datums</returns>
+        Task<List<QuantityDatumCm>> GetQuantityDatums();
+
+        /// <summary>
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>

@@ -390,10 +390,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_NODE_ATTRIBUTE_VALUE: {
-      const { id, nodeId, value, unitId: selectedUnitId } = action.payload;
-
+      const { id, nodeId, property, value } = action.payload;
       const getAttr = (n: Node) => {
-        return n.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
+        return n.attributes.map((attr) => (attr.id === id ? { ...attr, [property]: value } : attr));
       };
 
       return {

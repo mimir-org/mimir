@@ -43,7 +43,7 @@ export const DropdownList = ({
           key={item[keyProp]}
         >
           {valueImageProp && <Symbol source={item[valueImageProp]} text={item[valueProp]} />}
-          <p>{item.name ?? item.key}</p>
+          <p>{item[valueProp] ?? item.name ?? item.key}</p>
         </DropdownListItem>
       );
     })}

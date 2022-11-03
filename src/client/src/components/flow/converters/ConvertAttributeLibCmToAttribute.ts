@@ -1,8 +1,21 @@
-import { Attribute } from "@mimirorg/modelbuilder-types";
-import { AttributeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
+import { AttributeLibCm, TerminalLibCm, UnitLibCm } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
 import { ConvertUnitLibCmToUnits } from "./";
+
+/**
+ * Find what library units is set as default unnit type at current attribute.
+ * @param libUnits
+ * @param attributeUnits
+ * @returns default unit id or null.
+ */
+const FindDefaultUnitId = (libUnits: UnitLibCm[], attributeUnits: Unit[]): string => {
+  const defaultUnit = libUnits?.find((x) => x.isDefault)?.id ?? null;
+  if (defaultUnit == null) return null;
+
+  return attributeUnits?.find((x) => x.unitTypeId === defaultUnit)?.id ?? null;
+};
 
 /**
  * Component to convert Node's AttributeLibCm to the type Attribute.
@@ -42,6 +55,7 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
       terminalIri: null,
       transportIri: null,
     };
+    attribute.selectedUnitId = FindDefaultUnitId(a.units, attribute.units);
     return attribute;
   });
 };
@@ -83,6 +97,7 @@ export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLi
       transportIri: null,
       interfaceIri: null,
     };
+    attribute.selectedUnitId = FindDefaultUnitId(a.units, attribute.units);
     return attribute;
   });
 };
@@ -125,6 +140,7 @@ export const ConvertTransportAttributeLibCmToAttribute = (attributes: AttributeL
       terminalIri: null,
       transportIri: null,
     };
+    attribute.selectedUnitId = FindDefaultUnitId(a.units, attribute.units);
     return attribute;
   });
 };
@@ -167,7 +183,7 @@ export const ConvertInterfaceAttributeLibCmToAttribute = (attributes: AttributeL
       terminalIri: null,
       transportIri: null,
     };
-
+    attribute.selectedUnitId = FindDefaultUnitId(a.units, attribute.units);
     return attribute;
   });
 };

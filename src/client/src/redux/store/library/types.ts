@@ -1,4 +1,4 @@
-import { InterfaceLibCm, NodeLibCm, TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
+import { InterfaceLibCm, NodeLibCm, QuantityDatumCm, TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
@@ -11,6 +11,7 @@ export interface LibraryState {
   terminals: TerminalLibCm[] | null;
   apiError: ApiError[];
   collections: Collection[];
+  quantityDatums: QuantityDatumCm[];
 }
 
 // Action types
@@ -47,4 +48,9 @@ export interface DeleteLibraryItem {
 export interface AddToCollectionsTypes {
   libNodes: NodeLibCm[];
   collectionIds: string[];
+}
+
+export interface FetchQuantityDatums {
+  quantityDatums: QuantityDatumCm[];
+  apiError: ApiError;
 }

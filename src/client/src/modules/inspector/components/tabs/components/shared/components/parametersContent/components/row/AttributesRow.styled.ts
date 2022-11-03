@@ -10,7 +10,7 @@ export const AttributesRowBody = styled.div<AttributesRowBodyProps>`
   display: flex;
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
   width: max(100%, ${(props) => props.width}px);
-  min-height: 190px;
+  min-height: 230px;
   align-items: center;
 `;
 

@@ -29,13 +29,12 @@ const ConvertLibNodeToNode = (
   projectId: string,
   user: User,
   allTerminals: TerminalLibCm[]
-) => {
+): Node => {
   const id = CreateId();
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, allTerminals, id, libNode.iri);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
-
-  return {
+  const node: Node = {
     id,
     rds: libNode.rdsCode,
     projectId,
@@ -52,8 +51,8 @@ const ConvertLibNodeToNode = (
     masterProjectId: projectId,
     symbol: libNode.symbol,
     level: 0,
-    height: Size.BLOCK_NODE_HEIGHT, // Only used in BlockView
-    width: Size.BLOCK_NODE_WIDTH, // Only used in BlockView
+    height: Size.BLOCK_NODE_HEIGHT,
+    width: Size.BLOCK_NODE_WIDTH,
     purposeString: libNode.purposeName,
     created: libNode.created,
     createdBy: libNode.createdBy,
@@ -65,7 +64,22 @@ const ConvertLibNodeToNode = (
     blockHidden: false,
     parentNodeId: parentNode.id,
     typeReferences: ConvertTypeReference(libNode.typeReferences),
-  } as Node;
+    iri: null,
+    domain: null,
+    description: null,
+    isLocked: false,
+    isLockedStatusBy: null,
+    isLockedStatusDate: null,
+    order: 0,
+    isRoot: false,
+    masterProjectIri: null,
+    projectIri: null,
+    selected: false,
+    blockSelected: false,
+    isOffPageTarget: false,
+    isOffPageRequired: false,
+  };
+  return node;
 };
 
 export default ConvertLibNodeToNode;
