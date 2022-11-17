@@ -26,7 +26,7 @@ export const AttributeInputElement = ({ attributeId, property, value, isLocked, 
     <AttributeDescriptorBody>
       <AttributeDescriptorValue headerColor={null}>
         <AttributeInputBox>
-          <input ref={ref} name="attributeInputValue" defaultValue={value} onBlur={handleBlur} size={1} disabled={isLocked} />
+          <input ref={ref} name="attributeInputValue" value={value ?? ""} onChange={handleBlur} size={1} disabled={isLocked} />
         </AttributeInputBox>
       </AttributeDescriptorValue>
     </AttributeDescriptorBody>

@@ -414,10 +414,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
-      const { id, edgeId, value, unitId: selectedUnitId } = action.payload;
+      const { id, edgeId, property, value } = action.payload;
 
       const getAttr = (e: Edge) => {
-        return e.transport.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, [property]: value } : a));
       };
 
       return {
@@ -442,10 +442,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
-      const { id, edgeId, unitId: selectedUnitId, value } = action.payload;
+      const { id, edgeId, property, value } = action.payload;
 
       const getAttr = (e: Edge) => {
-        return e.transport.attributes.map((a) => (a.id === id ? { ...a, selectedUnitId, value } : a));
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, [property]: value } : a));
       };
 
       return {
@@ -458,10 +458,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { terminalId, nodeId, id, unitId: selectedUnitId, value } = action.payload;
+      const { id, nodeId, terminalId, property, value } = action.payload;
 
       const getAttr = (conn: Terminal) => {
-        return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
+        return conn.attributes.map((attr) => (attr.id === id ? { ...attr, [property]: value } : attr));
       };
 
       const getConnectors = (n: Node) => {
@@ -477,10 +477,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, edgeId, value, unitId } = action.payload;
-
+      const { attributeId, edgeId, terminalId, property, value } = action.payload;
       const getTransport = (e: Edge) => {
-        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId);
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, attributeId, property, value);
       };
 
       return {
@@ -490,10 +489,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, edgeId, value, unitId } = action.payload;
+      const { attributeId, edgeId, terminalId, property, value } = action.payload;
 
       const getInterface = (e: Edge) => {
-        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId);
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, attributeId, property, value);
       };
 
       return {

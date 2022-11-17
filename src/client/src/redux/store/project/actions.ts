@@ -2,16 +2,7 @@
 import * as Types from "./types";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
-import {
-  Project,
-  Node,
-  Edge,
-  ConnectorVisibility,
-  EntityType,
-  Connector,
-  ProjectConverterAm,
-  Terminal,
-} from "@mimirorg/modelbuilder-types";
+import { Project, Node, Edge, ConnectorVisibility, EntityType, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };
@@ -147,58 +138,58 @@ export function changeNodeAttributeValue(
 
 export function changeTransportAttributeValue(
   id: string,
-  edge: Edge,
-  value: string,
-  unitId: string
+  edgeId: string,
+  property: string,
+  value: string
 ): Types.ChangeTransportAttributeValue {
-  return { type: Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE, payload: { id, value, unitId, edgeId: edge.id } };
+  return { type: Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE, payload: { id, edgeId, property, value } };
 }
 
 export function changeInterfaceAttributeValue(
   id: string,
-  edge: Edge,
-  value: string,
-  unitId: string
+  edgeId: string,
+  property: string,
+  value: string
 ): Types.ChangeInterfaceAttributeValue {
-  return { type: Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE, payload: { id, value, unitId, edgeId: edge.id } };
+  return { type: Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE, payload: { id, edgeId, property, value } };
 }
 
 export function changeNodeTerminalAttributeValue(
   id: string,
-  terminal: Connector,
-  node: Node,
-  value: string,
-  unitId: string
+  nodeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeNodeTerminalAttributeValue {
   return {
     type: Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, nodeId: node.id },
+    payload: { id, nodeId, terminalId, property, value },
   };
 }
 
 export function changeTransportTerminalAttributeValue(
-  id: string,
-  terminal: Connector,
-  edge: Edge,
-  value: string,
-  unitId: string
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeTransportTerminalAttributeValue {
   return {
     type: Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, edgeId: edge.id },
+    payload: { attributeId, edgeId, terminalId, property, value },
   };
 }
 
 export function changeInterfaceTerminalAttributeValue(
-  id: string,
-  terminal: Connector,
-  edge: Edge,
-  value: string,
-  unitId: string
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeInterfaceTerminalAttributeValue {
   return {
     type: Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, edgeId: edge.id },
+    payload: { attributeId, edgeId, terminalId, property, value },
   };
 }
 

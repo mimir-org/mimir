@@ -1,4 +1,5 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
+import { FontSize } from "../../../../../../../../../../../assets/font";
 import { Dropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { AttributeDescriptorBody, AttributeDescriptorValue } from "./AttributeDescriptor.styled";
 import { AttributeUnitBox } from "./AttributeInput.styled";
@@ -26,6 +27,8 @@ export const AttributeUnitElement = ({ attributeId, property, value, values, isL
           label="Unit"
           valueProp="symbol"
           items={values}
+          fontSize={FontSize.TINY}
+          height={22}
           keyProp="id"
           disabled={isLocked}
           onChange={(item: Unit) => onChange(attributeId, property, item.id)}

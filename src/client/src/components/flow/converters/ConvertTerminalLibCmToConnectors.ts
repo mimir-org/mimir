@@ -25,7 +25,7 @@ const ConvertTerminalLibCmToConnectors = (
 
   // Convert all existing libTerminals
   libTerminals.forEach((t) => {
-    const terminalAmount = t.quantity;
+    const terminalAmount = t.minQuantity;
     [...Array(terminalAmount)].forEach(() => connectors.push(CreateTerminal(t, nodeId, nodeIri, allTerminals)));
   });
 

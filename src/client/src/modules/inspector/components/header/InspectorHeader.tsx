@@ -5,7 +5,7 @@ import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { InspectorHeaderBox } from "./InspectorHeader.styled";
 import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
 import { Dispatch } from "redux";
-import { Project, Terminal, Attribute } from "@mimirorg/modelbuilder-types";
+import { Project, Attribute } from "@mimirorg/modelbuilder-types";
 import {
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
@@ -29,7 +29,6 @@ interface Props {
   changeInspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
   attributes?: Attribute[];
-  terminals: Terminal[];
   selectedFlowNodes: FlowNode[];
 }
 
@@ -52,7 +51,6 @@ export const InspectorHeader = ({
   changeInspectorHeightAction,
   changeInspectorTabAction,
   attributes,
-  terminals,
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
@@ -65,7 +63,6 @@ export const InspectorHeader = ({
           element={element}
           activeTabIndex={activeTabIndex}
           attributes={attributes}
-          terminals={terminals}
           changeInspectorTabAction={changeInspectorTabAction}
           inspectorRef={inspectorRef}
           isInspectorOpen={isInspectorOpen}

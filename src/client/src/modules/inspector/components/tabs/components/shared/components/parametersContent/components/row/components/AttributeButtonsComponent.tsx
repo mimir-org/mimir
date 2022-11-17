@@ -11,7 +11,7 @@ interface Props {
   headerColor: string;
   attributeIsLocking: boolean;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
-  onClose: (id: string) => void;
+  onClose: () => void;
 }
 
 /**
@@ -37,7 +37,7 @@ export const AttributeButtonsComponent = ({ attribute, headerColor, attributeIsL
               LockComponent
             )}
           </AttributeButton>
-          <AttributeButton onClick={() => onClose(attribute.id)}>
+          <AttributeButton onClick={() => onClose()}>
             <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
             <img src={CloseIcon} alt="x mark" />
           </AttributeButton>

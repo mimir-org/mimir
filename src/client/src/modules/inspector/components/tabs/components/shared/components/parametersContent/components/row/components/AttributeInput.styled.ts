@@ -9,13 +9,13 @@ export const AttributeInputBox = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  font-size: ${FontSize.STANDARD};
+  font-size: ${FontSize.TINY};
 
   input {
     width: 100%;
     border: solid 1px black;
     border-radius: 5px;
-    height: 28px;
+    height: 20px;
     padding: 10px;
     text-align: right;
   }
@@ -26,5 +26,5 @@ export const AttributeUnitBox = styled.div`
   width: 60%;
   display: flex;
   flex-direction: column;
-  font-size: ${FontSize.STANDARD};
+  font-size: ${FontSize.TINY};
 `;

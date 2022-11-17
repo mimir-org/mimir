@@ -10,10 +10,9 @@ export const AttributeObjectBox = styled.div<AttributeObjectBoxProps>`
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   display: flex;
   flex-direction: column;
-  width: 430px;
-  height: 100%;
-  border-right: 1px solid ${Color.LIGHT_SILVER};
-  border-left: 1px solid ${Color.LIGHT_SILVER};
+  width: 330px;
+  border: 1px solid ${Color.LIGHT_SILVER};
+  margin: 10px;
 `;
 
 export const AttributeObjectBody = styled.div`

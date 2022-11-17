@@ -1,4 +1,3 @@
-import { CombinedAttributeFilter } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
@@ -9,7 +8,6 @@ const initialCommonState: CommonState = {
   companies: [] as MimirorgCompanyCm[],
   company: {} as MimirorgCompanyCm,
   parsers: [] as ModuleDescription[],
-  filters: [] as CombinedAttributeFilter[],
   apiError: [],
 };
 

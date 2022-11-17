@@ -14,8 +14,6 @@ import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
-import { IsTerminal } from "../../components/flow/helpers/Connectors";
-import { Terminal } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -47,7 +45,6 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
-  const terminals = selectedNode?.connectors.filter((c) => IsTerminal(c)) as Terminal[];
 
   useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
@@ -86,7 +83,6 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
         selectedFlowNodes={selectedFlowNodes}
-        terminals={terminals}
       />
     </AnimatedInspector>
   );

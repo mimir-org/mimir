@@ -233,7 +233,12 @@ export interface ChangeTransportPropValue {
 
 export interface ChangeTransportAttributeValue {
   type: typeof CHANGE_TRANSPORT_ATTRIBUTE_VALUE;
-  payload: { id: string; value: string; unitId: string; edgeId: string };
+  payload: {
+    id: string;
+    edgeId: string;
+    property: string;
+    value: string;
+  };
 }
 
 export interface ChangeInterfacePropValue {
@@ -242,21 +247,44 @@ export interface ChangeInterfacePropValue {
 }
 export interface ChangeInterfaceAttributeValue {
   type: typeof CHANGE_INTERFACE_ATTRIBUTE_VALUE;
-  payload: { id: string; value: string; unitId: string; edgeId: string };
+  payload: {
+    id: string;
+    edgeId: string;
+    property: string;
+    value: string;
+  };
 }
 export interface ChangeNodeTerminalAttributeValue {
   type: typeof CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE;
-  payload: { id: string; nodeId: string; value: string; unitId: string; terminalId: string };
+  payload: {
+    id: string;
+    nodeId: string;
+    terminalId: string;
+    property: string;
+    value: string;
+  };
 }
 
 export interface ChangeTransportTerminalAttributeValue {
   type: typeof CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE;
-  payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
+  payload: {
+    attributeId: string;
+    edgeId: string;
+    terminalId: string;
+    property: string;
+    value: string;
+  };
 }
 
 export interface ChangeInterfaceTerminalAttributeValue {
   type: typeof CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE;
-  payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
+  payload: {
+    attributeId: string;
+    edgeId: string;
+    terminalId: string;
+    property: string;
+    value: string;
+  };
 }
 
 export interface DeleteProjectErrorAction {

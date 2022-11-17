@@ -1,4 +1,4 @@
-import { Attribute, Node } from "@mimirorg/modelbuilder-types";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 
@@ -190,11 +190,6 @@ export const darkModeSelector = createAppSelector(
   (active) => active
 );
 
-export const location3DSelector = createAppSelector(
-  (state) => state.location3D.active,
-  (active) => active
-);
-
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
   (project) => project
@@ -245,17 +240,3 @@ export const nodeSelector = createParametricAppSelector(
   (_, id: string) => id,
   (nodes, id) => nodes.find((n: Node) => n.id === id)
 );
-
-export const makeFilterSelector = () =>
-  createParametricAppSelector(
-    (state) => state.commonState.filters,
-    (_, attributes: Attribute[]) => attributes,
-    (filters, attributes) => filters.filter((x) => attributes?.find((att) => att.entity === x.name)) ?? []
-  );
-
-export const makeSelectedFilterSelector = () =>
-  createParametricAppSelector(
-    (state) => state.parameters.selectedAttributeFilters,
-    (_, parametersElementId: string) => parametersElementId,
-    (selectedAttributeFilters, parametersElementId) => selectedAttributeFilters[parametersElementId] ?? {}
-  );

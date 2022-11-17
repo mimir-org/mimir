@@ -1,4 +1,5 @@
 import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
+import { FontSize } from "../../../../../../../../../../../assets/font";
 import { Dropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptorValue } from "./AttributeDescriptor.styled";
 
@@ -33,6 +34,8 @@ export const AttributeQuantityDatumElement = ({
     <AttributeDescriptorValue headerColor={color}>
       <Dropdown
         label={headerText}
+        fontSize={FontSize.TINY}
+        height={22}
         valueProp="name"
         items={values}
         keyProp="name"

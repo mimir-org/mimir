@@ -14,21 +14,14 @@ export const AttributeDescriptorBody = styled.div`
   position: relative;
   margin-bottom: 5px;
   right: 2px;
-  width: 200px;
+  width: 150px;
 `;
 
 export const AttributeDescriptorRow = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 10px;
-  width: 200px;
-`;
-
-export const AttributeDescriptorColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 10px;
-  width: 200px;
+  width: 100%;
 `;
 
 interface HeaderProps {
@@ -61,9 +54,9 @@ export const AttributeDescriptorValue = styled.div<ValueProps>`
   border-width: ${(props) => props.headerColor && "1px"};
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  height: 40px;
-  min-width: 200px;
-  max-width: 190px;
+  height: 30px;
+  min-width: 150px;
+  max-width: 150px;
   color: ${Color.BLACK};
   margin-right: 7px;
   white-space: nowrap;
