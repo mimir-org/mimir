@@ -4,8 +4,6 @@ export { OnSaveProjectClick } from "./OnSaveProjectClick";
 export { OnCloseProjectClick } from "./OnCloseProjectClick";
 export { OnExportProjectFile } from "./OnExportProjectFile";
 export { OnImportProjectFile } from "./OnImportProjectFile";
-export { OnSaveLibraryFile } from "./OnSaveLibraryFile";
-export { OnImportLibraryFile } from "./OnImportLibraryFile";
 export { OnCommitClick } from "./OnCommitClick";
 export { OnReturnShowInstructionClick } from "./OnReturnShowInstructionClick";
 export * from "./OnCreateSubProject";

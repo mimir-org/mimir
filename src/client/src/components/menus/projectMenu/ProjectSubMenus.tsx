@@ -4,9 +4,7 @@ import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitPro
 import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
 import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";
 import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
-import { ExportLibraryFileMenu } from "./components/subMenus/exportLibraryFile/ExportLibraryFileMenu";
 import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
-import { ImportFileLibraryMenu } from "./components/subMenus/importLibrary/ImportFileLibraryMenu";
 import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
 import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMenu";
 
@@ -28,8 +26,6 @@ export const ProjectSubMenus = ({ activeMenu }: Props) => {
   const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
   const isImportProjectFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU;
   const isExportProjectFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_PROJECT_FILE_MENU;
-  const isImportLibraryFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU;
-  const isExportLibraryFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_LIBRARY_FILE_MENU;
   const isCommitProjectMenuOpen = activeMenu === MENU_TYPE.COMMIT_PROJECT_MENU;
   const isCreateSubProjectMenu = activeMenu === MENU_TYPE.CREATE_SUB_PROJECT_MENU;
 
@@ -40,8 +36,6 @@ export const ProjectSubMenus = ({ activeMenu }: Props) => {
       {isCloseProjectMenuOpen && <CloseProjectMenu />}
       {isImportProjectFileMenuOpen && <ImportProjectFileMenu />}
       {isExportProjectFileMenuOpen && <ExportProjectFileMenu />}
-      {isImportLibraryFileMenuOpen && <ImportFileLibraryMenu />}
-      {isExportLibraryFileMenuOpen && <ExportLibraryFileMenu />}
       {isCommitProjectMenuOpen && !isSubProject && <CommitProjectMenu />}
       {isCreateSubProjectMenu && <CreateSubProjectMenu />}
     </>

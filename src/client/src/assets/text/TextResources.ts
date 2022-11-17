@@ -196,7 +196,6 @@ export const TextResources = {
   PROJECT_LIB: "Libraries",
 
   PROJECT_IMPORT: "Import project",
-  PROJECT_IMPORT_LIB_TYPES: "Import library types",
   PROJECT_IMPORT_LIB: "Import library",
   PROJECT_IMPORT_FILE: "File",
   PROJECT_IMPORT_SELECT: "Please select a file",
@@ -205,7 +204,6 @@ export const TextResources = {
   PROJECT_EXPORT_FILE: "Export file",
   PROJECT_EXPORT: "Export project",
   PROJECT_EXPORT_LIBRARY: "Export library",
-  PROJECT_EXPORT_LIBRARY_TYPES: "Export library types",
 
   COMMIT_PROJECT: "Commit project",
   PARTNER: "Send to collaboration partner",
