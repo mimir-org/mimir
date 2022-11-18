@@ -85,7 +85,7 @@ export const FlowModuleContainer = styled.div`
   .path-treeTransportEdge,
   .path-treeRelationSourceEdge,
   .path-treeRelationTargetEdge {
-    stroke-width: 2px !important;
+    stroke-width: 4px !important;
     fill: none;
     pointer-events: visibleStroke;
     cursor: grab;
@@ -99,10 +99,11 @@ export const FlowModuleContainer = styled.div`
       .path-treeTransportEdge,
       .path-treeRelationSourceEdge,
       .path-treeRelationTargetEdge {
-        stroke-width: 5px !important;
+        stroke-width: 8px !important;
+        border: 1px solid black;
       }
       .path-treeRelationTargetEdge {
-        stroke-dasharray: 5, 15;
+        stroke-dasharray: 6, 15;
       }
     }
   }
@@ -112,7 +113,7 @@ export const FlowModuleContainer = styled.div`
   .path-blockRelationSourceEdge,
   .path-blockRelationTargetEdge,
   .path-blockPartOfEdge {
-    stroke-width: 2px !important;
+    stroke-width: 4px !important;
     fill: none;
     pointer-events: visibleStroke;
     cursor: grab;
@@ -127,10 +128,10 @@ export const FlowModuleContainer = styled.div`
       .path-blockRelationTargetEdge,
       .path-blockPartOfEdge,
       .path-blockOffPageEdge {
-        stroke-width: 6px !important;
+        stroke-width: 8px !important;
       }
       .path-blockRelationTargetEdge {
-        stroke-dasharray: 5, 15;
+        stroke-dasharray: 6, 15;
       }
     }
   }

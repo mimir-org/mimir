@@ -1,6 +1,6 @@
 import { Connector, ConnectorDirection, ConnectorVisibility, Terminal, Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
-import { addTerminal, createEdge, deleteEdge, deleteTerminal, updateTerminal } from "../../../../../redux/store/project/actions";
+import { addTerminal, deleteTerminal, updateTerminal } from "../../../../../redux/store/project/actions";
 import { CreateId } from "../../../helpers";
 import { IsPartOfConnection, IsTerminal } from "../../../helpers/Connectors";
 import { IsTerminalSiblings } from "../../helpers";
@@ -34,32 +34,34 @@ export interface DetectedEdge {
   resolveType: ResolveType;
 }
 
-export const ResolveSubStreams = async (project: Project, dispatch: Dispatch, edgeToDelete: Edge, edgeToAdd: Edge) => {
-  const projectCopy = { ...project };
+// export const ResolveSubStreams = async (project: Project, dispatch: Dispatch, edgeToDelete: Edge, edgeToAdd: Edge) => {
+//   const projectCopy = { ...project };
 
-  if (edgeToAdd != null) projectCopy.edges.push(edgeToAdd);
+//   if (edgeToAdd != null) projectCopy.edges.push(edgeToAdd);
 
-  if (edgeToDelete != null) {
-    // TODO: We need to delete all objects that is not in the stream output
+//   if (edgeToDelete != null) {
+//     // TODO: We need to delete all objects that is not in the stream output
 
-    projectCopy.edges = projectCopy.edges.filter((x) => x.id !== edgeToAdd.id);
-  }
+//     projectCopy.edges = projectCopy.edges.filter((x) => x.id !== edgeToAdd.id);
+//   }
 
-  let streams: DetectedEdge[] = [];
+//   let streams: DetectedEdge[] = [];
 
-  projectCopy.nodes.forEach((node) => {
-    streams = streams.concat(ResolveDetectedEdgesRecursive(projectCopy, node));
-  });
+//   projectCopy.nodes.forEach((node) => {
+//     streams = streams.concat(ResolveDetectedEdgesRecursive(projectCopy, node));
+//   });
 
-  streams.forEach((stream) => {
-    const currentEdge = projectCopy.edges.find(
-      (x) => x.fromConnectorId === stream.edge.fromConnectorId && x.toConnectorId === stream.edge.toConnectorId
-    );
+//   console.log(streams);
 
-    if (stream.resolveType === ResolveType.Add && currentEdge == null) dispatch(createEdge(stream.edge));
-    if (stream.resolveType === ResolveType.Remove && currentEdge != null) dispatch(deleteEdge(currentEdge.id));
-  });
-};
+//   streams.forEach((stream) => {
+//     const currentEdge = projectCopy.edges.find(
+//       (x) => x.fromConnectorId === stream.edge.fromConnectorId && x.toConnectorId === stream.edge.toConnectorId
+//     );
+
+//     // if (stream.resolveType === ResolveType.Add && currentEdge == null) dispatch(createEdge(stream.edge));
+//     // if (stream.resolveType === ResolveType.Remove && currentEdge != null) dispatch(deleteEdge(currentEdge.id));
+//   });
+// };
 
 /**
  * Resolve detected edges recursive

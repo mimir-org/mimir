@@ -8,7 +8,7 @@ import { IsTerminal } from "../../helpers/Connectors";
 import { Project } from "@mimirorg/modelbuilder-types";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { ConvertEdgeDataToMimirEdge } from "../../converters";
-import { CreateSiblingProxyConnection, ResolveSubStreams } from "./helpers/ProxyTerminals";
+import { CreateSiblingProxyConnection } from "./helpers/ProxyTerminals";
 
 export interface OnBlockDropParameters {
   connection: FlowEdge | Connection;
@@ -42,7 +42,7 @@ const useOnBlockConnect = (params: OnBlockDropParameters) => {
   CreateSiblingProxyConnection(sourceConn, targetConn, source, target, dispatch);
 
   // Identify full connection
-  ResolveSubStreams(project, dispatch, null, edge);
+  // ResolveSubStreams(project, dispatch, null, edge);
 
   const type = GetBlockEdgeType(sourceConn);
   const animated = animatedEdge && IsTerminal(sourceConn);
