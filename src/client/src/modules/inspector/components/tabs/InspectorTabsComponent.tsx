@@ -50,6 +50,11 @@ export const InspectorTabsComponent = ({
       setTerminals(element.connectors.filter((x) => IsTerminal(x) && !x.isProxy) as Terminal[]);
     }
 
+    if (IsEdge(element)) {
+      const terminals: Terminal[] = [];
+      setTerminals(terminals);
+    }
+
     if (IsEdge(element) && element.transport) {
       const terminals: Terminal[] = [];
       terminals.push(element.transport.inputTerminal);
