@@ -6,7 +6,7 @@
     "@azure/msal-browser": "^2.23.0",
     "@azure/msal-react": "^1.4.9",
     "@headlessui/react": "^1.7.3",
-    "@microsoft/applicationinsights-web": "^2.7.4",
+    "@microsoft/applicationinsights-web": "^2.8.9",
     "@microsoft/signalr": "^6.0.3",
     "@mimirorg/modelbuilder-types": "^4.0.0-preview.79",
     "@mimirorg/typelibrary-types": "^1.0.0-preview.257",
