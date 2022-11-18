@@ -9,7 +9,7 @@
 
 <!-- Badges -->
 <p>
-<a href="https://github.com/mimir-org/mimir/actions/workflows/prod.yaml">
+<a href="https://github.com/mimir-org/mimir/actions/workflows/main.yaml">
     <img src="https://github.com/mimir-org/mimir/actions/workflows/prod.yaml/badge.svg?branch=main" alt="build status" />
   </a>
 
