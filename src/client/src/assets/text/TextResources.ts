@@ -276,6 +276,7 @@ export const TextResources = {
   VALIDATION_BLOCKVIEW_PROJECT: "Please select a project before opening Block View.",
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
+  VALIDATION_TRANSPORT_INTERFACE: "There is no transport type or interface type connected to this terminal type.",
 
   // Modal
   MODAL_CLOSE: "Close menu",

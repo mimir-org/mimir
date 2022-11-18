@@ -9,7 +9,6 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Color { get; set; }
-        public string TerminalCategory { get; set; }
         public bool IsProxy { get; set; }
         public string ProxyParent { get; set; }
         public string ProxySibling { get; set; }
@@ -20,6 +19,12 @@ namespace Mb.Models.Application
         [ValidIri]
         [RequiredOne(nameof(TerminalTypeId))]
         public string TerminalTypeIri { get; set; }
+
+        public string TerminalParentTypeId { get; set; }
+
+        [ValidIri]
+        public string TerminalParentTypeIri { get; set; }
+        public string TerminalParentTypeName { get; set; }
 
         public ICollection<TypeReference> TypeReferences { get; set; }
 

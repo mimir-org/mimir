@@ -29,8 +29,8 @@ namespace ModelBuilder.Rdf.Extensions
             switch (connector)
             {
                 case Terminal terminal:
-                    ontologyService.AssertNode($"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalCategory)}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
-                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalCategory)}-{HttpUtility.UrlEncode(terminal.Name)}");
+                    ontologyService.AssertNode($"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalParentTypeName)}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
+                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalParentTypeName)}-{HttpUtility.UrlEncode(terminal.Name)}");
                     ontologyService.AssertNode(terminal.Iri, Resources.Type, edge != null ? Resources.StreamTerminal : Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.Label, terminal.Name, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.TerminalDirectionType, terminal.Type.ToString(), true);
@@ -144,8 +144,8 @@ namespace ModelBuilder.Rdf.Extensions
             var transmitter = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.Type)?.Select(x => x.Object).FirstOrDefault(x => x.ToString().Contains("Transmitter"));
             if (transmitter != null)
             {
-                var terminalCategory = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
-                terminal.TerminalCategory = string.IsNullOrWhiteSpace(terminalCategory) ? null : terminalCategory;
+                var terminalParentTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                terminal.TerminalParentTypeName = string.IsNullOrWhiteSpace(terminalParentTypeName) ? null : terminalParentTypeName;
             }
 
             terminal.Attributes = new List<AttributeAm>();
