@@ -20,7 +20,7 @@ interface Props {
 export const TerminalsSelector = ({ terminals, selectedTerminalId, onSelect }: Props) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
-  const categories = [...new Set(terminals?.map((t) => t.terminalCategory))];
+  const categories = [...new Set(terminals?.map((t) => t.terminalParentTypeName))];
 
   const OnCategoryClick = (name: string) => {
     const expanded = expandedCategories?.includes(name);
@@ -45,7 +45,7 @@ export const TerminalsSelector = ({ terminals, selectedTerminalId, onSelect }: P
               />
             </TerminalsCategoryElement>
             <TerminalElementList
-              terminals={terminals.filter((x) => x.terminalCategory === category)}
+              terminals={terminals.filter((x) => x.terminalParentTypeName === category)}
               selectedTerminal={selectedTerminalId}
               onSelect={onSelect}
               visible={expandedCategories?.includes(category)}

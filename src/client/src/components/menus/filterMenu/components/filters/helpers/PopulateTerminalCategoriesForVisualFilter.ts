@@ -10,13 +10,13 @@ export const PopulateTerminalCategoriesForVisualFilter = (transportTerminals: Te
   const categories = [] as TerminalCategoryObject[];
 
   transportTerminals?.forEach((t) => {
-    const name = t.terminalCategory;
+    const name = t.terminalParentTypeName;
 
     if (categories.some((c) => c.name === name)) return;
 
     const category = {
-      name: t.terminalCategory,
-      terminals: transportTerminals.filter((tf) => tf.terminalCategory === t.terminalCategory),
+      name: t.terminalParentTypeName,
+      terminals: transportTerminals.filter((tf) => tf.terminalParentTypeName === t.terminalParentTypeName),
     } as TerminalCategoryObject;
 
     categories.push(category);

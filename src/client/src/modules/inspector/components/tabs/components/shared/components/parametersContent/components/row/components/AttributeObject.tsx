@@ -39,7 +39,6 @@ export const AttributeObject = ({
   const hasTypeReference = attribute?.attributeTypeIri != null && attribute?.attributeTypeIri.length > 0;
 
   const onClose = () => {
-    console.log("Test");
     setVisible(false);
   };
 

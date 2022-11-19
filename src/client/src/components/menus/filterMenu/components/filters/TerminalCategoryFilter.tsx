@@ -35,12 +35,12 @@ export const TerminalCategoryFilter = ({ category, edges, dispatch, visible }: P
         />
 
         {category.terminals.map((t) => {
-          const isChecked = IsTerminalTypeChecked(edges, t.terminalCategory, t.terminalTypeId);
+          const isChecked = IsTerminalTypeChecked(edges, t.terminalParentTypeName, t.terminalTypeId);
           return (
             <FilterElement
               key={t.id}
               label={t.name}
-              onChange={() => OnTerminalTypeChange(edges, t.terminalCategory, t.terminalTypeId, isChecked, dispatch)}
+              onChange={() => OnTerminalTypeChange(edges, t.terminalParentTypeName, t.terminalTypeId, isChecked, dispatch)}
               isChecked={isChecked}
               visible={visible}
               indent={3}

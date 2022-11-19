@@ -32,7 +32,7 @@ const ConvertLibNodeToNode = (
 ): Node => {
   const id = CreateId();
   const now = GetDateNowUtc();
-  const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, allTerminals, id, libNode.iri);
+  const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, id, libNode.iri, allTerminals);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
   const node: Node = {
     id,

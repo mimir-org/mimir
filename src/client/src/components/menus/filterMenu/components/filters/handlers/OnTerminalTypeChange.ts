@@ -5,7 +5,7 @@ import { IsTerminal } from "../../../../../flow/helpers/Connectors";
 
 export const OnTerminalTypeChange = (
   edges: Edge[],
-  terminalCategory: string,
+  terminalParentTypeName: string,
   terminalTypeId: string,
   isChecked: boolean,
   dispatch: Dispatch
@@ -13,7 +13,10 @@ export const OnTerminalTypeChange = (
   edges?.forEach((edge) => {
     if (!IsTerminal(edge.fromConnector)) return;
 
-    if (edge.fromConnector.terminalCategory === terminalCategory && edge.fromConnector.terminalTypeId === terminalTypeId)
+    if (
+      edge.fromConnector.terminalParentTypeName === terminalParentTypeName &&
+      edge.fromConnector.terminalTypeId === terminalTypeId
+    )
       dispatch(setEdgeVisibility(edge.id, isChecked));
   });
 };

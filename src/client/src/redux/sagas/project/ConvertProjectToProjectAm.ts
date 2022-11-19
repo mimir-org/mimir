@@ -161,7 +161,7 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     nodeId: terminal.nodeId,
     nodeIri: terminal.nodeIri,
     color: terminal.color,
-    terminalCategory: terminal.terminalCategory,
+    terminalParentTypeName: terminal.terminalParentTypeName,
     attributes: ConvertAttributesToAttributesAm(terminal.attributes),
     terminalTypeId: terminal.terminalTypeId,
     terminalTypeIri: terminal.terminalTypeIri,
@@ -170,6 +170,8 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     typeReferences: terminal.typeReferences,
     proxyParent: terminal.proxyParent,
     proxySibling: terminal.proxySibling,
+    terminalParentTypeId: terminal.terminalParentTypeId,
+    terminalParentTypeIri: terminal.terminalParentTypeIri,
   };
   return term;
 }
