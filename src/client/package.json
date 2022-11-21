@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^2.23.0",
-    "@azure/msal-react": "^1.4.9",
+    "@azure/msal-react": "^1.4.10",
     "@headlessui/react": "^1.7.3",
     "@microsoft/applicationinsights-web": "^2.8.9",
     "@microsoft/signalr": "^7.0.0",
