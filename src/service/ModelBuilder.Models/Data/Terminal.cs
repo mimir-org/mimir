@@ -9,6 +9,7 @@ namespace Mb.Models.Data
 {
     public class Terminal : Connector, IEquatable<Terminal>
     {
+        public override string Kind => nameof(Terminal);
         public string Color { get; set; }
         public string TerminalTypeId { get; set; }
         public string TerminalTypeIri { get; set; }

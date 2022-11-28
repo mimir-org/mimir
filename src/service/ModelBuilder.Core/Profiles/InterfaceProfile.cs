@@ -31,8 +31,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId))
-                .ForMember(dest => dest.Edges, opt => opt.Ignore())
-                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences));
+                .ForMember(dest => dest.Edges, opt => opt.Ignore());
 
             CreateMap<Interface, InterfaceAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

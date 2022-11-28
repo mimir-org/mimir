@@ -1,41 +1,41 @@
-import { ConnectorDirection, Transport } from "@mimirorg/modelbuilder-types";
-import { TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorDirection, Interface } from "@mimirorg/modelbuilder-types";
+import { TerminalLibCm, InterfaceLibCm } from "@mimirorg/typelibrary-types";
 import { GetDateNowUtc } from "../../../helpers";
 import { CreateId } from "../helpers";
-import { ConvertTransportAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
+import { ConvertInterfaceAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import ConvertTerminalLibCmToTerminal from "./ConvertTerminalLibCmToTerminal";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 
-const ConvertTransportLibCmToTransport = (
-  transportLibCm: TransportLibCm,
+const ConvertInterfaceLibCmToInterface = (
+  InterfaceLibCm: InterfaceLibCm,
   isBirectional: boolean,
   terminals: TerminalLibCm[]
-): Transport => {
+): Interface => {
   const id = CreateId();
 
   const inputTerminal = ConvertTerminalLibCmToTerminal(
-    transportLibCm.terminal,
+    InterfaceLibCm.terminal,
     isBirectional ? ConnectorDirection.Bidirectional : ConnectorDirection.Input,
     terminals
   );
   const outputTerminal = ConvertTerminalLibCmToTerminal(
-    transportLibCm.terminal,
+    InterfaceLibCm.terminal,
     isBirectional ? ConnectorDirection.Bidirectional : ConnectorDirection.Output,
     terminals
   );
   const now = GetDateNowUtc();
 
-  const transport: Transport = {
+  const inter: Interface = {
     id: id,
     iri: null,
     version: "1.0",
-    rds: transportLibCm.rdsCode,
-    kind: "Transport",
-    name: transportLibCm.name,
-    label: transportLibCm.name,
-    description: transportLibCm.description,
-    typeReferences: ConvertTypeReference(transportLibCm.typeReferences),
-    attributes: ConvertTransportAttributeLibCmToAttribute(transportLibCm.attributes, id),
+    rds: InterfaceLibCm.rdsCode,
+    kind: "Interface",
+    name: InterfaceLibCm.name,
+    label: InterfaceLibCm.name,
+    description: InterfaceLibCm.description,
+    typeReferences: ConvertTypeReference(InterfaceLibCm.typeReferences),
+    attributes: ConvertInterfaceAttributeLibCmToAttribute(InterfaceLibCm.attributes, id),
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,
@@ -44,10 +44,10 @@ const ConvertTransportLibCmToTransport = (
     updated: null,
     created: now,
     createdBy: "",
-    libraryTypeId: transportLibCm.id,
+    libraryTypeId: InterfaceLibCm.id,
   };
 
-  return transport;
+  return inter;
 };
 
-export default ConvertTransportLibCmToTransport;
+export default ConvertInterfaceLibCmToInterface;

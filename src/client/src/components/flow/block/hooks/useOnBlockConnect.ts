@@ -52,7 +52,7 @@ const useOnBlockConnect = (params: OnBlockDropParameters) => {
   if (existingEdge != null) return;
 
   // Create Mimir edge
-  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, library);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, project.iri, library);
 
   // If there is noe matching transport or interface, it is not allowed to create the edge
   if (edge.transport === null && edge.interface === null) {

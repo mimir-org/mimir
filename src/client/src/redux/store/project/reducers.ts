@@ -490,7 +490,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
       const { attributeId, edgeId, terminalId, property, value } = action.payload;
-
       const getInterface = (e: Edge) => {
         return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, attributeId, property, value);
       };

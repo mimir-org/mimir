@@ -16,7 +16,7 @@ namespace Mb.Models.Data
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
-        public string Kind => nameof(Connector);
+        public virtual string Kind => nameof(Connector);
         public string Name { get; set; }
         public ConnectorDirection Type { get; set; }
         public ConnectorVisibility ConnectorVisibility { get; set; }

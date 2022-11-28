@@ -21,7 +21,7 @@ import {
   OnChangeTransportAttributeValue,
   OnChangeTransportTerminalAttributeValue,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
-import { IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../../helpers/IsType";
+import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
 
 interface Props {
@@ -37,8 +37,8 @@ interface Props {
  * @returns a drop-down menu to select combinations of attributes, and buttons for hiding/showing all entities.
  */
 export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems }: Props) => {
-  const dispatch = useAppDispatch();
   const attributes = attributeItems ?? GetAttributes(attributesElem);
+  const dispatch = useAppDispatch();
   const username = useAppSelector(usernameSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
@@ -50,7 +50,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
     if (IsNode(attributesElem)) OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
 
     // Node terminal attributes
-    if (IsConnector(attributesElem) && IsNode(inspectorParentElem)) {
+    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
       OnChangeNodeTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
     }
 
@@ -63,19 +63,19 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
       OnChangeInterfaceAttributeValue(attributeId, inspectorParentElem.id, property, value, dispatch);
 
     // Transport terminal - attributes
-    if (IsConnector(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
       OnChangeTransportTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
     }
 
     // Interface terminal - attributes
-    if (IsConnector(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
       OnChangeInterfaceTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
     }
   };
 
   return (
     <>
-      {attributesElem && (
+      {attributesElem && attributes && (
         <AttributesBox>
           {Object.entries(attributes).map((attribute, index) => {
             const [headerColor, bodyColor] = GetParametersColor(index);

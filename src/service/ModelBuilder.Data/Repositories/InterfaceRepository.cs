@@ -82,6 +82,8 @@ namespace Mb.Data.Repositories
             if (interfaces == null || !interfaces.Any())
                 return;
 
+            var json = JsonConvert.SerializeObject(interfaces.FirstOrDefault());
+
             bulk.Setup<Interface>()
                 .ForCollection(interfaces)
                 .WithTable("Interface")

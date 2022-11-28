@@ -1,5 +1,6 @@
 import { ConnectorDirection, ConnectorVisibility, Terminal } from "@mimirorg/modelbuilder-types";
 import { TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
 import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import { GetTerminalCategoryName } from "./ConvertTerminalLibCmToConnectors";
@@ -29,7 +30,7 @@ const ConvertTerminalLibCmToTerminal = (
     id: id,
     iri: null,
     domain: null,
-    kind: "Terminal",
+    kind: TextResources.KIND_TERMINAL,
     name: libTerminal.name,
     type: type,
     connectorVisibility: ConnectorVisibility.None,

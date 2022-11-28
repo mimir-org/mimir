@@ -1,7 +1,6 @@
 import { Terminal, Transport } from "@mimirorg/modelbuilder-types";
 import { TransportLibCm } from "@mimirorg/typelibrary-types";
 import { LibraryState } from "../../../redux/store/library/types";
-import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 import ConvertTransportLibCmToTransport from "./ConvertTransportLibCmToTransport";
 
@@ -31,14 +30,5 @@ export const FindTransportTypeRecursive = (library: LibraryState, terminalTypeId
 
   return FindTransportTypeRecursive(library, parentTerminalType.id);
 };
-
-export function UpdateAttributesId(terminal: Terminal) {
-  if (!terminal?.attributes?.length) return;
-
-  terminal.attributes.forEach((a) => {
-    a.id = CreateId();
-    a.terminalId = terminal.id;
-  });
-}
 
 export default ConvertTerminalToTransport;
