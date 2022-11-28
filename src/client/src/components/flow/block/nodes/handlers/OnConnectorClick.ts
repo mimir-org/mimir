@@ -1,5 +1,10 @@
 import { Dispatch } from "redux";
-import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/project/actions";
+import {
+  changeActiveConnector,
+  deleteEdge,
+  removeSelectedEdge,
+  removeSelectedNode,
+} from "../../../../../redux/store/project/actions";
 import { IsConnectorVisible } from "../../../helpers/Connectors";
 import { Connector, ConnectorVisibility, Edge, Node } from "@mimirorg/modelbuilder-types";
 import { FindProxyConnector, CreateProxyTerminals, DeleteProxyTerminal } from "../../hooks/helpers/ProxyTerminals";
@@ -34,6 +39,8 @@ export const OnConnectorClick = (
   }
   if (proxy != null && visible) {
     DeleteProxyTerminal(proxy, dispatch);
+    dispatch(removeSelectedEdge());
+    dispatch(removeSelectedNode());
   }
 
   if (!visible) return;
