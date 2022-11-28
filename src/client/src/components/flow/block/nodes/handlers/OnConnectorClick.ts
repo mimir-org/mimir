@@ -39,8 +39,19 @@ export const OnConnectorClick = (
   if (!visible) return;
 
   if (edges != null) {
-    const edge = edges.find((e) => e.fromConnector.id === sourceConnector.id || e.toConnector.id === sourceConnector.id);
-    if (edge != null) dispatch(deleteEdge(edge.id));
+    const edgesToDelete = edges.filter(
+      (e) =>
+        e.fromConnector.id === sourceConnector.id ||
+        e.toConnector.id === sourceConnector.id ||
+        e.toConnector.id === proxy.id ||
+        e.fromConnector.id === proxy.id
+    );
+
+    if (edgesToDelete && edgesToDelete.length > 0) {
+      edgesToDelete.forEach((edge) => {
+        dispatch(deleteEdge(edge.id));
+      });
+    }
   }
 };
 
