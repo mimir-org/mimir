@@ -60,3 +60,26 @@ export const TerminalNameBox = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+/**
+ * Box for a terminal icon
+ */
+export const TerminalAddRemoveIconBox = styled.div`
+  display: flex;
+  width: 25px;
+  height: 25px;
+  padding: 0px;
+  margin: 0;
+  align-items: center;
+
+  &:hover {
+    background-color: ${Color.LAVANDER_WEB_HOVER};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  svg {
+    margin: auto auto;
+    height: 20px;
+  }
+`;

@@ -24,6 +24,8 @@ export const OnConnectorClick = (
   dispatch: Dispatch,
   edges?: Edge[]
 ) => {
+  if (sourceConnector == null && sourceConnector.id == null) return;
+
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
@@ -45,20 +47,18 @@ export const OnConnectorClick = (
 
   if (!visible) return;
 
-  if (edges != null) {
-    const edgesToDelete = edges.filter(
-      (e) =>
-        e.fromConnector.id === sourceConnector.id ||
-        e.toConnector.id === sourceConnector.id ||
-        e.toConnector.id === proxy.id ||
-        e.fromConnector.id === proxy.id
-    );
+  const edgesToDelete = edges?.filter(
+    (e) =>
+      (e.fromConnector.id && e.fromConnector.id === sourceConnector.id) ||
+      (e.toConnector.id && e.toConnector.id === sourceConnector.id) ||
+      (e.toConnector.id && e.toConnector.id === proxy?.id) ||
+      (e.fromConnector.id && e.fromConnector.id === proxy?.id)
+  );
 
-    if (edgesToDelete && edgesToDelete.length > 0) {
-      edgesToDelete.forEach((edge) => {
-        dispatch(deleteEdge(edge.id));
-      });
-    }
+  if (edgesToDelete && edgesToDelete.length > 0) {
+    edgesToDelete.forEach((edge) => {
+      dispatch(deleteEdge(edge.id));
+    });
   }
 };
 

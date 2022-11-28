@@ -5,5 +5,6 @@ export {
   projectSelector,
   librarySelector,
   terminalsSelector,
+  libNodesSelector,
   electroViewSelector,
 } from "../../../../redux/store/selectors";

@@ -22,7 +22,7 @@ const ConvertTerminalLibCmToTerminal = (
     terminalParentTypeIri: libTerminal.parentIri,
     terminalParentTypeName: terminalCategory,
     attributes: ConvertTerminalAttributeLibCmToAttribute(libTerminal, id),
-    discriminator: "Terminal",
+    discriminator: TextResources.KIND_TERMINAL,
     isProxy: false,
     proxyParent: null,
     proxySibling: null,

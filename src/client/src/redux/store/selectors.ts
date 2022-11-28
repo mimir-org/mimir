@@ -83,6 +83,11 @@ export const terminalsSelector = createAppSelector(
   (terminals) => terminals
 );
 
+export const libNodesSelector = createAppSelector(
+  (state) => state.library.libNodes,
+  (nodes) => nodes
+);
+
 export const qunatityDatumSelector = createAppSelector(
   (state) => state.library.quantityDatums,
   (quantityDatums) => quantityDatums

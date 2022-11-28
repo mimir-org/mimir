@@ -3,7 +3,7 @@ import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { commonStateCompanySelector, useAppSelector } from "../../../../../../redux/store";
 
 interface Props {
@@ -14,6 +14,8 @@ interface Props {
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
 /**
@@ -28,6 +30,8 @@ export const BlockChildComponent = ({
   inputConnectors,
   outputConnectors,
   onConnectorClick,
+  onClickAddTerminal,
+  onClickRemoveTerminal,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
   const company = useAppSelector(commonStateCompanySelector);
@@ -48,6 +52,8 @@ export const BlockChildComponent = ({
         outputConnectors={outputConnectors}
         onConnectorClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
         showMenuButton={showMenuButton}
+        onClickAddTerminal={onClickAddTerminal}
+        onClickRemoveTerminal={onClickRemoveTerminal}
       />
       <SymbolBox>
         <Symbol source={node.symbol} text={node.name} />

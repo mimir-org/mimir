@@ -1,3 +1,4 @@
+import * as selectors from "./../../../helpers/selectors";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -9,7 +10,8 @@ import { commonStateCompanySelector, useAppDispatch, useAppSelector } from "../.
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
+import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
 
 interface Props {
   node: Node;
@@ -45,6 +47,17 @@ export const BlockParentComponent = ({
   const resizePanelRef = useRef(null);
   const company = useAppSelector(commonStateCompanySelector);
   useResizeParentNode(node, resizePanelRef, dispatch);
+  const terminals = useAppSelector(selectors.terminalsSelector);
+  const project = useAppSelector(selectors.projectSelector);
+  const libNodes = useAppSelector(selectors.libNodesSelector);
+
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
+    return useOnAddTerminal(project, typeId, nodeId, terminals, libNodes, direction, dispatch);
+  };
+
+  const OnClickRemoveTerminal = (nodeId: string, terminalId: string) => {
+    return useOnRemoveTerminal(project, nodeId, terminalId, dispatch);
+  };
 
   return (
     <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={node.width} height={node.height}>
@@ -58,6 +71,8 @@ export const BlockParentComponent = ({
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}
         onConnectorClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
+        onClickAddTerminal={OnClickAddTerminal}
+        onClickRemoveTerminal={OnClickRemoveTerminal}
       />
       <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
         <ResizeButton ref={resizePanelRef} visible={!splitView}>

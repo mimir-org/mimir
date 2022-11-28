@@ -3,7 +3,7 @@ import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
@@ -16,6 +16,8 @@ interface Props {
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
   onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
 /**
@@ -32,6 +34,8 @@ export const BlockParentBanner = ({
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
+  onClickAddTerminal,
+  onClickRemoveTerminal,
 }: Props) => (
   <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>
     <HeaderGroup gap={"10px"}>
@@ -42,6 +46,8 @@ export const BlockParentBanner = ({
         isElectroView={isElectroView}
         isInput
         isParent
+        onClickAddTerminal={onClickAddTerminal}
+        onClickRemoveTerminal={onClickRemoveTerminal}
       />
       {!node.isRoot && (
         <LogoBox>
@@ -68,6 +74,8 @@ export const BlockParentBanner = ({
       isElectroView={isElectroView}
       isInput={false}
       isParent
+      onClickAddTerminal={onClickAddTerminal}
+      onClickRemoveTerminal={onClickRemoveTerminal}
     />
   </HeaderContainer>
 );

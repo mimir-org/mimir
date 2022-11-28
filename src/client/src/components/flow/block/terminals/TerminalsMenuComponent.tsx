@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
 import { IsConnectorVisible } from "../../helpers/Connectors";
 import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminalClick";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
@@ -13,6 +13,8 @@ interface Props {
   isElectroView: boolean;
   isParent?: boolean;
   showMenuButton?: boolean;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
 /**
@@ -28,6 +30,8 @@ export const TerminalsMenuComponent = ({
   isElectroView,
   isParent,
   showMenuButton = true,
+  onClickAddTerminal,
+  onClickRemoveTerminal,
 }: Props) => {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -51,6 +55,8 @@ export const TerminalsMenuComponent = ({
           isElectroView={isElectroView}
           onClick={onClick}
           onBlur={() => OnBlur(setShowMenu, showMenu)}
+          onClickAddTerminal={onClickAddTerminal}
+          onClickRemoveTerminal={onClickRemoveTerminal}
         />
       )}
     </TerminalMenuWrapper>

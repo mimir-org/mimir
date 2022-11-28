@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/BlockNodeSelectors";
+import * as libSelectors from "./../../helpers/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
@@ -14,8 +15,9 @@ import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { IsTerminal } from "../../../helpers/Connectors";
+import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
 
 /**
  * Component for a child Node in BlockView.
@@ -33,6 +35,16 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const isElectroView = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
+  const terminalTypes = useAppSelector(libSelectors.terminalsSelector);
+  const libNodes = useAppSelector(libSelectors.libNodesSelector);
+
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
+    return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);
+  };
+
+  const OnClickRemoveTerminal = (nodeId: string, terminalId: string) => {
+    return useOnRemoveTerminal(project, terminalId, nodeId, dispatch);
+  };
 
   // Handle connectors
   useEffect(() => {
@@ -70,6 +82,8 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
         onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
+        onClickAddTerminal={OnClickAddTerminal}
+        onClickRemoveTerminal={OnClickRemoveTerminal}
       />
       <HandleComponent
         node={data}
