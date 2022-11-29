@@ -15,13 +15,13 @@ export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
-  terminals: TerminalLibCm[];
   user: User;
   selectedNode: Node;
   secondaryNode: Node;
   instance: ReactFlowInstance;
   getViewport: GetViewport;
   dispatch: Dispatch;
+  terminals: TerminalLibCm[];
 }
 
 /**
@@ -50,12 +50,12 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
 function HandleLibNodeDrop({
   event,
   project,
-  terminals,
   user,
   selectedNode,
   secondaryNode,
   getViewport,
   dispatch,
+  terminals,
 }: OnDropParameters) {
   const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 

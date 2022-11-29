@@ -4,6 +4,17 @@ import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorTabsComponent.styled";
 
+export const EdgeHeaderText = (element: InspectorElement): string => {
+  if (IsEdge(element)) {
+    if (element == null) return "";
+
+    if (element.transport != null) return element.transport.name;
+
+    if (element.interface != null) return element.interface.name;
+  }
+  return "";
+};
+
 export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsNode(element)) {
     return (
@@ -17,7 +28,7 @@ export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsEdge(element)) {
     return (
       <InspectorHeaderNodeInfo>
-        <InspectorHeaderNodeInfoText>{element?.transport?.name ?? element?.id}</InspectorHeaderNodeInfoText>
+        <InspectorHeaderNodeInfoText>{EdgeHeaderText(element)}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );
   }

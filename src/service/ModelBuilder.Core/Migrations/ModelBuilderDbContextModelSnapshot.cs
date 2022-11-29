@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -35,10 +35,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("AttributeTypeIri")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeTypeIri");
-
-                    b.Property<int>("Discipline")
-                        .HasColumnType("int")
-                        .HasColumnName("Discipline");
 
                     b.Property<string>("Entity")
                         .IsRequired()
@@ -90,14 +86,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(127)")
                         .HasColumnName("RegularitySpecified");
 
-                    b.Property<int>("SelectType")
-                        .HasColumnType("int")
-                        .HasColumnName("SelectType");
-
-                    b.Property<string>("SelectValuesString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectValuesString");
-
                     b.Property<string>("SelectedUnitId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnitId");
@@ -127,10 +115,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TransportIri")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TransportIri");
-
-                    b.Property<string>("TypeReferenceString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TypeReferenceString");
 
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)")
@@ -754,10 +738,32 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TerminalCategory")
+                    b.Property<bool>("IsProxy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsProxy");
+
+                    b.Property<string>("ProxyParent")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProxyParent");
+
+                    b.Property<string>("ProxySibling")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProxySibling");
+
+                    b.Property<string>("TerminalParentTypeId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalParentTypeId");
+
+                    b.Property<string>("TerminalParentTypeIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalParentTypeIri");
+
+                    b.Property<string>("TerminalParentTypeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalCategory");
+                        .HasColumnName("TerminalParentTypeName");
 
                     b.Property<string>("TerminalTypeId")
                         .HasColumnType("nvarchar(max)")

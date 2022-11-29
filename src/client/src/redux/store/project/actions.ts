@@ -1,16 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Types from "./types";
-import { BlockNodeSize, OffPageObject } from "../../../models/project";
+import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
-import {
-  Project,
-  Node,
-  Edge,
-  ConnectorVisibility,
-  EntityType,
-  Connector,
-  ProjectConverterAm,
-} from "@mimirorg/modelbuilder-types";
+import { Project, Node, Edge, ConnectorVisibility, EntityType, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };
@@ -135,64 +127,69 @@ export function changeInterfaceValue(edgeId: string, propName: string, propValue
   return { type: Types.CHANGE_INTERFACE_PROP_VALUE, payload: { edgeId, propName, propValue } };
 }
 
-export function changeNodeAttributeValue(id: string, node: Node, value: string, unitId: string): Types.ChangeNodeAttributeValue {
-  return { type: Types.CHANGE_NODE_ATTRIBUTE_VALUE, payload: { id, value, unitId, nodeId: node.id } };
+export function changeNodeAttributeValue(
+  id: string,
+  nodeId: string,
+  property: string,
+  value: string
+): Types.ChangeNodeAttributeValue {
+  return { type: Types.CHANGE_NODE_ATTRIBUTE_VALUE, payload: { id, nodeId, property, value } };
 }
 
 export function changeTransportAttributeValue(
   id: string,
-  edge: Edge,
-  value: string,
-  unitId: string
+  edgeId: string,
+  property: string,
+  value: string
 ): Types.ChangeTransportAttributeValue {
-  return { type: Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE, payload: { id, value, unitId, edgeId: edge.id } };
+  return { type: Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE, payload: { id, edgeId, property, value } };
 }
 
 export function changeInterfaceAttributeValue(
   id: string,
-  edge: Edge,
-  value: string,
-  unitId: string
+  edgeId: string,
+  property: string,
+  value: string
 ): Types.ChangeInterfaceAttributeValue {
-  return { type: Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE, payload: { id, value, unitId, edgeId: edge.id } };
+  return { type: Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE, payload: { id, edgeId, property, value } };
 }
 
 export function changeNodeTerminalAttributeValue(
   id: string,
-  terminal: Connector,
-  node: Node,
-  value: string,
-  unitId: string
+  nodeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeNodeTerminalAttributeValue {
   return {
     type: Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, nodeId: node.id },
+    payload: { id, nodeId, terminalId, property, value },
   };
 }
 
 export function changeTransportTerminalAttributeValue(
-  id: string,
-  terminal: Connector,
-  edge: Edge,
-  value: string,
-  unitId: string
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeTransportTerminalAttributeValue {
   return {
     type: Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, edgeId: edge.id },
+    payload: { attributeId, edgeId, terminalId, property, value },
   };
 }
 
 export function changeInterfaceTerminalAttributeValue(
-  id: string,
-  terminal: Connector,
-  edge: Edge,
-  value: string,
-  unitId: string
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string
 ): Types.ChangeInterfaceTerminalAttributeValue {
   return {
     type: Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE,
-    payload: { id, value, unitId, terminalId: terminal.id, edgeId: edge.id },
+    payload: { attributeId, edgeId, terminalId, property, value },
   };
 }
 
@@ -252,19 +249,14 @@ export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
   return { type: Types.UPDATE_EDGE, payload: edge };
 }
 
-export function setOffPageStatus(nodeId: string, connectorId: string, isRequired: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_OFFPAGE_STATUS, payload: { nodeId, connectorId, isRequired } };
+export function addTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.ADD_TERMINAL, payload: { terminal: terminal } };
 }
 
-export function createRequiredOffPageNode(
-  nodeId: string,
-  connectorId: string,
-  isRequired: boolean,
-  offPageObject: OffPageObject
-): Types.CreateRequiredOffPageNode {
-  return { type: Types.CREATE_REQUIRED_OFFPAGE_NODE, payload: { nodeId, connectorId, isRequired, offPageObject } };
+export function deleteTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.DELETE_TERMINAL, payload: { terminal: terminal } };
 }
 
-export function createConnectedOffPageNode(offPageObject: OffPageObject): Types.CreateConnectedOffPageNode {
-  return { type: Types.CREATE_CONNECTED_OFFPAGE_NODE, payload: { offPageObject } };
+export function updateTerminal(terminal: Terminal): Types.ProjectActionTypes {
+  return { type: Types.UPDATE_TERMINAL, payload: { terminal: terminal } };
 }

@@ -7,9 +7,7 @@ import flowReducer from "./flow/flowSlice";
 import electroReducer from "./electro/electroSlice";
 import commonReducer from "./common/commonSlice";
 import darkModeReducer from "./darkMode/darkModeSlice";
-import parametersReducer from "../../modules/inspector/components/tabs/components/parameters/redux/parametersSlice";
 import customCategoryReducer from "./customCategory/customCategorySlice";
-import location3DReducer from "../../modules/location/redux/location3DSlice";
 import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
@@ -32,11 +30,9 @@ const rootReducers = combineReducers({
   electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
-  parameters: parametersReducer,
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
-  location3D: location3DReducer,
   validation: validationReducer,
 });
 

@@ -9,11 +9,9 @@ import { AttributeButton, AttributeLockSpinner } from "../../../styled/Attribute
 interface Props {
   attribute: Attribute;
   headerColor: string;
-  isAttribute: boolean;
   attributeIsLocking: boolean;
-  isLocked: boolean;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
-  onClose: (id: string) => void;
+  onClose: () => void;
 }
 
 /**
@@ -21,35 +19,30 @@ interface Props {
  * @param props
  * @returns attribute buttons.
  */
-export const AttributeButtonsComponent = ({
-  attribute,
-  headerColor,
-  isAttribute,
-  attributeIsLocking,
-  isLocked,
-  onLock,
-  onClose,
-}: Props) => {
-  if (!isAttribute) return null;
-  const lockDescription = isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
-  const LockComponent = isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
+export const AttributeButtonsComponent = ({ attribute, headerColor, attributeIsLocking, onLock, onClose }: Props) => {
+  const lockDescription = attribute?.isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
+  const LockComponent = attribute?.isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
 
   return (
     <>
-      <AttributeButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
-        <VisuallyHidden>{lockDescription}</VisuallyHidden>
-        {attributeIsLocking ? (
-          <AttributeLockSpinner>
-            <Spinner variant="small" />
-          </AttributeLockSpinner>
-        ) : (
-          LockComponent
-        )}
-      </AttributeButton>
-      <AttributeButton onClick={() => onClose(attribute.id)}>
-        <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
-        <img src={CloseIcon} alt="x mark" />
-      </AttributeButton>
+      {attribute && (
+        <>
+          <AttributeButton onClick={() => onLock(attribute, !attribute.isLocked)}>
+            <VisuallyHidden>{lockDescription}</VisuallyHidden>
+            {attributeIsLocking ? (
+              <AttributeLockSpinner>
+                <Spinner variant="small" />
+              </AttributeLockSpinner>
+            ) : (
+              LockComponent
+            )}
+          </AttributeButton>
+          <AttributeButton onClick={() => onClose()}>
+            <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
+            <img src={CloseIcon} alt="x mark" />
+          </AttributeButton>
+        </>
+      )}
     </>
   );
 };

@@ -6,6 +6,7 @@ namespace Mb.Models.Data
 {
     public class Relation : Connector, IEquatable<Relation>
     {
+        public override string Kind => nameof(Relation);
         public RelationType RelationType { get; set; }
         public string Discriminator => nameof(Relation);
 

@@ -3,20 +3,20 @@ import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
 interface AttributeObjectBoxProps {
-  singleColumn: boolean;
+  disabled: boolean;
 }
 
 export const AttributeObjectBox = styled.div<AttributeObjectBoxProps>`
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   display: flex;
   flex-direction: column;
-  width: ${(props) => (props.singleColumn ? 225 : 430)}px;
-  height: 100%;
-  border-right: 1px solid ${Color.LIGHT_SILVER};
-  border-left: 1px solid ${Color.LIGHT_SILVER};
+  width: 330px;
+  border: 1px solid ${Color.LIGHT_SILVER};
+  margin: 10px;
 `;
 
 export const AttributeObjectBody = styled.div`
-  flex: 1;
+  display: flex;
 `;
 
 interface AttributeHeaderBoxProps {

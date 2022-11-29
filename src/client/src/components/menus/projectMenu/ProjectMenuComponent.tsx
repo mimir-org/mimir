@@ -77,16 +77,6 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
         disabled={!hasSelectedNodes}
       />
-      <MenuElement
-        text={TextResources.PROJECT_IMPORT_LIB_TYPES}
-        icon={Icons.ImportLibraryIcon}
-        onClick={() => projectMenuAction(() => Click.OnImportLibraryFile(dispatch))}
-      />
-      <MenuElement
-        text={TextResources.PROJECT_EXPORT_LIBRARY_TYPES}
-        icon={Icons.ExportLibraryIcon}
-        onClick={() => projectMenuAction(() => Click.OnSaveLibraryFile(dispatch))}
-      />
     </ProjectMenuBox>
   );
 };

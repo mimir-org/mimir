@@ -1,6 +1,5 @@
 using AutoMapper;
 using Mb.Models.Application;
-using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -24,7 +23,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
-                .ForMember(dest => dest.TypeReferenceString, opt => opt.MapFrom(src => src.TypeReferences != null ? JsonConvert.SerializeObject(src.TypeReferences) : null))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
@@ -39,11 +37,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TransportIri, opt => opt.MapFrom(src => src.TransportIri))
                 .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
-                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore())
-                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
-                .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
 
             CreateMap<Attribute, AttributeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -66,11 +60,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TransportIri, opt => opt.MapFrom(src => src.TransportIri))
                 .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
                 .ForMember(dest => dest.InterfaceIri, opt => opt.MapFrom(src => src.InterfaceIri))
-                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
-                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences))
-                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
-                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
@@ -81,6 +82,8 @@ namespace Mb.Data.Repositories
         {
             if (transports == null || !transports.Any())
                 return;
+
+            var json = JsonConvert.SerializeObject(transports.FirstOrDefault());
 
             bulk.Setup<Transport>()
                 .ForCollection(transports)

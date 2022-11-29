@@ -5,7 +5,6 @@ using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
-using Mimirorg.TypeLibrary.Enums;
 using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
 using Mb.Models.Application;
@@ -25,15 +24,9 @@ namespace ModelBuilder.Rdf.Extensions
         {
             #region None Mimir specific data
 
-            if (attribute.Entity == "RDF Attribute")
-            {
-                var t = string.Empty;
-            }
-
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
             ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
-            attribute.TypeReferences.AssertTypeReference(attribute.Iri, ontologyService);
 
             var ado = attribute.AttributeDatumObject();
             var adp = attribute.Iri.AttributeDatumPredicate();
@@ -47,13 +40,6 @@ namespace ModelBuilder.Rdf.Extensions
             #endregion None Mimir specific data
 
             #region Mimir specific data
-
-            ontologyService.AssertNode(attribute.Iri, Resources.HasDiscipline, $"mimir:{attribute.Discipline}");
-            ontologyService.AssertNode(attribute.Iri, Resources.SelectType, $"mimir:{attribute.SelectType}");
-
-            if (attribute.SelectValues != null && attribute.SelectValues.Any())
-                foreach (var value in attribute.SelectValues)
-                    ontologyService.AssertNode(attribute.Iri, Resources.SelectValue, $"mimir:{value}");
 
             if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
                 ontologyService.AssertNode(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
@@ -174,8 +160,6 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.RangeSpecifying = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false);
             attribute.RegularitySpecified = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false);
 
-            attribute.TypeReferences.ResolveTypeReferences(attribute.Iri, ontologyService);
-
             #endregion None Mimir specific data
 
             #region None Mimir specific data
@@ -192,12 +176,6 @@ namespace ModelBuilder.Rdf.Extensions
                     Name = value?[1].Trim()
                 };
             }).ToList();
-
-            var selectValueNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.SelectValue).Select(x => x.Object).ToList();
-            attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue(false)).ToList();
-
-            attribute.SelectType = ontologyService.GetEnumValue<Select>(iri, Resources.SelectType, false);
-            attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
 
             #endregion None Mimir specific data
         }

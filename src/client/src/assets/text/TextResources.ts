@@ -196,7 +196,6 @@ export const TextResources = {
   PROJECT_LIB: "Libraries",
 
   PROJECT_IMPORT: "Import project",
-  PROJECT_IMPORT_LIB_TYPES: "Import library types",
   PROJECT_IMPORT_LIB: "Import library",
   PROJECT_IMPORT_FILE: "File",
   PROJECT_IMPORT_SELECT: "Please select a file",
@@ -205,7 +204,6 @@ export const TextResources = {
   PROJECT_EXPORT_FILE: "Export file",
   PROJECT_EXPORT: "Export project",
   PROJECT_EXPORT_LIBRARY: "Export library",
-  PROJECT_EXPORT_LIBRARY_TYPES: "Export library types",
 
   COMMIT_PROJECT: "Commit project",
   PARTNER: "Send to collaboration partner",
@@ -237,7 +235,6 @@ export const TextResources = {
   BLOCK_FUNCTION: "BlockFunctionNode",
   BLOCK_PRODUCT: "BlockProductNode",
   BLOCK_PARENTNODE: "BlockParentNode",
-  BLOCK_OFFPAGE_NODE: "BlockOffPageNode",
 
   // RDS
   RDS_FUNCTION: "=",
@@ -277,9 +274,9 @@ export const TextResources = {
   VALIDATION_BLOCKVIEW: "Please select a node before opening Block View.",
   VALIDATION_BLOCKVIEW_MULTISELECT: "Please select only one node before opening Block View.",
   VALIDATION_BLOCKVIEW_PROJECT: "Please select a project before opening Block View.",
-  VALIDATION_OFFPAGE: "An off-page node can only be connected with a node of the same type.",
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
+  VALIDATION_TRANSPORT_INTERFACE: "There is no transport type or interface type connected to this terminal type.",
 
   // Modal
   MODAL_CLOSE: "Close menu",
@@ -301,9 +298,4 @@ export const TextResources = {
   // Company names
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
-  GABBI: "gabbi",
-
-  // OffPage
-  OFFPAGE_ADD: "This will create an offpage node from the terminal.",
-  OFFPAGE_REMOVE: "This will remove the offpage node.",
 };

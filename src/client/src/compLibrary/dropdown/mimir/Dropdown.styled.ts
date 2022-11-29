@@ -92,7 +92,7 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   border-color: ${Color.LIGHT_SILVER};
   font-size: ${(props) => props.fontSize};
   color: ${Color.BLACK};
-  background-color: ${Color.CHOCOLATE};
+  background-color: ${Color.WHITE};
   cursor: pointer;
   z-index: 1;
 

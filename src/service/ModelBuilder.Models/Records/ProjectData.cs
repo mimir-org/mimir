@@ -26,15 +26,19 @@ namespace Mb.Models.Records
             var transportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).SelectMany(y => y.Attributes).ToList();
             var interfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).SelectMany(y => y.Attributes).ToList();
 
-            var inputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
-            var outputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
+            var inputTerminalTransportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
+            var outputTerminalTransportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
+            var inputTerminalInterfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
+            var outputTerminalInterfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
 
             var allAttributes = nodeAttributes
                 .Union(connectorAttributes)
                 .Union(transportAttributes)
                 .Union(interfaceAttributes)
-                .Union(inputTerminalAttributes)
-                .Union(outputTerminalAttributes)
+                .Union(inputTerminalTransportAttributes)
+                .Union(outputTerminalTransportAttributes)
+                .Union(inputTerminalInterfaceAttributes)
+                .Union(outputTerminalInterfaceAttributes)
                 .ToList();
 
             Attributes.AddRange(allAttributes);
@@ -64,13 +68,20 @@ namespace Mb.Models.Records
                 return Task.CompletedTask;
 
             var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Terminal>().ToList();
+
             var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
-            var inputTerminals = transports.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
-            var outputTerminals = transports.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
+            var inputTransportTerminals = transports.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
+            var outputTransportTerminals = transports.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
+
+            var interfaces = project.Edges.Where(x => x.Interface != null).Select(y => y.Interface).ToList();
+            var inputInterfaceTerminals = interfaces.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
+            var outputInterfaceTerminals = interfaces.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
 
             var terminals = nodeTerminals
-                .Union(inputTerminals)
-                .Union(outputTerminals)
+                .Union(inputTransportTerminals)
+                .Union(outputTransportTerminals)
+                .Union(inputInterfaceTerminals)
+                .Union(outputInterfaceTerminals)
                 .ToList();
 
             Terminals.AddRange(terminals);

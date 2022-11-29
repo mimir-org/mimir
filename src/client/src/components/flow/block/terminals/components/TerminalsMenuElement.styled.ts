@@ -27,9 +27,8 @@ export const TerminalElementBox = styled.div`
 export const TerminalBox = styled.div`
   display: flex;
   align-items: center;
-  border-right: 1px solid ${Color.LIGHT_SILVER};
   padding-left: 5px;
-  width: 180px;
+  width: 100%;
   height: 25px;
   gap: 5px;
   font-size: ${FontSize.SMALL};
@@ -56,45 +55,31 @@ export const TerminalIconBox = styled.div`
  * Box for the terminal name
  */
 export const TerminalNameBox = styled.span`
-  max-width: 120px;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 /**
- * Box to wrap the OffPageIcon and the OffPage checkbox
+ * Box for a terminal icon
  */
-export const TerminalOffPageBox = styled.span`
+export const TerminalAddRemoveIconBox = styled.div`
   display: flex;
-  gap: 5px;
-  height: 20px;
-  margin-top: 3px;
+  width: 25px;
+  height: 25px;
+  padding: 0px;
+  margin: 0;
+  align-items: center;
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
     cursor: pointer;
   }
-`;
 
-/**
- * Box for the OffPageIcon
- */
-export const OffPageIconBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 25px;
-  padding-top: 4px;
-  margin: 0px 4px;
-`;
-
-/**
- * Box for the OffPage checkbox
- */
-export const OffPageCheckboxWrapper = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  right: 5px;
+  svg {
+    margin: auto auto;
+    height: 20px;
+  }
 `;

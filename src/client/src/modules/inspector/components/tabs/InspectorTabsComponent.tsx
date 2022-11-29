@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import { Action } from "redux";
 import { Attribute, Project, Terminal } from "@mimirorg/modelbuilder-types";
 import { changeInspectorTab } from "../../redux/inspectorSlice";
@@ -12,17 +12,17 @@ import {
   RelationsComponent,
   TerminalAttributesComponent,
 } from "./components";
+import { IsEdge, IsNode } from "../../helpers/IsType";
+import { IsTerminal } from "../../../../components/flow/helpers/Connectors";
 
 interface Props {
   project: Project;
   element: InspectorElement;
   activeTabIndex: number;
   attributes?: Attribute[];
-  terminals: Terminal[];
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  isOffPage: boolean;
 }
 
 /**
@@ -35,15 +35,40 @@ export const InspectorTabsComponent = ({
   element,
   activeTabIndex,
   attributes,
-  terminals,
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
-  isOffPage,
 }: Props) => {
+  const [terminals, setTerminals] = useState([] as Terminal[]);
+
   const shouldShowTabs = ShouldShowTabs(element);
   const elements = GetAttributesElement(element);
   const headerText = GetInspectorHeaderText(element);
+
+  useEffect(() => {
+    if (IsNode(element)) {
+      setTerminals(element.connectors.filter((x) => IsTerminal(x) && !x.isProxy) as Terminal[]);
+    }
+
+    if (IsEdge(element)) {
+      const terminals: Terminal[] = [];
+      setTerminals(terminals);
+    }
+
+    if (IsEdge(element) && element.transport) {
+      const terminals: Terminal[] = [];
+      terminals.push(element.transport.inputTerminal);
+      terminals.push(element.transport.outputTerminal);
+      setTerminals(terminals);
+    }
+
+    if (IsEdge(element) && element.interface) {
+      const terminals: Terminal[] = [];
+      terminals.push(element.interface.inputTerminal);
+      terminals.push(element.interface.outputTerminal);
+      setTerminals(terminals);
+    }
+  }, [element]);
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
@@ -66,7 +91,6 @@ export const InspectorTabsComponent = ({
                 changeInspectorTabAction={changeInspectorTabAction}
                 inspectorRef={inspectorRef}
                 isInspectorOpen={isInspectorOpen}
-                isOffPage={isOffPage}
                 nodes={project?.nodes}
               >
                 {tab}

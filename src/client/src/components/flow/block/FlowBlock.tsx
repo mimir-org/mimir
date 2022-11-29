@@ -4,7 +4,7 @@ import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
-import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
+import { SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
@@ -18,6 +18,7 @@ import ReactFlow, {
   NodeChange,
   EdgeChange,
 } from "react-flow-renderer";
+import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -122,7 +123,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
       setHasRendered(true);
@@ -133,7 +134,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, isElectroView));
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
   }, [mimirNodes, secondaryNode, isElectroView]);
 
   // Rerender edges
@@ -151,8 +152,8 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
         onInit={OnInit}
         nodes={flowNodes}
         edges={flowEdges}
-        nodeTypes={useMemo(() => GetBlockNodeTypes, [])}
-        edgeTypes={useMemo(() => GetBlockEdgeTypes, [])}
+        nodeTypes={useMemo(() => GetNodeTypes, [])}
+        edgeTypes={useMemo(() => GetEdgeTypes, [])}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
         onConnect={OnConnect}

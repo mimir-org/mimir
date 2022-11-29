@@ -10,22 +10,22 @@ import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from
  * This operation is needed when a LibNode is dropped from the Library and converted to a Node.
  * The LibNode's terminals are of the the type NodeTerminalLibCm.
  * @param libTerminals - the libTerminals belonging to the libNode
- * @param allTerminals - all the terminals in the Project
  * @param nodeId
  * @param nodeIri
+ * @param allTerminals - all the terminals in the Project
  * @returns a list of Mimir Connectors.
  */
 const ConvertTerminalLibCmToConnectors = (
   libTerminals: NodeTerminalLibCm[],
-  allTerminals: TerminalLibCm[],
   nodeId: string,
-  nodeIri: string
+  nodeIri: string,
+  allTerminals: TerminalLibCm[]
 ) => {
   const connectors = [] as Connector[];
 
   // Convert all existing libTerminals
   libTerminals.forEach((t) => {
-    const terminalAmount = t.quantity;
+    const terminalAmount = t.minQuantity;
     [...Array(terminalAmount)].forEach(() => connectors.push(CreateTerminal(t, nodeId, nodeIri, allTerminals)));
   });
 
@@ -47,10 +47,10 @@ export default ConvertTerminalLibCmToConnectors;
  */
 function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string, allTerminals: TerminalLibCm[]) {
   const id = CreateId();
-  const attributes = ConvertTerminalAttributeLibCmToAttribute(libTerminal.terminal, id);
   const terminalCategory = GetTerminalCategoryName(libTerminal.terminal, allTerminals);
+  const attributes = ConvertTerminalAttributeLibCmToAttribute(libTerminal.terminal, id);
 
-  return {
+  const terminal: Terminal = {
     id,
     iri: null,
     domain: libTerminal.terminal.iri,
@@ -61,25 +61,31 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
     connectorVisibility: ConnectorVisibility.None,
     isRequired: false,
     color: libTerminal.terminal.color,
-    terminalCategory,
+    terminalParentTypeName: terminalCategory,
     attributes,
     terminalTypeId: libTerminal.terminal.id,
     terminalTypeIri: libTerminal.terminal.iri,
     kind: TextResources.KIND_TERMINAL,
     discriminator: null,
     typeReferences: ConvertTypeReference(libTerminal.terminal.typeReferences),
-  } as Terminal;
+    terminalParentTypeId: libTerminal.terminal.parentId,
+    terminalParentTypeIri: libTerminal.terminal.parentIri,
+    isProxy: false,
+    proxyParent: null,
+    proxySibling: null,
+  };
+
+  return terminal;
 }
 
-function GetTerminalCategoryName(libTerminal: TerminalLibCm, allTerminals: TerminalLibCm[]) {
+export const GetTerminalCategoryName = (libTerminal: TerminalLibCm, allTerminals: TerminalLibCm[]) => {
   if (libTerminal.parentName == null) {
     return libTerminal.name;
   }
-
   // Recursive traversal to find parent
   const parentTerminal = allTerminals.find((t) => t.name === libTerminal.parentName);
   return GetTerminalCategoryName(parentTerminal, allTerminals);
-}
+};
 
 /**
  * Function to add all Relation types to a Node.

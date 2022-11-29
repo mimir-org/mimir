@@ -1,19 +1,13 @@
-import red from "../../../../../redux/store";
 import { Dispatch } from "redux";
-import { changeActiveConnector, deleteEdge } from "../../../../../redux/store/project/actions";
-import { IsConnectorVisible } from "../../../helpers/Connectors";
-import { Connector, ConnectorVisibility, Node } from "@mimirorg/modelbuilder-types";
-import { CreateRequiredOffPageNode } from "../blockNode/helpers/CreateRequiredOffPageNode";
-import { OffPageData, Position } from "../../../../../models/project";
-import { CreateId } from "../../../helpers";
-import { DeleteRequiredOffPageNode } from "../blockNode/helpers/DeleteRequiredOffPageNode";
-import { GetParentNode } from "../../../../../helpers/Family";
-import { Size } from "../../../../../assets/size/Size";
 import {
-  GetOffPagePartOfEdge,
-  GetOffPageSourceTransportEdge,
-  GetOffPageTargetTransportEdge,
-} from "../../../handlers/helpers/OffPageDeleteFunctions";
+  changeActiveConnector,
+  deleteEdge,
+  removeSelectedEdge,
+  removeSelectedNode,
+} from "../../../../../redux/store/project/actions";
+import { IsConnectorVisible } from "../../../helpers/Connectors";
+import { Connector, ConnectorVisibility, Edge, Node } from "@mimirorg/modelbuilder-types";
+import { FindProxyConnector, CreateProxyTerminals, DeleteProxyTerminal } from "../../hooks/helpers/ProxyTerminals";
 
 /**
  * Component to handle a click on a terminal in the drop-down menu for a Node in BlockView.
@@ -21,33 +15,51 @@ import {
  * @param isInput
  * @param sourceNode
  * @param dispatch
- * @param isElectroView
- * @param isOffPage
+ * @param edges
  */
 export const OnConnectorClick = (
   sourceConnector: Connector,
   isInput: boolean,
   sourceNode: Node,
   dispatch: Dispatch,
-  isElectroView: boolean,
-  isOffPage?: boolean
+  edges?: Edge[]
 ) => {
+  if (sourceConnector == null && sourceConnector.id == null) return;
+
   const visible = IsConnectorVisible(sourceConnector);
   const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);
   dispatch(changeActiveConnector(sourceNode.id, sourceConnector.id, connectorVisibility));
-  const hasOffPageNode = visible && sourceConnector.isRequired;
 
-  if (isOffPage) {
-    hasOffPageNode
-      ? RemoveOffPageNodeFromDropdownMenu(sourceConnector.id, sourceNode, dispatch)
-      : AddOffPageNodeFromDropdownMenu(sourceConnector, sourceNode, isElectroView, dispatch);
+  const proxy = FindProxyConnector(sourceConnector.id, sourceNode);
+
+  if (proxy == null && !visible) {
+    if (isInput) {
+      CreateProxyTerminals(null, sourceConnector, dispatch);
+    } else {
+      CreateProxyTerminals(sourceConnector, null, dispatch);
+    }
+  }
+  if (proxy != null && visible) {
+    DeleteProxyTerminal(proxy, dispatch);
+    dispatch(removeSelectedEdge());
+    dispatch(removeSelectedNode());
   }
 
   if (!visible) return;
 
-  // TODO: what to do with edges for hidden connectors
-  // const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-  // if (edge) dispatch(deleteEdge(edge.id));
+  const edgesToDelete = edges?.filter(
+    (e) =>
+      (e.fromConnector.id && e.fromConnector.id === sourceConnector.id) ||
+      (e.toConnector.id && e.toConnector.id === sourceConnector.id) ||
+      (e.toConnector.id && e.toConnector.id === proxy?.id) ||
+      (e.fromConnector.id && e.fromConnector.id === proxy?.id)
+  );
+
+  if (edgesToDelete && edgesToDelete.length > 0) {
+    edgesToDelete.forEach((edge) => {
+      dispatch(deleteEdge(edge.id));
+    });
+  }
 };
 
 function SetConnectorVisibility(conn: Connector, isInput: boolean) {
@@ -56,70 +68,4 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
   if (visible) return ConnectorVisibility.None;
   if (isInput) return ConnectorVisibility.InputVisible;
   return ConnectorVisibility.OutputVisible;
-}
-
-/**
- * Function to add a new OffPageNode by a click in the drop-down menu for a Node.
- * @param sourceConnector
- * @param sourceNode
- * @param isElectroView
- * @param dispatch
- */
-function AddOffPageNodeFromDropdownMenu(
-  sourceConnector: Connector,
-  sourceNode: Node,
-  isElectroView: boolean,
-  dispatch: Dispatch
-) {
-  const offPageNodeId = CreateId();
-  const position = SetInitialOffPageNodePosition(sourceNode, isElectroView);
-  const isRequired = true;
-  const data = { offPageNodeId, sourceConnector, sourceNode, isRequired, position } as OffPageData;
-
-  CreateRequiredOffPageNode(data, dispatch);
-}
-
-/**
- * Function to remove an OffPageNode and related edges by a click in the drop-down menu for a Node.
- * @param sourceConnectorId
- * @param sourceNode
- * @param dispatch
- */
-function RemoveOffPageNodeFromDropdownMenu(sourceConnectorId: string, sourceNode: Node, dispatch: Dispatch) {
-  const edges = red.store.getState().projectState.project.edges;
-
-  const sourceTransportEdge = GetOffPageSourceTransportEdge(sourceConnectorId, edges);
-  const targetTransportEdge = GetOffPageTargetTransportEdge(sourceConnectorId, edges);
-
-  if (sourceTransportEdge == undefined && targetTransportEdge == undefined) return;
-
-  const offPageNodeId = sourceTransportEdge != undefined ? sourceTransportEdge.fromNodeId : targetTransportEdge.toNodeId;
-  const offPageTransportEdge = sourceTransportEdge != undefined ? sourceTransportEdge : targetTransportEdge;
-
-  if (offPageNodeId == undefined) return;
-
-  const offPagePartOfEdge = GetOffPagePartOfEdge(offPageNodeId, sourceNode.id, edges);
-  if (offPagePartOfEdge == undefined || offPagePartOfEdge == null) return;
-
-  dispatch(deleteEdge(offPagePartOfEdge.id));
-  dispatch(deleteEdge(offPageTransportEdge.id));
-  DeleteRequiredOffPageNode(offPageNodeId, sourceNode.id, sourceConnectorId, dispatch);
-}
-
-function SetInitialOffPageNodePosition(sourceNode: Node, isElectroView: boolean) {
-  const adjustment = 1.8;
-  const marginX = Size.NODE_WIDTH / adjustment;
-  const marginY = Size.NODE_HEIGHT / adjustment;
-
-  const parentNode = GetParentNode(sourceNode.id);
-
-  if (isElectroView) {
-    const x = sourceNode.positionBlockX + marginX;
-    const y = parentNode?.height;
-    return { x, y } as Position;
-  }
-
-  const x = sourceNode.positionBlockX + parentNode.width;
-  const y = sourceNode.positionBlockY + marginY;
-  return { x, y } as Position;
 }

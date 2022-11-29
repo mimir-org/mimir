@@ -1,25 +1,30 @@
 import styled from "styled-components";
-
-interface Props {
-  singleColumn: boolean;
-  hasDescriptors: boolean;
-}
+import { FontSize } from "../../../../../../../../../../../assets/font";
 
 /**
  * A wrapper for the input field and the drop-down menu for units
  */
-export const AttributeInputBox = styled.div<Props>`
-  width: ${(props) => (props.singleColumn ? 170 : 250)}px;
+export const AttributeInputBox = styled.div`
+  margin: 5px 0 5px auto;
+  width: 60%;
   display: flex;
-  gap: 4px;
-  margin-left: ${(props) => (props.singleColumn ? 47 : 140)}px;
-  margin-bottom: ${(props) => (props.hasDescriptors ? 11 : 78)}px;
-  height: 20px;
+  flex-direction: column;
+  font-size: ${FontSize.TINY};
 
   input {
-    width: 35%;
-    max-width: 70px;
-    margin-right: 5px;
-    font-size: 80%;
+    width: 100%;
+    border: solid 1px black;
+    border-radius: 5px;
+    height: 20px;
+    padding: 10px;
+    text-align: right;
   }
+`;
+
+export const AttributeUnitBox = styled.div`
+  margin: 5px auto 5px 0;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  font-size: ${FontSize.TINY};
 `;

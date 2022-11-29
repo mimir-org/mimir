@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Common;
 using Mb.Services.Contracts;
@@ -48,7 +47,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var data = await _libraryService.GetNodeTypes(null);
-                return Ok(data.ToList());
+                return Ok(data);
             }
             catch (Exception e)
             {
@@ -72,7 +71,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var transportTypes = await _libraryService.GetTransportTypes(null);
-                return Ok(transportTypes.ToList());
+                return Ok(transportTypes);
             }
             catch (Exception e)
             {
@@ -96,7 +95,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var interfaceTypes = await _libraryService.GetInterfaceTypes(null);
-                return Ok(interfaceTypes.ToList());
+                return Ok(interfaceTypes);
             }
             catch (Exception e)
             {
@@ -120,7 +119,7 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var subProjects = await _libraryService.GetSubProjects();
-                return Ok(subProjects.ToList());
+                return Ok(subProjects);
             }
             catch (Exception e)
             {
@@ -144,7 +143,31 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var data = await _libraryService.GetTerminalTypes();
-                return Ok(data.ToList());
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get all quantity datum types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("quantity-datums")]
+        [ProducesResponseType(typeof(ICollection<QuantityDatumCm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> GetQuantityDatums()
+        {
+            try
+            {
+                var data = await _libraryService.GetQuantityDatums();
+                return Ok(data);
             }
             catch (Exception e)
             {

@@ -1,34 +1,33 @@
-import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../types";
+import { InspectorElement, InspectorAttributesElement } from "../../../../types";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { OnShowAllFilters } from "../shared/components/parametersContent/handlers/OnShowAllFilters";
-import { CombinedAttributeFilter } from "../../../../../../models";
+import { useState } from "react";
 import { GetParametersColor } from "../shared/components/parametersContent/helpers/GetParametersColor";
-import { AttributesRow } from "../shared/components/parametersContent/components/row/AttributesRow";
-import { TextResources } from "../../../../../../assets/text/TextResources";
-import { OnClearAllFilters } from "../shared/components/parametersContent/handlers/OnClearAllFilters";
-import { AttributeButton } from "../shared/components/parametersContent/styled/AttributeButton";
-import { OnChangeFilterChoice } from "../shared/components/parametersContent/handlers/OnChangeFilterChoice";
-import { Dropdown } from "../shared/components/parametersContent/components/dropdown/Dropdown";
-import { AttributesBox, AttributesHeader, AttributesMenu, AttributesRowBox } from "./AttributesComponent.styled";
+import { AttributesBox } from "./AttributesComponent.styled";
 import {
-  GetAttributeCombinations,
-  GetCombinedAttributeFilters,
-} from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
-import {
-  makeSelectedFilterSelector,
+  isProjectStateGloballyLockingSelector,
+  projectIdSelector,
+  qunatityDatumSelector,
   useAppDispatch,
   useAppSelector,
   usernameSelector,
-  useUniqueParametricAppSelector,
 } from "../../../../../../redux/store";
+import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
+import {
+  OnChangeInterfaceAttributeValue,
+  OnChangeInterfaceTerminalAttributeValue,
+  OnChangeNodeAttributeValue,
+  OnChangeNodeTerminalAttributeValue,
+  OnChangeTransportAttributeValue,
+  OnChangeTransportTerminalAttributeValue,
+} from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
+import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
+import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
 
 interface Props {
   attributesElem: InspectorAttributesElement;
   inspectorParentElem: InspectorElement;
   attributeItems?: Attribute[];
-  terminalParentElem?: InspectorTerminalsElement;
 }
 
 /**
@@ -37,78 +36,70 @@ interface Props {
  * @param props
  * @returns a drop-down menu to select combinations of attributes, and buttons for hiding/showing all entities.
  */
-export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems, terminalParentElem }: Props) => {
-  const dispatch = useAppDispatch();
+export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems }: Props) => {
   const attributes = attributeItems ?? GetAttributes(attributesElem);
+  const dispatch = useAppDispatch();
   const username = useAppSelector(usernameSelector);
-  const shouldShowDefaultEntities = useRef(true);
-  const attributeFilters = GetCombinedAttributeFilters(attributes);
-  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, attributesElem?.id);
-  const hasFilters = Object.keys(selectedFilters).length > 0;
-  const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
-  const [colorMapping] = useState(new Map<string, [string, string]>());
+  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
+  const [lockingAttribute, setLockingAttribute] = useState(null);
+  const quantityDatums = useAppSelector(qunatityDatumSelector);
+  const projectId = useAppSelector(projectIdSelector);
 
-  const attributeCombinations = useMemo(
-    () => GetAttributeCombinations(attributeFilters, attributes),
-    [attributeFilters, attributes]
-  );
+  const handleAttributeChange = (attributeId: string, property: string, value: string) => {
+    // Node attributes
+    if (IsNode(attributesElem)) OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
 
-  const OnShowAllEntites = () => {
-    shouldShowDefaultEntities.current = true;
-    OnShowAllFilters(attributesElem.id, attributeFilters, attributeCombinations, dispatch);
+    // Node terminal attributes
+    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+      OnChangeNodeTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
+    }
+
+    // Transport attributes
+    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem))
+      OnChangeTransportAttributeValue(attributeId, inspectorParentElem.id, property, value, dispatch);
+
+    // Interface attributes
+    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem))
+      OnChangeInterfaceAttributeValue(attributeId, inspectorParentElem.id, property, value, dispatch);
+
+    // Transport terminal - attributes
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
+      OnChangeTransportTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
+    }
+
+    // Interface terminal - attributes
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
+      OnChangeInterfaceTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
+    }
   };
 
-  useEffect(() => {
-    OnShowAllEntites();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attributesElem]);
-
   return (
-    <AttributesBox>
-      <AttributesHeader>
-        <AttributesMenu>
-          <Dropdown
-            onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
-              OnChangeFilterChoice(attributesElem.id, filter.name, selected, dispatch);
-            }}
-            items={attributeFilters}
-            selectedItems={selectedFilters}
-          />
-
-          <AttributeButton className={`link`} onClick={() => OnClearAllFilters(attributesElem.id, dispatch)}>
-            {TextResources.PARAMS_CLEAR_ALL}
-          </AttributeButton>
-          <AttributeButton className={`link`} onClick={OnShowAllEntites}>
-            {TextResources.PARAMS_DEFAULT}
-          </AttributeButton>
-        </AttributesMenu>
-      </AttributesHeader>
-
-      <AttributesRowBox>
-        {hasFilters &&
-          Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
-            if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
-            const [headerColor, bodyColor] = colorMapping.get(filterName);
+    <>
+      {attributesElem && attributes && (
+        <AttributesBox>
+          {Object.entries(attributes).map((attribute, index) => {
+            const [headerColor, bodyColor] = GetParametersColor(index);
 
             return (
-              <AttributesRow
-                key={filterName}
-                element={attributesElem}
-                inspectorParentElem={inspectorParentElem}
-                terminalParentElem={terminalParentElem}
-                combinations={attributeCombinations[filterName]}
-                selectedCombinations={selectedCombinations}
-                attributeItems={attributes}
-                maxNumSelectedCombinations={maxNumSelectedCombinations}
-                username={username}
-                filterName={filterName}
+              <AttributeObject
+                key={index}
+                attribute={attribute[1]}
                 headerColor={headerColor}
                 bodyColor={bodyColor}
-                dispatch={dispatch}
+                isGloballyLocking={isGlobalLocking}
+                lockingAttribute={lockingAttribute}
+                quantityDatums={quantityDatums}
+                onChange={(attributeId: string, property: string, value: string) =>
+                  handleAttributeChange(attributeId, property, value)
+                }
+                onLock={(attr, isLocked) =>
+                  OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
+                }
               />
             );
           })}
-      </AttributesRowBox>
-    </AttributesBox>
+        </AttributesBox>
+      )}
+    </>
   );
 };

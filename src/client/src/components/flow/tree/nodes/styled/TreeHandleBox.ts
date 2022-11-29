@@ -18,8 +18,8 @@ export const TreeHandleBox = styled.div<Props>`
     border-radius: 0;
     bottom: -19px;
     z-index: 1;
-    right: ${(props) => props.position === Position.Right && 50}%;
-    left: ${(props) => props.position === Position.Left && 50}%;
+    right: ${(props) => props.position === Position.Right && 50}px;
+    left: ${(props) => props.position === Position.Left && 50}px;
     top: ${(props) => props.topPos};
     transition: opacity 0.5s ease-in-out;
   }

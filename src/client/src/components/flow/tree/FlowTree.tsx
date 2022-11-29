@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../assets/size/Size";
-import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
+import { SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {
@@ -21,6 +21,7 @@ import ReactFlow, {
   NodeChange,
   EdgeChange,
 } from "react-flow-renderer";
+import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -84,7 +85,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
       if (!project) return;
-      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, dispatch);
+      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, project, dispatch);
     },
     [selectedEdge]
   );
@@ -136,8 +137,8 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
         onNodesDelete={null}
-        nodeTypes={useMemo(() => GetTreeNodeTypes, [])}
-        edgeTypes={useMemo(() => GetTreeEdgeTypes, [])}
+        nodeTypes={useMemo(() => GetNodeTypes, [])}
+        edgeTypes={useMemo(() => GetEdgeTypes, [])}
         defaultZoom={0.7}
         minZoom={0.1}
         defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}

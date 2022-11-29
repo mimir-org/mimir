@@ -1,6 +1,4 @@
 import { Dispatch } from "redux";
-import { IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../../../../../helpers/IsType";
-import { InspectorElement, InspectorAttributesElement, InspectorTerminalsElement } from "../../../../../../../types";
 import {
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
@@ -10,26 +8,65 @@ import {
   changeTransportTerminalAttributeValue,
 } from "../../../../../../../../../redux/store/project/actions";
 
-export const OnChangeAttributeValue = (
-  element: InspectorAttributesElement,
-  inspectorParentElement: InspectorElement,
-  terminalParentElement: InspectorTerminalsElement,
+export const OnChangeNodeAttributeValue = (
   attributeId: string,
+  nodeId: string,
+  property: string,
   value: string,
-  unitId: string,
   dispatch: Dispatch
 ) => {
-  if (IsNode(element)) {
-    dispatch(changeNodeAttributeValue(attributeId, element, value, unitId));
-  } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeTransportAttributeValue(attributeId, inspectorParentElement, value, unitId));
-  } else if (IsInterface(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeInterfaceAttributeValue(attributeId, inspectorParentElement, value, unitId));
-  } else if (IsConnector(element) && IsNode(terminalParentElement)) {
-    dispatch(changeNodeTerminalAttributeValue(attributeId, element, terminalParentElement, value, unitId));
-  } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsTransport(terminalParentElement)) {
-    dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
-  } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
-    dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
-  }
+  dispatch(changeNodeAttributeValue(attributeId, nodeId, property, value));
+};
+
+export const OnChangeNodeTerminalAttributeValue = (
+  attributeId: string,
+  nodeId: string,
+  terminalId: string,
+  property: string,
+  value: string,
+  dispatch: Dispatch
+) => {
+  dispatch(changeNodeTerminalAttributeValue(attributeId, nodeId, terminalId, property, value));
+};
+
+export const OnChangeTransportAttributeValue = (
+  attributeId: string,
+  edgeId: string,
+  property: string,
+  value: string,
+  dispatch: Dispatch
+) => {
+  dispatch(changeTransportAttributeValue(attributeId, edgeId, property, value));
+};
+
+export const OnChangeInterfaceAttributeValue = (
+  attributeId: string,
+  edgeId: string,
+  property: string,
+  value: string,
+  dispatch: Dispatch
+) => {
+  dispatch(changeInterfaceAttributeValue(attributeId, edgeId, property, value));
+};
+
+export const OnChangeTransportTerminalAttributeValue = (
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string,
+  dispatch: Dispatch
+) => {
+  dispatch(changeTransportTerminalAttributeValue(attributeId, edgeId, terminalId, property, value));
+};
+
+export const OnChangeInterfaceTerminalAttributeValue = (
+  attributeId: string,
+  edgeId: string,
+  terminalId: string,
+  property: string,
+  value: string,
+  dispatch: Dispatch
+) => {
+  dispatch(changeInterfaceTerminalAttributeValue(attributeId, edgeId, terminalId, property, value));
 };

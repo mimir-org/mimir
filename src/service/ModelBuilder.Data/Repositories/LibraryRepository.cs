@@ -25,20 +25,18 @@ namespace Mb.Data.Repositories
 
         public async Task<List<QuantityDatumCm>> GetQuantityDatums()
         {
-            var quantityDatumSpecifiedScope = new List<QuantityDatumCm>();
-            var quantityDatumSpecifiedProvenance = new List<QuantityDatumCm>();
-            var quantityDatumRangeSpecifying = new List<QuantityDatumCm>();
-            var quantityDatumRegularitySpecified = new List<QuantityDatumCm>();
+            var task1 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedScope);
+            var task2 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedProvenance);
+            var task3 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRangeSpecifying);
+            var task4 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRegularitySpecified);
 
-            var tasks = new List<Task>
-            {
-                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedScope, quantityDatumSpecifiedScope)),
-                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedProvenance, quantityDatumSpecifiedProvenance)),
-                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRangeSpecifying, quantityDatumRangeSpecifying)),
-                Task.Run(() => GetQuantityDatumAsync(QuantityDatumType.QuantityDatumRegularitySpecified, quantityDatumRegularitySpecified))
-            };
+            await Task.WhenAll(task1, task2, task3, task4);
 
-            await Task.WhenAll(tasks);
+            var quantityDatumSpecifiedScope = await task1;
+            var quantityDatumSpecifiedProvenance = await task2;
+            var quantityDatumRangeSpecifying = await task3;
+            var quantityDatumRegularitySpecified = await task4;
+
             return quantityDatumSpecifiedScope.Union(quantityDatumSpecifiedProvenance).Union(quantityDatumRangeSpecifying).Union(quantityDatumRegularitySpecified).ToList();
         }
 
@@ -91,14 +89,13 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        private async Task GetQuantityDatumAsync(QuantityDatumType type, List<QuantityDatumCm> list)
+        private async Task<List<QuantityDatumCm>> GetQuantityDatumAsync(QuantityDatumType type)
         {
-            list ??= new List<QuantityDatumCm>();
-
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl($"libraryattribute/datum/{(int) type}");
-            list = await _cacheRepository.GetOrCreateAsync(type.ToString(),
+            var data = await _cacheRepository.GetOrCreateAsync(type.ToString(),
                 async () => await _httpRepository.GetData<List<QuantityDatumCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+            return data;
         }
     }
 }

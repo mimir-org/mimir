@@ -1,5 +1,4 @@
 import { Action, Dispatch } from "redux";
-import { CombinedAttribute } from "../../models";
 import { Node, Edge, Connector, Transport, Interface, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -18,7 +17,6 @@ export type InspectorTerminalsElement = Node | Transport | Interface;
  * This can either be attributes directly on the object itself (Node, Transport, Interface), or on its terminals (via terminals view).
  */
 export type InspectorAttributesElement = InspectorTerminalsElement | Terminal;
-export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 export type TerminalLikeItem = Connector | Terminal;
 
 export type ChangeInspectorVisibilityAction = (visibility: boolean) => Action;

@@ -4,7 +4,7 @@ import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
 import { electroViewSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
@@ -13,8 +13,10 @@ interface Props {
   hasActiveTerminals: boolean;
   isParent: boolean;
   isElectroView: boolean;
-  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
   onBlur: () => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
 /**
@@ -31,6 +33,8 @@ export const TerminalsMenu = ({
   isElectroView,
   onClick,
   onBlur,
+  onClickAddTerminal,
+  onClickRemoveTerminal,
 }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroViewSelector);
   const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
@@ -52,6 +56,8 @@ export const TerminalsMenu = ({
           node={node}
           isElectroView={isElectroView}
           onClick={onClick}
+          onClickAddTerminal={onClickAddTerminal}
+          onClickRemoveTerminal={onClickRemoveTerminal}
         />
       ))}
     </TerminalsBox>

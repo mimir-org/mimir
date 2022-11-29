@@ -7,3 +7,6 @@ export { default as useOnBlockConnect } from "./useOnBlockConnect";
 
 export { default as useOnBlockNodesChange } from "./useOnBlockNodesChange";
 export { default as useOnBlockEdgesChange } from "./useOnBlockEdgesChange";
+
+export { default as useOnAddTerminal } from "./useOnAddTerminal";
+export { default as useOnRemoveTerminal } from "./useOnRemoveTerminal";

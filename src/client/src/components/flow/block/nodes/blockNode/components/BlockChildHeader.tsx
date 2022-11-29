@@ -2,15 +2,17 @@ import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponen
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean, isOffPage: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
   isElectroView: boolean;
   showMenuButton?: boolean;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
 /**
@@ -24,6 +26,8 @@ export const BlockChildHeader = ({
   onConnectorClick,
   isElectroView,
   showMenuButton,
+  onClickAddTerminal,
+  onClickRemoveTerminal,
 }: Props) => {
   const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
   const name = node.label ?? node.name;
@@ -33,10 +37,12 @@ export const BlockChildHeader = ({
       <TerminalsMenuComponent
         node={node}
         connectors={inputConnectors}
-        onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
+        onClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
         showMenuButton={showMenuButton}
         isElectroView={isElectroView}
         isInput
+        onClickAddTerminal={onClickAddTerminal}
+        onClickRemoveTerminal={onClickRemoveTerminal}
       />
       <Tooltip content={name} disabled={!isOverflowing} offset={[0, 10]}>
         <BlockNodeNameBox tabIndex={isOverflowing ? 0 : undefined} ref={overflowRef}>
@@ -46,10 +52,12 @@ export const BlockChildHeader = ({
       <TerminalsMenuComponent
         node={node}
         connectors={outputConnectors}
-        onClick={(c, isInput, node, isElectroView, isOffPage) => onConnectorClick(c, isInput, node, isElectroView, isOffPage)}
+        onClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
         showMenuButton={showMenuButton}
         isElectroView={isElectroView}
         isInput={false}
+        onClickAddTerminal={onClickAddTerminal}
+        onClickRemoveTerminal={onClickRemoveTerminal}
       />
     </NodeBoxHeader>
   );

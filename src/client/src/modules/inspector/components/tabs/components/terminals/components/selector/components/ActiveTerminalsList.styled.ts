@@ -6,4 +6,5 @@ export const TerminalsCategoryListBox = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   padding-bottom: 100px;
+  margin: 10px;
 `;

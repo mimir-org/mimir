@@ -11,6 +11,7 @@ import { LibraryState } from "../../../redux/store/library/types";
  * @param fromNode
  * @param toNode
  * @param projectId
+ * @param projectIri
  * @returns an Edge.
  */
 export const ConvertEdgeDataToMimirEdge = (
@@ -20,28 +21,46 @@ export const ConvertEdgeDataToMimirEdge = (
   fromNode: Node,
   toNode: Node,
   projectId: string,
+  projectIri: string,
   library: LibraryState
 ) => {
-  const convertedTransport = ConvertTerminalToTransport(fromConnector as Terminal, toConnector as Terminal, library);
-  const convertedInterface = ConvertTerminalToInterface(fromConnector as Terminal, toConnector as Terminal, library);
+  const convertedTransport = ConvertTerminalToTransport(fromConnector as Terminal, library);
+  const convertedInterface = ConvertTerminalToInterface(fromConnector as Terminal, library);
 
-  return {
-    id,
-    projectId,
-    fromConnectorId: fromConnector.id,
-    fromConnector,
-    toConnectorId: toConnector.id,
-    toConnector,
-    fromNodeId: fromNode.id,
-    fromNode,
-    toNodeId: toNode.id,
-    toNode,
-    hidden: false,
-    masterProjectId: projectId,
-    transport: convertedTransport,
-    interface: convertedInterface,
+  const edge: Edge = {
+    id: id,
+    iri: null,
+    domain: null,
     kind: TextResources.KIND_EDGE,
-  } as Edge;
+    fromConnectorId: fromConnector.id,
+    fromConnectorIri: fromConnector.iri,
+    fromConnector: fromConnector,
+    toConnectorId: toConnector.id,
+    toConnectorIri: toConnector.iri,
+    toConnector: toConnector,
+    fromNodeId: fromNode.id,
+    fromNodeIri: fromNode.iri,
+    fromNode: fromNode,
+    toNodeId: toNode.id,
+    toNodeIri: toNode.iri,
+    toNode: toNode,
+    transportId: convertedTransport?.id,
+    transport: convertedTransport,
+    interfaceId: convertedInterface?.id,
+    interface: convertedInterface,
+    isLocked: false,
+    isLockedStatusBy: null,
+    isLockedStatusDate: null,
+    masterProjectId: projectId,
+    masterProjectIri: projectIri,
+    projectId: projectId,
+    projectIri: projectIri,
+    selected: false,
+    hidden: false,
+    blockHidden: false,
+  };
+
+  return edge;
 };
 
 /**

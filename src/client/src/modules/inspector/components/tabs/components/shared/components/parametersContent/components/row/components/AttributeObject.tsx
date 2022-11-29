@@ -1,86 +1,71 @@
-import { useEffect, useState } from "react";
 import { AttributeDescriptorComponent } from "./AttributeDescriptorComponent";
 import { AttributeHeaderBox, AttributeObjectBody, AttributeObjectBox } from "./AttributeObject.styled";
-import { CombinedAttribute } from "../../../../../../../../../../../models";
-import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { Attribute } from "@mimirorg/modelbuilder-types";
-import { AttributeInput } from "./AttributeInput";
 import { AttributeObjectNameComponent } from "./AttributeObjectNameComponent";
 import { AttributeButtonsComponent } from "./AttributeButtonsComponent";
-import { GetAttributeDescriptors } from "./helpers/GetAttributeDesciptors";
+import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
+import { useState } from "react";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
 interface Props {
   attribute: Attribute;
-  combination: CombinedAttribute;
   headerColor: string;
   bodyColor: string;
   isGloballyLocking: boolean;
   lockingAttribute: Attribute;
-  onChange: (id: string, value: string, unitId: string) => void;
+  quantityDatums: QuantityDatumCm[];
+  onChange: (attributeId: string, property: string, value: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
-  onClose: (id: string) => void;
 }
 
 /**
  * Component for a single Attribute used in the Inspector.
  * @param interface
- * @returns an attribute with data, an input field and a dropdown for units.
+ * @returns an attribute with quantity datums, value and unit.
  */
 export const AttributeObject = ({
   attribute,
-  combination,
   headerColor,
   bodyColor,
   isGloballyLocking,
   lockingAttribute,
+  quantityDatums,
   onLock,
-  onClose,
   onChange,
 }: Props) => {
-  const [value, setValue] = useState("");
-  const isAttribute = IsAttribute(attribute);
-  const attributeValue = isAttribute ? attribute.value ?? "" : "";
-  const isLocked = isAttribute ? attribute.isLocked : false;
+  const [visible, setVisible] = useState(true);
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
-  const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
-  const descriptors = GetAttributeDescriptors(combination);
+  const hasTypeReference = attribute?.attributeTypeIri != null && attribute?.attributeTypeIri.length > 0;
 
-  const hasDescriptors = descriptors.length > 0;
-  const singleColumn = descriptors.length < 3;
-
-  useEffect(() => {
-    IsAttribute(attribute) && setValue(attributeValue);
-  }, [attribute, attributeValue]);
+  const onClose = () => {
+    setVisible(false);
+  };
 
   return (
-    <AttributeObjectBox singleColumn={singleColumn}>
-      <AttributeHeaderBox color={bodyColor}>
-        <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
-        <AttributeButtonsComponent
-          attribute={attribute}
-          headerColor={headerColor}
-          isAttribute={isAttribute}
-          attributeIsLocking={attributeIsLocking}
-          isLocked={isLocked}
-          onClose={(id: string) => onClose(id)}
-          onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
-        />
-      </AttributeHeaderBox>
-      <AttributeObjectBody>
-        {hasDescriptors && (
-          <AttributeDescriptorComponent headerColor={headerColor} singleColumn={singleColumn} descriptors={descriptors} />
-        )}
-      </AttributeObjectBody>
-      <AttributeInput
-        attribute={attribute}
-        value={value}
-        singleColumn={singleColumn}
-        hasDescriptors={hasDescriptors}
-        setValue={setValue}
-        onChange={(id, value, unitId) => onChange(id, value, unitId)}
-      />
-    </AttributeObjectBox>
+    <>
+      {attribute && visible && (
+        <AttributeObjectBox disabled={attribute.isLocked ?? false}>
+          <AttributeHeaderBox color={bodyColor}>
+            <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
+            <AttributeButtonsComponent
+              attribute={attribute}
+              headerColor={headerColor}
+              attributeIsLocking={attributeIsLocking}
+              onClose={() => onClose()}
+              onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
+            />
+          </AttributeHeaderBox>
+          <AttributeObjectBody>
+            <AttributeDescriptorComponent
+              headerColor={headerColor}
+              attribute={attribute}
+              quantityDatums={quantityDatums}
+              onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
+            />
+          </AttributeObjectBody>
+        </AttributeObjectBox>
+      )}
+    </>
   );
 };

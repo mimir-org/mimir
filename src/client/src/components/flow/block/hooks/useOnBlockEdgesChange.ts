@@ -28,7 +28,6 @@ const useOnBlockEdgesChange = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  const nodes = project.nodes;
   const edges = project.edges;
   const verifiedFlowChanges = [] as EdgeChange[];
   const edgesToDelete = [] as Edge[];
@@ -41,7 +40,7 @@ const useOnBlockEdgesChange = (
   });
 
   // Execute verified changes
-  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
 };
 

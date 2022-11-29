@@ -1,5 +1,4 @@
 import { Node, Edge, Relation, Terminal } from "@mimirorg/modelbuilder-types";
-import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
 import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTransportItem } from "../components/filters/helpers";
 
@@ -16,12 +15,9 @@ const PopulateFilterLists = (
   nodes: Node[],
   transportItems: Terminal[],
   productAndLocationRelations: Relation[],
-  partOfItems: Relation[],
-  isTreeView: boolean
+  partOfItems: Relation[]
 ) => {
   edges.forEach((edge) => {
-    if (isTreeView && IsOffPageEdge(edge)) return;
-
     const sourceConn = edge.fromConnector;
 
     if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);

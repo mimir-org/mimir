@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
-import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
@@ -22,7 +21,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
   const project = projectState?.project;
-  const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const nodes = project?.nodes;
   const edges = project?.edges;
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());

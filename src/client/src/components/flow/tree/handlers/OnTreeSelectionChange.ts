@@ -40,8 +40,9 @@ function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
 }
 
 function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
-  dispatch(setSelectedEdge(flowEdge?.id));
+  dispatch(removeSelectedEdge());
   dispatch(removeSelectedNode());
+  dispatch(setSelectedEdge(flowEdge?.id));
 }
 
 function HandleMultiSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {

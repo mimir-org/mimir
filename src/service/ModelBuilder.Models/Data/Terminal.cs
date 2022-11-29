@@ -9,12 +9,18 @@ namespace Mb.Models.Data
 {
     public class Terminal : Connector, IEquatable<Terminal>
     {
+        public override string Kind => nameof(Terminal);
         public string Color { get; set; }
-        public string TerminalCategory { get; set; }
         public string TerminalTypeId { get; set; }
         public string TerminalTypeIri { get; set; }
+        public string TerminalParentTypeId { get; set; }
+        public string TerminalParentTypeIri { get; set; }
+        public string TerminalParentTypeName { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public string Discriminator => nameof(Terminal);
+        public bool IsProxy { get; set; }
+        public string ProxyParent { get; set; }
+        public string ProxySibling { get; set; }
 
         [NotMapped]
         public virtual ICollection<TypeReference> TypeReferences
@@ -59,9 +65,14 @@ namespace Mb.Models.Data
             return base.Equals(other) &&
                    TypeReferenceString == other.TypeReferenceString &&
                    Color == other.Color &&
-                   TerminalCategory == other.TerminalCategory &&
+                   TerminalParentTypeName == other.TerminalParentTypeName &&
                    TerminalTypeId == other.TerminalTypeId &&
-                   TerminalTypeIri == other.TerminalTypeIri;
+                   TerminalTypeIri == other.TerminalTypeIri &&
+                   TerminalParentTypeId == other.TerminalParentTypeId &&
+                   TerminalParentTypeIri == other.TerminalParentTypeIri &&
+                   IsProxy == other.IsProxy &&
+                   ProxyParent == other.ProxyParent &&
+                   ProxySibling == other.ProxySibling;
         }
 
         public override bool Equals(object obj)
@@ -73,7 +84,9 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString);
+            var proxyString = $"{IsProxy}{ProxyParent}{ProxySibling}";
+            var parentProxyString = $"{TerminalParentTypeId}{TerminalParentTypeIri}";
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalParentTypeName, TerminalTypeId, TerminalTypeIri, parentProxyString, TypeReferenceString, proxyString);
         }
 
         #endregion IEquatable
