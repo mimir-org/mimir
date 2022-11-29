@@ -11,15 +11,18 @@ import {
   useAppDispatch,
   useAppSelector,
   usernameSelector,
+  libraryAttributeTypeSelector,
 } from "../../../../../../redux/store";
 import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
 import {
+  OnAddNodeAttribute,
   OnChangeInterfaceAttributeValue,
   OnChangeInterfaceTerminalAttributeValue,
   OnChangeNodeAttributeValue,
   OnChangeNodeTerminalAttributeValue,
   OnChangeTransportAttributeValue,
   OnChangeTransportTerminalAttributeValue,
+  OnRemoveNodeAttribute,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
 import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
@@ -44,6 +47,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   const [lockingAttribute, setLockingAttribute] = useState(null);
   const quantityDatums = useAppSelector(qunatityDatumSelector);
   const projectId = useAppSelector(projectIdSelector);
+  const attributeTypes = useAppSelector(libraryAttributeTypeSelector);
 
   const handleAttributeChange = (attributeId: string, property: string, value: string) => {
     // Node attributes
@@ -73,6 +77,16 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
     }
   };
 
+  // Remove attribute
+  const onRemoveAttribute = (attributeId: string) => {
+    if (IsNode(attributesElem)) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
+  };
+
+  // Add attribute
+  const onAddAttribute = (attributeTypeId: string) => {
+    if (IsNode(attributesElem)) OnAddNodeAttribute(attributeTypeId, attributesElem.id, attributeTypes, dispatch);
+  };
+
   return (
     <>
       {attributesElem && attributes && (
@@ -95,6 +109,8 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
                 onLock={(attr, isLocked) =>
                   OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
                 }
+                onAddAttribute={onAddAttribute}
+                onRemoveAttribute={onRemoveAttribute}
               />
             );
           })}

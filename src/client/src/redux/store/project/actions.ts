@@ -2,7 +2,16 @@
 import * as Types from "./types";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
-import { Project, Node, Edge, ConnectorVisibility, EntityType, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
+import {
+  Project,
+  Node,
+  Edge,
+  ConnectorVisibility,
+  EntityType,
+  ProjectConverterAm,
+  Terminal,
+  Attribute,
+} from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };
@@ -134,6 +143,14 @@ export function changeNodeAttributeValue(
   value: string
 ): Types.ChangeNodeAttributeValue {
   return { type: Types.CHANGE_NODE_ATTRIBUTE_VALUE, payload: { id, nodeId, property, value } };
+}
+
+export function addNodeAttribute(attribute: Attribute): Types.AddNodeAttribute {
+  return { type: Types.ADD_NODE_ATTRIBUTE, payload: { attribute } };
+}
+
+export function removeNodeAttribute(attributeId: string, nodeId: string): Types.RemoveNodeAttribute {
+  return { type: Types.REMOVE_NODE_ATTRIBUTE, payload: { attributeId, nodeId } };
 }
 
 export function changeTransportAttributeValue(

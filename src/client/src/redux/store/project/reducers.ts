@@ -401,6 +401,43 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.ADD_NODE_ATTRIBUTE: {
+      const attribute = action.payload.attribute;
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === attribute.nodeId
+              ? {
+                  ...n,
+                  attributes: [...n.attributes, attribute],
+                }
+              : n
+          ),
+        },
+      };
+    }
+
+    case Types.REMOVE_NODE_ATTRIBUTE: {
+      const { attributeId, nodeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === nodeId
+              ? {
+                  ...n,
+                  attributes: n.attributes.filter((c) => c.id !== attributeId),
+                }
+              : n
+          ),
+        },
+      };
+    }
+
     case Types.CHANGE_TRANSPORT_PROP_VALUE: {
       const { edgeId, propName, propValue } = action.payload;
 

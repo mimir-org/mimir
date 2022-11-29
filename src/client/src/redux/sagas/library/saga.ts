@@ -8,6 +8,8 @@ import {
   deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
   fetchLibrary,
+  fetchLibraryAttributeTypes,
+  fetchLibraryAttributeTypesSuccessOrError,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
   fetchLibraryTerminalsSuccessOrError,
@@ -133,6 +135,24 @@ export function* getTerminals() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryTerminalsSuccessOrError.type);
     yield put(fetchLibraryTerminalsSuccessOrError({ terminals: [], apiError }));
+  }
+}
+
+export function* getAttributes() {
+  try {
+    const url = `${Config.API_BASE_URL}library/attribute`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchLibraryAttributeTypesSuccessOrError.type);
+      yield put(fetchLibraryAttributeTypesSuccessOrError({ attributeTypes: [], apiError }));
+      return;
+    }
+
+    yield put(fetchLibraryAttributeTypesSuccessOrError({ attributeTypes: response.data, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchLibraryAttributeTypesSuccessOrError.type);
+    yield put(fetchLibraryAttributeTypesSuccessOrError({ attributeTypes: [], apiError }));
   }
 }
 

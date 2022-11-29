@@ -38,6 +38,12 @@ namespace Mb.Services.Contracts
         Task<List<QuantityDatumCm>> GetQuantityDatums();
 
         /// <summary>
+        /// Get all attribute types
+        /// </summary>
+        /// <returns>A collection of attribute types</returns>
+        Task<List<AttributeLibCm>> GetAttributeTypes();
+
+        /// <summary>
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>

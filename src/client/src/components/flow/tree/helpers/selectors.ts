@@ -1,1 +1,7 @@
-export { projectSelector, userStateSelector, animatedEdgeSelector, terminalsSelector } from "../../../../redux/store/selectors";
+export {
+  projectSelector,
+  userStateSelector,
+  animatedEdgeSelector,
+  terminalsSelector,
+  libraryAttributeTypeSelector,
+} from "../../../../redux/store/selectors";

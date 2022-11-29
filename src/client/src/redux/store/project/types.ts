@@ -2,7 +2,16 @@
 import { ApiError } from "../../../models/webclient";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
-import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
+import {
+  Node,
+  Edge,
+  Project,
+  ConnectorVisibility,
+  LockAm,
+  ProjectConverterAm,
+  Terminal,
+  Attribute,
+} from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const CLOSE_PROJECT = "CLOSE_PROJECT";
@@ -40,6 +49,8 @@ export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
 export const CHANGE_TRANSPORT_PROP_VALUE = "CHANGE_TRANSPORT_PROP_VALUE";
 export const CHANGE_INTERFACE_PROP_VALUE = "CHANGE_INTERFACE_PROP_VALUE";
 export const CHANGE_NODE_ATTRIBUTE_VALUE = "CHANGE_NODE_ATTRIBUTE_VALUE";
+export const ADD_NODE_ATTRIBUTE = "ADD_NODE_ATTRIBUTE";
+export const REMOVE_NODE_ATTRIBUTE = "REMOVE_NODE_ATTRIBUTE";
 export const CHANGE_TRANSPORT_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALUE";
 export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
@@ -224,6 +235,16 @@ export interface ChangeNodePropValue {
 export interface ChangeNodeAttributeValue {
   type: typeof CHANGE_NODE_ATTRIBUTE_VALUE;
   payload: { id: string; nodeId: string; property: string; value: string };
+}
+
+export interface AddNodeAttribute {
+  type: typeof ADD_NODE_ATTRIBUTE;
+  payload: { attribute: Attribute };
+}
+
+export interface RemoveNodeAttribute {
+  type: typeof REMOVE_NODE_ATTRIBUTE;
+  payload: { attributeId: string; nodeId: string };
 }
 
 export interface ChangeTransportPropValue {
@@ -437,6 +458,8 @@ export type ProjectActionTypes =
   | UpdateBlockPositionAction
   | ChangeNodePropValue
   | ChangeNodeAttributeValue
+  | AddNodeAttribute
+  | RemoveNodeAttribute
   | ChangeTransportPropValue
   | ChangeTransportAttributeValue
   | ChangeInterfacePropValue

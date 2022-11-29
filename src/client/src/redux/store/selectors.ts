@@ -1,4 +1,4 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Attribute } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 
@@ -81,6 +81,11 @@ export const librarySelector = createAppSelector(
 export const terminalsSelector = createAppSelector(
   (state) => state.library.terminals,
   (terminals) => terminals
+);
+
+export const libraryAttributeTypeSelector = createAppSelector(
+  (state) => state.library.attributeTypes,
+  (attributes) => attributes
 );
 
 export const libNodesSelector = createAppSelector(
