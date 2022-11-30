@@ -153,6 +153,18 @@ export function removeNodeAttribute(attributeId: string, nodeId: string): Types.
   return { type: Types.REMOVE_NODE_ATTRIBUTE, payload: { attributeId, nodeId } };
 }
 
+export function removeNodeTerminalAttribute(
+  attributeId: string,
+  nodeId: string,
+  terminalId: string
+): Types.RemoveNodeTerminalAttribute {
+  return { type: Types.REMOVE_NODE_TERMINAL_ATTRIBUTE, payload: { attributeId, nodeId, terminalId } };
+}
+
+export function addNodeTerminalAttribute(nodeId: string, attribute: Attribute): Types.AddNodeTerminalAttribute {
+  return { type: Types.ADD_NODE_TERMINAL_ATTRIBUTE, payload: { nodeId, attribute } };
+}
+
 export function changeTransportAttributeValue(
   id: string,
   edgeId: string,
@@ -276,4 +288,52 @@ export function deleteTerminal(terminal: Terminal): Types.ProjectActionTypes {
 
 export function updateTerminal(terminal: Terminal): Types.ProjectActionTypes {
   return { type: Types.UPDATE_TERMINAL, payload: { terminal: terminal } };
+}
+
+export function removeTransportAttribute(edgeId: string, attributeId: string): Types.RemoveTransportAttribute {
+  return { type: Types.REMOVE_TRANSPORT_ATTRIBUTE, payload: { edgeId, attributeId } };
+}
+
+export function addTransportAttribute(edgeId: string, attribute: Attribute): Types.AddTransportAttribute {
+  return { type: Types.ADD_TRANSPORT_ATTRIBUTE, payload: { edgeId, attribute } };
+}
+
+export function removeInterfaceAttribute(edgeId: string, attributeId: string): Types.RemoveInterfaceAttribute {
+  return { type: Types.REMOVE_INTERFACE_ATTRIBUTE, payload: { edgeId, attributeId } };
+}
+
+export function addInterfaceAttribute(edgeId: string, attribute: Attribute): Types.AddInterfaceAttribute {
+  return { type: Types.ADD_INTERFACE_ATTRIBUTE, payload: { edgeId, attribute } };
+}
+
+export function addTransportTerminalAttribute(
+  edgeId: string,
+  attribute: Attribute,
+  isInput: boolean
+): Types.AddTransportTerminalAttribute {
+  return { type: Types.ADD_TRANSPORT_TERMINAL_ATTRIBUTE, payload: { edgeId, attribute, isInput } };
+}
+
+export function removeTransportTerminalAttribute(
+  edgeId: string,
+  attributeId: string,
+  isInput: boolean
+): Types.RemoveTransportTerminalAttribute {
+  return { type: Types.REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE, payload: { edgeId, attributeId, isInput } };
+}
+
+export function addInterfaceTerminalAttribute(
+  edgeId: string,
+  attribute: Attribute,
+  isInput: boolean
+): Types.AddInterfaceTerminalAttribute {
+  return { type: Types.ADD_INTERFACE_TERMINAL_ATTRIBUTE, payload: { edgeId, attribute, isInput } };
+}
+
+export function removeInterfaceTerminalAttribute(
+  edgeId: string,
+  attributeId: string,
+  isInput: boolean
+): Types.RemoveInterfaceTerminalAttribute {
+  return { type: Types.REMOVE_INTERFACE_TERMINAL_ATTRIBUTE, payload: { edgeId, attributeId, isInput } };
 }

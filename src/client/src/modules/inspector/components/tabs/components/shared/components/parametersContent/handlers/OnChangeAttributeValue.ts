@@ -8,6 +8,16 @@ import {
   changeTransportTerminalAttributeValue,
   addNodeAttribute,
   removeNodeAttribute,
+  removeNodeTerminalAttribute,
+  addNodeTerminalAttribute,
+  addTransportAttribute,
+  removeTransportAttribute,
+  addInterfaceAttribute,
+  removeInterfaceAttribute,
+  addInterfaceTerminalAttribute,
+  removeInterfaceTerminalAttribute,
+  addTransportTerminalAttribute,
+  removeTransportTerminalAttribute,
 } from "../../../../../../../../../redux/store/project/actions";
 import { AttributeLibCm, UnitLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../../../../../../../../../components/flow/helpers";
@@ -34,7 +44,13 @@ const FindDefaultUnitId = (libUnits: UnitLibCm[], attributeUnits: Unit[]): strin
  * @param nodeId
  * @returns a converted attribute.
  */
-export const ConvertAttributeLibCmToAttribute = (attributeLibCm: AttributeLibCm, nodeId: string) => {
+export const ConvertAttributeLibCmToAttribute = (
+  attributeLibCm: AttributeLibCm,
+  nodeId: string,
+  terminalId: string,
+  transportId: string,
+  interfaceId: string
+) => {
   if (attributeLibCm == null) return null;
 
   const attribute: Attribute = {
@@ -51,11 +67,11 @@ export const ConvertAttributeLibCmToAttribute = (attributeLibCm: AttributeLibCm,
     specifiedProvenance: null,
     rangeSpecifying: null,
     regularitySpecified: null,
-    nodeId,
+    nodeId: nodeId,
     nodeIri: null,
-    terminalId: null,
-    transportId: null,
-    interfaceId: null,
+    terminalId: terminalId,
+    transportId: transportId,
+    interfaceId: interfaceId,
     isLocked: false,
     isLockedStatusBy: null,
     isLockedStatusDate: null,
@@ -68,6 +84,16 @@ export const ConvertAttributeLibCmToAttribute = (attributeLibCm: AttributeLibCm,
   return attribute;
 };
 
+export const CanRemoveAttribute = (attributeId: string, attributes: Attribute[]): boolean => {
+  const existingAttribute = attributes.find((x) => x.id === attributeId);
+  if (existingAttribute == null) return false;
+
+  const existingTypes = attributes?.filter((x) => x.attributeTypeId === existingAttribute.attributeTypeId);
+  if (existingTypes?.length <= 1) return false;
+
+  return true;
+};
+
 export const OnAddNodeAttribute = (
   attributeTypeId: string,
   nodeId: string,
@@ -77,20 +103,140 @@ export const OnAddNodeAttribute = (
   const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
   if (attributeType == null) return;
 
-  const attribute = ConvertAttributeLibCmToAttribute(attributeType, nodeId);
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, nodeId, null, null, null);
   if (attribute == null) return;
 
   dispatch(addNodeAttribute(attribute));
 };
 
 export const OnRemoveNodeAttribute = (attributeId: string, nodeId: string, attributes: Attribute[], dispatch: Dispatch) => {
-  const existingAttribute = attributes.find((x) => x.id === attributeId);
-  if (existingAttribute == null) return;
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeNodeAttribute(attributeId, nodeId));
+};
 
-  const existingTypes = attributes?.filter((x) => x.attributeTypeId === existingAttribute.attributeTypeId);
-  if (existingTypes?.length <= 1) return;
+export const OnRemoveNodeTerminalAttribute = (
+  attributeId: string,
+  nodeId: string,
+  terminalId: string,
+  attributes: Attribute[],
+  dispatch: Dispatch
+) => {
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeNodeTerminalAttribute(attributeId, nodeId, terminalId));
+};
 
-  dispatch(removeNodeAttribute(attributeId, nodeId));
+export const OnAddNodeTerminalAttribute = (
+  attributeTypeId: string,
+  nodeId: string,
+  terminalId: string,
+  attributeTypes: AttributeLibCm[],
+  dispatch: Dispatch
+) => {
+  const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
+  if (attributeType == null) return;
+
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, null, terminalId, null, null);
+  if (attribute == null) return;
+
+  dispatch(addNodeTerminalAttribute(nodeId, attribute));
+};
+
+export const OnAddTransportAttribute = (
+  attributeTypeId: string,
+  edgeId: string,
+  transportId: string,
+  attributeTypes: AttributeLibCm[],
+  dispatch: Dispatch
+) => {
+  const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
+  if (attributeType == null) return;
+
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, null, null, transportId, null);
+  if (attribute == null) return;
+
+  dispatch(addTransportAttribute(edgeId, attribute));
+};
+
+export const OnRemoveTransportAttribute = (attributeId: string, edgeId: string, attributes: Attribute[], dispatch: Dispatch) => {
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeTransportAttribute(edgeId, attributeId));
+};
+
+export const OnAddInterfaceAttribute = (
+  attributeTypeId: string,
+  edgeId: string,
+  interfaceId: string,
+  attributeTypes: AttributeLibCm[],
+  dispatch: Dispatch
+) => {
+  const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
+  if (attributeType == null) return;
+
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, null, null, null, interfaceId);
+  if (attribute == null) return;
+
+  dispatch(addInterfaceAttribute(edgeId, attribute));
+};
+
+export const OnRemoveInterfaceAttribute = (attributeId: string, edgeId: string, attributes: Attribute[], dispatch: Dispatch) => {
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeInterfaceAttribute(edgeId, attributeId));
+};
+
+export const OnAddInterfaceTerminalAttribute = (
+  attributeTypeId: string,
+  edgeId: string,
+  isInput: boolean,
+  terminalId: string,
+  attributeTypes: AttributeLibCm[],
+  dispatch: Dispatch
+) => {
+  const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
+  if (attributeType == null) return;
+
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, null, terminalId, null, null);
+  if (attribute == null) return;
+
+  dispatch(addInterfaceTerminalAttribute(edgeId, attribute, isInput));
+};
+
+export const OnRemoveInterfaceTerminalAttribute = (
+  attributeId: string,
+  edgeId: string,
+  isInput: boolean,
+  attributes: Attribute[],
+  dispatch: Dispatch
+) => {
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeInterfaceTerminalAttribute(edgeId, attributeId, isInput));
+};
+
+export const OnAddTransportTerminalAttribute = (
+  attributeTypeId: string,
+  edgeId: string,
+  isInput: boolean,
+  terminalId: string,
+  attributeTypes: AttributeLibCm[],
+  dispatch: Dispatch
+) => {
+  const attributeType = attributeTypes.find((x) => x.id === attributeTypeId);
+  if (attributeType == null) return;
+
+  const attribute = ConvertAttributeLibCmToAttribute(attributeType, null, terminalId, null, null);
+  if (attribute == null) return;
+
+  dispatch(addTransportTerminalAttribute(edgeId, attribute, isInput));
+};
+
+export const OnRemoveTransportTerminalAttribute = (
+  attributeId: string,
+  edgeId: string,
+  isInput: boolean,
+  attributes: Attribute[],
+  dispatch: Dispatch
+) => {
+  const canRemove = CanRemoveAttribute(attributeId, attributes);
+  if (canRemove) dispatch(removeTransportTerminalAttribute(edgeId, attributeId, isInput));
 };
 
 export const OnChangeNodeAttributeValue = (

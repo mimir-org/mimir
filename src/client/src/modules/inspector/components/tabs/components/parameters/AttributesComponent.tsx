@@ -23,6 +23,16 @@ import {
   OnChangeTransportAttributeValue,
   OnChangeTransportTerminalAttributeValue,
   OnRemoveNodeAttribute,
+  OnRemoveNodeTerminalAttribute,
+  OnAddNodeTerminalAttribute,
+  OnAddInterfaceAttribute,
+  OnAddTransportAttribute,
+  OnRemoveInterfaceAttribute,
+  OnRemoveTransportAttribute,
+  OnAddTransportTerminalAttribute,
+  OnAddInterfaceTerminalAttribute,
+  OnRemoveInterfaceTerminalAttribute,
+  OnRemoveTransportTerminalAttribute,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
 import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
@@ -79,12 +89,92 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
 
   // Remove attribute
   const onRemoveAttribute = (attributeId: string) => {
+    // Remove Node attribute
     if (IsNode(attributesElem)) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
+
+    // Remove Node terminal attribute
+    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+      OnRemoveNodeTerminalAttribute(attributeId, inspectorParentElem.id, attributesElem.id, attributes, dispatch);
+    }
+
+    // Remove Transport attribute
+    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem)) {
+      OnRemoveTransportAttribute(attributeId, inspectorParentElem.id, attributes, dispatch);
+    }
+
+    // Remove Interface attribute
+    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem)) {
+      OnRemoveInterfaceAttribute(attributeId, inspectorParentElem.id, attributes, dispatch);
+    }
+
+    // Remove Transport terminal attribute
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
+      OnRemoveTransportTerminalAttribute(
+        attributeId,
+        inspectorParentElem.id,
+        inspectorParentElem.transport?.inputTerminalId === attributesElem.id,
+        attributes,
+        dispatch
+      );
+    }
+
+    // Remove Interface terminal attribute
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
+      OnRemoveInterfaceTerminalAttribute(
+        attributeId,
+        inspectorParentElem.id,
+        inspectorParentElem.interface?.inputTerminalId === attributesElem.id,
+        attributes,
+        dispatch
+      );
+    }
   };
 
   // Add attribute
   const onAddAttribute = (attributeTypeId: string) => {
-    if (IsNode(attributesElem)) OnAddNodeAttribute(attributeTypeId, attributesElem.id, attributeTypes, dispatch);
+    // Add node attribute
+    if (IsNode(attributesElem)) {
+      OnAddNodeAttribute(attributeTypeId, attributesElem.id, attributeTypes, dispatch);
+    }
+
+    // Add Node terminal attribute
+    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+      OnAddNodeTerminalAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
+    }
+
+    // Add Transport attribute
+    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem)) {
+      OnAddTransportAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
+    }
+
+    // Add Interface attribute
+    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem)) {
+      OnAddInterfaceAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
+    }
+
+    // Add Transport terminal attribute
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
+      OnAddTransportTerminalAttribute(
+        attributeTypeId,
+        inspectorParentElem.id,
+        inspectorParentElem.transport?.inputTerminalId === attributesElem.id,
+        attributesElem.id,
+        attributeTypes,
+        dispatch
+      );
+    }
+
+    // Add Interface terminal attribute
+    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
+      OnAddInterfaceTerminalAttribute(
+        attributeTypeId,
+        inspectorParentElem.id,
+        inspectorParentElem.interface?.inputTerminalId === attributesElem.id,
+        attributesElem.id,
+        attributeTypes,
+        dispatch
+      );
+    }
   };
 
   return (
