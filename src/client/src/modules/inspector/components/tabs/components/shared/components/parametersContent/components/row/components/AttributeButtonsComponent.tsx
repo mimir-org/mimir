@@ -1,5 +1,5 @@
 import { Attribute } from "@mimirorg/modelbuilder-types";
-import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
+import { MinusIcon, PlusIcon } from "../../../../../../../../../../../assets/icons/controls";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
@@ -11,7 +11,8 @@ interface Props {
   headerColor: string;
   attributeIsLocking: boolean;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
-  onClose: () => void;
+  onRemoveAttribute: (attributeId: string) => void;
+  onAddAttribute: (attributeTypeId: string) => void;
 }
 
 /**
@@ -19,7 +20,14 @@ interface Props {
  * @param props
  * @returns attribute buttons.
  */
-export const AttributeButtonsComponent = ({ attribute, headerColor, attributeIsLocking, onLock, onClose }: Props) => {
+export const AttributeButtonsComponent = ({
+  attribute,
+  headerColor,
+  attributeIsLocking,
+  onLock,
+  onRemoveAttribute,
+  onAddAttribute,
+}: Props) => {
   const lockDescription = attribute?.isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
   const LockComponent = attribute?.isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
 
@@ -37,9 +45,13 @@ export const AttributeButtonsComponent = ({ attribute, headerColor, attributeIsL
               LockComponent
             )}
           </AttributeButton>
-          <AttributeButton onClick={() => onClose()}>
+          <AttributeButton onClick={() => onAddAttribute(attribute.attributeTypeId)}>
             <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
-            <img src={CloseIcon} alt="x mark" />
+            <PlusIcon style={{ fill: "#black" }} />
+          </AttributeButton>
+          <AttributeButton onClick={() => onRemoveAttribute(attribute.id)}>
+            <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
+            <MinusIcon style={{ fill: "#black" }} />
           </AttributeButton>
         </>
       )}

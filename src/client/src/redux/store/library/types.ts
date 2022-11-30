@@ -1,4 +1,11 @@
-import { InterfaceLibCm, NodeLibCm, QuantityDatumCm, TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
+import {
+  InterfaceLibCm,
+  NodeLibCm,
+  QuantityDatumCm,
+  TerminalLibCm,
+  TransportLibCm,
+  AttributeLibCm,
+} from "@mimirorg/typelibrary-types";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
@@ -12,6 +19,7 @@ export interface LibraryState {
   apiError: ApiError[];
   collections: Collection[];
   quantityDatums: QuantityDatumCm[];
+  attributeTypes: AttributeLibCm[];
 }
 
 // Action types
@@ -32,6 +40,11 @@ export interface FetchTransportTypes {
 
 export interface FetchTerminals {
   terminals: TerminalLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchAttributes {
+  attributeTypes: AttributeLibCm[];
   apiError: ApiError;
 }
 

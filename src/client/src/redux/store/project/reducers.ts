@@ -401,6 +401,78 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.ADD_NODE_ATTRIBUTE: {
+      const attribute = action.payload.attribute;
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === attribute.nodeId
+              ? {
+                  ...n,
+                  attributes: [...n.attributes, attribute],
+                }
+              : n
+          ),
+        },
+      };
+    }
+
+    case Types.REMOVE_NODE_ATTRIBUTE: {
+      const { attributeId, nodeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) =>
+            n?.id === nodeId
+              ? {
+                  ...n,
+                  attributes: n.attributes.filter((c) => c.id !== attributeId),
+                }
+              : n
+          ),
+        },
+      };
+    }
+
+    case Types.ADD_NODE_TERMINAL_ATTRIBUTE: {
+      const { nodeId, attribute } = action.payload;
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) =>
+          conn.id === attribute.terminalId && IsTerminal(conn) ? { ...conn, attributes: [...conn.attributes, attribute] } : conn
+        );
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
+      };
+    }
+
+    case Types.REMOVE_NODE_TERMINAL_ATTRIBUTE: {
+      const { attributeId, nodeId, terminalId } = action.payload;
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) =>
+          conn.id === terminalId && IsTerminal(conn)
+            ? {
+                ...conn,
+                attributes: conn.attributes.filter((c) => c.id !== attributeId),
+              }
+            : conn
+        );
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
+      };
+    }
+
     case Types.CHANGE_TRANSPORT_PROP_VALUE: {
       const { edgeId, propName, propValue } = action.payload;
 
@@ -452,7 +524,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.transport, attributes: getAttr(e) } } : e)),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.interface, attributes: getAttr(e) } } : e)),
         },
       };
     }
@@ -720,6 +792,286 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+    }
+
+    case Types.REMOVE_TRANSPORT_ATTRIBUTE: {
+      const { edgeId, attributeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.filter((c) => c.id !== attributeId),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.ADD_TRANSPORT_ATTRIBUTE: {
+      const { edgeId, attribute } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: [...e.transport.attributes, attribute],
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.REMOVE_INTERFACE_ATTRIBUTE: {
+      const { edgeId, attributeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: {
+                    ...e.interface,
+                    attributes: e.interface.attributes.filter((c) => c.id !== attributeId),
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.ADD_INTERFACE_ATTRIBUTE: {
+      const { edgeId, attribute } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) =>
+            e.id === edgeId
+              ? {
+                  ...e,
+                  interface: {
+                    ...e.interface,
+                    attributes: [...e.interface.attributes, attribute],
+                  },
+                }
+              : e
+          ),
+        },
+      };
+    }
+
+    case Types.REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE: {
+      const { edgeId, attributeId, isInput } = action.payload;
+
+      if (isInput) {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    transport: {
+                      ...e.transport,
+                      inputTerminal: {
+                        ...e.transport.inputTerminal,
+                        attributes: e.transport.inputTerminal.attributes.filter((c) => c.id !== attributeId),
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      } else {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    transport: {
+                      ...e.transport,
+                      outputTerminal: {
+                        ...e.transport.outputTerminal,
+                        attributes: e.transport.outputTerminal.attributes.filter((c) => c.id !== attributeId),
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      }
+    }
+
+    case Types.ADD_TRANSPORT_TERMINAL_ATTRIBUTE: {
+      const { edgeId, attribute, isInput } = action.payload;
+
+      if (isInput) {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    transport: {
+                      ...e.transport,
+                      inputTerminal: {
+                        ...e.transport.inputTerminal,
+                        attributes: [...e.transport.inputTerminal.attributes, attribute],
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      } else {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    transport: {
+                      ...e.transport,
+                      outputTerminal: {
+                        ...e.transport.outputTerminal,
+                        attributes: [...e.transport.outputTerminal.attributes, attribute],
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      }
+    }
+
+    case Types.REMOVE_INTERFACE_TERMINAL_ATTRIBUTE: {
+      const { edgeId, attributeId, isInput } = action.payload;
+
+      if (isInput) {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    interface: {
+                      ...e.interface,
+                      inputTerminal: {
+                        ...e.interface.inputTerminal,
+                        attributes: e.interface.inputTerminal.attributes.filter((c) => c.id !== attributeId),
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      } else {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    interface: {
+                      ...e.interface,
+                      outputTerminal: {
+                        ...e.interface.outputTerminal,
+                        attributes: e.interface.outputTerminal.attributes.filter((c) => c.id !== attributeId),
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      }
+    }
+
+    case Types.ADD_INTERFACE_TERMINAL_ATTRIBUTE: {
+      const { edgeId, attribute, isInput } = action.payload;
+
+      if (isInput) {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    interface: {
+                      ...e.interface,
+                      inputTerminal: {
+                        ...e.interface.inputTerminal,
+                        attributes: [...e.interface.inputTerminal.attributes, attribute],
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      } else {
+        return {
+          ...state,
+          project: {
+            ...project,
+            edges: edges.map((e) =>
+              e.id === edgeId
+                ? {
+                    ...e,
+                    interface: {
+                      ...e.interface,
+                      outputTerminal: {
+                        ...e.interface.outputTerminal,
+                        attributes: [...e.interface.outputTerminal.attributes, attribute],
+                      },
+                    },
+                  }
+                : e
+            ),
+          },
+        };
+      }
     }
 
     default:

@@ -85,6 +85,16 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Get all attribute types
+        /// </summary>
+        /// <returns>A collection of attribute types</returns>
+        public async Task<List<AttributeLibCm>> GetAttributeTypes()
+        {
+            var attributes = await _libraryRepository.GetAttributeTypes();
+            return attributes;
+        }
+
+        /// <summary>
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>

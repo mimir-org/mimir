@@ -89,6 +89,15 @@ namespace Mb.Data.Repositories
             return data;
         }
 
+        public async Task<List<AttributeLibCm>> GetAttributeTypes()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryattribute");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Attribute.ToString(),
+                async () => await _httpRepository.GetData<List<AttributeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+            return data;
+        }
+
         private async Task<List<QuantityDatumCm>> GetQuantityDatumAsync(QuantityDatumType type)
         {
             // ReSharper disable once StringLiteralTypo

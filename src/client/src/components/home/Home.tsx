@@ -20,6 +20,7 @@ import { fetchCompanies, fetchCompany, fetchParsers } from "../../redux/store/co
 import { HeaderComponent } from "../header/HeaderComponent";
 import {
   fetchLibrary,
+  fetchLibraryAttributeTypes,
   fetchLibraryInterfaceTypes,
   fetchLibraryTerminals,
   fetchLibraryTransportTypes,
@@ -50,6 +51,7 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
     dispatch(fetchLibraryTerminals());
+    dispatch(fetchLibraryAttributeTypes());
     dispatch(search(""));
     dispatch(fetchLibrary());
     dispatch(fetchCompanies());
