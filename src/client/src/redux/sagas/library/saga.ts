@@ -8,7 +8,6 @@ import {
   deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
   fetchLibrary,
-  fetchLibraryAttributeTypes,
   fetchLibraryAttributeTypesSuccessOrError,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,

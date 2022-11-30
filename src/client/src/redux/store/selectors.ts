@@ -1,4 +1,4 @@
-import { Node, Attribute } from "@mimirorg/modelbuilder-types";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 
