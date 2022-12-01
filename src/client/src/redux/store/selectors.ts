@@ -83,6 +83,11 @@ export const terminalsSelector = createAppSelector(
   (terminals) => terminals
 );
 
+export const libraryAttributeTypeSelector = createAppSelector(
+  (state) => state.library.attributeTypes,
+  (attributes) => attributes
+);
+
 export const libNodesSelector = createAppSelector(
   (state) => state.library.libNodes,
   (nodes) => nodes

@@ -11,6 +11,7 @@ import {
   FetchTerminals,
   FetchTransportTypes,
   LibraryState,
+  FetchAttributes,
 } from "./types";
 
 const initialLibraryState: LibraryState = {
@@ -22,6 +23,7 @@ const initialLibraryState: LibraryState = {
   interfaceTypes: [],
   terminals: [],
   quantityDatums: [],
+  attributeTypes: [],
 };
 
 export const librarySlice = createSlice({
@@ -72,7 +74,6 @@ export const librarySlice = createSlice({
       state.transportTypes = action.payload.transportTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
-
     fetchLibraryTerminals: (state) => {
       state.fetching = true;
       state.apiError = state.apiError
@@ -82,6 +83,17 @@ export const librarySlice = createSlice({
     fetchLibraryTerminalsSuccessOrError: (state, action: PayloadAction<FetchTerminals>) => {
       state.fetching = false;
       state.terminals = action.payload.terminals;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchLibraryAttributeTypes: (state) => {
+      state.fetching = true;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchLibraryAttributeTypesSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchLibraryAttributeTypesSuccessOrError: (state, action: PayloadAction<FetchAttributes>) => {
+      state.fetching = false;
+      state.attributeTypes = action.payload.attributeTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchLibraryInterfaceTypes: (state) => {
@@ -164,6 +176,8 @@ export const {
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibraryTerminals,
   fetchLibraryTerminalsSuccessOrError,
+  fetchLibraryAttributeTypes,
+  fetchLibraryAttributeTypesSuccessOrError,
   addLibraryItem,
   removeLibraryItem,
   deleteLibraryError,

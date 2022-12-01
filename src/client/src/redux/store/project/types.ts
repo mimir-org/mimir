@@ -2,7 +2,16 @@
 import { ApiError } from "../../../models/webclient";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
-import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm, Terminal } from "@mimirorg/modelbuilder-types";
+import {
+  Node,
+  Edge,
+  Project,
+  ConnectorVisibility,
+  LockAm,
+  ProjectConverterAm,
+  Terminal,
+  Attribute,
+} from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const CLOSE_PROJECT = "CLOSE_PROJECT";
@@ -40,6 +49,10 @@ export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
 export const CHANGE_TRANSPORT_PROP_VALUE = "CHANGE_TRANSPORT_PROP_VALUE";
 export const CHANGE_INTERFACE_PROP_VALUE = "CHANGE_INTERFACE_PROP_VALUE";
 export const CHANGE_NODE_ATTRIBUTE_VALUE = "CHANGE_NODE_ATTRIBUTE_VALUE";
+export const ADD_NODE_ATTRIBUTE = "ADD_NODE_ATTRIBUTE";
+export const REMOVE_NODE_ATTRIBUTE = "REMOVE_NODE_ATTRIBUTE";
+export const REMOVE_NODE_TERMINAL_ATTRIBUTE = "REMOVE_NODE_TERMINAL_ATTRIBUTE";
+export const ADD_NODE_TERMINAL_ATTRIBUTE = "ADD_NODE_TERMINAL_ATTRIBUTE";
 export const CHANGE_TRANSPORT_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALUE";
 export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
@@ -65,6 +78,14 @@ export const UPDATE_EDGE = "UPDATE_EDGE";
 export const ADD_TERMINAL = "ADD_TERMINAL";
 export const DELETE_TERMINAL = "DELETE_TERMINAL";
 export const UPDATE_TERMINAL = "UPDATE_TERMINAL";
+export const ADD_TRANSPORT_ATTRIBUTE = "ADD_TRANSPORT_ATTRIBUTE";
+export const REMOVE_TRANSPORT_ATTRIBUTE = "REMOVE_TRANSPORT_ATTRIBUTE";
+export const ADD_INTERFACE_ATTRIBUTE = "ADD_INTERFACE_ATTRIBUTE";
+export const REMOVE_INTERFACE_ATTRIBUTE = "REMOVE_INTERFACE_ATTRIBUTE";
+export const ADD_INTERFACE_TERMINAL_ATTRIBUTE = "ADD_INTERFACE_TERMINAL_ATTRIBUTE";
+export const REMOVE_INTERFACE_TERMINAL_ATTRIBUTE = "REMOVE_INTERFACE_TERMINAL_ATTRIBUTE";
+export const ADD_TRANSPORT_TERMINAL_ATTRIBUTE = "ADD_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE = "REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE";
 
 // State types
 export interface ProjectState {
@@ -224,6 +245,66 @@ export interface ChangeNodePropValue {
 export interface ChangeNodeAttributeValue {
   type: typeof CHANGE_NODE_ATTRIBUTE_VALUE;
   payload: { id: string; nodeId: string; property: string; value: string };
+}
+
+export interface AddNodeAttribute {
+  type: typeof ADD_NODE_ATTRIBUTE;
+  payload: { attribute: Attribute };
+}
+
+export interface RemoveNodeAttribute {
+  type: typeof REMOVE_NODE_ATTRIBUTE;
+  payload: { attributeId: string; nodeId: string };
+}
+
+export interface RemoveNodeTerminalAttribute {
+  type: typeof REMOVE_NODE_TERMINAL_ATTRIBUTE;
+  payload: { attributeId: string; nodeId: string; terminalId: string };
+}
+
+export interface AddNodeTerminalAttribute {
+  type: typeof ADD_NODE_TERMINAL_ATTRIBUTE;
+  payload: { nodeId: string; attribute: Attribute };
+}
+
+export interface AddTransportAttribute {
+  type: typeof ADD_TRANSPORT_ATTRIBUTE;
+  payload: { edgeId: string; attribute: Attribute };
+}
+
+export interface RemoveTransportAttribute {
+  type: typeof REMOVE_TRANSPORT_ATTRIBUTE;
+  payload: { edgeId: string; attributeId: string };
+}
+
+export interface AddInterfaceAttribute {
+  type: typeof ADD_INTERFACE_ATTRIBUTE;
+  payload: { edgeId: string; attribute: Attribute };
+}
+
+export interface RemoveInterfaceAttribute {
+  type: typeof REMOVE_INTERFACE_ATTRIBUTE;
+  payload: { edgeId: string; attributeId: string };
+}
+
+export interface AddInterfaceTerminalAttribute {
+  type: typeof ADD_INTERFACE_TERMINAL_ATTRIBUTE;
+  payload: { edgeId: string; attribute: Attribute; isInput: boolean };
+}
+
+export interface RemoveInterfaceTerminalAttribute {
+  type: typeof REMOVE_INTERFACE_TERMINAL_ATTRIBUTE;
+  payload: { edgeId: string; attributeId: string; isInput: boolean };
+}
+
+export interface AddTransportTerminalAttribute {
+  type: typeof ADD_TRANSPORT_TERMINAL_ATTRIBUTE;
+  payload: { edgeId: string; attribute: Attribute; isInput: boolean };
+}
+
+export interface RemoveTransportTerminalAttribute {
+  type: typeof REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE;
+  payload: { edgeId: string; attributeId: string; isInput: boolean };
 }
 
 export interface ChangeTransportPropValue {
@@ -437,6 +518,10 @@ export type ProjectActionTypes =
   | UpdateBlockPositionAction
   | ChangeNodePropValue
   | ChangeNodeAttributeValue
+  | AddNodeAttribute
+  | RemoveNodeAttribute
+  | RemoveNodeTerminalAttribute
+  | AddNodeTerminalAttribute
   | ChangeTransportPropValue
   | ChangeTransportAttributeValue
   | ChangeInterfacePropValue
@@ -467,4 +552,12 @@ export type ProjectActionTypes =
   | UpdateEdgeAction
   | AddTerminal
   | DeleteTerminal
-  | UpdateTerminal;
+  | UpdateTerminal
+  | AddTransportAttribute
+  | RemoveTransportAttribute
+  | AddInterfaceAttribute
+  | RemoveInterfaceAttribute
+  | AddInterfaceTerminalAttribute
+  | RemoveInterfaceTerminalAttribute
+  | AddTransportTerminalAttribute
+  | RemoveTransportTerminalAttribute;

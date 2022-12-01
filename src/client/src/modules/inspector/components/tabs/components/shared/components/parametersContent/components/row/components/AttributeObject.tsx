@@ -4,7 +4,6 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeObjectNameComponent } from "./AttributeObjectNameComponent";
 import { AttributeButtonsComponent } from "./AttributeButtonsComponent";
 import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
-import { useState } from "react";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -17,6 +16,8 @@ interface Props {
   quantityDatums: QuantityDatumCm[];
   onChange: (attributeId: string, property: string, value: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
+  onAddAttribute: (attributeTypeId: string) => void;
+  onRemoveAttribute: (attributeId: string) => void;
 }
 
 /**
@@ -33,18 +34,15 @@ export const AttributeObject = ({
   quantityDatums,
   onLock,
   onChange,
+  onAddAttribute,
+  onRemoveAttribute,
 }: Props) => {
-  const [visible, setVisible] = useState(true);
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
   const hasTypeReference = attribute?.attributeTypeIri != null && attribute?.attributeTypeIri.length > 0;
 
-  const onClose = () => {
-    setVisible(false);
-  };
-
   return (
     <>
-      {attribute && visible && (
+      {attribute && (
         <AttributeObjectBox disabled={attribute.isLocked ?? false}>
           <AttributeHeaderBox color={bodyColor}>
             <AttributeObjectNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
@@ -52,8 +50,9 @@ export const AttributeObject = ({
               attribute={attribute}
               headerColor={headerColor}
               attributeIsLocking={attributeIsLocking}
-              onClose={() => onClose()}
               onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
+              onRemoveAttribute={onRemoveAttribute}
+              onAddAttribute={onAddAttribute}
             />
           </AttributeHeaderBox>
           <AttributeObjectBody>
