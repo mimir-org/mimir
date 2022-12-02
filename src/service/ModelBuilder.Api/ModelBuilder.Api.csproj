@@ -34,7 +34,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="1.25.5" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.25.10" />
     <PackageReference Include="Mimirorg.Common" Version="0.21.0" />
     <PackageReference Include="Mimirorg.TypeLibrary" Version="0.21.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
