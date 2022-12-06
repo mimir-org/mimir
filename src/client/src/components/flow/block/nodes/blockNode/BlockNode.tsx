@@ -48,13 +48,23 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Handle connectors
   useEffect(() => {
-    setConnectors(
-      FilterConnectors(
-        data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
-        selectedBlockNode,
-        secondaryNode
-      )
-    );
+    if (secondaryNode != null) {
+      setConnectors(
+        FilterConnectors(
+          data?.connectors.filter((x) => !IsTerminal(x)),
+          selectedBlockNode,
+          secondaryNode
+        )
+      );
+    } else {
+      setConnectors(
+        FilterConnectors(
+          data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
+          selectedBlockNode,
+          secondaryNode
+        )
+      );
+    }
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
   // Update node size based on active connectors
