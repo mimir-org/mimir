@@ -2,6 +2,7 @@ import { ConvertTerminalToInterface, ConvertTerminalToTransport } from ".";
 import { Connector, Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
+import { IsRelation } from "../../../modules/inspector/helpers/IsType";
 
 /**
  * Function to convert edge data to a Mimir Edge.
@@ -24,8 +25,11 @@ export const ConvertEdgeDataToMimirEdge = (
   projectIri: string,
   library: LibraryState
 ) => {
-  const convertedTransport = ConvertTerminalToTransport(fromConnector as Terminal, library);
-  const convertedInterface = ConvertTerminalToInterface(fromConnector as Terminal, library);
+  const isRelation = IsRelation(fromConnector);
+
+  const convertedTransport = isRelation ? null : ConvertTerminalToTransport(fromConnector as Terminal, library);
+  const convertedInterface =
+    isRelation || convertedTransport != null ? null : ConvertTerminalToInterface(fromConnector as Terminal, library);
 
   const edge: Edge = {
     id: id,

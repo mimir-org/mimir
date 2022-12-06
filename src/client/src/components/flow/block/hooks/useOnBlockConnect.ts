@@ -55,7 +55,7 @@ const useOnBlockConnect = (params: OnBlockDropParameters) => {
   const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, project.iri, library);
 
   // If there is noe matching transport or interface, it is not allowed to create the edge
-  if (edge.transport === null && edge.interface === null) {
+  if (edge.transport == null && edge.interface == null && IsTerminal(sourceConn)) {
     dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TRANSPORT_INTERFACE }));
     return;
   }
