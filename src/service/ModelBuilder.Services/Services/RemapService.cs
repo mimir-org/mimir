@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Common;
@@ -18,14 +17,12 @@ namespace Mb.Services.Services
     public class RemapService : IRemapService
     {
         private readonly ICommonRepository _commonRepository;
-        private readonly IMapper _mapper;
 
         #region Constructors
 
-        public RemapService(ICommonRepository commonRepository, IMapper mapper)
+        public RemapService(ICommonRepository commonRepository)
         {
             _commonRepository = commonRepository;
-            _mapper = mapper;
         }
 
         #endregion
@@ -325,6 +322,14 @@ namespace Mb.Services.Services
                 // Need to set this if there is a clone after new Id and Iri is created
                 connectorReplacement.FromId = connector.Id;
                 connectorReplacement.FromIri = connector.Iri;
+                var proxyChildren = connectors.OfType<TerminalAm>().Where(x => x.IsProxy && x.ProxyParent == connector.Id);
+                var proxySiblings = connectors.OfType<TerminalAm>().Where(x => x.IsProxy && x.ProxySibling == connector.Id);
+
+                foreach (var child in proxyChildren)
+                    child.ProxyParent = connectorReplacement.ToId;
+
+                foreach (var child in proxySiblings)
+                    child.ProxySibling = connectorReplacement.ToId;
 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
@@ -477,8 +482,8 @@ namespace Mb.Services.Services
 
             var attr = RemapAttributes(transportReplacement, transport.Attributes, createCopy, AttributeParent.Transport).ToList();
             transport.Attributes = attr.Any() ? attr : null;
-            transport.InputTerminal = RemapTerminal(transportReplacement, transport.InputTerminal, createCopy);
-            transport.OutputTerminal = RemapTerminal(transportReplacement, transport.OutputTerminal, createCopy);
+            transport.InputTerminal = RemapTerminal(transport.InputTerminal, createCopy);
+            transport.OutputTerminal = RemapTerminal(transport.OutputTerminal, createCopy);
             transport.InputTerminalId = transport.InputTerminal?.Id;
             transport.OutputTerminalId = transport.OutputTerminal?.Id;
             transport.Id = transportReplacement.ToId;
@@ -501,8 +506,8 @@ namespace Mb.Services.Services
 
             var attr = RemapAttributes(interfaceReplacement, interfaceAm.Attributes, createCopy, AttributeParent.Interface).ToList();
             interfaceAm.Attributes = attr.Any() ? attr : null;
-            interfaceAm.InputTerminal = RemapTerminal(interfaceReplacement, interfaceAm.InputTerminal, createCopy);
-            interfaceAm.OutputTerminal = RemapTerminal(interfaceReplacement, interfaceAm.OutputTerminal, createCopy);
+            interfaceAm.InputTerminal = RemapTerminal(interfaceAm.InputTerminal, createCopy);
+            interfaceAm.OutputTerminal = RemapTerminal(interfaceAm.OutputTerminal, createCopy);
             interfaceAm.InputTerminalId = interfaceAm.InputTerminal?.Id;
             interfaceAm.OutputTerminalId = interfaceAm.OutputTerminal?.Id;
             interfaceAm.Id = interfaceReplacement.ToId;
@@ -511,7 +516,7 @@ namespace Mb.Services.Services
         }
 
         // Remap terminal
-        private TerminalAm RemapTerminal(ReplacementId replacement, TerminalAm terminal, bool createCopy)
+        private TerminalAm RemapTerminal(TerminalAm terminal, bool createCopy)
         {
             if (terminal == null)
                 return null;

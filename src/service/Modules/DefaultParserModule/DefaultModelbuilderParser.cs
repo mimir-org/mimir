@@ -19,11 +19,20 @@ namespace DefaultParserModule
     {
         private ServiceProvider _provider;
         private IMapper _mapper;
+        private JsonSerializerSettings _serializerSettings;
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
             _provider = services.BuildServiceProvider();
             _mapper = _provider.GetService<IMapper>();
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                TypeNameHandling = TypeNameHandling.All
+            };
+
+            _serializerSettings.Converters.Add(new StringEnumConverter());
         }
 
         public ICollection<Profile> GetProfiles()
@@ -51,29 +60,23 @@ namespace DefaultParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            var serializerSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             var projectAm = _mapper.Map<ProjectAm>(project);
-            serializerSettings.Converters.Add(new StringEnumConverter());
-            var result = JsonConvert.SerializeObject(projectAm, serializerSettings);
+
+            var result = JsonConvert.SerializeObject(projectAm, _serializerSettings);
             return Task.FromResult(Encoding.UTF8.GetBytes(result));
         }
 
         public Task<Project> DeserializeProject(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = JsonConvert.DeserializeObject<Project>(valueAsString);
+            var project = JsonConvert.DeserializeObject<Project>(valueAsString, _serializerSettings);
             return Task.FromResult(project);
         }
 
         public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = JsonConvert.DeserializeObject<ProjectAm>(valueAsString);
+            var project = JsonConvert.DeserializeObject<ProjectAm>(valueAsString, _serializerSettings);
             return Task.FromResult(project);
         }
     }
