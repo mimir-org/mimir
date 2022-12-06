@@ -17,7 +17,7 @@ namespace ModelBuilder.Unit.Tests.Services
         public RemapServiceTests(ModelBuilderCommonFixtures fixture) : base(fixture)
         {
             var commonRepository = new CommonRepository(fixture.CompanyRepository.Object, Options.Create(fixture.ApplicationSetting));
-            _remapService = new RemapService(commonRepository, fixture.Mapper.Object);
+            _remapService = new RemapService(commonRepository);
         }
 
         [Theory]
