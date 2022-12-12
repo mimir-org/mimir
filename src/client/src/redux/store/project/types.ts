@@ -169,7 +169,7 @@ export interface UpdateBlockSizeAction {
 
 export interface SetNodeVisibility {
   type: typeof SET_NODE_VISIBILITY;
-  payload: { node: Node };
+  payload: { nodes: string[]; edges: string[]; hidden: boolean };
 }
 
 export interface SetBlockNodeVisibility {

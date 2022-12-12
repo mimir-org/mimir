@@ -6,7 +6,7 @@ import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
-import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
+// import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
 
 interface Props {
@@ -25,12 +25,12 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   const edges = project?.edges;
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
-  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
+  // const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, edges);
-  const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, edges);
-  const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
+  // const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, edges);
+  // const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   useEffect(() => {
     if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
@@ -52,14 +52,15 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
             indent={indent}
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, edges)}
-            isAncestorVisible={ancestorsVisible(node)}
-            isVisible={isVisible(node)}
+            // isAncestorVisible={ancestorsVisible(node)}
+            // isVisible={!node.hidden}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
             isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
-            onSetVisibleElement={() => OnSetVisibleElement(true, node.id, invisibleNodes, setInvisibleNodes)}
+            // onSetVisibleElement={(visible, nodeId) => OnSetVisibleElement(visible, nodeId, invisibleNodes, setInvisibleNodes)}
             dispatch={dispatch}
+            project={project}
           />
         );
       })}

@@ -71,8 +71,8 @@ export function updateBlockSize(nodeId: string, size: BlockNodeSize): Types.Proj
   return { type: Types.UPDATE_BLOCK_SIZE, payload: { nodeId, size } };
 }
 
-export function setNodeVisibility(node: Node): Types.ProjectActionTypes {
-  return { type: Types.SET_NODE_VISIBILITY, payload: { node } };
+export function setNodeVisibility(nodes: string[], edges: string[], hidden: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_NODE_VISIBILITY, payload: { nodes, edges, hidden } };
 }
 
 export function setBlockNodeVisibility(node: Node, blockHidden: boolean): Types.ProjectActionTypes {
