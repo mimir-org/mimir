@@ -20,7 +20,6 @@ export const NodeBox = styled.div<NodeBoxProps>`
   min-height: ${Size.NODE_HEIGHT}px;
   min-width: ${Size.NODE_WIDTH}px;
   padding: 5px 0;
-  opacity: ${(props) => (!props.node.hidden ? 1 : 0)};
   border-radius: 10px;
   font-size: 11px;
   text-align: center;

@@ -4,7 +4,7 @@ import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
 import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
-import { commonStateCompanySelector, useAppSelector } from "../../../../../../redux/store";
+import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
 
 interface Props {
   node: Node;
@@ -34,7 +34,7 @@ export const BlockChildComponent = ({
   onClickRemoveTerminal,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
-  const company = useAppSelector(commonStateCompanySelector);
+  const company = useCompanySelector(node.domain, node.id);
 
   return (
     <NodeBox
