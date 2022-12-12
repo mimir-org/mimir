@@ -6,6 +6,7 @@ export const AdminLogo = styled.img`
   max-width: 100px;
   margin-top: 5px;
   margin-left: 5px;
+  filter: brightness(0%);
 `;
 
 export const AdminContentWrapper = styled.div`
