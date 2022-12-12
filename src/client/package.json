@@ -5,7 +5,7 @@
   "dependencies": {
     "@azure/msal-browser": "^2.23.0",
     "@azure/msal-react": "^1.4.9",
-    "@headlessui/react": "^1.7.3",
+    "@headlessui/react": "^1.7.5",
     "@microsoft/applicationinsights-web": "^2.8.9",
     "@microsoft/signalr": "^7.0.0",
     "@mimirorg/modelbuilder-types": "^4.1.2",
