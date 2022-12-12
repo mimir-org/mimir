@@ -1,0 +1,22 @@
+name: CI - Replace
+
+on:
+  workflow_dispatch:
+
+jobs:
+  replace-string:
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.tag_replace.outputs.value }}      
+    steps:
+      - name: Find & Replace
+        id: tag_replace
+        uses: ashley-taylor/regex-property-action@v1.4
+        with:
+          value: "4.0.0-RC.1"
+          regex: "RC.1"
+          flags: "g"
+          replacement: "RC1"
+      - name: Print Result
+        run: echo "${{ steps.tag_replace.outputs.value }}"
+        
