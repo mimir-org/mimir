@@ -14,7 +14,7 @@ jobs:
         uses: ashley-taylor/regex-property-action@v1.4
         with:
           value: "4.0.0-RC.1"
-          regex: "/\.(?=[^.]*$)/"
+          regex: '/\.(?=[^.]*$)/'
           flags: "g"
           replacement: ""
       - name: Print Result
