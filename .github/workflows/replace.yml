@@ -14,9 +14,9 @@ jobs:
         uses: ashley-taylor/regex-property-action@v1.4
         with:
           value: "4.0.0-RC.1"
-          regex: "RC.1"
+          regex: "/\.(?=[^.]*$)/"
           flags: "g"
-          replacement: "RC1"
+          replacement: ""
       - name: Print Result
         run: echo "${{ steps.tag_replace.outputs.value }}"
         
