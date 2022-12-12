@@ -105,7 +105,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowTreeNodes(mimirNodes));
-  }, [mimirNodes?.length, selectedNode]);
+  }, [mimirNodes, selectedNode]);
 
   // // Rebuild edges
   useEffect(() => {

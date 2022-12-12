@@ -1,4 +1,4 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Divider } from "../../../../compLibrary/divider";
@@ -15,14 +15,12 @@ interface Props {
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
-  isAncestorVisible: boolean;
-  isVisible: boolean;
   isNodeLocking: boolean;
   isGlobalLocking: boolean;
   setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
-  onSetVisibleElement: (visible: boolean, nodeId: string) => void;
   dispatch: Dispatch;
+  project: Project;
 }
 
 /**
@@ -36,26 +34,19 @@ export const TreeAspectComponent = ({
   isExpanded,
   indent,
   isLeaf,
-  isAncestorVisible,
-  isVisible,
   isNodeLocking,
   isGlobalLocking,
   setLockingNode,
-  onSetVisibleElement,
   onToggleExpanded,
   dispatch,
+  project,
 }: Props) => (
   <AspectContainer node={node}>
     <VisibleComponent
       isHidden={node.hidden}
-      isAncestorVisible={isAncestorVisible}
-      isVisible={isVisible}
       showText={TextResources.SHOW_OBJECT}
       hideText={TextResources.HIDE_OBJECT}
-      onToggleVisible={() => {
-        onSetVisibleElement(!isVisible, node.id);
-        OnTreeExplorerChange(node, dispatch);
-      }}
+      onToggleVisible={() => OnTreeExplorerChange(project, node, dispatch)}
     />
     <Divider variant={"vertical"} />
     <LockComponent

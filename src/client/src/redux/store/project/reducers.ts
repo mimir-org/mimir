@@ -1,6 +1,4 @@
 import * as Types from "./types";
-import { IsAspectNode } from "../../../helpers/Aspects";
-import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
 import { Edge, Node, Terminal } from "@mimirorg/modelbuilder-types";
 import { IsTerminal } from "../../../components/flow/helpers/Connectors";
@@ -213,52 +211,15 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_NODE_VISIBILITY: {
-      const { node } = action.payload;
-      if (!node) return;
-
-      const hidden = node.hidden === undefined ? true : !node.hidden;
-
-      let isParent = false;
-      const parentEdge = edges?.find((x) => x.fromNodeId === node.id);
-      if (parentEdge) isParent = true;
-
-      if (IsAspectNode(node)) {
-        const isRelated = (e: Edge) => {
-          return IsFamily(node, e.fromNode) || IsFamily(node, e.toNode) || e.fromNodeId === node.id;
-        };
-
-        return {
-          ...state,
-          project: {
-            ...project,
-            nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, hidden } : n)),
-            edges: edges.map((e) => (isRelated(e) ? { ...e, hidden } : e)),
-          },
-        };
-      }
-
-      if (isParent) {
-        const elements: (Node | Edge)[] = [];
-        elements.push(node);
-
-        TraverseTree(edges, nodes, node, elements);
-
-        return {
-          ...state,
-          project: {
-            ...project,
-            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, hidden } : n)),
-            edges: edges.map((e) => (elements.includes(e) || e.toNodeId === node.id ? { ...e, hidden } : e)),
-          },
-        };
-      }
+      const { nodes, edges, hidden } = action.payload;
+      if (!nodes && !edges) return;
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === node.id ? { ...n, hidden } : n)),
-          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, hidden } : e)),
+          nodes: project.nodes.map((n) => (nodes.some((x) => x === n.id) ? { ...n, hidden } : n)),
+          edges: project.edges.map((e) => (edges.some((x) => x === e.id) ? { ...e, hidden } : e)),
         },
       };
     }

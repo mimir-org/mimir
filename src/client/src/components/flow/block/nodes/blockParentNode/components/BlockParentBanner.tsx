@@ -49,7 +49,7 @@ export const BlockParentBanner = ({
         onClickAddTerminal={onClickAddTerminal}
         onClickRemoveTerminal={onClickRemoveTerminal}
       />
-      {!node.isRoot && (
+      {!node.isRoot && company && (
         <LogoBox>
           <img src={company.logo} alt={company.name} />
         </LogoBox>
