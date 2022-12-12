@@ -6,12 +6,13 @@ import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { commonStateCompanySelector, useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
 import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
+import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
 
 interface Props {
   node: Node;
@@ -45,7 +46,7 @@ export const BlockParentComponent = ({
   const dispatch = useAppDispatch();
   const isLocation = IsLocation(node);
   const resizePanelRef = useRef(null);
-  const company = useAppSelector(commonStateCompanySelector);
+  const company = useCompanySelector(node.domain, node.id);
   useResizeParentNode(node, resizePanelRef, dispatch);
   const terminals = useAppSelector(selectors.terminalsSelector);
   const project = useAppSelector(selectors.projectSelector);
