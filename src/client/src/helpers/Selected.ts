@@ -2,10 +2,10 @@ import red from "../redux/store";
 import { Node as FlowNode, Edge as FlowEdge, useReactFlow } from "react-flow-renderer";
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
 
-export const GetSelectedFlowEdges = (): FlowEdge[] => {
+export const GetSelectedFlowEdges = (selectedNodes: FlowNode[]): FlowEdge[] => {
   return useReactFlow()
     .getEdges()
-    .filter((edge) => edge.selected);
+    .filter((edge) => selectedNodes.some((n) => n.id === edge.source || n.id === edge.target));
 };
 
 export const GetSelectedFlowNodes = (): FlowNode[] => {

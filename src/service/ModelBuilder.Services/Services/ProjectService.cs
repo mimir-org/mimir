@@ -101,7 +101,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a new mimir project based on data
+        /// Create a new Mimir project based on data
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
@@ -135,7 +135,7 @@ namespace Mb.Services.Services
                 throw new MimirorgDuplicateException("One or more connectors already exist");
 
             // Remap and create new id's
-            _remapService.Remap(project);
+            var _ = _remapService.Remap(project);
 
             // Create an empty project
             var newProject = new Project
@@ -165,7 +165,6 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
-        /// TODO: Should implement new way of creating project
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
             try
@@ -182,22 +181,29 @@ namespace Mb.Services.Services
                 if (fromProject == null)
                     throw new MimirorgInvalidOperationException("The original project does not exist");
 
-                fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y))
-                    .ToList();
-                fromProject.Edges = fromProject.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
-
                 var projectAm = _mapper.Map<ProjectAm>(fromProject);
+
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
                 projectAm.IsSubProject = true;
+                projectAm.Nodes = projectAm.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                projectAm.Edges = projectAm.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
 
                 _ = _remapService.Clone(projectAm);
 
+                // Map data
                 var newSubProject = _mapper.Map<Project>(projectAm);
-                await _projectRepository.CreateAsync(newSubProject);
-                await _projectRepository.SaveAsync();
 
-                return newSubProject;
+                // Sort nodes
+                ResolveLevelAndOrder(newSubProject);
+
+                // Deconstruct project
+                var projectData = new ProjectData();
+                await _remapService.DeConstruct(newSubProject, projectData);
+                await _projectRepository.CreateProject(newSubProject, projectData);
+
+                var updatedProject = await GetProject(newSubProject.Id, null);
+                return updatedProject;
             }
             catch (Exception e)
             {
