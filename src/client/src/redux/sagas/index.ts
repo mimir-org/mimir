@@ -36,6 +36,7 @@ import {
   LOCK_ENTITY,
   SAVE_PROJECT,
   SEARCH_PROJECT,
+  CONVERT_SUB_PROJECT_STATUS,
 } from "../store/project/types";
 import {
   commitProject,
@@ -47,6 +48,7 @@ import {
   lockNode,
   searchProject,
   updateProject,
+  convertSubProject,
 } from "./project/saga";
 
 //TODO: Add takeEvery for LOCK_ on
@@ -71,6 +73,7 @@ function* sagas() {
     takeEvery(importLibraryAction, importLibrary),
     takeEvery(deleteLibraryAction, deleteLibraryItem),
     takeEvery(fetchQuantityDatums, getQuantityDatums),
+    takeEvery(CONVERT_SUB_PROJECT_STATUS, convertSubProject),
   ]);
 }
 

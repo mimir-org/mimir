@@ -33,6 +33,9 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   };
 
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
+  const convertProjectText = project?.isSubProject
+    ? TextResources.MAKE_DISABLE_SUBPROJECT
+    : TextResources.MAKE_AVAILABLE_SUBPROJECT;
 
   return (
     <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={!!activeMenu}>
@@ -76,6 +79,12 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         icon={hasSelectedNodes ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
         disabled={!hasSelectedNodes}
+      />
+
+      <MenuElement
+        text={convertProjectText}
+        icon={Icons.CommitProjectIcon}
+        onClick={() => projectMenuAction(() => Click.OnConvertSubProject(dispatch))}
       />
     </ProjectMenuBox>
   );

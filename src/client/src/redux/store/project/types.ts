@@ -86,6 +86,8 @@ export const ADD_INTERFACE_TERMINAL_ATTRIBUTE = "ADD_INTERFACE_TERMINAL_ATTRIBUT
 export const REMOVE_INTERFACE_TERMINAL_ATTRIBUTE = "REMOVE_INTERFACE_TERMINAL_ATTRIBUTE";
 export const ADD_TRANSPORT_TERMINAL_ATTRIBUTE = "ADD_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE = "REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const CONVERT_SUB_PROJECT_STATUS = "CONVERT_SUB_PROJECT_STATUS";
+export const CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR = "CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR";
 
 // State types
 export interface ProjectState {
@@ -98,6 +100,16 @@ export interface ProjectState {
 }
 
 // Action types
+export interface ConvertSubProjectStatus {
+  type: typeof CONVERT_SUB_PROJECT_STATUS;
+  payload: { projectId: string };
+}
+
+export interface ConvertSubProjectStatusFinished {
+  type: typeof CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR;
+  payload: { apiError: ApiError };
+}
+
 export interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
   payload: { id: string; project: Project };
@@ -488,6 +500,8 @@ export interface UpdateTerminal {
 }
 
 export type ProjectActionTypes =
+  | ConvertSubProjectStatus
+  | ConvertSubProjectStatusFinished
   | FetchingProjectAction
   | SearchProjectAction
   | SearchProjectActionFinished

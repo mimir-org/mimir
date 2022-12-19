@@ -8,15 +8,7 @@ import { search } from "../../store/project/actions";
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import {
-  ApiError,
-  GetApiErrorForBadRequest,
-  GetApiErrorForException,
-  GetBadResponseData,
-  get,
-  post,
-  HeadersInitDefault,
-} from "../../../models/webclient";
-import {
+  CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -33,7 +25,17 @@ import {
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
+  ConvertSubProjectStatus,
 } from "../../store/project/types";
+import {
+  ApiError,
+  GetApiErrorForBadRequest,
+  GetApiErrorForException,
+  GetBadResponseData,
+  get,
+  post,
+  HeadersInitDefault,
+} from "../../../models/webclient";
 
 export function* getProject(action: FetchingProjectAction) {
   try {
@@ -325,5 +327,40 @@ export function* lockNode(action: LockEntity) {
   } catch (error) {
     const apiError = GetApiErrorForException(error, LOCK_ENTITY_SUCCESS_OR_ERROR);
     yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
+  }
+}
+
+export function* convertSubProject(action: ConvertSubProjectStatus) {
+  try {
+    const url = Config.API_BASE_URL + "subproject/convert";
+    const response = yield call(post, url, action.payload.projectId);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { apiError };
+      yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+      return;
+    }
+
+    const payload = { apiError: null };
+
+    yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+  } catch (error) {
+    const apiError = {
+      key: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = { apiError };
+    yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
   }
 }

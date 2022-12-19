@@ -101,6 +101,19 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Convert or inverse sub project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>Completed Task</returns>
+        public async Task ConvertSubProject(string projectId)
+        {
+            var project = await GetProject(projectId, null);
+            var am = _mapper.Map<ProjectAm>(project);
+            am.IsSubProject = !am.IsSubProject;
+            await UpdateProject(am.Id, am.Iri, am, _commonRepository.GetDomain());
+        }
+
+        /// <summary>
         /// Create a new Mimir project based on data
         /// </summary>
         /// <param name="project">The project that should be created</param>

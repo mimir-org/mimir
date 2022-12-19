@@ -13,6 +13,10 @@ import {
   Attribute,
 } from "@mimirorg/modelbuilder-types";
 
+export function convertSubProjectStatus(projectId: string): Types.ProjectActionTypes {
+  return { type: Types.CONVERT_SUB_PROJECT_STATUS, payload: { projectId: projectId } };
+}
+
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };
 }

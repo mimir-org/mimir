@@ -80,6 +80,35 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Convert sun project status
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>No content</returns>
+        [HttpPost("convert")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Edit")]
+        public async Task<IActionResult> ConvertProject([FromBody] string projectId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _projectService.ConvertSubProject(projectId);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Get a sub project by id
         /// </summary>
         /// <param name="id"></param>

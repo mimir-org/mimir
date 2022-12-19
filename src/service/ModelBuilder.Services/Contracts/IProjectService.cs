@@ -62,9 +62,19 @@ namespace Mb.Services.Contracts
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain);
 
-
-
+        /// <summary>
+        /// Create a new empty project. The project wil include the aspect root nodes.
+        /// </summary>
+        /// <param name="createProject"></param>
+        /// <returns></returns>
         Task<Project> CreateProject(CreateProjectAm createProject);
+
+        /// <summary>
+        /// Convert or inverse sub project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>Completed Task</returns>
+        Task ConvertSubProject(string projectId);
 
 
         Task DeleteProject(string projectId);

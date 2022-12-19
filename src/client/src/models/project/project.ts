@@ -40,6 +40,7 @@ export const MENU_TYPE = {
   CREATE_SUB_PROJECT_MENU: "CreateSubProjectMenu",
   INSTRUCTION_PROJECT_MENU: "InstructionProjectMenu",
   VISUAL_FILTER_MENU: "VisualFilter",
+  CONVERT_SUB_PROJECT_MENU: "ConvertSubProjectMenu",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;
