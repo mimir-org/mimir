@@ -56,7 +56,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProjectOwner, opt => opt.MapFrom(src => src.ProjectOwner))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated));
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.Versions, opt => opt.Ignore());
         }
     }
 }

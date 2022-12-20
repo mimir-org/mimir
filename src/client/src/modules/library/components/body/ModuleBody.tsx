@@ -1,4 +1,4 @@
-import { CollectionsActions, LibraryTab } from "../../../../models";
+import { CollectionsActions, LibrarySubProjectItem, LibraryTab } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
@@ -18,6 +18,7 @@ interface Props {
   setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
+  subProjects: LibrarySubProjectItem[];
 }
 
 /**
@@ -37,6 +38,7 @@ export const ModuleBody = ({
   setSelectedLibNode,
   aspectFilters,
   selectedNode,
+  subProjects,
 }: Props) => {
   const showCollections = activeTab === LibraryTab.Library;
   const showSubProjects = activeTab === LibraryTab.SubProjects;
@@ -58,7 +60,7 @@ export const ModuleBody = ({
           selectedNode={selectedNode}
         />
       )}
-      {showSubProjects && <SubProjectsComponent />}
+      {showSubProjects && <SubProjectsComponent items={subProjects} />}
       {showTemplates && <TemplatesComponent />}
     </ModuleContent>
   );

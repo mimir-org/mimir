@@ -5,7 +5,6 @@ import { webSocketSaga } from "../../modules/cooperate/saga";
 import { getUser } from "./user/saga";
 import { fetchUser } from "../store/user/userSlice";
 import {
-  deleteLibraryItem,
   exportLibrary,
   getInterfaceTypes,
   getQuantityDatums,
@@ -14,6 +13,7 @@ import {
   getTransportTypes,
   importLibrary,
   searchLibrary,
+  getSubProjects,
 } from "./library/saga";
 import {
   exportLibrary as exportLibraryAction,
@@ -21,10 +21,10 @@ import {
   fetchLibraryInterfaceTypes,
   fetchLibraryTransportTypes,
   importLibrary as importLibraryAction,
-  deleteLibraryItem as deleteLibraryAction,
   fetchLibraryTerminals,
   fetchQuantityDatums,
   fetchLibraryAttributeTypes,
+  fetchSubProjects,
 } from "../store/library/librarySlice";
 import {
   COMMIT_PROJECT,
@@ -69,9 +69,9 @@ function* sagas() {
     takeEvery(fetchLibraryInterfaceTypes, getInterfaceTypes),
     takeEvery(fetchLibraryTerminals, getTerminals),
     takeEvery(fetchLibraryAttributeTypes, getAttributes),
+    takeEvery(fetchSubProjects, getSubProjects),
     takeEvery(exportLibraryAction, exportLibrary),
     takeEvery(importLibraryAction, importLibrary),
-    takeEvery(deleteLibraryAction, deleteLibraryItem),
     takeEvery(fetchQuantityDatums, getQuantityDatums),
     takeEvery(CONVERT_SUB_PROJECT_STATUS, convertSubProject),
   ]);

@@ -37,7 +37,7 @@ export const LibNodeBox = styled.button<LibNodeBoxProps>`
 
   &:hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 

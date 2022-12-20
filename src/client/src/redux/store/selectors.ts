@@ -93,6 +93,11 @@ export const libNodesSelector = createAppSelector(
   (nodes) => nodes
 );
 
+export const libSubProjectorSelector = createAppSelector(
+  (state) => state.library.subProjects,
+  (subProjects) => subProjects
+);
+
 export const qunatityDatumSelector = createAppSelector(
   (state) => state.library.quantityDatums,
   (quantityDatums) => quantityDatums

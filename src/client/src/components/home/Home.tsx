@@ -25,6 +25,7 @@ import {
   fetchLibraryTerminals,
   fetchLibraryTransportTypes,
   fetchQuantityDatums,
+  fetchSubProjects,
 } from "../../redux/store/library/librarySlice";
 
 interface Props {
@@ -48,6 +49,7 @@ export const Home = ({ dispatch }: Props) => {
 
   useEffect(() => {
     dispatch(fetchCompany());
+    dispatch(fetchSubProjects());
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
     dispatch(fetchLibraryTerminals());

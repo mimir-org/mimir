@@ -6,7 +6,7 @@ import {
   TransportLibCm,
   AttributeLibCm,
 } from "@mimirorg/typelibrary-types";
-import { Collection } from "../../../models";
+import { Collection, LibrarySubProjectItem } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types
@@ -20,6 +20,7 @@ export interface LibraryState {
   collections: Collection[];
   quantityDatums: QuantityDatumCm[];
   attributeTypes: AttributeLibCm[];
+  subProjects: LibrarySubProjectItem[];
 }
 
 // Action types
@@ -53,11 +54,6 @@ export interface FetchInterfaceTypes {
   apiError: ApiError;
 }
 
-export interface DeleteLibraryItem {
-  id: string;
-  apiError: ApiError;
-}
-
 export interface AddToCollectionsTypes {
   libNodes: NodeLibCm[];
   collectionIds: string[];
@@ -65,5 +61,10 @@ export interface AddToCollectionsTypes {
 
 export interface FetchQuantityDatums {
   quantityDatums: QuantityDatumCm[];
+  apiError: ApiError;
+}
+
+export interface FetchSubProjects {
+  subProjects: LibrarySubProjectItem[];
   apiError: ApiError;
 }
