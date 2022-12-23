@@ -1,3 +1,4 @@
+import { LibrarySubProjectItem } from "@mimirorg/modelbuilder-types";
 import {
   InterfaceLibCm,
   NodeLibCm,
@@ -6,7 +7,7 @@ import {
   TransportLibCm,
   AttributeLibCm,
 } from "@mimirorg/typelibrary-types";
-import { Collection, LibrarySubProjectItem } from "../../../models";
+import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types

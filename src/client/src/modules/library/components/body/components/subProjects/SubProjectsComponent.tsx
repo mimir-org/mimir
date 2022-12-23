@@ -1,5 +1,4 @@
 import { TextResources } from "../../../../../../assets/text/TextResources";
-import { LibrarySubProjectItem } from "../../../../../../models";
 import {
   SubProjectHeader,
   SubProjectsItemWrapper,
@@ -11,6 +10,7 @@ import {
 import { SubProjectCategory, Movable, Version, Latest } from "../../../../../../assets/icons/library";
 import { Icon } from "../../../../../../compLibrary/icon/Icon";
 import { useState } from "react";
+import { LibrarySubProjectItem } from "@mimirorg/modelbuilder-types";
 
 interface SubProjectProps {
   items: LibrarySubProjectItem[];
@@ -52,28 +52,19 @@ interface SubProjectItemProps {
 }
 
 const SubProjectComponentItem = ({ item, visible }: SubProjectItemProps) => {
+  const versionVisible = item && visible && item.versions && item.versions.length > 0;
   return (
     <>
-      {item && visible && (
+      {versionVisible && (
         <SubProjectItemContainer>
-          <SubProjectItem id={item.id} draggable>
-            <Icon size={20} src={Latest} alt={"Sub-project"} />
-            <span>{item.name}</span>
-            <span>v{item.version}</span>
-            <Icon size={14} src={Movable} alt={"Sub-project"} />
-          </SubProjectItem>
-          <SubProjectItem id={item.id} draggable>
-            <Icon size={20} src={Latest} alt={"Sub-project"} />
-            <span>{item.name}</span>
-            <span>v{item.version}</span>
-            <Icon size={14} src={Movable} alt={"Sub-project"} />
-          </SubProjectItem>
-          <SubProjectItem id={item.id} draggable>
-            <Icon size={20} src={Latest} alt={"Sub-project"} />
-            <span>{item.name}</span>
-            <span>v{item.version}</span>
-            <Icon size={14} src={Movable} alt={"Sub-project"} />
-          </SubProjectItem>
+          {item.versions.map((version) => (
+            <SubProjectItem id={item.id} draggable>
+              <Icon size={20} src={Latest} alt={"Sub-project"} />
+              <span>{item.name}</span>
+              <span>v{version}</span>
+              <Icon size={14} src={Movable} alt={"Sub-project"} />
+            </SubProjectItem>
+          ))}
         </SubProjectItemContainer>
       )}
     </>

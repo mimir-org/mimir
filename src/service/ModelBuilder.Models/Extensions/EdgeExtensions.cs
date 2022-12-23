@@ -1,7 +1,6 @@
 using Mb.Models.Application;
 using System.Collections.Generic;
 using System.Linq;
-using Mb.Models.Data;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Extensions

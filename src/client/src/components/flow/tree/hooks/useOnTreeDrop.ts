@@ -2,12 +2,12 @@ import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
 import { ConvertLibNodeToNode } from "../../converters";
 import { Dispatch } from "redux";
-import { LibrarySubProjectItem, User } from "../../../../models";
+import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Project } from "@mimirorg/modelbuilder-types";
+import { LibrarySubProjectItem, Node, Project } from "@mimirorg/modelbuilder-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

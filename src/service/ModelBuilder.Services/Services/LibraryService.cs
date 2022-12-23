@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Common;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Services
@@ -16,13 +18,15 @@ namespace Mb.Services.Services
         private readonly ILibraryRepository _libraryRepository;
         private readonly ICooperateService _cooperateService;
         private readonly IMapper _mapper;
+        private readonly IServiceProvider _services;
 
-        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, ICooperateService cooperateService)
+        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, ICooperateService cooperateService, IServiceProvider services)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
             _libraryRepository = libraryRepository;
             _cooperateService = cooperateService;
+            _services = services;
         }
 
         /// <summary>
@@ -98,25 +102,46 @@ namespace Mb.Services.Services
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>
-        public async Task<List<LibrarySubProjectItem>> GetSubProjects(string searchString = null)
+        public async Task<List<LibrarySubProject>> GetSubProjects(string searchString = null)
         {
-            var projects = await _projectRepository.GetAll()
-                .Where(x => x.IsSubProject)
-                .OrderBy(x => x.Name)
-                .ToArrayAsync();
-
+            var projectsQuery = _projectRepository.GetAll().Where(x => x.IsSubProject);
             if (!string.IsNullOrWhiteSpace(searchString))
-                projects = projects.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
+                projectsQuery = projectsQuery.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
 
-            var librarySubProjectItems = new List<LibrarySubProjectItem>();
+            var projectIds = await projectsQuery.Select(x => x.Id).ToListAsync();
 
-            Parallel.ForEach(projects, x =>
+            var projectDictionary = new Dictionary<string, LibrarySubProject>();
+            var tasks = new List<Task>();
+
+
+            foreach (var id in projectIds)
             {
-                librarySubProjectItems.Add(_mapper.Map<LibrarySubProjectItem>(x));
-            });
+                tasks.Add(Task.Run(() => ResolveProjectItem(id, projectDictionary)));
+            }
 
-            return librarySubProjectItems;
+            await Task.WhenAll(tasks);
+            return projectDictionary.Values.ToList();
         }
+
+        private async Task ResolveProjectItem(string projectId, IDictionary<string, LibrarySubProject> projectDictionary)
+        {
+            using var scope = _services.CreateScope();
+            var pr = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
+            var project = await pr.GetAsyncComplete(projectId, null);
+
+            if (project == null)
+                return;
+
+            var item = _mapper.Map<LibrarySubProject>(project);
+            var defaultVersion = _mapper.Map<LibrarySubProjectVersion>(project);
+            item.Versions.Add(defaultVersion);
+
+            // TODO: Resolve data from version table
+
+            projectDictionary.Add(projectId, item);
+        }
+
+
 
         /// <summary>
         /// Get all node types and send types to connected clients

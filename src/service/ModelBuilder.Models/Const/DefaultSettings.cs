@@ -13,7 +13,7 @@ namespace Mb.Models.Const
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-
+                TypeNameHandling = TypeNameHandling.All
             };
         }
     }
