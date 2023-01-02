@@ -11,6 +11,7 @@ import {
   ProjectConverterAm,
   Terminal,
   Attribute,
+  PrepareAm,
 } from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -503,12 +504,12 @@ export interface UpdateTerminal {
 
 export interface MergeSubProject {
   type: typeof MERGE_SUB_PROJECT;
-  payload: { subProject: string };
+  payload: { prepare: PrepareAm };
 }
 
 export interface MergeSubProjectFinished {
   type: typeof MERGE_SUB_PROJECT_SUCCESS_OR_ERROR;
-  payload: { apiError: ApiError };
+  payload: { prepare: PrepareAm; apiError: ApiError };
 }
 
 export type ProjectActionTypes =

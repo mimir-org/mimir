@@ -9,7 +9,7 @@ namespace Mimirorg.Package
         {
             try
             {
-                CreateTypeScriptFile(new List<string>() { "Mb.Models.Data", "Mb.Models.Application", "Mb.Models.Common" },
+                CreateTypeScriptFile(new List<string>() { "Mb.Models.Data", "Mb.Models.Application", "Mb.Models.Client", "Mb.Models.Common" },
                     "template/index.ts");
             }
             catch (Exception e)
