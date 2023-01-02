@@ -88,6 +88,8 @@ export const ADD_TRANSPORT_TERMINAL_ATTRIBUTE = "ADD_TRANSPORT_TERMINAL_ATTRIBUT
 export const REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE = "REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const CONVERT_SUB_PROJECT_STATUS = "CONVERT_SUB_PROJECT_STATUS";
 export const CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR = "CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR";
+export const MERGE_SUB_PROJECT = "MERGE_SUB_PROJECT";
+export const MERGE_SUB_PROJECT_SUCCESS_OR_ERROR = "MERGE_SUB_PROJECT_SUCCESS_OR_ERROR";
 
 // State types
 export interface ProjectState {
@@ -497,6 +499,16 @@ export interface DeleteTerminal {
 export interface UpdateTerminal {
   type: typeof UPDATE_TERMINAL;
   payload: { terminal: Terminal };
+}
+
+export interface MergeSubProject {
+  type: typeof MERGE_SUB_PROJECT;
+  payload: { subProject: string };
+}
+
+export interface MergeSubProjectFinished {
+  type: typeof MERGE_SUB_PROJECT_SUCCESS_OR_ERROR;
+  payload: { apiError: ApiError };
 }
 
 export type ProjectActionTypes =

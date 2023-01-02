@@ -10,10 +10,11 @@ import {
 import { SubProjectCategory, Movable, Version, Latest } from "../../../../../../assets/icons/library";
 import { Icon } from "../../../../../../compLibrary/icon/Icon";
 import { useState } from "react";
-import { LibrarySubProjectItem } from "@mimirorg/modelbuilder-types";
+import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
+import { OnDragStart } from "../collections/components/nodeCollection/libNode/handlers";
 
 interface SubProjectProps {
-  items: LibrarySubProjectItem[];
+  items: LibrarySubProject[];
 }
 
 export const SubProjectsComponent = ({ items }: SubProjectProps) => {
@@ -31,8 +32,8 @@ export const SubProjectsComponent = ({ items }: SubProjectProps) => {
       {items &&
         items.map((item) => {
           return (
-            <SubProjectsItemWrapper>
-              <SubProjectHeader key={item.id} id={item.id} selected={selected} onClick={() => setSelected(item.id)}>
+            <SubProjectsItemWrapper key={item.id}>
+              <SubProjectHeader id={item.id} selected={selected} onClick={() => setSelected(item.id)}>
                 <Icon size={20} src={SubProjectCategory} alt={"Sub-project"} />
                 <span>{item.name}</span>
                 <span>v{item.version}</span>
@@ -47,7 +48,7 @@ export const SubProjectsComponent = ({ items }: SubProjectProps) => {
 };
 
 interface SubProjectItemProps {
-  item: LibrarySubProjectItem;
+  item: LibrarySubProject;
   visible: boolean;
 }
 
@@ -58,10 +59,15 @@ const SubProjectComponentItem = ({ item, visible }: SubProjectItemProps) => {
       {versionVisible && (
         <SubProjectItemContainer>
           {item.versions.map((version) => (
-            <SubProjectItem id={item.id} draggable>
+            <SubProjectItem
+              id={version.project.id}
+              key={version.project.id}
+              draggable
+              onDragStart={(event) => OnDragStart(event, JSON.stringify(version?.project))}
+            >
               <Icon size={20} src={Latest} alt={"Sub-project"} />
               <span>{item.name}</span>
-              <span>v{version}</span>
+              <span>v{version?.version}</span>
               <Icon size={14} src={Movable} alt={"Sub-project"} />
             </SubProjectItem>
           ))}

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -133,6 +134,40 @@ namespace Mb.Core.Controllers.V1
                 if (data is { IsSubProject: false })
                     return BadRequest("This is not a subProject");
 
+                return Ok(data);
+            }
+            catch (MimirorgNotFoundException)
+            {
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Clone a sub-project and prepare sub-project for merging into another project
+        /// </summary>
+        /// <param name="prepare">The prepare project data</param>
+        /// <returns></returns>
+        [HttpPost("prepare")]
+        [ProducesResponseType(typeof(PrepareCm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> PrepareForMerge([FromBody] PrepareAm prepare)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var data = await _projectService.PrepareForMerge(prepare);
                 return Ok(data);
             }
             catch (MimirorgNotFoundException)

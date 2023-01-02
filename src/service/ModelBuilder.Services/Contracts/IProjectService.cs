@@ -81,5 +81,7 @@ namespace Mb.Services.Contracts
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task CommitProject(CommitPackageAm package);
         bool ProjectExist(string projectId, string projectIri);
+
+        Task<PrepareCm> PrepareForMerge(PrepareAm prepare);
     }
 }

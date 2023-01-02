@@ -6,14 +6,11 @@ import { IsOutputConnector, IsPartOfRelation } from "../../helpers/Connectors";
 
 const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project, subProject: Project): [Node[], Edge[]] => {
   try {
-    if (!subProject?.isSubProject) return [[], []];
+    if (!subProject.isSubProject) return [[], []];
 
-    let targetNodeId = event.currentTarget?.attributes["data-id"]?.value;
-    if (!targetNodeId) targetNodeId = event.currentTarget?.offsetParent?.attributes["data-id"]?.value;
-    if (!targetNodeId) return [[], []];
+    const targetNode = project?.nodes?.find((n) => n.selected);
 
-    const targetNode = project.nodes.find((x) => x.id === targetNodeId);
-    if (!targetNode) return [[], []];
+    if (targetNode == null) return [[], []];
 
     const targetnodeConnector = targetNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
 
@@ -34,6 +31,8 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
       // Find edges that should change parent
       const edges = subProject.edges.filter((e) => e.fromConnectorId === rootNodeConnector.id);
 
+      console.log(targetnodeConnector.id);
+
       // Remap edges
       edges.forEach((edge) => {
         edge.id = CreateId();
@@ -42,6 +41,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
         edge.fromConnector = targetnodeConnector;
         edge.fromNode = targetNode;
         edge.masterProjectId = project.id;
+        edge.projectId = project.id;
       });
     } else {
       // Remove Edges that is connected to root nodes

@@ -1,4 +1,4 @@
-import { LibrarySubProjectItem } from "@mimirorg/modelbuilder-types";
+import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
 import {
   InterfaceLibCm,
   NodeLibCm,
@@ -21,7 +21,7 @@ export interface LibraryState {
   collections: Collection[];
   quantityDatums: QuantityDatumCm[];
   attributeTypes: AttributeLibCm[];
-  subProjects: LibrarySubProjectItem[];
+  subProjects: LibrarySubProject[];
 }
 
 // Action types
@@ -66,6 +66,6 @@ export interface FetchQuantityDatums {
 }
 
 export interface FetchSubProjects {
-  subProjects: LibrarySubProjectItem[];
+  subProjects: LibrarySubProject[];
   apiError: ApiError;
 }

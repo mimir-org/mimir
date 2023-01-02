@@ -384,6 +384,31 @@ namespace Mb.Services.Services
             return exist;
         }
 
+        public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
+        {
+            // TODO: We need to handle versions
+            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProjectId, null);
+            if (subProject == null)
+                throw new MimirorgNotFoundException("There is no sub-project with current id");
+
+            var projectAm = _mapper.Map<ProjectAm>(subProject);
+            _ = _remapService.Clone(projectAm);
+
+            // Map data to project
+            var clonedProject = _mapper.Map<Project>(projectAm);
+
+            // TODO: remove root-nodes and connected edges to root nodes and position nodes and reset projectId
+
+            var prepareCm = new PrepareCm
+            {
+                SubProjectId = prepare.SubProjectId,
+                Nodes = clonedProject.Nodes,
+                Edges = clonedProject.Edges
+            };
+
+            return prepareCm;
+        }
+
         #region Private
 
         private Node CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)

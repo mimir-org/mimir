@@ -4,7 +4,7 @@ import { CollectionsComponent } from "./components/collections/CollectionsCompon
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Aspect, LibrarySubProjectItem } from "@mimirorg/modelbuilder-types";
+import { Node, Aspect, LibrarySubProject } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   libOpen: boolean;
@@ -18,7 +18,7 @@ interface Props {
   setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
-  subProjects: LibrarySubProjectItem[];
+  subProjects: LibrarySubProject[];
 }
 
 /**

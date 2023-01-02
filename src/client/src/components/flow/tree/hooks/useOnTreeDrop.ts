@@ -4,10 +4,10 @@ import { ConvertLibNodeToNode } from "../../converters";
 import { Dispatch } from "redux";
 import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
+import { GetProjectData, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { LibrarySubProjectItem, Node, Project } from "@mimirorg/modelbuilder-types";
+import { Node, Project } from "@mimirorg/modelbuilder-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -84,15 +84,16 @@ function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[])
  * @param dispatch
  */
 function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
-  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
+  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as Project;
+  const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, eventData);
+  nodesToCreate.forEach((node) => dispatch(addNode(node)));
+  edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
 
-  (async () => {
-    const subProject = await GetSubProject(eventData.id);
-    const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
+  // (async () => {
+  //   const subProject = await GetSubProject(eventData.project.id);
+  //   const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
 
-    nodesToCreate.forEach((node) => dispatch(addNode(node)));
-    edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
-  })();
+  // })();
 }
 
 export default useOnTreeDrop;
