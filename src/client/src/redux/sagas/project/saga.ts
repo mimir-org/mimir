@@ -8,6 +8,8 @@ import { search } from "../../store/project/actions";
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import {
+  MergeSubProject,
+  MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
   CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -362,5 +364,40 @@ export function* convertSubProject(action: ConvertSubProjectStatus) {
 
     const payload = { apiError };
     yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+  }
+}
+
+export function* mergeSubProject(action: MergeSubProject) {
+  try {
+    const url = Config.API_BASE_URL + "subproject/prepare";
+    const response = yield call(post, url, action.payload.prepare);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { prepare: null, apiError: apiError };
+      yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+      return;
+    }
+
+    const payload = { prepare: response.data, apiError: null };
+
+    yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+  } catch (error) {
+    const apiError = {
+      key: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = { prepare: null, apiError: apiError };
+    yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }

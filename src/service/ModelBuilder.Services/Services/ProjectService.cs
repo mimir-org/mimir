@@ -290,7 +290,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task DeleteProject(string projectId)
         {
-            var existingProject = await GetProject(projectId, null);
+            var existingProject = await _projectRepository.GetProjectAsync(projectId, null);
             if (existingProject == null)
                 throw new MimirorgNotFoundException($"There is no project with id: {projectId}");
 
@@ -394,16 +394,46 @@ namespace Mb.Services.Services
             var projectAm = _mapper.Map<ProjectAm>(subProject);
             _ = _remapService.Clone(projectAm);
 
-            // Map data to project
-            var clonedProject = _mapper.Map<Project>(projectAm);
+            // Save the project as a temporary project
+            projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";
+            projectAm.Description = "This is a temporary project";
+            projectAm.IsSubProject = true;
 
-            // TODO: remove root-nodes and connected edges to root nodes and position nodes and reset projectId
+            _ = _remapService.Clone(projectAm);
+            var newSubProject = _mapper.Map<Project>(projectAm);
+            ResolveLevelAndOrder(newSubProject);
+            var projectData = new ProjectData();
+            await _remapService.DeConstruct(newSubProject, projectData);
+            await _projectRepository.CreateProject(newSubProject, projectData);
+
+            // Get the created project
+            var updatedProject = await GetProject(newSubProject.Id, null);
+
+            // Identify root nodes
+            var rootNodes = updatedProject.Nodes.Where(x => x.IsRoot).Select(x => x.Id);
+
+            // Set node and edges project id to merge project
+            updatedProject.Nodes = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).Select(x =>
+            {
+                x.ProjectId = prepare.ProjectId;
+                x.ProjectIri = null;
+                return x;
+            }).ToList();
+
+            updatedProject.Edges = updatedProject.Edges.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
+            {
+                x.ProjectId = prepare.ProjectId;
+                x.ProjectIri = null;
+                return x;
+            }).ToList();
+
+            // TODO: update node positions
 
             var prepareCm = new PrepareCm
             {
                 SubProjectId = prepare.SubProjectId,
-                Nodes = clonedProject.Nodes,
-                Edges = clonedProject.Edges
+                Nodes = updatedProject.Nodes,
+                Edges = updatedProject.Edges
             };
 
             return prepareCm;

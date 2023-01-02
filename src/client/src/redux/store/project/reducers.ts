@@ -37,6 +37,29 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
   const edges = state.project?.edges;
 
   switch (action.type) {
+    case Types.MERGE_SUB_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== Types.MERGE_SUB_PROJECT_SUCCESS_OR_ERROR)
+          : state.apiError,
+      };
+
+    case Types.MERGE_SUB_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        project: {
+          ...project,
+          edges: [...edges, ...action.payload.prepare.edges],
+          nodes: [...nodes, ...action.payload.prepare.nodes],
+        },
+      };
+
     case Types.CONVERT_SUB_PROJECT_STATUS:
       return {
         ...state,

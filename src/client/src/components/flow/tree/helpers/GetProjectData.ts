@@ -31,8 +31,6 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
       // Find edges that should change parent
       const edges = subProject.edges.filter((e) => e.fromConnectorId === rootNodeConnector.id);
 
-      console.log(targetnodeConnector.id);
-
       // Remap edges
       edges.forEach((edge) => {
         edge.id = CreateId();

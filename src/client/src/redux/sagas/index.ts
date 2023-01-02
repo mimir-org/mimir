@@ -37,6 +37,7 @@ import {
   SAVE_PROJECT,
   SEARCH_PROJECT,
   CONVERT_SUB_PROJECT_STATUS,
+  MERGE_SUB_PROJECT,
 } from "../store/project/types";
 import {
   commitProject,
@@ -49,6 +50,7 @@ import {
   searchProject,
   updateProject,
   convertSubProject,
+  mergeSubProject,
 } from "./project/saga";
 
 //TODO: Add takeEvery for LOCK_ on
@@ -74,6 +76,7 @@ function* sagas() {
     takeEvery(importLibraryAction, importLibrary),
     takeEvery(fetchQuantityDatums, getQuantityDatums),
     takeEvery(CONVERT_SUB_PROJECT_STATUS, convertSubProject),
+    takeEvery(MERGE_SUB_PROJECT, mergeSubProject),
   ]);
 }
 

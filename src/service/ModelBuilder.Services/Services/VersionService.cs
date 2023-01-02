@@ -99,7 +99,7 @@ namespace Mb.Services.Services
                 Name = project.Name,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                Data = JsonConvert.SerializeObject(project, DefaultSettings.SerializerSettings)
+                Data = JsonConvert.SerializeObject(project, DefaultSettings.SerializerSettingsNoTypeNameHandling)
             };
 
             await _versionRepository.CreateAsync(version);

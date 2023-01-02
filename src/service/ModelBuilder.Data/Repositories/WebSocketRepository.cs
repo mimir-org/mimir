@@ -23,19 +23,19 @@ namespace Mb.Data.Repositories
 
         public async Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus)
         {
-            var data = JsonConvert.SerializeObject(node, DefaultSettings.SerializerSettings);
+            var data = JsonConvert.SerializeObject(node, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveNodeData, workerStatus, data);
         }
 
         public async Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus)
         {
-            var data = JsonConvert.SerializeObject(edge, DefaultSettings.SerializerSettings);
+            var data = JsonConvert.SerializeObject(edge, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
 
         public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)
         {
-            var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettings);
+            var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
         }
 

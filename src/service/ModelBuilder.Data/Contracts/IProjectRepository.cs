@@ -19,6 +19,14 @@ namespace Mb.Data.Contracts
         Task<Project> GetAsyncComplete(string id, string iri);
 
         /// <summary>
+        /// Get complete project async not read from cache
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns>Complete project</returns>
+        Task<Project> GetProjectAsync(string id, string iri);
+
+        /// <summary>
         /// Get project list
         /// </summary>
         /// <param name="name">The project to search for</param>

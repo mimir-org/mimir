@@ -78,6 +78,55 @@ namespace Mb.Data.Repositories
         }
 
         /// <summary>
+        /// Get complete project async not read from cache
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns>Complete project</returns>
+        public Task<Project> GetProjectAsync(string id, string iri)
+        {
+            var project =
+                FindBy(x => x.Id == id || x.Iri == iri)
+                    .Include(x => x.Edges)
+                    .Include("Edges.FromNode")
+                    .Include("Edges.ToNode")
+                    .Include("Edges.FromConnector")
+                    .Include("Edges.ToConnector")
+                    .Include("Edges.Transport")
+                    .Include("Edges.Transport.Attributes")
+                    .Include("Edges.Transport.InputTerminal")
+                    .Include("Edges.Transport.InputTerminal.Attributes")
+                    .Include("Edges.Transport.OutputTerminal")
+                    .Include("Edges.Transport.OutputTerminal.Attributes")
+                    .Include("Edges.Interface")
+                    .Include("Edges.Interface.Attributes")
+                    .Include("Edges.Interface.InputTerminal")
+                    .Include("Edges.Interface.InputTerminal.Attributes")
+                    .Include("Edges.Interface.OutputTerminal")
+                    .Include("Edges.Interface.OutputTerminal.Attributes")
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .AsNoTracking()
+                    .AsSplitQuery()
+                    .FirstOrDefault();
+
+            if (project != null && project.Nodes.Any())
+                project.Nodes = project.Nodes.OrderBy(x => x.Order).Select(x =>
+                {
+                    x.Hidden = false;
+                    x.BlockHidden = false;
+                    x.Selected = false;
+                    x.BlockSelected = false;
+                    return x;
+                })
+                    .ToList();
+
+            return Task.FromResult(project);
+        }
+
+        /// <summary>
         /// Get project list
         /// </summary>
         /// <param name="name">The project to search for</param>
@@ -249,58 +298,5 @@ namespace Mb.Data.Repositories
             var key = !string.IsNullOrWhiteSpace(project.Id) ? project.Id.ResolveKey() : project.Iri.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
         }
-
-        #region Private methods
-
-        /// <summary>
-        /// Get complete project async
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="iri"></param>
-        /// <returns></returns>
-        private Task<Project> GetProjectAsync(string id, string iri)
-        {
-            var project =
-                FindBy(x => x.Id == id || x.Iri == iri)
-                    .Include(x => x.Edges)
-                    .Include("Edges.FromNode")
-                    .Include("Edges.ToNode")
-                    .Include("Edges.FromConnector")
-                    .Include("Edges.ToConnector")
-                    .Include("Edges.Transport")
-                    .Include("Edges.Transport.Attributes")
-                    .Include("Edges.Transport.InputTerminal")
-                    .Include("Edges.Transport.InputTerminal.Attributes")
-                    .Include("Edges.Transport.OutputTerminal")
-                    .Include("Edges.Transport.OutputTerminal.Attributes")
-                    .Include("Edges.Interface")
-                    .Include("Edges.Interface.Attributes")
-                    .Include("Edges.Interface.InputTerminal")
-                    .Include("Edges.Interface.InputTerminal.Attributes")
-                    .Include("Edges.Interface.OutputTerminal")
-                    .Include("Edges.Interface.OutputTerminal.Attributes")
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .AsNoTracking()
-                    .AsSplitQuery()
-                    .FirstOrDefault();
-
-            if (project != null && project.Nodes.Any())
-                project.Nodes = project.Nodes.OrderBy(x => x.Order).Select(x =>
-                {
-                    x.Hidden = false;
-                    x.BlockHidden = false;
-                    x.Selected = false;
-                    x.BlockSelected = false;
-                    return x;
-                })
-                    .ToList();
-
-            return Task.FromResult(project);
-        }
-
-        #endregion
     }
 }

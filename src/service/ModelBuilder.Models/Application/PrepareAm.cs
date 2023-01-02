@@ -11,9 +11,9 @@ namespace Mb.Models.Application
         public string ProjectId { get; set; }
 
         [Required]
-        public string DropPositionX { get; set; }
+        public double DropPositionX { get; set; }
 
         [Required]
-        public string DropPositionY { get; set; }
+        public double DropPositionY { get; set; }
     }
 }

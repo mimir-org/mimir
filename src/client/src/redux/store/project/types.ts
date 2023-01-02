@@ -12,6 +12,7 @@ import {
   Terminal,
   Attribute,
   PrepareAm,
+  PrepareCm,
 } from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -509,7 +510,7 @@ export interface MergeSubProject {
 
 export interface MergeSubProjectFinished {
   type: typeof MERGE_SUB_PROJECT_SUCCESS_OR_ERROR;
-  payload: { prepare: PrepareAm; apiError: ApiError };
+  payload: { prepare: PrepareCm; apiError: ApiError };
 }
 
 export type ProjectActionTypes =
@@ -587,4 +588,6 @@ export type ProjectActionTypes =
   | AddInterfaceTerminalAttribute
   | RemoveInterfaceTerminalAttribute
   | AddTransportTerminalAttribute
-  | RemoveTransportTerminalAttribute;
+  | RemoveTransportTerminalAttribute
+  | MergeSubProject
+  | MergeSubProjectFinished;

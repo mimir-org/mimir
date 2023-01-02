@@ -11,6 +11,7 @@ import {
   ProjectConverterAm,
   Terminal,
   Attribute,
+  PrepareAm,
 } from "@mimirorg/modelbuilder-types";
 
 export function convertSubProjectStatus(projectId: string): Types.ProjectActionTypes {
@@ -340,4 +341,8 @@ export function removeInterfaceTerminalAttribute(
   isInput: boolean
 ): Types.RemoveInterfaceTerminalAttribute {
   return { type: Types.REMOVE_INTERFACE_TERMINAL_ATTRIBUTE, payload: { edgeId, attributeId, isInput } };
+}
+
+export function mergeSubProject(prepare: PrepareAm): Types.MergeSubProject {
+  return { type: Types.MERGE_SUB_PROJECT, payload: { prepare } };
 }
