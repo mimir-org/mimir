@@ -50,8 +50,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Edges, opt => opt.MapFrom(src => src.Edges));
 
             CreateMap<Project, LibrarySubProjectVersion>()
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
 
             CreateMap<Project, LibrarySubProject>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

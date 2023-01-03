@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data;
 using Mimirorg.Common.Attributes;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application

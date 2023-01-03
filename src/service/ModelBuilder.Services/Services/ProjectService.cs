@@ -17,6 +17,7 @@ using Mimirorg.TypeLibrary.Enums;
 using Mb.Models.Common;
 using Mb.Models.Application;
 using Mb.Models.Client;
+using Mb.Models.Extensions;
 
 namespace Mb.Services.Services
 {
@@ -34,13 +35,14 @@ namespace Mb.Services.Services
         private readonly IRemapService _remapService;
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
+        private readonly IVersionService _versionService;
 
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
             IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
-            ICooperateService cooperateService)
+            ICooperateService cooperateService, IVersionService versionService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -54,6 +56,7 @@ namespace Mb.Services.Services
             _logger = logger;
             _remapService = remapService;
             _cooperateService = cooperateService;
+            _versionService = versionService;
         }
 
         /// <summary>
@@ -273,8 +276,16 @@ namespace Mb.Services.Services
             // Sort nodes
             ResolveLevelAndOrder(updated);
 
+            // Resolve version changes
+            var versionStatus = original.CalculateVersionStatus(project);
+            updated.UpdateVersion(versionStatus);
+
             // Get create edit data
             var projectEditData = await _remapService.CreateEditData(original, updated);
+
+            // Save last version if there is version changes
+            if (versionStatus != VersionStatus.NoChange)
+                await _versionService.CreateVersion(original);
 
             // Update
             await _projectRepository.UpdateProject(original, updated, projectEditData);
@@ -367,7 +378,6 @@ namespace Mb.Services.Services
                     continue;
 
                 await client.SendData(export);
-                await SetProjectCommitVersion(project.Id);
             }
         }
 
@@ -384,6 +394,12 @@ namespace Mb.Services.Services
             return exist;
         }
 
+        /// <summary>
+        /// Create a prepare project clone that could be merged into another project
+        /// </summary>
+        /// <param name="prepare"></param>
+        /// <returns></returns>
+        /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
         public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
         {
             // TODO: We need to handle versions
@@ -394,7 +410,7 @@ namespace Mb.Services.Services
             var projectAm = _mapper.Map<ProjectAm>(subProject);
             _ = _remapService.Clone(projectAm);
 
-            // Save the project as a temporary project
+            // Save the project as a temporary project, the cleanup hosted service will remove this temp project later
             projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";
             projectAm.Description = "This is a temporary project";
             projectAm.IsSubProject = true;
@@ -412,13 +428,23 @@ namespace Mb.Services.Services
             // Identify root nodes
             var rootNodes = updatedProject.Nodes.Where(x => x.IsRoot).Select(x => x.Id);
 
-            // Set node and edges project id to merge project
+            // Position node
+            var rootOrigin = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).MinBy(x => x.PositionY);
+
+            // Set node and edges project id to merge project, and calculate position
             updatedProject.Nodes = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).Select(x =>
             {
                 x.ProjectId = prepare.ProjectId;
                 x.ProjectIri = null;
-                return x;
+                return x.CalculatePosition(rootOrigin, prepare);
             }).ToList();
+
+            // Set root origin to center
+            if (rootOrigin != null)
+            {
+                rootOrigin.PositionX = (decimal) prepare.DropPositionX;
+                rootOrigin.PositionY = (decimal) prepare.DropPositionY;
+            }
 
             updatedProject.Edges = updatedProject.Edges.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
             {
@@ -426,8 +452,6 @@ namespace Mb.Services.Services
                 x.ProjectIri = null;
                 return x;
             }).ToList();
-
-            // TODO: update node positions
 
             var prepareCm = new PrepareCm
             {
@@ -440,6 +464,8 @@ namespace Mb.Services.Services
         }
 
         #region Private
+
+
 
         private Node CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)
         {
@@ -630,17 +656,7 @@ namespace Mb.Services.Services
 
         //}
 
-        private async Task SetProjectCommitVersion(string projectId)
-        {
-            if (string.IsNullOrWhiteSpace(projectId))
-                return;
 
-            var projectCommitVersionUpdate = _projectRepository.FindBy(x => x.Id == projectId).First();
-            projectCommitVersionUpdate.IncrementCommitVersion();
-            _projectRepository.Update(projectCommitVersionUpdate);
-            await _projectRepository.SaveAsync();
-            _projectRepository.Detach(projectCommitVersionUpdate);
-        }
 
         private void ClearAllChangeTracker()
         {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Mb.Models.Client;
+using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Records;
@@ -34,6 +35,13 @@ namespace Mb.Data.Contracts
         /// <param name="number">Get number of project</param>
         /// <returns>A list of project information</returns>
         IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
+
+        /// <summary>
+        /// Get project version list
+        /// </summary>
+        /// <param name="isSubProject">Get sub-projects or projects</param>
+        /// <returns>A list of project version information</returns>
+        Task<List<VersionData>> GetProjectVersions(bool isSubProject);
 
         /// <summary>
         /// Update project

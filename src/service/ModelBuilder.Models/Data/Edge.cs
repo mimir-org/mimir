@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode

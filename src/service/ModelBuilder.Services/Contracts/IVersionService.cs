@@ -10,7 +10,7 @@ namespace Mb.Services.Contracts
         Task<IEnumerable<VersionCm>> GetAllVersions();
         Task<IEnumerable<VersionCm>> GetAllVersions(string typeId);
         Task<Project> GetProject(int id);
-        Task<VersionCm> CreateVersion(string projectId);
+        Task<VersionCm> CreateVersion(Project project);
         Task DeleteVersion(int id);
     }
 }

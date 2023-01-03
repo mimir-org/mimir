@@ -1,10 +1,10 @@
 import { ReactFlowInstance } from "react-flow-renderer";
-import { addNode, createEdge, mergeSubProject } from "../../../../redux/store/project/actions";
+import { addNode, mergeSubProject } from "../../../../redux/store/project/actions";
 import { ConvertLibNodeToNode } from "../../converters";
 import { Dispatch } from "redux";
 import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { GetProjectData, IsSubProject } from "../helpers";
+import { IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Node, PrepareAm, Project } from "@mimirorg/modelbuilder-types";
@@ -35,7 +35,7 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  IsSubProject(event) ? HandleSubProjectDrop(event, project, dispatch) : HandleLibNodeDrop(params);
+  IsSubProject(event) ? HandleSubProjectDrop(event, project, params, dispatch) : HandleLibNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
@@ -83,26 +83,30 @@ function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[])
  * @param project
  * @param dispatch
  */
-function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
+function HandleSubProjectDrop(
+  event: React.DragEvent<HTMLDivElement>,
+  project: Project,
+  params: OnDropParameters,
+  dispatch: Dispatch
+) {
   const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as Project;
+  const reactFlowBounds = params.flowWrapper.current.getBoundingClientRect();
+
+  const position = params.flowInstance.project({
+    x: event.clientX - reactFlowBounds.left,
+    y: event.clientY - reactFlowBounds.top,
+  });
+
+  console.log(event);
 
   const prepare: PrepareAm = {
     subProjectId: eventData.id,
     projectId: project.id,
-    dropPositionX: event.clientX.toString(),
-    dropPositionY: event.clientY.toString(),
+    dropPositionX: position.x,
+    dropPositionY: position.y,
   };
 
   dispatch(mergeSubProject(prepare));
-  // const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, eventData);
-  // nodesToCreate.forEach((node) => dispatch(addNode(node)));
-  // edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
-
-  // (async () => {
-  //   const subProject = await GetSubProject(eventData.project.id);
-  //   const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
-
-  // })();
 }
 
 export default useOnTreeDrop;

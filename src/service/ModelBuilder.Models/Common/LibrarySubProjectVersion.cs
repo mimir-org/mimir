@@ -1,10 +1,9 @@
-using Mb.Models.Data;
-
 namespace Mb.Models.Common
 {
     public class LibrarySubProjectVersion
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
         public string Version { get; set; }
-        public Project Project { get; set; }
     }
 }

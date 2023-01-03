@@ -6,7 +6,6 @@ using Mimirorg.Common.Exceptions;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Extensions;
-using StringExtensions = Mb.Models.Extensions.StringExtensions;
 
 namespace Mb.Data.Repositories
 {
@@ -227,7 +226,7 @@ namespace Mb.Data.Repositories
         /// <returns>A valid id</returns>
         private string ResolveIri(string id)
         {
-            var domain = StringExtensions.ResolveDomain(id);
+            var domain = id?.ResolveDomain();
 
             if (string.IsNullOrWhiteSpace(domain))
                 throw new MimirorgConfigurationException($"Missing domain from id {id}");

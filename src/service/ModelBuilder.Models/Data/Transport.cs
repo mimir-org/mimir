@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -55,16 +54,6 @@ namespace Mb.Models.Data
         [JsonIgnore]
         [TSExclude]
         public ICollection<Edge> Edges { get; set; }
-
-        public void IncrementMinorVersion()
-        {
-            Version = Version.IncrementMinorVersion();
-        }
-
-        public void IncrementMajorVersion()
-        {
-            Version = Version.IncrementMajorVersion();
-        }
 
         #region IEquatable
 

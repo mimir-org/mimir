@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mimirorg.Common.Attributes;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Application
 {

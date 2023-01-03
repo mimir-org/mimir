@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Common;
+using Mb.Models.Data;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -104,23 +105,39 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<List<LibrarySubProject>> GetSubProjects(string searchString = null)
         {
-            var projectsQuery = _projectRepository.GetAll().Where(x => x.IsSubProject);
-            if (!string.IsNullOrWhiteSpace(searchString))
-                projectsQuery = projectsQuery.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
+            var projectVersions = await _projectRepository.GetProjectVersions(true);
+            var groups = projectVersions.ToLookup(x => x.Id);
+            var keys = groups.Select(t => t.Key);
+            var versions = new List<LibrarySubProject>();
 
-            var projectIds = await projectsQuery.Select(x => x.Id).ToListAsync();
-
-            var projectDictionary = new Dictionary<string, LibrarySubProject>();
-            var tasks = new List<Task>();
-
-
-            foreach (var id in projectIds)
+            foreach (var key in keys)
             {
-                tasks.Add(Task.Run(() => ResolveProjectItem(id, projectDictionary)));
+                var items = groups[key].OrderByDescending(x => x.Version).ThenByDescending(x => x.Ver).ToList();
+                if (!items.Any())
+                    continue;
+
+                var version = new LibrarySubProject
+                {
+                    Id = items[0].Id,
+                    Name = items[0].Name,
+                    Version = items[0].Version,
+                    Description = items[0].Description,
+                    Versions = new List<LibrarySubProjectVersion>()
+                };
+
+                foreach (var item in items)
+                {
+                    version.Versions.Add(new LibrarySubProjectVersion
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        Version = item.Ver ?? item.Version,
+                    });
+                }
+                versions.Add(version);
             }
 
-            await Task.WhenAll(tasks);
-            return projectDictionary.Values.ToList();
+            return versions;
         }
 
         private async Task ResolveProjectItem(string projectId, IDictionary<string, LibrarySubProject> projectDictionary)

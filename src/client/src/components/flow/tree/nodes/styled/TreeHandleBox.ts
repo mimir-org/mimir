@@ -6,6 +6,8 @@ interface Props {
   visible: boolean;
   position: Position;
   topPos: string;
+  rightPos?: number;
+  leftPos?: number;
 }
 
 export const TreeHandleBox = styled.div<Props>`
@@ -18,9 +20,18 @@ export const TreeHandleBox = styled.div<Props>`
     border-radius: 0;
     bottom: -19px;
     z-index: 1;
-    right: ${(props) => props.position === Position.Right && 50}px;
-    left: ${(props) => props.position === Position.Left && 50}px;
+    right: ${(props) => props.position === Position.Right && props.rightPos}px;
+    left: ${(props) => props.position === Position.Left && props.leftPos}px;
     top: ${(props) => props.topPos};
     transition: opacity 0.5s ease-in-out;
   }
 `;
+
+TreeHandleBox.displayName = "TreeHandleBox";
+
+TreeHandleBox.defaultProps = {
+  visible: false,
+  position: Position.Right,
+  rightPos: 50,
+  leftPos: 50,
+};

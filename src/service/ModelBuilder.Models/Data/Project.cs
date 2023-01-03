@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Mb.Models.Extensions;
+using System.Linq;
+using Mb.Models.Abstract;
+using Mb.Models.Application;
+using Mimirorg.Common.Extensions;
+using Mimirorg.Common.Models;
+using Mimirorg.TypeLibrary.Enums;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Project : IEquatable<Project>
+    public class Project : IEquatable<Project>, IVersionable<ProjectAm>
     {
         #region Properties
 
@@ -22,34 +28,6 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
-
-        #endregion
-
-        #region Public methods
-
-        public void IncrementMajorVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementMajorVersion();
-        }
-
-        public void IncrementMinorVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementMinorVersion();
-        }
-
-        public void IncrementCommitVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementCommitVersion();
-        }
 
         #endregion
 
@@ -90,6 +68,79 @@ namespace Mb.Models.Data
             hashCode.Add(UpdatedBy);
             hashCode.Add(Updated);
             return hashCode.ToHashCode();
+        }
+
+        #endregion
+
+        #region IVersionable
+
+        public Validation HasIllegalChanges(ProjectAm other)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            var validation = new Validation();
+            return validation;
+        }
+
+        public VersionStatus CalculateVersionStatus(ProjectAm other)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            var minor = false;
+            var major = false;
+
+            if (Description != other.Description)
+                minor = true;
+
+            if (Edges?.Count != other.Edges?.Count)
+                minor = true;
+
+            // Node has been added. This is a minor release
+            if (Nodes?.Count < other.Nodes?.Count)
+                minor = true;
+
+            if (Nodes != null)
+            {
+                foreach (var node in Nodes)
+                {
+                    var otherNode = other.Nodes?.FirstOrDefault(x => x.Id == node.Id);
+                    if (otherNode == null)
+                    {
+                        // The node is deleted and this is a major version change
+                        major = true;
+                        continue;
+                    }
+                    var nodeVersionStatus = node.CalculateVersionStatus(otherNode);
+                    node.UpdateVersion(nodeVersionStatus);
+                    switch (nodeVersionStatus)
+                    {
+                        case VersionStatus.Major:
+                            major = true;
+                            break;
+                        case VersionStatus.Minor:
+                            minor = true;
+                            break;
+                        case VersionStatus.NoChange:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+
+            return major ? VersionStatus.Major : minor ? VersionStatus.Minor : VersionStatus.NoChange;
+        }
+
+        public void UpdateVersion(VersionStatus status)
+        {
+            Version = status switch
+            {
+                VersionStatus.Minor => Version.IncrementMinorVersion(),
+                VersionStatus.Major => Version.IncrementMajorVersion(),
+                _ => Version
+            };
         }
 
         #endregion

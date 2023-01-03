@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
 using TypeScriptBuilder;

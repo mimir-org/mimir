@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Mb.Models.Client;
+using Mb.Models.Common;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
@@ -34,12 +35,13 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly ICacheRepository _cacheRepository;
+        private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
             IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
             IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository,
             IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository,
-            ICacheRepository cacheRepository) : base(dbContext)
+            ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
@@ -50,6 +52,7 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _interfaceRepository = interfaceRepository;
             _cacheRepository = cacheRepository;
+            _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
         /// <summary>
@@ -150,6 +153,22 @@ namespace Mb.Data.Repositories
                 .Take(number)
                 .ProjectTo<ProjectItemCm>(_mapper.ConfigurationProvider)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Get project version list
+        /// </summary>
+        /// <param name="isSubProject">Get sub-projects or projects</param>
+        /// <returns>A list of project version information</returns>
+        public async Task<List<VersionData>> GetProjectVersions(bool isSubProject)
+        {
+            var procParams = new Dictionary<string, object>
+            {
+                {"@IsSubProject", isSubProject}
+            };
+
+            var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionData>("GetProjectVersion", procParams);
+            return subProjects;
         }
 
         /// <summary>
