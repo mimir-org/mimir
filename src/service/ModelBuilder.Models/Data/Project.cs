@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
+using Mb.Models.Extensions;
 using Mimirorg.Common.Extensions;
 using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
@@ -101,33 +101,19 @@ namespace Mb.Models.Data
             if (Nodes?.Count < other.Nodes?.Count)
                 minor = true;
 
-            if (Nodes != null)
+            var nodeVersionStatus = this.SetNodeVersionStatus(other);
+            switch (nodeVersionStatus)
             {
-                foreach (var node in Nodes)
-                {
-                    var otherNode = other.Nodes?.FirstOrDefault(x => x.Id == node.Id);
-                    if (otherNode == null)
-                    {
-                        // The node is deleted and this is a major version change
-                        major = true;
-                        continue;
-                    }
-                    var nodeVersionStatus = node.CalculateVersionStatus(otherNode);
-                    node.UpdateVersion(nodeVersionStatus);
-                    switch (nodeVersionStatus)
-                    {
-                        case VersionStatus.Major:
-                            major = true;
-                            break;
-                        case VersionStatus.Minor:
-                            minor = true;
-                            break;
-                        case VersionStatus.NoChange:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
+                case VersionStatus.Major:
+                    major = true;
+                    break;
+                case VersionStatus.Minor:
+                    minor = true;
+                    break;
+                case VersionStatus.NoChange:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             return major ? VersionStatus.Major : minor ? VersionStatus.Minor : VersionStatus.NoChange;
