@@ -21,6 +21,11 @@ interface OnDropParameters {
   dispatch: Dispatch;
 }
 
+interface VersionData {
+  id: string;
+  version: string;
+}
+
 /**
  * Hook that runs when a LibNode from the LibraryModule is dropped onto the Mimir canvas in TreeView.
  * The LibNode is converted to a Mimir Node, and a partOf Edge is created from the dropped Node to its parent.
@@ -89,7 +94,7 @@ function HandleSubProjectDrop(
   params: OnDropParameters,
   dispatch: Dispatch
 ) {
-  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as Project;
+  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as VersionData;
   const reactFlowBounds = params.flowWrapper.current.getBoundingClientRect();
 
   const position = params.flowInstance.project({
@@ -104,6 +109,7 @@ function HandleSubProjectDrop(
     projectId: project.id,
     dropPositionX: position.x,
     dropPositionY: position.y,
+    version: eventData.version,
   };
 
   dispatch(mergeSubProject(prepare));

@@ -60,10 +60,10 @@ const SubProjectComponentItem = ({ item, visible }: SubProjectItemProps) => {
         <SubProjectItemContainer>
           {item.versions.map((version) => (
             <SubProjectItem
-              id={version.project.id}
-              key={version.project.id}
+              id={version.id}
+              key={version.id}
               draggable
-              onDragStart={(event) => OnDragStart(event, JSON.stringify(version?.project))}
+              onDragStart={(event) => OnDragStart(event, JSON.stringify({ id: version?.id, version: version?.version }))}
             >
               <Icon size={20} src={Latest} alt={"Sub-project"} />
               <span>{item.name}</span>
