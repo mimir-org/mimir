@@ -50,9 +50,9 @@ namespace Mb.Services.Contracts
         Task<List<LibrarySubProject>> GetSubProjects(string searchString = null);
 
         /// <summary>
-        /// Get all node types and send types to connected clients
+        /// Send refresh cache to all connected clients
         /// </summary>
         /// <returns></returns>
-        Task SendClientNodeTypes();
+        Task SendRefreshLibData();
     }
 }

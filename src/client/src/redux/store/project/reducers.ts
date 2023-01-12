@@ -37,6 +37,18 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
   const edges = state.project?.edges;
 
   switch (action.type) {
+    case Types.UPDATE_PROJECT_VERSION: {
+      if (action?.payload?.version == null || action?.payload?.version?.projectId !== state.project.id) return;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          version: action.payload.version.version,
+        },
+      };
+    }
+
     case Types.MERGE_SUB_PROJECT:
       return {
         ...state,

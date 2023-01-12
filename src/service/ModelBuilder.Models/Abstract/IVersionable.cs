@@ -1,3 +1,4 @@
+using Mb.Models.Records;
 using Mimirorg.TypeLibrary.Enums;
 using Mimirorg.Common.Models;
 
@@ -8,7 +9,7 @@ namespace Mb.Models.Abstract
     {
         string Version { get; set; }
         Validation HasIllegalChanges(T other);
-        VersionStatus CalculateVersionStatus(T other);
+        VersionStatus CalculateVersionStatus(T other, ProjectEditData editData);
         void UpdateVersion(VersionStatus status);
     }
 }

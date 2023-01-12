@@ -32,7 +32,7 @@ export const SubProjectsComponent = ({ items }: SubProjectProps) => {
       {items &&
         items.map((item) => {
           return (
-            <SubProjectsItemWrapper key={item.id}>
+            <SubProjectsItemWrapper key={`item-${item.id}-${item.version}`}>
               <SubProjectHeader id={item.id} selected={selected} onClick={() => setSelected(item.id)}>
                 <Icon size={20} src={SubProjectCategory} alt={"Sub-project"} />
                 <span>{item.name}</span>
@@ -61,7 +61,7 @@ const SubProjectComponentItem = ({ item, visible }: SubProjectItemProps) => {
           {item.versions.map((version) => (
             <SubProjectItem
               id={version.id}
-              key={version.id}
+              key={`version-${item.id}-${version.version}`}
               draggable
               onDragStart={(event) => OnDragStart(event, JSON.stringify({ id: version?.id, version: version?.version }))}
             >

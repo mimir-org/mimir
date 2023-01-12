@@ -57,6 +57,22 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Get project from typeid and version
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <param name="version"></param>
+        /// <returns>Project</returns>
+        public Task<Project> GetGetByVersion(string typeId, string version)
+        {
+            var projectData = _versionRepository.GetAll().FirstOrDefault(x => x.TypeId == typeId && x.Ver == version);
+            if (projectData?.Data == null)
+                return null;
+
+            var project = JsonConvert.DeserializeObject<Project>(projectData.Data, DefaultSettings.SerializerSettings);
+            return Task.FromResult(project);
+        }
+
+        /// <summary>
         /// Returns a specific version of a Project
         /// </summary>
         /// <param name="id"></param>
@@ -92,7 +108,7 @@ namespace Mb.Services.Services
                 Name = project.Name,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                Data = JsonConvert.SerializeObject(project, DefaultSettings.SerializerSettingsNoTypeNameHandling)
+                Data = JsonConvert.SerializeObject(project, DefaultSettings.SerializerSettings)
             };
 
             await _versionRepository.CreateAsync(version);

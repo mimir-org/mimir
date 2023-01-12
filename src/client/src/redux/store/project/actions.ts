@@ -2,6 +2,7 @@
 import * as Types from "./types";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
+import { ProjectVersionCm } from "../../../models/client/projectVersionCm";
 import {
   Project,
   Node,
@@ -36,6 +37,10 @@ export function search(name: string): Types.ProjectActionTypes {
 
 export function create(name: string, description: string): Types.ProjectActionTypes {
   return { type: Types.CREATING_PROJECT, payload: { name, description, version: "1.0" } };
+}
+
+export function updateProjectVersion(version: ProjectVersionCm): Types.UpdateProjectVersion {
+  return { type: Types.UPDATE_PROJECT_VERSION, payload: { version: version } };
 }
 
 export function createSubProject(

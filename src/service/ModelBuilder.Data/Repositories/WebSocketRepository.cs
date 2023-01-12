@@ -7,7 +7,6 @@ using Mb.Models.Data;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.SignalR;
-using Mimirorg.TypeLibrary.Models.Client;
 using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
@@ -19,6 +18,12 @@ namespace Mb.Data.Repositories
         public WebSocketRepository(IHubContext<ModelBuilderHub> hubContext)
         {
             _hubContext = hubContext;
+        }
+
+        public async Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(version, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+            await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
         }
 
         public async Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus)
@@ -39,9 +44,9 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
         }
 
-        public async Task SendNodeLibData(List<NodeLibCm> nodes)
+        public async Task SendRefreshLibData()
         {
-            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveNodeLibData);
+            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLibData);
         }
     }
 }

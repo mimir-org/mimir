@@ -2,6 +2,7 @@
 import { ApiError } from "../../../models/webclient";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
+import { ProjectVersionCm } from "../../../models/client/projectVersionCm";
 import {
   Node,
   Edge,
@@ -92,6 +93,7 @@ export const CONVERT_SUB_PROJECT_STATUS = "CONVERT_SUB_PROJECT_STATUS";
 export const CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR = "CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR";
 export const MERGE_SUB_PROJECT = "MERGE_SUB_PROJECT";
 export const MERGE_SUB_PROJECT_SUCCESS_OR_ERROR = "MERGE_SUB_PROJECT_SUCCESS_OR_ERROR";
+export const UPDATE_PROJECT_VERSION = "UPDATE_PROJECT_VERSION";
 
 // State types
 export interface ProjectState {
@@ -513,6 +515,11 @@ export interface MergeSubProjectFinished {
   payload: { prepare: PrepareCm; apiError: ApiError };
 }
 
+export interface UpdateProjectVersion {
+  type: typeof UPDATE_PROJECT_VERSION;
+  payload: { version: ProjectVersionCm };
+}
+
 export type ProjectActionTypes =
   | ConvertSubProjectStatus
   | ConvertSubProjectStatusFinished
@@ -590,4 +597,5 @@ export type ProjectActionTypes =
   | AddTransportTerminalAttribute
   | RemoveTransportTerminalAttribute
   | MergeSubProject
-  | MergeSubProjectFinished;
+  | MergeSubProjectFinished
+  | UpdateProjectVersion;

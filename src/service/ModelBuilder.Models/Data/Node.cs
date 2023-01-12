@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
+using Mb.Models.Extensions;
 using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 using Mimirorg.Common.Extensions;
+using Mb.Models.Records;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Node : IEquatable<Node>, IVersionable<NodeAm>
+    public class Node : IEquatable<Node>, IVersionable<Node>
     {
         #region Properties
 
@@ -220,7 +221,7 @@ namespace Mb.Models.Data
 
         #region IVersionable
 
-        public Validation HasIllegalChanges(NodeAm other)
+        public Validation HasIllegalChanges(Node other)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
@@ -229,18 +230,18 @@ namespace Mb.Models.Data
             return validation;
         }
 
-        public VersionStatus CalculateVersionStatus(NodeAm other)
+        public VersionStatus CalculateVersionStatus(Node other, ProjectEditData editData)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
 
-            var minor = false;
-            var major = false;
+            if (this.HasMajorChanges(editData))
+                return VersionStatus.Major;
 
-            if (Label != other.Label)
-                minor = true;
+            if (this.HasMinorChanges(editData, other))
+                return VersionStatus.Minor;
 
-            return major ? VersionStatus.Major : minor ? VersionStatus.Minor : VersionStatus.NoChange;
+            return VersionStatus.NoChange;
         }
 
         public void UpdateVersion(VersionStatus status)

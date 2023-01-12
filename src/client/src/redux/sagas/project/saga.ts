@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { WebSocket } from "../../../models";
 import { Project, ProjectFileAm } from "@mimirorg/modelbuilder-types";
 import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
@@ -7,6 +7,7 @@ import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
+import { fetchSubProjects } from "../../store/library/librarySlice";
 import {
   MergeSubProject,
   MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -140,8 +141,8 @@ export function* createProject(action) {
       } as ApiError;
 
       const payload = { project: null, apiError };
-
       yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
+
       return;
     }
 
@@ -149,8 +150,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = { project, apiError: null };
-
-    yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
+    yield all([put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload }), put(search(""))]);
   } catch (error) {
     const apiError = {
       key: CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -185,8 +185,7 @@ export function* createSubProject(action: CreateSubProject) {
     }
 
     const payload = { apiError: null };
-
-    yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+    yield all([put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload }), put(search("")), put(fetchSubProjects())]);
   } catch (error) {
     const apiError = {
       key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -210,8 +209,7 @@ export function* updateProject(action: SaveProjectAction) {
       yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
       return;
     }
-
-    yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } });
+    yield all([put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } }), put(search(""))]);
   } catch (error) {
     const apiError = GetApiErrorForException(error, SAVE_PROJECT_SUCCESS_OR_ERROR);
     yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
@@ -267,9 +265,11 @@ export function* importProject(action: ImportProjectAction) {
       yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
       return;
     }
-
-    yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } });
-    yield put(search(""));
+    yield all([
+      put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } }),
+      put(search("")),
+      put(fetchSubProjects()),
+    ]);
   } catch (error) {
     const apiError = GetApiErrorForException(error, IMPORT_PROJECT_SUCCESS_OR_ERROR);
     yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
@@ -353,8 +353,7 @@ export function* convertSubProject(action: ConvertSubProjectStatus) {
     }
 
     const payload = { apiError: null };
-
-    yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+    yield all([put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload }), put(search("")), put(fetchSubProjects())]);
   } catch (error) {
     const apiError = {
       key: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,

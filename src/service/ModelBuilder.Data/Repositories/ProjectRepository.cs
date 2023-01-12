@@ -17,7 +17,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Mb.Models.Client;
-using Mb.Models.Common;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo

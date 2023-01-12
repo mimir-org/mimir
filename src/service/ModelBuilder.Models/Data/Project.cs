@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Extensions;
+using Mb.Models.Records;
 using Mimirorg.Common.Extensions;
 using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
@@ -12,7 +12,7 @@ using Mimirorg.TypeLibrary.Enums;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Project : IEquatable<Project>, IVersionable<ProjectAm>
+    public class Project : IEquatable<Project>, IVersionable<Project>
     {
         #region Properties
 
@@ -74,7 +74,7 @@ namespace Mb.Models.Data
 
         #region IVersionable
 
-        public Validation HasIllegalChanges(ProjectAm other)
+        public Validation HasIllegalChanges(Project other)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
@@ -83,40 +83,18 @@ namespace Mb.Models.Data
             return validation;
         }
 
-        public VersionStatus CalculateVersionStatus(ProjectAm other)
+        public VersionStatus CalculateVersionStatus(Project other, ProjectEditData editData)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
 
-            var minor = false;
-            var major = false;
+            if (this.HasMajorChanges(editData))
+                return VersionStatus.Major;
 
-            if (Description != other.Description)
-                minor = true;
+            if (this.HasMinorChanges(editData, other))
+                return VersionStatus.Minor;
 
-            if (Edges?.Count != other.Edges?.Count)
-                minor = true;
-
-            // Node has been added. This is a minor release
-            if (Nodes?.Count < other.Nodes?.Count)
-                minor = true;
-
-            var nodeVersionStatus = this.SetNodeVersionStatus(other);
-            switch (nodeVersionStatus)
-            {
-                case VersionStatus.Major:
-                    major = true;
-                    break;
-                case VersionStatus.Minor:
-                    minor = true;
-                    break;
-                case VersionStatus.NoChange:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return major ? VersionStatus.Major : minor ? VersionStatus.Minor : VersionStatus.NoChange;
+            return VersionStatus.NoChange;
         }
 
         public void UpdateVersion(VersionStatus status)
@@ -130,5 +108,6 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
     }
 }

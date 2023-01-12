@@ -102,8 +102,6 @@ function HandleSubProjectDrop(
     y: event.clientY - reactFlowBounds.top,
   });
 
-  console.log(event);
-
   const prepare: PrepareAm = {
     subProjectId: eventData.id,
     projectId: project.id,
