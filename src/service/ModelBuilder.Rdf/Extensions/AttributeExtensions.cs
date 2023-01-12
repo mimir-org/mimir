@@ -97,7 +97,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns>A list of allowed units</returns>
         public static List<UnitLibCm> GetAllowedUnits(this Attribute attribute)
         {
-            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.UnitString, DefaultSettings.SerializerSettings);
+            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.UnitString, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         }
 
         /// <summary>

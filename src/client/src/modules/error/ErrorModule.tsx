@@ -5,7 +5,6 @@ import { TextResources } from "../../assets/text/TextResources";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/commonSlice";
-import { deleteLibraryError } from "../../redux/store/library/librarySlice";
 import { deleteUserError } from "../../redux/store/user/userSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
@@ -39,7 +38,6 @@ const ErrorModule = () => {
         if (error.key) {
           dispatch(deleteProjectError(error.key));
           dispatch(deleteCommonError(error.key));
-          dispatch(deleteLibraryError(error.key));
           dispatch(deleteUserError(error.key));
         }
       });

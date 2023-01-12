@@ -109,7 +109,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("subProject")]
-        [ProducesResponseType(typeof(ICollection<LibrarySubProjectItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<LibrarySubProjectVersion>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

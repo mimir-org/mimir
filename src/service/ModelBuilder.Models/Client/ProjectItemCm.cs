@@ -1,5 +1,5 @@
 using System;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Client
 {

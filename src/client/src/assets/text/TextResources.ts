@@ -150,8 +150,8 @@ export const TextResources = {
   MANAGE_COLLECTIONS_ADD: "Add to Collections",
   MANAGE_COLLECTIONS_BUTTON: "Manage Collections",
   MANAGE_COLLECTIONS_UPDATE: "Update Library",
-  SUBPROJECTS_INFO: "Subprojects created in Project menu appear listed here.",
-  SUBPROJECTS_NONE: "There are currently no Subprojects for this Project.",
+  SUBPROJECTS_INFO: "Subprojects created in project menu appear listed here.",
+  SUBPROJECTS_NONE: "There are currently no subprojects.",
   TEMPLATES_NONE: "There are currently no Templates available for this Project.",
   TYPE_VERSION: "v",
   CREATE_COLLECTION: "Create or add to existing Library Collection",
@@ -215,6 +215,11 @@ export const TextResources = {
   PROJECT_NAME_NEW: "New project name...",
   CONFIRM_SAVE: " Save this project before opening/starting another?",
   FILE_NAME: "File name",
+
+  MAKE_AVAILABLE_SUBPROJECT: "Available as subproject",
+  MAKE_DISABLE_SUBPROJECT: "Disable as subproject",
+  MAKE_DISABLE_SUBPROJECT_DESCRIPTION:
+    "If the project is a sub-project, you can merge this project into another project. \nAre you sure that you want to convert this project?",
 
   SAVE_SUBPROJECT: "Save subproject",
   PROJECT_CLOSE_LABEL: "Please make sure you save before you close the project.",

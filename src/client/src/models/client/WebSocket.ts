@@ -1,7 +1,7 @@
 import Config from "../Config";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { WorkerStatus } from "../index";
+import { ProjectVersionCm, WorkerStatus } from "../index";
 import { ProjectState } from "../../redux/store/project/types";
 import { LockCm } from "../application/LockCm";
 import { Node, Edge, EntityType } from "@mimirorg/modelbuilder-types";
@@ -18,8 +18,14 @@ import {
   setLockedNodes,
   updateEdge,
   updateNode,
+  updateProjectVersion,
 } from "../../redux/store/project/actions";
-import { fetchLibrary } from "../../redux/store/library/librarySlice";
+import {
+  fetchLibrary,
+  fetchLibraryInterfaceTypes,
+  fetchLibraryTransportTypes,
+  fetchSubProjects,
+} from "../../redux/store/library/librarySlice";
 
 let instance = null;
 
@@ -67,7 +73,8 @@ export class WebSocket {
           this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
           this._connection.on("ReceiveEdgeData", this.handleReceivedEdgeData);
           this._connection.on("ReceiveLockData", this.handleReceiveLockData);
-          this._connection.on("ReceiveNodeLibData", this.handleNodeLibData);
+          this._connection.on("ReceiveLibData", this.handleUpdateLibData);
+          this._connection.on("ReceiveProjectVersionData", this.handleReceiveProjectVersionData);
         })
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         .catch((_e: unknown) => {});
@@ -155,7 +162,15 @@ export class WebSocket {
     }
   };
 
-  private handleNodeLibData = () => {
+  private handleUpdateLibData = () => {
     this._dispatch(fetchLibrary());
+    this._dispatch(fetchLibraryTransportTypes());
+    this._dispatch(fetchLibraryInterfaceTypes());
+    this._dispatch(fetchSubProjects());
+  };
+
+  private handleReceiveProjectVersionData = (_: WorkerStatus, data: string) => {
+    const obj = JSON.parse(data) as ProjectVersionCm;
+    this._dispatch(updateProjectVersion(obj));
   };
 }

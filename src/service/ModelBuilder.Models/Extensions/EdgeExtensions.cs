@@ -1,6 +1,7 @@
 using Mb.Models.Application;
 using System.Collections.Generic;
 using System.Linq;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Extensions
 {
@@ -17,6 +18,11 @@ namespace Mb.Models.Extensions
             {
                 var fromNode = nodes.FirstOrDefault(x => x.Id == edge.FromNodeId);
                 if (fromNode != null)
+                    continue;
+
+                var toNode = nodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
+                var toConnector = toNode?.Connectors?.FirstOrDefault(x => x.Id == edge.ToConnectorId);
+                if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
                     continue;
 
                 parentlessEdges.Add(edge);

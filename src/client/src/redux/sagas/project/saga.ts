@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { WebSocket } from "../../../models";
 import { Project, ProjectFileAm } from "@mimirorg/modelbuilder-types";
 import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
@@ -7,16 +7,11 @@ import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
+import { fetchSubProjects } from "../../store/library/librarySlice";
 import {
-  ApiError,
-  GetApiErrorForBadRequest,
-  GetApiErrorForException,
-  GetBadResponseData,
-  get,
-  post,
-  HeadersInitDefault,
-} from "../../../models/webclient";
-import {
+  MergeSubProject,
+  MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
+  CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -33,7 +28,17 @@ import {
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
+  ConvertSubProjectStatus,
 } from "../../store/project/types";
+import {
+  ApiError,
+  GetApiErrorForBadRequest,
+  GetApiErrorForException,
+  GetBadResponseData,
+  get,
+  post,
+  HeadersInitDefault,
+} from "../../../models/webclient";
 
 export function* getProject(action: FetchingProjectAction) {
   try {
@@ -136,8 +141,8 @@ export function* createProject(action) {
       } as ApiError;
 
       const payload = { project: null, apiError };
-
       yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
+
       return;
     }
 
@@ -145,8 +150,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = { project, apiError: null };
-
-    yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
+    yield all([put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload }), put(search(""))]);
   } catch (error) {
     const apiError = {
       key: CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -181,8 +185,7 @@ export function* createSubProject(action: CreateSubProject) {
     }
 
     const payload = { apiError: null };
-
-    yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+    yield all([put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload }), put(search("")), put(fetchSubProjects())]);
   } catch (error) {
     const apiError = {
       key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -206,8 +209,7 @@ export function* updateProject(action: SaveProjectAction) {
       yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
       return;
     }
-
-    yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } });
+    yield all([put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } }), put(search(""))]);
   } catch (error) {
     const apiError = GetApiErrorForException(error, SAVE_PROJECT_SUCCESS_OR_ERROR);
     yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
@@ -263,9 +265,11 @@ export function* importProject(action: ImportProjectAction) {
       yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
       return;
     }
-
-    yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } });
-    yield put(search(""));
+    yield all([
+      put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } }),
+      put(search("")),
+      put(fetchSubProjects()),
+    ]);
   } catch (error) {
     const apiError = GetApiErrorForException(error, IMPORT_PROJECT_SUCCESS_OR_ERROR);
     yield put({ type: IMPORT_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
@@ -325,5 +329,74 @@ export function* lockNode(action: LockEntity) {
   } catch (error) {
     const apiError = GetApiErrorForException(error, LOCK_ENTITY_SUCCESS_OR_ERROR);
     yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
+  }
+}
+
+export function* convertSubProject(action: ConvertSubProjectStatus) {
+  try {
+    const url = Config.API_BASE_URL + "subproject/convert";
+    const response = yield call(post, url, action.payload.projectId);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { apiError };
+      yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+      return;
+    }
+
+    const payload = { apiError: null };
+    yield all([put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload }), put(search("")), put(fetchSubProjects())]);
+  } catch (error) {
+    const apiError = {
+      key: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = { apiError };
+    yield put({ type: CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR, payload });
+  }
+}
+
+export function* mergeSubProject(action: MergeSubProject) {
+  try {
+    const url = Config.API_BASE_URL + "subproject/prepare";
+    const response = yield call(post, url, action.payload.prepare);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { prepare: null, apiError: apiError };
+      yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+      return;
+    }
+
+    const payload = { prepare: response.data, apiError: null };
+
+    yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
+  } catch (error) {
+    const apiError = {
+      key: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = { prepare: null, apiError: apiError };
+    yield put({ type: MERGE_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }

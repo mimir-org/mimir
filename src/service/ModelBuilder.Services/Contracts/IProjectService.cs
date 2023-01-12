@@ -62,14 +62,49 @@ namespace Mb.Services.Contracts
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain);
 
-
-
+        /// <summary>
+        /// Create a new empty project. The project wil include the aspect root nodes.
+        /// </summary>
+        /// <param name="createProject"></param>
+        /// <returns></returns>
         Task<Project> CreateProject(CreateProjectAm createProject);
 
+        /// <summary>
+        /// Convert or inverse sub project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>Completed Task</returns>
+        Task ConvertSubProject(string projectId);
 
+        /// <summary>
+        /// Delete a project from given id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         Task DeleteProject(string projectId);
+
+        /// <summary>
+        /// Create a json byte array based on project id
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
-        Task CommitProject(CommitPackageAm package);
+
+        /// <summary>
+        /// Check if project exists
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="projectIri"></param>
+        /// <returns></returns>
         bool ProjectExist(string projectId, string projectIri);
+
+        /// <summary>
+        /// Create a prepare project clone that could be merged into another project
+        /// </summary>
+        /// <param name="prepare"></param>
+        /// <returns></returns>
+        /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
+        Task<PrepareCm> PrepareForMerge(PrepareAm prepare);
     }
 }

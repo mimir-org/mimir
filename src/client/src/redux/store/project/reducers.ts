@@ -37,6 +37,61 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
   const edges = state.project?.edges;
 
   switch (action.type) {
+    case Types.UPDATE_PROJECT_VERSION: {
+      if (action?.payload?.version == null || action?.payload?.version?.projectId !== state.project.id) return;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          version: action.payload.version.version,
+        },
+      };
+    }
+
+    case Types.MERGE_SUB_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== Types.MERGE_SUB_PROJECT_SUCCESS_OR_ERROR)
+          : state.apiError,
+      };
+
+    case Types.MERGE_SUB_PROJECT_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        project: {
+          ...project,
+          edges: [...edges, ...action.payload.prepare.edges],
+          nodes: [...nodes, ...action.payload.prepare.nodes],
+        },
+      };
+
+    case Types.CONVERT_SUB_PROJECT_STATUS:
+      return {
+        ...state,
+        fetching: true,
+        creating: false,
+        apiError: state.apiError
+          ? state.apiError.filter((elem) => elem.key !== Types.CONVERT_SUB_PROJECT_STATUS)
+          : state.apiError,
+      };
+    case Types.CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        creating: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+        project: {
+          ...project,
+          isSubProject: action.payload.apiError ? project.isSubProject : !project.isSubProject,
+        },
+      };
     case Types.CLOSE_PROJECT:
       return {
         ...state,

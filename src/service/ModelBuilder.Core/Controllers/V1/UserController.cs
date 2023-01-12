@@ -22,9 +22,9 @@ namespace Mb.Core.Controllers.V1
     [SwaggerTag("User Service")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<CommitController> _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<CommitController> logger)
+        public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
         }

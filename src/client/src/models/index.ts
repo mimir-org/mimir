@@ -1,6 +1,7 @@
 export { WebSocket } from "./client/WebSocket";
 export type { FileData } from "./client/FileData";
 export type { Collection } from "./client/Collection";
+export type { ProjectVersionCm } from "./client/projectVersionCm";
 
 export { ObjectType } from "./enums/ObjectType";
 export { LibraryTab } from "./enums/LibraryTab";
@@ -16,4 +17,3 @@ export type { LockCm } from "./application/LockCm";
 export type { Library } from "./application/Library";
 export type { CommitPackage } from "./application/CommitPackage";
 export type { ProjectItemCm } from "./application/ProjectItemCm";
-export type { LibrarySubProjectItem } from "./application/LibrarySubProjectItem";

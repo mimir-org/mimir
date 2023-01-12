@@ -35,6 +35,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
     >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
+
         return (
           <TreeHandleBox
             onMouseEnter={() => setIsHover(true)}

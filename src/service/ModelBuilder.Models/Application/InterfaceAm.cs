@@ -1,9 +1,9 @@
-using Mb.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data;
 using Mimirorg.Common.Attributes;
+using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Application
 {

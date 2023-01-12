@@ -7,6 +7,7 @@ import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/Cre
 import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
 import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
 import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMenu";
+import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
 
 interface Props {
   activeMenu: string;
@@ -28,6 +29,7 @@ export const ProjectSubMenus = ({ activeMenu }: Props) => {
   const isExportProjectFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_PROJECT_FILE_MENU;
   const isCommitProjectMenuOpen = activeMenu === MENU_TYPE.COMMIT_PROJECT_MENU;
   const isCreateSubProjectMenu = activeMenu === MENU_TYPE.CREATE_SUB_PROJECT_MENU;
+  const isConvertSubProjectMenu = activeMenu === MENU_TYPE.CONVERT_SUB_PROJECT_MENU;
 
   return (
     <>
@@ -38,6 +40,7 @@ export const ProjectSubMenus = ({ activeMenu }: Props) => {
       {isExportProjectFileMenuOpen && <ExportProjectFileMenu />}
       {isCommitProjectMenuOpen && !isSubProject && <CommitProjectMenu />}
       {isCreateSubProjectMenu && <CreateSubProjectMenu />}
+      {isConvertSubProjectMenu && <ConvertSubProjectMenu />}
     </>
   );
 };

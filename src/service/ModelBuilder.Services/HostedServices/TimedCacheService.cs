@@ -22,8 +22,7 @@ namespace Mb.Services.HostedServices
         /// <param name="logger"></param>
         /// <param name="cacheRepository"></param>
         /// <param name="scopeFactory"></param>
-        public TimedCacheService(ILogger<TimedCacheService> logger, ICacheRepository cacheRepository,
-            IServiceScopeFactory scopeFactory)
+        public TimedCacheService(ILogger<TimedCacheService> logger, ICacheRepository cacheRepository, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _cacheRepository = cacheRepository;

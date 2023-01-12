@@ -6,7 +6,6 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
-using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -26,14 +25,21 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="editData"></param>
         /// <param name="projectId"></param>
+        /// <param name="projectVersion"></param>
         /// <returns></returns>
-        public async Task SendDataUpdates(ProjectEditData editData, string projectId)
+        public async Task SendDataUpdates(ProjectEditData editData, string projectId, string projectVersion)
         {
             if (editData == null || string.IsNullOrWhiteSpace(projectId))
                 return;
 
             // TODO: Find changed node and edge based on changed terminal, attribute, transport etc.
+            var versionObj = new ProjectVersionCm
+            {
+                ProjectId = projectId,
+                Version = projectVersion
+            };
             await Task.WhenAll(
+                Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
                 Task.Run(() => SendNodeUpdates(editData.NodeUpdate, WorkerStatus.Update, projectId)),
                 Task.Run(() => SendNodeUpdates(editData.NodeDelete, WorkerStatus.Delete, projectId)),
                 Task.Run(() => SendNodeUpdates(editData.NodeCreate, WorkerStatus.Create, projectId)),
@@ -41,6 +47,11 @@ namespace Mb.Services.Services
                 Task.Run(() => SendEdgeUpdates(editData.EdgeDelete, WorkerStatus.Delete, projectId)),
                 Task.Run(() => SendEdgeUpdates(editData.EdgeCreate, WorkerStatus.Create, projectId))
             );
+        }
+
+        public async Task SendProjectVersionUpdate(ProjectVersionCm version, WorkerStatus workerStatus)
+        {
+            await _webSocketRepository.SendProjectVersionData(version, workerStatus);
         }
 
         public Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId)
@@ -70,9 +81,9 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public async Task SendNodeLibs(List<NodeLibCm> nodes)
+        public async Task SendRefreshLibData()
         {
-            await _webSocketRepository.SendNodeLibData(nodes);
+            await _webSocketRepository.SendRefreshLibData();
         }
 
         #endregion Public methods
