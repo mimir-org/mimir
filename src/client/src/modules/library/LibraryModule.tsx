@@ -14,6 +14,7 @@ import {
   animatedModuleSelector,
   libOpenSelector,
   nodesSelector,
+  libSubProjectorSelector,
 } from "../../redux/store";
 
 interface Props {
@@ -33,6 +34,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [selectedLibNode, setSelectedLibNode] = useState<NodeLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
   const nodes = useAppSelector(nodesSelector);
+  const subProjects = useAppSelector(libSubProjectorSelector);
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
@@ -64,6 +66,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
         setSelectedLibNode={setSelectedLibNode}
         aspectFilters={aspectFilters}
         selectedNode={selectedNode}
+        subProjects={subProjects}
       />
     </AnimatedModule>
   );

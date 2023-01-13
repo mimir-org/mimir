@@ -2,6 +2,7 @@
 import * as Types from "./types";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, LockCm } from "../../../models";
+import { ProjectVersionCm } from "../../../models/client/projectVersionCm";
 import {
   Project,
   Node,
@@ -11,7 +12,12 @@ import {
   ProjectConverterAm,
   Terminal,
   Attribute,
+  PrepareAm,
 } from "@mimirorg/modelbuilder-types";
+
+export function convertSubProjectStatus(projectId: string): Types.ProjectActionTypes {
+  return { type: Types.CONVERT_SUB_PROJECT_STATUS, payload: { projectId: projectId } };
+}
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };
@@ -31,6 +37,10 @@ export function search(name: string): Types.ProjectActionTypes {
 
 export function create(name: string, description: string): Types.ProjectActionTypes {
   return { type: Types.CREATING_PROJECT, payload: { name, description, version: "1.0" } };
+}
+
+export function updateProjectVersion(version: ProjectVersionCm): Types.UpdateProjectVersion {
+  return { type: Types.UPDATE_PROJECT_VERSION, payload: { version: version } };
 }
 
 export function createSubProject(
@@ -336,4 +346,8 @@ export function removeInterfaceTerminalAttribute(
   isInput: boolean
 ): Types.RemoveInterfaceTerminalAttribute {
   return { type: Types.REMOVE_INTERFACE_TERMINAL_ATTRIBUTE, payload: { edgeId, attributeId, isInput } };
+}
+
+export function mergeSubProject(prepare: PrepareAm): Types.MergeSubProject {
+  return { type: Types.MERGE_SUB_PROJECT, payload: { prepare } };
 }

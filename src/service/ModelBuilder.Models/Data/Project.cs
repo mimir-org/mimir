@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Mb.Models.Abstract;
 using Mb.Models.Extensions;
+using Mb.Models.Records;
+using Mimirorg.Common.Extensions;
+using Mimirorg.Common.Models;
+using Mimirorg.TypeLibrary.Enums;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Project : IEquatable<Project>
+    public class Project : IEquatable<Project>, IVersionable<Project>
     {
         #region Properties
 
@@ -22,34 +28,6 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public virtual ICollection<Node> Nodes { get; set; }
         public virtual ICollection<Edge> Edges { get; set; }
-
-        #endregion
-
-        #region Public methods
-
-        public void IncrementMajorVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementMajorVersion();
-        }
-
-        public void IncrementMinorVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementMinorVersion();
-        }
-
-        public void IncrementCommitVersion()
-        {
-            if (Version.Length == 3)
-                Version += ".0";
-
-            Version = Version.IncrementCommitVersion();
-        }
 
         #endregion
 
@@ -93,5 +71,43 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
+        #region IVersionable
+
+        public Validation HasIllegalChanges(Project other)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            var validation = new Validation();
+            return validation;
+        }
+
+        public VersionStatus CalculateVersionStatus(Project other, ProjectEditData editData)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            if (this.HasMajorChanges(editData))
+                return VersionStatus.Major;
+
+            if (this.HasMinorChanges(editData, other))
+                return VersionStatus.Minor;
+
+            return VersionStatus.NoChange;
+        }
+
+        public void UpdateVersion(VersionStatus status)
+        {
+            Version = status switch
+            {
+                VersionStatus.Minor => Version.IncrementMinorVersion(),
+                VersionStatus.Major => Version.IncrementMajorVersion(),
+                _ => Version
+            };
+        }
+
+        #endregion
+
     }
 }

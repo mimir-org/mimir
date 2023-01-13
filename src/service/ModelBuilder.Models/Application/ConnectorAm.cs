@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mimirorg.Common.Attributes;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application

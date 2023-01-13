@@ -1,11 +1,10 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
 import { NodeLibCm, QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
-import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
+import { GetApiErrorForBadRequest, GetApiErrorForException, get, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
 import Config from "../../../models/Config";
 import {
-  deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
   fetchLibrary,
   fetchLibraryAttributeTypesSuccessOrError,
@@ -14,6 +13,7 @@ import {
   fetchLibraryTerminalsSuccessOrError,
   fetchLibraryTransportTypesSuccessOrError,
   fetchQuantityDatumsSuccessOrError,
+  fetchSubProjectsSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
 
@@ -155,23 +155,6 @@ export function* getAttributes() {
   }
 }
 
-export function* deleteLibraryItem(action: PayloadAction<string>) {
-  try {
-    const url = `${Config.API_BASE_URL}librarytype/${action.payload}`;
-    const response = yield call(del, url);
-
-    if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, deleteLibraryItemSuccessOrError.type);
-      yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
-      return;
-    }
-    yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError: null }));
-  } catch (error) {
-    const apiError = GetApiErrorForException(error, deleteLibraryItemSuccessOrError.type);
-    yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
-  }
-}
-
 export function* getQuantityDatums() {
   try {
     const url = `${Config.API_BASE_URL}library/quantity-datums`;
@@ -201,5 +184,24 @@ export function* getQuantityDatums() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchQuantityDatumsSuccessOrError.type);
     yield put(fetchQuantityDatumsSuccessOrError({ quantityDatums: [], apiError }));
+  }
+}
+
+export function* getSubProjects() {
+  try {
+    const url = `${Config.API_BASE_URL}library/subProject`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchSubProjectsSuccessOrError.type);
+      yield put(fetchSubProjectsSuccessOrError({ subProjects: [], apiError }));
+      return;
+    }
+
+    const subProjects = (response.data != null && [...response.data]) || [];
+    yield put(fetchSubProjectsSuccessOrError({ subProjects: subProjects, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchQuantityDatumsSuccessOrError.type);
+    yield put(fetchSubProjectsSuccessOrError({ subProjects: [], apiError }));
   }
 }

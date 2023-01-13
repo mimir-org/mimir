@@ -128,36 +128,6 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Create a new version of an existing Project. Returns the created VersionCm
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns>VersionCm</returns>
-        [HttpPost("{projectId}")]
-        [ProducesResponseType(typeof(VersionCm), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateVersion(string projectId)
-        {
-            try
-            {
-                var versionCm = await _versionService.CreateVersion(projectId);
-                return Ok(versionCm);
-            }
-            catch (MimirorgNotFoundException)
-            {
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
         /// Delete a version. Returns 200OK
         /// </summary>
         /// <param name="id"></param>

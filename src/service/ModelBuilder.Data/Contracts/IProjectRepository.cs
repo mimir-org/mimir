@@ -19,6 +19,14 @@ namespace Mb.Data.Contracts
         Task<Project> GetAsyncComplete(string id, string iri);
 
         /// <summary>
+        /// Get complete project async not read from cache
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns>Complete project</returns>
+        Task<Project> GetProjectAsync(string id, string iri);
+
+        /// <summary>
         /// Get project list
         /// </summary>
         /// <param name="name">The project to search for</param>
@@ -26,6 +34,13 @@ namespace Mb.Data.Contracts
         /// <param name="number">Get number of project</param>
         /// <returns>A list of project information</returns>
         IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
+
+        /// <summary>
+        /// Get project version list
+        /// </summary>
+        /// <param name="isSubProject">Get sub-projects or projects</param>
+        /// <returns>A list of project version information</returns>
+        Task<List<VersionData>> GetProjectVersions(bool isSubProject);
 
         /// <summary>
         /// Update project

@@ -2,6 +2,7 @@
 import { ApiError } from "../../../models/webclient";
 import { BlockNodeSize } from "../../../models/project";
 import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
+import { ProjectVersionCm } from "../../../models/client/projectVersionCm";
 import {
   Node,
   Edge,
@@ -11,6 +12,8 @@ import {
   ProjectConverterAm,
   Terminal,
   Attribute,
+  PrepareAm,
+  PrepareCm,
 } from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -86,6 +89,11 @@ export const ADD_INTERFACE_TERMINAL_ATTRIBUTE = "ADD_INTERFACE_TERMINAL_ATTRIBUT
 export const REMOVE_INTERFACE_TERMINAL_ATTRIBUTE = "REMOVE_INTERFACE_TERMINAL_ATTRIBUTE";
 export const ADD_TRANSPORT_TERMINAL_ATTRIBUTE = "ADD_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE = "REMOVE_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const CONVERT_SUB_PROJECT_STATUS = "CONVERT_SUB_PROJECT_STATUS";
+export const CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR = "CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR";
+export const MERGE_SUB_PROJECT = "MERGE_SUB_PROJECT";
+export const MERGE_SUB_PROJECT_SUCCESS_OR_ERROR = "MERGE_SUB_PROJECT_SUCCESS_OR_ERROR";
+export const UPDATE_PROJECT_VERSION = "UPDATE_PROJECT_VERSION";
 
 // State types
 export interface ProjectState {
@@ -98,6 +106,16 @@ export interface ProjectState {
 }
 
 // Action types
+export interface ConvertSubProjectStatus {
+  type: typeof CONVERT_SUB_PROJECT_STATUS;
+  payload: { projectId: string };
+}
+
+export interface ConvertSubProjectStatusFinished {
+  type: typeof CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR;
+  payload: { apiError: ApiError };
+}
+
 export interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
   payload: { id: string; project: Project };
@@ -487,7 +505,24 @@ export interface UpdateTerminal {
   payload: { terminal: Terminal };
 }
 
+export interface MergeSubProject {
+  type: typeof MERGE_SUB_PROJECT;
+  payload: { prepare: PrepareAm };
+}
+
+export interface MergeSubProjectFinished {
+  type: typeof MERGE_SUB_PROJECT_SUCCESS_OR_ERROR;
+  payload: { prepare: PrepareCm; apiError: ApiError };
+}
+
+export interface UpdateProjectVersion {
+  type: typeof UPDATE_PROJECT_VERSION;
+  payload: { version: ProjectVersionCm };
+}
+
 export type ProjectActionTypes =
+  | ConvertSubProjectStatus
+  | ConvertSubProjectStatusFinished
   | FetchingProjectAction
   | SearchProjectAction
   | SearchProjectActionFinished
@@ -560,4 +595,7 @@ export type ProjectActionTypes =
   | AddInterfaceTerminalAttribute
   | RemoveInterfaceTerminalAttribute
   | AddTransportTerminalAttribute
-  | RemoveTransportTerminalAttribute;
+  | RemoveTransportTerminalAttribute
+  | MergeSubProject
+  | MergeSubProjectFinished
+  | UpdateProjectVersion;

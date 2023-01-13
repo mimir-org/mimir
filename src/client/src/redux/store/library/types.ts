@@ -1,3 +1,4 @@
+import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
 import {
   InterfaceLibCm,
   NodeLibCm,
@@ -20,6 +21,7 @@ export interface LibraryState {
   collections: Collection[];
   quantityDatums: QuantityDatumCm[];
   attributeTypes: AttributeLibCm[];
+  subProjects: LibrarySubProject[];
 }
 
 // Action types
@@ -53,11 +55,6 @@ export interface FetchInterfaceTypes {
   apiError: ApiError;
 }
 
-export interface DeleteLibraryItem {
-  id: string;
-  apiError: ApiError;
-}
-
 export interface AddToCollectionsTypes {
   libNodes: NodeLibCm[];
   collectionIds: string[];
@@ -65,5 +62,10 @@ export interface AddToCollectionsTypes {
 
 export interface FetchQuantityDatums {
   quantityDatums: QuantityDatumCm[];
+  apiError: ApiError;
+}
+
+export interface FetchSubProjects {
+  subProjects: LibrarySubProject[];
   apiError: ApiError;
 }

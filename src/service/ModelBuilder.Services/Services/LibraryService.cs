@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Common;
+using Mb.Models.Compare;
 using Mb.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Services
@@ -15,12 +14,10 @@ namespace Mb.Services.Services
         private readonly IProjectRepository _projectRepository;
         private readonly ILibraryRepository _libraryRepository;
         private readonly ICooperateService _cooperateService;
-        private readonly IMapper _mapper;
 
-        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, ICooperateService cooperateService)
+        public LibraryService(IProjectRepository projectRepository, ILibraryRepository libraryRepository, ICooperateService cooperateService)
         {
             _projectRepository = projectRepository;
-            _mapper = mapper;
             _libraryRepository = libraryRepository;
             _cooperateService = cooperateService;
         }
@@ -98,34 +95,58 @@ namespace Mb.Services.Services
         /// Get all sub projects
         /// </summary>
         /// <returns></returns>
-        public async Task<List<LibrarySubProjectItem>> GetSubProjects(string searchString = null)
+        public async Task<List<LibrarySubProject>> GetSubProjects(string searchString = null)
         {
-            var projects = await _projectRepository.GetAll()
-                .Where(x => x.IsSubProject)
-                .OrderBy(x => x.Name)
-                .ToArrayAsync();
+            var projectVersions = await _projectRepository.GetProjectVersions(true);
+            var groups = projectVersions.ToLookup(x => x.Id);
+            var keys = groups.Select(t => t.Key);
+            var versions = new List<LibrarySubProject>();
 
-            if (!string.IsNullOrWhiteSpace(searchString))
-                projects = projects.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
-
-            var librarySubProjectItems = new List<LibrarySubProjectItem>();
-
-            Parallel.ForEach(projects, x =>
+            foreach (var key in keys)
             {
-                librarySubProjectItems.Add(_mapper.Map<LibrarySubProjectItem>(x));
-            });
+                var items = groups[key].OrderByDescending(x => x, new VersionDataComparer()).Take(5).ToList();
+                if (!items.Any())
+                    continue;
 
-            return librarySubProjectItems;
+                var version = new LibrarySubProject
+                {
+                    Id = items[0].Id,
+                    Name = items[0].Name,
+                    Version = items[0].Version,
+                    Description = items[0].Description,
+                    Versions = new List<LibrarySubProjectVersion>()
+                };
+
+                // Add the latest project to the list
+                version.Versions.Add(new LibrarySubProjectVersion
+                {
+                    Id = items[0].Id,
+                    Name = items[0].Name,
+                    Version = items[0].Version
+                });
+
+                foreach (var item in items)
+                {
+                    version.Versions.Add(new LibrarySubProjectVersion
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        Version = item.Ver
+                    });
+                }
+                versions.Add(version);
+            }
+
+            return versions.OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>
         /// Get all node types and send types to connected clients
         /// </summary>
         /// <returns></returns>
-        public async Task SendClientNodeTypes()
+        public async Task SendRefreshLibData()
         {
-            var nodeTypes = await GetNodeTypes(null);
-            await _cooperateService.SendNodeLibs(nodeTypes);
+            await _cooperateService.SendRefreshLibData();
         }
     }
 }

@@ -17,6 +17,7 @@ using Mimirorg.TypeLibrary.Enums;
 using Mb.Models.Common;
 using Mb.Models.Application;
 using Mb.Models.Client;
+using Mb.Models.Extensions;
 
 namespace Mb.Services.Services
 {
@@ -34,13 +35,14 @@ namespace Mb.Services.Services
         private readonly IRemapService _remapService;
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
+        private readonly IVersionService _versionService;
 
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
             IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
-            ICooperateService cooperateService)
+            ICooperateService cooperateService, IVersionService versionService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -54,6 +56,7 @@ namespace Mb.Services.Services
             _logger = logger;
             _remapService = remapService;
             _cooperateService = cooperateService;
+            _versionService = versionService;
         }
 
         /// <summary>
@@ -101,7 +104,20 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a new mimir project based on data
+        /// Convert or inverse sub project
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>Completed Task</returns>
+        public async Task ConvertSubProject(string projectId)
+        {
+            var project = await GetProject(projectId, null);
+            var am = _mapper.Map<ProjectAm>(project);
+            am.IsSubProject = !am.IsSubProject;
+            await UpdateProject(am.Id, am.Iri, am, _commonRepository.GetDomain());
+        }
+
+        /// <summary>
+        /// Create a new Mimir project based on data
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
@@ -135,7 +151,7 @@ namespace Mb.Services.Services
                 throw new MimirorgDuplicateException("One or more connectors already exist");
 
             // Remap and create new id's
-            _remapService.Remap(project);
+            var _ = _remapService.Remap(project);
 
             // Create an empty project
             var newProject = new Project
@@ -165,7 +181,6 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
-        /// TODO: Should implement new way of creating project
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
             try
@@ -182,22 +197,29 @@ namespace Mb.Services.Services
                 if (fromProject == null)
                     throw new MimirorgInvalidOperationException("The original project does not exist");
 
-                fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y))
-                    .ToList();
-                fromProject.Edges = fromProject.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
-
                 var projectAm = _mapper.Map<ProjectAm>(fromProject);
+
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
                 projectAm.IsSubProject = true;
+                projectAm.Nodes = projectAm.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                projectAm.Edges = projectAm.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
 
                 _ = _remapService.Clone(projectAm);
 
+                // Map data
                 var newSubProject = _mapper.Map<Project>(projectAm);
-                await _projectRepository.CreateAsync(newSubProject);
-                await _projectRepository.SaveAsync();
 
-                return newSubProject;
+                // Sort nodes
+                ResolveLevelAndOrder(newSubProject);
+
+                // Deconstruct project
+                var projectData = new ProjectData();
+                await _remapService.DeConstruct(newSubProject, projectData);
+                await _projectRepository.CreateProject(newSubProject, projectData);
+
+                var updatedProject = await GetProject(newSubProject.Id, null);
+                return updatedProject;
             }
             catch (Exception e)
             {
@@ -238,6 +260,7 @@ namespace Mb.Services.Services
                     validation);
 
             var original = await _projectRepository.GetAsyncComplete(id, iri);
+            project.Version = original.Version;
             ClearAllChangeTracker();
 
             if (original == null)
@@ -257,11 +280,32 @@ namespace Mb.Services.Services
             // Get create edit data
             var projectEditData = await _remapService.CreateEditData(original, updated);
 
+            // Resolve version changes
+            var versionStatus = original.CalculateVersionStatus(updated, projectEditData);
+            updated.UpdateVersion(versionStatus);
+
+            // Resolve node versions
+            foreach (var node in updated.Nodes)
+            {
+                var originalNode = original.Nodes.FirstOrDefault(x => x.Id == node.Id);
+                if (originalNode == null)
+                    continue;
+
+                var nodeVersionStatus = originalNode.CalculateVersionStatus(node, projectEditData);
+                node.UpdateVersion(nodeVersionStatus);
+            }
+
+            // Save last version if there is version changes
+            if (versionStatus != VersionStatus.NoChange)
+                await _versionService.CreateVersion(original);
+
             // Update
             await _projectRepository.UpdateProject(original, updated, projectEditData);
 
+            // Find project versions
+
             // Send websocket data.
-            await _cooperateService.SendDataUpdates(projectEditData, id);
+            await _cooperateService.SendDataUpdates(projectEditData, id, updated.Version);
         }
 
         /// <summary>
@@ -271,7 +315,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task DeleteProject(string projectId)
         {
-            var existingProject = await GetProject(projectId, null);
+            var existingProject = await _projectRepository.GetProjectAsync(projectId, null);
             if (existingProject == null)
                 throw new MimirorgNotFoundException($"There is no project with id: {projectId}");
 
@@ -301,58 +345,6 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Resolve commit package
-        /// </summary>
-        /// <param name="package"></param>
-        /// <returns></returns>
-        public async Task CommitProject(CommitPackageAm package)
-        {
-            // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
-
-            if (string.IsNullOrWhiteSpace(package?.ProjectId))
-                throw new MimirorgNullReferenceException("Can't commit a null reference commit package");
-
-            if (_moduleService.Modules.All(x =>
-                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
-                        x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
-                throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
-
-            var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
-
-            if (!senders.Any())
-                throw new ModelBuilderModuleException("There is no sender module");
-
-            var parser = _moduleService.Resolve<IModelBuilderParser>(new Guid(package.Parser));
-
-            var project = await GetProject(package.ProjectId, null);
-            project.IsSubProject = true;
-
-            var data = await parser.SerializeProject(project);
-            var projectString = System.Text.Encoding.UTF8.GetString(data);
-
-            var export = new ImfData
-            {
-                ProjectId = project.Id,
-                Version = project.Version,
-                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
-                Parser = package.Parser,
-                CommitStatus = package.CommitStatus,
-                SenderDomain = _commonRepository.GetDomain(),
-                ReceivingDomain = package.ReceivingDomain,
-                Document = projectString
-            };
-
-            foreach (var sender in senders)
-            {
-                if (sender.Instance is not IModelBuilderSyncService client)
-                    continue;
-
-                await client.SendData(export);
-                await SetProjectCommitVersion(project.Id);
-            }
-        }
-
-        /// <summary>
         /// Check if project exists
         /// </summary>
         /// <param name="projectId"></param>
@@ -365,8 +357,88 @@ namespace Mb.Services.Services
             return exist;
         }
 
+        /// <summary>
+        /// Create a prepare project clone that could be merged into another project
+        /// </summary>
+        /// <param name="prepare"></param>
+        /// <returns></returns>
+        /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
+        public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
+        {
+            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProjectId, null);
+            if (subProject == null)
+                throw new MimirorgNotFoundException("There is no sub-project with current id");
+
+            if (subProject.Version != prepare.Version)
+                subProject = await _versionService.GetGetByVersion(prepare.SubProjectId, prepare.Version);
+
+            if (subProject == null)
+                throw new MimirorgNotFoundException("There is no sub-project with current id and version");
+
+            var projectAm = _mapper.Map<ProjectAm>(subProject);
+
+            // Save the project as a temporary project, the cleanup hosted service will remove this temp project later
+            projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";
+            projectAm.Description = "This is a temporary project";
+            projectAm.IsSubProject = true;
+
+            _ = _remapService.Clone(projectAm);
+            var newSubProject = _mapper.Map<Project>(projectAm);
+            ResolveLevelAndOrder(newSubProject);
+            var projectData = new ProjectData();
+            await _remapService.DeConstruct(newSubProject, projectData);
+            await _projectRepository.CreateProject(newSubProject, projectData);
+
+            // Get the created project
+            var updatedProject = await GetProject(newSubProject.Id, null);
+
+            // Identify root nodes
+            var rootNodes = updatedProject.Nodes.Where(x => x.IsRoot).Select(x => x.Id).ToList();
+
+            // Position node
+            var rootOrigin = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).MinBy(x => x.PositionY);
+
+            // Set node and edges project id to merge project, and calculate position
+            updatedProject.Nodes = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).Select(x =>
+            {
+                x.ProjectId = prepare.ProjectId;
+                x.ProjectIri = null;
+                return x.CalculatePosition(rootOrigin, prepare);
+            }).ToList();
+
+            // Set root origin to center
+            if (rootOrigin != null)
+            {
+                rootOrigin.PositionX = (decimal) prepare.DropPositionX;
+                rootOrigin.PositionY = (decimal) prepare.DropPositionY;
+            }
+
+            updatedProject.Edges = updatedProject.Edges.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
+            {
+                x.ProjectId = prepare.ProjectId;
+                x.ProjectIri = null;
+                return x;
+            }).ToList();
+
+            var prepareCm = new PrepareCm
+            {
+                SubProjectId = prepare.SubProjectId,
+                Nodes = updatedProject.Nodes,
+                Edges = updatedProject.Edges
+            };
+
+            return prepareCm;
+        }
+
         #region Private
 
+        /// <summary>
+        /// Create init aspect nodes
+        /// </summary>
+        /// <param name="aspect"></param>
+        /// <param name="projectId"></param>
+        /// <param name="projectIri"></param>
+        /// <returns></returns>
         private Node CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)
         {
             const string version = "1.0";
@@ -447,6 +519,10 @@ namespace Mb.Services.Services
             return node;
         }
 
+        /// <summary>
+        /// Resolve level and order for project
+        /// </summary>
+        /// <param name="project"></param>
         private void ResolveLevelAndOrder(Project project)
         {
             if (project?.Nodes == null || project.Edges == null)
@@ -456,6 +532,14 @@ namespace Mb.Services.Services
             _ = rootNodes.Aggregate(0, (current, node) => ResolveNodeLevelAndOrder(node, project, 0, current) + 1);
         }
 
+        /// <summary>
+        /// Resolve node level and order
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="project"></param>
+        /// <param name="level"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
         private int ResolveNodeLevelAndOrder(Node node, Project project, int level, int order)
         {
             if (node == null)
@@ -475,9 +559,16 @@ namespace Mb.Services.Services
                 (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 
+        /// <summary>
+        /// Create a initial project
+        /// </summary>
+        /// <param name="createProject"></param>
+        /// <param name="isSubProject"></param>
+        /// <returns></returns>
+        /// <exception cref="MimirorgInvalidOperationException"></exception>
         private Project CreateInitProject(CreateProjectAm createProject, bool isSubProject)
         {
-            const string version = "1.0.0";
+            const string version = "1.0";
 
             if (string.IsNullOrWhiteSpace(createProject?.Name))
                 throw new MimirorgInvalidOperationException(
@@ -517,57 +608,9 @@ namespace Mb.Services.Services
             return project;
         }
 
-        //private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
-        //{
-        //    if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
-        //        projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
-        //        return;
-
-        //    //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
-
-        //    if (originalProject.IsSubProject != projectAm.IsSubProject)
-        //    {
-        //        originalProject.IncrementMinorVersion();
-        //        return;
-        //    }
-
-        //    if (originalProject.Name != projectAm.Name)
-        //    {
-        //        originalProject.IncrementMinorVersion();
-        //        return;
-        //    }
-
-        //    if (originalProject.Description != projectAm.Description)
-        //    {
-        //        originalProject.IncrementMinorVersion();
-        //        return;
-        //    }
-
-        //    if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
-        //    {
-        //        originalProject.IncrementMinorVersion();
-        //        return;
-        //    }
-
-        //    if (originalProject.Edges?.Count != projectAm.Edges?.Count)
-        //    {
-        //        originalProject.IncrementMinorVersion();
-        //    }
-
-        //}
-
-        private async Task SetProjectCommitVersion(string projectId)
-        {
-            if (string.IsNullOrWhiteSpace(projectId))
-                return;
-
-            var projectCommitVersionUpdate = _projectRepository.FindBy(x => x.Id == projectId).First();
-            projectCommitVersionUpdate.IncrementCommitVersion();
-            _projectRepository.Update(projectCommitVersionUpdate);
-            await _projectRepository.SaveAsync();
-            _projectRepository.Detach(projectCommitVersionUpdate);
-        }
-
+        /// <summary>
+        /// Clear Entity Framework change-trackers 
+        /// </summary>
         private void ClearAllChangeTracker()
         {
             _projectRepository?.Context?.ChangeTracker.Clear();

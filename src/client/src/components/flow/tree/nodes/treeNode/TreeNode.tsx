@@ -20,7 +20,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
   const [terminals, setTerminals] = useState([] as Connector[]);
-  const [renderTerminals, setRenderTerminals] = useState(true);
 
   useEffect(() => {
     setTerminals(FilterTreeTerminals(data?.connectors));
@@ -54,12 +53,11 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   if (!data) return null;
 
-  const mouseUp = () => setRenderTerminals(true);
-  const mouseDown = () => setRenderTerminals(false);
-  const mouseEnter = () => setIsHover(true);
+  const mouseEnter = () => {
+    setIsHover(true);
+  };
   const mouseLeave = () => {
     setTimer(true);
-    setIsHover(false);
   };
 
   return (
@@ -70,13 +68,10 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       visible={!data.hidden}
       onMouseEnter={() => mouseEnter()}
       onMouseLeave={() => mouseLeave()}
-      onMouseUp={() => mouseUp()}
-      onMouseDown={() => mouseDown()}
     >
-      {renderTerminals &&
-        terminals.map((connector) => {
-          return GetTerminal(connector);
-        })}
+      {terminals.map((connector) => {
+        return GetTerminal(connector);
+      })}
       <TreeLogoComponent node={data} />
     </TreeNodeBox>
   );

@@ -2,16 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mb.Models.Abstract;
 using Mb.Models.Extensions;
+using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
+using Mimirorg.Common.Extensions;
+using Mb.Models.Records;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Node : IEquatable<Node>
+    public class Node : IEquatable<Node>, IVersionable<Node>
     {
         #region Properties
 
@@ -73,6 +77,7 @@ namespace Mb.Models.Data
         public string CreatedBy { get; set; }
         public string LibraryTypeId { get; set; }
         public string Version { get; set; }
+
         public Aspect Aspect { get; set; }
 
         [Required]
@@ -131,20 +136,6 @@ namespace Mb.Models.Data
         public bool? IsOffPageRequired { get; set; }
 
         #endregion Properties
-
-        #region Methods
-
-        public void IncrementMinorVersion()
-        {
-            Version = Version.IncrementMinorVersion();
-        }
-
-        public void IncrementMajorVersion()
-        {
-            Version = Version.IncrementMajorVersion();
-        }
-
-        #endregion
 
         #region IEquatable
 
@@ -224,6 +215,43 @@ namespace Mb.Models.Data
             hashCode.Add(Width);
             hashCode.Add(Height);
             return hashCode.ToHashCode();
+        }
+
+        #endregion
+
+        #region IVersionable
+
+        public Validation HasIllegalChanges(Node other)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            var validation = new Validation();
+            return validation;
+        }
+
+        public VersionStatus CalculateVersionStatus(Node other, ProjectEditData editData)
+        {
+            if (other == null)
+                throw new ArgumentNullException(nameof(other));
+
+            if (this.HasMajorChanges(editData))
+                return VersionStatus.Major;
+
+            if (this.HasMinorChanges(editData, other))
+                return VersionStatus.Minor;
+
+            return VersionStatus.NoChange;
+        }
+
+        public void UpdateVersion(VersionStatus status)
+        {
+            Version = status switch
+            {
+                VersionStatus.Minor => Version.IncrementMinorVersion(),
+                VersionStatus.Major => Version.IncrementMajorVersion(),
+                _ => Version
+            };
         }
 
         #endregion

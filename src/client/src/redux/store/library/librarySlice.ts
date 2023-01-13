@@ -3,8 +3,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ApiError } from "../../../models/webclient";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import {
+  FetchSubProjects,
   AddToCollectionsTypes,
-  DeleteLibraryItem,
   FetchInterfaceTypes,
   FetchLibrary,
   FetchQuantityDatums,
@@ -24,6 +24,7 @@ const initialLibraryState: LibraryState = {
   terminals: [],
   quantityDatums: [],
   attributeTypes: [],
+  subProjects: [],
 };
 
 export const librarySlice = createSlice({
@@ -68,7 +69,6 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryTransportTypesSuccessOrError.type)
         : state.apiError;
     },
-
     fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchTransportTypes>) => {
       state.fetching = false;
       state.transportTypes = action.payload.transportTypes;
@@ -107,35 +107,6 @@ export const librarySlice = createSlice({
       state.interfaceTypes = action.payload.interfaceTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
-    addLibraryItem: (state, action: PayloadAction<NodeLibCm>) => {
-      // TODO: fix
-      // action.payload.libraryType === ObjectType.Interface && state.interfaceTypes.push(action.payload);
-      // action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
-      // action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
-      state.libNodes.push(action.payload);
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    deleteLibraryItem: (state, action: PayloadAction<string>) => {
-      return state;
-    },
-    deleteLibraryItemSuccessOrError: (state, action: PayloadAction<DeleteLibraryItem>) => {
-      const { id, apiError } = action.payload;
-      if (apiError) {
-        state.apiError.push(apiError);
-      } else {
-        state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
-        state.libNodes = state.libNodes.filter((x) => x.id !== id);
-        state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
-      }
-    },
-    removeLibraryItem: (state, action: PayloadAction<string>) => {
-      state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
-      state.libNodes = state.libNodes.filter((x) => x.id !== action.payload);
-      state.transportTypes = state.transportTypes.filter((x) => x.id !== action.payload);
-    },
-    deleteLibraryError: (state, action: PayloadAction<string>) => {
-      state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
-    },
     addCollection: (state, action: PayloadAction<Collection>) => {
       state.collections?.push(action.payload);
     },
@@ -160,6 +131,17 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryTerminalsSuccessOrError.type)
         : state.apiError;
     },
+    fetchSubProjectsSuccessOrError: (state, action: PayloadAction<FetchSubProjects>) => {
+      state.fetching = false;
+      state.subProjects = action.payload.subProjects;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchSubProjects: (state) => {
+      state.fetching = true;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchSubProjectsSuccessOrError.type)
+        : state.apiError;
+    },
   },
 });
 
@@ -178,15 +160,12 @@ export const {
   fetchLibraryTerminalsSuccessOrError,
   fetchLibraryAttributeTypes,
   fetchLibraryAttributeTypesSuccessOrError,
-  addLibraryItem,
-  removeLibraryItem,
-  deleteLibraryError,
-  deleteLibraryItem,
-  deleteLibraryItemSuccessOrError,
   addCollection,
   addToCollections,
   fetchQuantityDatums,
   fetchQuantityDatumsSuccessOrError,
+  fetchSubProjectsSuccessOrError,
+  fetchSubProjects,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;

@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;

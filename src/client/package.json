@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^2.23.0",
-    "@azure/msal-react": "^1.4.9",
+    "@azure/msal-react": "^1.5.1",
     "@headlessui/react": "^1.7.5",
     "@microsoft/applicationinsights-web": "^2.8.9",
     "@microsoft/signalr": "^7.0.0",
-    "@mimirorg/modelbuilder-types": "^4.1.2",
+    "@mimirorg/modelbuilder-types": "^4.2.0",
     "@mimirorg/typelibrary-types": "^0.23.0",
     "@reduxjs/toolkit": "^1.8.6",
     "@tippyjs/react": "^4.2.6",
