@@ -4,4 +4,5 @@ export {
   flowViewSelector,
   nodesSelector,
   secondaryNodeSelector,
+  projectSelector,
 } from "../../../../redux/store/selectors";

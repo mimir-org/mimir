@@ -19,10 +19,12 @@ import ReactFlow, {
   EdgeChange,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
+import { VisualFilterData } from "../../../models/application/VisualFilter";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
+  filter: VisualFilterData;
 }
 
 /**
@@ -34,7 +36,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
-export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
+export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -125,7 +127,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
       SetInitialParentId(mimirNodes);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, filter));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -140,8 +142,8 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
-  }, [mimirEdges, mimirNodes, animatedEdge, secondaryNode]);
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, filter));
+  }, [mimirEdges, mimirNodes, filter, secondaryNode]);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>

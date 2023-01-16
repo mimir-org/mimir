@@ -1,4 +1,5 @@
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { VisualFilterData } from "../../../../models/application/VisualFilter";
 import { EdgeType } from "../../../../models/project";
 import { ConvertEdgeToFlowEdge } from "../../converters";
 import { ValidateSplitViewEdge } from "./helpers";
@@ -9,7 +10,7 @@ export const BuildFlowBlockEdge = (
   edgeType: EdgeType,
   selectedBlockNode: Node,
   secondaryNode: Node,
-  animated: boolean
+  filter: VisualFilterData
 ) => {
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
@@ -29,7 +30,7 @@ export const BuildFlowBlockEdge = (
   }
 
   if (!isValid) return null;
-  return ConvertEdgeToFlowEdge(edge, edgeType, sourceNode, targetNode, animated);
+  return ConvertEdgeToFlowEdge(edge, edgeType, sourceNode, targetNode, filter);
 };
 
 export default BuildFlowBlockEdge;

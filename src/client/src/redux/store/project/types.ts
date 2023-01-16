@@ -94,6 +94,7 @@ export const CONVERT_SUB_PROJECT_STATUS_SUCCESS_OR_ERROR = "CONVERT_SUB_PROJECT_
 export const MERGE_SUB_PROJECT = "MERGE_SUB_PROJECT";
 export const MERGE_SUB_PROJECT_SUCCESS_OR_ERROR = "MERGE_SUB_PROJECT_SUCCESS_OR_ERROR";
 export const UPDATE_PROJECT_VERSION = "UPDATE_PROJECT_VERSION";
+export const UPDATE_PROJECT_DESCRIPTION = "UPDATE_PROJECT_DESCRIPTION";
 
 // State types
 export interface ProjectState {
@@ -520,6 +521,11 @@ export interface UpdateProjectVersion {
   payload: { version: ProjectVersionCm };
 }
 
+export interface UpdateProjectDescription {
+  type: typeof UPDATE_PROJECT_DESCRIPTION;
+  payload: { description: string };
+}
+
 export type ProjectActionTypes =
   | ConvertSubProjectStatus
   | ConvertSubProjectStatusFinished
@@ -598,4 +604,5 @@ export type ProjectActionTypes =
   | RemoveTransportTerminalAttribute
   | MergeSubProject
   | MergeSubProjectFinished
-  | UpdateProjectVersion;
+  | UpdateProjectVersion
+  | UpdateProjectDescription;

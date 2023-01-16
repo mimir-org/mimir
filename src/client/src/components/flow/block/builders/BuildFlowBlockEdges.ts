@@ -3,6 +3,7 @@ import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../helpers/Connectors";
 import { GetBlockEdgeType } from "../helpers";
 import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
+import { VisualFilterData } from "../../../../models/application/VisualFilter";
 
 /**
  * Component to draw all Flow edges in BlockView.
@@ -21,14 +22,14 @@ const BuildFlowBlockEdges = (
   mimirEdges: Edge[],
   selectedBlockNode: Node,
   secondaryNode: Node,
-  animatedEdge: boolean
+  filter: VisualFilterData
 ) => {
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
     if (IsPartOfRelation(edge.fromConnector)) return;
     const edgeType = GetBlockEdgeType(edge.fromConnector);
-    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
+    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, filter);
     if (blockEdge) flowEdges.push(blockEdge);
   });
 

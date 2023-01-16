@@ -3,7 +3,7 @@ import { ConnectorDirection, NodeTerminalLibCm, TerminalLibCm } from "@mimirorg/
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import { ConvertTypeReference } from "./ConvertTypeReference";
-import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
+import { Aspect, Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to convert terminals from NodeTerminalLibCm to Connector.
@@ -19,7 +19,8 @@ const ConvertTerminalLibCmToConnectors = (
   libTerminals: NodeTerminalLibCm[],
   nodeId: string,
   nodeIri: string,
-  allTerminals: TerminalLibCm[]
+  allTerminals: TerminalLibCm[],
+  aspect: Aspect
 ) => {
   const connectors = [] as Connector[];
 
@@ -30,7 +31,7 @@ const ConvertTerminalLibCmToConnectors = (
   });
 
   // Create all mandatory relation connectors
-  CreateRelationConnectors(connectors, nodeId, nodeIri);
+  CreateRelationConnectors(connectors, nodeId, nodeIri, aspect);
 
   return connectors;
 };
@@ -94,13 +95,23 @@ export const GetTerminalCategoryName = (libTerminal: TerminalLibCm, allTerminals
  * @param nodeId
  * @param nodeIri
  */
-function CreateRelationConnectors(connectors: Connector[], nodeId: string, nodeIri: string) {
+function CreateRelationConnectors(connectors: Connector[], nodeId: string, nodeIri: string, aspect: Aspect) {
   connectors.push(CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, true));
   connectors.push(CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP));
-  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, true));
-  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION));
-  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, true));
-  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY));
+
+  if (aspect === Aspect.Location) {
+    connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, true));
+  }
+
+  if (aspect === Aspect.Product) {
+    connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, true));
+    connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION));
+  }
+
+  if (aspect === Aspect.Function) {
+    connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION));
+    connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY));
+  }
 }
 
 /**

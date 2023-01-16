@@ -1,11 +1,9 @@
 import { all, call, put } from "redux-saga/effects";
 import { WebSocket } from "../../../models";
 import { Project, ProjectFileAm } from "@mimirorg/modelbuilder-types";
-import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
+import { ConvertProjectToProjectAm } from ".";
 import { saveAs } from "file-saver";
-import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
-import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import { fetchSubProjects } from "../../store/library/librarySlice";
 import {
@@ -65,14 +63,6 @@ export function* getProject(action: FetchingProjectAction) {
     }
 
     const project = response.data as Project;
-
-    MapProjectProperties(project, action.payload.project, {});
-
-    if (!IsBlockView()) {
-      project?.edges.forEach((edge) => {
-        if (!IsPartOfRelation(edge.fromConnector)) edge.hidden = true;
-      });
-    }
 
     const payload = { project, apiError: null };
 

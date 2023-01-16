@@ -282,6 +282,8 @@ export const TextResources = {
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
   VALIDATION_TRANSPORT_INTERFACE: "There is no transport type or interface type connected to this terminal type.",
+  VALIDATION_IMPOSSIBLE_CONNECTION: "It is not possible to create the connection.",
+  VALIDATION_DIRECTION: "A connection must be from an output connector to a input connector",
 
   // Modal
   MODAL_CLOSE: "Close menu",
