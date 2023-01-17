@@ -12,7 +12,8 @@ export const GetVisualFilterId = (source: Node, target: Node, edgeType: EdgeType
   };
 
   switch (edgeType) {
-    case EDGE_TYPE.TREE_PARTOF || EDGE_TYPE.BLOCK_PARTOF:
+    case EDGE_TYPE.TREE_PARTOF:
+    case EDGE_TYPE.BLOCK_PARTOF:
       record.Category = VisualFilterId.PARTOF;
       record.Item =
         source.aspect === Aspect.Function
@@ -21,7 +22,8 @@ export const GetVisualFilterId = (source: Node, target: Node, edgeType: EdgeType
           ? VisualFilterId.PRODUCT
           : VisualFilterId.LOCATION;
       break;
-    case EDGE_TYPE.TREE_RELATION || EDGE_TYPE.BLOCK_RELATION:
+    case EDGE_TYPE.TREE_RELATION:
+    case EDGE_TYPE.BLOCK_RELATION:
       record.Category = VisualFilterId.RELATION;
       record.Item =
         target.aspect === Aspect.Location
@@ -30,7 +32,8 @@ export const GetVisualFilterId = (source: Node, target: Node, edgeType: EdgeType
           ? VisualFilterId.FULFILLED_BY
           : null;
       break;
-    case EDGE_TYPE.TREE_TRANSPORT || EDGE_TYPE.BLOCK_TRANSPORT:
+    case EDGE_TYPE.TREE_TRANSPORT:
+    case EDGE_TYPE.BLOCK_TRANSPORT:
       record.Category = VisualFilterId.TRANSPORT;
       record.Item = null;
       break;

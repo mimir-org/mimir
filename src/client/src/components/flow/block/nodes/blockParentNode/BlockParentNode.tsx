@@ -26,7 +26,6 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const project = useAppSelector(selectors.projectSelector);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectroView = useAppSelector(selectors.electroSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
@@ -35,8 +34,8 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
-  }, [data?.connectors, selectedBlockNode, secondaryNode]);
+    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode));
+  }, [data?.connectors, selectedBlockNode]);
 
   if (!data) return null;
 
@@ -54,10 +53,9 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <BlockParentComponent
         node={data}
         isElectroView={isElectroView}
-        splitView={secondaryNode != null}
         inputConnectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         outputConnectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
-        isNavigationActive={data.id !== secondaryNode?.id}
+        isNavigationActive={true}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}

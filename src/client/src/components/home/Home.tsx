@@ -86,7 +86,7 @@ export const Home = ({ dispatch }: Props) => {
           <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} filter={filter} />
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
-          {isFilterOpen && <VisualFilterComponent dispatch={dispatch} filter={filter} onFilterChange={onFilterChange} />}
+          {isFilterOpen && <VisualFilterComponent filter={filter} onFilterChange={onFilterChange} />}
           <ValidationModule />
         </>
       )}

@@ -4,7 +4,6 @@ import { FontSize } from "../../../../../assets/font";
 
 interface CheckboxWrapperProps {
   color: string;
-  miniCheckBox: boolean;
 }
 
 export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
@@ -27,8 +26,8 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   > input::before {
     content: "";
-    height: ${(props) => (!props.miniCheckBox ? 16 : 8)}px;
-    width: ${(props) => (!props.miniCheckBox ? 20 : 14)}px;
+    height: 16px;
+    width: 20px;
     background-color: ${(props) => props.color};
     transform: scale(0);
     transition: 250ms transform ease-in-out;
@@ -36,7 +35,6 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   > input:checked::before {
     transform: scale(1);
-    margin: ${(props) => props.miniCheckBox && "4px"};
     transition: 250ms transform ease-in-out;
   }
 

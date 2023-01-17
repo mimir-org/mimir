@@ -28,7 +28,6 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
   const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
 
   return (
     <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -38,7 +37,7 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
             <ToolbarElement
               label={TextResources.FITSCREEN}
               icon={Icons.FitScreenIcon}
-              onClick={() => handlers.OnFitToScreenClick(isTreeView, viewportData, secondaryNode)}
+              onClick={() => handlers.OnFitToScreenClick(isTreeView, viewportData)}
               borderRight
             />
             <ToolbarElement

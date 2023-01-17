@@ -15,7 +15,6 @@ const BuildFlowChildNode = (childNode: Node, parentNode: Node) => {
 
   const type = GetNodeTypeString(childNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
-
   const position = SetChildNodePos(nodePos, parentNode);
 
   return {

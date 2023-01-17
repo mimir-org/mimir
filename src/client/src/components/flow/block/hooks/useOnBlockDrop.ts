@@ -17,7 +17,6 @@ interface OnDropParameters {
   project: Project;
   user: User;
   selectedNode: Node;
-  secondaryNode: Node;
   instance: ReactFlowInstance;
   getViewport: GetViewport;
   dispatch: Dispatch;
@@ -47,36 +46,19 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param params
  */
-function HandleLibNodeDrop({
-  event,
-  project,
-  user,
-  selectedNode,
-  secondaryNode,
-  getViewport,
-  dispatch,
-  terminals,
-}: OnDropParameters) {
+function HandleLibNodeDrop({ event, project, user, selectedNode, getViewport, dispatch, terminals }: OnDropParameters) {
   const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
-  let parentNode = selectedNode;
-  if (!parentNode) return;
-
-  // Handle drop in SplitView
-  if (secondaryNode) {
-    const dropZone = CalculateSecondaryNodeDropZone(getViewport, parentNode);
-    parentNode = FindParent(nodeLib, parentNode, secondaryNode, dropZone, event.clientX);
-    if (!parentNode) return;
-  }
+  if (!selectedNode) return;
 
   // Position for both treeView and blockView must be set
-  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
+  const treePosition = SetTreeNodePosition(selectedNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const convertedNode = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user, terminals);
+  const convertedNode = ConvertLibNodeToNode(nodeLib, selectedNode, treePosition, blockPosition, project.id, user, terminals);
   convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
 
-  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, dispatch);
+  if (IsFamily(selectedNode, convertedNode)) HandleCreatePartOfEdge(selectedNode, convertedNode, project, dispatch);
   dispatch(addNode(convertedNode));
 }
 
@@ -101,37 +83,6 @@ function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<H
   }
 
   return { x, y } as Position;
-}
-
-/**
- * Function to define the dropzone for a SecondaryNode.
- * A node will have the SecondaryNode as parent if dropped over its area.
- * @param getViewport
- * @returns an X value where the SecondaryNode is placed.
- */
-function CalculateSecondaryNodeDropZone(getViewport: GetViewport, primaryNode: Node) {
-  const zoom = getViewport().zoom;
-  const x = getViewport().x;
-  const parentNodeWidthScaled = primaryNode.width * zoom;
-
-  return x + parentNodeWidthScaled + Size.SPLITVIEW_DISTANCE;
-}
-
-/**
- * Function to determine which parentNode in SplitView that will be the parent of a dropped Node.
- * The parentNode is chosen based on if it is dropped over the primaryNode or the secondaryNode.
- * @param targetNode
- * @param primaryNode
- * @param secondaryNode
- * @param dropZone
- * @param clientX
- * @returns a parentNode.
- */
-function FindParent(targetNode: NodeLibCm, primaryNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
-  if (!IsFamily(targetNode, primaryNode) && !IsFamily(targetNode, secondaryNode)) return null;
-  if (!IsFamily(targetNode, primaryNode)) return secondaryNode;
-  if (!IsFamily(targetNode, secondaryNode)) return primaryNode;
-  return clientX < dropZone ? primaryNode : secondaryNode;
 }
 
 export default useOnBlockDrop;

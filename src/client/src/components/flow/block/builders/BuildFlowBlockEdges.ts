@@ -12,24 +12,17 @@ import { VisualFilterData } from "../../../../models/application/VisualFilter";
  * and share the same id and position.
  * @param mimirNodes
  * @param mimirEdges
- * @param selectedBlockNode
- * @param secondaryNode
  * @param animatedEdge
  * @returns all validated FlowEdges.
  */
-const BuildFlowBlockEdges = (
-  mimirNodes: Node[],
-  mimirEdges: Edge[],
-  selectedBlockNode: Node,
-  secondaryNode: Node,
-  filter: VisualFilterData
-) => {
+const BuildFlowBlockEdges = (mimirNodes: Node[], mimirEdges: Edge[], filter: VisualFilterData) => {
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
     if (IsPartOfRelation(edge.fromConnector)) return;
     const edgeType = GetBlockEdgeType(edge.fromConnector);
-    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, filter);
+    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, filter);
+
     if (blockEdge) flowEdges.push(blockEdge);
   });
 

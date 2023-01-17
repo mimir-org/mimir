@@ -1,7 +1,7 @@
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode } from "react-flow-renderer";
-import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
-import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
+import { BuildFlowParentNode } from ".";
+import { DrawFlowChildNodes } from "./helpers";
 
 /**
  * Component to draw all Flow nodes in BlockView.
@@ -11,26 +11,15 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  * @param mimirNodes
  * @param mimirEdges
  * @param primaryNode
- * @param secondaryNode
  * @returns all validated FlowNodes.
  */
-const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode: Node, secondaryNode: Node) => {
+const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode: Node) => {
   const flowNodes: FlowNode[] = [];
-  const splitView = secondaryNode != undefined;
 
   const parentBlockNode = BuildFlowParentNode(primaryNode);
   if (!parentBlockNode) return flowNodes;
 
   flowNodes.push(parentBlockNode);
-
-  if (splitView) {
-    const parentSecondaryBlock = BuildFlowSecondaryParentNode(primaryNode, secondaryNode);
-    if (!parentSecondaryBlock) return flowNodes;
-
-    flowNodes.push(parentSecondaryBlock);
-    DrawFlowSecondaryChildren(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes);
-  }
-
   DrawFlowChildNodes(mimirNodes, mimirEdges, primaryNode, flowNodes);
 
   return flowNodes;

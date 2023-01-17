@@ -16,8 +16,8 @@ const BuildFlowParentNode = (node: Node) => {
   const position = { x: 0, y: 0 };
 
   // TODO: remove state mutation outside store
-  node.positionBlockX = position.x;
-  node.positionBlockY = position.y;
+  // node.positionBlockX = position.x;
+  // node.positionBlockY = position.y;
 
   return {
     id: node.id,
