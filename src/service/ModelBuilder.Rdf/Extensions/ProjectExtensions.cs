@@ -92,7 +92,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var n in rootNodes)
             {
                 var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, true, projectData);
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, NodeType.Root, projectData);
                 project.Nodes.Add(node);
             }
 
@@ -104,7 +104,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var n in nodes)
             {
                 var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, false, projectData);
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, NodeType.Aspect, projectData);
                 project.Nodes.Add(node);
             }
         }

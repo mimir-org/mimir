@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Abstract;
+using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
@@ -80,8 +81,7 @@ namespace Mb.Models.Data
 
         public Aspect Aspect { get; set; }
 
-        [Required]
-        public bool IsRoot { get; set; }
+        public NodeType NodeType { get; set; }
 
         [Required]
         public string MasterProjectId { get; set; }
@@ -163,7 +163,7 @@ namespace Mb.Models.Data
                    LibraryTypeId == other.LibraryTypeId &&
                    Version == other.Version &&
                    Aspect == other.Aspect &&
-                   IsRoot == other.IsRoot &&
+                   NodeType == other.NodeType &&
                    MasterProjectId == other.MasterProjectId &&
                    MasterProjectIri == other.MasterProjectIri &&
                    Symbol == other.Symbol &&
@@ -205,7 +205,7 @@ namespace Mb.Models.Data
             hashCode.Add(LibraryTypeId);
             hashCode.Add(Version);
             hashCode.Add((int) Aspect);
-            hashCode.Add(IsRoot);
+            hashCode.Add(NodeType);
             hashCode.Add(MasterProjectId);
             hashCode.Add(MasterProjectIri);
             hashCode.Add(Symbol);

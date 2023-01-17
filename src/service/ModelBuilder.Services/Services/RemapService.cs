@@ -254,7 +254,7 @@ namespace Mb.Services.Services
                 if (actualNode == null)
                     continue;
 
-                var rootNode = project.Nodes.FirstOrDefault(x => x.IsRoot && x.Aspect == actualNode.Aspect);
+                var rootNode = project.Nodes.FirstOrDefault(x => x.NodeType == NodeType.Root && x.Aspect == actualNode.Aspect);
                 if (rootNode == null)
                     continue;
 

@@ -156,7 +156,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.LibraryTypeId)
                 .AddColumn(x => x.Version)
                 .AddColumn(x => x.Aspect)
-                .AddColumn(x => x.IsRoot)
+                .AddColumn(x => x.NodeType)
                 .AddColumn(x => x.MasterProjectId)
                 .AddColumn(x => x.MasterProjectIri)
                 .AddColumn(x => x.Symbol)

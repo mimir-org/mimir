@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Mimirorg.Common.Attributes;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
@@ -20,7 +21,7 @@ namespace Mb.Models.Application
         public Aspect Aspect { get; set; }
 
         [Required]
-        public bool IsRoot { get; set; }
+        public NodeType NodeType { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
@@ -93,8 +94,8 @@ namespace Mb.Models.Application
         {
             var validations = new List<ValidationResult>();
 
-            if (string.IsNullOrWhiteSpace(Rds) && !IsRoot)
-                validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(IsRoot) }));
+            if (string.IsNullOrWhiteSpace(Rds) && NodeType == NodeType.Aspect)
+                validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(NodeType) }));
 
             if (Aspect == Aspect.None)
                 validations.Add(new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) }));
