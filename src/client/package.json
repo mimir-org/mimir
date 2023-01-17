@@ -7,7 +7,7 @@
     "@azure/msal-react": "^1.5.1",
     "@headlessui/react": "^1.7.5",
     "@microsoft/applicationinsights-web": "^2.8.9",
-    "@microsoft/signalr": "^7.0.0",
+    "@microsoft/signalr": "^7.0.2",
     "@mimirorg/modelbuilder-types": "^5.0.0-preview.7",
     "@mimirorg/typelibrary-types": "^0.23.0",
     "@reduxjs/toolkit": "^1.8.6",
