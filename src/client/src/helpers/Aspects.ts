@@ -1,10 +1,10 @@
-import { Aspect, Node } from "@mimirorg/modelbuilder-types";
+import { Aspect, Node, NodeType } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 type Item = Node | NodeLibCm;
 
 export const IsAspectNode = (node: Node) => {
-  return node?.isRoot;
+  return node?.nodeType === NodeType.Aspect;
 };
 
 export const IsLocation = (item: Item) => {

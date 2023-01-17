@@ -6,7 +6,7 @@ import { TextResources } from "../../assets/text/TextResources";
 import { IsAspectNode } from "../../helpers/Aspects";
 import { IsOutputConnector, IsPartOfRelation } from "../../components/flow/helpers/Connectors";
 import { IsFamily } from "../../helpers/Family";
-import { Node, Edge, Project, ProjectAm } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project, ProjectAm, NodeType } from "@mimirorg/modelbuilder-types";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
 
     // Add data to current project
     // Find the rootnode for current location
-    const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
+    const rootNode = subProject.nodes.find((x) => x.nodeType === NodeType.Root && IsFamily(x, targetNode));
 
     // Find the connector that should do a remap
     const rootNodeConnector = rootNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
@@ -69,7 +69,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
     });
 
     const nodesToCreate = subProject.nodes.filter(
-      (n) => !n.isRoot && IsFamily(n, targetNode) && !project.nodes.find((y) => y.id === n.id)
+      (n) => !(n.nodeType === NodeType.Root) && IsFamily(n, targetNode) && !project.nodes.find((y) => y.id === n.id)
     );
 
     const edgesToCreate = subProject.edges.filter(

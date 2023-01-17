@@ -3,7 +3,7 @@ import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
-import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, ConnectorDirection, NodeType } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
@@ -49,7 +49,7 @@ export const BlockParentBanner = ({
         onClickAddTerminal={onClickAddTerminal}
         onClickRemoveTerminal={onClickRemoveTerminal}
       />
-      {!node.isRoot && company && (
+      {node.nodeType !== NodeType.Root && company && (
         <LogoBox>
           <img src={company.logo} alt={company.name} />
         </LogoBox>

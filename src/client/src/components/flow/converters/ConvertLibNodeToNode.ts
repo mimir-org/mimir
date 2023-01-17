@@ -7,7 +7,7 @@ import { CreateId } from "../helpers";
 import { ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, NodeType } from "@mimirorg/modelbuilder-types";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.
@@ -71,7 +71,7 @@ const ConvertLibNodeToNode = (
     isLockedStatusBy: null,
     isLockedStatusDate: null,
     order: 0,
-    isRoot: false,
+    nodeType: NodeType.Aspect,
     masterProjectIri: null,
     projectIri: null,
     selected: false,

@@ -1,4 +1,4 @@
-import { Node, Aspect } from "@mimirorg/modelbuilder-types";
+import { Node, Aspect, NodeType } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode } from "react-flow-renderer";
 
 /**
@@ -25,7 +25,7 @@ const ConvertNodeToFlowNode = (node: Node) => {
 };
 
 function GetNodeType(node: Node) {
-  let typeName = node.isRoot ? "Aspect" : "";
+  let typeName = node.nodeType === NodeType.Root ? "Aspect" : "";
   typeName += Aspect[node.aspect];
   return typeName;
 }

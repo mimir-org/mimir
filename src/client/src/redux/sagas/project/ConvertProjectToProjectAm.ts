@@ -69,7 +69,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       connectors: ConvertConnectorsToConnectorsAm(node.connectors),
       attributes: ConvertAttributesToAttributesAm(node.attributes),
       aspect: node.aspect,
-      isRoot: node.isRoot,
+      nodeType: node.nodeType,
       purpose: node.purposeString,
       created: node.created,
       createdBy: node.createdBy,
