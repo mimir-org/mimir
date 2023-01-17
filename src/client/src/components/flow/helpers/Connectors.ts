@@ -46,6 +46,10 @@ export const IsProductRelation = (conn: Connector) => {
 };
 
 // Connections
+export const IsRelationConnection = (source: Connector, target: Connector): boolean => {
+  return IsRelationConnector(source) && IsRelationConnector(target);
+};
+
 export const IsLocationConnection = (source: Connector, target: Connector) => {
   return (
     IsRelationConnector(source) &&

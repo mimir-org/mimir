@@ -7,13 +7,13 @@ import { TextResources } from "../../../../assets/text/TextResources";
 import { ViewportData } from "../../../../models/project";
 import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { Divider } from "../../../../compLibrary/divider";
+import { OnBlockExplorerChange } from "./components/handlers/OnBlockExplorerChange";
 
 interface Props {
   username: string;
   node: Node;
   nodes: Node[];
   selectedBlockNode: Node;
-  secondaryNode: Node;
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
@@ -35,7 +35,6 @@ export const BlockAspectComponent = ({
   node,
   nodes,
   selectedBlockNode,
-  secondaryNode,
   isExpanded,
   indent,
   isLeaf,
@@ -45,28 +44,30 @@ export const BlockAspectComponent = ({
   dispatch,
   onToggleExpanded,
   viewportData,
-}: Props) => (
-  <AspectContainer node={node}>
-    <LockComponent
-      isLocked={node.isLocked}
-      unlockText={TextResources.UNLOCK_OBJECT}
-      lockText={TextResources.LOCK_OBJECT}
-      nodeIsLocking={isNodeLocking}
-      onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
-      disabled={isGlobalLocking}
-    />
-    <Divider variant={"vertical"} />
-    <BlockAspectElement
-      node={node}
-      nodes={nodes}
-      isExpanded={isExpanded}
-      isLeaf={isLeaf}
-      onToggleExpanded={onToggleExpanded}
-      selectedBlockNode={selectedBlockNode}
-      secondaryNode={secondaryNode}
-      dispatch={dispatch}
-      indent={indent}
-      viewportData={viewportData}
-    />
-  </AspectContainer>
-);
+}: Props) => {
+  return (
+    <AspectContainer node={node}>
+      <LockComponent
+        isLocked={node.isLocked}
+        unlockText={TextResources.UNLOCK_OBJECT}
+        lockText={TextResources.LOCK_OBJECT}
+        nodeIsLocking={isNodeLocking}
+        onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
+        disabled={isGlobalLocking}
+      />
+      <Divider variant={"vertical"} />
+      <BlockAspectElement
+        node={node}
+        nodes={nodes}
+        isExpanded={isExpanded}
+        isLeaf={isLeaf}
+        onToggleExpanded={onToggleExpanded}
+        selectedBlockNode={selectedBlockNode}
+        dispatch={dispatch}
+        indent={indent}
+        viewportData={viewportData}
+        onChange={() => OnBlockExplorerChange(node, nodes, dispatch)}
+      />
+    </AspectContainer>
+  );
+};

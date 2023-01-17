@@ -1,4 +1,4 @@
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
+import { IsLocation } from "../../../../../helpers/Aspects";
 import { Connectors } from "../blockParentNode/BlockParentNode";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 import {
@@ -7,7 +7,6 @@ import {
   IsLocationRelation,
   IsOutputConnector,
   IsPartOfRelation,
-  IsProductRelation,
   IsTerminal,
 } from "../../../helpers/Connectors";
 
@@ -19,9 +18,9 @@ import {
  * @param secondaryNode
  * @returns two filtered lists of connectors sorted by type, name and input/output.
  */
-export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Node, secondaryNode: Node) => {
+export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Node) => {
   const sortedConnectors = connectors
-    ?.filter((c) => FilterConnector(selectedBlockNode, secondaryNode, c))
+    ?.filter((c) => FilterConnector(selectedBlockNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 
   const inputs =
@@ -32,24 +31,7 @@ export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Nod
   return { inputs, outputs } as Connectors;
 };
 
-function FilterConnector(selectedNode: Node, secondaryNode: Node, connector: Connector) {
-  if (secondaryNode != null) return FilterSplitViewConnector(selectedNode, secondaryNode, connector);
+function FilterConnector(selectedNode: Node, connector: Connector) {
   if (IsLocation(selectedNode)) return IsLocationRelation(connector);
   return IsTerminal(connector);
-}
-
-function FilterSplitViewConnector(selectedNode: Node, secondaryNode: Node, connector: Connector) {
-  if (IsProduct(selectedNode)) {
-    if (IsFunction(secondaryNode)) return IsProductRelation(connector);
-    if (IsLocation(secondaryNode)) return IsLocationRelation(connector);
-    if (IsProduct(secondaryNode)) return IsTerminal(connector);
-  }
-
-  if (IsFunction(selectedNode)) {
-    if (IsFunction(secondaryNode)) return IsTerminal(connector);
-    if (IsLocation(secondaryNode)) return IsLocationRelation(connector);
-    if (IsProduct(secondaryNode)) return IsProductRelation(connector);
-  }
-
-  return IsLocationRelation(connector);
 }

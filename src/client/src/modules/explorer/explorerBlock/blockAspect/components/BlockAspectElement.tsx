@@ -3,8 +3,6 @@ import { AspectColorType } from "../../../../../models";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { GetAspectColor } from "../../../../../helpers";
 import { CheckboxBlockExplorer } from "../../../../../compLibrary/input/checkbox/explorer/block/CheckboxBlockExplorer";
-import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
-import { IsMiniCheckBox } from "./helpers/IsMiniCheckBox";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
@@ -15,13 +13,13 @@ interface Props {
   node: Node;
   nodes: Node[];
   selectedBlockNode: Node;
-  secondaryNode: Node;
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
   viewportData: ViewportData;
+  onChange: (node: Node) => void;
 }
 
 /**
@@ -29,26 +27,14 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-export const BlockAspectElement = ({
-  node,
-  nodes,
-  selectedBlockNode,
-  secondaryNode,
-  dispatch,
-  isLeaf,
-  isExpanded,
-  onToggleExpanded,
-  indent,
-  viewportData,
-}: Props) => (
+export const BlockAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, onChange }: Props) => (
   <AspectElementWrapper indent={GetIndentLevel(indent)}>
     <CheckboxBlockExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
-      isChecked={node.blockSelected || node.id === secondaryNode?.id}
-      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode, selectedBlockNode)}
+      isChecked={node.blockSelected}
       isAspectNode={IsAspectNode(node)}
-      onChange={() => OnBlockExplorerChange(node, selectedBlockNode, secondaryNode, nodes, viewportData, dispatch)}
-      label={node.label}
+      onChange={() => onChange(node)}
+      label={node.label ?? node.name}
       icon={GetAspectIcon(node)}
     />
     {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded} />}

@@ -19,10 +19,12 @@ import ReactFlow, {
   EdgeChange,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
+import { VisualFilterData } from "../../../models/application/VisualFilter";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
+  filter: VisualFilterData;
 }
 
 /**
@@ -34,7 +36,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
-export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
+export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -43,7 +45,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
-  const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const terminals = useAppSelector(selectors.terminalsSelector);
@@ -53,7 +54,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);
   const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
-  const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
   const selectedEdge = mimirEdges.find((e) => e.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
@@ -87,7 +87,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
       project,
       user,
       selectedNode,
-      secondaryNode,
       instance,
       getViewport,
       dispatch,
@@ -101,7 +100,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
         project,
         selectedNode,
         selectedBlockNode,
-        secondaryNode,
         changes,
         setNodes,
         dispatch,
@@ -123,9 +121,9 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -134,14 +132,14 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
-  }, [mimirNodes, secondaryNode, isElectroView]);
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
+  }, [mimirNodes, isElectroView]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
-  }, [mimirEdges, mimirNodes, animatedEdge, secondaryNode]);
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
+  }, [mimirEdges, mimirNodes, filter]);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>

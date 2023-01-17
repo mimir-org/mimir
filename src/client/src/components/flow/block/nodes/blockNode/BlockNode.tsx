@@ -33,7 +33,6 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const [, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
   const isElectroView = useAppSelector(selectors.electroSelector);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const terminalTypes = useAppSelector(libSelectors.terminalsSelector);
   const libNodes = useAppSelector(libSelectors.libNodesSelector);
@@ -48,24 +47,13 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   // Handle connectors
   useEffect(() => {
-    if (secondaryNode != null) {
-      setConnectors(
-        FilterConnectors(
-          data?.connectors.filter((x) => !IsTerminal(x)),
-          selectedBlockNode,
-          secondaryNode
-        )
-      );
-    } else {
-      setConnectors(
-        FilterConnectors(
-          data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
-          selectedBlockNode,
-          secondaryNode
-        )
-      );
-    }
-  }, [selectedBlockNode, secondaryNode, data?.connectors]);
+    setConnectors(
+      FilterConnectors(
+        data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
+        selectedBlockNode
+      )
+    );
+  }, [selectedBlockNode, data?.connectors]);
 
   // Update node size based on active connectors
   useEffect(() => {

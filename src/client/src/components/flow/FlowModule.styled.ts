@@ -37,8 +37,8 @@ export const FlowModuleContainer = styled.div`
 
   .react-flow__handle {
     position: absolute;
-    width: 19px !important;
-    height: 19px !important;
+    width: 19px;
+    height: 19px;
     border-radius: 0 !important;
     border: none !important;
     background-color: transparent !important;

@@ -8,7 +8,8 @@ import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeBox } from "./AspectNode.styled";
 import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector, Aspect } from "@mimirorg/modelbuilder-types";
+import { GetHandleClassName } from "../helpers/GetHandleClassName";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -35,6 +36,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
     >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
+        const className = GetHandleClassName(conn);
 
         return (
           <TreeHandleBox
@@ -44,14 +46,9 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
             visible={isHover}
             position={positionHandler}
             topPos={SetTopPos(positionHandler)}
+            isFunctionAspect={data.aspect === Aspect.Function}
           >
-            <Handle
-              type={typeHandler}
-              position={positionHandler}
-              id={conn.id}
-              key={conn.id}
-              className="function-treeview-handler"
-            />
+            <Handle type={typeHandler} position={positionHandler} id={conn.id} key={conn.id} className={className} />
           </TreeHandleBox>
         );
       })}

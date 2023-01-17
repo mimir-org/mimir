@@ -7,17 +7,13 @@ import { Node, Relation } from "@mimirorg/modelbuilder-types";
  * @param IsTreeView
  * @param partOfRelations
  * @param nodes
- * @param secondaryNode
  * @returns a boolean value.
  */
-const ArePartOfRelationsVisible = (IsTreeView: boolean, partOfRelations: Relation[], nodes: Node[], secondaryNode: Node) => {
+const ArePartOfRelationsVisible = (IsTreeView: boolean, partOfRelations: Relation[], nodes: Node[]) => {
   if (IsTreeView) return !!partOfRelations.length;
 
   const selectedBlockNode = nodes.find((n) => n.blockSelected);
-  const isSplitView = secondaryNode != null;
-  const isProduct = isSplitView ? IsProduct(selectedBlockNode) || IsProduct(secondaryNode) : IsProduct(selectedBlockNode);
-
-  return !!partOfRelations.length && isProduct;
+  return !!partOfRelations.length && IsProduct(selectedBlockNode);
 };
 
 export default ArePartOfRelationsVisible;

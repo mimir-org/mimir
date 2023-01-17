@@ -1,10 +1,9 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../../assets/text/TextResources";
-import { IsFamily } from "../../../../../../helpers/Family";
 import { GetMimirNodes } from "../../../../../../helpers/Selected";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
+import { ValidateFlowTreeEdge } from "../../../builders/helpers";
 
 /**
  * Function to check if a connection/edge in TreeView is valid.
@@ -15,14 +14,17 @@ import { setValidation } from "../../../../../../redux/store/validation/validati
  */
 export const IsValidTreeConnection = (node: Node, connection: Connection, dispatch: Dispatch) => {
   const nodes = GetMimirNodes() as Node[];
-  const parentNode = nodes.find((n) => n.id === connection.source);
-  const isValidAspect = IsFamily(node, parentNode);
+  const fromNode = nodes.find((n) => n.id === connection.source);
+  const toNode = nodes.find((n) => n.id === connection.target);
+  const fromConnector = fromNode?.connectors.find((c) => c.id === connection.sourceHandle);
+  const toConnector = toNode?.connectors.find((c) => c.id === connection.targetHandle);
 
-  document.addEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch), { once: true });
-  return isValidAspect;
+  const [status, message] = ValidateFlowTreeEdge(fromNode, toNode, fromConnector, toConnector);
+  document.addEventListener("mouseup", () => onMouseUp(status, message, dispatch), { once: true });
+  return status;
 };
 
-const onMouseUp = (isValidAspect: boolean, dispatch: Dispatch) => {
-  if (!isValidAspect) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_ASPECT }));
-  return document.removeEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch));
+const onMouseUp = (status: boolean, message: string, dispatch: Dispatch) => {
+  if (!status) dispatch(setValidation({ valid: false, message: message }));
+  return document.removeEventListener("mouseup", () => onMouseUp(status, message, dispatch));
 };

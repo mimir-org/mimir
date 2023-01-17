@@ -27,6 +27,8 @@ import {
   fetchQuantityDatums,
   fetchSubProjects,
 } from "../../redux/store/library/librarySlice";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { defaultFilter, VisualFilterData } from "../../models/application/VisualFilter";
 
 interface Props {
   dispatch: Dispatch;
@@ -38,6 +40,7 @@ interface Props {
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = ({ dispatch }: Props) => {
+  const [filter, setFilter] = useLocalStorage("visual_filter", defaultFilter);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const isFilterOpen = useAppSelector(selectors.filterSelector);
@@ -46,6 +49,10 @@ export const Home = ({ dispatch }: Props) => {
   const isProjectMenuOpen = activeMenu != null;
   const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
   const inspectorRef = useRef(null);
+
+  const onFilterChange = (filter: VisualFilterData) => {
+    setFilter(filter);
+  };
 
   useEffect(() => {
     dispatch(fetchCompany());
@@ -76,10 +83,10 @@ export const Home = ({ dispatch }: Props) => {
           <ToolbarComponent isTreeView={isTreeView} dispatch={dispatch} />
           {isTreeView && <ExplorerTreeModule dispatch={dispatch} />}
           {!isTreeView && <ExplorerBlockModule dispatch={dispatch} />}
-          <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} />
+          <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} filter={filter} />
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
-          {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
+          {isFilterOpen && <VisualFilterComponent filter={filter} onFilterChange={onFilterChange} />}
           <ValidationModule />
         </>
       )}

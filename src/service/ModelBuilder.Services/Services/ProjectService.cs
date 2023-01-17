@@ -202,7 +202,7 @@ namespace Mb.Services.Services
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
                 projectAm.IsSubProject = true;
-                projectAm.Nodes = projectAm.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                projectAm.Nodes = projectAm.Nodes.Where(x => x.NodeType == NodeType.Root || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
                 projectAm.Edges = projectAm.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
 
                 _ = _remapService.Clone(projectAm);
@@ -393,7 +393,7 @@ namespace Mb.Services.Services
             var updatedProject = await GetProject(newSubProject.Id, null);
 
             // Identify root nodes
-            var rootNodes = updatedProject.Nodes.Where(x => x.IsRoot).Select(x => x.Id).ToList();
+            var rootNodes = updatedProject.Nodes.Where(x => x.NodeType == NodeType.Root).Select(x => x.Id).ToList();
 
             // Position node
             var rootOrigin = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).MinBy(x => x.PositionY);
@@ -487,7 +487,7 @@ namespace Mb.Services.Services
                 Connectors = new List<Connector>(),
                 Version = version,
                 Rds = string.Empty,
-                IsRoot = true,
+                NodeType = NodeType.Root,
                 MasterProjectId = projectId,
                 Aspect = aspect,
                 Height = null,
@@ -528,7 +528,7 @@ namespace Mb.Services.Services
             if (project?.Nodes == null || project.Edges == null)
                 return;
 
-            var rootNodes = project.Nodes.Where(x => x.IsRoot).ToList();
+            var rootNodes = project.Nodes.Where(x => x.NodeType == NodeType.Root).ToList();
             _ = rootNodes.Aggregate(0, (current, node) => ResolveNodeLevelAndOrder(node, project, 0, current) + 1);
         }
 

@@ -4,8 +4,9 @@ import { TreeHandleBox } from "../../styled/TreeHandleBox";
 import { Handle } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { SetTopPos } from "../../helpers/SetTopPos";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
-import { IsPartOfRelation } from "../../../../helpers/Connectors";
+import { Aspect, Connector, Node } from "@mimirorg/modelbuilder-types";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation } from "../../../../helpers/Connectors";
+import { GetHandleClassName } from "../../helpers/GetHandleClassName";
 
 interface Props {
   node: Node;
@@ -23,20 +24,22 @@ interface Props {
  */
 export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatch }: Props) => {
   const [type, pos] = GetHandleType(connector);
+  const className = GetHandleClassName(connector);
 
   return (
     <TreeHandleBox
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      visible={IsPartOfRelation(connector) && isHover}
+      visible={(IsPartOfRelation(connector) || IsLocationRelation(connector) || IsProductRelation(connector)) && isHover}
       position={pos}
       topPos={SetTopPos(pos)}
+      isFunctionAspect={node.aspect === Aspect.Function}
     >
       <Handle
         type={type}
         position={pos}
         id={connector.id}
-        className="function-treeview-handler"
+        className={className}
         isValidConnection={(connection) => IsValidTreeConnection(node, connection, dispatch)}
       />
     </TreeHandleBox>

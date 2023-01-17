@@ -3,7 +3,6 @@ import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { SetFitToScreen } from "../../../helpers";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
@@ -20,9 +19,9 @@ import {
 export const OnElectroClick = (dispatch: Dispatch) => dispatch(toggleElectroView());
 export const OnFilterClick = (dispatch: Dispatch, open: boolean) => dispatch(setFilterMenuVisibility(!open));
 
-export const OnFitToScreenClick = (isTreeView: boolean, viewportData: ViewportData, secondaryNode: Node) => {
+export const OnFitToScreenClick = (isTreeView: boolean, viewportData: ViewportData) => {
   if (isTreeView) return;
-  SetFitToScreen(viewportData, secondaryNode !== null);
+  SetFitToScreen(viewportData);
 };
 
 export const OnBlockViewClick = (
@@ -33,7 +32,7 @@ export const OnBlockViewClick = (
 ) => {
   if (!isTreeView || !ValidateBlockViewClick(selectedFlowNodes.length, dispatch)) return;
 
-  SetFitToScreen(viewportData, false);
+  SetFitToScreen(viewportData);
   dispatch(removeSecondaryNode());
   dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
   dispatch(setSelectedNode(selectedFlowNodes[0].id));

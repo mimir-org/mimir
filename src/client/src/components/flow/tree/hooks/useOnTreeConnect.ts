@@ -1,11 +1,11 @@
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { IsPartOfRelation, IsPartOfConnection, IsTerminal } from "../../helpers/Connectors";
+import { IsPartOfRelation, IsTerminal, IsRelationConnection } from "../../helpers/Connectors";
 import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
 import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
-import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Project, Connector } from "@mimirorg/modelbuilder-types";
 import { ConvertEdgeDataToMimirPartOfEdge } from "../../converters";
 
 interface Params {
@@ -31,7 +31,7 @@ const useOnTreeConnect = (params: Params) => {
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
   const existingEdge = GetExistingEdge(project.edges, connection, source, target);
 
-  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
+  if (IsRelationConnection(sourceConn, targetConn)) HandleRelationConnectionChange(project.edges, target, targetConn, dispatch);
 
   const currentEdge = existingEdge ?? ConvertEdgeDataToMimirPartOfEdge(id, sourceConn, targetConn, source, target, project.id);
   if (!existingEdge) dispatch(createEdge(currentEdge));
@@ -47,10 +47,10 @@ const useOnTreeConnect = (params: Params) => {
   });
 };
 
-function HandlePartOfEdge(edges: Edge[], targetNode: Node, dispatch: Dispatch) {
+function HandleRelationConnectionChange(edges: Edge[], targetNode: Node, targetConnector: Connector, dispatch: Dispatch) {
   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const existingPartOfEdge = edges.find((edge) => edge.toNodeId === targetNode.id && IsPartOfRelation(edge?.fromConnector));
-  if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
+  const exixtingEdge = edges.find((edge) => edge.toNodeId === targetNode.id && edge.toConnectorId === targetConnector.id);
+  if (exixtingEdge) dispatch(deleteEdge(exixtingEdge.id));
 }
 
 export default useOnTreeConnect;

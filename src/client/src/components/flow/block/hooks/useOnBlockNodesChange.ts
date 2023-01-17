@@ -3,7 +3,6 @@ import { Node, Project } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
 import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
-import { IsFamily } from "../../../../helpers/Family";
 import {
   applyNodeChanges,
   NodeChange,
@@ -17,7 +16,6 @@ interface OnChangeParams {
   project: Project;
   selectedNode: Node;
   selectedBlockNode: Node;
-  secondaryNode: Node;
   changes: NodeChange[];
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>;
   dispatch: Dispatch;
@@ -38,7 +36,7 @@ interface OnChangeParams {
  * @param params
  */
 const useOnBlockNodesChange = (params: OnChangeParams) => {
-  const { project, selectedNode, selectedBlockNode, secondaryNode, changes, setNodes, dispatch, inspectorRef } = params;
+  const { project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef } = params;
   const mimirNodes = project.nodes;
   const mimirEdges = project.edges;
   const verifiedFlowChanges = [] as NodeChange[];
@@ -47,7 +45,8 @@ const useOnBlockNodesChange = (params: OnChangeParams) => {
   // Handle changes
   changes.forEach((c) => {
     if (c.type === "select") return HandleSelect(c, selectedNode, verifiedFlowChanges, dispatch);
-    if (c.type === "position") return HandlePosition(c, selectedBlockNode, selectedNode, secondaryNode, verifiedFlowChanges);
+    if (c.type === "position") return HandlePosition(c, selectedBlockNode, selectedNode, verifiedFlowChanges);
+
     if (c.type === "remove") return HandleRemove(c, selectedBlockNode, verifiedFlowChanges, nodesToDelete, mimirNodes);
     verifiedFlowChanges.push(c);
   });
@@ -79,17 +78,8 @@ function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedF
  * @param selectedBlockNode
  * @param filteredList
  */
-function HandlePosition(
-  change: NodePositionChange,
-  selectedBlockNode: Node,
-  selectedNode: Node,
-  secondaryNode: Node,
-  filteredList: NodeChange[]
-) {
-  const splitView = secondaryNode != undefined;
-  const parentNode = splitView && IsFamily(selectedNode, secondaryNode) ? secondaryNode : selectedBlockNode;
-
-  if (!ValidateNodePosition(parentNode, change.id, change.position)) return;
+function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, selectedNode: Node, filteredList: NodeChange[]) {
+  if (!ValidateNodePosition(selectedBlockNode, change.id, change.position)) return;
   filteredList.push(change);
 }
 

@@ -351,3 +351,7 @@ export function removeInterfaceTerminalAttribute(
 export function mergeSubProject(prepare: PrepareAm): Types.MergeSubProject {
   return { type: Types.MERGE_SUB_PROJECT, payload: { prepare } };
 }
+
+export function updateProjectDescription(description: string): Types.UpdateProjectDescription {
+  return { type: Types.UPDATE_PROJECT_DESCRIPTION, payload: { description } };
+}

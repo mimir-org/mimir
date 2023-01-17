@@ -22,7 +22,6 @@ export const BlockProjectComponent = () => {
   const [lockingNode, setLockingNode] = useState(null);
   const projectState = useAppSelector(selectors.projectStateSelector);
   const username = useAppSelector(selectors.usernameSelector);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const project = projectState?.project;
   const nodes = project?.nodes;
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
@@ -48,7 +47,6 @@ export const BlockProjectComponent = () => {
             node={node}
             nodes={nodes}
             selectedBlockNode={selectedBlockNode}
-            secondaryNode={secondaryNode}
             indent={indent}
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, project.edges)}

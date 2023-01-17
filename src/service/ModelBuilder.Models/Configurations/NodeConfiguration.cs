@@ -35,7 +35,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
-            builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();
+            builder.Property(p => p.NodeType).HasColumnName("NodeType").IsRequired();
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
             builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false);

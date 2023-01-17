@@ -16,7 +16,6 @@ import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
 
 interface Props {
   node: Node;
-  splitView: boolean;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   isNavigationActive: boolean;
@@ -34,7 +33,6 @@ interface Props {
  */
 export const BlockParentComponent = ({
   node,
-  splitView,
   inputConnectors,
   outputConnectors,
   isNavigationActive,
@@ -76,7 +74,7 @@ export const BlockParentComponent = ({
         onClickRemoveTerminal={OnClickRemoveTerminal}
       />
       <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
-        <ResizeButton ref={resizePanelRef} visible={!splitView}>
+        <ResizeButton ref={resizePanelRef} visible={true}>
           <img src={ResizeIcon} alt="resize" />
         </ResizeButton>
       </Tooltip>

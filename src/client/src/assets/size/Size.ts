@@ -17,12 +17,8 @@ export const Size = {
   BLOCK_MARGIN_Y: 70,
   BLOCK_MARGIN_X: 45,
 
-  SPLITVIEW_DISTANCE: 120,
-  SPLITVIEW_DIVISOR: 1.2,
-
   // Zoom
   ZOOM_DEFAULT: 1,
-  ZOOM_SPLITVIEW: 0.5,
 
   // Modules
   MODULE_OPEN: 400,

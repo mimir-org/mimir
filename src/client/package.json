@@ -11,6 +11,7 @@
     "@mimirorg/modelbuilder-types": "^4.2.0",
     "@mimirorg/typelibrary-types": "^0.23.0",
     "@reduxjs/toolkit": "^1.8.6",
+    "@styled-icons/heroicons-outline": "^10.46.0",
     "@tippyjs/react": "^4.2.6",
     "file-saver": "^2.0.5",
     "moment": "^2.29.2",

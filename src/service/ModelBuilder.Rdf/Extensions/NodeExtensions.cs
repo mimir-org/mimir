@@ -71,7 +71,7 @@ namespace ModelBuilder.Rdf.Extensions
                 ontologyService.AssertNode(node.Iri, Resources.Type, @$"og{strippedRds.Length}:{node.Aspect}{strippedRds}");
             }
 
-            if (node.IsRoot)
+            if (node.NodeType == NodeType.Root)
             {
                 ontologyService.AssertNode(node.Iri, Resources.IsAspectOf, project.Iri);
                 ontologyService.AssertNode(node.Iri, Resources.HasMasterProject, project.Iri);
@@ -121,7 +121,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// TODO: This is not correct. We have more values ex. ++ etc.
         public static string RdsString(this Node node, Project project)
         {
-            if (node.IsRoot)
+            if (node.NodeType == NodeType.Root)
             {
                 return $"<{project.Name.ToUpper()}>";
             }
@@ -156,10 +156,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="iri">The IRI of the node</param>
         /// <param name="projectIri">The IRI of the project</param>
-        /// <param name="isRootNode">Is the node a root node</param>
+        /// <param name="nodeType">The type of the node</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
-        public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode, ProjectData projectData)
+        public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, NodeType nodeType, ProjectData projectData)
         {
             if (node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
                 throw new InvalidDataException($"Can't resolve a node without required parameters.");
@@ -192,7 +192,7 @@ namespace ModelBuilder.Rdf.Extensions
             node.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
             node.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
-            node.IsRoot = isRootNode;
+            node.NodeType = nodeType;
 
             node.TypeReferences.ResolveTypeReferences(node.Iri, ontologyService);
 
@@ -218,7 +218,7 @@ namespace ModelBuilder.Rdf.Extensions
             }
             else
             {
-                node.Connectors = CreateDefaultConnectors(iri, isRootNode);
+                node.Connectors = CreateDefaultConnectors(iri, nodeType == NodeType.Root);
             }
 
             // Create all input terminals
