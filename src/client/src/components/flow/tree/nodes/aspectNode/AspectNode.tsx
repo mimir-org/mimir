@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
 import { TreeHandleBox } from "../styled/TreeHandleBox";
 import { AspectColorType } from "../../../../../models";
@@ -13,26 +13,13 @@ import { GetHandleClassName } from "../helpers/GetHandleClassName";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
-  const [timer, setTimer] = useState(false);
-
-  useEffect(() => {
-    if (timer) {
-      const clock = window.setInterval(() => {
-        setTimer(false);
-        setIsHover(false);
-      }, 5000);
-      return () => {
-        window.clearInterval(clock);
-      };
-    }
-  }, [timer]);
 
   return (
     <AspectNodeBox
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       selected={data.selected}
       onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => OnMouseLeave(setTimer)}
+      onMouseLeave={() => OnMouseLeave(setIsHover)}
     >
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
@@ -41,7 +28,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
         return (
           <TreeHandleBox
             onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
+            onMouseLeave={() => OnMouseLeave(setIsHover)}
             key={conn.id}
             visible={isHover}
             position={positionHandler}
