@@ -1,9 +1,12 @@
 import { memo } from "react";
-import { EdgeProps, getBezierPath, getEdgeCenter, getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getEdgeCenter, getSmoothStepPath } from "react-flow-renderer";
+import { createHandlerNode } from "../../../../../redux/store/project/actions";
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useAppSelector, projectSelector } from "../../../../../redux/store";
 
 /**
  * Component for PartOfEdges in TreeView.
@@ -11,6 +14,7 @@ import styled from "styled-components";
  * @returns an edge between nodes of the same Aspect.
  */
 
+// TODO: Style correctly, or use existing components
 const StyledButton = styled.button`
   width: 20px;
   height: 20px;
@@ -22,6 +26,7 @@ const StyledButton = styled.button`
   line-height: 1;
 `;
 
+// TODO: Style correctly and move to separate file
 const StyledDiv = styled.div`
   background: transparent;
   width: 40px;
@@ -31,18 +36,14 @@ const StyledDiv = styled.div`
   align-items: center;
   min-height: 40px;
 `;
-
-const onEdgeClick = (evt, id, edgePath, labelX, labelY) => {
-  evt.stopPropagation();
-  alert(`remove ${id}, edgePath: ${edgePath}, labelX: ${labelX}, labelY: ${labelY}`);
-};
-
 const foreignObjectSize = 40;
 
 const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
+  // const project = useAppSelector(projectSelector);
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);
   const style = GetTreeEdgeStyle(color, !data.edge.hidden);
   const edgePathSmoothStep = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+  // const dispatch = useDispatch();
   const [labelX, labelY] = getEdgeCenter({
     sourceX,
     sourceY,
@@ -51,6 +52,11 @@ const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition
     targetY,
     targetPosition,
   });
+
+  const onEdgeClick = (evt, id, x: number, y: number) => {
+    evt.stopPropagation();
+    // dispatch(createHandlerNode(id, x, y, project));
+  };
 
   return (
     <>
@@ -64,7 +70,7 @@ const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition
         requiredExtensions="http://www.w3.org/1999/xhtml"
       >
         <StyledDiv>
-          <StyledButton className="edgebutton" onClick={(event) => onEdgeClick(event, id, edgePathSmoothStep, labelX, labelY)}>
+          <StyledButton className="edgebutton" onClick={(event) => onEdgeClick(event, id, labelX, labelY)}>
             +
           </StyledButton>
         </StyledDiv>
