@@ -4,7 +4,7 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 type Item = Node | NodeLibCm;
 
 export const IsAspectNode = (node: Node) => {
-  return node?.nodeType === NodeType.Aspect;
+  return node?.nodeType === NodeType.Root;
 };
 
 export const IsLocation = (item: Item) => {
