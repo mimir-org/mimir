@@ -115,6 +115,22 @@ namespace Mb.Models.Data
 
         #endregion Properties
 
+        #region Client properties only
+
+        [NotMapped]
+        public bool Hidden { get; set; } = false;
+
+        [NotMapped]
+        public bool BlockHidden { get; set; } = false;
+
+        [NotMapped]
+        public bool Selected { get; set; } = false;
+
+        [NotMapped]
+        public bool BlockSelected { get; set; } = false;
+
+        #endregion
+
         #region IEquatable
 
         public bool Equals(Node other)
