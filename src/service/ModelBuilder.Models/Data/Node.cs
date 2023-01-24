@@ -113,28 +113,6 @@ namespace Mb.Models.Data
 
         public int? Height { get; set; }
 
-        // Only for client
-        [NotMapped]
-        public string ParentNodeId { get; set; }
-
-        [NotMapped]
-        public bool? Selected { get; set; }
-
-        [NotMapped]
-        public bool? BlockSelected { get; set; }
-
-        [NotMapped]
-        public bool? Hidden { get; set; }
-
-        [NotMapped]
-        public bool? BlockHidden { get; set; }
-
-        [NotMapped]
-        public bool? IsOffPageTarget { get; set; }
-
-        [NotMapped]
-        public bool? IsOffPageRequired { get; set; }
-
         #endregion Properties
 
         #region IEquatable

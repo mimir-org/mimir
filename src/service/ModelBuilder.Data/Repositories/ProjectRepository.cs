@@ -114,17 +114,6 @@ namespace Mb.Data.Repositories
                     .AsSplitQuery()
                     .FirstOrDefault();
 
-            if (project != null && project.Nodes.Any())
-                project.Nodes = project.Nodes.OrderBy(x => x.Order).Select(x =>
-                {
-                    x.Hidden = false;
-                    x.BlockHidden = false;
-                    x.Selected = false;
-                    x.BlockSelected = false;
-                    return x;
-                })
-                    .ToList();
-
             return Task.FromResult(project);
         }
 

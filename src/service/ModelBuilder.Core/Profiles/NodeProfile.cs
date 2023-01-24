@@ -48,14 +48,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
                 .ForMember(dest => dest.ProjectIri, opt => opt.MapFrom(src => src.ProjectIri))
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
-                .ForMember(dest => dest.PurposeString, opt => opt.Ignore())
-                .ForMember(dest => dest.ParentNodeId, opt => opt.Ignore())
-                .ForMember(dest => dest.Selected, opt => opt.Ignore())
-                .ForMember(dest => dest.BlockSelected, opt => opt.Ignore())
-                .ForMember(dest => dest.Hidden, opt => opt.Ignore())
-                .ForMember(dest => dest.BlockHidden, opt => opt.Ignore())
-                .ForMember(dest => dest.IsOffPageTarget, opt => opt.Ignore())
-                .ForMember(dest => dest.IsOffPageRequired, opt => opt.Ignore());
+                .ForMember(dest => dest.PurposeString, opt => opt.Ignore());
 
             CreateMap<Node, NodeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
