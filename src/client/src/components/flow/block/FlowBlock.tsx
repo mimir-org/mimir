@@ -20,6 +20,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
+import { CreateHandleEdge, CreateHandleNode, UpdateHandleEdge } from "../helpers/CreateHandleNode";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -59,6 +60,13 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
   }, []);
+
+  const OnEdgeSplitClick = (id: string, x: number, y: number) => {
+    const currentEdge = project.edges.find((x) => x.id === id);
+    const handleNode = CreateHandleNode(x, y, currentEdge, dispatch);
+    UpdateHandleEdge(currentEdge, handleNode, dispatch);
+    CreateHandleEdge(currentEdge, handleNode, dispatch);
+  };
 
   const OnConnectStart = (e: React.MouseEvent, { nodeId, handleType, handleId }) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
@@ -123,7 +131,7 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
       SetInitialParentId(mimirNodes);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -138,7 +146,7 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
   }, [mimirEdges, mimirNodes, filter]);
 
   return (

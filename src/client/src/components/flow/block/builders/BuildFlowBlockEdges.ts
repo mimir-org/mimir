@@ -15,13 +15,18 @@ import { VisualFilterData } from "../../../../models/application/VisualFilter";
  * @param animatedEdge
  * @returns all validated FlowEdges.
  */
-const BuildFlowBlockEdges = (mimirNodes: Node[], mimirEdges: Edge[], filter: VisualFilterData) => {
+const BuildFlowBlockEdges = (
+  mimirNodes: Node[],
+  mimirEdges: Edge[],
+  filter: VisualFilterData,
+  onEdgeSplitClick: (id: string, x: number, y: number) => void
+) => {
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
     if (IsPartOfRelation(edge.fromConnector)) return;
     const edgeType = GetBlockEdgeType(edge.fromConnector);
-    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, filter);
+    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, filter, onEdgeSplitClick);
 
     if (blockEdge) flowEdges.push(blockEdge);
   });

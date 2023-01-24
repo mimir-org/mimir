@@ -25,7 +25,7 @@ const ConvertNodeToFlowNode = (node: Node) => {
 };
 
 function GetNodeType(node: Node) {
-  let typeName = node.nodeType === NodeType.Root ? "Aspect" : "";
+  let typeName = node.nodeType === NodeType.Root ? "Aspect" : node.nodeType === NodeType.Handler ? "Handle" : "";
   typeName += Aspect[node.aspect];
   return typeName;
 }

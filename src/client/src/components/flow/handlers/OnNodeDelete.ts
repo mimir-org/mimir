@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { deleteEdge, deleteNode } from "../../../redux/store/project/actions";
+import { Node, Edge, NodeType, ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { deleteEdge, deleteNode, updateEdge } from "../../../redux/store/project/actions";
 import { IsEdgeConnectedToNode } from "../helpers/IsEdgeConnectedToNode";
 import { CloseInspector } from "../tree/handlers";
 
@@ -25,15 +25,39 @@ const OnNodeDelete = (
 ) => {
   nodesToDelete.forEach((node) => {
     if (node.id === selectedBlockNode?.id) return;
-    DeleteRelatedEdges(node.id, edges, dispatch);
-    HandleRelatedEdges(node.id, nodes, edges, dispatch);
-    dispatch(deleteNode(node.id));
+    if (node.nodeType === NodeType.Handler) {
+      RemapAndDeleteHandlerEdges(node, edges, dispatch);
+      dispatch(deleteNode(node.id));
+    } else {
+      DeleteRelatedEdges(node.id, edges, dispatch);
+      HandleRelatedEdges(node.id, nodes, edges, dispatch);
+      dispatch(deleteNode(node.id));
+    }
   });
 
   CloseInspector(inspectorRef, dispatch);
 };
 
 export default OnNodeDelete;
+
+function RemapAndDeleteHandlerEdges(node: Node, edges: Edge[], dispatch: Dispatch) {
+  // There should always only contains 2 connectors on handle node.
+  // One input connector and one output connector.
+  const inputConnector = node.connectors.find((x) => x.type === ConnectorDirection.Input);
+  const outputConnector = node.connectors.find((x) => x.type === ConnectorDirection.Output);
+  const remapEdge = edges.find((x) => x.toConnectorId === inputConnector.id);
+  const delEdge = edges.find((x) => x.fromConnectorId === outputConnector.id);
+  const copy = { ...remapEdge };
+
+  copy.toNode = delEdge.toNode;
+  copy.toNodeId = delEdge.toNodeId;
+  copy.toNodeIri = delEdge.toNodeIri;
+  copy.toConnector = delEdge.toConnector;
+  copy.toConnectorId = delEdge.toConnectorId;
+  copy.toConnectorIri = delEdge.toConnectorIri;
+  if (delEdge.id !== copy.id) dispatch(deleteEdge(delEdge.id));
+  dispatch(updateEdge(copy));
+}
 
 /**
  * Function to delete all edges related to a node that is to be deleted.

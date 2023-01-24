@@ -1,12 +1,9 @@
 import { memo } from "react";
 import { EdgeProps, getEdgeCenter, getSmoothStepPath } from "react-flow-renderer";
-import { createHandlerNode } from "../../../../../redux/store/project/actions";
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { useAppSelector, projectSelector } from "../../../../../redux/store";
 
 /**
  * Component for PartOfEdges in TreeView.
@@ -53,9 +50,9 @@ const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition
     targetPosition,
   });
 
-  const onEdgeClick = (evt, id, x: number, y: number) => {
+  const onEdgeClick = (evt, id: string, x: number, y: number) => {
     evt.stopPropagation();
-    // dispatch(createHandlerNode(id, x, y, project));
+    if (data.onEdgeSplitClick != null) data.onEdgeSplitClick(id, x - 10, y - 10);
   };
 
   return (
