@@ -92,6 +92,8 @@ namespace Mb.Data.Repositories
                     .Include(x => x.Edges)
                     .Include("Edges.FromNode")
                     .Include("Edges.ToNode")
+                    .Include("Edges.FromNode.Connectors")
+                    .Include("Edges.ToNode.Connectors")
                     .Include("Edges.FromConnector")
                     .Include("Edges.ToConnector")
                     .Include("Edges.Transport")

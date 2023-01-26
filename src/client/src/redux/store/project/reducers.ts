@@ -1,7 +1,7 @@
 import * as Types from "./types";
 import { CreateEmptyProject } from "../../../models/data/Project";
 import { Edge, Node, Terminal } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsTerminal } from "../../../services";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,

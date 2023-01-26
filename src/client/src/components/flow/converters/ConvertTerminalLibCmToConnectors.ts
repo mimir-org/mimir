@@ -129,7 +129,7 @@ function CreateRelation(nodeId: string, nodeIri: string, relationType: RelationT
     nodeId,
     nodeIri,
     relationType,
-    kind: TextResources.KIND_CONNECTOR,
+    kind: TextResources.KIND_RELATION,
     discriminator: TextResources.KIND_RELATION,
     name,
     isRequired: false,

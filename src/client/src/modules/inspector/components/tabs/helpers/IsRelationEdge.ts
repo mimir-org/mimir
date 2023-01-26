@@ -1,6 +1,6 @@
 import { Edge } from "@mimirorg/modelbuilder-types";
-import { IsRelationConnector } from "../../../../../components/flow/helpers/Connectors";
+import { IsRelation } from "../../../../../services";
 
 export const IsRelationEdge = (edge: Edge) => {
-  return IsRelationConnector(edge.fromConnector);
+  return IsRelation(edge.fromConnector);
 };

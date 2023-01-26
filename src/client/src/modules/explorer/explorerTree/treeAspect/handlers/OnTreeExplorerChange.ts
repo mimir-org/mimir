@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { setNodeVisibility } from "../../../../../redux/store/project/actions";
 import { ConnectorDirection, Edge, Node, Project, RelationType } from "@mimirorg/modelbuilder-types";
-import { IsRelation } from "../../../../inspector/helpers/IsType";
+import { IsRelation } from "../../../../../services";
 
 /**
  * Handler for changing visibility of a node in the TreeView's Explorer.

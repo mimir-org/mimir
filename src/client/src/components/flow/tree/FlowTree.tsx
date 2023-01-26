@@ -3,7 +3,6 @@ import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
@@ -67,9 +66,12 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
-    dispatch(updatePosition(n.id, n.position.x, n.position.y));
-  }, []);
+  const OnNodeDragStop = useCallback(
+    (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
+      return hooks.useOnDragStop(activeNode, mimirEdges, dispatch);
+    },
+    [mimirEdges]
+  );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
     return hooks.useOnTreeConnect({
@@ -116,17 +118,12 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
     }
   }, []);
 
-  // Rebuild nodes
+  // Rebuild nodes and edges
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowTreeNodes(mimirNodes));
-  }, [mimirNodes, selectedNode]);
-
-  // Rebuild edges
-  useEffect(() => {
-    if (!project) return;
     setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
-  }, [mimirEdges, filter]);
+  }, [mimirNodes, mimirEdges, selectedNode, filter]);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>

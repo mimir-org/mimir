@@ -1,6 +1,6 @@
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { InspectorElement } from "../../../types";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../services";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorTabsComponent.styled";
 

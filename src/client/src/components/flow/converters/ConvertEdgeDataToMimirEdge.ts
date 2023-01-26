@@ -2,7 +2,7 @@ import { ConvertTerminalToInterface, ConvertTerminalToTransport } from ".";
 import { Connector, Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
-import { IsRelation } from "../../../modules/inspector/helpers/IsType";
+import { IsRelation } from "../../../services";
 
 /**
  * Function to convert edge data to a Mimir Edge.

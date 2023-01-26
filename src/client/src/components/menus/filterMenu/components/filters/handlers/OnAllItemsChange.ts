@@ -1,7 +1,8 @@
 import { Edge, Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal } from "../../../../../../services";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
 
 export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
   const hidden = edges.some((e) => (IsLocationRelation(e.fromConnector) || IsProductRelation(e.fromConnector)) && e.hidden);

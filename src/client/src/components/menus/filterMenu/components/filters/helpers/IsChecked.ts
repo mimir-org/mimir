@@ -1,5 +1,6 @@
 import { Edge } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal } from "../../../../../../services";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
 
 export const AreAllProductAndLocationChecked = (edges: Edge[]) => {
   return !edges.some((e) => e.hidden && (IsProductRelation(e.fromConnector) || IsLocationRelation(e.fromConnector)));

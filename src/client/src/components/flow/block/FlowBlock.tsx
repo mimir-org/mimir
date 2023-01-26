@@ -4,7 +4,7 @@ import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
-import { SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
+import { SetInitialEdgeVisibility } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
@@ -85,9 +85,12 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
-    return hooks.useOnDragStop(activeNode, dispatch);
-  }, []);
+  const OnNodeDragStop = useCallback(
+    (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
+      return hooks.useOnDragStop(activeNode, mimirEdges, dispatch);
+    },
+    [mimirEdges]
+  );
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnBlockDrop({
@@ -128,7 +131,6 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      SetInitialParentId(mimirNodes);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
@@ -141,7 +143,7 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
-  }, [mimirNodes, isElectroView]);
+  }, [mimirEdges, mimirNodes, isElectroView]);
 
   // Rerender edges
   useEffect(() => {

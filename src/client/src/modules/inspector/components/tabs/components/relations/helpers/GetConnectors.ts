@@ -1,4 +1,4 @@
-import { IsEdge, IsNode } from "../../../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../../../services";
 import { InspectorElement } from "../../../../../types";
 
 export const GetConnectors = (element: InspectorElement) => {

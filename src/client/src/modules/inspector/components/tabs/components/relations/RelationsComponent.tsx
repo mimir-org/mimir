@@ -3,7 +3,7 @@ import { RelationsBody } from "./RelationsComponent.styled";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { edgesSelector, useAppSelector } from "../../../../../../redux/store";
 import { InspectorElement } from "../../../../types";
-import { IsEdge, IsNode } from "../../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../../services";
 import { useMemo } from "react";
 import { GetConnectors } from "./helpers/GetConnectors";
 import { GetTerminals, GetTransports } from "./helpers/GetTerminals";

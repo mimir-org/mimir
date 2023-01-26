@@ -8,7 +8,7 @@ import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
 import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
-import { IsNode } from "../../../helpers/IsType";
+import { IsNode } from "../../../../../services";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
 import { IsBlockView } from "../../../../../helpers";

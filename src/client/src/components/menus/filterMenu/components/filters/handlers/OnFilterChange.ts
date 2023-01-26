@@ -2,8 +2,9 @@ import { Dispatch } from "redux";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../../../../../../services";
 
 /**
  * Component to toggle a specific element on/off in Visual Filter.

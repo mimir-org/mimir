@@ -1,7 +1,7 @@
 import { Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { IsInputConnector, IsOutputConnector } from "../../../../../../../components/flow/helpers/Connectors";
 import { InspectorElement } from "../../../../../types";
-import { IsEdge, IsNode } from "../../../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../../../services";
 
 export const GetTransports = (edges: Edge[], element: InspectorElement): Edge[] => {
   if (IsNode(element))

@@ -1,12 +1,13 @@
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { IsPartOfRelation, IsTerminal, IsRelationConnection } from "../../helpers/Connectors";
+import { IsPartOfRelation, IsRelationConnection } from "../../helpers/Connectors";
 import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
 import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 import { Node, Edge, Project, Connector } from "@mimirorg/modelbuilder-types";
 import { ConvertEdgeDataToMimirPartOfEdge } from "../../converters";
+import { IsTerminal } from "../../../../services";
 
 interface Params {
   connection: FlowEdge | Connection;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Connector, Terminal } from "@mimirorg/modelbuilder-types";
 import { EdgeProps, getEdgeCenter, getSmoothStepPath } from "react-flow-renderer";
 import styled from "styled-components";
@@ -61,11 +62,13 @@ export const BlockTransportEdge = ({
   const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
-  sourceX = SetSourceMarginForArrow(isBidirectional, isElectro, sourceX);
-  targetX = SetTargetMarginForArrow(isElectro, targetX);
+  // sourceX = SetSourceMarginForArrow(isBidirectional, isElectro, sourceX);
+  // targetX = SetTargetMarginForArrow(isElectro, targetX);
 
   const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
+  const edgePathSmoothStep = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+  const style = GetBlockEdgeStyle(color, !data.edge.hidden);
 
   const onEdgeClick = (evt, id: string, x: number, y: number) => {
     evt.stopPropagation();
@@ -83,25 +86,7 @@ export const BlockTransportEdge = ({
 
   return (
     <>
-      <marker
-        id={arrowId}
-        refX="5"
-        refY="5"
-        markerUnits="userSpaceOnUse"
-        markerWidth="10"
-        markerHeight="20"
-        orient={!isElectro ? "auto-start-reverse" : "auto"}
-      >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
-      </marker>
-      <path
-        id={id}
-        style={GetBlockEdgeStyle(color, visible)}
-        className="path-blockTransportEdge"
-        d={transportPath}
-        markerStart={isBidirectional ? `url(#${arrowId})` : null}
-        markerEnd={`url(#${arrowId})`}
-      />
+      <path id={id} style={style} className="path-treePartOfEdge" d={edgePathSmoothStep} />
       <foreignObject
         width={foreignObjectSize}
         height={foreignObjectSize}

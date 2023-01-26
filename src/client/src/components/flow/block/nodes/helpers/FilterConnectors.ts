@@ -7,8 +7,8 @@ import {
   IsLocationRelation,
   IsOutputConnector,
   IsPartOfRelation,
-  IsTerminal,
 } from "../../../helpers/Connectors";
+import { IsTerminal } from "../../../../../services";
 
 /**
  * Component to filter the connectors displayed on the nodes in BlockView.

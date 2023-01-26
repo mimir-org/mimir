@@ -12,8 +12,7 @@ import {
   RelationsComponent,
   TerminalAttributesComponent,
 } from "./components";
-import { IsEdge, IsNode } from "../../helpers/IsType";
-import { IsTerminal } from "../../../../components/flow/helpers/Connectors";
+import { IsEdge, IsNode, IsTerminal } from "../../../../services";
 
 interface Props {
   project: Project;

@@ -34,7 +34,7 @@ import {
   OnRemoveInterfaceTerminalAttribute,
   OnRemoveTransportTerminalAttribute,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
-import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
+import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../../../services";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
 
 interface Props {

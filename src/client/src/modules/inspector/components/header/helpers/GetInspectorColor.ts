@@ -1,6 +1,6 @@
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../services";
 import { InspectorElement } from "../../../types";
 import { Node } from "@mimirorg/modelbuilder-types";
 

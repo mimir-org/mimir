@@ -1,4 +1,4 @@
-import { IsTerminal } from "../../../../components/flow/helpers/Connectors";
+import { IsTerminal } from "../../../../services";
 import * as Types from "../types";
 import { UpdateAttributeIsLocked } from "./index";
 

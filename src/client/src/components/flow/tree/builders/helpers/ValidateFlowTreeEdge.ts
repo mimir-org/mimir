@@ -1,6 +1,7 @@
 import { Node, Connector, Relation, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsPartOfRelation, IsRelationConnector } from "../../../helpers/Connectors";
+import { IsRelation } from "../../../../../services";
+import { IsPartOfRelation } from "../../../helpers/Connectors";
 
 /**
  * Validator for an edge in three-view.
@@ -19,8 +20,7 @@ const ValidateFlowTreeEdge = (
 ): [status: boolean, message: string] => {
   if (sourceNode == null || targetNode == null || sourceConn == null || targetConn == null)
     return [false, TextResources.VALIDATION_IMPOSSIBLE_CONNECTION];
-  if (!IsRelationConnector(sourceConn) || !IsRelationConnector(targetConn))
-    return [false, TextResources.VALIDATION_IMPOSSIBLE_CONNECTION];
+  if (!IsRelation(sourceConn) || !IsRelation(targetConn)) return [false, TextResources.VALIDATION_IMPOSSIBLE_CONNECTION];
 
   const from = sourceConn as Relation;
   const to = targetConn as Relation;

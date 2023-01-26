@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Config from "../Config";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
@@ -110,15 +111,15 @@ export class WebSocket {
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
 
-      this._dispatch(addNode(node));
+      // this._dispatch(addNode(node));
     }
 
     if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
     if (eventType === WorkerStatus.Delete) {
-      this._dispatch(deleteNode(node.id));
+      // this._dispatch(deleteNode(node.id));
     }
     if (eventType === WorkerStatus.Update) {
-      this._dispatch(updateNode(node));
+      // this._dispatch(updateNode(node));
     }
   };
 
@@ -128,15 +129,15 @@ export class WebSocket {
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
 
-      this._dispatch(createEdge(edge));
+      // this._dispatch(createEdge(edge));
     }
 
     if (!this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
     if (eventType === WorkerStatus.Delete) {
-      this._dispatch(deleteEdge(edge.id));
+      // this._dispatch(deleteEdge(edge.id));
     }
     if (eventType === WorkerStatus.Update) {
-      this._dispatch(updateEdge(edge));
+      // this._dispatch(updateEdge(edge));
     }
   };
 

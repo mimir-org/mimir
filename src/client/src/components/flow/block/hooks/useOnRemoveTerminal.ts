@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Project, Terminal, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { deleteTerminal } from "../../../../redux/store/project/actions";
-import { IsTerminal } from "../../helpers/Connectors";
+import { IsTerminal } from "../../../../services";
 
 /**
  * Hook that runs when a user click on remove terminal.

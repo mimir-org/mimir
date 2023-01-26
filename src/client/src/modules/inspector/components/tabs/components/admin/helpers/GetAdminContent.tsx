@@ -1,5 +1,5 @@
 import { Project } from "@mimirorg/modelbuilder-types";
-import { IsEdge, IsNode } from "../../../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../../../services";
 import { InspectorElement } from "../../../../../types";
 import { NodeAdminContent } from "../components/NodeAdminContent";
 import { RelationEdgeAdminContent } from "../components/RelationEdgeAdminContent";

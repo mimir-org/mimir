@@ -7,8 +7,8 @@ import {
   IsOutputVisible,
   IsBidirectionalTerminal,
   IsPartOfRelation,
-  IsTerminal,
 } from "../../../helpers/Connectors";
+import { IsTerminal } from "../../../../../services";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
   let sourcePosition = IsPartOfRelation(conn) ? Position.Bottom : Position.Right;

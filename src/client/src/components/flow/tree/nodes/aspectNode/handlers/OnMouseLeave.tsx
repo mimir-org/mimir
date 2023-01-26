@@ -1,5 +1,3 @@
-export const OnMouseLeave = (setIsHover: (isHover: boolean) => void) => {
-  setTimeout(function () {
-    setIsHover(false);
-  }, 3000);
+export const OnMouseLeave = (setTimer: (timer: boolean) => void) => {
+  setTimer(true);
 };

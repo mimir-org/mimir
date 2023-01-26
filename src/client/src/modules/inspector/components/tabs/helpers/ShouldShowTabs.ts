@@ -1,6 +1,6 @@
 import { IsRelationEdge } from "./IsRelationEdge";
 import { InspectorElement } from "../../../types";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../services";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
   const shouldShowParameters = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));

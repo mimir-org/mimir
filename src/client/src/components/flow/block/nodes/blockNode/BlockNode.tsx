@@ -16,8 +16,8 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
 import { Node, ConnectorDirection } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../helpers/Connectors";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
+import { IsTerminal } from "../../../../../services";
 
 /**
  * Component for a child Node in BlockView.

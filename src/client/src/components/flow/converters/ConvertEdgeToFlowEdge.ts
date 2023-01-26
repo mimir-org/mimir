@@ -1,10 +1,10 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EdgeType } from "../../../models/project";
-import { IsTerminal } from "../helpers/Connectors";
 import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
 import { isHidden } from "../../../models/helpers/isHidden";
 import { GetVisualFilterId } from "../helpers/GetVisualFilterId";
+import { IsTerminal } from "../../../services";
 
 /**
  * Function to convert a Mimir Edge to a FlowEdge that interacts with the Flow Library.

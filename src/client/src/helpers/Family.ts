@@ -9,10 +9,6 @@ export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 
-export const IsDirectChild = (child: Node, parent: Node) => {
-  return child.parentNodeId === parent.id;
-};
-
 export const IsParentOf = (parentId: string, childId: string) => {
   const edges = red.store.getState().projectState.project.edges;
   const edge = edges?.find((e) => e.toNode?.id === childId && e.fromNode?.id === parentId);

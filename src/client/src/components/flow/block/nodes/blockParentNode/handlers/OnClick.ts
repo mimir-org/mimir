@@ -1,6 +1,6 @@
 import { GetChild } from "../helpers/GetChild";
 import { Dispatch } from "redux";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import {
   removeSelectedBlockNode,
   removeSelectedEdge,
@@ -8,9 +8,10 @@ import {
   setSelectedBlockNode,
   setSelectedNode,
 } from "../../../../../../redux/store/project/actions";
+import { nodeService } from "../../../../../../services";
 
-export const OnBlockParentClick = (dispatch: Dispatch, childNode: Node) => {
-  const parentNodeId = childNode.parentNodeId;
+export const OnBlockParentClick = (dispatch: Dispatch, childNode: Node, edges: Edge[]) => {
+  const parentNodeId = nodeService.getParentNodeId(childNode, edges);
 
   dispatch(removeSelectedEdge());
   dispatch(removeSelectedNode());

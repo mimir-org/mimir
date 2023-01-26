@@ -4,13 +4,13 @@ import { SaveEventData } from "../../../../redux/store/localStorage/localStorage
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
 import { GetBlockEdgeType } from "../helpers";
-import { IsTerminal } from "../../helpers/Connectors";
 import { Project } from "@mimirorg/modelbuilder-types";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { ConvertEdgeDataToMimirEdge } from "../../converters";
 import { CreateSiblingProxyConnection } from "./helpers/ProxyTerminals";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { IsTerminal } from "../../../../services";
 
 export interface OnBlockDropParameters {
   connection: FlowEdge | Connection;
@@ -63,7 +63,7 @@ const useOnBlockConnect = (params: OnBlockDropParameters) => {
   dispatch(createEdge(edge));
 
   // Create Mimir connection
-  CreateSiblingProxyConnection(sourceConn, targetConn, source, target, dispatch);
+  CreateSiblingProxyConnection(sourceConn, targetConn, source, target, dispatch, project.edges);
 
   // Identify full connection
   // ResolveSubStreams(project, dispatch, null, edge);

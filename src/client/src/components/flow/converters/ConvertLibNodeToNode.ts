@@ -62,7 +62,6 @@ const ConvertLibNodeToNode = (
     kind: TextResources.KIND_NODE,
     hidden: false,
     blockHidden: false,
-    parentNodeId: parentNode.id,
     typeReferences: ConvertTypeReference(libNode.typeReferences),
     iri: null,
     domain: null,
@@ -76,8 +75,6 @@ const ConvertLibNodeToNode = (
     projectIri: null,
     selected: false,
     blockSelected: false,
-    isOffPageTarget: false,
-    isOffPageRequired: false,
   };
   return node;
 };

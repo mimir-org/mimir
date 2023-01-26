@@ -11,7 +11,7 @@ import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../helpers/Connectors";
+import { IsTerminal } from "../../../../../services";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
@@ -56,7 +56,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         inputConnectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         outputConnectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
         isNavigationActive={true}
-        onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, data, project.edges)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
       />

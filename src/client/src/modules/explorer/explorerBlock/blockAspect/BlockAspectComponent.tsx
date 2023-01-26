@@ -7,7 +7,7 @@ import { TextResources } from "../../../../assets/text/TextResources";
 import { ViewportData } from "../../../../models/project";
 import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { Divider } from "../../../../compLibrary/divider";
-import { OnBlockExplorerChange } from "./components/handlers/OnBlockExplorerChange";
+import { nodeService } from "./../../../../services";
 
 interface Props {
   username: string;
@@ -66,7 +66,7 @@ export const BlockAspectComponent = ({
         dispatch={dispatch}
         indent={indent}
         viewportData={viewportData}
-        onChange={() => OnBlockExplorerChange(node, nodes, dispatch)}
+        onChange={() => nodeService.setSelectedkNode(node.id, dispatch)}
       />
     </AspectContainer>
   );

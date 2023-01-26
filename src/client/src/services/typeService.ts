@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Attribute, Interface, Connector, Transport, Edge, Node, Terminal, Relation } from "@mimirorg/modelbuilder-types";
-import { TextResources } from "../../../assets/text/TextResources";
+import { TextResources } from "../assets/text/TextResources";
 
 export const IsNode = (element: any): element is Node => element?.kind === TextResources.KIND_NODE;
 export const IsEdge = (element: any): element is Edge => element?.kind === TextResources.KIND_EDGE;

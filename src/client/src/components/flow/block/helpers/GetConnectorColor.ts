@@ -1,6 +1,7 @@
 import { Color } from "../../../../assets/color/Color";
 import { Connector, Terminal } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsProductRelation, IsTerminal } from "../../helpers/Connectors";
+import { IsLocationRelation, IsProductRelation } from "../../helpers/Connectors";
+import { IsTerminal } from "../../../../services";
 
 const GetConnectorColor = (connector: Connector | Terminal) => {
   if (IsTerminal(connector)) return connector?.color;

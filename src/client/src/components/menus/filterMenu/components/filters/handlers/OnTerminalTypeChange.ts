@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Edge } from "@mimirorg/modelbuilder-types";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsTerminal } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal } from "../../../../../../services";
 
 export const OnTerminalTypeChange = (
   edges: Edge[],

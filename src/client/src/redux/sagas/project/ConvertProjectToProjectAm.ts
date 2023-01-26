@@ -1,4 +1,4 @@
-import { IsRelationConnector, IsTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsTerminal, IsRelation } from "../../../services";
 import {
   Project,
   Edge,
@@ -125,7 +125,7 @@ function ConvertConnectorsToConnectorsAm(connectors: Connector[]) {
   if (!connectors.length) return convertedConnectors;
 
   connectors.forEach((connector) => {
-    if (IsRelationConnector(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector as Relation));
+    if (IsRelation(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector as Relation));
     else if (IsTerminal(connector)) convertedConnectors.push(ConvertTerminalToTerminalAm(connector as Terminal));
   });
 

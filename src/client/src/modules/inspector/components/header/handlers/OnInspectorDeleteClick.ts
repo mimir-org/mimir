@@ -1,6 +1,6 @@
 import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { InspectorElement } from "../../../types";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../services";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";

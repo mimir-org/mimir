@@ -1,8 +1,9 @@
 import { Connector, ConnectorDirection, ConnectorVisibility, Terminal, Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { addTerminal, deleteTerminal, updateTerminal } from "../../../../../redux/store/project/actions";
+import { IsTerminal } from "../../../../../services";
 import { CreateId } from "../../../helpers";
-import { IsPartOfConnection, IsTerminal } from "../../../helpers/Connectors";
+import { IsPartOfConnection } from "../../../helpers/Connectors";
 import { IsTerminalSiblings } from "../../helpers";
 
 export enum TransportDirection {
@@ -304,9 +305,10 @@ export const CreateSiblingProxyConnection = (
   target: Connector,
   sourceNode: Node,
   targetNode: Node,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  edges: Edge[]
 ): void => {
-  if (!IsTerminalSiblings(sourceNode, targetNode)) return;
+  if (!IsTerminalSiblings(sourceNode, targetNode, edges)) return;
 
   const sourceProxy = sourceNode.connectors.find((x) => IsTerminal(x) && x.isProxy && x.proxyParent == source.id) as Terminal;
   const targetProxy = targetNode.connectors.find((x) => IsTerminal(x) && x.isProxy && x.proxyParent == target.id) as Terminal;

@@ -13,8 +13,8 @@ import { GetDateNowUtc } from "../../../helpers";
 import CreateId from "./CreateId";
 import { Dispatch } from "redux";
 import { addNode, createEdge, updateEdge } from "../../../redux/store/project/actions";
-import { IsRelation } from "../../../modules/inspector/helpers/IsType";
-import { IsTerminal } from "./Connectors";
+import { IsRelation, IsTerminal } from "../../../services";
+import { IsInputConnector } from "./Connectors";
 
 export const CreateHandleEdge = (edge: Edge, handleNode: Node, dispach: Dispatch) => {
   const copy = { ...edge };
@@ -31,9 +31,8 @@ export const CreateHandleEdge = (edge: Edge, handleNode: Node, dispach: Dispatch
 };
 
 export const UpdateHandleEdge = (edge: Edge, handleNode: Node, dispatch: Dispatch) => {
-  console.log(handleNode);
   const copy = { ...edge };
-  const connector = handleNode.connectors.find((x) => x.type === ConnectorDirection.Input);
+  const connector = handleNode.connectors.find((x) => IsRelation(x) && IsInputConnector(x));
   copy.toNode = handleNode;
   copy.toNodeId = handleNode.id;
   copy.toNodeIri = handleNode.iri;
@@ -70,7 +69,7 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
     updated: now,
     created: now,
     createdBy: "System",
-    libraryTypeId: null,
+    libraryTypeId: "handle",
     version: "1.0",
     aspect: edge.fromNode.aspect,
     nodeType: NodeType.Handler,
@@ -79,7 +78,7 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
     symbol: null,
     purposeString: null,
     connectors: IsRelation(edge.fromConnector)
-      ? CreateHandleRelationConnectors(nodeId, edge.fromConnector.relationType)
+      ? CreateHandleRelationConnectors(nodeId)
       : IsTerminal(edge.fromConnector)
       ? CreateHandleTerminalConnectors(nodeId, edge.fromConnector)
       : [],
@@ -88,13 +87,10 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
     projectIri: null,
     width: 20,
     height: 20,
-    parentNodeId: edge.fromNode.id,
     selected: false,
     blockSelected: false,
     hidden: false,
     blockHidden: false,
-    isOffPageTarget: false,
-    isOffPageRequired: false,
   };
 
   dispach(addNode(node));
@@ -103,8 +99,6 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
 
 const CreateHandleTerminalConnectors = (nodeId: string, terminal: Terminal): Connector[] => {
   const connectors = [] as Connector[];
-
-  console.log(terminal);
 
   const inputTerminal: Terminal = {
     kind: "Terminal",
@@ -161,12 +155,12 @@ const CreateHandleTerminalConnectors = (nodeId: string, terminal: Terminal): Con
   return connectors;
 };
 
-const CreateHandleRelationConnectors = (nodeId: string, relationType: RelationType): Connector[] => {
+const CreateHandleRelationConnectors = (nodeId: string): Connector[] => {
   const connectors = [] as Connector[];
 
   const inputConnector: Relation = {
     kind: "Relation",
-    relationType: relationType,
+    relationType: RelationType.PartOf,
     discriminator: "Relation",
     id: CreateId(),
     iri: null,
@@ -181,7 +175,7 @@ const CreateHandleRelationConnectors = (nodeId: string, relationType: RelationTy
 
   const outputConnector: Relation = {
     kind: "Relation",
-    relationType: relationType,
+    relationType: RelationType.PartOf,
     discriminator: "Relation",
     id: CreateId(),
     iri: null,

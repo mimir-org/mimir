@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
-import { IsTerminal, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal } from "../../../../../../services";
+import { IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 /**
  * Method to find all terminals of a Node.

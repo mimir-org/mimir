@@ -3,7 +3,7 @@ import { TerminalLibCm, NodeLibCm } from "@mimirorg/typelibrary-types";
 import ConvertTerminalLibCmToTerminal from "../../converters/ConvertTerminalLibCmToTerminal";
 import { ConnectorDirection, Project } from "@mimirorg/modelbuilder-types";
 import { addTerminal } from "../../../../redux/store/project/actions";
-import { IsTerminal } from "../../helpers/Connectors";
+import { IsTerminal } from "../../../../services";
 
 /**
  * Hook that runs when a user click on add terminal.

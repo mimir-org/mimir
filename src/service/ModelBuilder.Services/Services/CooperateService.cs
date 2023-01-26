@@ -115,7 +115,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="edges"></param>
         /// <param name="workerStatus"></param>
-        /// <param name="projectId"></param>
+        /// <param name="projectId"></param>Ed
         /// <returns></returns>
         private Task SendEdgeUpdates(List<Edge> edges, WorkerStatus workerStatus, string projectId)
         {

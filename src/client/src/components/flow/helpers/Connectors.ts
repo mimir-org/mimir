@@ -1,23 +1,6 @@
 import { TerminalLikeItem } from "../../../modules/inspector/types";
-import {
-  Connector,
-  ConnectorDirection,
-  ConnectorVisibility,
-  RelationType,
-  Relation,
-  Terminal,
-} from "@mimirorg/modelbuilder-types";
-
-// ConnectorType
-export function IsRelationConnector(relationCandidate: Connector): relationCandidate is Relation {
-  if ((relationCandidate as Relation).relationType) return true;
-  return false;
-}
-
-export function IsTerminal(terminalCandidate: Connector): terminalCandidate is Terminal {
-  if ((terminalCandidate as Terminal).color) return true;
-  return false;
-}
+import { Connector, ConnectorDirection, ConnectorVisibility, RelationType } from "@mimirorg/modelbuilder-types";
+import { IsRelation, IsTerminal } from "../../../services";
 
 // ConnectorDirection
 export const IsInputConnector = (connector: Connector) => {
@@ -34,39 +17,39 @@ export const IsBidirectionalTerminal = (terminal: TerminalLikeItem) => {
 
 // RelationTypes
 export const IsPartOfRelation = (conn: Connector) => {
-  return IsRelationConnector(conn) && conn?.relationType === RelationType.PartOf;
+  return IsRelation(conn) && conn?.relationType === RelationType.PartOf;
 };
 
 export const IsLocationRelation = (conn: Connector) => {
-  return IsRelationConnector(conn) && conn?.relationType === RelationType.HasLocation;
+  return IsRelation(conn) && conn?.relationType === RelationType.HasLocation;
 };
 
 export const IsProductRelation = (conn: Connector) => {
-  return IsRelationConnector(conn) && conn?.relationType === RelationType.FulfilledBy;
+  return IsRelation(conn) && conn?.relationType === RelationType.FulfilledBy;
 };
 
 // Connections
 export const IsRelationConnection = (source: Connector, target: Connector): boolean => {
-  return IsRelationConnector(source) && IsRelationConnector(target);
+  return IsRelation(source) && IsRelation(target);
 };
 
 export const IsLocationConnection = (source: Connector, target: Connector) => {
   return (
-    IsRelationConnector(source) &&
-    IsRelationConnector(target) &&
+    IsRelation(source) &&
+    IsRelation(target) &&
     source?.relationType === RelationType.HasLocation &&
     target?.relationType === RelationType.HasLocation
   );
 };
 
 export const IsPartOfConnection = (source: Connector, target: Connector) => {
-  return IsRelationConnector(source) && IsRelationConnector(target) && IsPartOfRelation(source) && IsPartOfRelation(target);
+  return IsRelation(source) && IsRelation(target) && IsPartOfRelation(source) && IsPartOfRelation(target);
 };
 
 export const IsProductConnection = (source: Connector, target: Connector) => {
   return (
-    IsRelationConnector(source) &&
-    IsRelationConnector(target) &&
+    IsRelation(source) &&
+    IsRelation(target) &&
     source?.relationType === RelationType.FulfilledBy &&
     target?.relationType === RelationType.FulfilledBy
   );

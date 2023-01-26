@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { LockCm } from "../../../../../models";
 import { lockEntity, setLockedEdge, setLockedNode } from "../../../../../redux/store/project/actions";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../../../services";
 import { InspectorElement } from "../../../types";
 
 export const OnLockClick = (

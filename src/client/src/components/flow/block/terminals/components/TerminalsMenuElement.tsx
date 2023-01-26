@@ -7,7 +7,7 @@ import { TerminalIcon } from "./helpers/TerminalIcon";
 import { TerminalIconBox, TerminalBox, TerminalElementBox, TerminalNameBox } from "./TerminalsMenuElement.styled";
 import { AddTerminalComponent } from "./AddTerminalComponent";
 import { RemoveTerminalComponent } from "./RemoveTerminalComponent";
-import { IsTerminal } from "../../../../../modules/inspector/helpers/IsType";
+import { IsTerminal } from "../../../../../services";
 
 interface Props {
   connector: Connector;

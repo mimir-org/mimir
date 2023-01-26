@@ -47,6 +47,7 @@ function RemapAndDeleteHandlerEdges(node: Node, edges: Edge[], dispatch: Dispatc
   const outputConnector = node.connectors.find((x) => x.type === ConnectorDirection.Output);
   const remapEdge = edges.find((x) => x.toConnectorId === inputConnector.id);
   const delEdge = edges.find((x) => x.fromConnectorId === outputConnector.id);
+  console.log(remapEdge, delEdge);
   const copy = { ...remapEdge };
 
   copy.toNode = delEdge.toNode;

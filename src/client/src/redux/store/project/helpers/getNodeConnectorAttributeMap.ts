@@ -1,5 +1,5 @@
 import { Node } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../../components/flow/helpers/Connectors";
+import { IsTerminal } from "../../../../services";
 
 export const GetNodeConnectorAttributeMap = (nodes: Node[]) => {
   const map: { [attributeId: string]: { nodeId: string; terminalId: string } } = {};

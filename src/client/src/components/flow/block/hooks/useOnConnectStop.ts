@@ -2,9 +2,9 @@ import { Dispatch } from "redux";
 import { EdgeEvent } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
 import { Connector, Project, Node } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../helpers/Connectors";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { IsTerminal } from "../../../../services";
 
 const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) => {
   e.preventDefault();
