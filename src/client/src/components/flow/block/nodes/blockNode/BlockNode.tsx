@@ -1,9 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/BlockNodeSelectors";
-import * as libSelectors from "./../../helpers/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import {
+  libNodesSelector,
+  projectSelector,
+  terminalsSelector,
+  useAppDispatch,
+  useAppSelector,
+  electroViewSelector,
+} from "../../../../../redux/store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { FilterConnectors } from "../helpers/FilterConnectors";
@@ -31,11 +36,11 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [, setSize] = useState<BlockNodeSize>(initialSize);
-  const project = useAppSelector(selectors.projectSelector);
-  const isElectroView = useAppSelector(selectors.electroSelector);
+  const project = useAppSelector(projectSelector);
+  const isElectroView = useAppSelector(electroViewSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-  const terminalTypes = useAppSelector(libSelectors.terminalsSelector);
-  const libNodes = useAppSelector(libSelectors.libNodesSelector);
+  const terminalTypes = useAppSelector(terminalsSelector);
+  const libNodes = useAppSelector(libNodesSelector);
 
   const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
     return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);

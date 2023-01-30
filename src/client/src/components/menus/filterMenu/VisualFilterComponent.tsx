@@ -1,10 +1,9 @@
-import * as selectors from "./helpers/selectors";
+import { nodesSelector, edgesSelector, useAppSelector } from "../../../redux/store";
 import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists } from "./helpers";
-import { useAppSelector } from "../../../redux/store";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
 import { VisualFilterDataCategoryComponent } from "./VisualFilterDataCategoryComponent";
 
@@ -19,8 +18,8 @@ interface Props {
  */
 export const VisualFilterComponent = ({ filter, onFilterChange }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const nodes = useAppSelector(selectors.nodesSelector);
-  const edges = useAppSelector(selectors.edgesSelector);
+  const nodes = useAppSelector(nodesSelector);
+  const edges = useAppSelector(edgesSelector);
 
   const transportTerminals = [] as Terminal[];
   const productAndLocationRelations = [] as Relation[];

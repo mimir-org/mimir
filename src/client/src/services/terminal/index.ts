@@ -1,0 +1,1 @@
+export { createTerminalCopy } from "./createTerminalCopy";

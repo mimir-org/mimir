@@ -1,0 +1,1 @@
+export { createAttributeCopy } from "./createAttributeCopy";

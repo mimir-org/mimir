@@ -236,7 +236,7 @@ export const selectedNodeSelector = createAppSelector(
 );
 
 export const electroViewSelector = createAppSelector(
-  (state) => state.electro.visible,
+  (state) => state.electro?.visible,
   (visible) => visible
 );
 

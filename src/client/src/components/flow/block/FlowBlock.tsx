@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
@@ -21,6 +20,14 @@ import ReactFlow, {
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
 import { CreateHandleEdge, CreateHandleNode, UpdateHandleEdge } from "../helpers/CreateHandleNode";
+import {
+  electroViewSelector,
+  librarySelector,
+  animatedEdgeSelector,
+  projectSelector,
+  terminalsSelector,
+  userStateSelector,
+} from "../../../redux/store";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -45,12 +52,12 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
-  const user = useAppSelector(selectors.userStateSelector).user;
-  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const terminals = useAppSelector(selectors.terminalsSelector);
-  const library = useAppSelector(selectors.librarySelector);
-  const isElectroView = useAppSelector(selectors.electroViewSelector);
+  const project = useAppSelector(projectSelector);
+  const user = useAppSelector(userStateSelector).user;
+  const animatedEdge = useAppSelector(animatedEdgeSelector);
+  const terminals = useAppSelector(terminalsSelector);
+  const library = useAppSelector(librarySelector);
+  const isElectroView = useAppSelector(electroViewSelector);
   const mimirNodes = project?.nodes ?? [];
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);

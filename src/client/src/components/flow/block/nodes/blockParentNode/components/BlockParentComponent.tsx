@@ -1,4 +1,3 @@
-import * as selectors from "./../../../helpers/selectors";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -6,7 +5,13 @@ import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import {
+  libNodesSelector,
+  projectSelector,
+  terminalsSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
@@ -46,9 +51,9 @@ export const BlockParentComponent = ({
   const resizePanelRef = useRef(null);
   const company = useCompanySelector(node.domain, node.id);
   useResizeParentNode(node, resizePanelRef, dispatch);
-  const terminals = useAppSelector(selectors.terminalsSelector);
-  const project = useAppSelector(selectors.projectSelector);
-  const libNodes = useAppSelector(selectors.libNodesSelector);
+  const terminals = useAppSelector(terminalsSelector);
+  const project = useAppSelector(projectSelector);
+  const libNodes = useAppSelector(libNodesSelector);
 
   const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
     return useOnAddTerminal(project, typeId, nodeId, terminals, libNodes, direction, dispatch);

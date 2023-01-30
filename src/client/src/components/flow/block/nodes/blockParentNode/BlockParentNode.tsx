@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterConnectors } from "../helpers/FilterConnectors";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { projectSelector, useAppDispatch, useAppSelector, electroViewSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
@@ -25,8 +24,8 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
-  const project = useAppSelector(selectors.projectSelector);
-  const isElectroView = useAppSelector(selectors.electroSelector);
+  const project = useAppSelector(projectSelector);
+  const isElectroView = useAppSelector(electroViewSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {
