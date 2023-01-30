@@ -32,7 +32,7 @@ export const CreateHandleEdge = (edge: Edge, handleNode: Node, dispach: Dispatch
 
 export const UpdateHandleEdge = (edge: Edge, handleNode: Node, dispatch: Dispatch) => {
   const copy = { ...edge };
-  const connector = handleNode.connectors.find((x) => IsRelation(x) && IsInputConnector(x));
+  const connector = handleNode.connectors.find((x) => IsInputConnector(x));
   copy.toNode = handleNode;
   copy.toNodeId = handleNode.id;
   copy.toNodeIri = handleNode.iri;
