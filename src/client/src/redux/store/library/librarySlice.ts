@@ -33,10 +33,10 @@ export const librarySlice = createSlice({
   reducers: {
     fetchLibrary: (state) => {
       state.fetching = true;
-      (state.libNodes = [] as NodeLibCm[]),
-        (state.apiError = state.apiError
-          ? state.apiError.filter((elem) => elem.key !== fetchLibrarySuccessOrError.type)
-          : state.apiError);
+      state.libNodes = [] as NodeLibCm[];
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchLibrarySuccessOrError.type)
+        : state.apiError;
     },
     fetchLibrarySuccessOrError: (state, action: PayloadAction<FetchLibrary>) => {
       state.fetching = false;
