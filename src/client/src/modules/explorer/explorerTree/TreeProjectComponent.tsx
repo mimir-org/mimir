@@ -1,13 +1,11 @@
-import { Node } from "@mimirorg/modelbuilder-types";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
-import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
-// import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
+import { MimirNode } from "../../../lib/types/Node";
 
 interface Props {
   dispatch: Dispatch;
@@ -21,16 +19,10 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
   const project = projectState?.project;
-  const nodes = project?.nodes;
+  const nodes = project?.nodes.map((node) => new MimirNode(node));
   const edges = project?.edges;
-
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
-  // const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
-
-  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, edges);
-  // const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, edges);
-  // const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   useEffect(() => {
     if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
@@ -41,7 +33,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   return (
     <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if (ancestorsCollapsed(node)) return null;
+        if (node.isAncestorInSet(node, closedNodes, edges)) return null;
         const expanded = !closedNodes.has(node.id);
 
         return (
@@ -51,14 +43,11 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
             node={node}
             indent={indent}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node.id, edges)}
-            // isAncestorVisible={ancestorsVisible(node)}
-            // isVisible={!node.hidden}
+            isLeaf={node.hasChildren(edges)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
             isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
-            // onSetVisibleElement={(visible, nodeId) => OnSetVisibleElement(visible, nodeId, invisibleNodes, setInvisibleNodes)}
             dispatch={dispatch}
             project={project}
           />

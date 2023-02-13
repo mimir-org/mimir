@@ -1,14 +1,13 @@
 import * as selectors from "./helpers/selectors";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
-import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { useReactFlow } from "react-flow-renderer";
 import { ViewportData } from "../../../models/project";
+import { MimirNode } from "../../../lib/types/Node";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -23,10 +22,8 @@ export const BlockProjectComponent = () => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const project = projectState?.project;
-  const nodes = project?.nodes;
+  const nodes = project?.nodes.map((node) => new MimirNode(node));
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
-
-  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
 
   useEffect(() => {
     if (lockingNode != null && !projectState.isLocking) setLockingNode(null);
@@ -37,7 +34,7 @@ export const BlockProjectComponent = () => {
   return (
     <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if (ancestorsCollapsed(node)) return null;
+        if (node.isAncestorInSet(node, closedNodes, project?.edges)) return null;
         const expanded = !closedNodes.has(node.id);
 
         return (
@@ -49,7 +46,7 @@ export const BlockProjectComponent = () => {
             selectedBlockNode={selectedBlockNode}
             indent={indent}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node.id, project.edges)}
+            isLeaf={!node.hasChildren(project.edges)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
             isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}

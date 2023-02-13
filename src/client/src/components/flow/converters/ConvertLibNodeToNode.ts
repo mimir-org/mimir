@@ -75,9 +75,6 @@ const ConvertLibNodeToNode = (
     projectIri: null,
     selected: false,
     blockSelected: false,
-    parentNodeId: "", // TODO: Remove this property
-    isOffPageTarget: false, // TODO: Remove this property
-    isOffPageRequired: false, // TODO: Remove this property
   };
   return node;
 };

@@ -91,9 +91,6 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
     blockSelected: false,
     hidden: false,
     blockHidden: false,
-    parentNodeId: "", //TODO: Remove this property
-    isOffPageTarget: false, //TODO: Remove this property
-    isOffPageRequired: false, //TODO: Remove this property
   };
 
   dispach(addNode(node));

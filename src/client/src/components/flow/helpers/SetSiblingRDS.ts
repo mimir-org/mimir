@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { FindParentEdge } from "../../../helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { IsPartOfRelation } from "./Connectors";
+import { MimirNode } from "../../../lib/types/Node";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.
@@ -11,7 +11,7 @@ import { IsPartOfRelation } from "./Connectors";
  * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
   const parentId = edge.fromNodeId;
   const children = [...GetChildren(parentId, nodes, edges), edge.toNode];
 
@@ -25,7 +25,7 @@ export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, nodes: Node[], edges
  * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
   ClearRDS(edge.toNode, dispatch);
   HandleSiblingDeleted(edge.toNodeId, nodes, edges, dispatch);
 };
@@ -37,7 +37,7 @@ export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, nodes: Node[], edges:
  * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnNodeDelete = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+export const UpdateSiblingIndexOnNodeDelete = (nodeId: string, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
   HandleParentDeleted(nodeId, nodes, edges, dispatch);
   HandleSiblingDeleted(nodeId, nodes, edges, dispatch);
 };
@@ -56,15 +56,15 @@ export const SetSiblingIndexOnNodeDrop = (node: Node, nodes: Node[], edges: Edge
   node.rds += siblings.length;
 };
 
-const HandleParentDeleted = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+const HandleParentDeleted = (nodeId: string, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
   const children = GetChildren(nodeId, nodes, edges).filter((n) => n.id !== nodeId);
   if (!children || !children.length) return;
 
   children.forEach((child) => ClearRDS(child, dispatch));
 };
 
-const HandleSiblingDeleted = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
-  const parent = FindParentEdge(nodeId, edges)?.fromNode;
+const HandleSiblingDeleted = (nodeId: string, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
+  const parent = nodes.find((node) => node.id === nodeId).findParentEdge(nodeId, edges)?.fromNode;
   if (!parent) return;
 
   const siblings = GetChildren(parent.id, nodes, edges).filter((n) => n.id !== nodeId);

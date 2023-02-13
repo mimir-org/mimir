@@ -1,11 +1,11 @@
 import { GetRdsId } from ".";
 import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "./Aspects";
-import { FindParentEdge } from "./ParentNode";
+import { MimirNode } from "../lib/types/Node";
 
-const findParentNode = (currentNode: Node, edges: Edge[]) => {
+const findParentNode = (currentNode: MimirNode, edges: Edge[]) => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
-  return FindParentEdge(currentNode.id, edges)?.fromNode;
+  return currentNode.findParentEdge(currentNode.id, edges)?.fromNode;
 };
 
 const GetReferenceDesignation = (node: Node, project: Project) => {
@@ -16,7 +16,7 @@ const GetReferenceDesignation = (node: Node, project: Project) => {
 
   while (nextNode) {
     if (nextNode?.rds) refs.push(GetRdsId(nextNode));
-    nextNode = findParentNode(nextNode, project.edges);
+    nextNode = findParentNode(nextNode as MimirNode, project.edges);
   }
 
   refs.push(`<${project.name.toUpperCase()}>`);

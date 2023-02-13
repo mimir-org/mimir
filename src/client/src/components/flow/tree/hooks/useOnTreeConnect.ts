@@ -8,6 +8,7 @@ import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 import { Node, Edge, Project, Connector } from "@mimirorg/modelbuilder-types";
 import { ConvertEdgeDataToMimirPartOfEdge } from "../../converters";
 import { IsTerminal } from "../../../../services";
+import { MimirNode } from "../../../../lib/types/Node";
 
 interface Params {
   connection: FlowEdge | Connection;
@@ -38,7 +39,7 @@ const useOnTreeConnect = (params: Params) => {
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOfRelation(currentEdge?.fromConnector))
-    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
+    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes as MimirNode[], project.edges, dispatch);
 
   const type = GetTreeEdgeType(sourceConn);
   const animated = animatedEdge && IsTerminal(sourceConn);

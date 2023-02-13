@@ -3,8 +3,9 @@ import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
+import { MimirNode } from "../../../../lib/types/Node";
 
-const SortNodesWithIndent = (nodes: Node[]) => {
+const SortNodesWithIndent = (nodes: MimirNode[]): [MimirNode, number][] => {
   InitialSortNodes(nodes);
   const buckets = GroupNodesByIndentLevel(nodes);
   return SortNodesByIndent(buckets);
@@ -23,8 +24,8 @@ export const InitialSortNodes = (nodes: Node[]) => {
  * @param nodes Nodes to group.
  * @returns Map of indent levels and nodes with the corresponding indent level.
  */
-const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
-  const buckets: Map<number, Node[]> = new Map();
+const GroupNodesByIndentLevel = (nodes: MimirNode[]): Map<number, MimirNode[]> => {
+  const buckets: Map<number, MimirNode[]> = new Map();
 
   for (const node of nodes) {
     const indent = SetIndentLevel(node, 0);
@@ -42,8 +43,8 @@ const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
  * @param buckets Mapping between indent level and array of nodes with corresponding indent level.
  * @returns Array of Node and indent level, to be rendered by explorer module.
  */
-const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
-  let sortedNodedWithIndent: [Node, number][] = [];
+const SortNodesByIndent = (buckets: Map<number, MimirNode[]>) => {
+  let sortedNodedWithIndent: [MimirNode, number][] = [];
 
   for (const indent of Array.from(buckets.keys())) {
     const bucket = buckets.get(indent);
@@ -67,7 +68,7 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
  * @param indent Indent level of node
  * @param sortedNodedWithIndent Current (partial) array of nodes with indent.
  */
-const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [Node, number][]) => {
+const AddNodeFromBucket = (node: MimirNode, indent: number, sortedNodedWithIndent: [MimirNode, number][]) => {
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {
     const [otherNode] = sortedNodedWithIndent[i];
 

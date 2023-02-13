@@ -1,4 +1,4 @@
-import { Node, Project } from "@mimirorg/modelbuilder-types";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Divider } from "../../../../compLibrary/divider";
@@ -8,16 +8,17 @@ import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TreeAspectElement } from "../../explorerTree/treeAspect/components/TreeAspectElement";
 import { OnTreeExplorerChange } from "../../explorerTree/treeAspect/handlers/OnTreeExplorerChange";
+import { MimirNode } from "../../../../lib/types/Node";
 
 interface Props {
   username: string;
-  node: Node;
+  node: MimirNode;
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
   isNodeLocking: boolean;
   isGlobalLocking: boolean;
-  setLockingNode: (node: Node) => void;
+  setLockingNode: (node: MimirNode) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
   project: Project;

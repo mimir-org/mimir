@@ -6,6 +6,7 @@ import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
 import { IsPartOfRelation } from "../../../../../components/flow/helpers/Connectors";
 import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handlers";
+import { MimirNode } from "../../../../../lib/types/Node";
 
 /**
  * Component to handle delete clicks coming from the Inspector delete button.
@@ -39,7 +40,7 @@ function HandleInspectorNodeDelete(
 
   if (!IsAspectNode(node) && !node.isLocked) {
     nodesToDelete.push(node);
-    UpdateSiblingIndexOnNodeDelete(node?.id, nodes, edges, dispatch);
+    UpdateSiblingIndexOnNodeDelete(node?.id, nodes as MimirNode[], edges, dispatch);
   }
 
   OnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
@@ -56,7 +57,7 @@ function HandleInspectorEdgeDelete(
   const edgesToDelete = [] as Edge[];
 
   if (!edge.isLocked) {
-    if (IsPartOfRelation(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes, edges, dispatch);
+    if (IsPartOfRelation(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes as MimirNode[], edges, dispatch);
     edgesToDelete.push(edge);
   }
 
