@@ -6,7 +6,7 @@ import { ProjectContentContainer } from "../shared/styled/ProjectComponent.style
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { Dispatch } from "redux";
 import { MimirNode } from "../../../lib/types/MimirNode";
-import {MimirProject} from "../../../lib/types/MimirProject";
+import { MimirProject } from "../../../lib/types/MimirProject";
 
 interface Props {
   dispatch: Dispatch;

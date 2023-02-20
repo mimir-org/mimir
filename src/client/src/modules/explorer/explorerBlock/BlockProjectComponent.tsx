@@ -8,7 +8,7 @@ import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElem
 import { useReactFlow } from "react-flow-renderer";
 import { ViewportData } from "../../../models/project";
 import { MimirNode } from "../../../lib/types/MimirNode";
-import {MimirProject} from "../../../lib/types/MimirProject";
+import { MimirProject } from "../../../lib/types/MimirProject";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.

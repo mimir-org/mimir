@@ -2,12 +2,12 @@ import { GetRdsId } from ".";
 import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "./Aspects";
 import { MimirNode } from "../lib/types/MimirNode";
-import {MimirEdge} from "../lib/types/MimirEdge";
+import { MimirEdge } from "../lib/types/MimirEdge";
 
 const findParentNode = (currentNode: MimirNode, edges: Edge[]) => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
   // TODO: Refactor Edge to MimirEdge
-  const convertedEdges = edges.map((edge) => new MimirEdge(edge))
+  const convertedEdges = edges.map((edge) => new MimirEdge(edge));
   return currentNode.findParentEdge(currentNode.id, convertedEdges)?.fromNode;
 };
 
