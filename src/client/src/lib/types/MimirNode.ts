@@ -1,5 +1,6 @@
-import {Node, Edge, Aspect, Attribute, Connector, NodeType, TypeReference} from "@mimirorg/modelbuilder-types";
+import {Aspect, Attribute, Connector, Edge, Node, NodeType, TypeReference} from "@mimirorg/modelbuilder-types";
 import {IsPartOfRelation} from "../../components/flow/helpers/Connectors";
+import {MimirEdge} from "./MimirEdge";
 
 /**
  * @interface
@@ -116,7 +117,7 @@ export interface IMimirNode extends Node {
     toNode(): Node;
 }
 
-export class MimirNode implements IMimirNode {
+export class MimirNode implements Node {
     id: string;
     iri: string;
     domain: string;
@@ -164,7 +165,7 @@ export class MimirNode implements IMimirNode {
         this.domain = node.domain;
         this.kind = node.kind;
         this.rds = node.rds;
-        this.description = node.description;
+        this.description = node.description ? node.description : "";
         this.typeReferences = node.typeReferences;
         this.name = node.name;
         this.label = node.label;
@@ -202,9 +203,6 @@ export class MimirNode implements IMimirNode {
     }
 
     // TODO: Move is part of relation to a more generic place
-    public findParentEdge(nodeId: string, edges: Edge[]): Edge {
-        return edges.find((edge) => edge.toNodeId === nodeId && IsPartOfRelation(edge.fromConnector));
-    }
 
     // TODO: Move is part of relation to a more generic place
     public findChildrenEdge(edges: Edge[]): Edge {
@@ -215,20 +213,11 @@ export class MimirNode implements IMimirNode {
         return !!this.findChildrenEdge(edges);
     }
 
-    public isAncestorInSet(currentNode: MimirNode, set: Set<string>, edges: Edge[]): boolean {
-        const edge = this.findParentEdge(currentNode.id, edges);
-        if (!edge) return false;
-
-        const parentNode = edge.fromNode as MimirNode;
-        if (set.has(parentNode.id)) return true;
-
-        return this.isAncestorInSet(parentNode, set, edges);
+    // TODO: Refactor this code into MimirProject completely, this function is currently used in SetSiblingRDS.ts
+    public findParentEdge(nodeId: string, edges: MimirEdge[]): MimirEdge {
+        return edges.find((edge) => edge.toNodeId === nodeId && IsPartOfRelation(edge.fromConnector));
     }
 
-    public findParentNode = (currentNode: MimirNode, edges: Edge[]) => {
-        if (!currentNode || this.isAspectNode(currentNode)) return null;
-        return currentNode.findParentEdge(currentNode.id, edges)?.fromNode as MimirNode;
-    };
 
     public isAspectNode = (node?: MimirNode) => {
         if (node) {
@@ -249,7 +238,7 @@ export class MimirNode implements IMimirNode {
         return this.aspect === Aspect.Function;
     };
 
-    public toNode(): Node {
+    public convertToNode(): Node {
         return {
             id: this.id,
             iri: this.iri,
