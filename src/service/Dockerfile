@@ -14,7 +14,7 @@ RUN dotnet restore ModelBuilder.Api/ModelBuilder.Api.csproj
 COPY . .
 
 FROM base as format
-RUN dotnet format --verify-no-changes --verbosity diagnostic --no-restore
+RUN dotnet-format --verify-no-changes --verbosity diagnostic --no-restore
 
 FROM base as build
 RUN dotnet test -c Release
