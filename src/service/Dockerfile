@@ -13,8 +13,13 @@ RUN for file in $(ls *.csproj); do mkdir -p Tests/${file%.*}/ && mv $file Tests/
 RUN dotnet restore ModelBuilder.Api/ModelBuilder.Api.csproj
 COPY . .
 
+# FIXME: dotnet-format is broken for 6.0.200 https://github.com/dotnet/format/issues/1519
+# globally install dotnet-format as workaround
+# When fix is in place, can be replaced with only "dotnet format . --verify-no-changes --verbosity diagnostic --no-restore"
+
 FROM base as format
-RUN dotnet-format --verify-no-changes --verbosity diagnostic --no-restore
+RUN dotnet tool install -g dotnet-format --version "6.*" --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json
+RUN /root/.dotnet/tools/dotnet-format . --verify-no-changes --verbosity diagnostic --no-restore
 
 FROM base as build
 RUN dotnet test -c Release
