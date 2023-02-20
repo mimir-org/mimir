@@ -2,7 +2,8 @@ import { Dispatch } from "redux";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { IsPartOfRelation } from "./Connectors";
-import { MimirNode } from "../../../lib/types/Node";
+import { MimirNode } from "../../../lib/types/MimirNode";
+import {MimirEdge} from "../../../lib/types/MimirEdge";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.
@@ -64,7 +65,10 @@ const HandleParentDeleted = (nodeId: string, nodes: MimirNode[], edges: Edge[], 
 };
 
 const HandleSiblingDeleted = (nodeId: string, nodes: MimirNode[], edges: Edge[], dispatch: Dispatch) => {
-  const parent = nodes.find((node) => node.id === nodeId).findParentEdge(nodeId, edges)?.fromNode;
+  // TODO: Refactor
+  const convertedEdges = edges.map((edge) => new MimirEdge(edge))
+
+  const parent = nodes.find((node) => node.id === nodeId).findParentEdge(nodeId, convertedEdges)?.fromNode;
   if (!parent) return;
 
   const siblings = GetChildren(parent.id, nodes, edges).filter((n) => n.id !== nodeId);

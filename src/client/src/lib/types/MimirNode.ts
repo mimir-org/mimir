@@ -226,6 +226,16 @@ export class MimirNode implements Node {
         return this.nodeType === NodeType.Root;
     };
 
+    public isAncestorInSet(currentNode: MimirNode, set: Set<string>, edges: MimirEdge[]): boolean {
+        const edge = this.findParentEdge(currentNode.id, edges);
+        if (!edge) return false;
+
+        const parentNode = edge.fromNode as MimirNode;
+        if (set.has(parentNode.id)) return true;
+
+        return this.isAncestorInSet(parentNode, set, edges);
+    }
+
     public isLocation = () => {
         return this.aspect === Aspect.Location;
     };

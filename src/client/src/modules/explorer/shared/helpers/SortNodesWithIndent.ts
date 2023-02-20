@@ -3,7 +3,7 @@ import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
-import { MimirNode } from "../../../../lib/types/Node";
+import { MimirNode } from "../../../../lib/types/MimirNode";
 
 const SortNodesWithIndent = (nodes: MimirNode[]): [MimirNode, number][] => {
   InitialSortNodes(nodes);

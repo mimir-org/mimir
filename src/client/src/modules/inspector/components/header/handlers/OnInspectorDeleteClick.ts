@@ -6,7 +6,7 @@ import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
 import { IsPartOfRelation } from "../../../../../components/flow/helpers/Connectors";
 import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handlers";
-import { MimirNode } from "../../../../../lib/types/Node";
+import { MimirNode } from "../../../../../lib/types/MimirNode";
 
 /**
  * Component to handle delete clicks coming from the Inspector delete button.

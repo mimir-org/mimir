@@ -8,7 +8,7 @@ import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TreeAspectElement } from "../../explorerTree/treeAspect/components/TreeAspectElement";
 import { OnTreeExplorerChange } from "../../explorerTree/treeAspect/handlers/OnTreeExplorerChange";
-import { MimirNode } from "../../../../lib/types/Node";
+import { MimirNode } from "../../../../lib/types/MimirNode";
 
 interface Props {
   username: string;

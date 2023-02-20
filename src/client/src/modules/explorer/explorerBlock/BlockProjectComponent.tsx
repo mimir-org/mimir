@@ -7,7 +7,8 @@ import { ProjectContentContainer } from "../shared/styled/ProjectComponent.style
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { useReactFlow } from "react-flow-renderer";
 import { ViewportData } from "../../../models/project";
-import { MimirNode } from "../../../lib/types/Node";
+import { MimirNode } from "../../../lib/types/MimirNode";
+import {MimirProject} from "../../../lib/types/MimirProject";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -21,7 +22,7 @@ export const BlockProjectComponent = () => {
   const [lockingNode, setLockingNode] = useState(null);
   const projectState = useAppSelector(selectors.projectStateSelector);
   const username = useAppSelector(selectors.usernameSelector);
-  const project = projectState?.project;
+  const project = new MimirProject(projectState?.project);
   const nodes = project?.nodes.map((node) => new MimirNode(node));
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 

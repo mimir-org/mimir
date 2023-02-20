@@ -5,7 +5,8 @@ import { usernameSelector, useAppSelector, projectStateSelector } from "../../..
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { Dispatch } from "redux";
-import { MimirNode } from "../../../lib/types/Node";
+import { MimirNode } from "../../../lib/types/MimirNode";
+import {MimirProject} from "../../../lib/types/MimirProject";
 
 interface Props {
   dispatch: Dispatch;
@@ -18,7 +19,7 @@ interface Props {
 export const TreeProjectComponent = ({ dispatch }: Props) => {
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
-  const project = projectState?.project;
+  const project = new MimirProject(projectState?.project);
   const nodes = project?.nodes.map((node) => new MimirNode(node));
   const edges = project?.edges;
   const [closedNodes, setClosedNodes] = useState(new Set<string>());

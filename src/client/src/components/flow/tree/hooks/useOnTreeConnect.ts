@@ -8,7 +8,7 @@ import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 import { Node, Edge, Project, Connector } from "@mimirorg/modelbuilder-types";
 import { ConvertEdgeDataToMimirPartOfEdge } from "../../converters";
 import { IsTerminal } from "../../../../services";
-import { MimirNode } from "../../../../lib/types/Node";
+import { MimirNode } from "../../../../lib/types/MimirNode";
 
 interface Params {
   connection: FlowEdge | Connection;
