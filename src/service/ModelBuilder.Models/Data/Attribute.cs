@@ -62,20 +62,6 @@ namespace Mb.Models.Data
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }
 
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Transport Transport { get; set; }
-
-        public virtual string TransportId { get; set; }
-        public virtual string TransportIri { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Interface Interface { get; set; }
-
-        public virtual string InterfaceId { get; set; }
-        public virtual string InterfaceIri { get; set; }
-
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
