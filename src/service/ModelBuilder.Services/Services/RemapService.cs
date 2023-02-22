@@ -467,54 +467,6 @@ namespace Mb.Services.Services
             }
         }
 
-        // Remap transport
-        private TransportAm RemapTransport(TransportAm transport, bool createCopy)
-        {
-            if (transport == null)
-                return null;
-
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = transport.Id, FromIri = transport.Iri };
-            var transportReplacement = _commonRepository.CreateOrUseIdAndIri(r);
-
-            // Need to set this if there is a clone after new Id and Iri is created
-            transportReplacement.FromId = transport.Id;
-            transportReplacement.FromIri = transport.Iri;
-
-            var attr = RemapAttributes(transportReplacement, transport.Attributes, createCopy, AttributeParent.Transport).ToList();
-            transport.Attributes = attr.Any() ? attr : null;
-            transport.InputTerminal = RemapTerminal(transport.InputTerminal, createCopy);
-            transport.OutputTerminal = RemapTerminal(transport.OutputTerminal, createCopy);
-            transport.InputTerminalId = transport.InputTerminal?.Id;
-            transport.OutputTerminalId = transport.OutputTerminal?.Id;
-            transport.Id = transportReplacement.ToId;
-            transport.Iri = transportReplacement.ToIri;
-            return transport;
-        }
-
-        // Remap interface
-        private InterfaceAm RemapInterface(InterfaceAm interfaceAm, bool createCopy)
-        {
-            if (interfaceAm == null)
-                return null;
-
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = interfaceAm.Id, FromIri = interfaceAm.Iri };
-            var interfaceReplacement = _commonRepository.CreateOrUseIdAndIri(r);
-
-            // Need to set this if there is a clone after new Id and Iri is created
-            interfaceReplacement.FromId = interfaceAm.Id;
-            interfaceReplacement.FromIri = interfaceAm.Iri;
-
-            var attr = RemapAttributes(interfaceReplacement, interfaceAm.Attributes, createCopy, AttributeParent.Interface).ToList();
-            interfaceAm.Attributes = attr.Any() ? attr : null;
-            interfaceAm.InputTerminal = RemapTerminal(interfaceAm.InputTerminal, createCopy);
-            interfaceAm.OutputTerminal = RemapTerminal(interfaceAm.OutputTerminal, createCopy);
-            interfaceAm.InputTerminalId = interfaceAm.InputTerminal?.Id;
-            interfaceAm.OutputTerminalId = interfaceAm.OutputTerminal?.Id;
-            interfaceAm.Id = interfaceReplacement.ToId;
-            interfaceAm.Iri = interfaceReplacement.ToIri;
-            return interfaceAm;
-        }
-
         // Remap terminal
         private TerminalAm RemapTerminal(TerminalAm terminal, bool createCopy)
         {
