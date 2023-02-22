@@ -122,8 +122,6 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 
             // Create profiles
