@@ -30,16 +30,13 @@ namespace Mb.Data.Repositories
         private readonly IEdgeRepository _edgeRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly ITransportRepository _transportRepository;
         private readonly IConnectorRepository _connectorRepository;
-        private readonly IInterfaceRepository _interfaceRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
             IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
-            IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository,
-            IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository,
+            IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
             ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _mapper = mapper;
@@ -47,9 +44,7 @@ namespace Mb.Data.Repositories
             _edgeRepository = edgeRepository;
             _attributeRepository = attributeRepository;
             _databaseConfiguration = databaseConfiguration?.Value;
-            _transportRepository = transportRepository;
             _connectorRepository = connectorRepository;
-            _interfaceRepository = interfaceRepository;
             _cacheRepository = cacheRepository;
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
@@ -94,18 +89,6 @@ namespace Mb.Data.Repositories
                     .Include("Edges.ToNode")
                     .Include("Edges.FromConnector")
                     .Include("Edges.ToConnector")
-                    .Include("Edges.Transport")
-                    .Include("Edges.Transport.Attributes")
-                    .Include("Edges.Transport.InputTerminal")
-                    .Include("Edges.Transport.InputTerminal.Attributes")
-                    .Include("Edges.Transport.OutputTerminal")
-                    .Include("Edges.Transport.OutputTerminal.Attributes")
-                    .Include("Edges.Interface")
-                    .Include("Edges.Interface.Attributes")
-                    .Include("Edges.Interface.InputTerminal")
-                    .Include("Edges.Interface.InputTerminal.Attributes")
-                    .Include("Edges.Interface.OutputTerminal")
-                    .Include("Edges.Interface.OutputTerminal.Attributes")
                     .Include(x => x.Nodes)
                     .Include("Nodes.Attributes")
                     .Include("Nodes.Connectors")
@@ -209,16 +192,12 @@ namespace Mb.Data.Repositories
                     _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
-                    _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
-                    _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
                     _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
                     _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
 
                     // Delete
                     _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
                     _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-                    _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
-                    _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
                     _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
@@ -266,8 +245,6 @@ namespace Mb.Data.Repositories
                     _nodeRepository.BulkUpsert(bulk, conn, data.Nodes);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Relations);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
-                    _transportRepository.BulkUpsert(bulk, conn, data.Transports);
-                    _interfaceRepository.BulkUpsert(bulk, conn, data.Interfaces);
                     _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
                     _edgeRepository.BulkUpsert(bulk, conn, data.Edges);
                 }
@@ -295,8 +272,6 @@ namespace Mb.Data.Repositories
                 {
                     _edgeRepository.BulkDelete(bulk, conn, data.Edges);
                     _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
-                    _transportRepository.BulkDelete(bulk, conn, data.Transports);
-                    _interfaceRepository.BulkDelete(bulk, conn, data.Interfaces);
                     _connectorRepository.BulkDelete(bulk, conn, data.Relations);
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
                     _nodeRepository.BulkDelete(bulk, conn, data.Nodes);
