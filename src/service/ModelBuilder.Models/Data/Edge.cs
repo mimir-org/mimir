@@ -27,10 +27,6 @@ namespace Mb.Models.Data
         public string ToNodeId { get; set; }
         public string ToNodeIri { get; set; }
         public Node ToNode { get; set; }
-        public string TransportId { get; set; }
-        public Transport Transport { get; set; }
-        public string InterfaceId { get; set; }
-        public Interface Interface { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }

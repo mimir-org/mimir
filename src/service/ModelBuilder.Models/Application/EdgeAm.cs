@@ -56,31 +56,9 @@ namespace Mb.Models.Application
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
 
-        public TransportAm Transport { get; set; }
-
-        public InterfaceAm Interface { get; set; }
-
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
-
-            if (Transport != null)
-            {
-                var transportValidationResult = Transport.Validate(validationContext);
-                foreach (var result in transportValidationResult)
-                {
-                    validations.Add(result);
-                }
-            }
-
-            if (Interface != null)
-            {
-                var interfaceValidationResult = Interface.Validate(validationContext);
-                foreach (var result in interfaceValidationResult)
-                {
-                    validations.Add(result);
-                }
-            }
 
             return validations;
         }
