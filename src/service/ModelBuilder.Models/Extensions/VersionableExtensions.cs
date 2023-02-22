@@ -82,12 +82,6 @@ namespace Mb.Models.Extensions
             if (editData.RelationUpdate.Any() || editData.RelationCreate.Any())
                 return true;
 
-            if (editData.TransportDelete.Any() || editData.TransportUpdate.Any() || editData.TransportCreate.Any())
-                return true;
-
-            if (editData.InterfaceDelete.Any() || editData.InterfaceUpdate.Any() || editData.InterfaceCreate.Any())
-                return true;
-
             if (editData.AttributeDelete.Any() || editData.AttributeUpdate.Any() || editData.AttributeCreate.Any())
                 return true;
 
