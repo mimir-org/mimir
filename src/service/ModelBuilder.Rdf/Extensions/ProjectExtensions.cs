@@ -110,52 +110,6 @@ namespace ModelBuilder.Rdf.Extensions
         }
 
         /// <summary>
-        /// Resolve transports
-        /// </summary>
-        /// <param name="project">Extended project</param>
-        /// <param name="ontologyService">Ontology service</param>
-        /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
-        /// <exception cref="NullReferenceException">Throws if ontology service or project is null</exception>
-        public static void ResolveTransports(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
-        {
-            if (project == null || ontologyService == null)
-                throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
-
-            var transportNodes = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.Transport).Select(x => x.Subject).ToList();
-
-            project.Edges ??= new List<EdgeAm>();
-            foreach (var t in transportNodes)
-            {
-                var transport = new TransportAm();
-                var edge = transport.ResolveTransport(ontologyService, project, t.ToString(), projectData);
-                project.Edges.Add(edge);
-            }
-        }
-
-        /// <summary>
-        /// Resolve interfaces
-        /// </summary>
-        /// <param name="project">Extended project</param>
-        /// <param name="ontologyService">Ontology service</param>
-        /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
-        /// <exception cref="NullReferenceException">Throws if ontology service or project is null</exception>
-        public static void ResolveInterfaces(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
-        {
-            if (project == null || ontologyService == null)
-                throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
-
-            var interfaceNodes = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.Interface).Select(x => x.Subject).ToList();
-
-            project.Edges ??= new List<EdgeAm>();
-            foreach (var i in interfaceNodes)
-            {
-                var inter = new InterfaceAm();
-                var edge = inter.ResolveInterface(ontologyService, project, i.ToString(), projectData);
-                project.Edges.Add(edge);
-            }
-        }
-
-        /// <summary>
         /// Resolve relation edges
         /// </summary>
         /// <param name="project">Extended project</param>
