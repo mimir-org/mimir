@@ -96,11 +96,7 @@ namespace Mb.Models.Data
                    TerminalId == other.TerminalId &&
                    TerminalIri == other.TerminalIri &&
                    NodeId == other.NodeId &&
-                   NodeIri == other.NodeIri &&
-                   TransportId == other.TransportId &&
-                   TransportIri == other.TransportIri &&
-                   InterfaceId == other.InterfaceId &&
-                   InterfaceIri == other.InterfaceIri;
+                   NodeIri == other.NodeIri;
         }
 
         public override bool Equals(object obj)
@@ -129,10 +125,6 @@ namespace Mb.Models.Data
             hashCode.Add(TerminalIri);
             hashCode.Add(NodeId);
             hashCode.Add(NodeIri);
-            hashCode.Add(TransportId);
-            hashCode.Add(TransportIri);
-            hashCode.Add(InterfaceId);
-            hashCode.Add(InterfaceIri);
             return hashCode.ToHashCode();
         }
 
