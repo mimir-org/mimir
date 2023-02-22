@@ -82,8 +82,6 @@ namespace Mb.Core.Extensions
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<ITransportRepository, TransportRepository>();
-            services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
             services.AddScoped<IWebSocketRepository, WebSocketRepository>();
             services.AddScoped<ILibraryRepository, LibraryRepository>();
