@@ -71,8 +71,6 @@ namespace Mb.Models.Data
                    FromNodeIri == other.FromNodeIri &&
                    ToNodeId == other.ToNodeId &&
                    ToNodeIri == other.ToNodeIri &&
-                   TransportId == other.TransportId &&
-                   InterfaceId == other.InterfaceId &&
                    MasterProjectId == other.MasterProjectId &&
                    MasterProjectIri == other.MasterProjectIri &&
                    ProjectId == other.ProjectId &&
@@ -99,8 +97,6 @@ namespace Mb.Models.Data
             hashCode.Add(FromNodeIri);
             hashCode.Add(ToNodeId);
             hashCode.Add(ToNodeIri);
-            hashCode.Add(TransportId);
-            hashCode.Add(InterfaceId);
             hashCode.Add(MasterProjectId);
             hashCode.Add(MasterProjectIri);
             hashCode.Add(ProjectId);
