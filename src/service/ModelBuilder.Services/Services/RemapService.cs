@@ -71,8 +71,6 @@ namespace Mb.Services.Services
                 Task.Run(() => data.DeconstructAttributes(project)),
                 Task.Run(() => data.DeconstructEdges(project)),
                 Task.Run(() => data.DeconstructNodes(project)),
-                Task.Run(() => data.DeconstructInterfaces(project)),
-                Task.Run(() => data.DeconstructTransports(project)),
                 Task.Run(() => data.DeconstructRelations(project)),
                 Task.Run(() => data.DeconstructTerminals(project))
             };
@@ -207,9 +205,6 @@ namespace Mb.Services.Services
 
                 if (edgeReplacement.FromId != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromId) || edgeReplacement.FromIri != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromIri))
                     remap.Add(edgeReplacement.ToId, edgeReplacement.FromId);
-
-                edge.Transport = RemapTransport(edge.Transport, createCopy);
-                edge.Interface = RemapInterface(edge.Interface, createCopy);
 
                 edge.Id = edgeReplacement.ToId;
                 edge.Iri = edgeReplacement.ToIri;
