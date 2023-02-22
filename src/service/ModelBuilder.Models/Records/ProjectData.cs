@@ -10,8 +10,6 @@ namespace Mb.Models.Records
         public List<Node> Nodes { get; init; } = new();
         public List<Edge> Edges { get; init; } = new();
         public List<Attribute> Attributes { get; init; } = new();
-        public List<Transport> Transports { get; init; } = new();
-        public List<Interface> Interfaces { get; init; } = new();
         public List<Terminal> Terminals { get; init; } = new();
         public List<Relation> Relations { get; init; } = new();
 
@@ -23,22 +21,9 @@ namespace Mb.Models.Records
         {
             var nodeAttributes = project.Nodes.Select(x => x.Attributes).SelectMany(y => y).ToList();
             var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<Terminal>().SelectMany(y => y.Attributes).ToList();
-            var transportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).SelectMany(y => y.Attributes).ToList();
-            var interfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).SelectMany(y => y.Attributes).ToList();
-
-            var inputTerminalTransportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
-            var outputTerminalTransportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
-            var inputTerminalInterfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
-            var outputTerminalInterfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
 
             var allAttributes = nodeAttributes
                 .Union(connectorAttributes)
-                .Union(transportAttributes)
-                .Union(interfaceAttributes)
-                .Union(inputTerminalTransportAttributes)
-                .Union(outputTerminalTransportAttributes)
-                .Union(inputTerminalInterfaceAttributes)
-                .Union(outputTerminalInterfaceAttributes)
                 .ToList();
 
             Attributes.AddRange(allAttributes);
@@ -69,19 +54,7 @@ namespace Mb.Models.Records
 
             var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Terminal>().ToList();
 
-            var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
-            var inputTransportTerminals = transports.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
-            var outputTransportTerminals = transports.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
-
-            var interfaces = project.Edges.Where(x => x.Interface != null).Select(y => y.Interface).ToList();
-            var inputInterfaceTerminals = interfaces.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
-            var outputInterfaceTerminals = interfaces.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
-
             var terminals = nodeTerminals
-                .Union(inputTransportTerminals)
-                .Union(outputTransportTerminals)
-                .Union(inputInterfaceTerminals)
-                .Union(outputInterfaceTerminals)
                 .ToList();
 
             Terminals.AddRange(terminals);
@@ -100,36 +73,6 @@ namespace Mb.Models.Records
             var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Relation>().ToList();
 
             Relations.AddRange(nodeRelations);
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Deconstruct and flatten interfaces
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructInterfaces(Project project)
-        {
-            if (project.Edges == null || !project.Edges.Any())
-                return Task.CompletedTask;
-
-            var interfaces = project.Edges.Where(x => x.Interface != null).Select(y => y.Interface).ToList();
-
-            Interfaces.AddRange(interfaces);
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Deconstruct and flatten transports
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructTransports(Project project)
-        {
-            if (project.Edges == null || !project.Edges.Any())
-                return Task.CompletedTask;
-
-            var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
-
-            Transports.AddRange(transports);
             return Task.CompletedTask;
         }
 
