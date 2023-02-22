@@ -22,7 +22,7 @@ namespace Mb.Services.Contracts
         IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
 
         /// <summary>
-        /// Get a project by Id or Iri. The project will include all edges, nodes, transports, interfaces,
+        /// Get a project by Id or Iri. The project will include all edges, nodes,
         /// attributes and connectors.
         /// </summary>
         /// <param name="id"></param>

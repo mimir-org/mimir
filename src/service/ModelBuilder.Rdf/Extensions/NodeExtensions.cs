@@ -203,7 +203,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null, null, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null);
                 node.Attributes.Add(attribute);
             }
 

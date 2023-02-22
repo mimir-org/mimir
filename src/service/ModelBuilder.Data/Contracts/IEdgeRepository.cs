@@ -47,7 +47,7 @@ namespace Mb.Data.Contracts
         /// </summary>
         /// <param name="edgeId">The edge you want data from</param>
         /// <returns>A collection connected identity data</returns>
-        /// <remarks>Get det edge identifier and all connected attributes from transport, interface and terminals</remarks>
+        /// <remarks>Get det edge identifier and all connected attributes from terminals</remarks>
         Task<List<ObjectIdentity>> GetEdgeConnectedData(string edgeId);
     }
 }

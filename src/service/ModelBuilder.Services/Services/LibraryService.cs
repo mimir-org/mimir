@@ -36,32 +36,6 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get all transport types
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<TransportLibCm>> GetTransportTypes(string searchString)
-        {
-            var transports = await _libraryRepository.GetTransportTypes();
-            if (!string.IsNullOrWhiteSpace(searchString))
-                transports = transports.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
-
-            return transports;
-        }
-
-        /// <summary>
-        /// Get all interface types
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<InterfaceLibCm>> GetInterfaceTypes(string searchString)
-        {
-            var interfaces = await _libraryRepository.GetInterfaceTypes();
-            if (!string.IsNullOrWhiteSpace(searchString))
-                interfaces = interfaces.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
-
-            return interfaces;
-        }
-
-        /// <summary>
         /// Get all terminal types
         /// </summary>
         /// <returns>A collection of all registered terminals</returns>

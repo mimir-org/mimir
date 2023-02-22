@@ -14,18 +14,6 @@ namespace Mb.Services.Contracts
         Task<List<NodeLibCm>> GetNodeTypes(string searchString);
 
         /// <summary>
-        /// Get all transport types
-        /// </summary>
-        /// <returns></returns>
-        Task<List<TransportLibCm>> GetTransportTypes(string searchString);
-
-        /// <summary>
-        /// Get all interface types
-        /// </summary>
-        /// <returns></returns>
-        Task<List<InterfaceLibCm>> GetInterfaceTypes(string searchString);
-
-        /// <summary>
         /// Get all terminal types
         /// </summary>
         /// <returns>A collection of all registered terminals</returns>

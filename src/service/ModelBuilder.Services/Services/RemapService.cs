@@ -438,18 +438,6 @@ namespace Mb.Services.Services
                     attribute.NodeIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.TransportId, replacement.FromId, attribute.TransportIri, replacement.FromIri) && parent == AttributeParent.Transport)
-                {
-                    attribute.TransportId = replacement.ToId;
-                    attribute.TransportIri = replacement.ToIri;
-                }
-
-                if (ShouldReplace(attribute.InterfaceId, replacement.FromId, attribute.InterfaceIri, replacement.FromIri) && parent == AttributeParent.Interface)
-                {
-                    attribute.InterfaceId = replacement.ToId;
-                    attribute.InterfaceIri = replacement.ToIri;
-                }
-
                 attribute.Id = attributeReplacement.ToId;
                 attribute.Iri = attributeReplacement.ToIri;
 

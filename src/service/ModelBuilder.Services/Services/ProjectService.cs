@@ -73,7 +73,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get a project by Id or Iri. The project will include all edges, nodes, transports, interfaces,
+        /// Get a project by Id or Iri. The project will include all edges, nodes,
         /// attributes and connectors.
         /// </summary>
         /// <param name="id"></param>

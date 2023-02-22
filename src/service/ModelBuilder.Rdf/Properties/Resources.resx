@@ -243,9 +243,6 @@
   <data name="IntegratedObject" xml:space="preserve">
     <value>imf:IntegratedObject</value>
   </data>
-  <data name="Interface" xml:space="preserve">
-    <value>imf:Interface</value>
-  </data>
   <data name="IsAspectOf" xml:space="preserve">
     <value>imf:isAspectOf</value>
   </data>
@@ -308,9 +305,6 @@
   </data>
   <data name="Transmitter" xml:space="preserve">
     <value>mimir:Transmitter</value>
-  </data>
-  <data name="Transport" xml:space="preserve">
-    <value>imf:Transport</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>rdf:type</value>
