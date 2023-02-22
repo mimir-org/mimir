@@ -20,22 +20,17 @@ namespace Mb.Data.Repositories
     public class EdgeRepository : GenericRepository<ModelBuilderDbContext, Edge>, IEdgeRepository
     {
         private readonly IAttributeRepository _attributeRepository;
-        private readonly ITransportRepository _transportRepository;
-        private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
         public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository,
-            ITransportRepository transportRepository, IInterfaceRepository interfaceRepository,
             IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor,
             ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(
             dbContext)
         {
             _attributeRepository = attributeRepository;
-            _transportRepository = transportRepository;
-            _interfaceRepository = interfaceRepository;
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
             _commonRepository = commonRepository;
@@ -57,9 +52,7 @@ namespace Mb.Data.Repositories
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
                     SetEdgeProperties(edge, true);
-
-                    _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
-                    _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
+                    
                     Attach(edge, EntityState.Added);
                     yield return (edge, WorkerStatus.Create);
                 }
@@ -74,9 +67,7 @@ namespace Mb.Data.Repositories
                     }
 
                     SetEdgeProperties(edge, false);
-
-                    _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
-                    _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
+                    
                     Attach(edge, EntityState.Modified);
                     yield return (edge, WorkerStatus.Update);
                 }
@@ -100,62 +91,8 @@ namespace Mb.Data.Repositories
                     continue;
                 }
 
-                //Attributes - Transport (delete)
-                if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
-                    _attributeRepository.Attach(edge.Transport.Attributes, EntityState.Deleted);
-
-                //Attributes - Interface (delete)
-                if (edge.Interface?.Attributes != null && edge.Interface.Attributes.Any())
-                    _attributeRepository.Attach(edge.Interface.Attributes, EntityState.Deleted);
-
-                //Attributes - Terminal transport (delete)
-                if (edge.Transport?.InputTerminalId != null && edge.Transport?.OutputTerminalId != null)
-                {
-                    var terminalTransportAttributes = _attributeRepository.FindBy(x =>
-                        x.TerminalId == edge.Transport.InputTerminalId ||
-                        x.TerminalId == edge.Transport.OutputTerminalId).ToList();
-
-                    if (terminalTransportAttributes.Any())
-                        _attributeRepository.Attach(terminalTransportAttributes, EntityState.Deleted);
-                }
-
-                //Attributes - Terminal Interface (delete)
-                if (edge.Interface?.InputTerminalId != null && edge.Interface?.OutputTerminalId != null)
-                {
-                    var terminalInterfaceAttributes = _attributeRepository.FindBy(x =>
-                        x.TerminalId == edge.Interface.InputTerminalId ||
-                        x.TerminalId == edge.Interface.OutputTerminalId).ToList();
-
-                    if (terminalInterfaceAttributes.Any())
-                        _attributeRepository.Attach(terminalInterfaceAttributes, EntityState.Deleted);
-                }
-
-                //Transport - (delete)
-                if (edge.Transport != null)
-                    _transportRepository.Attach(edge.Transport, EntityState.Deleted);
-
-                //Interface - (delete)
-                if (edge.Interface != null)
-                    _interfaceRepository.Attach(edge.Interface, EntityState.Deleted);
-
                 //Edge - (delete)
                 Attach(edge, EntityState.Deleted);
-
-                //Terminal - Transport output (delete) 
-                if (edge.Transport?.InputTerminalId != null)
-                    await _connectorRepository.Delete(edge.Transport.InputTerminalId);
-
-                //Terminal - Transport input (delete)
-                if (edge.Transport?.OutputTerminalId != null)
-                    await _connectorRepository.Delete(edge.Transport.OutputTerminalId);
-
-                //Terminal - Interface input (delete)
-                if (edge.Interface?.InputTerminalId != null)
-                    await _connectorRepository.Delete(edge.Interface.InputTerminalId);
-
-                //Terminal - Interface output (delete)
-                if (edge.Interface?.OutputTerminalId != null)
-                    await _connectorRepository.Delete(edge.Interface.OutputTerminalId);
 
                 //projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
                 returnValues.Add((edge, WorkerStatus.Delete));
@@ -188,8 +125,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.FromNodeIri)
                 .AddColumn(x => x.ToNodeId)
                 .AddColumn(x => x.ToNodeIri)
-                .AddColumn(x => x.TransportId)
-                .AddColumn(x => x.InterfaceId)
                 .AddColumn(x => x.IsLocked)
                 .AddColumn(x => x.IsLockedStatusBy)
                 .AddColumn(x => x.IsLockedStatusDate)
@@ -283,42 +218,12 @@ namespace Mb.Data.Repositories
             var dateTimeNow = DateTime.Now.ToUniversalTime();
             var contextAccessorName = _contextAccessor.GetName();
 
-            if (!string.IsNullOrWhiteSpace(edge?.Transport?.UpdatedBy))
-                edge.Transport.UpdatedBy = contextAccessorName;
-
-            if (edge?.Transport?.Updated != null)
-                edge.Transport.Updated = dateTimeNow;
-
-            if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
-                edge.Interface.UpdatedBy = contextAccessorName;
-
-            if (edge?.Interface?.Updated != null)
-                edge.Interface.Updated = dateTimeNow;
-
             if (!isNewEdge)
                 return;
 
             //TODO: Versioning
 
             const string version = "1.0";
-
-            if (!string.IsNullOrWhiteSpace(edge?.Transport?.Version))
-                edge.Transport.Version = version;
-
-            if (!string.IsNullOrWhiteSpace(edge?.Transport?.CreatedBy))
-                edge.Transport.CreatedBy = contextAccessorName;
-
-            if (edge?.Transport?.Created != null)
-                edge.Transport.Created = dateTimeNow;
-
-            if (!string.IsNullOrWhiteSpace(edge?.Interface?.Version))
-                edge.Interface.Version = version;
-
-            if (!string.IsNullOrWhiteSpace(edge?.Interface?.CreatedBy))
-                edge.Interface.CreatedBy = contextAccessorName;
-
-            if (edge?.Interface?.Created != null)
-                edge.Interface.Created = dateTimeNow;
         }
     }
 }
