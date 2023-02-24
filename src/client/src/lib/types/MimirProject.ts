@@ -22,7 +22,7 @@ export class MimirProject implements Project {
   updatedBy: string;
   version: string;
 
-  constructor(project?: Project) {
+  constructor(project: Project) {
     this.description = project.description;
     this.domain = project.domain;
     this.edges = project.edges.map((edge) => new MimirEdge(edge));
