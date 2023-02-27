@@ -173,9 +173,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         ToNodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                         IsLocked = false,
                         IsLockedStatusBy = null,
-                        IsLockedStatusDate = null,
-                        Interface = null,
-                        Transport = null
+                        IsLockedStatusDate = null
                     }
                 }
             };

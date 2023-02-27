@@ -144,7 +144,7 @@ namespace Mb.Core.Controllers.V1
 
                 await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
 
-                if (cacheInvalidation.Key is CacheKey.AspectNode or CacheKey.Interface or CacheKey.Transport)
+                if (cacheInvalidation.Key is CacheKey.AspectNode)
                     await _libraryService.SendRefreshLibData();
 
                 return NoContent();

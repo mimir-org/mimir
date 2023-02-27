@@ -60,26 +60,6 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<InterfaceLibCm>> GetInterfaceTypes()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryinterface");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Interface.ToString(),
-                async () => await _httpRepository.GetData<List<InterfaceLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
-        public async Task<List<TransportLibCm>> GetTransportTypes()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("librarytransport");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Transport.ToString(),
-                async () => await _httpRepository.GetData<List<TransportLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
         public async Task<List<TerminalLibCm>> GetTerminalTypes()
         {
             // ReSharper disable once StringLiteralTypo

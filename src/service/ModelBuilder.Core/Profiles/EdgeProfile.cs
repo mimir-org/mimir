@@ -26,10 +26,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnectorIri))
                 .ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNodeIri))
                 .ForMember(dest => dest.ToNodeIri, opt => opt.MapFrom(src => src.ToNodeIri))
-                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.Transport.Id))
-                .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
-                .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.Interface.Id))
-                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
@@ -52,9 +48,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNodeIri))
                 .ForMember(dest => dest.ToNodeIri, opt => opt.MapFrom(src => src.ToNodeIri))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
-                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
-                .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
-                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface));
+                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri));
         }
     }
 }

@@ -8,10 +8,8 @@ import {
   exportLibrarySuccessOrError,
   fetchLibrary,
   fetchLibraryAttributeTypesSuccessOrError,
-  fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
   fetchLibraryTerminalsSuccessOrError,
-  fetchLibraryTransportTypesSuccessOrError,
   fetchQuantityDatumsSuccessOrError,
   fetchSubProjectsSuccessOrError,
   importLibrarySuccessOrError,
@@ -80,42 +78,6 @@ export function* importLibrary(action: PayloadAction<File>) {
   } catch (error) {
     const apiError = GetApiErrorForException(error, importLibrarySuccessOrError.type);
     yield put(importLibrarySuccessOrError(apiError));
-  }
-}
-
-export function* getTransportTypes() {
-  try {
-    const url = `${Config.API_BASE_URL}library/transport`;
-    const response = yield call(get, url);
-
-    if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, fetchLibraryTransportTypesSuccessOrError.type);
-      yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
-      return;
-    }
-
-    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: response.data, apiError: null }));
-  } catch (error) {
-    const apiError = GetApiErrorForException(error, fetchLibraryTransportTypesSuccessOrError.type);
-    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
-  }
-}
-
-export function* getInterfaceTypes() {
-  try {
-    const url = `${Config.API_BASE_URL}library/interface`;
-    const response = yield call(get, url);
-
-    if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, fetchLibraryInterfaceTypesSuccessOrError.type);
-      yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
-      return;
-    }
-
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: response.data, apiError: null }));
-  } catch (error) {
-    const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
   }
 }
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.7.5" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.259" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.259" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.263" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.263" />
   </ItemGroup>
 
   <ItemGroup>

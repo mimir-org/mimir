@@ -32,7 +32,7 @@ namespace Mb.Services.Services
             if (editData == null || string.IsNullOrWhiteSpace(projectId))
                 return;
 
-            // TODO: Find changed node and edge based on changed terminal, attribute, transport etc.
+            // TODO: Find changed node and edge based on changed terminal, attribute etc.
             var versionObj = new ProjectVersionCm
             {
                 ProjectId = projectId,

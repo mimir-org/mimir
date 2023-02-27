@@ -439,15 +439,6 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Interface.
-        /// </summary>
-        public static string Interface {
-            get {
-                return ResourceManager.GetString("Interface", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to imf:isAspectOf.
         /// </summary>
         public static string IsAspectOf {
@@ -633,15 +624,6 @@ namespace ModelBuilder.Rdf.Properties {
         public static string Transmitter {
             get {
                 return ResourceManager.GetString("Transmitter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:Transport.
-        /// </summary>
-        public static string Transport {
-            get {
-                return ResourceManager.GetString("Transport", resourceCulture);
             }
         }
         
