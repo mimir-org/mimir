@@ -6,11 +6,9 @@ import { getUser } from "./user/saga";
 import { fetchUser } from "../store/user/userSlice";
 import {
   exportLibrary,
-  getInterfaceTypes,
   getQuantityDatums,
   getTerminals,
   getAttributes,
-  getTransportTypes,
   importLibrary,
   searchLibrary,
   getSubProjects,
@@ -67,8 +65,6 @@ function* sagas() {
     takeEvery(LOCK_ENTITY, lockNode),
     takeEvery(COMMIT_PROJECT, commitProject),
     takeEvery(fetchLibrary, searchLibrary),
-    takeEvery(fetchLibraryTransportTypes, getTransportTypes),
-    takeEvery(fetchLibraryInterfaceTypes, getInterfaceTypes),
     takeEvery(fetchLibraryTerminals, getTerminals),
     takeEvery(fetchLibraryAttributeTypes, getAttributes),
     takeEvery(fetchSubProjects, getSubProjects),
