@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.259" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.262" />
     <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.259" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
