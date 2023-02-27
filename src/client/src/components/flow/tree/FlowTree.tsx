@@ -22,6 +22,8 @@ import ReactFlow, {
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
 import { CreateHandleEdge, CreateHandleNode, UpdateHandleEdge } from "../helpers/CreateHandleNode";
+import {MimirNode} from "../../../lib/types/MimirNode";
+import {MimirEdge} from "../../../lib/types/MimirEdge";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -44,10 +46,10 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const terminals = useAppSelector(selectors.terminalsSelector);
-  const mimirNodes = project?.nodes;
-  const mimirEdges = project?.edges;
-  const selectedNode = mimirNodes?.find((n) => n.selected);
-  const selectedEdge = mimirEdges?.find((e) => e.selected);
+  const nodes = project?.nodes;
+  const edges = project?.edges;
+  const selectedNode = nodes?.find((n) => n.selected);
+  const selectedEdge = edges?.find((e) => e.selected);
   const hasAnimation = filter.filters.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
@@ -68,9 +70,9 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
 
   const OnNodeDragStop = useCallback(
     (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
-      return hooks.useOnDragStop(activeNode, mimirEdges, dispatch);
+      return hooks.useOnDragStop(activeNode, edges, dispatch);
     },
-    [mimirEdges]
+    [edges]
   );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -94,7 +96,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
+      return hooks.useOnTreeNodesChange(nodes, edges, changes, setNodes, dispatch, inspectorRef);
     },
     [selectedNode]
   );
@@ -102,7 +104,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
       if (!project) return;
-      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, project, dispatch);
+      return hooks.useOnTreeEdgesChange(nodes, edges, selectedNode, changes, setEdges, inspectorRef, project, dispatch);
     },
     [selectedEdge]
   );
@@ -111,8 +113,9 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(BuildFlowTreeNodes(mimirNodes));
-      setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
+      //TODO: project.toFlownodes in state
+      setNodes(BuildFlowTreeNodes(nodes));
+      setEdges(BuildFlowTreeEdges(nodes as MimirNode[], edges as MimirEdge[], filter, OnEdgeSplitClick));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -121,9 +124,9 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rebuild nodes and edges
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowTreeNodes(mimirNodes));
-    setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter, OnEdgeSplitClick));
-  }, [mimirNodes, mimirEdges, selectedNode, filter]);
+    setNodes(BuildFlowTreeNodes(nodes));
+    setEdges(BuildFlowTreeEdges(nodes as MimirNode[], edges as MimirEdge[], filter, OnEdgeSplitClick));
+  }, [nodes, edges, selectedNode, filter]);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
