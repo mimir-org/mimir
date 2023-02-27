@@ -28,9 +28,5 @@ public class TestJsonLdWriter
         var topNodes = g2.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();
         var wrongNode = g2.GetUriNode(new Uri("https://rdf.equinor.com/ID043f6dba-0d0e-48c6-a439-a42f228d80bb"));
         Assert.DoesNotContain(wrongNode, topNodes);
-
-        var transport_class = g2.CreateUriNode(new Uri("http://ns.imfid.org/imf#Transport"));
-        var transports = g2.GetTriplesWithPredicateObject(type, transport_class).Select(t => t.Subject).ToList();
-        Assert.Single(transports);
     }
 }

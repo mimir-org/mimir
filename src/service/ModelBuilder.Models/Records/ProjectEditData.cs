@@ -21,14 +21,6 @@ namespace Mb.Models.Records
         public List<Attribute> AttributeUpdate { get; init; } = new();
         public List<Attribute> AttributeDelete { get; init; } = new();
 
-        public List<Transport> TransportCreate { get; init; } = new();
-        public List<Transport> TransportUpdate { get; init; } = new();
-        public List<Transport> TransportDelete { get; init; } = new();
-
-        public List<Interface> InterfaceCreate { get; init; } = new();
-        public List<Interface> InterfaceUpdate { get; init; } = new();
-        public List<Interface> InterfaceDelete { get; init; } = new();
-
         public List<Relation> RelationCreate { get; init; } = new();
         public List<Relation> RelationUpdate { get; init; } = new();
         public List<Relation> RelationDelete { get; init; } = new();
@@ -40,16 +32,12 @@ namespace Mb.Models.Records
         public List<Edge> EdgeCreateAndDelete => EdgeCreate.Union(EdgeDelete).ToList();
         public List<Node> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
         public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
-        public List<Transport> TransportCreateAndDelete => TransportCreate.Union(TransportDelete).ToList();
-        public List<Interface> InterfaceCreateAndDelete => InterfaceCreate.Union(InterfaceDelete).ToList();
         public List<Relation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
         public List<Terminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
         public List<Node> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
         public List<Terminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
         public List<Relation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
-        public List<Transport> TransportUpdateInsert => TransportUpdate.Union(TransportCreate).ToList();
-        public List<Interface> InterfaceUpdateInsert => InterfaceUpdate.Union(InterfaceCreate).ToList();
         public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
         public List<Edge> EdgeUpdateInsert => EdgeUpdate.Union(EdgeCreate).ToList();
 
@@ -60,8 +48,6 @@ namespace Mb.Models.Records
                 Task.Run(() => ResolveEdges(original, updated)),
                 Task.Run(() => ResolveNodes(original, updated)),
                 Task.Run(() => ResolveAttributes(original, updated)),
-                Task.Run(() => ResolveTransports(original, updated)),
-                Task.Run(() => ResolveInterfaces(original, updated)),
                 Task.Run(() => ResolveRelations(original, updated)),
                 Task.Run(() => ResolveTerminals(original, updated))
             };
@@ -151,62 +137,6 @@ namespace Mb.Models.Records
         private Task FindCreatedAttributes(ProjectData original, ProjectData updated)
         {
             AttributeCreate.AddRange(updated.Attributes.Exclude(original.Attributes, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        #endregion
-
-        #region Transports
-
-        private async Task ResolveTransports(ProjectData original, ProjectData updated)
-        {
-            var tasks = new List<Task>
-            {
-                Task.Run(() => FindDeletedTransports(original, updated)),
-                Task.Run(() => FindCreatedTransports(original, updated))
-            };
-            await Task.WhenAll(tasks);
-            var dict = updated.Transports.ToDictionary(x => x.Id, x => x);
-            TransportUpdate.AddRange(original.Transports.Exclude(TransportCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
-        }
-
-        private Task FindDeletedTransports(ProjectData original, ProjectData updated)
-        {
-            TransportDelete.AddRange(original.Transports.Exclude(updated.Transports, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        private Task FindCreatedTransports(ProjectData original, ProjectData updated)
-        {
-            TransportCreate.AddRange(updated.Transports.Exclude(original.Transports, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        #endregion
-
-        #region Interfaces
-
-        private async Task ResolveInterfaces(ProjectData original, ProjectData updated)
-        {
-            var tasks = new List<Task>
-            {
-                Task.Run(() => FindDeletedInterfaces(original, updated)),
-                Task.Run(() => FindCreatedInterfaces(original, updated))
-            };
-            await Task.WhenAll(tasks);
-            var dict = updated.Interfaces.ToDictionary(x => x.Id, x => x);
-            InterfaceUpdate.AddRange(original.Interfaces.Exclude(InterfaceCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
-        }
-
-        private Task FindDeletedInterfaces(ProjectData original, ProjectData updated)
-        {
-            InterfaceDelete.AddRange(original.Interfaces.Exclude(updated.Interfaces, x => x.Id));
-            return Task.CompletedTask;
-        }
-
-        private Task FindCreatedInterfaces(ProjectData original, ProjectData updated)
-        {
-            InterfaceCreate.AddRange(updated.Interfaces.Exclude(original.Interfaces, x => x.Id));
             return Task.CompletedTask;
         }
 

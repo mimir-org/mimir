@@ -29,12 +29,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.Interface, opt => opt.Ignore())
-                .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
-                .ForMember(dest => dest.InterfaceIri, opt => opt.MapFrom(src => src.InterfaceIri))
-                .ForMember(dest => dest.Transport, opt => opt.Ignore())
-                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
-                .ForMember(dest => dest.TransportIri, opt => opt.MapFrom(src => src.TransportIri))
                 .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
@@ -56,10 +50,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RegularitySpecified, opt => opt.MapFrom(src => src.RegularitySpecified))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
-                .ForMember(dest => dest.TransportIri, opt => opt.MapFrom(src => src.TransportIri))
-                .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
-                .ForMember(dest => dest.InterfaceIri, opt => opt.MapFrom(src => src.InterfaceIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
         }
     }

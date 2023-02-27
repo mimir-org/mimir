@@ -74,8 +74,6 @@ namespace ModelBuilder.Rdf.Services
             var applicationData = GetApplicationData(project.Iri);
 
             project.ResolveNodes(this, applicationData);
-            project.ResolveTransports(this, applicationData);
-            project.ResolveInterfaces(this, applicationData);
             project.ResolveRelationEdges(this, applicationData);
 
             return project;
@@ -422,24 +420,6 @@ namespace ModelBuilder.Rdf.Services
             foreach (var edge in project.Edges)
             {
                 edge.AssertEdge(this, projectData);
-
-                if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
-                {
-                    foreach (var attribute in edge.Transport.Attributes)
-                    {
-                        attribute.AssertAttribute(edge.Transport.Iri, this);
-                        attribute.AssertAttributeValue(this, projectData);
-                    }
-                }
-
-                if (edge.Interface?.Attributes != null && edge.Interface.Attributes.Any())
-                {
-                    foreach (var attribute in edge.Interface.Attributes)
-                    {
-                        attribute.AssertAttribute(edge.Interface.Iri, this);
-                        attribute.AssertAttributeValue(this, projectData);
-                    }
-                }
             }
         }
 

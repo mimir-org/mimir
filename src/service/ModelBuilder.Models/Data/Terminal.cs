@@ -40,22 +40,6 @@ namespace Mb.Models.Data
         [TSExclude]
         public string TypeReferenceString { get; set; }
 
-        [JsonIgnore]
-        [TSExclude]
-        public ICollection<Transport> InputTransports { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public ICollection<Transport> OutputTransports { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public ICollection<Interface> InputInterfaces { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public ICollection<Interface> OutputInterfaces { get; set; }
-
         #region IEquatable
 
         public bool Equals(Terminal other)

@@ -48,7 +48,7 @@ namespace Mb.Data.Contracts
         /// <param name="nodeId">The node you want data from</param>
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det node identifier and all connected children including
-        /// children nodes, children edges, children attributes from children transports, children interfaces and children terminals</remarks>
+        /// children nodes, children edges and children terminals</remarks>
         Task<List<ObjectIdentity>> GetNodeConnectedData(string nodeId);
     }
 }

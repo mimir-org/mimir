@@ -48,16 +48,6 @@ namespace Mb.Models.Application
         [ValidIri]
         public string NodeIri { get; set; }
 
-        public string TransportId { get; set; }
-
-        [ValidIri]
-        public string TransportIri { get; set; }
-
-        public string InterfaceId { get; set; }
-
-        [ValidIri]
-        public string InterfaceIri { get; set; }
-
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
@@ -69,11 +59,7 @@ namespace Mb.Models.Application
             if (string.IsNullOrEmpty(TerminalId) &&
                 string.IsNullOrEmpty(TerminalIri) &&
                 string.IsNullOrEmpty(NodeId) &&
-                string.IsNullOrEmpty(NodeIri) &&
-                string.IsNullOrEmpty(TransportId) &&
-                string.IsNullOrEmpty(TransportIri) &&
-                string.IsNullOrEmpty(InterfaceId) &&
-                string.IsNullOrEmpty(InterfaceIri)
+                string.IsNullOrEmpty(NodeIri)
                )
             {
                 validations.Add(new ValidationResult("One of this fields is required", new[]
@@ -81,11 +67,7 @@ namespace Mb.Models.Application
                     nameof(TerminalId),
                     nameof(TerminalIri),
                     nameof(NodeId),
-                    nameof(NodeIri),
-                    nameof(TransportId),
-                    nameof(TransportIri),
-                    nameof(InterfaceId),
-                    nameof(InterfaceIri)
+                    nameof(NodeIri)
                 }));
             }
 
