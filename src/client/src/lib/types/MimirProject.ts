@@ -2,6 +2,7 @@ import { Edge, Project } from "@mimirorg/modelbuilder-types";
 import { MimirNode } from "./MimirNode";
 import { MimirEdge } from "./MimirEdge";
 import { IsPartOfRelation } from "../../components/flow/helpers/Connectors";
+import { Node as FlowNode } from "react-flow-renderer";
 
 /**
  * @interface
@@ -61,5 +62,16 @@ export class MimirProject implements Project {
 
   public findParentEdge(nodeId: string, edges: Edge[]): Edge {
     return edges.find((edge) => edge.toNodeId === nodeId && IsPartOfRelation(edge.fromConnector));
+  }
+
+  public buildFlowTreeNodes() {
+    const flowNodes: FlowNode[] = [];
+
+    this.nodes.forEach((node) => {
+      const treeNode = node.convertToFlowNode();
+      if (treeNode) flowNodes.push(treeNode);
+    });
+
+    return flowNodes;
   }
 }

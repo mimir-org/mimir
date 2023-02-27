@@ -1,12 +1,5 @@
 import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
-import {
-  InterfaceLibCm,
-  NodeLibCm,
-  QuantityDatumCm,
-  TerminalLibCm,
-  TransportLibCm,
-  AttributeLibCm,
-} from "@mimirorg/typelibrary-types";
+import { NodeLibCm, QuantityDatumCm, TerminalLibCm, AttributeLibCm } from "@mimirorg/typelibrary-types";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
@@ -14,8 +7,6 @@ import { ApiError } from "../../../models/webclient";
 export interface LibraryState {
   fetching: boolean;
   libNodes: NodeLibCm[] | null;
-  transportTypes: TransportLibCm[] | null;
-  interfaceTypes: InterfaceLibCm[] | null;
   terminals: TerminalLibCm[] | null;
   apiError: ApiError[];
   collections: Collection[];
@@ -36,7 +27,6 @@ export interface FetchLibraryItems {
 }
 
 export interface FetchTransportTypes {
-  transportTypes: TransportLibCm[];
   apiError: ApiError;
 }
 
@@ -51,7 +41,6 @@ export interface FetchAttributes {
 }
 
 export interface FetchInterfaceTypes {
-  interfaceTypes: InterfaceLibCm[];
   apiError: ApiError;
 }
 

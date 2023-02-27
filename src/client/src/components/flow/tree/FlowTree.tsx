@@ -24,6 +24,7 @@ import { VisualFilterData, VisualFilterId } from "../../../models/application/Vi
 import { CreateHandleEdge, CreateHandleNode, UpdateHandleEdge } from "../helpers/CreateHandleNode";
 import {MimirNode} from "../../../lib/types/MimirNode";
 import {MimirEdge} from "../../../lib/types/MimirEdge";
+import {MimirProject} from "../../../lib/types/MimirProject";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -43,11 +44,11 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as MimirProject;
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const terminals = useAppSelector(selectors.terminalsSelector);
-  const nodes = project?.nodes;
-  const edges = project?.edges;
+  const nodes = project?.nodes.map((node) => new MimirNode(node));
+  const edges = project?.edges.map((edge) => new MimirEdge(edge));
   const selectedNode = nodes?.find((n) => n.selected);
   const selectedEdge = edges?.find((e) => e.selected);
   const hasAnimation = filter.filters.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
@@ -114,8 +115,8 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       //TODO: project.toFlownodes in state
-      setNodes(BuildFlowTreeNodes(nodes));
-      setEdges(BuildFlowTreeEdges(nodes as MimirNode[], edges as MimirEdge[], filter, OnEdgeSplitClick));
+      setNodes(project.buildFlowTreeNodes());
+      setEdges(BuildFlowTreeEdges(nodes, edges, filter, OnEdgeSplitClick));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -125,7 +126,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowTreeNodes(nodes));
-    setEdges(BuildFlowTreeEdges(nodes as MimirNode[], edges as MimirEdge[], filter, OnEdgeSplitClick));
+    setEdges(BuildFlowTreeEdges(nodes, edges, filter, OnEdgeSplitClick));
   }, [nodes, edges, selectedNode, filter]);
 
   return (
