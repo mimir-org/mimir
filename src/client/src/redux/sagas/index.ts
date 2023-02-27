@@ -16,8 +16,6 @@ import {
 import {
   exportLibrary as exportLibraryAction,
   fetchLibrary,
-  fetchLibraryInterfaceTypes,
-  fetchLibraryTransportTypes,
   importLibrary as importLibraryAction,
   fetchLibraryTerminals,
   fetchQuantityDatums,
