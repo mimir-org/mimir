@@ -1,512 +1,558 @@
-export interface TransportAm {
-    id: string;
-    iri: string;
-    domain: string;
-    version: string;
-    rds: string;
-    name: string;
-    label: string;
-    description: string;
-    statusId: string;
-    semanticReference: string;
-    inputTerminalId: string;
-    inputTerminal: TerminalAm;
-    outputTerminalId: string;
-    outputTerminal: TerminalAm;
-    attributes: AttributeAm[];
-    updatedBy: string;
-    updated: Date;
-    created: Date;
-    createdBy: string;
-    libraryTypeId: string;
+export interface IModuleInterface
+{
 }
-export interface TerminalAm extends ConnectorAm {
+export interface TerminalAm extends ConnectorAm
+{
+	color: string;
+	isProxy: boolean;
+	proxyParent: string;
+	proxySibling: string;
+	terminalTypeId: string;
+	terminalTypeIri: string;
+	terminalParentTypeId: string;
+	terminalParentTypeIri: string;
+	terminalParentTypeName: string;
+	typeReferences: TypeReference[];
+	attributes: AttributeAm[];
 }
-export interface SubProjectAm {
-    fromProjectId: string;
-    name: string;
-    description: string;
-    nodes: string[];
-    edges: string[];
+export interface SubProjectAm
+{
+	fromProjectId: string;
+	name: string;
+	description: string;
+	nodes: string[];
+	edges: string[];
 }
-export interface SimpleAm {
-    id: string;
-    iri: string;
-    name: string;
-    attributes: AttributeAm[];
-    nodeId: string;
-    nodeIri: string;
+export interface RelationAm extends ConnectorAm
+{
+	relationType: RelationType;
 }
-export interface RelationAm extends ConnectorAm {
+export interface ProjectFileAm
+{
+	parserId: string;
+	fileContent: string;
+	fileFormat: FileFormat;
+	filename: string;
 }
-export interface ProjectFileAm {
-    parserId: string;
-    fileContent: string;
-    fileFormat: FileFormat;
+export interface ProjectConverterAm
+{
+	parserId: string;
+	project: ProjectAm;
+	fileName: string;
 }
-export interface ProjectConverterAm {
-    parserId: string;
-    project: ProjectAm;
+export interface ProjectAm
+{
+	id: string;
+	iri: string;
+	domain: string;
+	name: string;
+	isSubProject: boolean;
+	version: string;
+	description: string;
+	projectOwner: string;
+	updatedBy: string;
+	updated: Date;
+	nodes: NodeAm[];
+	edges: EdgeAm[];
 }
-export interface ProjectAm {
-    id: string;
-    iri: string;
-    domain: string;
-    name: string;
-    isSubProject: boolean;
-    version: string;
-    description: string;
-    projectOwner: string;
-    updatedBy: string;
-    updated: Date;
-    nodes: NodeAm[];
-    edges: EdgeAm[];
+export interface PrepareAm
+{
+	subProjectId: string;
+	version: string;
+	projectId: string;
+	dropPositionX: number;
+	dropPositionY: number;
 }
-export interface NodeAm {
-    id: string;
-    iri: string;
-    aspect: Aspect;
-    isRoot: boolean;
-    domain: string;
-    projectId: string;
-    projectIri: string;
-    name: string;
-    version: string;
-    label: string;
-    rds: string;
-    semanticReference: string;
-    description: string;
-    positionX: number;
-    positionY: number;
-    positionBlockX: number;
-    positionBlockY: number;
-    width: number;
-    height: number;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
-    statusId: string;
-    masterProjectId: string;
-    masterProjectIri: string;
-    symbol: string;
-    purpose: string;
-    created: Date;
-    createdBy: string;
-    updated: Date;
-    updatedBy: string;
-    libraryTypeId: string;
-    connectors: ConnectorAm[];
-    attributes: AttributeAm[];
-    simples: SimpleAm[];
+export interface NodeAm
+{
+	id: string;
+	iri: string;
+	aspect: Aspect;
+	nodeType: NodeType;
+	domain: string;
+	projectId: string;
+	projectIri: string;
+	name: string;
+	version: string;
+	label: string;
+	rds: string;
+	typeReferences: TypeReference[];
+	description: string;
+	positionX: number;
+	positionY: number;
+	positionBlockX: number;
+	positionBlockY: number;
+	width: number;
+	height: number;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+	masterProjectId: string;
+	masterProjectIri: string;
+	symbol: string;
+	purpose: string;
+	created: Date;
+	createdBy: string;
+	updated: Date;
+	updatedBy: string;
+	libraryTypeId: string;
+	connectors: ConnectorAm[];
+	attributes: AttributeAm[];
 }
-export interface LockAm {
-    id: string;
-    projectId: string;
-    isLocked: boolean;
-    type: EntityType;
+export interface LockAm
+{
+	id: string;
+	projectId: string;
+	isLocked: boolean;
+	type: EntityType;
 }
-export interface InterfaceAm {
-    id: string;
-    iri: string;
-    domain: string;
-    version: string;
-    rds: string;
-    name: string;
-    label: string;
-    description: string;
-    statusId: string;
-    semanticReference: string;
-    inputTerminalId: string;
-    inputTerminal: TerminalAm;
-    outputTerminalId: string;
-    outputTerminal: TerminalAm;
-    attributes: AttributeAm[];
-    updatedBy: string;
-    updated: Date;
-    created: Date;
-    createdBy: string;
-    libraryTypeId: string;
+export interface EdgeAm
+{
+	id: string;
+	iri: string;
+	domain: string;
+	projectId: string;
+	projectIri: string;
+	fromConnectorId: string;
+	fromConnectorIri: string;
+	toConnectorId: string;
+	toConnectorIri: string;
+	fromNodeId: string;
+	fromNodeIri: string;
+	toNodeId: string;
+	toNodeIri: string;
+	masterProjectId: string;
+	masterProjectIri: string;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
 }
-export interface EdgeAm {
-    id: string;
-    iri: string;
-    domain: string;
-    projectId: string;
-    projectIri: string;
-    fromConnectorId: string;
-    fromConnectorIri: string;
-    toConnectorId: string;
-    toConnectorIri: string;
-    fromNodeId: string;
-    fromNodeIri: string;
-    toNodeId: string;
-    toNodeIri: string;
-    masterProjectId: string;
-    masterProjectIri: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
-    transport: TransportAm;
-    interface: InterfaceAm;
+export interface CreateProjectAm
+{
+	name: string;
+	description: string;
 }
-export interface CreateProjectAm {
-    name: string;
-    description: string;
+export interface ConnectorAm
+{
+	id: string;
+	iri: string;
+	domain: string;
+	name: string;
+	type: ConnectorDirection;
+	connectorVisibility: ConnectorVisibility;
+	nodeId: string;
+	nodeIri: string;
+	isRequired: boolean;
 }
-export interface ConnectorAm {
-    id: string;
-    iri: string;
-    domain: string;
-    name: string;
-    type: ConnectorDirection;
-    semanticReference: string;
-    connectorVisibility: ConnectorVisibility;
-    nodeId: string;
-    nodeIri: string;
-    isRequired: boolean;
-    relationType: RelationType;
-    color: string;
-    terminalCategory: string;
-    terminalTypeId: string;
-    terminalTypeIri: string;
-    attributes: AttributeAm[];
+export interface CommitPackageAm
+{
+	projectId: string;
+	commitStatus: CommitStatus;
+	parser: string;
+	receivingDomain: string;
 }
-export interface CommitPackageAm {
-    projectId: string;
-    commitStatus: CommitStatus;
-    parser: string;
-    receivingDomain: string;
+export interface CollaborationPartnerAm
+{
+	name: string;
+	domain: string;
+	current: boolean;
+	iris: string[];
 }
-export interface CollaborationPartnerAm {
-    name: string;
-    domain: string;
-    current: boolean;
-    iris: string[];
+export interface AttributeAm
+{
+	id: string;
+	iri: string;
+	entity: string;
+	value: string;
+	attributeTypeId: string;
+	attributeTypeIri: string;
+	selectedUnitId: string;
+	units: Unit[];
+	specifiedScope: string;
+	specifiedProvenance: string;
+	rangeSpecifying: string;
+	regularitySpecified: string;
+	terminalId: string;
+	terminalIri: string;
+	nodeId: string;
+	nodeIri: string;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
 }
-export interface AttributeAm {
-    id: string;
-    iri: string;
-    domain: string;
-    entity: string;
-    value: string;
-    attributeTypeId: string;
-    attributeTypeIri: string;
-    selectedUnitId: string;
-    units: UnitLibCm[];
-    qualifier: string;
-    source: string;
-    condition: string;
-    format: string;
-    terminalId: string;
-    terminalIri: string;
-    nodeId: string;
-    nodeIri: string;
-    transportId: string;
-    transportIri: string;
-    interfaceId: string;
-    interfaceIri: string;
-    simpleId: string;
-    simpleIri: string;
-    selectValues: string[];
-    selectType: Select;
-    discipline: Discipline;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+export interface VersionCm
+{
+	id: string;
+	ver: string;
+	type: string;
+	typeId: string;
+	name: string;
+	created: Date;
+	createdBy: string;
 }
-export interface FileFormat {
-    contentType: string;
-    fileExtension: string;
+export interface UserCm
+{
+	name: string;
+	email: string;
+	role: string;
 }
-export interface Version {
-    id: number;
-    ver: string;
-    type: string;
-    typeId: string;
-    name: string;
-    created: Date;
-    createdBy: string;
-    data: string;
+export interface ProjectVersionCm
+{
+	projectId: string;
+	version: string;
 }
-export interface Transport {
-    id: string;
-    iri: string;
-    version: string;
-    rds: string;
-    kind: string;
-    name: string;
-    label: string;
-    description: string;
-    statusId: string;
-    semanticReference: string;
-    attributes: Attribute[];
-    inputTerminalId: string;
-    inputTerminal: Terminal;
-    outputTerminalId: string;
-    outputTerminal: Terminal;
-    updatedBy: string;
-    updated: Date;
-    created: Date;
-    createdBy: string;
-    libraryTypeId: string;
+export interface ProjectItemCm
+{
+	id: string;
+	iri: string;
+	domain: string;
+	name: string;
+	version: string;
+	description: string;
+	projectOwner: string;
+	updated: Date;
+	updatedBy: string;
 }
-export interface Terminal extends Connector {
-    color: string;
-    terminalCategory: string;
-    terminalTypeId: string;
-    terminalTypeIri: string;
-    attributes: Attribute[];
-    discriminator: string;
+export interface PrepareCm
+{
+	subProjectId: string;
+	nodes: Node[];
+	edges: Edge[];
 }
-export interface Simple {
-    id: string;
-    iri: string;
-    name: string;
-    kind: string;
-    attributes: Attribute[];
-    nodeId: string;
-    nodeIri: string;
+export interface LockCm
+{
+	id: string;
+	projectId: string;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+	type: EntityType;
 }
-export interface Relation extends Connector {
-    relationType: RelationType;
-    discriminator: string;
+export interface CombinedAttributeFilter
+{
+	name: string;
+	combinedAttributes: CombinedAttribute[];
 }
-export interface ProjectEdge {
-    projectId: string;
-    edgeId: string;
+export interface CombinedAttribute
+{
+	qualifier: string;
+	source: string;
+	condition: string;
+	combined: string;
 }
-export interface Project {
-    id: string;
-    iri: string;
-    domain: string;
-    isSubProject: boolean;
-    version: string;
-    name: string;
-    description: string;
-    projectOwner: string;
-    updatedBy: string;
-    updated: Date;
-    nodes: Node[];
-    edges: Edge[];
+export interface ReplacementId
+{
+	fromId: string;
+	fromIri: string;
+	toId: string;
+	toIri: string;
 }
-export interface ObjectIdentity {
-    id: string;
-    type: EntityType;
+export interface Module
+{
+	moduleDescription: ModuleDescription;
+	instance: IModuleInterface;
+	moduleType: ModuleType;
 }
-export interface Node {
-    id: string;
-    iri: string;
-    domain: string;
-    kind: string;
-    rds: string;
-    description: string;
-    semanticReference: string;
-    name: string;
-    label: string;
-    positionX: number;
-    positionY: number;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
-    positionBlockX: number;
-    positionBlockY: number;
-    level: number;
-    order: number;
-    statusId: string;
-    updatedBy: string;
-    updated: Date;
-    created: Date;
-    createdBy: string;
-    libraryTypeId: string;
-    version: string;
-    aspect: Aspect;
-    isRoot: boolean;
-    masterProjectId: string;
-    masterProjectIri: string;
-    symbol: string;
-    purposeString: string;
-    connectors: Connector[];
-    attributes: Attribute[];
-    simples: Simple[];
-    projectId: string;
-    projectIri: string;
-    width: number;
-    height: number;
-    parentNodeId: string;
-    selected: boolean;
-    blockSelected: boolean;
-    hidden: boolean;
-    blockHidden: boolean;
-    isOffPageTarget: boolean;
-    isOffPageRequired: boolean;
+export interface LockDm
+{
+	id: string;
+	projectId: string;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+	type: EntityType;
 }
-export interface ModuleDescription {
-    id: string;
-    name: string;
+export interface LibrarySubProjectVersion
+{
+	id: string;
+	name: string;
+	version: string;
 }
-export interface Interface {
-    id: string;
-    iri: string;
-    version: string;
-    rds: string;
-    kind: string;
-    name: string;
-    label: string;
-    description: string;
-    statusId: string;
-    semanticReference: string;
-    attributes: Attribute[];
-    inputTerminalId: string;
-    inputTerminal: Terminal;
-    outputTerminalId: string;
-    outputTerminal: Terminal;
-    updatedBy: string;
-    updated: Date;
-    created: Date;
-    createdBy: string;
-    libraryTypeId: string;
+export interface LibrarySubProject
+{
+	id: string;
+	name: string;
+	version: string;
+	description: string;
+	versions: LibrarySubProjectVersion[];
 }
-export interface Edge {
-    id: string;
-    iri: string;
-    domain: string;
-    kind: string;
-    fromConnectorId: string;
-    fromConnectorIri: string;
-    fromConnector: Connector;
-    toConnectorId: string;
-    toConnectorIri: string;
-    toConnector: Connector;
-    fromNodeId: string;
-    fromNodeIri: string;
-    fromNode: Node;
-    toNodeId: string;
-    toNodeIri: string;
-    toNode: Node;
-    transportId: string;
-    transport: Transport;
-    interfaceId: string;
-    interface: Interface;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
-    masterProjectId: string;
-    masterProjectIri: string;
-    projectId: string;
-    projectIri: string;
-    selected: boolean;
-    hidden: boolean;
-    blockHidden: boolean;
+export interface ImfData
+{
+	id: string;
+	projectId: string;
+	version: string;
+	environment: string;
+	parser: string;
+	senderDomain: string;
+	receivingDomain: string;
+	document: string;
+	commitStatus: CommitStatus;
 }
-export interface Connector {
-    id: string;
-    iri: string;
-    domain: string;
-    kind: string;
-    name: string;
-    type: ConnectorDirection;
-    connectorVisibility: ConnectorVisibility;
-    nodeId: string;
-    nodeIri: string;
-    isRequired: boolean;
+export interface FileFormat
+{
+	contentType: string;
+	fileExtension: string;
 }
-export interface CollaborationPartner {
-    id: number;
-    name: string;
-    domain: string;
-    current: boolean;
-    iris: string[];
+export interface VersionData
+{
+	id: string;
+	name: string;
+	version: string;
+	description: string;
+	ver: string;
+	data: string;
+	type: string;
 }
-export interface Attribute {
-    id: string;
-    iri: string;
-    domain: string;
-    kind: string;
-    entity: string;
-    value: string;
-    attributeTypeId: string;
-    attributeTypeIri: string;
-    selectedUnitId: string;
-    units: UnitLibCm[];
-    qualifier: string;
-    source: string;
-    condition: string;
-    format: string;
-    terminalId: string;
-    terminalIri: string;
-    nodeId: string;
-    nodeIri: string;
-    transportId: string;
-    transportIri: string;
-    interfaceId: string;
-    interfaceIri: string;
-    simpleId: string;
-    simpleIri: string;
-    selectValues: string[];
-    selectType: Select;
-    discipline: Discipline;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+export interface Version
+{
+	id: number;
+	ver: string;
+	type: string;
+	typeId: string;
+	name: string;
+	created: Date;
+	createdBy: string;
+	data: string;
 }
-export enum EntityType {
-    Node = 0,
-    Edge = 1,
-    Attribute = 2,
+export interface Unit
+{
+	id: string;
+	iri: string;
+	unitTypeId: string;
+	unitTypeIri: string;
+	name: string;
+	symbol: string;
+	kind: string;
 }
-export enum RelationType {
-    NotSet = 0,
-    HasLocation = 1,
-    PartOf = 2,
-    FulfilledBy = 3,
+export interface TypeReferenceSub
+{
+	id: string;
+	name: string;
+	iri: string;
+	isDefault: boolean;
 }
-export enum ConnectorVisibility {
-    None = 0,
-    InputVisible = 1,
-    OutputVisible = 2,
+export interface TypeReference
+{
+	name: string;
+	iri: string;
+	source: string;
+	subs: TypeReferenceSub[];
+	kind: string;
 }
-export enum CommitStatus {
-    NotSet = 0,
-    Working = 1,
-    Review = 2,
-    Approved = 4,
-    Committed = 8,
-    Sent = 16,
+export interface Terminal extends Connector
+{
+	kind: string;
+	color: string;
+	terminalTypeId: string;
+	terminalTypeIri: string;
+	terminalParentTypeId: string;
+	terminalParentTypeIri: string;
+	terminalParentTypeName: string;
+	attributes: Attribute[];
+	discriminator: string;
+	isProxy: boolean;
+	proxyParent: string;
+	proxySibling: string;
+	typeReferences: TypeReference[];
 }
-export enum Aspect {
-    NotSet = 0,
-    None = 1,
-    Function = 2,
-    Product = 4,
-    Location = 8,
+export interface Relation extends Connector
+{
+	kind: string;
+	relationType: RelationType;
+	discriminator: string;
 }
-export enum ConnectorDirection {
-    Input = 0,
-    Output = 1,
-    Bidirectional = 2,
+export interface ProjectEdge
+{
+	projectId: string;
+	edgeId: string;
 }
-export enum Discipline {
-    None = 0,
-    NotSet = 1,
-    ProjectManagement = 2,
-    Electrical = 4,
-    Automation = 8,
-    Structural = 16,
-    Operation = 32,
-    Process = 64,
+export interface Project
+{
+	id: string;
+	iri: string;
+	domain: string;
+	isSubProject: boolean;
+	version: string;
+	name: string;
+	description: string;
+	projectOwner: string;
+	updatedBy: string;
+	updated: Date;
+	nodes: Node[];
+	edges: Edge[];
 }
-export enum Select {
-    None = 0,
-    SingleSelect = 1,
-    MultiSelect = 2,
+export interface ObjectIdentity
+{
+	id: string;
+	type: EntityType;
 }
-export interface UnitLibCm {
-    id: string;
-    name: string;
-    iri: string;
-    contentReferences: string[];
-    description: string;
-    created: Date;
-    createdBy: string;
-    kind: string;
+export interface Node
+{
+	id: string;
+	iri: string;
+	domain: string;
+	kind: string;
+	rds: string;
+	description: string;
+	typeReferences: TypeReference[];
+	name: string;
+	label: string;
+	positionX: number;
+	positionY: number;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+	positionBlockX: number;
+	positionBlockY: number;
+	level: number;
+	order: number;
+	updatedBy: string;
+	updated: Date;
+	created: Date;
+	createdBy: string;
+	libraryTypeId: string;
+	version: string;
+	aspect: Aspect;
+	nodeType: NodeType;
+	masterProjectId: string;
+	masterProjectIri: string;
+	symbol: string;
+	purposeString: string;
+	connectors: Connector[];
+	attributes: Attribute[];
+	projectId: string;
+	projectIri: string;
+	width: number;
+	height: number;
+	parentNodeId: string;
+	selected: boolean;
+	blockSelected: boolean;
+	hidden: boolean;
+	blockHidden: boolean;
+	isOffPageTarget: boolean;
+	isOffPageRequired: boolean;
+}
+export interface ModuleDescription
+{
+	id: string;
+	name: string;
+}
+export interface Edge
+{
+	id: string;
+	iri: string;
+	domain: string;
+	kind: string;
+	fromConnectorId: string;
+	fromConnectorIri: string;
+	fromConnector: Connector;
+	toConnectorId: string;
+	toConnectorIri: string;
+	toConnector: Connector;
+	fromNodeId: string;
+	fromNodeIri: string;
+	fromNode: Node;
+	toNodeId: string;
+	toNodeIri: string;
+	toNode: Node;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+	masterProjectId: string;
+	masterProjectIri: string;
+	projectId: string;
+	projectIri: string;
+	selected: boolean;
+	hidden: boolean;
+	blockHidden: boolean;
+}
+export interface Connector
+{
+	id: string;
+	iri: string;
+	domain: string;
+	kind: string;
+	name: string;
+	type: ConnectorDirection;
+	connectorVisibility: ConnectorVisibility;
+	nodeId: string;
+	nodeIri: string;
+	isRequired: boolean;
+}
+export interface Attribute
+{
+	id: string;
+	iri: string;
+	kind: string;
+	entity: string;
+	value: string;
+	attributeTypeId: string;
+	attributeTypeIri: string;
+	selectedUnitId: string;
+	units: Unit[];
+	specifiedScope: string;
+	specifiedProvenance: string;
+	rangeSpecifying: string;
+	regularitySpecified: string;
+	terminalId: string;
+	terminalIri: string;
+	nodeId: string;
+	nodeIri: string;
+	isLocked: boolean;
+	isLockedStatusBy: string;
+	isLockedStatusDate: Date;
+}
+export enum RelationType
+{
+	NotSet = 0,
+	HasLocation = 1,
+	PartOf = 2,
+	FulfilledBy = 3,
+}
+export enum NodeType
+{
+	Root = 0,
+	Aspect = 1,
+	Handler = 2,
+}
+export enum EntityType
+{
+	Node = 0,
+	Edge = 1,
+	Attribute = 2,
+}
+export enum ConnectorVisibility
+{
+	None = 0,
+	InputVisible = 1,
+	OutputVisible = 2,
+}
+export enum CommitStatus
+{
+	NotSet = 0,
+	Working = 1,
+	Review = 2,
+	Approved = 4,
+	Committed = 8,
+	Sent = 16,
+}
+export enum ModuleType
+{
+	Plugin = 0,
+	Parser = 1,
+	SyncService = 2,
+}
+export enum Aspect
+{
+	NotSet = 0,
+	None = 1,
+	Function = 2,
+	Product = 4,
+	Location = 8,
+}
+export enum ConnectorDirection
+{
+	Input = 0,
+	Output = 1,
+	Bidirectional = 2,
 }
