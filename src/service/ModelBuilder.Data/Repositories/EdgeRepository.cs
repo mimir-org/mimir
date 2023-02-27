@@ -52,7 +52,7 @@ namespace Mb.Data.Repositories
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
                     SetEdgeProperties(edge, true);
-                    
+
                     Attach(edge, EntityState.Added);
                     yield return (edge, WorkerStatus.Create);
                 }
@@ -67,7 +67,7 @@ namespace Mb.Data.Repositories
                     }
 
                     SetEdgeProperties(edge, false);
-                    
+
                     Attach(edge, EntityState.Modified);
                     yield return (edge, WorkerStatus.Update);
                 }
