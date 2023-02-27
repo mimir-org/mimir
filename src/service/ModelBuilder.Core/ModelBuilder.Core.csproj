@@ -19,8 +19,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.259" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.259" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.263" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.263" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
