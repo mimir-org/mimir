@@ -9,9 +9,6 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Color { get; set; }
-        public bool IsProxy { get; set; }
-        public string ProxyParent { get; set; }
-        public string ProxySibling { get; set; }
 
         [RequiredOne(nameof(TerminalTypeIri))]
         public string TerminalTypeId { get; set; }
@@ -33,12 +30,6 @@ namespace Mb.Models.Application
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
-
-            if (IsProxy)
-            {
-                if (string.IsNullOrWhiteSpace(ProxyParent))
-                    validations.Add(new ValidationResult($"{nameof(ProxyParent)} is required when {IsProxy} is true.", new List<string> { nameof(ProxyParent) }));
-            }
 
             if (Attributes != null)
             {

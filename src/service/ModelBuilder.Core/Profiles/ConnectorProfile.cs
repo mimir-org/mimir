@@ -26,9 +26,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalParentTypeId, opt => opt.MapFrom(src => src.TerminalParentTypeId))
                 .ForMember(dest => dest.TerminalParentTypeIri, opt => opt.MapFrom(src => src.TerminalParentTypeIri))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.IsProxy, opt => opt.MapFrom(src => src.IsProxy))
-                .ForMember(dest => dest.ProxyParent, opt => opt.MapFrom(src => src.ProxyParent))
-                .ForMember(dest => dest.ProxySibling, opt => opt.MapFrom(src => src.ProxySibling))
                 .IncludeBase<ConnectorAm, Connector>();
 
             CreateMap<RelationAm, Relation>()
@@ -53,9 +50,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.TerminalParentTypeId, opt => opt.MapFrom(src => src.TerminalParentTypeId))
                 .ForMember(dest => dest.TerminalParentTypeIri, opt => opt.MapFrom(src => src.TerminalParentTypeIri))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.IsProxy, opt => opt.MapFrom(src => src.IsProxy))
-                .ForMember(dest => dest.ProxyParent, opt => opt.MapFrom(src => src.ProxyParent))
-                .ForMember(dest => dest.ProxySibling, opt => opt.MapFrom(src => src.ProxySibling))
                 .IncludeBase<Connector, ConnectorAm>();
 
             CreateMap<Relation, RelationAm>()

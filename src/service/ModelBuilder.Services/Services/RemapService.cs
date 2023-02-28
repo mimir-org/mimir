@@ -317,15 +317,7 @@ namespace Mb.Services.Services
                 // Need to set this if there is a clone after new Id and Iri is created
                 connectorReplacement.FromId = connector.Id;
                 connectorReplacement.FromIri = connector.Iri;
-                var proxyChildren = connectors.OfType<TerminalAm>().Where(x => x.IsProxy && x.ProxyParent == connector.Id);
-                var proxySiblings = connectors.OfType<TerminalAm>().Where(x => x.IsProxy && x.ProxySibling == connector.Id);
-
-                foreach (var child in proxyChildren)
-                    child.ProxyParent = connectorReplacement.ToId;
-
-                foreach (var child in proxySiblings)
-                    child.ProxySibling = connectorReplacement.ToId;
-
+                
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
                     _ = edges?.Where(x => x.FromConnectorIri == connectorReplacement.FromIri).Select(y =>
