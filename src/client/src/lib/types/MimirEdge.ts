@@ -101,7 +101,7 @@ export class MimirEdge implements Edge {
     } as FlowEdge;
   }
 
-  public buildTreeEdge(
+  public toFlowEdge(
     edgeType: EdgeType,
     nodes: MimirNode[],
     filter: VisualFilterData,

@@ -3,6 +3,8 @@ import { MimirNode } from "./MimirNode";
 import { MimirEdge } from "./MimirEdge";
 import { IsPartOfRelation } from "../../components/flow/helpers/Connectors";
 import { Node as FlowNode } from "react-flow-renderer";
+import { VisualFilterData } from "../../models/application/VisualFilter";
+import { Edge as FlowEdge } from "react-flow-renderer/dist/esm/types/edges";
 
 /**
  * @interface
@@ -73,5 +75,17 @@ export class MimirProject implements Project {
     });
 
     return flowNodes;
+  }
+
+  public buildFlowTreeConnections(filter: VisualFilterData, onEdgeSplitClick: (id: string, x: number, y: number) => void) {
+    const flowEdges: FlowEdge[] = [];
+
+    this.edges.forEach((edge) => {
+      const edgeType = edge.getTreeEdgeType(edge.fromConnector);
+      const treeEdge = edge.toFlowEdge(edgeType, this.nodes, filter, onEdgeSplitClick);
+      if (treeEdge) flowEdges.push(treeEdge);
+    });
+
+    return flowEdges;
   }
 }

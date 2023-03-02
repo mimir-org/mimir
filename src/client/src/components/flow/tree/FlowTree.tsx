@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
-import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
@@ -11,20 +10,20 @@ import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {
   Background,
-  Edge as FlowEdge,
   Connection,
-  Node as FlowNode,
-  ReactFlowInstance,
-  OnSelectionChangeParams,
-  NodeChange,
+  Edge as FlowEdge,
   EdgeChange,
+  Node as FlowNode,
+  NodeChange,
+  OnSelectionChangeParams,
+  ReactFlowInstance,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
 import { CreateHandleEdge, CreateHandleNode, UpdateHandleEdge } from "../helpers/CreateHandleNode";
-import {MimirNode} from "../../../lib/types/MimirNode";
-import {MimirEdge} from "../../../lib/types/MimirEdge";
-import {MimirProject} from "../../../lib/types/MimirProject";
+import { MimirNode } from "../../../lib/types/MimirNode";
+import { MimirEdge } from "../../../lib/types/MimirEdge";
+import { MimirProject } from "../../../lib/types/MimirProject";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -44,7 +43,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector) as MimirProject;
+  const project = new MimirProject(useAppSelector(selectors.projectSelector));
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const terminals = useAppSelector(selectors.terminalsSelector);
   const nodes = project?.nodes.map((node) => new MimirNode(node));
@@ -116,7 +115,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
       setIsFetching(true);
       //TODO: project.toFlownodes in state
       setNodes(project.buildFlowTreeNodes());
-      setEdges(BuildFlowTreeEdges(nodes, edges, filter, OnEdgeSplitClick));
+      setEdges(project.buildFlowTreeConnections(filter, OnEdgeSplitClick));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -125,8 +124,8 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rebuild nodes and edges
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowTreeNodes(nodes));
-    setEdges(BuildFlowTreeEdges(nodes, edges, filter, OnEdgeSplitClick));
+    setNodes(project.buildFlowTreeNodes());
+    setEdges(project.buildFlowTreeConnections(filter, OnEdgeSplitClick));
   }, [nodes, edges, selectedNode, filter]);
 
   return (

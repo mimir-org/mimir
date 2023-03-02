@@ -118,11 +118,11 @@ export class MimirNode implements Node {
   };
 
   public isAncestorInSet(currentNode: MimirNode, set: Set<string>, edges: MimirEdge[]): boolean {
-    const edge = this.findParentEdge(currentNode.id, edges);
+    const edge = this.findParentEdge(currentNode?.id ?? null, edges);
     if (!edge) return false;
 
     const parentNode = edge.fromNode as MimirNode;
-    if (set.has(parentNode.id)) return true;
+    if (set.has(parentNode?.id)) return true;
 
     return this.isAncestorInSet(parentNode, set, edges);
   }
