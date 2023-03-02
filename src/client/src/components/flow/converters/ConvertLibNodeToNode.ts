@@ -1,6 +1,5 @@
 import { User } from "../../../models";
 import { Size } from "../../../assets/size/Size";
-import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
@@ -32,7 +31,6 @@ const ConvertLibNodeToNode = (
   allTerminals: TerminalLibCm[]
 ): Node => {
   const id = CreateId();
-  const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, id, libNode.iri, allTerminals, libNode.aspect);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
   const node = new MimirNode({

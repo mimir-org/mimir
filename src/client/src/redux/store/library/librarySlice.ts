@@ -5,11 +5,9 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import {
   FetchSubProjects,
   AddToCollectionsTypes,
-  FetchInterfaceTypes,
   FetchLibrary,
   FetchQuantityDatums,
   FetchTerminals,
-  FetchTransportTypes,
   LibraryState,
   FetchAttributes,
 } from "./types";

@@ -22,6 +22,7 @@ export const ConvertEdgeDataToMimirEdge = (
   toNode: Node,
   projectId: string,
   projectIri: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   library: LibraryState
 ) => {
   const edge = new MimirEdge({
