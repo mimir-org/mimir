@@ -1,5 +1,5 @@
 import { Checkbox } from "../../../compLibrary/input/checkbox/common/Checkbox";
-import { VisualFilterDataCategory } from "../../../models/application/VisualFilter";
+import { VisualFilterDataCategory } from "../../../lib/models/application/VisualFilter";
 import { ElementBox, ElementLabel } from "./components/FilterElement.styled";
 import { VisualFilterDataItemComponent } from "./VisualFilterDataItemComponent";
 

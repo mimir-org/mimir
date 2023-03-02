@@ -1,6 +1,6 @@
 import { Project } from "@mimirorg/modelbuilder-types";
-import Config from "../../../../models/Config";
-import { get } from "../../../../models/webclient";
+import Config from "../../../../lib/config/config";
+import { get } from "../../../../lib/models/webclient";
 
 const GetSubProject = async (projectId: string): Promise<Project> => {
   try {

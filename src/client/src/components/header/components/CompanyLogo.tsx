@@ -1,13 +1,14 @@
-import { commonStateCompanySelector, useAppSelector } from "../../../redux/store";
 import { CompanyLogoBox } from "./../HeaderComponent.styled";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 /**
  * Component for the avatar icon in the header of Mimir.
  * @returns an avatar.
  */
-export const CompanyLogo = () => {
-  const company = useAppSelector(commonStateCompanySelector);
-
+interface CompanyLogoProps {
+  company: MimirorgCompanyCm;
+}
+export const CompanyLogo = ({ company }: CompanyLogoProps) => {
   return (
     <>
       {company?.logo && company?.homePage && (

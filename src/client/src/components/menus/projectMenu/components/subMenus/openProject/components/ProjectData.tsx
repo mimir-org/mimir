@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
-import { ProjectItemCm } from "../../../../../../../models";
+import { ProjectItemCm } from "../../../../../../../lib/models";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
 import { projectSelector, useAppSelector } from "../../../../../../../redux/store";

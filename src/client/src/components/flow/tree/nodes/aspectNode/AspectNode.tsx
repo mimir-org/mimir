@@ -1,15 +1,9 @@
-import { FC, memo, useState, useEffect } from "react";
-import { Handle, NodeProps } from "react-flow-renderer";
+import { FC, memo, useEffect, useState } from "react";
+import { Handle, NodeProps, Position } from "react-flow-renderer";
 import { TreeHandleBox } from "../styled/TreeHandleBox";
-import { AspectColorType } from "../../../../../models";
-import { GetHandleType } from "../helpers/GetHandleType";
 import { AspectNodeBox } from "./AspectNode.styled";
-import { GetAspectColor } from "../../../../../helpers";
-import { SetTopPos } from "../helpers/SetTopPos";
-import { Connector, Aspect } from "@mimirorg/modelbuilder-types";
-import { GetHandleClassName } from "../helpers/GetHandleClassName";
-import { OnMouseLeave } from "./handlers/OnMouseLeave";
-import {MimirNode} from "../../../../../lib/types/MimirNode";
+import { Aspect, Connector } from "@mimirorg/modelbuilder-types";
+import { MimirNode } from "../../../../../lib/classes/MimirNode";
 
 const AspectNode: FC<NodeProps<MimirNode>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -28,27 +22,19 @@ const AspectNode: FC<NodeProps<MimirNode>> = ({ data }) => {
   }, [timer]);
 
   return (
-    <AspectNodeBox
-      colorMain={GetAspectColor(data, AspectColorType.Main)}
-      selected={data.selected}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => OnMouseLeave(setTimer)}
-    >
+    <AspectNodeBox colorMain={data.getMainColor()} selected={data.selected} onMouseEnter={() => setIsHover(true)}>
       {data.connectors?.map((conn: Connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(conn);
-        const className = GetHandleClassName(conn);
-
         return (
           <TreeHandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
+            position={Position.Top}
             key={conn.id}
             visible={isHover}
-            position={positionHandler}
-            topPos={SetTopPos(positionHandler)}
+            topPos={Position.Top}
             isFunctionAspect={data.aspect === Aspect.Function}
           >
-            <Handle type={typeHandler} position={positionHandler} id={conn.id} key={conn.id} className={className} />
+            <Handle type={"source"} position={Position.Bottom} id={conn.id} key={conn.id} />
           </TreeHandleBox>
         );
       })}

@@ -1,8 +1,7 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
+import { MimirNode } from "../../../../../lib/classes/MimirNode";
 
 /**
  * Component for a RelationEdge. The color of the RelationEdge is a combination of the sourceNode and targetNode's AspectColor.
@@ -34,8 +33,8 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   );
 };
 
-function GetRelationColor(node: Node) {
-  if (IsFunction(node)) return Color.SUNGLOW;
-  if (IsLocation(node)) return Color.MAGENTA;
-  if (IsProduct(node)) return Color.ELECTRIC_BLUE;
+function GetRelationColor(node: MimirNode) {
+  if (node.isFunction()) return Color.SUNGLOW;
+  if (node.isLocation()) return Color.MAGENTA;
+  if (node.isProduct()) return Color.ELECTRIC_BLUE;
 }

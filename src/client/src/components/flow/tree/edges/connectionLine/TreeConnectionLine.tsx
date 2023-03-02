@@ -1,6 +1,6 @@
 import { MarkerType, ConnectionLineComponentProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../../helpers";
-import { AspectColorType } from "../../../../../models";
+import { AspectColorType } from "../../../../../lib/models";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in TreeView.

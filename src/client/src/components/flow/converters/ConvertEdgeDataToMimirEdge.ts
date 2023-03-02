@@ -1,7 +1,7 @@
 import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
-import { LibraryState } from "../../../redux/store/library/types";
-import { MimirEdge } from "../../../lib/types/MimirEdge";
+import { MimirEdge } from "../../../lib/classes/MimirEdge";
+import { LibraryState } from "../../../lib/types/redux/librarySliceTypes";
 
 /**
  * Function to convert edge data to a Mimir Edge.

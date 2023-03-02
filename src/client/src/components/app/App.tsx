@@ -1,10 +1,8 @@
 import { Home } from "../home/Home";
 import { GlobalStyle } from "../../compLibrary/GlobalStyle";
-import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text/TextResources";
-import { WebSocket } from "../../models";
 import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
@@ -18,15 +16,14 @@ type AppProps = {
 
 export const App = ({ pca }: AppProps) => {
   const dispatch = useDispatch();
-  const isFetching = useAppSelector(isFetchingSelector);
-  const projectState = useAppSelector(projectStateSelector);
 
   const login = () => msalInstance && msalInstance.loginRedirect();
 
-  const websocket = new WebSocket();
-  websocket.setDispatcher(dispatch);
-  websocket.setProjectState(projectState);
-  websocket.start();
+  // TODO: Reimplement websockets below when new types are implemented
+  // const websocket = new WebSocket();
+  // websocket.setDispatcher(dispatch);
+  // websocket.setProjectState(projectState);
+  // websocket.start();
 
   return (
     <>
@@ -34,7 +31,7 @@ export const App = ({ pca }: AppProps) => {
         <MsalProvider instance={pca}>
           <AuthenticatedTemplate>
             <GlobalStyle />
-            <SpinnerWrapper fetching={isFetching}>
+            <SpinnerWrapper fetching={false}>
               <Spinner variant="big" />
             </SpinnerWrapper>
             <Home dispatch={dispatch} />
@@ -48,7 +45,7 @@ export const App = ({ pca }: AppProps) => {
       ) : (
         <>
           <GlobalStyle />
-          <SpinnerWrapper fetching={isFetching}>
+          <SpinnerWrapper fetching={false}>
             <Spinner variant="big" />
           </SpinnerWrapper>
           <Home dispatch={dispatch} />

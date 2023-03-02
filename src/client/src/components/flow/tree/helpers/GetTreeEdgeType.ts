@@ -1,5 +1,5 @@
 import { Connector } from "@mimirorg/modelbuilder-types";
-import { EDGE_TYPE, EdgeType } from "../../../../models/project";
+import { EDGE_TYPE, EdgeType } from "../../../../lib/models/project";
 import { IsTerminal } from "../../../../services";
 import { IsPartOfRelation, IsLocationRelation, IsProductRelation } from "../../helpers/Connectors";
 

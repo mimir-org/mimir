@@ -2,11 +2,11 @@ import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { App } from "./components/app/App";
-import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
+import { loginRequest, msalConfig } from "./lib/config/msalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-import Config from "./models/Config";
+import Config from "./lib/config/config";
 
 const rootElement = document.getElementById("root");
 const isSilent = Config.SILENT === "true";

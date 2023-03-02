@@ -1,10 +1,10 @@
 import { ConnectorDirection, Transport } from "@mimirorg/modelbuilder-types";
 import { TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
-import { GetDateNowUtc } from "../../../helpers";
 import { CreateId } from "../helpers";
 import { ConvertTransportAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import ConvertTerminalLibCmToTerminal from "./ConvertTerminalLibCmToTerminal";
 import { ConvertTypeReference } from "./ConvertTypeReference";
+import GetDateNowUtc from "../../../lib/helpers/getDateNowUtc";
 
 const ConvertTransportLibCmToTransport = (
   transportLibCm: TransportLibCm,

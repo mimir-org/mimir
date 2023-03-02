@@ -1,15 +1,18 @@
 import * as Click from "./handlers";
 import * as Icons from "../../../assets/icons/project";
 import { MenuElement } from "./components/MenuElement";
-import { MENU_TYPE } from "../../../models/project";
+import { MENU_TYPE } from "../../../lib/models/project";
 import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
-import { GetSelectedFlowNodes } from "../../../helpers/Selected";
+import { MimirProject } from "../../../lib/classes/MimirProject";
+import { Dispatch, AnyAction } from "redux";
 
-interface Props {
+interface ProjectMenuProps {
+  dispatch: Dispatch;
+  project: MimirProject;
+  activeMenu: string;
   setIsUserMenuOpen: (value: boolean) => void;
 }
 
@@ -17,13 +20,9 @@ interface Props {
  * Component for the Project Menu.
  * @returns a menu for the Project in the header of Mimir.
  */
-const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
-  const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
-  const activeMenu = useAppSelector(activeMenuSelector);
+const ProjectMenuComponent = ({ dispatch, project, activeMenu, setIsUserMenuOpen }: ProjectMenuProps) => {
   const hasActiveProject = project && project.id;
-  const selectedFlowNodes = GetSelectedFlowNodes();
-  const hasSelectedNodes = selectedFlowNodes.length > 0;
+  const hasSelectedNodes = false;
 
   const menuRef = useRef(null);
 
@@ -52,32 +51,32 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <MenuElement
         text={TextResources.PROJECT_SAVE}
         icon={!hasActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
-        onClick={() => projectMenuAction(() => Click.OnSaveProjectClick(dispatch, project))}
+        onClick={() => projectMenuAction(() => alert("not yet implemented"))}
         disabled={!hasActiveProject}
       />
       <MenuElement
         text={TextResources.PROJECT_CLOSE}
         icon={!hasActiveProject ? Icons.CloseProjectInactiveIcon : Icons.CloseProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnCloseProjectClick(dispatch))}
+        onClick={() => projectMenuAction(() => alert("not yet implemented"))}
         disabled={!hasActiveProject}
         bottomLine
       />
       <MenuElement
         text={TextResources.PROJECT_IMPORT}
         icon={Icons.ImportProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnImportProjectFile(dispatch))}
+        onClick={() => projectMenuAction(() => alert("not yet implemented"))}
       />
       <MenuElement
         text={TextResources.PROJECT_EXPORT}
         icon={!hasActiveProject ? Icons.ExportProjectInactiveIcon : Icons.ExportProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnExportProjectFile(dispatch))}
+        onClick={() => projectMenuAction(() => alert("not yet implemented"))}
         disabled={!hasActiveProject}
         bottomLine
       />
       <MenuElement
         text={TextResources.SUBPROJECT_SAVE}
         icon={hasSelectedNodes ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
-        onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
+        onClick={() => projectMenuAction(() => alert("not yet implemented"))}
         disabled={!hasSelectedNodes}
       />
 

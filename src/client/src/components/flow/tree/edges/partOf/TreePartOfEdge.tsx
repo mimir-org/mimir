@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { EdgeProps, getEdgeCenter, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../../helpers";
-import { AspectColorType } from "../../../../../models";
+import { AspectColorType } from "../../../../../lib/models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 import styled from "styled-components";
 

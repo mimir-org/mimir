@@ -1,14 +1,11 @@
 import * as Icons from "../../assets/icons/header";
-import * as selectors from "../header/helpers/selectors";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { ViewportData } from "../../models/project";
 import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
-import { useAppSelector } from "../../redux/store";
-import { GetSelectedFlowNodes } from "../../helpers/Selected";
 import { useReactFlow, useStoreApi } from "react-flow-renderer";
 import { Dispatch } from "redux";
+import { useState } from "react";
 
 interface Props {
   isTreeView: boolean;
@@ -22,12 +19,12 @@ interface Props {
 export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
   const { setViewport, setCenter } = useReactFlow();
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
-  const selectedFlowNodes = GetSelectedFlowNodes();
-  const viewportData = { setViewport, setCenter } as ViewportData;
-  const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
-  const isExplorerOpen = useAppSelector(selectors.explorerSelector);
-  const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
+  // const selectedFlowNodes = GetSelectedFlowNodes();
+  const viewportData = { setViewport, setCenter };
+  const [isVisualFilterOpen, setIsVisualFilterOpen] = useState<boolean>(false);
+  const [isLibraryOpen, setIslibraryOpen] = useState<boolean>(false);
+  const [isExplorerOpen, setIsExplorerOpen] = useState<boolean>(false);
+  const isElectro = false;
 
   return (
     <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -59,18 +56,10 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
           clickable={!isTreeView}
         />
         <ToolbarElement
-          active={!isTreeView}
-          label={TextResources.BLOCKVIEW}
-          icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes, viewportData, isTreeView, dispatch)}
-          borderLeft
-          clickable={isTreeView}
-        />
-        <ToolbarElement
           active={isVisualFilterOpen}
           label={isVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
           icon={isVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
-          onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
+          onClick={() => alert("Visual filter not implemented")}
           borderLeft
         />
       </ToolbarButtonGroup>

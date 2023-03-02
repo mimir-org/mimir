@@ -1,13 +1,13 @@
-import { User } from "../../../models";
 import { Size } from "../../../assets/size/Size";
-import { Position } from "../../../models/project";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
 import { ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 import { Node, NodeType } from "@mimirorg/modelbuilder-types";
-import { MimirNode } from "../../../lib/types/MimirNode";
+import { MimirNode } from "../../../lib/classes/MimirNode";
+import { Position } from "../../../lib/types/Project";
+import { User } from "../../../lib/types/User";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.

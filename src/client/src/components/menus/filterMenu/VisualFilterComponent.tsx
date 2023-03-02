@@ -1,11 +1,8 @@
-import { nodesSelector, edgesSelector, useAppSelector } from "../../../redux/store";
-import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
-import { IsLibrary } from "../../../helpers/Modules";
-import { PopulateFilterLists } from "./helpers";
-import { VisualFilterData } from "../../../models/application/VisualFilter";
+import { VisualFilterData } from "../../../lib/models/application/VisualFilter";
 import { VisualFilterDataCategoryComponent } from "./VisualFilterDataCategoryComponent";
+import { useState } from "react";
 
 interface Props {
   filter: VisualFilterData;
@@ -17,15 +14,7 @@ interface Props {
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
 export const VisualFilterComponent = ({ filter, onFilterChange }: Props) => {
-  const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const nodes = useAppSelector(nodesSelector);
-  const edges = useAppSelector(edgesSelector);
-
-  const transportTerminals = [] as Terminal[];
-  const productAndLocationRelations = [] as Relation[];
-  const partOfRelations = [] as Relation[];
-
-  PopulateFilterLists(edges, nodes, transportTerminals, productAndLocationRelations, partOfRelations);
+  const [libOpen, setLibOpen] = useState<boolean>(true);
 
   const onChange = (category, item) => {
     if (item == null) {

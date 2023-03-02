@@ -2,7 +2,7 @@ import * as Click from "../../../../handlers";
 import { ProjectList } from "./ProjectList";
 import { ProjectSearchBarComponent } from "./ProjectSearchBarComponent";
 import { ProjectDescription } from "./ProjectDescription";
-import { ProjectItemCm } from "../../../../../../../models";
+import { ProjectItemCm } from "../../../../../../../lib/models";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../../../assets/icons/project";
 import { Button } from "../../../../../../../compLibrary/buttons/standard";
 import { TextResources } from "../../../../../../../assets/text/TextResources";

@@ -1,11 +1,10 @@
-import { EdgeType } from "../../../models/project";
 import { Node, Aspect } from "@mimirorg/modelbuilder-types";
-import { EDGE_TYPE } from "../../../models/project/project";
-import { VisualFilterId } from "../../../models/application/VisualFilter";
+import { EDGE_TYPE } from "../../../lib/types/enums/EdgeType";
+import { VisualFilterId } from "../../../lib/models/VisualFilter";
 
 export type FilterType = "Category" | "Item";
 
-export const GetVisualFilterId = (source: Node, target: Node, edgeType: EdgeType): Record<FilterType, string | null> => {
+export const GetVisualFilterId = (source: Node, target: Node, edgeType: EDGE_TYPE): Record<FilterType, string | null> => {
   const record: Record<FilterType, string> = {
     Category: null,
     Item: null,

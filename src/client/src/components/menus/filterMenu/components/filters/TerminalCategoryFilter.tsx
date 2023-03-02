@@ -3,7 +3,7 @@ import { Edge } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
-import { TerminalCategoryObject } from "../../../../../models/project";
+import { TerminalCategoryObject } from "../../../../../lib/models/project";
 
 interface Props {
   category: TerminalCategoryObject;

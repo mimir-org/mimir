@@ -1,6 +1,6 @@
 import { ProjectData } from "./ProjectData";
 import { Dispatch } from "redux";
-import { ProjectItemCm } from "../../../../../../../models";
+import { ProjectItemCm } from "../../../../../../../lib/models";
 import { ProjectDataContainer, ProjectListBox, ProjectListLabels } from "./ProjectList.styled";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 

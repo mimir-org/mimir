@@ -1,4 +1,4 @@
-import config from "../../../models/Config";
+import config from "../../../lib/config/config";
 
 /**
  * Matches version against expected release format.

@@ -1,10 +1,10 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { EdgeType } from "../../../models/project";
-import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
-import { isHidden } from "../../../models/helpers/isHidden";
 import { GetVisualFilterId } from "../helpers/GetVisualFilterId";
-import { IsTerminal } from "../../../services";
+import { EDGE_TYPE } from "../../../lib/types/enums/EdgeType";
+import { VisualFilterData, VisualFilterId } from "../../../lib/models/VisualFilter";
+import { ConnectorTerminal } from "../../../lib/classes/MimirConnector";
+import { isHidden } from "../../../lib/helpers/isHidden";
 
 /**
  * Function to convert a Mimir Edge to a FlowEdge that interacts with the Flow Library.
@@ -17,14 +17,14 @@ import { IsTerminal } from "../../../services";
  */
 const ConvertEdgeToFlowEdge = (
   edge: Edge,
-  edgeType: EdgeType,
+  edgeType: EDGE_TYPE,
   source: Node,
   target: Node,
   filter: VisualFilterData,
   onEdgeSplitClick: (id: string, x: number, y: number) => void
 ) => {
   const animated = filter.filters?.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
-  const isAnimated = animated && IsTerminal(edge.fromConnector);
+  const isAnimated = animated && edge.fromConnector instanceof ConnectorTerminal;
   const filterId = GetVisualFilterId(source, target, edgeType);
   const hidden = isHidden(filter, filterId.Category, filterId.Item);
 

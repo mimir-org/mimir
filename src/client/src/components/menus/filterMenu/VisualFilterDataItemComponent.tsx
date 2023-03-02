@@ -1,5 +1,5 @@
 import { Checkbox } from "../../../compLibrary/input/checkbox/common/Checkbox";
-import { VisualFilterDataItem } from "../../../models/application/VisualFilter";
+import { VisualFilterDataItem } from "../../../lib/models/application/VisualFilter";
 import { ElementBox, ElementLabel } from "./components/FilterElement.styled";
 
 interface Props {

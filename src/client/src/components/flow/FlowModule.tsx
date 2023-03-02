@@ -1,15 +1,17 @@
-import { FlowTree } from "./tree/FlowTree";
-import { FlowBlock } from "./block/FlowBlock";
-import { VIEW_TYPE, ViewType } from "../../models/project";
+import FlowTree from "./tree/FlowTree";
 import { FlowModuleContainer } from "./FlowModule.styled";
 import { Dispatch } from "redux";
-import { VisualFilterData } from "../../models/application/VisualFilter";
+import { MimirProject } from "../../lib/classes/MimirProject";
+import { VisualFilterData } from "../../lib/models/VisualFilter";
+import { TerminalLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
-  flowView: ViewType;
   dispatch: Dispatch;
   filter: VisualFilterData;
+  project: MimirProject;
+  terminals: TerminalLibCm;
+  user: string;
 }
 
 /**
@@ -17,9 +19,16 @@ interface Props {
  * @param interface
  * @returns a JSX element containing either TreeView or BlockView.
  */
-export const FlowModule = ({ inspectorRef, flowView, dispatch, filter }: Props) => (
+export const FlowModule = ({ inspectorRef, dispatch, filter, project, terminals, user }: Props) => (
   <FlowModuleContainer>
-    {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} dispatch={dispatch} filter={filter} />}
-    {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} dispatch={dispatch} filter={filter} />}
+    <FlowTree
+      inspectorRef={inspectorRef}
+      dispatch={dispatch}
+      filter={filter}
+      project={project}
+      terminals={terminals}
+      user={user}
+    />
+    {/*{flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} dispatch={dispatch} filter={filter} />}*/}
   </FlowModuleContainer>
 );

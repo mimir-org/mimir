@@ -1,0 +1,75 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+import {
+  CommonState,
+  FetchCompaniesFinished,
+  FetchParsersFinished,
+  FetchCompanyFinished,
+} from "../../lib/types/redux/commonSliceTypes";
+
+const initialCommonState: CommonState = {
+  fetching: false,
+  companies: [] as MimirorgCompanyCm[],
+  company: {} as MimirorgCompanyCm,
+  parsers: [] as ModuleDescription[],
+  apiError: [],
+};
+
+export const commonSlice = createSlice({
+  name: "common",
+  initialState: initialCommonState,
+  reducers: {
+    fetchCompanies: (state) => {
+      state.fetching = true;
+      state.companies = [];
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchCompaniesSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchCompany: (state) => {
+      state.fetching = true;
+      state.company = {} as MimirorgCompanyCm;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchCompaniesSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchCompaniesSuccessOrError: (state, action: PayloadAction<FetchCompaniesFinished>) => {
+      state.fetching = false;
+      state.companies = action.payload.companies;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchCompanySuccessOrError: (state, action: PayloadAction<FetchCompanyFinished>) => {
+      state.fetching = false;
+      state.company = action.payload.company;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchParsers: (state) => {
+      state.fetching = true;
+      state.parsers = [];
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchParsersSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchParsersSuccessOrError: (state, action: PayloadAction<FetchParsersFinished>) => {
+      state.fetching = false;
+      state.parsers = action.payload.parsers;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    deleteCommonError: (state, action: PayloadAction<string>) => {
+      state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
+    },
+  },
+});
+
+export const {
+  fetchCompany,
+  fetchCompanies,
+  fetchCompaniesSuccessOrError,
+  fetchCompanySuccessOrError,
+  fetchParsers,
+  fetchParsersSuccessOrError,
+  deleteCommonError,
+} = commonSlice.actions;
+
+export default commonSlice.reducer;

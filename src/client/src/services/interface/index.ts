@@ -1,1 +1,0 @@
-export { createInterfaceCopy } from "./createInterfaceCopy";

@@ -3,7 +3,6 @@ import { Node } from "@mimirorg/modelbuilder-types";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
 
 interface Props {
   node: Node;
@@ -16,7 +15,7 @@ interface Props {
  */
 export const TreeLogoComponent = ({ node }: Props) => {
   const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
-  const company = useCompanySelector(node.domain, node.id);
+  const company = null;
   const name = node.label ?? node.name;
 
   return (
