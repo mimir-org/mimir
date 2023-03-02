@@ -19,8 +19,6 @@ const initialLibraryState: LibraryState = {
   libNodes: [],
   apiError: [],
   collections: [],
-  transportTypes: [],
-  interfaceTypes: [],
   terminals: [],
   quantityDatums: [],
   attributeTypes: [],
@@ -63,17 +61,6 @@ export const librarySlice = createSlice({
       state.fetching = false;
       action.payload && state.apiError.push(action.payload);
     },
-    fetchLibraryTransportTypes: (state) => {
-      state.fetching = true;
-      state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchLibraryTransportTypesSuccessOrError.type)
-        : state.apiError;
-    },
-    fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchTransportTypes>) => {
-      state.fetching = false;
-      state.transportTypes = action.payload.transportTypes;
-      action.payload.apiError && state.apiError.push(action.payload.apiError);
-    },
     fetchLibraryTerminals: (state) => {
       state.fetching = true;
       state.apiError = state.apiError
@@ -94,17 +81,6 @@ export const librarySlice = createSlice({
     fetchLibraryAttributeTypesSuccessOrError: (state, action: PayloadAction<FetchAttributes>) => {
       state.fetching = false;
       state.attributeTypes = action.payload.attributeTypes;
-      action.payload.apiError && state.apiError.push(action.payload.apiError);
-    },
-    fetchLibraryInterfaceTypes: (state) => {
-      state.fetching = true;
-      state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchLibraryInterfaceTypesSuccessOrError.type)
-        : state.apiError;
-    },
-    fetchLibraryInterfaceTypesSuccessOrError: (state, action: PayloadAction<FetchInterfaceTypes>) => {
-      state.fetching = false;
-      state.interfaceTypes = action.payload.interfaceTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     addCollection: (state, action: PayloadAction<Collection>) => {
@@ -152,10 +128,6 @@ export const {
   exportLibrarySuccessOrError,
   importLibrary,
   importLibrarySuccessOrError,
-  fetchLibraryTransportTypes,
-  fetchLibraryTransportTypesSuccessOrError,
-  fetchLibraryInterfaceTypes,
-  fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibraryTerminals,
   fetchLibraryTerminalsSuccessOrError,
   fetchLibraryAttributeTypes,

@@ -6,7 +6,6 @@ export { ConvertEdgeDataToMimirEdge, ConvertEdgeDataToMimirPartOfEdge } from "./
 export { default as ConvertEdgeToFlowEdge } from "./ConvertEdgeToFlowEdge";
 export { default as ConvertNodeToFlowNode } from "./ConvertNodeToFlowNode";
 
-export { default as ConvertTerminalToTransport } from "./ConvertTerminalToTransport";
 export { default as ConvertUnitLibCmToUnits } from "./ConvertUnitLibCmToUnits";
 
 export {

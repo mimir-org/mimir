@@ -21,9 +21,7 @@ import { HeaderComponent } from "../header/HeaderComponent";
 import {
   fetchLibrary,
   fetchLibraryAttributeTypes,
-  fetchLibraryInterfaceTypes,
   fetchLibraryTerminals,
-  fetchLibraryTransportTypes,
   fetchQuantityDatums,
   fetchSubProjects,
 } from "../../redux/store/library/librarySlice";
@@ -57,8 +55,6 @@ export const Home = ({ dispatch }: Props) => {
   useEffect(() => {
     dispatch(fetchCompany());
     dispatch(fetchSubProjects());
-    dispatch(fetchLibraryInterfaceTypes());
-    dispatch(fetchLibraryTransportTypes());
     dispatch(fetchLibraryTerminals());
     dispatch(fetchLibraryAttributeTypes());
     dispatch(search(""));

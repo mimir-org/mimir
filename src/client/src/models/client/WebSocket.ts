@@ -21,12 +21,7 @@ import {
   updateNode,
   updateProjectVersion,
 } from "../../redux/store/project/actions";
-import {
-  fetchLibrary,
-  fetchLibraryInterfaceTypes,
-  fetchLibraryTransportTypes,
-  fetchSubProjects,
-} from "../../redux/store/library/librarySlice";
+import { fetchLibrary, fetchSubProjects } from "../../redux/store/library/librarySlice";
 
 let instance = null;
 
@@ -165,8 +160,6 @@ export class WebSocket {
 
   private handleUpdateLibData = () => {
     this._dispatch(fetchLibrary());
-    this._dispatch(fetchLibraryTransportTypes());
-    this._dispatch(fetchLibraryInterfaceTypes());
     this._dispatch(fetchSubProjects());
   };
 
