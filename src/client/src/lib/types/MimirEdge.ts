@@ -22,13 +22,10 @@ export class MimirEdge implements Edge {
   isLockedStatusDate: Date;
   kind: string;
   selected: boolean;
-  transportId: string;
   fromNodeId: string;
   toNodeId: string;
   fromNode: Node;
   fromNodeIri: string;
-  interface: Interface;
-  interfaceId: string;
   masterProjectId: string;
   masterProjectIri: string;
   projectId: string;
@@ -39,24 +36,30 @@ export class MimirEdge implements Edge {
   toNode: Node;
   toNodeIri: string;
   transport: Transport;
+  transportId: string;
+  interface: Interface;
+  interfaceId: string;
 
-  constructor(edge: Edge) {
-    this.blockHidden = edge.blockHidden;
-    this.domain = edge.domain;
-    this.fromConnector = edge.fromConnector;
-    this.fromConnectorId = edge.fromConnectorId;
-    this.fromConnectorIri = edge.fromConnectorIri;
-    this.fromNodeId = edge.fromNodeId;
-    this.toNodeId = edge.toNodeId;
-    this.hidden = edge.hidden;
-    this.id = edge.id;
-    this.iri = edge.iri;
-    this.isLocked = edge.isLocked;
-    this.isLockedStatusBy = edge.isLockedStatusBy;
-    this.isLockedStatusDate = edge.isLockedStatusDate;
-    this.kind = edge.kind;
-    this.selected = edge.selected;
-    this.transportId = edge.transportId;
+  constructor(connection: Partial<Edge>) {
+    this.blockHidden = connection.blockHidden ?? false;
+    this.domain = connection.domain ?? null;
+    this.fromConnector = connection.fromConnector ?? null;
+    this.fromConnectorId = connection.fromConnectorId ?? null;
+    this.fromConnectorIri = connection.fromConnectorIri ?? null;
+    this.fromNodeId = connection.fromNodeId ?? null;
+    this.toNodeId = connection.toNodeId ?? null;
+    this.hidden = connection.hidden ?? null;
+    this.id = connection.id ?? null;
+    this.iri = connection.iri ?? null;
+    this.isLocked = connection.isLocked ?? null;
+    this.isLockedStatusBy = connection.isLockedStatusBy ?? null;
+    this.isLockedStatusDate = connection.isLockedStatusDate ?? null;
+    this.kind = connection.kind ?? null;
+    this.selected = connection.selected ?? null;
+    this.transportId = connection.transportId ?? null;
+    this.transport = connection.transport ?? null;
+    this.interfaceId = connection.interfaceId ?? null;
+    this.interface = connection.interface ?? null;
   }
 
   /**

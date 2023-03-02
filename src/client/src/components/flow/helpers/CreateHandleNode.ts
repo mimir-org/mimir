@@ -15,6 +15,7 @@ import { Dispatch } from "redux";
 import { addNode, createEdge, updateEdge } from "../../../redux/store/project/actions";
 import { IsRelation, IsTerminal } from "../../../services";
 import { IsInputConnector } from "./Connectors";
+import { MimirNode } from "../../../lib/types/MimirNode";
 
 export const CreateHandleEdge = (edge: Edge, handleNode: Node, dispach: Dispatch) => {
   const copy = { ...edge };
@@ -46,7 +47,7 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
   const now = GetDateNowUtc();
   const nodeId = CreateId();
 
-  const node: Node = {
+  const node = new MimirNode({
     id: nodeId,
     iri: null,
     domain: "",
@@ -91,7 +92,7 @@ export const CreateHandleNode = (x: number, y: number, edge: Edge, dispach: Disp
     blockSelected: false,
     hidden: false,
     blockHidden: false,
-  };
+  });
 
   dispach(addNode(node));
   return node;

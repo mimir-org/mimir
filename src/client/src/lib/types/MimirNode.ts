@@ -3,6 +3,7 @@ import { IsPartOfRelation } from "../../components/flow/helpers/Connectors";
 import { MimirEdge } from "./MimirEdge";
 import * as Icons from "../../assets/icons/aspects";
 import { Node as FlowNode } from "react-flow-renderer/dist/esm/types/nodes";
+import getDateNowUtc from "../../helpers/GetDateNowUtc";
 
 export class MimirNode implements Node {
   id: string;
@@ -45,28 +46,31 @@ export class MimirNode implements Node {
   blockHidden: boolean;
   selected: boolean;
   blockSelected: boolean;
+  parentNodeId: string;
+  isOffPageTarget: boolean; // TODO: Remove
+  isOffPageRequired: boolean; // TODO: Remove
 
-  constructor(node: Node) {
+  constructor(node: Partial<Node>) {
     this.id = node.id;
-    this.iri = node.iri;
-    this.domain = node.domain;
+    this.iri = node.iri ?? null;
+    this.domain = node.domain ?? null;
     this.kind = node.kind;
     this.rds = node.rds;
-    this.description = node.description ? node.description : "";
+    this.description = node.description ?? "";
     this.typeReferences = node.typeReferences;
     this.name = node.name;
     this.label = node.label;
     this.positionX = node.positionX;
     this.positionY = node.positionY;
-    this.isLocked = node.isLocked;
-    this.isLockedStatusBy = node.isLockedStatusBy;
-    this.isLockedStatusDate = node.isLockedStatusDate;
+    this.isLocked = node.isLocked ?? false;
+    this.isLockedStatusBy = node.isLockedStatusBy ?? null;
+    this.isLockedStatusDate = node.isLockedStatusDate ?? null;
     this.positionBlockX = node.positionBlockX;
     this.positionBlockY = node.positionBlockY;
-    this.level = node.level;
-    this.order = node.order;
+    this.level = node.level ?? 0;
+    this.order = node.order ?? 0;
     this.updatedBy = node.updatedBy;
-    this.updated = node.updated;
+    this.updated = node.updated ?? getDateNowUtc();
     this.created = node.created;
     this.createdBy = node.createdBy;
     this.libraryTypeId = node.libraryTypeId;
@@ -74,19 +78,22 @@ export class MimirNode implements Node {
     this.aspect = node.aspect;
     this.nodeType = node.nodeType;
     this.masterProjectId = node.masterProjectId;
-    this.masterProjectIri = node.masterProjectIri;
+    this.masterProjectIri = node.masterProjectIri ?? null;
     this.symbol = node.symbol;
     this.purposeString = node.purposeString;
     this.connectors = node.connectors;
     this.attributes = node.attributes;
     this.projectId = node.projectId;
-    this.projectIri = node.projectIri;
+    this.projectIri = node.projectIri ?? null;
     this.width = node.width;
     this.height = node.height;
-    this.hidden = node.hidden;
-    this.blockHidden = node.blockHidden;
-    this.selected = node.selected;
-    this.blockSelected = node.blockSelected;
+    this.hidden = node.hidden ?? false;
+    this.blockHidden = node.blockHidden ?? false;
+    this.selected = node.selected ?? false;
+    this.blockSelected = node.blockSelected ?? false;
+    this.parentNodeId = node.parentNodeId;
+    this.isOffPageTarget = node.isOffPageTarget ?? null; // TODO: Remove
+    this.isOffPageRequired = node.isOffPageRequired ?? null; // TODO: Remove
   }
 
   // TODO: Move is part of relation to a more generic place
@@ -204,6 +211,9 @@ export class MimirNode implements Node {
       blockHidden: this.blockHidden,
       selected: this.selected,
       blockSelected: this.blockSelected,
+      parentNodeId: this.parentNodeId,
+      isOffPageTarget: this.isOffPageTarget,
+      isOffPageRequired: this.isOffPageRequired,
     };
   }
 }

@@ -1,7 +1,6 @@
-import { Connector, Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
+import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
-import { IsRelation } from "../../../services";
 import { MimirEdge } from "../../../lib/types/MimirEdge";
 
 /**
@@ -25,7 +24,7 @@ export const ConvertEdgeDataToMimirEdge = (
   projectIri: string,
   library: LibraryState
 ) => {
-  const edge: Edge = {
+  const edge = new MimirEdge({
     id: id,
     iri: null,
     domain: null,
@@ -52,7 +51,7 @@ export const ConvertEdgeDataToMimirEdge = (
     selected: false,
     hidden: false,
     blockHidden: false,
-  };
+  });
 
   return edge;
 };

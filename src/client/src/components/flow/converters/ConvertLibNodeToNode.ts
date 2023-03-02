@@ -8,6 +8,7 @@ import { ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors 
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 import { Node, NodeType } from "@mimirorg/modelbuilder-types";
+import { MimirNode } from "../../../lib/types/MimirNode";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.
@@ -34,7 +35,7 @@ const ConvertLibNodeToNode = (
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, id, libNode.iri, allTerminals, libNode.aspect);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
-  const node: Node = {
+  const node = new MimirNode({
     id,
     rds: libNode.rdsCode,
     projectId,
@@ -50,32 +51,17 @@ const ConvertLibNodeToNode = (
     version: libNode.version,
     masterProjectId: projectId,
     symbol: libNode.symbol,
-    level: 0,
     height: Size.BLOCK_NODE_HEIGHT,
     width: Size.BLOCK_NODE_WIDTH,
     purposeString: libNode.purposeName,
     created: libNode.created,
     createdBy: libNode.createdBy,
-    updated: now,
     updatedBy: user?.name,
     libraryTypeId: libNode.id,
     kind: TextResources.KIND_NODE,
-    hidden: false,
-    blockHidden: false,
     typeReferences: ConvertTypeReference(libNode.typeReferences),
-    iri: null,
-    domain: null,
-    description: null,
-    isLocked: false,
-    isLockedStatusBy: null,
-    isLockedStatusDate: null,
-    order: 0,
     nodeType: NodeType.Aspect,
-    masterProjectIri: null,
-    projectIri: null,
-    selected: false,
-    blockSelected: false,
-  };
+  });
   return node;
 };
 
