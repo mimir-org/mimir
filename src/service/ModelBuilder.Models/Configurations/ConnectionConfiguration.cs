@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations
 {
-    public class EdgeConfiguration : IEntityTypeConfiguration<Edge>
+    public class ConnectionConfiguration : IEntityTypeConfiguration<Connection>
     {
-        public void Configure(EntityTypeBuilder<Edge> builder)
+        public void Configure(EntityTypeBuilder<Connection> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("Edge");
+            builder.ToTable("Connection");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.ProjectId).HasColumnName("ProjectId").IsRequired();
@@ -23,10 +23,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.FromNodeIri).HasColumnName("FromNodeIri").IsRequired();
             builder.Property(p => p.ToNodeIri).HasColumnName("ToNodeIri").IsRequired();
 
-            builder.HasOne(x => x.FromNode).WithMany(y => y.FromEdges).HasForeignKey(x => x.FromNodeId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.ToNode).WithMany(y => y.ToEdges).HasForeignKey(x => x.ToNodeId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.FromConnector).WithMany(y => y.FromEdges).HasForeignKey(x => x.FromConnectorId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.ToConnector).WithMany(y => y.ToEdges).HasForeignKey(x => x.ToConnectorId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.FromNode).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromNodeId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.ToNode).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToNodeId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.FromConnector).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromConnectorId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.ToConnector).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToConnectorId).OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();

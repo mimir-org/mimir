@@ -17,7 +17,7 @@ using Mb.Models.Common;
 
 namespace Mb.Data.Repositories
 {
-    public class EdgeRepository : GenericRepository<ModelBuilderDbContext, Edge>, IEdgeRepository
+    public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Connection>, IConnectionRepository
     {
         private readonly IAttributeRepository _attributeRepository;
         private readonly IConnectorRepository _connectorRepository;
@@ -25,7 +25,7 @@ namespace Mb.Data.Repositories
         private readonly ICommonRepository _commonRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository,
+        public ConnectionRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository,
             IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor,
             ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(
             dbContext)
@@ -37,84 +37,83 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project,
+        public IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, Project project,
             string invokedByDomain)
         {
-            if (project?.Edges == null || !project.Edges.Any() || original == null)
+            if (project?.Connections == null || !project.Connections.Any() || original == null)
                 yield break;
 
-            var newEdges = project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList();
+            var newConnections = project.Connections.Where(x => original.All(y => y.Id != x.Id)).ToList();
 
-            foreach (var edge in project.Edges)
+            foreach (var connection in project.Connections)
             {
-                ResetEdgeBeforeSave(edge);
+                ResetConnectionBeforeSave(connection);
 
-                if (newEdges.Any(x => x.Id == edge.Id))
+                if (newConnections.Any(x => x.Id == connection.Id))
                 {
-                    SetEdgeProperties(edge, true);
+                    SetConnectionProperties(connection, true);
 
-                    Attach(edge, EntityState.Added);
-                    yield return (edge, WorkerStatus.Create);
+                    Attach(connection, EntityState.Added);
+                    yield return (connection, WorkerStatus.Create);
                 }
                 else
                 {
-                    // Parties is not allowed changed our edge
-                    if (_commonRepository.GetDomain() == edge.Domain &&
+                    // Parties is not allowed changed our connection
+                    if (_commonRepository.GetDomain() == connection.Domain &&
                         _commonRepository.GetDomain() != invokedByDomain)
                     {
-                        Detach(edge);
+                        Detach(connection);
                         continue;
                     }
 
-                    SetEdgeProperties(edge, false);
+                    SetConnectionProperties(connection, false);
 
-                    Attach(edge, EntityState.Modified);
-                    yield return (edge, WorkerStatus.Update);
+                    Attach(connection, EntityState.Modified);
+                    yield return (connection, WorkerStatus.Update);
                 }
             }
         }
 
-        public async Task<IEnumerable<(Edge edge, WorkerStatus status)>> DeleteEdges(ICollection<Edge> delete,
+        public async Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete,
             string projectId, string invokedByDomain)
         {
-            var returnValues = new List<(Edge edge, WorkerStatus status)>();
+            var returnValues = new List<(Connection connection, WorkerStatus status)>();
 
             if (delete == null || projectId == null || !delete.Any())
                 return returnValues;
 
-            foreach (var edge in delete)
+            foreach (var connection in delete)
             {
-                // Parties is not allowed delete our edge
-                if (_commonRepository.GetDomain() == edge.Domain && _commonRepository.GetDomain() != invokedByDomain)
+                // Parties is not allowed delete our connection
+                if (_commonRepository.GetDomain() == connection.Domain && _commonRepository.GetDomain() != invokedByDomain)
                 {
-                    Detach(edge);
+                    Detach(connection);
                     continue;
                 }
 
-                //Edge - (delete)
-                Attach(edge, EntityState.Deleted);
+                //Connection - (delete)
+                Attach(connection, EntityState.Deleted);
 
-                //projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
-                returnValues.Add((edge, WorkerStatus.Delete));
+                returnValues.Add((connection, WorkerStatus.Delete));
             }
 
             return returnValues;
         }
 
         /// <summary>
-        /// Bulk edge update
+        /// Bulk connection update
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="edges">The edges to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        /// <param name="connections">The connections to be upserted</param>
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connection> connections)
         {
-            if (edges == null || !edges.Any())
+            if (connections == null || !connections.Any())
                 return;
 
-            bulk.Setup<Edge>()
-                .ForCollection(edges)
-                .WithTable("Edge")
+            bulk.Setup<Connection>()
+                .ForCollection(connections)
+                .WithTable("Connection")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.Iri)
                 .AddColumn(x => x.FromConnectorId)
@@ -139,19 +138,19 @@ namespace Mb.Data.Repositories
 
 
         /// <summary>
-        /// Bulk delete edges
+        /// Bulk delete connections
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="edges">The edges to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        /// <param name="connections">The connections to be deleted</param>
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connection> connections)
         {
-            if (edges == null || !edges.Any())
+            if (connections == null || !connections.Any())
                 return;
 
-            bulk.Setup<Edge>()
-                .ForCollection(edges)
-                .WithTable("Edge")
+            bulk.Setup<Connection>()
+                .ForCollection(connections)
+                .WithTable("Connection")
                 .AddColumn(x => x.Id)
                 .BulkDelete()
                 .MatchTargetOn(x => x.Id)
@@ -169,12 +168,12 @@ namespace Mb.Data.Repositories
             if (lockDms == null || !lockDms.Any())
                 return;
 
-            if (lockDms.Any(x => x.Type is not EntityType.Edge))
-                throw new MimirorgBadRequestException("EntityType is not of type Edge");
+            if (lockDms.Any(x => x.Type is not EntityType.Connection))
+                throw new MimirorgBadRequestException("EntityType is not of type Connection");
 
             bulk.Setup<LockDm>()
                 .ForCollection(lockDms)
-                .WithTable("Edge")
+                .WithTable("Connection")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.IsLocked)
                 .AddColumn(x => x.IsLockedStatusBy)
@@ -185,40 +184,40 @@ namespace Mb.Data.Repositories
         }
 
         /// <summary>
-        /// Get edge connected data
+        /// Get connection connected data
         /// </summary>
-        /// <param name="edgeId">The edge you want data from</param>
+        /// <param name="connectionId">The connection you want data from</param>
         /// <returns>A collection connected identity data</returns>
-        /// <remarks>Get det edge identifier and all connected attributes from terminals</remarks>
-        public async Task<List<ObjectIdentity>> GetEdgeConnectedData(string edgeId)
+        /// <remarks>Get det connection identifier and all connected attributes from terminals</remarks>
+        public async Task<List<ObjectIdentity>> GetConnectionConnectedData(string connectionId)
         {
-            if (string.IsNullOrWhiteSpace(edgeId))
+            if (string.IsNullOrWhiteSpace(connectionId))
                 return null;
 
             var procParams = new Dictionary<string, object>
             {
-                {"@EdgeId", edgeId}
+                {"@ConnectionId", connectionId}
             };
 
             var attributes =
-                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("EdgeLockData", procParams);
+                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("ConnectionLockData", procParams);
             return attributes;
         }
 
-        private void ResetEdgeBeforeSave(Edge edge)
+        private void ResetConnectionBeforeSave(Connection connection)
         {
-            edge.FromConnector = null;
-            edge.ToConnector = null;
-            edge.FromNode = null;
-            edge.ToNode = null;
+            connection.FromConnector = null;
+            connection.ToConnector = null;
+            connection.FromNode = null;
+            connection.ToNode = null;
         }
 
-        private void SetEdgeProperties(Edge edge, bool isNewEdge)
+        private void SetConnectionProperties(Connection connection, bool isNewConnection)
         {
             var dateTimeNow = DateTime.Now.ToUniversalTime();
             var contextAccessorName = _contextAccessor.GetName();
 
-            if (!isNewEdge)
+            if (!isNewConnection)
                 return;
 
             //TODO: Versioning

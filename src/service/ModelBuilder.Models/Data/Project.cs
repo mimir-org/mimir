@@ -27,7 +27,7 @@ namespace Mb.Models.Data
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public virtual ICollection<Node> Nodes { get; set; }
-        public virtual ICollection<Edge> Edges { get; set; }
+        public virtual ICollection<Connection> Connections { get; set; }
 
         #endregion
 

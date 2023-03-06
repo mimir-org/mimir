@@ -10,7 +10,7 @@ namespace Mb.Data.Contracts
     {
         Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus);
         Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus);
-        Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus);
+        Task SendConnectionData(Connection connection, string projectId, WorkerStatus workerStatus);
         Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus);
         Task SendRefreshLibData();
     }

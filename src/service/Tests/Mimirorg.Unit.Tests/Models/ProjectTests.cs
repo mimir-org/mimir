@@ -153,9 +153,9 @@ namespace ModelBuilder.Unit.Tests.Models
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     }
                 },
-                Edges = new List<EdgeAm>
+                Connections = new List<ConnectionAm>
                 {
-                    new EdgeAm
+                    new ConnectionAm
                     {
                         Id = "runir.net_108097DF-0319-46F8-AAE0-46F894AF0252",
                         Iri = "https://rdf.runir.net/108097DF-0319-46F8-AAE0-46F894AF0252",
@@ -211,7 +211,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 Version = version,
                 ProjectOwner = projectOwner,
                 Nodes = null,
-                Edges = null
+                Connections = null
             };
 
             var validation = p.ValidateObject();
@@ -219,47 +219,47 @@ namespace ModelBuilder.Unit.Tests.Models
         }
 
         [Fact]
-        public void GetParentlessEdges_With_No_Parentless_Edges_Returns_Ok()
+        public void GetParentlessConnections_With_No_Parentless_Connections_Returns_Ok()
         {
-            var edges = ValidProject().GetParentlessEdges().ToList();
-            Assert.Empty(edges);
+            var connections = ValidProject().GetParentlessConnectors().ToList();
+            Assert.Empty(connections);
         }
 
         [Fact]
-        public void GetParentlessEdges_With_One_Parentless_Edges_Returns_Ok()
+        public void GetParentlessConnections_With_One_Parentless_Connections_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Edges.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
-            var edges = clone.GetParentlessEdges().ToList();
-            Assert.Single(edges);
+            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
+            var connections = clone.GetParentlessConnectors().ToList();
+            Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedEdges_With_One_Edge_Missing_ToNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_ToNode_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Edges.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{1}";
-            var edges = clone.GetNotConnectedEdges().ToList();
-            Assert.Single(edges);
+            clone.Connections.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{1}";
+            var connections = clone.GetNotConnectedConnectors().ToList();
+            Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedEdges_With_One_Edge_Missing_FromNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_FromNode_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Edges.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
-            var edges = clone.GetNotConnectedEdges().ToList();
-            Assert.Single(edges);
+            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
+            var connections = clone.GetNotConnectedConnectors().ToList();
+            Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedEdges_With_One_Edge_Missing_FromNode_And_ToNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_FromNode_And_ToNode_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Edges.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
-            clone.Edges.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{2}";
-            var edges = clone.GetNotConnectedEdges().ToList();
-            Assert.Single(edges);
+            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
+            clone.Connections.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{2}";
+            var connections = clone.GetNotConnectedConnectors().ToList();
+            Assert.Single(connections);
         }
     }
 }

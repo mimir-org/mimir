@@ -48,33 +48,33 @@ namespace Mb.Services.Contracts
         /// </summary>
         /// <param name="project">ReplacementId</param>
         /// <param name="nodes">ICollection&lt;NodeAm&gt; nodes</param>
-        /// <param name="edges">ICollection&lt;EdgeAm&gt; edges</param>
+        /// <param name="connections">ICollection&lt;ConnectionAm&gt; connections</param>
         /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
         /// <param name="createCopy">bool</param>
         /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
         /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy);
+        IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
 
         /// <summary>
-        /// Remap a collection of edges and all sub objects.
+        /// Remap a collection of connections and all sub objects.
         /// </summary>
         /// <param name="project">ReplacementId</param>
-        /// <param name="edges">ICollection&lt;EdgeAm&gt;</param>
+        /// <param name="connections">ICollection&lt;ConnectionAm&gt;</param>
         /// <param name="remap">Dictionary&lt;string, string&gt;</param>
         /// <param name="createCopy">bool</param>
-        /// <returns>IEnumerable&lt;EdgeAm&gt;</returns>
-        /// <remarks>If id is not correct, it will create new unique id's for all edges and children objects.
+        /// <returns>IEnumerable&lt;ConnectionAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all connections and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        IEnumerable<EdgeAm> RemapEdges(ReplacementId project, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy);
+        IEnumerable<ConnectionAm> RemapConnections(ReplacementId project, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
 
         /// <summary>
-        /// Remap all parentless edges to root nodes
+        /// Remap all parentless connections to root nodes
         /// </summary>
         /// <param name="project">ProjectAm</param>
-        /// <remarks>If there is some edges that is not connected to a parent, we need to find
+        /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root node in same aspect, and connect the part of relation to that node.</remarks>
-        void RemapParentlessEdges(ProjectAm project);
+        void RemapParentlessConnections(ProjectAm project);
 
         MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri);
     }

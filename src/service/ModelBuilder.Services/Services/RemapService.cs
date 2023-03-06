@@ -63,13 +63,13 @@ namespace Mb.Services.Services
         /// <returns>A task that updates project data</returns>
         public async Task DeConstruct(Project project, ProjectData data)
         {
-            if (project == null || (project.Edges == null && project.Nodes == null))
+            if (project == null || (project.Connections == null && project.Nodes == null))
                 return;
 
             var tasks = new List<Task>
             {
                 Task.Run(() => data.DeconstructAttributes(project)),
-                Task.Run(() => data.DeconstructEdges(project)),
+                Task.Run(() => data.DeconstructConnections(project)),
                 Task.Run(() => data.DeconstructNodes(project)),
                 Task.Run(() => data.DeconstructRelations(project)),
                 Task.Run(() => data.DeconstructTerminals(project))
@@ -91,8 +91,8 @@ namespace Mb.Services.Services
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-            project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, false).ToList();
-            project.Edges = RemapEdges(replacement, project.Edges, remap, false).ToList();
+            project.Nodes = RemapNodes(replacement, project.Nodes, project.Connections, remap, false).ToList();
+            project.Connections = RemapConnections(replacement, project.Connections, remap, false).ToList();
 
             project.Id = replacement.ToId;
             project.Iri = replacement.ToIri;
@@ -117,16 +117,16 @@ namespace Mb.Services.Services
             replacement.FromId = project.Id;
             replacement.FromIri = project.Iri;
 
-            // We need to connect parentless edges to root nodes of same aspect
-            RemapParentlessEdges(project);
+            // We need to connect parentless connections to root nodes of same aspect
+            RemapParentlessConnections(project);
 
-            // We need to remove edges that misses connected node
-            var edgesToDelete = project.GetNotConnectedEdges().ToList();
-            project.Edges = project.Edges.Where(x => edgesToDelete.All(y => x.Id != y.Id)).ToList();
+            // We need to remove connections that misses connected node
+            var connectionsToDelete = project.GetNotConnectedConnectors().ToList();
+            project.Connections = project.Connections.Where(x => connectionsToDelete.All(y => x.Id != y.Id)).ToList();
 
             // Create deep clone of whole project
-            project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, true).ToList();
-            project.Edges = RemapEdges(replacement, project.Edges, remap, true).ToList();
+            project.Nodes = RemapNodes(replacement, project.Nodes, project.Connections, remap, true).ToList();
+            project.Connections = RemapConnections(replacement, project.Connections, remap, true).ToList();
 
             project.Id = replacement.ToId;
             project.Iri = replacement.ToIri;
@@ -139,13 +139,13 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="project">ReplacementId</param>
         /// <param name="nodes">ICollection&lt;NodeAm&gt; nodes</param>
-        /// <param name="edges">ICollection&lt;EdgeAm&gt; edges</param>
+        /// <param name="connections">ICollection&lt;ConnectionAm&gt; connections</param>
         /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
         /// <param name="createCopy">bool</param>
         /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
         /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        public IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy)
+        public IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
         {
             if (nodes == null || !nodes.Any())
                 yield break;
@@ -162,7 +162,7 @@ namespace Mb.Services.Services
                 if (nodeReplacement.FromId != nodeReplacement.ToId)
                     remap.Add(nodeReplacement.ToId, nodeReplacement.FromId);
 
-                node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, edges, createCopy).ToList();
+                node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, connections, createCopy).ToList();
                 var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy, AttributeParent.Node).ToList();
                 node.Attributes = attr.Any() ? attr : null;
 
@@ -180,72 +180,72 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Remap a collection of edges and all sub objects.
+        /// Remap a collection of connections and all sub objects.
         /// </summary>
         /// <param name="project">ReplacementId</param>
-        /// <param name="edges">ICollection&lt;EdgeAm&gt;</param>
+        /// <param name="connections">ICollection&lt;ConnectionAm&gt;</param>
         /// <param name="remap">Dictionary&lt;string, string&gt;</param>
         /// <param name="createCopy">bool</param>
-        /// <returns>IEnumerable&lt;EdgeAm&gt;</returns>
-        /// <remarks>If id is not correct, it will create new unique id's for all edges and children objects.
+        /// <returns>IEnumerable&lt;ConnectionAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all connections and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        public IEnumerable<EdgeAm> RemapEdges(ReplacementId project, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy)
+        public IEnumerable<ConnectionAm> RemapConnections(ReplacementId project, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
         {
-            if (edges == null || !edges.Any())
+            if (connections == null || !connections.Any())
                 yield break;
 
-            foreach (var edge in edges)
+            foreach (var connection in connections)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = edge.Id, FromIri = edge.Iri };
-                var edgeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connection.Id, FromIri = connection.Iri };
+                var connectionReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
-                edgeReplacement.FromId = edge.Id;
-                edgeReplacement.FromIri = edge.Iri;
+                connectionReplacement.FromId = connection.Id;
+                connectionReplacement.FromIri = connection.Iri;
 
-                if (edgeReplacement.FromId != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromId) || edgeReplacement.FromIri != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromIri))
-                    remap.Add(edgeReplacement.ToId, edgeReplacement.FromId);
+                if (connectionReplacement.FromId != connectionReplacement.ToId && !string.IsNullOrWhiteSpace(connectionReplacement.FromId) || connectionReplacement.FromIri != connectionReplacement.ToId && !string.IsNullOrWhiteSpace(connectionReplacement.FromIri))
+                    remap.Add(connectionReplacement.ToId, connectionReplacement.FromId);
 
-                edge.Id = edgeReplacement.ToId;
-                edge.Iri = edgeReplacement.ToIri;
-                edge.ProjectId = project.ToId;
-                edge.ProjectIri = project.ToIri;
+                connection.Id = connectionReplacement.ToId;
+                connection.Iri = connectionReplacement.ToIri;
+                connection.ProjectId = project.ToId;
+                connection.ProjectIri = project.ToIri;
 
-                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToConnectorId, FromIri = edge.ToConnectorIri });
-                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromConnectorId, FromIri = edge.FromConnectorIri });
-                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToNodeId, FromIri = edge.ToNodeIri });
-                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromNodeId, FromIri = edge.FromNodeIri });
+                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToConnectorId, FromIri = connection.ToConnectorIri });
+                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromConnectorId, FromIri = connection.FromConnectorIri });
+                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToNodeId, FromIri = connection.ToNodeIri });
+                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromNodeId, FromIri = connection.FromNodeIri });
 
-                edge.ToConnectorId = toConnectorReplacement.ToId;
-                edge.FromConnectorId = fromConnectorReplacement.ToId;
-                edge.ToNodeId = toNodeReplacement.ToId;
-                edge.FromNodeId = fromNodeReplacement.ToId;
+                connection.ToConnectorId = toConnectorReplacement.ToId;
+                connection.FromConnectorId = fromConnectorReplacement.ToId;
+                connection.ToNodeId = toNodeReplacement.ToId;
+                connection.FromNodeId = fromNodeReplacement.ToId;
 
-                edge.ToConnectorIri = toConnectorReplacement.ToIri;
-                edge.FromConnectorIri = fromConnectorReplacement.ToIri;
-                edge.ToNodeIri = toNodeReplacement.ToIri;
-                edge.FromNodeIri = fromNodeReplacement.ToIri;
+                connection.ToConnectorIri = toConnectorReplacement.ToIri;
+                connection.FromConnectorIri = fromConnectorReplacement.ToIri;
+                connection.ToNodeIri = toNodeReplacement.ToIri;
+                connection.FromNodeIri = fromNodeReplacement.ToIri;
 
-                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, edge.MasterProjectId, edge.MasterProjectIri);
-                edge.MasterProjectId = masterProject.Id;
-                edge.MasterProjectIri = masterProject.Iri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, connection.MasterProjectId, connection.MasterProjectIri);
+                connection.MasterProjectId = masterProject.Id;
+                connection.MasterProjectIri = masterProject.Iri;
 
-                yield return edge;
+                yield return connection;
             }
         }
 
         /// <summary>
-        /// Remap all parentless edges to root nodes
+        /// Remap all parentless connections to root nodes
         /// </summary>
         /// <param name="project">ProjectAm</param>
-        /// <remarks>If there is some edges that is not connected to a parent, we need to find
+        /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root node in same aspect, and connect the part of relation to that node.</remarks>
-        public void RemapParentlessEdges(ProjectAm project)
+        public void RemapParentlessConnections(ProjectAm project)
         {
-            var parentLessEdges = project.GetParentlessEdges().ToList();
-            foreach (var edge in parentLessEdges)
+            var parentLessConnections = project.GetParentlessConnectors().ToList();
+            foreach (var connection in parentLessConnections)
             {
-                var actualNode = project.Nodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
+                var actualNode = project.Nodes.FirstOrDefault(x => x.Id == connection.ToNodeId);
                 if (actualNode == null)
                     continue;
 
@@ -253,8 +253,8 @@ namespace Mb.Services.Services
                 if (rootNode == null)
                     continue;
 
-                edge.FromNodeId = rootNode.Id;
-                edge.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+                connection.FromNodeId = rootNode.Id;
+                connection.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
         }
 
@@ -304,7 +304,7 @@ namespace Mb.Services.Services
         #region Private methods
 
         // Remap connectors
-        private IEnumerable<ConnectorAm> RemapConnectors(ReplacementId replacement, ICollection<ConnectorAm> connectors, ICollection<EdgeAm> edges, bool createCopy)
+        private IEnumerable<ConnectorAm> RemapConnectors(ReplacementId replacement, ICollection<ConnectorAm> connectors, ICollection<ConnectionAm> connections, bool createCopy)
         {
             if (connectors == null || !connectors.Any())
                 yield break;
@@ -320,7 +320,7 @@ namespace Mb.Services.Services
                 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    _ = edges?.Where(x => x.FromConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    _ = connections?.Where(x => x.FromConnectorIri == connectorReplacement.FromIri).Select(y =>
                     {
                         y.FromConnectorIri = connectorReplacement.ToIri;
                         y.FromConnectorId = connectorReplacement.ToId;
@@ -331,7 +331,7 @@ namespace Mb.Services.Services
                 }
                 else
                 {
-                    _ = edges?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
+                    _ = connections?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
                     {
                         y.FromConnectorIri = connectorReplacement.ToIri;
                         y.FromConnectorId = connectorReplacement.ToId;
@@ -343,7 +343,7 @@ namespace Mb.Services.Services
 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    _ = edges?.Where(x => x.ToConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    _ = connections?.Where(x => x.ToConnectorIri == connectorReplacement.FromIri).Select(y =>
                     {
                         y.ToConnectorIri = connectorReplacement.ToIri;
                         y.ToConnectorId = connectorReplacement.ToId;
@@ -354,7 +354,7 @@ namespace Mb.Services.Services
                 }
                 else
                 {
-                    _ = edges?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
+                    _ = connections?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
                     {
                         y.ToConnectorIri = connectorReplacement.ToIri;
                         y.ToConnectorId = connectorReplacement.ToId;

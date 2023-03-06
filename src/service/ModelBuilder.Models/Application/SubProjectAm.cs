@@ -16,7 +16,7 @@ namespace Mb.Models.Application
         public string Description { get; set; }
 
         public ICollection<string> Nodes { get; set; }
-        public ICollection<string> Edges { get; set; }
+        public ICollection<string> Connections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -33,11 +33,11 @@ namespace Mb.Models.Application
             if (Nodes.HasEmptyValues())
                 validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Nodes" }));
 
-            if (Edges.HasDuplicateValues())
-                validateionResults.Add(new ValidationResult("Duplicate edge id's detected", new List<string> { "Edges" }));
+            if (Connections.HasDuplicateValues())
+                validateionResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
 
-            if (Edges.HasEmptyValues())
-                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Edges" }));
+            if (Connections.HasEmptyValues())
+                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Connections" }));
 
             return validateionResults;
         }

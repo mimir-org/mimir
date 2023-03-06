@@ -9,12 +9,12 @@ using TypeScriptBuilder;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Edge : IEquatable<Edge>
+    public class Connection : IEquatable<Connection>
     {
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
-        public string Kind => nameof(Edge);
+        public string Kind => nameof(Connection);
         public string FromConnectorId { get; set; }
         public string FromConnectorIri { get; set; }
         public Connector FromConnector { get; set; }
@@ -57,7 +57,7 @@ namespace Mb.Models.Data
 
         #region IEquatable
 
-        public bool Equals(Edge other)
+        public bool Equals(Connection other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -81,7 +81,7 @@ namespace Mb.Models.Data
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Edge) obj);
+            return obj.GetType() == GetType() && Equals((Connection) obj);
         }
 
         public override int GetHashCode()

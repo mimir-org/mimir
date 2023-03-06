@@ -1,14 +1,14 @@
 using System;
 using Mb.Models.Enums;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     public class Relation : Connector, IEquatable<Relation>
     {
-        public override string Kind => nameof(Relation);
+        public virtual string Discriminator => nameof(Relation);
         public RelationType RelationType { get; set; }
-        public string Discriminator => nameof(Relation);
 
         #region IEquatable
 
@@ -16,7 +16,7 @@ namespace Mb.Models.Data
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && RelationType == other.RelationType;
+            return base.Equals(other);
         }
 
         public override bool Equals(object obj)
@@ -29,9 +29,35 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), (int) RelationType);
+            return base.GetHashCode();
         }
 
         #endregion
+    }
+
+    public class PartOf : Relation
+    {
+        public override string Discriminator => nameof(PartOf);
+
+        private bool Equals(PartOf other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return base.Equals(other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((PartOf) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }

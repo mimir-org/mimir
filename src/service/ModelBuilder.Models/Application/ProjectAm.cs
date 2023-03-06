@@ -36,7 +36,7 @@ namespace Mb.Models.Application
         public DateTime? Updated { get; set; }
 
         public ICollection<NodeAm> Nodes { get; set; } = new List<NodeAm>();
-        public ICollection<EdgeAm> Edges { get; set; } = new List<EdgeAm>();
+        public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
 
         #region Validate
 
@@ -44,7 +44,7 @@ namespace Mb.Models.Application
         {
             var validations = new List<ValidationResult>();
             validations.AddRange(Nodes.Validate(validationContext));
-            validations.AddRange(Edges.Validate(validationContext));
+            validations.AddRange(Connections.Validate(validationContext));
             return validations;
         }
 
@@ -52,14 +52,14 @@ namespace Mb.Models.Application
 
         #region Public Methods
 
-        public IEnumerable<EdgeAm> GetParentlessEdges()
+        public IEnumerable<ConnectionAm> GetParentlessConnectors()
         {
-            return Edges.GetParentlessEdges(Nodes);
+            return Connections.GetParentlessConnectors(Nodes);
         }
 
-        public IEnumerable<EdgeAm> GetNotConnectedEdges()
+        public IEnumerable<ConnectionAm> GetNotConnectedConnectors()
         {
-            return Edges.GetNotConnectedEdges(Nodes);
+            return Connections.GetNotConnectedConnectors(Nodes);
         }
 
         #endregion

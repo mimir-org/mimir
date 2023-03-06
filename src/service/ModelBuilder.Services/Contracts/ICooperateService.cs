@@ -11,7 +11,7 @@ namespace Mb.Services.Contracts
     {
         Task SendDataUpdates(ProjectEditData editData, string projectId, string projectVersion);
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
-        Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
+        Task SendConnectionUpdates(IReadOnlyCollection<(Connection connection, WorkerStatus workerStatus)> connectionMap, string projectId);
         Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId);
         Task SendRefreshLibData();
     }

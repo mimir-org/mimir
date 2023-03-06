@@ -7,6 +7,6 @@ namespace Mb.Models.Client
     {
         public string SubProjectId { get; set; }
         public ICollection<Node> Nodes { get; set; } = new List<Node>();
-        public ICollection<Edge> Edges { get; set; } = new List<Edge>();
+        public ICollection<Connection> Connections { get; set; } = new List<Connection>();
     }
 }

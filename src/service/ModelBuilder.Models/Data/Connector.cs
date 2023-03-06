@@ -30,11 +30,11 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public virtual ICollection<Edge> FromEdges { get; set; }
+        public virtual ICollection<Connection> FromConnections { get; set; }
 
         [JsonIgnore]
         [TSExclude]
-        public virtual ICollection<Edge> ToEdges { get; set; }
+        public virtual ICollection<Connection> ToConnections { get; set; }
 
         #endregion
 

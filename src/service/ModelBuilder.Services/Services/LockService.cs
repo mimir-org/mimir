@@ -24,16 +24,16 @@ namespace Mb.Services.Services
     {
         private readonly IAttributeRepository _attributeRepository;
         private readonly INodeRepository _nodeRepository;
-        private readonly IEdgeRepository _edgeRepository;
+        private readonly IConnectionRepository _connectionRepository;
         private readonly ICooperateService _cooperateService;
         private readonly ICacheRepository _cacheRepository;
         private readonly IMapper _mapper;
         private readonly DatabaseConfiguration _databaseConfiguration;
 
-        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
+        public LockService(INodeRepository nodeRepository, IConnectionRepository connectionRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
         {
             _nodeRepository = nodeRepository;
-            _edgeRepository = edgeRepository;
+            _connectionRepository = connectionRepository;
             _attributeRepository = attributeRepository;
             _cooperateService = cooperateService;
             _cacheRepository = cacheRepository;
@@ -51,12 +51,12 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a list of all locked edges id's
+        /// Returns a list of all locked connections id's
         /// </summary>
-        /// <returns>List of locked edges id></returns>
-        public IEnumerable<string> GetLockedEdges()
+        /// <returns>List of locked connections id></returns>
+        public IEnumerable<string> GetLockedConnections()
         {
-            return _edgeRepository.FindBy(x => x.IsLocked).Select(y => y.Id);
+            return _connectionRepository.FindBy(x => x.IsLocked).Select(y => y.Id);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Lock/Unlock Attribute/Edge/Node
+        /// Lock/Unlock Attribute/Connection/Node
         /// </summary>
         /// <param name="lockAm"></param>
         /// <returns></returns>
@@ -86,8 +86,8 @@ namespace Mb.Services.Services
                 case EntityType.Attribute:
                     lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm> { lockAm }));
                     break;
-                case EntityType.Edge:
-                    objectIdentity = await _edgeRepository.GetEdgeConnectedData(lockAm.Id);
+                case EntityType.Connection:
+                    objectIdentity = await _connectionRepository.GetConnectionConnectedData(lockAm.Id);
                     break;
                 case EntityType.Node:
                     objectIdentity = await _nodeRepository.GetNodeConnectedData(lockAm.Id);
@@ -107,7 +107,7 @@ namespace Mb.Services.Services
             {
                 await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
-                    _edgeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Edge).ToList());
+                    _connectionRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Connection).ToList());
                     _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Attribute).ToList());
                     _nodeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Node).ToList());
                 }

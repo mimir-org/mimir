@@ -13,9 +13,9 @@ namespace Mb.Models.Records
         public List<Node> NodeUpdate { get; init; } = new();
         public List<Node> NodeDelete { get; init; } = new();
 
-        public List<Edge> EdgeCreate { get; init; } = new();
-        public List<Edge> EdgeUpdate { get; init; } = new();
-        public List<Edge> EdgeDelete { get; init; } = new();
+        public List<Connection> ConnectionCreate { get; init; } = new();
+        public List<Connection> ConnectionUpdate { get; init; } = new();
+        public List<Connection> ConnectionDelete { get; init; } = new();
 
         public List<Attribute> AttributeCreate { get; init; } = new();
         public List<Attribute> AttributeUpdate { get; init; } = new();
@@ -29,7 +29,7 @@ namespace Mb.Models.Records
         public List<Terminal> TerminalUpdate { get; init; } = new();
         public List<Terminal> TerminalDelete { get; init; } = new();
 
-        public List<Edge> EdgeCreateAndDelete => EdgeCreate.Union(EdgeDelete).ToList();
+        public List<Connection> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
         public List<Node> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
         public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
         public List<Relation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
@@ -39,13 +39,13 @@ namespace Mb.Models.Records
         public List<Terminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
         public List<Relation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
         public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
-        public List<Edge> EdgeUpdateInsert => EdgeUpdate.Union(EdgeCreate).ToList();
+        public List<Connection> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
 
         public async Task ResolveEditData(ProjectData original, ProjectData updated)
         {
             var tasks = new List<Task>
             {
-                Task.Run(() => ResolveEdges(original, updated)),
+                Task.Run(() => ResolveConnections(original, updated)),
                 Task.Run(() => ResolveNodes(original, updated)),
                 Task.Run(() => ResolveAttributes(original, updated)),
                 Task.Run(() => ResolveRelations(original, updated)),
@@ -56,29 +56,29 @@ namespace Mb.Models.Records
         }
 
 
-        #region Edges
+        #region Connections
 
-        private async Task ResolveEdges(ProjectData original, ProjectData updated)
+        private async Task ResolveConnections(ProjectData original, ProjectData updated)
         {
             var tasks = new List<Task>
             {
-                Task.Run(() => FindDeletedEdges(original, updated)),
-                Task.Run(() => FindCreatedEdges(original, updated))
+                Task.Run(() => FindDeletedConnections(original, updated)),
+                Task.Run(() => FindCreatedConnections(original, updated))
             };
             await Task.WhenAll(tasks);
-            var dict = updated.Edges.ToDictionary(x => x.Id, x => x);
-            EdgeUpdate.AddRange(original.Edges.Exclude(EdgeCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
+            var dict = updated.Connections.ToDictionary(x => x.Id, x => x);
+            ConnectionUpdate.AddRange(original.Connections.Exclude(ConnectionCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
         }
 
-        private Task FindDeletedEdges(ProjectData original, ProjectData updated)
+        private Task FindDeletedConnections(ProjectData original, ProjectData updated)
         {
-            EdgeDelete.AddRange(original.Edges.Exclude(updated.Edges, x => x.Id));
+            ConnectionDelete.AddRange(original.Connections.Exclude(updated.Connections, x => x.Id));
             return Task.CompletedTask;
         }
 
-        private Task FindCreatedEdges(ProjectData original, ProjectData updated)
+        private Task FindCreatedConnections(ProjectData original, ProjectData updated)
         {
-            EdgeCreate.AddRange(updated.Edges.Exclude(original.Edges, x => x.Id));
+            ConnectionCreate.AddRange(updated.Connections.Exclude(original.Connections, x => x.Id));
             return Task.CompletedTask;
         }
 

@@ -78,7 +78,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
-            services.AddScoped<IEdgeRepository, EdgeRepository>();
+            services.AddScoped<IConnectionRepository, ConnectionRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -118,7 +118,7 @@ namespace Mb.Core.Extensions
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile(new AttributeProfile());
             cfg.AddProfile(new ConnectorProfile());
-            cfg.AddProfile(new EdgeProfile());
+            cfg.AddProfile(new ConnectionProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));

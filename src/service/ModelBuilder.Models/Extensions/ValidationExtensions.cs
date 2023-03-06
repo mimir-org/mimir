@@ -28,18 +28,18 @@ namespace Mb.Models.Extensions
             return validations;
         }
 
-        public static List<ValidationResult> Validate(this ICollection<EdgeAm> edges, ValidationContext validationContext)
+        public static List<ValidationResult> Validate(this ICollection<ConnectionAm> connections, ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
 
-            if (edges != null && edges.Any())
+            if (connections != null && connections.Any())
             {
-                if (edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    validations.Add(new ValidationResult($"{nameof(edges)} list has duplicate edge id's", new List<string> { nameof(edges) }));
+                if (connections.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                    validations.Add(new ValidationResult($"{nameof(connections)} list has duplicate connection id's", new List<string> { nameof(connections) }));
 
-                foreach (var edge in edges)
+                foreach (var connection in connections)
                 {
-                    foreach (var result in edge.Validate(validationContext))
+                    foreach (var result in connection.Validate(validationContext))
                     {
                         validations.Add(result);
                     }

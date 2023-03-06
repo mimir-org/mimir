@@ -20,10 +20,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="ownerIri">The terminal owner IRI</param>
         /// <param name="projectData">Record of ICollections</param>
-        /// <param name="edge">Connected Mimir edge</param>
+        /// <param name="connection">Connected Mimir connection</param>
         /// <param name="flowDirection">Default flow direction. Used to define the default flow direction when connector is bi-directional</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, Edge edge, DefaultFlowDirection flowDirection)
+        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, Connection connection, DefaultFlowDirection flowDirection)
         {
             ontologyService.AssertNode(connector.Iri, Resources.Domain, connector.Domain, true);
             switch (connector)
@@ -31,7 +31,7 @@ namespace ModelBuilder.Rdf.Extensions
                 case Terminal terminal:
                     ontologyService.AssertNode($"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalParentTypeName)}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
                     ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalParentTypeName)}-{HttpUtility.UrlEncode(terminal.Name)}");
-                    ontologyService.AssertNode(terminal.Iri, Resources.Type, edge != null ? Resources.StreamTerminal : Resources.FSBTerminal);
+                    ontologyService.AssertNode(terminal.Iri, Resources.Type, connection != null ? Resources.StreamTerminal : Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.Label, terminal.Name, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.TerminalDirectionType, terminal.Type.ToString(), true);
                     ontologyService.AssertNode(terminal.Iri, Resources.LibraryType, terminal.TerminalTypeIri);
@@ -49,8 +49,8 @@ namespace ModelBuilder.Rdf.Extensions
                             if (flowDirection != DefaultFlowDirection.NotSet)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
-                            if (edge != null)
-                                ontologyService.AssertNode(terminal.Iri, Resources.HasNodeFromConnection, edge.FromConnectorIri);
+                            if (connection != null)
+                                ontologyService.AssertNode(terminal.Iri, Resources.HasNodeFromConnection, connection.FromConnectorIri);
                             break;
                         case ConnectorDirection.Output:
                             ontologyService.AssertNode(ownerIri, Resources.HasOutputTerminal, terminal.Iri);
@@ -59,8 +59,8 @@ namespace ModelBuilder.Rdf.Extensions
                             if (flowDirection != DefaultFlowDirection.NotSet)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
-                            if (edge != null)
-                                ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
+                            if (connection != null)
+                                ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, connection.ToConnectorIri);
                             break;
                         case ConnectorDirection.Bidirectional:
                             ontologyService.AssertNode(ownerIri, Resources.HasBidirectionalTerminal, terminal.Iri);
@@ -69,12 +69,12 @@ namespace ModelBuilder.Rdf.Extensions
                             if (flowDirection != DefaultFlowDirection.NotSet)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
-                            if (edge != null)
+                            if (connection != null)
                             {
                                 if (flowDirection == DefaultFlowDirection.InputFlow)
-                                    ontologyService.AssertNode(terminal.Iri, Resources.HasNodeFromConnection, edge.FromConnectorIri);
+                                    ontologyService.AssertNode(terminal.Iri, Resources.HasNodeFromConnection, connection.FromConnectorIri);
                                 else
-                                    ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
+                                    ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, connection.ToConnectorIri);
                             }
 
                             break;
@@ -113,7 +113,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static bool IsConnected(this Connector c, Project project)
         {
-            return project.Edges.Any(edge => edge.FromConnectorId == c.Id || edge.ToConnectorId == c.Id);
+            return project.Connections.Any(connection => connection.FromConnectorId == c.Id || connection.ToConnectorId == c.Id);
         }
 
         /// <summary>

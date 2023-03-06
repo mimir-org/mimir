@@ -27,24 +27,24 @@ namespace Mb.Data.Repositories
     {
         private readonly IMapper _mapper;
         private readonly INodeRepository _nodeRepository;
-        private readonly IEdgeRepository _edgeRepository;
+        private readonly IConnectionRepository _connectionRepository;
+        private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly IConnectorRepository _connectorRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
-            IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
+            IConnectionRepository connectionRepository, IAttributeRepository attributeRepository,
             IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
             ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
-            _edgeRepository = edgeRepository;
+            _connectionRepository = connectionRepository;
+            _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
             _databaseConfiguration = databaseConfiguration?.Value;
-            _connectorRepository = connectorRepository;
             _cacheRepository = cacheRepository;
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
@@ -84,11 +84,11 @@ namespace Mb.Data.Repositories
         {
             var project =
                 FindBy(x => x.Id == id || x.Iri == iri)
-                    .Include(x => x.Edges)
-                    .Include("Edges.FromNode")
-                    .Include("Edges.ToNode")
-                    .Include("Edges.FromConnector")
-                    .Include("Edges.ToConnector")
+                    .Include(x => x.Connections)
+                    .Include("Connections.FromNode")
+                    .Include("Connections.ToNode")
+                    .Include("Connections.FromConnector")
+                    .Include("Connections.ToConnector")
                     .Include(x => x.Nodes)
                     .Include("Nodes.Attributes")
                     .Include("Nodes.Connectors")
@@ -193,10 +193,10 @@ namespace Mb.Data.Repositories
                     _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                     _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
-                    _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
+                    _connectionRepository.BulkUpsert(bulk, conn, data.ConnectionUpdateInsert);
 
                     // Delete
-                    _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
+                    _connectionRepository.BulkDelete(bulk, conn, data.ConnectionDelete);
                     _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
@@ -246,7 +246,7 @@ namespace Mb.Data.Repositories
                     _connectorRepository.BulkUpsert(bulk, conn, data.Relations);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
                     _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
-                    _edgeRepository.BulkUpsert(bulk, conn, data.Edges);
+                    _connectionRepository.BulkUpsert(bulk, conn, data.Connections);
                 }
 
                 trans.Complete();
@@ -270,7 +270,7 @@ namespace Mb.Data.Repositories
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
-                    _edgeRepository.BulkDelete(bulk, conn, data.Edges);
+                    _connectionRepository.BulkDelete(bulk, conn, data.Connections);
                     _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
                     _connectorRepository.BulkDelete(bulk, conn, data.Relations);
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);

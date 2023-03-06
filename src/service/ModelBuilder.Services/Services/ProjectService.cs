@@ -28,7 +28,7 @@ namespace Mb.Services.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly INodeRepository _nodeRepository;
-        private readonly IEdgeRepository _edgeRepository;
+        private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IModuleService _moduleService;
@@ -39,7 +39,7 @@ namespace Mb.Services.Services
 
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
-            IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
+            IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IConnectionRepository connectionRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
             IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
             ICooperateService cooperateService, IVersionService versionService)
@@ -48,7 +48,7 @@ namespace Mb.Services.Services
             _mapper = mapper;
             _contextAccessor = contextAccessor;
             _nodeRepository = nodeRepository;
-            _edgeRepository = edgeRepository;
+            _connectionRepository = connectionRepository;
             _commonRepository = commonRepository;
             _connectorRepository = connectorRepository;
             _moduleService = moduleService;
@@ -73,7 +73,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get a project by Id or Iri. The project will include all edges, nodes,
+        /// Get a project by Id or Iri. The project will include all connections, nodes,
         /// attributes and connectors.
         /// </summary>
         /// <param name="id"></param>
@@ -121,7 +121,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
-        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
+        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or connection with same id.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
         public async Task<Project> CreateProject(ProjectAm project)
@@ -140,8 +140,8 @@ namespace Mb.Services.Services
             if (existingProject)
                 throw new MimirorgDuplicateException($"Project already exist - id: {project.Id}");
 
-            if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                throw new MimirorgDuplicateException("One or more edges already exist");
+            if (_connectionRepository.GetAll().AsEnumerable().Any(x => project.Connections.Any(y => y.Id == x.Id)))
+                throw new MimirorgDuplicateException("One or more connections already exist");
 
             if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
                 throw new MimirorgDuplicateException("One or more nodes already exist");
@@ -203,7 +203,7 @@ namespace Mb.Services.Services
                 projectAm.Description = subProjectAm.Description;
                 projectAm.IsSubProject = true;
                 projectAm.Nodes = projectAm.Nodes.Where(x => x.NodeType == NodeType.Root || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
-                projectAm.Edges = projectAm.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
+                projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
 
                 _ = _remapService.Clone(projectAm);
 
@@ -398,7 +398,7 @@ namespace Mb.Services.Services
             // Position node
             var rootOrigin = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).MinBy(x => x.PositionY);
 
-            // Set node and edges project id to merge project, and calculate position
+            // Set node and connections project id to merge project, and calculate position
             updatedProject.Nodes = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).Select(x =>
             {
                 x.ProjectId = prepare.ProjectId;
@@ -413,7 +413,7 @@ namespace Mb.Services.Services
                 rootOrigin.PositionY = (decimal) prepare.DropPositionY;
             }
 
-            updatedProject.Edges = updatedProject.Edges.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
+            updatedProject.Connections = updatedProject.Connections.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
             {
                 x.ProjectId = prepare.ProjectId;
                 x.ProjectIri = null;
@@ -424,7 +424,7 @@ namespace Mb.Services.Services
             {
                 SubProjectId = prepare.SubProjectId,
                 Nodes = updatedProject.Nodes,
-                Edges = updatedProject.Edges
+                Connections = updatedProject.Connections
             };
 
             return prepareCm;
@@ -525,7 +525,7 @@ namespace Mb.Services.Services
         /// <param name="project"></param>
         private void ResolveLevelAndOrder(Project project)
         {
-            if (project?.Nodes == null || project.Edges == null)
+            if (project?.Nodes == null || project.Connections == null)
                 return;
 
             var rootNodes = project.Nodes.Where(x => x.NodeType == NodeType.Root).ToList();
@@ -553,8 +553,8 @@ namespace Mb.Services.Services
             if (connector == null)
                 return order;
 
-            var edges = project.Edges.Where(x => x.FromConnectorId == connector.Id).ToList();
-            var children = project.Nodes.Where(x => edges.Any(y => y.ToNodeId == x.Id)).ToList();
+            var connections = project.Connections.Where(x => x.FromConnectorId == connector.Id).ToList();
+            var children = project.Nodes.Where(x => connections.Any(y => y.ToNodeId == x.Id)).ToList();
             return children.Aggregate(order,
                 (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
@@ -615,7 +615,7 @@ namespace Mb.Services.Services
         {
             _projectRepository?.Context?.ChangeTracker.Clear();
             _nodeRepository?.Context?.ChangeTracker.Clear();
-            _edgeRepository?.Context?.ChangeTracker.Clear();
+            _connectionRepository?.Context?.ChangeTracker.Clear();
             _connectorRepository?.Context?.ChangeTracker.Clear();
             _attributeRepository?.Context?.ChangeTracker.Clear();
         }

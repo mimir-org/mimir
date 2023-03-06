@@ -50,7 +50,7 @@ namespace Mb.Models.Extensions
             if (editData == null)
                 return false;
 
-            if (editData.EdgeDelete.Any())
+            if (editData.ConnectionDelete.Any())
                 return true;
 
             if (editData.NodeDelete.Any())
@@ -70,7 +70,7 @@ namespace Mb.Models.Extensions
             if (editData == null)
                 return false;
 
-            if (editData.EdgeUpdate.Any() || editData.EdgeCreate.Any())
+            if (editData.ConnectionUpdate.Any() || editData.ConnectionCreate.Any())
                 return true;
 
             if (editData.NodeUpdate.Any() || editData.NodeCreate.Any())

@@ -19,19 +19,19 @@ namespace ModelBuilder.Rdf.Services
         private readonly IOntologyRepository _ontologyRepository;
         private readonly ILibraryRepository _libRepository;
         private readonly INodeRepository _nodeRepository;
-        private readonly IEdgeRepository _edgeRepository;
+        private readonly IConnectionRepository _connectionRepository;
         private readonly IMapper _mapper;
 
         #region Constructors
 
         public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
-            INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
+            INodeRepository nodeRepository, IMapper mapper, IConnectionRepository connectionRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
             _nodeRepository = nodeRepository;
             _mapper = mapper;
-            _edgeRepository = edgeRepository;
+            _connectionRepository = connectionRepository;
         }
 
         #endregion
@@ -53,7 +53,7 @@ namespace ModelBuilder.Rdf.Services
             _ontologyRepository.LoadData(new Graph());
             project.AssertGraph(this);
             BuildNodes(project, applicationData);
-            BuildEdges(project, applicationData);
+            BuildConnections(project, applicationData);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ModelBuilder.Rdf.Services
             var applicationData = GetApplicationData(project.Iri);
 
             project.ResolveNodes(this, applicationData);
-            project.ResolveRelationEdges(this, applicationData);
+            project.ResolveRelationConnections(this, applicationData);
 
             return project;
         }
@@ -338,20 +338,20 @@ namespace ModelBuilder.Rdf.Services
         /// <returns></returns>
         private ProjectData GetApplicationData(string projectIri)
         {
-            var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
+            var connections = _connectionRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
             var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == projectIri).ToList();
             var quantityDatums = _libRepository.GetQuantityDatums().Result;
             var units = _libRepository.GetUnits().Result;
 
             var projectData = new ProjectData
             {
-                Edges = _mapper.Map<List<EdgeAm>>(edges),
+                Connections = _mapper.Map<List<ConnectionAm>>(connections),
                 Nodes = _mapper.Map<List<NodeAm>>(nodes),
                 Units = units,
                 QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
             };
 
-            _edgeRepository.Context.ChangeTracker.Clear();
+            _connectionRepository.Context.ChangeTracker.Clear();
             _nodeRepository.Context.ChangeTracker.Clear();
 
             return projectData;
@@ -408,18 +408,18 @@ namespace ModelBuilder.Rdf.Services
         }
 
         /// <summary>
-        /// Build project edges
+        /// Build project connections
         /// </summary>
         /// <param name="project"></param>
         /// <param name="projectData">Record of ICollections</param>
-        private void BuildEdges(Project project, ProjectData projectData)
+        private void BuildConnections(Project project, ProjectData projectData)
         {
-            if (project.Edges == null || !project.Edges.Any())
+            if (project.Connections == null || !project.Connections.Any())
                 return;
 
-            foreach (var edge in project.Edges)
+            foreach (var connection in project.Connections)
             {
-                edge.AssertEdge(this, projectData);
+                connection.AssertConnection(this, projectData);
             }
         }
 

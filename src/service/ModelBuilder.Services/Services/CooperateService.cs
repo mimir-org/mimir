@@ -32,7 +32,7 @@ namespace Mb.Services.Services
             if (editData == null || string.IsNullOrWhiteSpace(projectId))
                 return;
 
-            // TODO: Find changed node and edge based on changed terminal, attribute etc.
+            // TODO: Find changed node and connection based on changed terminal, attribute etc.
             var versionObj = new ProjectVersionCm
             {
                 ProjectId = projectId,
@@ -43,9 +43,9 @@ namespace Mb.Services.Services
                 Task.Run(() => SendNodeUpdates(editData.NodeUpdate, WorkerStatus.Update, projectId)),
                 Task.Run(() => SendNodeUpdates(editData.NodeDelete, WorkerStatus.Delete, projectId)),
                 Task.Run(() => SendNodeUpdates(editData.NodeCreate, WorkerStatus.Create, projectId)),
-                Task.Run(() => SendEdgeUpdates(editData.EdgeUpdate, WorkerStatus.Update, projectId)),
-                Task.Run(() => SendEdgeUpdates(editData.EdgeDelete, WorkerStatus.Delete, projectId)),
-                Task.Run(() => SendEdgeUpdates(editData.EdgeCreate, WorkerStatus.Create, projectId))
+                Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
+                Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId)),
+                Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
             );
         }
 
@@ -64,11 +64,11 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId)
+        public Task SendConnectionUpdates(IReadOnlyCollection<(Connection connection, WorkerStatus workerStatus)> connectionMap, string projectId)
         {
-            foreach (var tuple in edgeMap)
+            foreach (var tuple in connectionMap)
             {
-                _webSocketRepository.SendEdgeData(tuple.edge, projectId, tuple.workerStatus);
+                _webSocketRepository.SendConnectionData(tuple.connection, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;
@@ -111,20 +111,20 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Send websocket events for changed edges
+        /// Send websocket events for changed connections
         /// </summary>
-        /// <param name="edges"></param>
+        /// <param name="connections"></param>
         /// <param name="workerStatus"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private Task SendEdgeUpdates(List<Edge> edges, WorkerStatus workerStatus, string projectId)
+        private Task SendConnectionUpdates(List<Connection> connections, WorkerStatus workerStatus, string projectId)
         {
-            if (edges == null || string.IsNullOrWhiteSpace(projectId))
+            if (connections == null || string.IsNullOrWhiteSpace(projectId))
                 return Task.CompletedTask;
 
-            foreach (var edge in edges)
+            foreach (var connection in connections)
             {
-                _webSocketRepository.SendEdgeData(edge, projectId, workerStatus);
+                _webSocketRepository.SendConnectionData(connection, projectId, workerStatus);
             }
 
             return Task.CompletedTask;

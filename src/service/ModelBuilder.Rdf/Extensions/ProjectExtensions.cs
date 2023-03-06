@@ -110,20 +110,20 @@ namespace ModelBuilder.Rdf.Extensions
         }
 
         /// <summary>
-        /// Resolve relation edges
+        /// Resolve relation connections
         /// </summary>
         /// <param name="project">Extended project</param>
         /// <param name="ontologyService">Ontology service</param>
         /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if ontology service or project is null</exception>
-        public static void ResolveRelationEdges(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+        public static void ResolveRelationConnections(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
             // PartOf relations
             var partOfRelations = ontologyService.GetTriplesWithPredicate(Resources.HasParent)
-                .Select(x => new RelationEdge
+                .Select(x => new RelationConnector
                 {
                     ParentIri = x.Object.ToString(), ChildIri = x.Subject.ToString(), RelationType = RelationType.PartOf
                 }).ToList();
@@ -135,13 +135,13 @@ namespace ModelBuilder.Rdf.Extensions
             var hasLocationRelations = ResolveRelations(RelationType.HasLocation, ontologyService);
 
             var relations = partOfRelations.Union(fullFilledByRelations).Union(hasLocationRelations).ToList();
-            project.Edges ??= new List<EdgeAm>();
+            project.Connections ??= new List<ConnectionAm>();
 
             foreach (var relation in relations)
             {
-                var edge = new EdgeAm();
-                edge.ResolveEdge(ontologyService, project, relation, projectData);
-                project.Edges.Add(edge);
+                var connection = new ConnectionAm();
+                connection.ResolveConnection(ontologyService, project, relation, projectData);
+                project.Connections.Add(connection);
             }
         }
 
@@ -150,12 +150,12 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="relationType">Relation type</param>
         /// <param name="ontologyService">Ontology service</param>
-        /// <returns>A list of relation edges information</returns>
-        private static IEnumerable<RelationEdge> ResolveRelations(RelationType relationType, IOntologyService ontologyService)
+        /// <returns>A list of relation connections information</returns>
+        private static IEnumerable<RelationConnector> ResolveRelations(RelationType relationType, IOntologyService ontologyService)
         {
             return ontologyService
                 .GetTriplesWithPredicate($"imf:{relationType.ToString().LowerCaseFirstCharacter()}")
-                .Select(x => new RelationEdge
+                .Select(x => new RelationConnector
                 {
                     ParentIri = x.Subject.ToString(), ChildIri = x.Object.ToString(), RelationType = relationType
                 }).ToList();

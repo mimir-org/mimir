@@ -32,10 +32,10 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveNodeData, workerStatus, data);
         }
 
-        public async Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus)
+        public async Task SendConnectionData(Connection connection, string projectId, WorkerStatus workerStatus)
         {
-            var data = JsonConvert.SerializeObject(edge, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
+            var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
         }
 
         public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)

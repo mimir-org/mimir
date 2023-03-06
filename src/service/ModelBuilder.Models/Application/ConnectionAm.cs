@@ -6,7 +6,7 @@ using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Application
 {
-    public class EdgeAm : IValidatableObject
+    public class ConnectionAm : IValidatableObject
     {
         [RequiredOne(nameof(Iri))]
         public string Id { get; set; }

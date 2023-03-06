@@ -35,7 +35,7 @@ namespace Mb.Data.Contracts
         void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
 
         /// <summary>
-        /// Bulk edge update lock status
+        /// Bulk connection update lock status
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
@@ -48,7 +48,7 @@ namespace Mb.Data.Contracts
         /// <param name="nodeId">The node you want data from</param>
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det node identifier and all connected children including
-        /// children nodes, children edges and children terminals</remarks>
+        /// children nodes, children connections and children terminals</remarks>
         Task<List<ObjectIdentity>> GetNodeConnectedData(string nodeId);
     }
 }

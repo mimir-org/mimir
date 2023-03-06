@@ -4,11 +4,11 @@ using Mb.Models.Data;
 
 namespace Mb.Core.Profiles
 {
-    public class EdgeProfile : Profile
+    public class ConnectionProfile : Profile
     {
-        public EdgeProfile()
+        public ConnectionProfile()
         {
-            CreateMap<EdgeAm, Edge>()
+            CreateMap<ConnectionAm, Connection>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => src.FromConnectorId))
@@ -33,7 +33,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Selected, opt => opt.Ignore())
                 .ForMember(dest => dest.Hidden, opt => opt.Ignore())
                 .ForMember(dest => dest.BlockHidden, opt => opt.Ignore());
-            CreateMap<Edge, EdgeAm>()
+            CreateMap<Connection, ConnectionAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => src.FromConnectorId))

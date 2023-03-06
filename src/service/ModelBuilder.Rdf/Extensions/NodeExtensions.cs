@@ -97,15 +97,15 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static Node GetParent(this Node node, Project project)
         {
-            foreach (var edge in project.Edges)
+            foreach (var connection in project.Connections)
             {
-                if (edge.ToNodeId != node.Id) continue;
+                if (connection.ToNodeId != node.Id) continue;
 
-                if (!edge.ToConnector.IsPartOf()) continue;
+                if (!connection.ToConnector.IsPartOf()) continue;
 
-                if (edge.ToConnector.IsConnected(project))
+                if (connection.ToConnector.IsConnected(project))
                 {
-                    return edge.FromNode;
+                    return connection.FromNode;
                 }
             }
             return null;

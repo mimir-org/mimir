@@ -95,7 +95,7 @@ namespace Mb.Data.Repositories
         public IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId,
             string invokedByDomain)
         {
-            var returnValues = new List<(Node edge, WorkerStatus status)>();
+            var returnValues = new List<(Node connection, WorkerStatus status)>();
 
             if (delete == null || projectId == null || !delete.Any())
                 return returnValues;
@@ -223,7 +223,7 @@ namespace Mb.Data.Repositories
         /// <param name="nodeId">The node you want data from</param>
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det node identifier and all connected children including
-        /// children nodes, children edges and children terminals</remarks>
+        /// children nodes, children connections and children terminals</remarks>
         public async Task<List<ObjectIdentity>> GetNodeConnectedData(string nodeId)
         {
             if (string.IsNullOrWhiteSpace(nodeId))

@@ -22,7 +22,7 @@ namespace Mb.Services.Contracts
         IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
 
         /// <summary>
-        /// Get a project by Id or Iri. The project will include all edges, nodes,
+        /// Get a project by Id or Iri. The project will include all connections, nodes,
         /// attributes and connectors.
         /// </summary>
         /// <param name="id"></param>
@@ -36,7 +36,7 @@ namespace Mb.Services.Contracts
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
-        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
+        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or connection with same id.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
         Task<Project> CreateProject(ProjectAm project);

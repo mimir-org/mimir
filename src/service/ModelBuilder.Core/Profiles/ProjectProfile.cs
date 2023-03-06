@@ -34,7 +34,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Nodes, opt => opt.MapFrom(src => src.Nodes))
-                .ForMember(dest => dest.Edges, opt => opt.MapFrom(src => src.Edges));
+                .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
             CreateMap<Project, ProjectAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -47,7 +47,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Nodes, opt => opt.MapFrom(src => src.Nodes))
-                .ForMember(dest => dest.Edges, opt => opt.MapFrom(src => src.Edges));
+                .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
             CreateMap<Project, LibrarySubProjectVersion>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

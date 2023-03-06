@@ -8,13 +8,13 @@ namespace Mb.Models.Records
     public record ProjectData
     {
         public List<Node> Nodes { get; init; } = new();
-        public List<Edge> Edges { get; init; } = new();
+        public List<Connection> Connections { get; init; } = new();
         public List<Attribute> Attributes { get; init; } = new();
         public List<Terminal> Terminals { get; init; } = new();
         public List<Relation> Relations { get; init; } = new();
 
         /// <summary>
-        /// Deconstruct and flatten edges 
+        /// Deconstruct and flatten connections 
         /// </summary>
         /// <param name="project">Project to be deconstructed</param>
         public Task DeconstructAttributes(Project project)
@@ -77,15 +77,15 @@ namespace Mb.Models.Records
         }
 
         /// <summary>
-        /// Deconstruct and flatten edges
+        /// Deconstruct and flatten connections
         /// </summary>
         /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructEdges(Project project)
+        public Task DeconstructConnections(Project project)
         {
-            if (project.Edges == null || !project.Edges.Any())
+            if (project.Connections == null || !project.Connections.Any())
                 return Task.CompletedTask;
 
-            Edges.AddRange(project.Edges);
+            Connections.AddRange(project.Connections);
             return Task.CompletedTask;
         }
     }

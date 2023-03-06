@@ -7,8 +7,8 @@ namespace Mb.Models.Enums
         [Display(Name = "Node")]
         Node = 0,
 
-        [Display(Name = "Edge")]
-        Edge = 1,
+        [Display(Name = "Connection")]
+        Connection = 1,
 
         [Display(Name = "Attribute")]
         Attribute = 2
