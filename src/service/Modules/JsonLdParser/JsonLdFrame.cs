@@ -20,7 +20,7 @@ namespace JsonLdParser
                     ["hasAspectModel"] = new JObject() { ["@reverse"] = Resources.IsAspectOf },
                     ["@version"] = "1.1"
                 },
-                ["@type"] = new JArray() { Resources.FSB, Resources.IntegratedObject, Resources.Project, "TerminalConnector", Resources.InputTerminal, Resources.OutputTerminal, "AspectObject" },
+                ["@type"] = new JArray() { Resources.FSB, Resources.IntegratedObject, Resources.Project, "ConnectorTerminal", Resources.InputTerminal, Resources.OutputTerminal, "AspectObject" },
                 [Resources.HasChild] = new JObject()
                 {
                     ["@embed"] = "@never"

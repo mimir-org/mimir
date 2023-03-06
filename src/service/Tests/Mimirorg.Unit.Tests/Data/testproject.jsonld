@@ -177,7 +177,7 @@
         "mimir:isRequired": "False",
         "mimir:terminalDirection": "Input",
         "mimir:type": {
-          "@id": "http://ns.imfid.org/imf/terminalConnector#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
+          "@id": "http://ns.imfid.org/imf/connectorTerminal#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
         },
         "mimir:visibility": "None",
         "lis:hasPhysicalQuantity": [
@@ -598,7 +598,7 @@
         "mimir:isRequired": "False",
         "mimir:terminalDirection": "Output",
         "mimir:type": {
-          "@id": "http://ns.imfid.org/imf/terminalConnector#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
+          "@id": "http://ns.imfid.org/imf/connectorTerminal#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
         },
         "mimir:visibility": "OutputVisible",
         "lis:hasPhysicalQuantity": [
@@ -1270,7 +1270,7 @@
         "mimir:isRequired": "False",
         "mimir:terminalDirection": "Input",
         "mimir:type": {
-          "@id": "http://ns.imfid.org/imf/terminalConnector#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
+          "@id": "http://ns.imfid.org/imf/connectorTerminal#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
         },
         "mimir:visibility": "InputVisible",
         "lis:hasPhysicalQuantity": [
@@ -1691,7 +1691,7 @@
         "mimir:isRequired": "False",
         "mimir:terminalDirection": "Output",
         "mimir:type": {
-          "@id": "http://ns.imfid.org/imf/terminalConnector#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
+          "@id": "http://ns.imfid.org/imf/connectorTerminal#IDC4F0FDFBDB12CD9E79A0AD9F1E976FDF"
         },
         "mimir:visibility": "None",
         "lis:hasPhysicalQuantity": [

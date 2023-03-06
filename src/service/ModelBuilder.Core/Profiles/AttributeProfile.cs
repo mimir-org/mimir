@@ -23,7 +23,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
-                .ForMember(dest => dest.TerminalConnector, opt => opt.Ignore())
+                .ForMember(dest => dest.ConnectorTerminal, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
                 .ForMember(dest => dest.Node, opt => opt.Ignore())

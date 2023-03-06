@@ -50,7 +50,7 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public virtual ConnectorTerminal TerminalConnector { get; set; }
+        public virtual ConnectorTerminal ConnectorTerminal { get; set; }
 
         public virtual string TerminalId { get; set; }
         public virtual string TerminalIri { get; set; }

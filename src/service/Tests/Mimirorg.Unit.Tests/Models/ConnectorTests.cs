@@ -15,7 +15,7 @@ namespace ModelBuilder.Unit.Tests.Models
             {
                 Id = "runir.com_12345",
                 Iri = "https://dummy.com/ID12345",
-                Name = "TerminalConnector",
+                Name = "ConnectorTerminal",
                 Attributes = null,
                 Color = "#ffffff",
                 Type = ConnectorDirection.Input,

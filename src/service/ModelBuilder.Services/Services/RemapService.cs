@@ -442,31 +442,31 @@ namespace Mb.Services.Services
             }
         }
 
-        // Remap terminalConnector
-        private ConnectorTerminalAm RemapTerminal(ConnectorTerminalAm terminalConnector, bool createCopy)
+        // Remap connectorTerminal
+        private ConnectorTerminalAm RemapTerminal(ConnectorTerminalAm connectorTerminal, bool createCopy)
         {
-            if (terminalConnector == null)
+            if (connectorTerminal == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = terminalConnector.Id, FromIri = terminalConnector.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connectorTerminal.Id, FromIri = connectorTerminal.Iri };
             var terminalReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
-            terminalReplacement.FromId = terminalConnector.Id;
-            terminalReplacement.FromIri = terminalConnector.Iri;
+            terminalReplacement.FromId = connectorTerminal.Id;
+            terminalReplacement.FromIri = connectorTerminal.Iri;
 
-            var attr = RemapAttributes(terminalReplacement, terminalConnector.Attributes, createCopy, AttributeParent.Connector).ToList();
-            terminalConnector.Attributes = attr.Any() ? attr : null;
+            var attr = RemapAttributes(terminalReplacement, connectorTerminal.Attributes, createCopy, AttributeParent.Connector).ToList();
+            connectorTerminal.Attributes = attr.Any() ? attr : null;
 
-            terminalConnector.Id = terminalReplacement.ToId;
-            terminalConnector.Iri = terminalReplacement.ToIri;
+            connectorTerminal.Id = terminalReplacement.ToId;
+            connectorTerminal.Iri = terminalReplacement.ToIri;
 
-            if (!string.IsNullOrWhiteSpace(terminalConnector.TerminalTypeId) && string.IsNullOrWhiteSpace(terminalConnector.TerminalTypeIri))
+            if (!string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeId) && string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeIri))
             {
-                terminalConnector.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + terminalConnector.TerminalTypeId;
+                connectorTerminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connectorTerminal.TerminalTypeId;
             }
 
-            return terminalConnector;
+            return connectorTerminal;
         }
 
         #endregion

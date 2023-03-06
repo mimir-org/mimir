@@ -252,9 +252,9 @@ namespace ModelBuilder.Rdf.Extensions
 
             foreach (var node in nodes)
             {
-                var terminalConnector = new ConnectorTerminalAm();
-                terminalConnector.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
-                yield return terminalConnector;
+                var connectorTerminal = new ConnectorTerminalAm();
+                connectorTerminal.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
+                yield return connectorTerminal;
             }
         }
 
