@@ -81,10 +81,10 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all terminal types
+        /// Get all terminalConnector types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("terminal")]
+        [HttpGet("terminalConnector")]
         [ProducesResponseType(typeof(ICollection<TerminalLibCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -105,7 +105,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all terminal types
+        /// Get all terminalConnector types
         /// </summary>
         /// <returns></returns>
         [HttpGet("attribute")]

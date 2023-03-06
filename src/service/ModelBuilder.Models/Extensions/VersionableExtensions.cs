@@ -1,8 +1,6 @@
 using Mb.Models.Data;
 using System.Linq;
 using Mb.Models.Records;
-using System;
-using Mb.Models.Application;
 
 namespace Mb.Models.Extensions
 {
@@ -14,10 +12,10 @@ namespace Mb.Models.Extensions
             if (editData == null)
                 return false;
 
-            if (editData.TerminalDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
+            if (editData.TerminalDelete.Any(x => x.AspectObjectId == node.Id))
                 return true;
 
-            if (editData.RelationDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
+            if (editData.RelationDelete.Any(x => x.AspectObjectId == node.Id))
                 return true;
 
             return false;
@@ -27,9 +25,9 @@ namespace Mb.Models.Extensions
         {
             if (editData == null)
                 return false;
-            if (editData.TerminalUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.TerminalCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
+            if (editData.TerminalUpdate.Any(x => x.AspectObjectId == node.Id) || editData.TerminalCreate.Any(x => x.AspectObjectId == node.Id))
                 return true;
-            if (editData.RelationUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.RelationCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
+            if (editData.RelationUpdate.Any(x => x.AspectObjectId == node.Id) || editData.RelationCreate.Any(x => x.AspectObjectId == node.Id))
                 return true;
             if (editData.AttributeDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
                 return true;

@@ -28,14 +28,13 @@ namespace Mb.Models.Extensions
                     break;
             }
 
-            var relation = new Relation
+            var relation = new ConnectorRelation
             {
                 Id = Guid.NewGuid().ToString().ToLower(),
                 Name = name,
-                Type = connectorType,
-                RelationType = relationType,
-                NodeId = null,
-                Node = null
+                Direction = connectorType,
+                AspectObjectId = null,
+                AspectObject = null
             };
 
             return await Task.Run(() => relation);

@@ -14,7 +14,7 @@ namespace Mb.Models.Converters
             if (jObj.ContainsKey(FirstCharToLowerCase(nameof(RelationAm.RelationType))) || jObj.ContainsKey(nameof(RelationAm.RelationType)))
                 return jObj.ToObject<RelationAm>();
 
-            return jObj.ToObject<TerminalAm>();
+            return jObj.ToObject<ConnectorTerminalAm>();
         }
 
         public override bool CanWrite => false;

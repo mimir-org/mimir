@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
@@ -14,19 +13,16 @@ namespace Mb.Models.Data
     {
         #region Properties
         public string Id { get; set; }
-        public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
-        public virtual string Kind => nameof(Connector);
         public string Name { get; set; }
-        public ConnectorDirection Type { get; set; }
-        public ConnectorVisibility ConnectorVisibility { get; set; }
-        public virtual string NodeId { get; set; }
-        public virtual string NodeIri { get; set; }
-        public bool IsRequired { get; set; }
+        public ConnectorDirection Direction { get; set; }
+        public virtual string AspectObjectId { get; set; }
+        public string Inside { get; set; }
+        public string Outside { get; set; }
 
         [JsonIgnore]
         [TSExclude]
-        public virtual Node Node { get; set; }
+        public virtual Node AspectObject { get; set; }
 
         [JsonIgnore]
         [TSExclude]
@@ -43,13 +39,9 @@ namespace Mb.Models.Data
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   Iri == other.Iri &&
                    Name == other.Name &&
-                   Type == other.Type &&
-                   ConnectorVisibility == other.ConnectorVisibility &&
-                   NodeId == other.NodeId &&
-                   NodeIri == other.NodeIri &&
-                   IsRequired == other.IsRequired;
+                   Direction == other.Direction &&
+                   AspectObjectId == other.AspectObjectId;
         }
 
         public override bool Equals(object obj)
@@ -62,7 +54,7 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Iri, Name, (int) Type, (int) ConnectorVisibility, NodeId, NodeIri, IsRequired);
+            return HashCode.Combine(Id, Name, (int) Direction, AspectObjectId);
         }
     }
 }

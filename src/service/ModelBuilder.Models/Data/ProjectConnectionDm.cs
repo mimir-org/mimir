@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Mb.Models.Data
 {
-    public class ProjectConnection
+    public class ProjectConnectionDm
     {
         public string ProjectId { get; set; }
         public string ConnectionId { get; set; }

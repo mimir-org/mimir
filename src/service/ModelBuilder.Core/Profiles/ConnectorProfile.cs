@@ -10,50 +10,34 @@ namespace Mb.Core.Profiles
         {
             CreateMap<ConnectorAm, Connector>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
-                .ForMember(dest => dest.ConnectorVisibility, opt => opt.MapFrom(src => src.ConnectorVisibility))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired));
+                .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Type))
+                .ForMember(dest => dest.AspectObjectId, opt => opt.MapFrom(src => src.NodeId));
 
-            CreateMap<TerminalAm, Terminal>()
+            CreateMap<ConnectorTerminalAm, ConnectorTerminal>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-                .ForMember(dest => dest.TerminalParentTypeName, opt => opt.MapFrom(src => src.TerminalParentTypeName))
-                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
-                .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.TerminalTypeIri))
-                .ForMember(dest => dest.TerminalParentTypeId, opt => opt.MapFrom(src => src.TerminalParentTypeId))
-                .ForMember(dest => dest.TerminalParentTypeIri, opt => opt.MapFrom(src => src.TerminalParentTypeIri))
+                .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentTypeId))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .IncludeBase<ConnectorAm, Connector>();
 
-            CreateMap<RelationAm, Relation>()
-                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.RelationType))
+            CreateMap<RelationAm, ConnectorRelation>()
                 .IncludeBase<ConnectorAm, Connector>();
 
             CreateMap<Connector, ConnectorAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
-                .ForMember(dest => dest.ConnectorVisibility, opt => opt.MapFrom(src => src.ConnectorVisibility))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired));
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Direction))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.AspectObjectId));
 
-            CreateMap<Terminal, TerminalAm>()
+            CreateMap<ConnectorTerminal, ConnectorTerminalAm>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-                .ForMember(dest => dest.TerminalParentTypeName, opt => opt.MapFrom(src => src.TerminalParentTypeName))
-                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
-                .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.TerminalTypeIri))
-                .ForMember(dest => dest.TerminalParentTypeId, opt => opt.MapFrom(src => src.TerminalParentTypeId))
-                .ForMember(dest => dest.TerminalParentTypeIri, opt => opt.MapFrom(src => src.TerminalParentTypeIri))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalType))
+                .ForMember(dest => dest.TerminalParentTypeId, opt => opt.MapFrom(src => src.TerminalParentType))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .IncludeBase<Connector, ConnectorAm>();
 
-            CreateMap<Relation, RelationAm>()
-                .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.RelationType))
+            CreateMap<ConnectorRelation, RelationAm>()
                 .IncludeBase<Connector, ConnectorAm>();
         }
     }

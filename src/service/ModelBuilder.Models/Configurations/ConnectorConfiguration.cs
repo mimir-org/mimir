@@ -1,5 +1,4 @@
 using Mb.Models.Data;
-using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,15 +11,13 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Connector");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
-            builder.Property(p => p.Type).HasColumnName("Type").IsRequired();
-            builder.Property(p => p.ConnectorVisibility).HasColumnName("ConnectorVisibility").IsRequired().HasDefaultValue(ConnectorVisibility.None);
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
-            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
-            builder.Property(p => p.IsRequired).HasColumnName("IsRequired").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.Direction).HasColumnName("Direction").IsRequired();
+            builder.Property(p => p.AspectObjectId).HasColumnName("AspectObject").IsRequired();
+            builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
+            builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
 
-            builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.AspectObject).WithMany(y => y.Connectors).HasForeignKey(x => x.AspectObjectId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

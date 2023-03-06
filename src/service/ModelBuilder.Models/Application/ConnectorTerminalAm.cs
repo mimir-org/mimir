@@ -5,7 +5,7 @@ using Mb.Models.Data;
 
 namespace Mb.Models.Application
 {
-    public class TerminalAm : ConnectorAm, IValidatableObject
+    public class ConnectorTerminalAm : ConnectorAm, IValidatableObject
     {
         [Required]
         public string Color { get; set; }

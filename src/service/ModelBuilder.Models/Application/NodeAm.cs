@@ -107,7 +107,7 @@ namespace Mb.Models.Application
             {
                 foreach (var connector in Connectors)
                 {
-                    if (!(connector is TerminalAm t))
+                    if (!(connector is ConnectorTerminalAm t))
                         continue;
 
                     var result = t.Validate(validationContext);

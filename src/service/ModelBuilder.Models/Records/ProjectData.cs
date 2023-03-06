@@ -10,8 +10,8 @@ namespace Mb.Models.Records
         public List<Node> Nodes { get; init; } = new();
         public List<Connection> Connections { get; init; } = new();
         public List<Attribute> Attributes { get; init; } = new();
-        public List<Terminal> Terminals { get; init; } = new();
-        public List<Relation> Relations { get; init; } = new();
+        public List<ConnectorTerminal> Terminals { get; init; } = new();
+        public List<ConnectorRelation> Relations { get; init; } = new();
 
         /// <summary>
         /// Deconstruct and flatten connections 
@@ -20,7 +20,7 @@ namespace Mb.Models.Records
         public Task DeconstructAttributes(Project project)
         {
             var nodeAttributes = project.Nodes.Select(x => x.Attributes).SelectMany(y => y).ToList();
-            var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<Terminal>().SelectMany(y => y.Attributes).ToList();
+            var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().SelectMany(y => y.Attributes).ToList();
 
             var allAttributes = nodeAttributes
                 .Union(connectorAttributes)
@@ -52,7 +52,7 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Terminal>().ToList();
+            var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().ToList();
 
             var terminals = nodeTerminals
                 .ToList();
@@ -70,7 +70,7 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Relation>().ToList();
+            var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelation>().ToList();
 
             Relations.AddRange(nodeRelations);
             return Task.CompletedTask;

@@ -36,7 +36,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get all terminal types
+        /// Get all terminalConnector types
         /// </summary>
         /// <returns>A collection of all registered terminals</returns>
         public async Task<List<TerminalLibCm>> GetTerminalTypes()

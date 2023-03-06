@@ -245,16 +245,16 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="nodeIri">Parent node IRI</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <returns></returns>
-        public static IEnumerable<TerminalAm> ResolveTerminals(List<INode> nodes, ProjectData projectData, string nodeIri, IOntologyService ontologyService)
+        public static IEnumerable<ConnectorTerminalAm> ResolveTerminals(List<INode> nodes, ProjectData projectData, string nodeIri, IOntologyService ontologyService)
         {
             if (!nodes.Any())
                 yield break;
 
             foreach (var node in nodes)
             {
-                var terminal = new TerminalAm();
-                terminal.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
-                yield return terminal;
+                var terminalConnector = new ConnectorTerminalAm();
+                terminalConnector.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
+                yield return terminalConnector;
             }
         }
 

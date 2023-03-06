@@ -18,7 +18,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="relations">The relations to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Relation> relations);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations);
 
         /// <summary>
         /// Bulk relation update
@@ -26,7 +26,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="terminals">The terminals to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals);
 
         /// <summary>
         /// Bulk delete relations
@@ -34,7 +34,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="relations">The relations to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Relation> relations);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations);
 
         /// <summary>
         /// Bulk delete terminals
@@ -42,6 +42,6 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="terminals">The terminals to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals);
     }
 }

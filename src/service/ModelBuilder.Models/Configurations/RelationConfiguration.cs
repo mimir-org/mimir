@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations
 {
-    public class RelationConfiguration : IEntityTypeConfiguration<Relation>
+    public class RelationConfiguration : IEntityTypeConfiguration<ConnectorRelation>
     {
-        public void Configure(EntityTypeBuilder<Relation> builder)
+        public void Configure(EntityTypeBuilder<ConnectorRelation> builder)
         {
-            builder.Property(p => p.RelationType).HasColumnName("RelationType");
+            builder.Property(p => p.Discriminator).HasColumnName("Discriminator");
         }
     }
 }

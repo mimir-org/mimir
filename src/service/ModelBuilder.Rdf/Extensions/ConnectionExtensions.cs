@@ -18,16 +18,16 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="projectData">Record of ICollections</param>
         public static void AssertConnection(this Connection connection, IOntologyService ontologyService, ProjectData projectData)
         {
-            if (connection.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
+            if (connection.FromConnector is ConnectorRelation and not ConnectorPartOf)
             {
-                var relationString = fromRelation.RelationType.ToString().LowerCaseFirstCharacter();
+                var relationString = connection.FromConnector is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
                 ontologyService.AssertNode(connection.FromNodeIri, $"imf:{relationString}", connection.ToNodeIri);
             }
 
-            if (connection.ToConnector is Relation { RelationType: not RelationType.PartOf } toRelation)
+            if (connection.ToConnector is ConnectorRelation and not ConnectorPartOf)
             {
-                var relationString = toRelation.RelationType.ToString().LowerCaseFirstCharacter();
-                ontologyService.AssertNode(connection.ToNodeIri, $"imf:{relationString}", connection.FromNodeIri);
+                var relationString = connection.ToConnector is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
+                ontologyService.AssertNode(connection.ToNodeIri, $"imf:{relationString}", connection.ToNodeIri);
             }
         }
 

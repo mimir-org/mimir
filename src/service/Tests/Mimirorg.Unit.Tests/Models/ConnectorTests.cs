@@ -7,15 +7,15 @@ namespace ModelBuilder.Unit.Tests.Models
 {
     public class ConnectorTests
     {
-        private readonly TerminalAm _terminal;
+        private readonly ConnectorTerminalAm _terminal;
 
         public ConnectorTests()
         {
-            _terminal = new TerminalAm
+            _terminal = new ConnectorTerminalAm
             {
                 Id = "runir.com_12345",
                 Iri = "https://dummy.com/ID12345",
-                Name = "Terminal",
+                Name = "TerminalConnector",
                 Attributes = null,
                 Color = "#ffffff",
                 Type = ConnectorDirection.Input,

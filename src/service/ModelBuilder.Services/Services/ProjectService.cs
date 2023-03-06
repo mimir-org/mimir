@@ -501,18 +501,14 @@ namespace Mb.Services.Services
                 ProjectIri = projectIri,
                 MasterProjectIri = projectIri
             };
+            var (connectorId, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
-            var (connectorId, connectorIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
-
-            var connector = new Relation
+            var connector = new ConnectorRelation
             {
                 Id = connectorId,
-                Iri = connectorIri,
                 Name = connectorName,
-                Type = ConnectorDirection.Output,
-                NodeId = node.Id,
-                NodeIri = node.Iri,
-                RelationType = RelationType.PartOf
+                Direction = ConnectorDirection.Output,
+                AspectObjectId = node.Id
             };
 
             node.Connectors.Add(connector);
@@ -547,8 +543,8 @@ namespace Mb.Services.Services
 
             node.Level = level;
             node.Order = order;
-            var connector = node.Connectors.OfType<Relation>().FirstOrDefault(x =>
-                x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf);
+            var connector = node.Connectors.OfType<ConnectorRelation>().FirstOrDefault(x =>
+                x.Direction == ConnectorDirection.Output);
 
             if (connector == null)
                 return order;

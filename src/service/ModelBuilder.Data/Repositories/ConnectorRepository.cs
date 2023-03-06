@@ -25,7 +25,7 @@ namespace Mb.Data.Repositories
             if (entities == null)
                 return;
 
-            foreach (var connector in entities.OfType<Terminal>())
+            foreach (var connector in entities.OfType<ConnectorTerminal>())
             {
                 if (connector.Attributes != null)
                 {
@@ -38,7 +38,7 @@ namespace Mb.Data.Repositories
                 Attach(connector, state);
             }
 
-            foreach (var connector in entities.OfType<Relation>())
+            foreach (var connector in entities.OfType<ConnectorRelation>())
             {
                 Attach(connector, state);
             }
@@ -50,23 +50,18 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="relations">The relations to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Relation> relations)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations)
         {
             if (relations == null || !relations.Any())
                 return;
 
-            bulk.Setup<Relation>()
+            bulk.Setup<ConnectorRelation>()
                 .ForCollection(relations)
                 .WithTable("Connector")
                 .AddColumn(x => x.Id)
-                .AddColumn(x => x.Iri)
                 .AddColumn(x => x.Name)
-                .AddColumn(x => x.Type)
-                .AddColumn(x => x.ConnectorVisibility)
-                .AddColumn(x => x.NodeId)
-                .AddColumn(x => x.NodeIri)
-                .AddColumn(x => x.IsRequired)
-                .AddColumn(x => x.RelationType)
+                .AddColumn(x => x.Direction)
+                .AddColumn(x => x.AspectObjectId)
                 .AddColumn(x => x.Discriminator)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
@@ -79,33 +74,23 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="terminals">The terminals to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals)
         {
             if (terminals == null || !terminals.Any())
                 return;
 
-            bulk.Setup<Terminal>()
+            bulk.Setup<ConnectorTerminal>()
                 .ForCollection(terminals)
                 .WithTable("Connector")
                 .AddColumn(x => x.Id)
-                .AddColumn(x => x.Iri)
                 .AddColumn(x => x.Name)
-                .AddColumn(x => x.Type)
-                .AddColumn(x => x.ConnectorVisibility)
-                .AddColumn(x => x.NodeId)
-                .AddColumn(x => x.NodeIri)
-                .AddColumn(x => x.IsRequired)
+                .AddColumn(x => x.Direction)
+                .AddColumn(x => x.AspectObjectId)
                 .AddColumn(x => x.Color)
-                .AddColumn(x => x.TerminalParentTypeName)
-                .AddColumn(x => x.TerminalTypeId)
-                .AddColumn(x => x.TerminalTypeIri)
-                .AddColumn(x => x.TerminalParentTypeId)
-                .AddColumn(x => x.TerminalParentTypeIri)
+                .AddColumn(x => x.TerminalType)
+                .AddColumn(x => x.TerminalParentType)
                 .AddColumn(x => x.Discriminator)
                 .AddColumn(x => x.TypeReferenceString)
-                .AddColumn(x => x.IsProxy)
-                .AddColumn(x => x.ProxyParent)
-                .AddColumn(x => x.ProxySibling)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
@@ -117,12 +102,12 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="relations">The relations to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Relation> relations)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations)
         {
             if (relations == null || !relations.Any())
                 return;
 
-            bulk.Setup<Relation>()
+            bulk.Setup<ConnectorRelation>()
                 .ForCollection(relations)
                 .WithTable("Connector")
                 .AddColumn(x => x.Id)
@@ -137,12 +122,12 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="terminals">The terminals to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals)
         {
             if (terminals == null || !terminals.Any())
                 return;
 
-            bulk.Setup<Terminal>()
+            bulk.Setup<ConnectorTerminal>()
                 .ForCollection(terminals)
                 .WithTable("Connector")
                 .AddColumn(x => x.Id)

@@ -364,7 +364,7 @@ namespace Mb.Services.Services
                     }).ToList();
                 }
 
-                if (connector is TerminalAm t)
+                if (connector is ConnectorTerminalAm t)
                 {
                     var attr = RemapAttributes(connectorReplacement, t.Attributes, createCopy, AttributeParent.Connector).ToList();
                     t.Attributes = attr.Any() ? attr : null;
@@ -379,7 +379,7 @@ namespace Mb.Services.Services
                     connector.NodeIri = replacement.ToIri;
                 }
 
-                if (connector is TerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
+                if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
                 {
                     am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalTypeId;
                 }
@@ -442,31 +442,31 @@ namespace Mb.Services.Services
             }
         }
 
-        // Remap terminal
-        private TerminalAm RemapTerminal(TerminalAm terminal, bool createCopy)
+        // Remap terminalConnector
+        private ConnectorTerminalAm RemapTerminal(ConnectorTerminalAm terminalConnector, bool createCopy)
         {
-            if (terminal == null)
+            if (terminalConnector == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = terminal.Id, FromIri = terminal.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = terminalConnector.Id, FromIri = terminalConnector.Iri };
             var terminalReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
-            terminalReplacement.FromId = terminal.Id;
-            terminalReplacement.FromIri = terminal.Iri;
+            terminalReplacement.FromId = terminalConnector.Id;
+            terminalReplacement.FromIri = terminalConnector.Iri;
 
-            var attr = RemapAttributes(terminalReplacement, terminal.Attributes, createCopy, AttributeParent.Connector).ToList();
-            terminal.Attributes = attr.Any() ? attr : null;
+            var attr = RemapAttributes(terminalReplacement, terminalConnector.Attributes, createCopy, AttributeParent.Connector).ToList();
+            terminalConnector.Attributes = attr.Any() ? attr : null;
 
-            terminal.Id = terminalReplacement.ToId;
-            terminal.Iri = terminalReplacement.ToIri;
+            terminalConnector.Id = terminalReplacement.ToId;
+            terminalConnector.Iri = terminalReplacement.ToIri;
 
-            if (!string.IsNullOrWhiteSpace(terminal.TerminalTypeId) && string.IsNullOrWhiteSpace(terminal.TerminalTypeIri))
+            if (!string.IsNullOrWhiteSpace(terminalConnector.TerminalTypeId) && string.IsNullOrWhiteSpace(terminalConnector.TerminalTypeIri))
             {
-                terminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + terminal.TerminalTypeId;
+                terminalConnector.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + terminalConnector.TerminalTypeId;
             }
 
-            return terminal;
+            return terminalConnector;
         }
 
         #endregion
