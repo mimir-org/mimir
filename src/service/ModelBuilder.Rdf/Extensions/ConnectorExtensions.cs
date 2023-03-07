@@ -43,7 +43,7 @@ namespace ModelBuilder.Rdf.Extensions
                                 ontologyService.AssertNode(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                             if (connection != null)
-                                ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeFromConnection, connection.FromConnectorIri);
+                                ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeFromConnection, connection.FromConnector);
                             break;
                         case ConnectorDirection.Output:
                             ontologyService.AssertNode(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id);
@@ -53,7 +53,7 @@ namespace ModelBuilder.Rdf.Extensions
                                 ontologyService.AssertNode(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                             if (connection != null)
-                                ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeToConnection, connection.ToConnectorIri);
+                                ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeToConnection, connection.ToConnector);
                             break;
                         case ConnectorDirection.Bidirectional:
                             ontologyService.AssertNode(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id);
@@ -65,9 +65,9 @@ namespace ModelBuilder.Rdf.Extensions
                             if (connection != null)
                             {
                                 if (flowDirection == DefaultFlowDirection.InputFlow)
-                                    ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeFromConnection, connection.FromConnectorIri);
+                                    ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeFromConnection, connection.FromConnector);
                                 else
-                                    ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeToConnection, connection.ToConnectorIri);
+                                    ontologyService.AssertNode(connectorTerminal.Id, Resources.HasNodeToConnection, connection.ToConnector);
                             }
 
                             break;
@@ -95,7 +95,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static bool IsPartOf(this Connector c)
         {
-            return c is ConnectorPartOf;
+            return c is ConnectorRelationPartOf;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static bool IsConnected(this Connector c, Project project)
         {
-            return project.Connections.Any(connection => connection.FromConnectorId == c.Id || connection.ToConnectorId == c.Id);
+            return project.Connections.Any(connection => connection.FromConnector == c.Id || connection.ToConnector == c.Id);
         }
 
         /// <summary>

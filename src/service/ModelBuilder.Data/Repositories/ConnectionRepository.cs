@@ -115,22 +115,12 @@ namespace Mb.Data.Repositories
                 .ForCollection(connections)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
-                .AddColumn(x => x.Iri)
-                .AddColumn(x => x.FromConnectorId)
-                .AddColumn(x => x.FromConnectorIri)
-                .AddColumn(x => x.ToConnectorId)
-                .AddColumn(x => x.ToConnectorIri)
-                .AddColumn(x => x.FromNodeId)
-                .AddColumn(x => x.FromNodeIri)
-                .AddColumn(x => x.ToNodeId)
-                .AddColumn(x => x.ToNodeIri)
-                .AddColumn(x => x.IsLocked)
-                .AddColumn(x => x.IsLockedStatusBy)
-                .AddColumn(x => x.IsLockedStatusDate)
-                .AddColumn(x => x.MasterProjectId)
-                .AddColumn(x => x.MasterProjectIri)
-                .AddColumn(x => x.ProjectId)
-                .AddColumn(x => x.ProjectIri)
+                .AddColumn(x => x.FromConnector)
+                .AddColumn(x => x.ToConnector)
+                .AddColumn(x => x.FromNode)
+                .AddColumn(x => x.ToNode)
+                .AddColumn(x => x.MainProject)
+                .AddColumn(x => x.Project)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
@@ -206,10 +196,10 @@ namespace Mb.Data.Repositories
 
         private void ResetConnectionBeforeSave(Connection connection)
         {
-            connection.FromConnector = null;
-            connection.ToConnector = null;
-            connection.FromNode = null;
-            connection.ToNode = null;
+            connection.FromConnectorObject = null;
+            connection.ToConnectorObject = null;
+            connection.FromNodeObject = null;
+            connection.ToNodeObject = null;
         }
 
         private void SetConnectionProperties(Connection connection, bool isNewConnection)

@@ -51,15 +51,6 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a list of all locked connections id's
-        /// </summary>
-        /// <returns>List of locked connections id></returns>
-        public IEnumerable<string> GetLockedConnections()
-        {
-            return _connectionRepository.FindBy(x => x.IsLocked).Select(y => y.Id);
-        }
-
-        /// <summary>
         /// Returns a list of all locked nodes id's
         /// </summary>
         /// <returns>List of locked node id></returns>

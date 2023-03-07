@@ -105,10 +105,10 @@ namespace Mb.Core.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direction = table.Column<int>(type: "int", nullable: false),
-                    AspectObject = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Inside = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Outside = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AspectObject = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TypeReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -168,49 +168,42 @@ namespace Mb.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Iri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FromConnectorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FromConnectorIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToConnectorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ToConnectorIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FromNodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FromNodeIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ToNodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ToNodeIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    IsLockedStatusBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsLockedStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    MasterProjectId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MasterProjectIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProjectIri = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FromConnector = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ToConnector = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FromNode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ToNode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Project = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Connection", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Connection_Connector_FromConnectorId",
-                        column: x => x.FromConnectorId,
+                        name: "FK_Connection_Connector_FromConnector",
+                        column: x => x.FromConnector,
                         principalTable: "Connector",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Connection_Connector_ToConnectorId",
-                        column: x => x.ToConnectorId,
+                        name: "FK_Connection_Connector_ToConnector",
+                        column: x => x.ToConnector,
                         principalTable: "Connector",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Connection_Node_FromNodeId",
-                        column: x => x.FromNodeId,
+                        name: "FK_Connection_Node_FromNode",
+                        column: x => x.FromNode,
                         principalTable: "Node",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Connection_Node_ToNodeId",
-                        column: x => x.ToNodeId,
+                        name: "FK_Connection_Node_ToNode",
+                        column: x => x.ToNode,
                         principalTable: "Node",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Connection_Project_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_Connection_Project_Project",
+                        column: x => x.Project,
                         principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -227,29 +220,29 @@ namespace Mb.Core.Migrations
                 column: "TerminalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connection_FromConnectorId",
+                name: "IX_Connection_FromConnector",
                 table: "Connection",
-                column: "FromConnectorId");
+                column: "FromConnector");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connection_FromNodeId",
+                name: "IX_Connection_FromNode",
                 table: "Connection",
-                column: "FromNodeId");
+                column: "FromNode");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connection_ProjectId",
+                name: "IX_Connection_Project",
                 table: "Connection",
-                column: "ProjectId");
+                column: "Project");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connection_ToConnectorId",
+                name: "IX_Connection_ToConnector",
                 table: "Connection",
-                column: "ToConnectorId");
+                column: "ToConnector");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Connection_ToNodeId",
+                name: "IX_Connection_ToNode",
                 table: "Connection",
-                column: "ToNodeId");
+                column: "ToNode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Connector_AspectObject",

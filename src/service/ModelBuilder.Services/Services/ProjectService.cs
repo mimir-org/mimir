@@ -413,10 +413,9 @@ namespace Mb.Services.Services
                 rootOrigin.PositionY = (decimal) prepare.DropPositionY;
             }
 
-            updatedProject.Connections = updatedProject.Connections.Where(x => !rootNodes.Any(y => (y == x.FromNodeId || y == x.ToNodeId))).Select(x =>
+            updatedProject.Connections = updatedProject.Connections.Where(x => !rootNodes.Any(y => (y == x.FromNode || y == x.ToNode))).Select(x =>
             {
-                x.ProjectId = prepare.ProjectId;
-                x.ProjectIri = null;
+                x.Project = prepare.ProjectId;
                 return x;
             }).ToList();
 
@@ -549,8 +548,8 @@ namespace Mb.Services.Services
             if (connector == null)
                 return order;
 
-            var connections = project.Connections.Where(x => x.FromConnectorId == connector.Id).ToList();
-            var children = project.Nodes.Where(x => connections.Any(y => y.ToNodeId == x.Id)).ToList();
+            var connections = project.Connections.Where(x => x.FromConnector == connector.Id).ToList();
+            var children = project.Nodes.Where(x => connections.Any(y => y.ToNode == x.Id)).ToList();
             return children.Aggregate(order,
                 (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }

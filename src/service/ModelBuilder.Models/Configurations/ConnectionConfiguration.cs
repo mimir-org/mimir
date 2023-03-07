@@ -11,29 +11,20 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Connection");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.ProjectId).HasColumnName("ProjectId").IsRequired();
-            builder.Property(p => p.ProjectIri).HasColumnName("ProjectIri").IsRequired();
-            builder.Property(p => p.FromConnectorId).HasColumnName("FromConnectorId").IsRequired();
-            builder.Property(p => p.ToConnectorId).HasColumnName("ToConnectorId").IsRequired();
-            builder.Property(p => p.FromNodeId).HasColumnName("FromNodeId").IsRequired();
-            builder.Property(p => p.ToNodeId).HasColumnName("ToNodeId").IsRequired();
-            builder.Property(p => p.FromConnectorIri).HasColumnName("FromConnectorIri").IsRequired();
-            builder.Property(p => p.ToConnectorIri).HasColumnName("ToConnectorIri").IsRequired();
-            builder.Property(p => p.FromNodeIri).HasColumnName("FromNodeIri").IsRequired();
-            builder.Property(p => p.ToNodeIri).HasColumnName("ToNodeIri").IsRequired();
+            builder.Property(p => p.Discriminator).HasColumnName("Discriminator");
+            builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
+            builder.Property(p => p.FromConnector).HasColumnName("FromConnector").IsRequired();
+            builder.Property(p => p.ToConnector).HasColumnName("ToConnector").IsRequired();
+            builder.Property(p => p.FromNode).HasColumnName("FromNode").IsRequired();
+            builder.Property(p => p.ToNode).HasColumnName("ToNode").IsRequired();
+            builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
+            builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired(false);
+            builder.Property(p => p.TerminalParentType).HasColumnName("TerminalParentType").IsRequired(false);
 
-            builder.HasOne(x => x.FromNode).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromNodeId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.ToNode).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToNodeId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.FromConnector).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromConnectorId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.ToConnector).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToConnectorId).OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
-            builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
-
-            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
-            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
-            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
+            builder.HasOne(x => x.FromNodeObject).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromNode).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.ToNodeObject).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToNode).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.FromConnectorObject).WithMany(y => y.FromConnections).HasForeignKey(x => x.FromConnector).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.ToConnectorObject).WithMany(y => y.ToConnections).HasForeignKey(x => x.ToConnector).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

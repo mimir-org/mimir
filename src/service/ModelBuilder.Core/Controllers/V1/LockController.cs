@@ -67,34 +67,6 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Returns a list of all locked connectors id's
-        /// </summary>
-        /// <returns>List of locked connectors id></returns>
-        [HttpGet("connection")]
-        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetLockedConnections()
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var result = _lockService.GetLockedConnections().ToList();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
         /// Returns a list of all locked nodes id's
         /// If param 'projectId' is null all locked nodes in the database will be returned
         /// </summary>

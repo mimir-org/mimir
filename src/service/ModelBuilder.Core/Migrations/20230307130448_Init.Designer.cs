@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230307101422_Init")]
+    [Migration("20230307130448_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -126,96 +126,59 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("FromConnectorId")
+                    b.Property<string>("Discriminator")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discriminator");
+
+                    b.Property<string>("FromConnector")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("FromConnectorId");
+                        .HasColumnName("FromConnector");
 
-                    b.Property<string>("FromConnectorIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FromConnectorIri");
-
-                    b.Property<string>("FromNodeId")
+                    b.Property<string>("FromNode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("FromNodeId");
+                        .HasColumnName("FromNode");
 
-                    b.Property<string>("FromNodeIri")
+                    b.Property<string>("MainProject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("FromNodeIri");
+                        .HasColumnName("MainProject");
 
-                    b.Property<string>("Iri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Iri");
-
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
-
-                    b.Property<string>("MasterProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("MasterProjectId");
-
-                    b.Property<string>("MasterProjectIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("MasterProjectIri");
-
-                    b.Property<string>("ProjectId")
+                    b.Property<string>("Project")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
+                        .HasColumnName("Project");
 
-                    b.Property<string>("ProjectIri")
-                        .IsRequired()
+                    b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProjectIri");
+                        .HasColumnName("TerminalParentType");
 
-                    b.Property<string>("ToConnectorId")
+                    b.Property<string>("TerminalType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalType");
+
+                    b.Property<string>("ToConnector")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ToConnectorId");
+                        .HasColumnName("ToConnector");
 
-                    b.Property<string>("ToConnectorIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ToConnectorIri");
-
-                    b.Property<string>("ToNodeId")
+                    b.Property<string>("ToNode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ToNodeId");
-
-                    b.Property<string>("ToNodeIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ToNodeIri");
+                        .HasColumnName("ToNode");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromConnectorId");
+                    b.HasIndex("FromConnector");
 
-                    b.HasIndex("FromNodeId");
+                    b.HasIndex("FromNode");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("Project");
 
-                    b.HasIndex("ToConnectorId");
+                    b.HasIndex("ToConnector");
 
-                    b.HasIndex("ToNodeId");
+                    b.HasIndex("ToNode");
 
                     b.ToTable("Connection", (string)null);
                 });
@@ -571,45 +534,45 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Connection", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Connector", "FromConnector")
+                    b.HasOne("Mb.Models.Data.Connector", "FromConnectorObject")
                         .WithMany("FromConnections")
-                        .HasForeignKey("FromConnectorId")
+                        .HasForeignKey("FromConnector")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Node", "FromNode")
+                    b.HasOne("Mb.Models.Data.Node", "FromNodeObject")
                         .WithMany("FromConnections")
-                        .HasForeignKey("FromNodeId")
+                        .HasForeignKey("FromNode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Project", "Project")
+                    b.HasOne("Mb.Models.Data.Project", "ProjectObject")
                         .WithMany("Connections")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("Project")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Connector", "ToConnector")
+                    b.HasOne("Mb.Models.Data.Connector", "ToConnectorObject")
                         .WithMany("ToConnections")
-                        .HasForeignKey("ToConnectorId")
+                        .HasForeignKey("ToConnector")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Node", "ToNode")
+                    b.HasOne("Mb.Models.Data.Node", "ToNodeObject")
                         .WithMany("ToConnections")
-                        .HasForeignKey("ToNodeId")
+                        .HasForeignKey("ToNode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("FromConnector");
+                    b.Navigation("FromConnectorObject");
 
-                    b.Navigation("FromNode");
+                    b.Navigation("FromNodeObject");
 
-                    b.Navigation("Project");
+                    b.Navigation("ProjectObject");
 
-                    b.Navigation("ToConnector");
+                    b.Navigation("ToConnectorObject");
 
-                    b.Navigation("ToNode");
+                    b.Navigation("ToNodeObject");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>

@@ -12,38 +12,28 @@ namespace Mb.Models.Data
     public class Connection : IEquatable<Connection>
     {
         public string Id { get; set; }
-        public string Iri { get; set; }
+        public virtual string Discriminator { get; set; }
         public string Domain => Id.ResolveDomain();
-        public string Kind => nameof(Connection);
-        public string FromConnectorId { get; set; }
-        public string FromConnectorIri { get; set; }
-        public Connector FromConnector { get; set; }
-        public string ToConnectorId { get; set; }
-        public string ToConnectorIri { get; set; }
-        public Connector ToConnector { get; set; }
-        public string FromNodeId { get; set; }
-        public string FromNodeIri { get; set; }
-        public Node FromNode { get; set; }
-        public string ToNodeId { get; set; }
-        public string ToNodeIri { get; set; }
-        public Node ToNode { get; set; }
-        public bool IsLocked { get; set; }
-        public string IsLockedStatusBy { get; set; }
-        public DateTime? IsLockedStatusDate { get; set; }
+        public string FromConnector { get; set; }
+        public Connector FromConnectorObject { get; set; }
+        public string ToConnector { get; set; }
+        public Connector ToConnectorObject { get; set; }
+        public string FromNode { get; set; }
+        public Node FromNodeObject { get; set; }
+        public string ToNode { get; set; }
+        public Node ToNodeObject { get; set; }
+        public virtual string TerminalType { get; set; }
+        public virtual string TerminalParentType { get; set; }
 
         [Required]
-        public string MasterProjectId { get; set; }
-
-        public string MasterProjectIri { get; set; }
+        public string MainProject { get; set; }
 
         [Required]
-        public virtual string ProjectId { get; set; }
-
-        public virtual string ProjectIri { get; set; }
+        public virtual string Project { get; set; }
 
         [JsonIgnore]
         [TSExclude]
-        public virtual Project Project { get; set; }
+        public virtual Project ProjectObject { get; set; }
 
         // Only for client
         [NotMapped]
@@ -62,19 +52,12 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   Iri == other.Iri &&
-                   FromConnectorId == other.FromConnectorId &&
-                   FromConnectorIri == other.FromConnectorIri &&
-                   ToConnectorId == other.ToConnectorId &&
-                   ToConnectorIri == other.ToConnectorIri &&
-                   FromNodeId == other.FromNodeId &&
-                   FromNodeIri == other.FromNodeIri &&
-                   ToNodeId == other.ToNodeId &&
-                   ToNodeIri == other.ToNodeIri &&
-                   MasterProjectId == other.MasterProjectId &&
-                   MasterProjectIri == other.MasterProjectIri &&
-                   ProjectId == other.ProjectId &&
-                   ProjectIri == other.ProjectIri;
+                   FromConnector == other.FromConnector &&
+                   ToConnector == other.ToConnector &&
+                   FromNode == other.FromNode &&
+                   ToNode == other.ToNode &&
+                   MainProject == other.MainProject &&
+                   Project == other.Project;
         }
 
         public override bool Equals(object obj)
@@ -88,19 +71,12 @@ namespace Mb.Models.Data
         {
             var hashCode = new HashCode();
             hashCode.Add(Id);
-            hashCode.Add(Iri);
-            hashCode.Add(FromConnectorId);
-            hashCode.Add(FromConnectorIri);
-            hashCode.Add(ToConnectorId);
-            hashCode.Add(ToConnectorIri);
-            hashCode.Add(FromNodeId);
-            hashCode.Add(FromNodeIri);
-            hashCode.Add(ToNodeId);
-            hashCode.Add(ToNodeIri);
-            hashCode.Add(MasterProjectId);
-            hashCode.Add(MasterProjectIri);
-            hashCode.Add(ProjectId);
-            hashCode.Add(ProjectIri);
+            hashCode.Add(FromConnector);
+            hashCode.Add(ToConnector);
+            hashCode.Add(FromNode);
+            hashCode.Add(ToNode);
+            hashCode.Add(MainProject);
+            hashCode.Add(Project);
             return hashCode.ToHashCode();
         }
 

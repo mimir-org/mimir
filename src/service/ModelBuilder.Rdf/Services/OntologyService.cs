@@ -334,12 +334,12 @@ namespace ModelBuilder.Rdf.Services
         /// <summary>
         /// Get ProjectData (Record of ICollections)
         /// </summary>
-        /// <param name="projectIri"></param>
+        /// <param name="project"></param>
         /// <returns></returns>
-        private ProjectData GetApplicationData(string projectIri)
+        private ProjectData GetApplicationData(string project)
         {
-            var connections = _connectionRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
-            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == projectIri).ToList();
+            var connections = _connectionRepository.GetAll().Where(x => x.Project == project).ToList();
+            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == project).ToList();
             var quantityDatums = _libRepository.GetQuantityDatums().Result;
             var units = _libRepository.GetUnits().Result;
 

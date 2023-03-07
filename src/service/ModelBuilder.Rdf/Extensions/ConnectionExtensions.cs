@@ -1,9 +1,7 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
-using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 
 namespace ModelBuilder.Rdf.Extensions
@@ -18,16 +16,16 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="projectData">Record of ICollections</param>
         public static void AssertConnection(this Connection connection, IOntologyService ontologyService, ProjectData projectData)
         {
-            if (connection.FromConnector is ConnectorRelation and not ConnectorPartOf)
+            if (connection.FromConnectorObject is ConnectorRelation and not ConnectorRelationPartOf)
             {
-                var relationString = connection.FromConnector is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
-                ontologyService.AssertNode(connection.FromNodeIri, $"imf:{relationString}", connection.ToNodeIri);
+                var relationString = connection.FromConnectorObject is ConnectorRelationFulfilledBy ? "fulfilledBy" : "hasLocation";
+                ontologyService.AssertNode(connection.FromNode, $"imf:{relationString}", connection.ToNode);
             }
 
-            if (connection.ToConnector is ConnectorRelation and not ConnectorPartOf)
+            if (connection.ToConnectorObject is ConnectorRelation and not ConnectorRelationPartOf)
             {
-                var relationString = connection.ToConnector is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
-                ontologyService.AssertNode(connection.ToNodeIri, $"imf:{relationString}", connection.ToNodeIri);
+                var relationString = connection.ToConnectorObject is ConnectorRelationFulfilledBy ? "fulfilledBy" : "hasLocation";
+                ontologyService.AssertNode(connection.ToNode, $"imf:{relationString}", connection.ToNode);
             }
         }
 

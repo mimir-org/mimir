@@ -99,13 +99,13 @@ namespace ModelBuilder.Rdf.Extensions
         {
             foreach (var connection in project.Connections)
             {
-                if (connection.ToNodeId != node.Id) continue;
+                if (connection.ToNode != node.Id) continue;
 
-                if (!connection.ToConnector.IsPartOf()) continue;
+                if (!connection.ToConnectorObject.IsPartOf()) continue;
 
-                if (connection.ToConnector.IsConnected(project))
+                if (connection.ToConnectorObject.IsConnected(project))
                 {
-                    return connection.FromNode;
+                    return connection.FromNodeObject;
                 }
             }
             return null;
