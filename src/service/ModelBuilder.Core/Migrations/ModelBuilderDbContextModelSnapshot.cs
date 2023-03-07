@@ -117,62 +117,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Attribute", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<int>("ConnectorVisibility")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("ConnectorVisibility");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Iri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Iri");
-
-                    b.Property<bool>("IsRequired")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsRequired");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("NodeId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("NodeId");
-
-                    b.Property<string>("NodeIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NodeIri");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int")
-                        .HasColumnName("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NodeId");
-
-                    b.ToTable("Connector", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Connector");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Edge", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connection", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -269,7 +214,69 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("ToNodeId");
 
-                    b.ToTable("Edge", (string)null);
+                    b.ToTable("Connection", (string)null);
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("AspectObjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("AspectObject");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Color");
+
+                    b.Property<int>("Direction")
+                        .HasColumnType("int")
+                        .HasColumnName("Direction");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Discriminator");
+
+                    b.Property<string>("Inside")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Inside");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("Outside")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Outside");
+
+                    b.Property<string>("TerminalParentType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalParentType");
+
+                    b.Property<string>("TerminalType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalType");
+
+                    b.Property<string>("TypeReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReference");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AspectObjectId");
+
+                    b.ToTable("Connector", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Connector");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
@@ -528,64 +535,18 @@ namespace Mb.Core.Migrations
                     b.ToTable("Version", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Relation", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorRelation", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Connector");
 
-                    b.Property<int>("RelationType")
-                        .HasColumnType("int")
-                        .HasColumnName("RelationType");
-
-                    b.HasDiscriminator().HasValue("Relation");
+                    b.HasDiscriminator().HasValue("ConnectorRelation");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Terminal", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminal", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Connector");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsProxy")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsProxy");
-
-                    b.Property<string>("ProxyParent")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProxyParent");
-
-                    b.Property<string>("ProxySibling")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProxySibling");
-
-                    b.Property<string>("TerminalParentTypeId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalParentTypeId");
-
-                    b.Property<string>("TerminalParentTypeIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalParentTypeIri");
-
-                    b.Property<string>("TerminalParentTypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalParentTypeName");
-
-                    b.Property<string>("TerminalTypeId")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalTypeId");
-
-                    b.Property<string>("TerminalTypeIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalTypeIri");
-
-                    b.Property<string>("TypeReferenceString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TypeReferenceString");
-
-                    b.HasDiscriminator().HasValue("Terminal");
+                    b.HasDiscriminator().HasValue("ConnectorTerminal");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
@@ -595,54 +556,44 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("NodeId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Terminal", "Terminal")
+                    b.HasOne("Mb.Models.Data.ConnectorTerminal", "ConnectorTerminal")
                         .WithMany("Attributes")
                         .HasForeignKey("TerminalId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Node");
-
-                    b.Navigation("Terminal");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
-                {
-                    b.HasOne("Mb.Models.Data.Node", "Node")
-                        .WithMany("Connectors")
-                        .HasForeignKey("NodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Navigation("ConnectorTerminal");
 
                     b.Navigation("Node");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Edge", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connection", b =>
                 {
                     b.HasOne("Mb.Models.Data.Connector", "FromConnector")
-                        .WithMany("FromEdges")
+                        .WithMany("FromConnections")
                         .HasForeignKey("FromConnectorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Mb.Models.Data.Node", "FromNode")
-                        .WithMany("FromEdges")
+                        .WithMany("FromConnections")
                         .HasForeignKey("FromNodeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Edges")
+                        .WithMany("Connections")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Mb.Models.Data.Connector", "ToConnector")
-                        .WithMany("ToEdges")
+                        .WithMany("ToConnections")
                         .HasForeignKey("ToConnectorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Mb.Models.Data.Node", "ToNode")
-                        .WithMany("ToEdges")
+                        .WithMany("ToConnections")
                         .HasForeignKey("ToNodeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -658,6 +609,17 @@ namespace Mb.Core.Migrations
                     b.Navigation("ToNode");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Node", "AspectObject")
+                        .WithMany("Connectors")
+                        .HasForeignKey("AspectObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AspectObject");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
                     b.HasOne("Mb.Models.Data.Project", "Project")
@@ -671,9 +633,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
-                    b.Navigation("FromEdges");
+                    b.Navigation("FromConnections");
 
-                    b.Navigation("ToEdges");
+                    b.Navigation("ToConnections");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
@@ -682,19 +644,19 @@ namespace Mb.Core.Migrations
 
                     b.Navigation("Connectors");
 
-                    b.Navigation("FromEdges");
+                    b.Navigation("FromConnections");
 
-                    b.Navigation("ToEdges");
+                    b.Navigation("ToConnections");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Project", b =>
                 {
-                    b.Navigation("Edges");
+                    b.Navigation("Connections");
 
                     b.Navigation("Nodes");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Terminal", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminal", b =>
                 {
                     b.Navigation("Attributes");
                 });

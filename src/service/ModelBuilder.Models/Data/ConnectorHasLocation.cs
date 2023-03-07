@@ -1,8 +1,10 @@
+using Mb.Models.Const;
+
 namespace Mb.Models.Data
 {
     public class ConnectorHasLocation : ConnectorRelation
     {
-        public override string Discriminator => nameof(ConnectorHasLocation);
+        public override string Discriminator => Discriminators.HasLocation;
 
         private bool Equals(ConnectorHasLocation other)
         {

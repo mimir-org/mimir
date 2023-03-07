@@ -4,8 +4,6 @@ namespace Mb.Models.Data
 {
     public class ConnectorRelation : Connector, IEquatable<ConnectorRelation>
     {
-        public virtual string Discriminator => nameof(ConnectorRelation);
-
         public bool Equals(ConnectorRelation other)
         {
             if (other is null) 

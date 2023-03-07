@@ -1,8 +1,10 @@
+using Mb.Models.Const;
+
 namespace Mb.Models.Data
 {
     public class ConnectorFulfilledBy : ConnectorRelation
     {
-        public override string Discriminator => nameof(ConnectorFulfilledBy);
+        public override string Discriminator => Discriminators.FulfilledBy;
 
         private bool Equals(ConnectorFulfilledBy other)
         {

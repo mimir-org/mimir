@@ -9,16 +9,21 @@ using TypeScriptBuilder;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Connector : IEquatable<Connector>
+    public abstract class Connector : IEquatable<Connector>
     {
-        #region Properties
         public string Id { get; set; }
-        public string Domain => Id.ResolveDomain();
         public string Name { get; set; }
+        public virtual string Discriminator { get; set; }
         public ConnectorDirection Direction { get; set; }
-        public virtual string AspectObjectId { get; set; }
         public string Inside { get; set; }
         public string Outside { get; set; }
+        public virtual string Color { get; set; }
+        public virtual string AspectObjectId { get; set; }
+        public virtual string TypeReference { get; set; }
+        public virtual string TerminalType { get; set; }
+        public virtual string TerminalParentType { get; set; }
+
+        public string Domain => Id.ResolveDomain();
 
         [JsonIgnore]
         [TSExclude]
@@ -32,12 +37,14 @@ namespace Mb.Models.Data
         [TSExclude]
         public virtual ICollection<Connection> ToConnections { get; set; }
 
-        #endregion
-
         public bool Equals(Connector other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (other is null) 
+                return false;
+
+            if (ReferenceEquals(this, other)) 
+                return true;
+
             return Id == other.Id &&
                    Name == other.Name &&
                    Direction == other.Direction &&
@@ -46,10 +53,13 @@ namespace Mb.Models.Data
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Connector) obj);
+            if (obj is null) 
+                return false;
+
+            if (ReferenceEquals(this, obj)) 
+                return true;
+
+            return obj.GetType() == GetType() && Equals((Connector) obj);
         }
 
         public override int GetHashCode()

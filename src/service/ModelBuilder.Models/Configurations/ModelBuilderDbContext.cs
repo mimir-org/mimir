@@ -12,8 +12,8 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Connection> Connections { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
         public virtual DbSet<Connector> Connectors { get; set; }
-        public virtual DbSet<ConnectorRelation> Relations { get; set; }
-        public virtual DbSet<ConnectorTerminal> Terminals { get; set; }
+        public virtual DbSet<ConnectorRelation> ConnectorRelations { get; set; }
+        public virtual DbSet<ConnectorTerminal> ConnectorTerminals { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -30,8 +30,6 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new ConnectionConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeConfiguration());
             modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
-            modelBuilder.ApplyConfiguration(new RelationConfiguration());
-            modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
         }
     }

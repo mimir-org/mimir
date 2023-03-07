@@ -1,22 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mb.Models.Const;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     public class ConnectorTerminal : Connector, IEquatable<ConnectorTerminal>
     {
-        public string Color { get; set; }
-        public string TerminalType { get; set; }
-        public string TerminalParentType { get; set; }
+        public override string Color { get; set; }
+        public override string TerminalType { get; set; }
+        public override string TerminalParentType { get; set; }
+        public override string Discriminator => Discriminators.Terminal;
         public ICollection<Attribute> Attributes { get; set; }
-        public string Discriminator => nameof(ConnectorTerminal);
-
+        
         [JsonIgnore]
         [TSExclude]
-        public string TypeReferenceString { get; set; }
+        public override string TypeReference { get; set; }
 
         [NotMapped]
         public ICollection<TypeReference> TypeReferences
@@ -26,7 +28,7 @@ namespace Mb.Models.Data
                 if (_typeReferences != null)
                     return _typeReferences;
 
-                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+                return !string.IsNullOrWhiteSpace(TypeReference) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReference) : null;
             }
 
             set => _typeReferences = value;
@@ -42,7 +44,7 @@ namespace Mb.Models.Data
                 return true;
 
             return base.Equals(other) &&
-                   TypeReferenceString == other.TypeReferenceString &&
+                   TypeReference == other.TypeReference &&
                    Color == other.Color &&
                    TerminalType == other.TerminalType &&
                    TerminalParentType == other.TerminalParentType;
@@ -61,7 +63,7 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalType, TypeReferenceString);
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalType, TypeReference);
         }
 
         [TSExclude]
