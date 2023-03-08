@@ -24,8 +24,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.RangeSpecifying).HasColumnName("RangeSpecifying").HasMaxLength(127).IsRequired(false);
             builder.Property(p => p.RegularitySpecified).HasColumnName("RegularitySpecified").HasMaxLength(127).IsRequired(false);
 
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
-            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
+            builder.Property(p => p.AspectObjectId).HasColumnName("AspectObjectId").IsRequired(false);
+            builder.Property(p => p.AspectObjectIri).HasColumnName("AspectObjectIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
             builder.Property(p => p.TerminalIri).HasColumnName("TerminalIri").IsRequired(false);
 
@@ -34,7 +34,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
 
             builder.HasOne(x => x.ConnectorTerminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(x => x.AspectObject).WithMany(y => y.Attributes).HasForeignKey(x => x.AspectObjectId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

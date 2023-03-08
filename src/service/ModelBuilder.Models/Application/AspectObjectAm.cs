@@ -21,7 +21,7 @@ namespace Mb.Models.Application
         public Aspect Aspect { get; set; }
 
         [Required]
-        public AspectObjectType NodeType { get; set; }
+        public AspectObjectType AspectObjectType { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
@@ -94,8 +94,8 @@ namespace Mb.Models.Application
         {
             var validations = new List<ValidationResult>();
 
-            if (string.IsNullOrWhiteSpace(Rds) && NodeType == AspectObjectType.Aspect)
-                validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(NodeType) }));
+            if (string.IsNullOrWhiteSpace(Rds) && AspectObjectType == AspectObjectType.Aspect)
+                validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(AspectObjectType) }));
 
             if (Aspect == Aspect.None)
                 validations.Add(new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) }));

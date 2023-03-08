@@ -18,18 +18,18 @@ namespace ModelBuilder.Rdf.Services
     {
         private readonly IOntologyRepository _ontologyRepository;
         private readonly ILibraryRepository _libRepository;
-        private readonly IAspectObjectRepository _nodeRepository;
+        private readonly IAspectObjectRepository _aspectObjectRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly IMapper _mapper;
 
         #region Constructors
 
         public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
-            IAspectObjectRepository nodeRepository, IMapper mapper, IConnectionRepository connectionRepository)
+            IAspectObjectRepository aspectObjectRepository, IMapper mapper, IConnectionRepository connectionRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
-            _nodeRepository = nodeRepository;
+            _aspectObjectRepository = aspectObjectRepository;
             _mapper = mapper;
             _connectionRepository = connectionRepository;
         }
@@ -52,7 +52,7 @@ namespace ModelBuilder.Rdf.Services
 
             _ontologyRepository.LoadData(new Graph());
             project.AssertGraph(this);
-            BuildNodes(project, applicationData);
+            BuildAspectObjects(project, applicationData);
             BuildConnections(project, applicationData);
         }
 
@@ -73,7 +73,7 @@ namespace ModelBuilder.Rdf.Services
 
             var applicationData = GetApplicationData(project.Iri);
 
-            project.ResolveNodes(this, applicationData);
+            project.ResolveAspectObjects(this, applicationData);
             project.ResolveRelationConnections(this, applicationData);
 
             return project;
@@ -105,76 +105,76 @@ namespace ModelBuilder.Rdf.Services
         }
 
         /// <summary>
-        /// Assert a node to the graph
+        /// Assert a aspectObject to the graph
         /// </summary>
         /// <param name="subject"></param>
         /// <param name="predicate"></param>
         /// <param name="obj"></param>
         /// <param name="isLiteral"></param>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public void AssertNode(string subject, string predicate, string obj, bool isLiteral = false)
+        public void AssertAspectObject(string subject, string predicate, string obj, bool isLiteral = false)
         {
             if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(predicate) || string.IsNullOrEmpty(obj))
                 return;
 
-            var s = CreateNode(subject);
-            var p = CreateNode(predicate);
-            var o = CreateNode(obj, isLiteral);
+            var s = CreateAspectObject(subject);
+            var p = CreateAspectObject(predicate);
+            var o = CreateAspectObject(obj, isLiteral);
 
             if (s == null || p == null || o == null)
-                throw new ModelBuilderModuleException($"Can't create nodes from data: {subject} - {predicate} - {obj}");
+                throw new ModelBuilderModuleException($"Can't create aspectObjects from data: {subject} - {predicate} - {obj}");
             _ontologyRepository.Graph.Assert(s, p, o);
         }
 
         /// <summary>
-        /// Assert a node to the graph
+        /// Assert a aspectObject to the graph
         /// </summary>
         /// <param name="subject"></param>
         /// <param name="predicate"></param>
         /// <param name="obj"></param>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public void AssertNode(string subject, string predicate, INode obj)
+        public void AssertAspectObject(string subject, string predicate, INode obj)
         {
             if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(predicate))
                 return;
 
-            var s = CreateNode(subject);
-            var p = CreateNode(predicate);
+            var s = CreateAspectObject(subject);
+            var p = CreateAspectObject(predicate);
 
             if (s == null || p == null || obj == null)
-                throw new ModelBuilderModuleException($"Can't create nodes from data: {subject} - {predicate} - {obj}");
+                throw new ModelBuilderModuleException($"Can't create aspectObjects from data: {subject} - {predicate} - {obj}");
 
             _ontologyRepository.Graph.Assert(s, p, obj);
         }
 
         /// <summary>
-        /// Create a literal node
+        /// Create a literal aspectObject
         /// </summary>
         /// <param name="literal"></param>
         /// <param name="dataType"></param>
         /// <returns></returns>
-        public INode CreateLiteralNode(string literal, Uri dataType)
+        public INode CreateLiteralAspectObject(string literal, Uri dataType)
         {
             return _ontologyRepository.Graph.CreateLiteralNode(literal, dataType);
         }
 
         /// <summary>
-        /// Create a literal node
+        /// Create a literal aspectObject
         /// </summary>
         /// <param name="literal"></param>
         /// <returns></returns>
-        public INode CreateLiteralNode(string literal)
+        public INode CreateLiteralAspectObject(string literal)
         {
             return _ontologyRepository.Graph.CreateLiteralNode(literal);
         }
 
         /// <summary>
-        /// Create a literal node
+        /// Create a literal aspectObject
         /// </summary>
         /// <param name="literal"></param>
         /// <param name="dataType"></param>
         /// <returns></returns>
-        public INode CreateLiteralNode(string literal, string dataType)
+        public INode CreateLiteralAspectObject(string literal, string dataType)
         {
             var uri = _ontologyRepository.BuildUri(dataType);
             return _ontologyRepository.Graph.CreateLiteralNode(literal, uri);
@@ -191,9 +191,9 @@ namespace ModelBuilder.Rdf.Services
         }
 
 
-        public INode GetOrCreateUriNode(string type)
+        public INode GetOrCreateUriAspectObject(string type)
         {
-            return _ontologyRepository.Graph.GetOrCreateUriNode(type);
+            return _ontologyRepository.Graph.GetOrCreateUriAspectObject(type);
         }
 
         public IEnumerable<Triple> GetTriplesWithPredicateObject(string predicate, string obj)
@@ -201,8 +201,8 @@ namespace ModelBuilder.Rdf.Services
             if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(obj))
                 throw new NullReferenceException("Can't get triples from null reference objects");
 
-            var p = GetOrCreateUriNode(predicate);
-            var o = GetOrCreateUriNode(obj);
+            var p = GetOrCreateUriAspectObject(predicate);
+            var o = GetOrCreateUriAspectObject(obj);
 
             return _ontologyRepository.Store.GetTriplesWithPredicateObject(p, o);
         }
@@ -212,8 +212,8 @@ namespace ModelBuilder.Rdf.Services
             if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(subject))
                 throw new NullReferenceException("Can't get triples from null reference objects");
 
-            var s = GetOrCreateUriNode(subject);
-            var p = GetOrCreateUriNode(predicate);
+            var s = GetOrCreateUriAspectObject(subject);
+            var p = GetOrCreateUriAspectObject(predicate);
 
             return _ontologyRepository.Store.GetTriplesWithSubjectPredicate(s, p);
         }
@@ -223,7 +223,7 @@ namespace ModelBuilder.Rdf.Services
             if (string.IsNullOrWhiteSpace(predicate))
                 throw new NullReferenceException("Can't get triples from null reference objects");
 
-            var p = GetOrCreateUriNode(predicate);
+            var p = GetOrCreateUriAspectObject(predicate);
             return _ontologyRepository.Store.GetTriplesWithPredicate(p);
         }
 
@@ -339,69 +339,69 @@ namespace ModelBuilder.Rdf.Services
         private ProjectData GetApplicationData(string project)
         {
             var connections = _connectionRepository.GetAll().Where(x => x.Project == project).ToList();
-            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == project).ToList();
+            var aspectObjects = _aspectObjectRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == project).ToList();
             var quantityDatums = _libRepository.GetQuantityDatums().Result;
             var units = _libRepository.GetUnits().Result;
 
             var projectData = new ProjectData
             {
                 Connections = _mapper.Map<List<ConnectionAm>>(connections),
-                Nodes = _mapper.Map<List<AspectObjectAm>>(nodes),
+                AspectObjects = _mapper.Map<List<AspectObjectAm>>(aspectObjects),
                 Units = units,
                 QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
             };
 
             _connectionRepository.Context.ChangeTracker.Clear();
-            _nodeRepository.Context.ChangeTracker.Clear();
+            _aspectObjectRepository.Context.ChangeTracker.Clear();
 
             return projectData;
         }
 
         /// <summary>
-        /// Create a node
+        /// Create a aspectObject
         /// </summary>
         /// <param name="value"></param>
         /// <param name="isLiteral"></param>
         /// <returns></returns>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        private INode CreateNode(string value, bool isLiteral = false)
+        private INode CreateAspectObject(string value, bool isLiteral = false)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
             return isLiteral
                 ? _ontologyRepository.Graph.CreateLiteralNode(value)
-                : _ontologyRepository.Graph.GetOrCreateUriNode(value);
+                : _ontologyRepository.Graph.GetOrCreateUriAspectObject(value);
         }
 
         /// <summary>
-        /// Build project nodes
+        /// Build project aspectObjects
         /// </summary>
         /// <param name="project"></param>
         /// <param name="projectData">Record of ICollections</param>
-        private void BuildNodes(Project project, ProjectData projectData)
+        private void BuildAspectObjects(Project project, ProjectData projectData)
         {
-            if (project.Nodes == null || !project.Nodes.Any())
+            if (project.AspectObjects == null || !project.AspectObjects.Any())
                 return;
 
-            foreach (var node in project.Nodes)
+            foreach (var aspectObject in project.AspectObjects)
             {
-                node.AssertNode(project, this, projectData);
+                aspectObject.AssertAspectObject(project, this, projectData);
 
-                if (node.Attributes != null && node.Attributes.Any())
+                if (aspectObject.Attributes != null && aspectObject.Attributes.Any())
                 {
-                    foreach (var attribute in node.Attributes)
+                    foreach (var attribute in aspectObject.Attributes)
                     {
-                        attribute.AssertAttribute(node.Iri, this);
+                        attribute.AssertAttribute(aspectObject.Iri, this);
                         attribute.AssertAttributeValue(this, projectData);
                     }
                 }
 
-                if (node.Connectors != null && node.Connectors.Any())
+                if (aspectObject.Connectors != null && aspectObject.Connectors.Any())
                 {
-                    foreach (var connector in node.Connectors)
+                    foreach (var connector in aspectObject.Connectors)
                     {
-                        connector.AssertConnector(this, node.Iri, projectData, null, DefaultFlowDirection.NotSet);
+                        connector.AssertConnector(this, aspectObject.Iri, projectData, null, DefaultFlowDirection.NotSet);
                     }
                 }
             }

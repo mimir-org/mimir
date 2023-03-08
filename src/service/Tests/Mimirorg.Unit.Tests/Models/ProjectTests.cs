@@ -28,14 +28,14 @@ namespace ModelBuilder.Unit.Tests.Models
                 ProjectOwner = "Anna Bond",
                 UpdatedBy = "Anna Bond",
                 Updated = new DateTime(2022, 6, 1, 10, 0, 0),
-                Nodes = new List<AspectObjectAm>
+                AspectObjects = new List<AspectObjectAm>
                 {
                     new AspectObjectAm
                     {
                         Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
                         Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                        Name = "Dummy Node A",
-                        Description = "Dummy Node A",
+                        Name = "Dummy AspectObject A",
+                        Description = "Dummy AspectObject A",
                         ProjectId = $"runir.net_{ProjectGuid}",
                         ProjectIri = $"https://rdf.runir.net/ID{ProjectGuid}",
                         Version = "1.0",
@@ -53,8 +53,8 @@ namespace ModelBuilder.Unit.Tests.Models
                                 Iri = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                NodeId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                NodeIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObjectId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObjectIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector A",
                                 Type = ConnectorDirection.Input,
                                 RelationType = RelationType.PartOf
@@ -65,8 +65,8 @@ namespace ModelBuilder.Unit.Tests.Models
                                 Iri = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                NodeId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                NodeIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObjectId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObjectIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector B",
                                 Type = ConnectorDirection.Output,
                                 RelationType = RelationType.PartOf
@@ -79,8 +79,8 @@ namespace ModelBuilder.Unit.Tests.Models
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null,
-                        NodeType = AspectObjectType.Aspect,
-                        Label = "Dummy Node A",
+                        AspectObjectType = AspectObjectType.Aspect,
+                        Label = "Dummy AspectObject A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                         PositionBlockX = -64.2857m,
                         PositionBlockY = -6.4285m,
@@ -95,8 +95,8 @@ namespace ModelBuilder.Unit.Tests.Models
                     {
                         Id = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
                         Iri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
-                        Name = "Dummy Node B",
-                        Description = "Dummy Node B",
+                        Name = "Dummy AspectObject B",
+                        Description = "Dummy AspectObject B",
                         ProjectId = $"runir.net_{ProjectGuid}",
                         ProjectIri = $"https://rdf.runir.net/ID{ProjectGuid}",
                         Version = "1.0",
@@ -114,8 +114,8 @@ namespace ModelBuilder.Unit.Tests.Models
                                 Iri = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                NodeId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                                NodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObjectId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObjectIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector A",
                                 Type = ConnectorDirection.Input,
                                 RelationType = RelationType.PartOf
@@ -126,8 +126,8 @@ namespace ModelBuilder.Unit.Tests.Models
                                 Iri = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                NodeId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                                NodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObjectId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObjectIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector B",
                                 Type = ConnectorDirection.Output,
                                 RelationType = RelationType.PartOf
@@ -140,8 +140,8 @@ namespace ModelBuilder.Unit.Tests.Models
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null,
-                        NodeType = AspectObjectType.Aspect,
-                        Label = "Dummy Node A",
+                        AspectObjectType = AspectObjectType.Aspect,
+                        Label = "Dummy AspectObject A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                         PositionBlockX = -64.2857m,
                         PositionBlockY = -6.4285m,
@@ -167,10 +167,10 @@ namespace ModelBuilder.Unit.Tests.Models
                         FromConnectorIri = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                         ToConnectorId = "runir.net_95479872-2249-4E46-8E9F-305589F946CC",
                         ToConnectorIri = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
-                        FromNodeId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                        FromNodeIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                        ToNodeId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                        ToNodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                        FromAspectObjectId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                        FromAspectObjectIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                        ToAspectObjectId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
+                        ToAspectObjectIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null
@@ -180,10 +180,10 @@ namespace ModelBuilder.Unit.Tests.Models
         }
 
         [Fact]
-        public void Project_With_Duplicate_Nodes_Validate_Error()
+        public void Project_With_Duplicate_AspectObjects_Validate_Error()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Nodes.Add(new AspectObjectAm
+            clone.AspectObjects.Add(new AspectObjectAm
             {
                 Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
                 Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
@@ -210,7 +210,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 Name = name,
                 Version = version,
                 ProjectOwner = projectOwner,
-                Nodes = null,
+                AspectObjects = null,
                 Connections = null
             };
 
@@ -229,35 +229,35 @@ namespace ModelBuilder.Unit.Tests.Models
         public void GetParentlessConnections_With_One_Parentless_Connections_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
+            clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
             var connections = clone.GetParentlessConnectors().ToList();
             Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedConnections_With_One_Connection_Missing_ToNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_ToAspectObject_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Connections.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{1}";
+            clone.Connections.ElementAt(0).ToAspectObjectId = $"Id_Bare_Tull_{1}";
             var connections = clone.GetNotConnectedConnectors().ToList();
             Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedConnections_With_One_Connection_Missing_FromNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_FromAspectObject_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
+            clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
             var connections = clone.GetNotConnectedConnectors().ToList();
             Assert.Single(connections);
         }
 
         [Fact]
-        public void GetNotConnectedConnections_With_One_Connection_Missing_FromNode_And_ToNode_Returns_Ok()
+        public void GetNotConnectedConnections_With_One_Connection_Missing_FromAspectObject_And_ToAspectObject_Returns_Ok()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Connections.ElementAt(0).FromNodeId = $"Id_Bare_Tull_{1}";
-            clone.Connections.ElementAt(0).ToNodeId = $"Id_Bare_Tull_{2}";
+            clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
+            clone.Connections.ElementAt(0).ToAspectObjectId = $"Id_Bare_Tull_{2}";
             var connections = clone.GetNotConnectedConnectors().ToList();
             Assert.Single(connections);
         }

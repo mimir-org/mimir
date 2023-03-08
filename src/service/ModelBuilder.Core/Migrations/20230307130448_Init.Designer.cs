@@ -63,13 +63,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("IsLockedStatusDate");
 
-                    b.Property<string>("NodeId")
+                    b.Property<string>("AspectObjectId")
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("NodeId");
+                        .HasColumnName("AspectObjectId");
 
-                    b.Property<string>("NodeIri")
+                    b.Property<string>("AspectObjectIri")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NodeIri");
+                        .HasColumnName("AspectObjectIri");
 
                     b.Property<string>("RangeSpecifying")
                         .HasMaxLength(127)
@@ -113,7 +113,7 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NodeId");
+                    b.HasIndex("AspectObjectId");
 
                     b.HasIndex("TerminalId");
 
@@ -135,10 +135,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FromConnector");
 
-                    b.Property<string>("FromNode")
+                    b.Property<string>("FromAspectObject")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("FromNode");
+                        .HasColumnName("FromAspectObject");
 
                     b.Property<string>("MainProject")
                         .IsRequired()
@@ -163,22 +163,22 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("ToConnector");
 
-                    b.Property<string>("ToNode")
+                    b.Property<string>("ToAspectObject")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ToNode");
+                        .HasColumnName("ToAspectObject");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FromConnector");
 
-                    b.HasIndex("FromNode");
+                    b.HasIndex("FromAspectObject");
 
                     b.HasIndex("Project");
 
                     b.HasIndex("ToConnector");
 
-                    b.HasIndex("ToNode");
+                    b.HasIndex("ToAspectObject");
 
                     b.ToTable("Connection", (string)null);
                 });
@@ -245,7 +245,7 @@ namespace Mb.Core.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Node", b =>
+            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -321,9 +321,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
-                    b.Property<int>("NodeType")
+                    b.Property<int>("AspectObjectType")
                         .HasColumnType("int")
-                        .HasColumnName("NodeType");
+                        .HasColumnName("AspectObjectType");
 
                     b.Property<int>("Order")
                         .HasColumnType("int")
@@ -397,7 +397,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("ProjectIri");
 
-                    b.ToTable("Node", (string)null);
+                    b.ToTable("AspectObject", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Project", b =>
@@ -517,9 +517,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Node", "Node")
+                    b.HasOne("Mb.Models.Data.AspectObject", "AspectObject")
                         .WithMany("Attributes")
-                        .HasForeignKey("NodeId")
+                        .HasForeignKey("AspectObjectId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Mb.Models.Data.ConnectorTerminal", "ConnectorTerminal")
@@ -529,7 +529,7 @@ namespace Mb.Core.Migrations
 
                     b.Navigation("ConnectorTerminal");
 
-                    b.Navigation("Node");
+                    b.Navigation("AspectObject");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connection", b =>
@@ -540,9 +540,9 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Node", "FromNodeObject")
+                    b.HasOne("Mb.Models.Data.AspectObject", "FromAspectObjectObject")
                         .WithMany("FromConnections")
-                        .HasForeignKey("FromNode")
+                        .HasForeignKey("FromAspectObject")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -558,26 +558,26 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Mb.Models.Data.Node", "ToNodeObject")
+                    b.HasOne("Mb.Models.Data.AspectObject", "ToAspectObjectObject")
                         .WithMany("ToConnections")
-                        .HasForeignKey("ToNode")
+                        .HasForeignKey("ToAspectObject")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("FromConnectorObject");
 
-                    b.Navigation("FromNodeObject");
+                    b.Navigation("FromAspectObjectObject");
 
                     b.Navigation("ProjectObject");
 
                     b.Navigation("ToConnectorObject");
 
-                    b.Navigation("ToNodeObject");
+                    b.Navigation("ToAspectObjectObject");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Node", "AspectObject")
+                    b.HasOne("Mb.Models.Data.AspectObject", "AspectObject")
                         .WithMany("Connectors")
                         .HasForeignKey("AspectObjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -586,10 +586,10 @@ namespace Mb.Core.Migrations
                     b.Navigation("AspectObject");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Node", b =>
+            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
                 {
                     b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Nodes")
+                        .WithMany("AspectObjects")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -604,7 +604,7 @@ namespace Mb.Core.Migrations
                     b.Navigation("ToConnections");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Node", b =>
+            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
                 {
                     b.Navigation("Attributes");
 
@@ -619,7 +619,7 @@ namespace Mb.Core.Migrations
                 {
                     b.Navigation("Connections");
 
-                    b.Navigation("Nodes");
+                    b.Navigation("AspectObjects");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.ConnectorTerminal", b =>

@@ -23,21 +23,21 @@ namespace ModelBuilder.Rdf.Extensions
 
             ontologyService.SetBaseUri(new Uri(project.Iri));
 
-            ontologyService.AssertNode(project.Iri, Resources.Label, project.Name, true);
-            ontologyService.AssertNode(project.Iri, Resources.Version, project.Version, true);
-            ontologyService.AssertNode(project.Iri, Resources.Type, Resources.Project);
-            ontologyService.AssertNode(project.Iri, Resources.Type, Resources.IntegratedObject);
-            ontologyService.AssertNode(project.Iri, Resources.Domain, project.Domain, true);
-            ontologyService.AssertNode(project.Iri, Resources.HasOwner, project.ProjectOwner, true);
+            ontologyService.AssertAspectObject(project.Iri, Resources.Label, project.Name, true);
+            ontologyService.AssertAspectObject(project.Iri, Resources.Version, project.Version, true);
+            ontologyService.AssertAspectObject(project.Iri, Resources.Type, Resources.Project);
+            ontologyService.AssertAspectObject(project.Iri, Resources.Type, Resources.IntegratedObject);
+            ontologyService.AssertAspectObject(project.Iri, Resources.Domain, project.Domain, true);
+            ontologyService.AssertAspectObject(project.Iri, Resources.HasOwner, project.ProjectOwner, true);
 
             if (!string.IsNullOrWhiteSpace(project.UpdatedBy))
-                ontologyService.AssertNode(project.Iri, Resources.UpdatedBy, project.UpdatedBy, true);
+                ontologyService.AssertAspectObject(project.Iri, Resources.UpdatedBy, project.UpdatedBy, true);
 
             if (project.Updated != null)
-                ontologyService.AssertNode(project.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{project.Updated?.ToString("u")}", Resources.DateTime));
+                ontologyService.AssertAspectObject(project.Iri, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{project.Updated?.ToString("u")}", Resources.DateTime));
 
             if (!string.IsNullOrEmpty(project.Description))
-                ontologyService.AssertNode(project.Iri, Resources.Desc, project.Description, true);
+                ontologyService.AssertAspectObject(project.Iri, Resources.Desc, project.Description, true);
         }
 
         /// <summary>
@@ -69,43 +69,43 @@ namespace ModelBuilder.Rdf.Extensions
         }
 
         /// <summary>
-        /// Resolve project aspect nodes
+        /// Resolve project aspect aspectObjects
         /// </summary>
         /// <param name="project">Extended project</param>
         /// <param name="ontologyService">Ontology service</param>
         /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-        /// <exception cref="MimirorgBadRequestException">Throws if missing root nodes in rdf file, or bad rdf declaration</exception>
-        public static void ResolveNodes(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+        /// <exception cref="MimirorgBadRequestException">Throws if missing root aspectObjects in rdf file, or bad rdf declaration</exception>
+        public static void ResolveAspectObjects(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-            project.Nodes = new List<AspectObjectAm>();
+            project.AspectObjects = new List<AspectObjectAm>();
 
-            // Resolve root nodes
-            var rootNodes = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
+            // Resolve root aspectObjects
+            var rootAspectObjects = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
 
-            if (rootNodes == null || !rootNodes.Any())
-                throw new MimirorgBadRequestException("Cannot find the root nodes in rdf file.");
+            if (rootAspectObjects == null || !rootAspectObjects.Any())
+                throw new MimirorgBadRequestException("Cannot find the root aspectObjects in rdf file.");
 
-            foreach (var n in rootNodes)
+            foreach (var n in rootAspectObjects)
             {
-                var node = new AspectObjectAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, AspectObjectType.Root, projectData);
-                project.Nodes.Add(node);
+                var aspectObject = new AspectObjectAm();
+                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Iri, AspectObjectType.Root, projectData);
+                project.AspectObjects.Add(aspectObject);
             }
 
             // Resolve functional system blocks
-            var nodes = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.FSB).Select(t => t.Subject).ToList();
-            if (!nodes.Any())
+            var aspectObjects = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.FSB).Select(t => t.Subject).ToList();
+            if (!aspectObjects.Any())
                 return;
 
-            foreach (var n in nodes)
+            foreach (var n in aspectObjects)
             {
-                var node = new AspectObjectAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, AspectObjectType.Aspect, projectData);
-                project.Nodes.Add(node);
+                var aspectObject = new AspectObjectAm();
+                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Iri, AspectObjectType.Aspect, projectData);
+                project.AspectObjects.Add(aspectObject);
             }
         }
 

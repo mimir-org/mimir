@@ -41,7 +41,7 @@ namespace ModelBuilder.Unit.Tests.Services
         }
 
         [Fact]
-        public void RemapNodes_Node_Project_Mapping_Ok()
+        public void RemapAspectObjects_AspectObject_Project_Mapping_Ok()
         {
             // Project replacement
             var projectReplacement = new ReplacementId
@@ -52,8 +52,8 @@ namespace ModelBuilder.Unit.Tests.Services
                 ToIri = "https://rdf.runir.net/ID5678"
             };
 
-            // Node data
-            var nodes = new List<AspectObjectAm>
+            // AspectObject data
+            var aspectObjects = new List<AspectObjectAm>
             {
                 new()
                 {
@@ -78,18 +78,18 @@ namespace ModelBuilder.Unit.Tests.Services
             };
 
             var remap = new Dictionary<string, string>();
-            var mappedNodes = _remapService.RemapNodes(projectReplacement, nodes, null, remap, false).ToList();
+            var mappedAspectObjects = _remapService.RemapAspectObjects(projectReplacement, aspectObjects, null, remap, false).ToList();
 
-            foreach (var testNode in mappedNodes)
+            foreach (var testAspectObject in mappedAspectObjects)
             {
 
-                Assert.NotNull(testNode);
-                Assert.Equal("https://rdf.runir.net/ID5678", testNode.ProjectIri);
-                Assert.Equal("runir.net_5678", testNode.ProjectId);
-                Assert.Equal("https://rdf.runir.net/ID5678", testNode.MasterProjectIri);
-                Assert.Equal("runir.net_5678", testNode.MasterProjectId);
+                Assert.NotNull(testAspectObject);
+                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.ProjectIri);
+                Assert.Equal("runir.net_5678", testAspectObject.ProjectId);
+                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.MasterProjectIri);
+                Assert.Equal("runir.net_5678", testAspectObject.MasterProjectId);
 
-                var nodeIdSplit = testNode.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+                var nodeIdSplit = testAspectObject.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 Assert.Equal(2, nodeIdSplit.Length);
             }
         }

@@ -30,23 +30,23 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(AspectObject node, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
+        public IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
             string invokedByDomain)
         {
-            if (project?.Nodes == null || !project.Nodes.Any())
+            if (project?.AspectObjects == null || !project.AspectObjects.Any())
                 yield break;
 
-            var newNodes = original != null
-                ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
+            var newAspectObjects = original != null
+                ? project.AspectObjects.Where(x => original.All(y => y.Id != x.Id)).ToList()
                 : new List<AspectObject>();
 
-            foreach (var node in project.Nodes)
+            foreach (var aspectObject in project.AspectObjects)
             {
-                if (newNodes.Any(x => x.Id == node.Id))
+                if (newAspectObjects.Any(x => x.Id == aspectObject.Id))
                 {
-                    if (node.Attributes != null)
+                    if (aspectObject.Attributes != null)
                     {
-                        foreach (var attribute in node.Attributes)
+                        foreach (var attribute in aspectObject.Attributes)
                         {
                             attribute.UnitString = attribute.Units != null
                                 ? JsonConvert.SerializeObject(attribute.Units)
@@ -55,28 +55,28 @@ namespace Mb.Data.Repositories
                         }
                     }
 
-                    node.Version = _commonRepository.GetDomain() != node.Domain
-                        ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version
+                    aspectObject.Version = _commonRepository.GetDomain() != aspectObject.Domain
+                        ? string.IsNullOrEmpty(aspectObject.Version) ? "1.0" : aspectObject.Version
                         : "1.0";
 
-                    _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
+                    _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Added);
 
-                    yield return (node, WorkerStatus.Create);
-                    Attach(node, EntityState.Added);
+                    yield return (aspectObject, WorkerStatus.Create);
+                    Attach(aspectObject, EntityState.Added);
                 }
                 else
                 {
-                    // Parties is not allowed changed our node
-                    if (_commonRepository.GetDomain() == node.Domain &&
+                    // Parties is not allowed changed our aspectObject
+                    if (_commonRepository.GetDomain() == aspectObject.Domain &&
                         _commonRepository.GetDomain() != invokedByDomain)
                     {
-                        Detach(node);
+                        Detach(aspectObject);
                         continue;
                     }
 
-                    if (node.Attributes != null)
+                    if (aspectObject.Attributes != null)
                     {
-                        foreach (var attribute in node.Attributes)
+                        foreach (var attribute in aspectObject.Attributes)
                         {
                             attribute.UnitString = attribute.Units != null
                                 ? JsonConvert.SerializeObject(attribute.Units)
@@ -85,14 +85,14 @@ namespace Mb.Data.Repositories
                         }
                     }
 
-                    _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
-                    yield return (node, WorkerStatus.Update);
-                    Attach(node, EntityState.Modified);
+                    _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Modified);
+                    yield return (aspectObject, WorkerStatus.Update);
+                    Attach(aspectObject, EntityState.Modified);
                 }
             }
         }
 
-        public IEnumerable<(AspectObject node, WorkerStatus status)> DeleteNodes(ICollection<AspectObject> delete, string projectId,
+        public IEnumerable<(AspectObject aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObject> delete, string projectId,
             string invokedByDomain)
         {
             var returnValues = new List<(AspectObject connection, WorkerStatus status)>();
@@ -100,39 +100,39 @@ namespace Mb.Data.Repositories
             if (delete == null || projectId == null || !delete.Any())
                 return returnValues;
 
-            foreach (var node in delete)
+            foreach (var aspectObject in delete)
             {
-                // Parties is not allowed delete our node
-                if (_commonRepository.GetDomain() == node.Domain && _commonRepository.GetDomain() != invokedByDomain)
+                // Parties is not allowed delete our aspectObject
+                if (_commonRepository.GetDomain() == aspectObject.Domain && _commonRepository.GetDomain() != invokedByDomain)
                 {
-                    Detach(node);
+                    Detach(aspectObject);
                     continue;
                 }
 
-                _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
-                _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
-                Attach(node, EntityState.Deleted);
+                _attributeRepository.Attach(aspectObject.Attributes, EntityState.Deleted);
+                _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Deleted);
+                Attach(aspectObject, EntityState.Deleted);
 
-                returnValues.Add((node, WorkerStatus.Delete));
+                returnValues.Add((aspectObject, WorkerStatus.Delete));
             }
 
             return returnValues;
         }
 
         /// <summary>
-        /// Bulk node update
+        /// Bulk aspectObject update
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn"></param>
-        /// <param name="nodes">The nodes to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes)
+        /// <param name="aspectObjects">The aspectObjects to be upserted</param>
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects)
         {
-            if (nodes == null || !nodes.Any())
+            if (aspectObjects == null || !aspectObjects.Any())
                 return;
 
             bulk.Setup<AspectObject>()
-                .ForCollection(nodes)
-                .WithTable("Node")
+                .ForCollection(aspectObjects)
+                .WithTable("AspectObject")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.Iri)
                 .AddColumn(x => x.Rds)
@@ -156,7 +156,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.LibraryTypeId)
                 .AddColumn(x => x.Version)
                 .AddColumn(x => x.Aspect)
-                .AddColumn(x => x.NodeType)
+                .AddColumn(x => x.AspectObjectType)
                 .AddColumn(x => x.MasterProjectId)
                 .AddColumn(x => x.MasterProjectIri)
                 .AddColumn(x => x.Symbol)
@@ -171,19 +171,19 @@ namespace Mb.Data.Repositories
         }
 
         /// <summary>
-        /// Bulk delete nodes
+        /// Bulk delete aspectObjects
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="nodes">The nodes to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes)
+        /// <param name="aspectObjects">The aspectObjects to be deleted</param>
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects)
         {
-            if (nodes == null || !nodes.Any())
+            if (aspectObjects == null || !aspectObjects.Any())
                 return;
 
             bulk.Setup<AspectObject>()
-                .ForCollection(nodes)
-                .WithTable("Node")
+                .ForCollection(aspectObjects)
+                .WithTable("AspectObject")
                 .AddColumn(x => x.Id)
                 .BulkDelete()
                 .MatchTargetOn(x => x.Id)
@@ -201,12 +201,12 @@ namespace Mb.Data.Repositories
             if (lockDms == null || !lockDms.Any())
                 return;
 
-            if (lockDms.Any(x => x.Type is not EntityType.Node))
-                throw new MimirorgBadRequestException("EntityType is not of type Node");
+            if (lockDms.Any(x => x.Type is not EntityType.AspectObject))
+                throw new MimirorgBadRequestException("EntityType is not of type AspectObject");
 
             bulk.Setup<LockDm>()
                 .ForCollection(lockDms)
-                .WithTable("Node")
+                .WithTable("AspectObject")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.IsLocked)
                 .AddColumn(x => x.IsLockedStatusBy)
@@ -218,23 +218,23 @@ namespace Mb.Data.Repositories
 
 
         /// <summary>
-        /// Get node connected data
+        /// Get aspectObject connected data
         /// </summary>
-        /// <param name="nodeId">The node you want data from</param>
+        /// <param name="aspectObjectId">The aspectObject you want data from</param>
         /// <returns>A collection connected identity data</returns>
-        /// <remarks>Get det node identifier and all connected children including
-        /// children nodes, children connections and children terminals</remarks>
-        public async Task<List<ObjectIdentity>> GetNodeConnectedData(string nodeId)
+        /// <remarks>Get det aspectObject identifier and all connected children including
+        /// children aspectObjects, children connections and children terminals</remarks>
+        public async Task<List<ObjectIdentity>> GetAspectObjectConnectedData(string aspectObjectId)
         {
-            if (string.IsNullOrWhiteSpace(nodeId))
+            if (string.IsNullOrWhiteSpace(aspectObjectId))
                 return null;
 
             var procParams = new Dictionary<string, object>
             {
-                {"@NodeId", nodeId}
+                {"@AspectObjectId", aspectObjectId}
             };
 
-            var attributes = await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("NodeLockData", procParams);
+            var attributes = await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("AspectObjectLockData", procParams);
             return attributes;
         }
 

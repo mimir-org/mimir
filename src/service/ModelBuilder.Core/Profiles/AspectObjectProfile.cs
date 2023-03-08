@@ -36,7 +36,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-                .ForMember(dest => dest.NodeType, opt => opt.MapFrom(src => src.NodeType))
+                .ForMember(dest => dest.AspectObjectType, opt => opt.MapFrom(src => src.AspectObjectType))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.Width, opt => opt.MapFrom(src => src.Width))
@@ -49,7 +49,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ProjectIri, opt => opt.MapFrom(src => src.ProjectIri))
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.PurposeString, opt => opt.Ignore())
-                .ForMember(dest => dest.ParentNodeId, opt => opt.Ignore())
+                .ForMember(dest => dest.ParentAspectObjectId, opt => opt.Ignore())
                 .ForMember(dest => dest.Selected, opt => opt.Ignore())
                 .ForMember(dest => dest.BlockSelected, opt => opt.Ignore())
                 .ForMember(dest => dest.Hidden, opt => opt.Ignore())
@@ -89,7 +89,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
-                .ForMember(dest => dest.NodeType, opt => opt.MapFrom(src => src.NodeType));
+                .ForMember(dest => dest.AspectObjectType, opt => opt.MapFrom(src => src.AspectObjectType));
         }
     }
 }

@@ -19,13 +19,13 @@ namespace ModelBuilder.Rdf.Extensions
             if (connection.FromConnectorObject is ConnectorRelation and not ConnectorRelationPartOf)
             {
                 var relationString = connection.FromConnectorObject is ConnectorRelationFulfilledBy ? "fulfilledBy" : "hasLocation";
-                ontologyService.AssertNode(connection.FromNode, $"imf:{relationString}", connection.ToNode);
+                ontologyService.AssertAspectObject(connection.FromAspectObject, $"imf:{relationString}", connection.ToAspectObject);
             }
 
             if (connection.ToConnectorObject is ConnectorRelation and not ConnectorRelationPartOf)
             {
                 var relationString = connection.ToConnectorObject is ConnectorRelationFulfilledBy ? "fulfilledBy" : "hasLocation";
-                ontologyService.AssertNode(connection.ToNode, $"imf:{relationString}", connection.ToNode);
+                ontologyService.AssertAspectObject(connection.ToAspectObject, $"imf:{relationString}", connection.ToAspectObject);
             }
         }
 
@@ -37,17 +37,17 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="project">Current project</param>
         /// <param name="relation">Relation connection data</param>
         /// <param name="projectData">Record of ICollections</param>
-        /// <exception cref="InvalidDataException">Throws if nodes and connectors is not defined in RDF file</exception>
+        /// <exception cref="InvalidDataException">Throws if aspectObjects and connectors is not defined in RDF file</exception>
         public static void ResolveConnection(this ConnectionAm connection, IOntologyService ontologyService, ProjectAm project, RelationConnector relation, ProjectData projectData)
         {
-            var fromNode = project.Nodes?.FirstOrDefault(x => x.Iri == relation.ParentIri);
-            var toNode = project.Nodes?.FirstOrDefault(x => x.Iri == relation.ChildIri);
+            var fromAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Iri == relation.ParentIri);
+            var toAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Iri == relation.ChildIri);
 
-            if (fromNode == null || toNode == null)
-                throw new InvalidDataException($"Can't create an connection. Can't find connected nodes from IRI. From: {fromNode?.Iri} to {toNode?.Iri}");
+            if (fromAspectObject == null || toAspectObject == null)
+                throw new InvalidDataException($"Can't create an connection. Can't find connected aspectObjects from IRI. From: {fromAspectObject?.Iri} to {toAspectObject?.Iri}");
 
-            var fromConnector = fromNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == relation.RelationType);
-            var toConnector = toNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Input && x.RelationType == relation.RelationType);
+            var fromConnector = fromAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == relation.RelationType);
+            var toConnector = toAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Input && x.RelationType == relation.RelationType);
 
             if (fromConnector == null || toConnector == null)
                 throw new InvalidDataException($"Can't create an connection. Can't find connectors from IRI. From: {fromConnector?.Iri} to {toConnector?.Iri}");
@@ -55,17 +55,17 @@ namespace ModelBuilder.Rdf.Extensions
             var existingConnection = projectData?.Connections?.FirstOrDefault(x =>
                 x.FromConnectorIri == fromConnector.Iri &&
                 x.ToConnectorIri == toConnector.Iri &&
-                x.FromNodeIri == fromNode.Iri &&
-                x.ToNodeIri == toNode.Iri
+                x.FromAspectObjectIri == fromAspectObject.Iri &&
+                x.ToAspectObjectIri == toAspectObject.Iri
             );
 
-            connection.Iri = existingConnection != null ? existingConnection.Iri : toNode.Iri.StripAndCreateIdIri();
-            connection.MasterProjectIri = toNode.MasterProjectIri;
-            connection.ProjectIri = toNode.ProjectIri;
+            connection.Iri = existingConnection != null ? existingConnection.Iri : toAspectObject.Iri.StripAndCreateIdIri();
+            connection.MasterProjectIri = toAspectObject.MasterProjectIri;
+            connection.ProjectIri = toAspectObject.ProjectIri;
             connection.FromConnectorIri = fromConnector.Iri;
             connection.ToConnectorIri = toConnector.Iri;
-            connection.FromNodeIri = fromNode.Iri;
-            connection.ToNodeIri = toNode.Iri;
+            connection.FromAspectObjectIri = fromAspectObject.Iri;
+            connection.ToAspectObjectIri = toAspectObject.Iri;
         }
     }
 }

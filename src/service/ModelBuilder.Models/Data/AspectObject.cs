@@ -80,7 +80,7 @@ namespace Mb.Models.Data
 
         public Aspect Aspect { get; set; }
 
-        public AspectObjectType NodeType { get; set; }
+        public AspectObjectType AspectObjectType { get; set; }
 
         [Required]
         public string MasterProjectId { get; set; }
@@ -114,7 +114,7 @@ namespace Mb.Models.Data
 
         // Only for client
         [NotMapped]
-        public string ParentNodeId { get; set; }
+        public string ParentAspectObjectId { get; set; }
 
         [NotMapped]
         public bool? Selected { get; set; }
@@ -162,7 +162,7 @@ namespace Mb.Models.Data
                    LibraryTypeId == other.LibraryTypeId &&
                    Version == other.Version &&
                    Aspect == other.Aspect &&
-                   NodeType == other.NodeType &&
+                   AspectObjectType == other.AspectObjectType &&
                    MasterProjectId == other.MasterProjectId &&
                    MasterProjectIri == other.MasterProjectIri &&
                    Symbol == other.Symbol &&
@@ -204,7 +204,7 @@ namespace Mb.Models.Data
             hashCode.Add(LibraryTypeId);
             hashCode.Add(Version);
             hashCode.Add((int) Aspect);
-            hashCode.Add(NodeType);
+            hashCode.Add(AspectObjectType);
             hashCode.Add(MasterProjectId);
             hashCode.Add(MasterProjectIri);
             hashCode.Add(Symbol);

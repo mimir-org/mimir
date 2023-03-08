@@ -198,11 +198,11 @@
   <data name="HasMasterProject" xml:space="preserve">
     <value>mimir:hasMasterProject</value>
   </data>
-  <data name="HasNodeFromConnection" xml:space="preserve">
-    <value>mimir:hasNodeFromConnection</value>
+  <data name="HasAspectObjectFromConnection" xml:space="preserve">
+    <value>mimir:hasAspectObjectFromConnection</value>
   </data>
-  <data name="HasNodeToConnection" xml:space="preserve">
-    <value>mimir:hasNodeToConnection</value>
+  <data name="HasAspectObjectToConnection" xml:space="preserve">
+    <value>mimir:hasAspectObjectToConnection</value>
   </data>
   <data name="HasOutputTerminal" xml:space="preserve">
     <value>imf:hasOutTerminal</value>

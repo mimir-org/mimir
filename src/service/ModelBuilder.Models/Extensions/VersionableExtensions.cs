@@ -7,37 +7,37 @@ namespace Mb.Models.Extensions
     // ReSharper disable once IdentifierTypo
     public static class VersionableExtensions
     {
-        public static bool HasMajorChanges(this AspectObject node, ProjectEditData editData)
+        public static bool HasMajorChanges(this AspectObject aspectObject, ProjectEditData editData)
         {
             if (editData == null)
                 return false;
 
-            if (editData.TerminalDelete.Any(x => x.AspectObjectId == node.Id))
+            if (editData.TerminalDelete.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
 
-            if (editData.RelationDelete.Any(x => x.AspectObjectId == node.Id))
+            if (editData.RelationDelete.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
 
             return false;
         }
 
-        public static bool HasMinorChanges(this AspectObject node, ProjectEditData editData, AspectObject other)
+        public static bool HasMinorChanges(this AspectObject aspectObject, ProjectEditData editData, AspectObject other)
         {
             if (editData == null)
                 return false;
-            if (editData.TerminalUpdate.Any(x => x.AspectObjectId == node.Id) || editData.TerminalCreate.Any(x => x.AspectObjectId == node.Id))
+            if (editData.TerminalUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.TerminalCreate.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
-            if (editData.RelationUpdate.Any(x => x.AspectObjectId == node.Id) || editData.RelationCreate.Any(x => x.AspectObjectId == node.Id))
+            if (editData.RelationUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
-            if (editData.AttributeDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
+            if (editData.AttributeDelete.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri) || editData.AttributeUpdate.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri) || editData.AttributeCreate.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri))
                 return true;
-            if (node.Description != other.Description)
+            if (aspectObject.Description != other.Description)
                 return true;
-            if (node.Name != other.Name)
+            if (aspectObject.Name != other.Name)
                 return true;
-            if (node.Label != other.Label)
+            if (aspectObject.Label != other.Label)
                 return true;
-            if (node.UpdatedBy != other.UpdatedBy)
+            if (aspectObject.UpdatedBy != other.UpdatedBy)
                 return true;
 
             return false;
@@ -51,7 +51,7 @@ namespace Mb.Models.Extensions
             if (editData.ConnectionDelete.Any())
                 return true;
 
-            if (editData.NodeDelete.Any())
+            if (editData.AspectObjectDelete.Any())
                 return true;
 
             if (editData.TerminalDelete.Any())
@@ -71,7 +71,7 @@ namespace Mb.Models.Extensions
             if (editData.ConnectionUpdate.Any() || editData.ConnectionCreate.Any())
                 return true;
 
-            if (editData.NodeUpdate.Any() || editData.NodeCreate.Any())
+            if (editData.AspectObjectUpdate.Any() || editData.AspectObjectCreate.Any())
                 return true;
 
             if (editData.TerminalUpdate.Any() || editData.TerminalCreate.Any())

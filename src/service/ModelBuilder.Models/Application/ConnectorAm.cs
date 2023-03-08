@@ -26,10 +26,10 @@ namespace Mb.Models.Application
         [EnumDataType(typeof(ConnectorVisibility))]
         public ConnectorVisibility ConnectorVisibility { get; set; }
 
-        public string NodeId { get; set; }
+        public string AspectObjectId { get; set; }
 
         [ValidIri]
-        public string NodeIri { get; set; }
+        public string AspectObjectIri { get; set; }
 
         public bool IsRequired { get; set; }
     }

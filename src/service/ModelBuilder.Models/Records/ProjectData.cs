@@ -7,7 +7,7 @@ namespace Mb.Models.Records
 {
     public record ProjectData
     {
-        public List<AspectObject> Nodes { get; init; } = new();
+        public List<AspectObject> AspectObjects { get; init; } = new();
         public List<Connection> Connections { get; init; } = new();
         public List<Attribute> Attributes { get; init; } = new();
         public List<ConnectorTerminal> Terminals { get; init; } = new();
@@ -19,10 +19,10 @@ namespace Mb.Models.Records
         /// <param name="project">Project to be deconstructed</param>
         public Task DeconstructAttributes(Project project)
         {
-            var nodeAttributes = project.Nodes.Select(x => x.Attributes).SelectMany(y => y).ToList();
-            var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().SelectMany(y => y.Attributes).ToList();
+            var aspectObjectAttributes = project.AspectObjects.Select(x => x.Attributes).SelectMany(y => y).ToList();
+            var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().SelectMany(y => y.Attributes).ToList();
 
-            var allAttributes = nodeAttributes
+            var allAttributes = aspectObjectAttributes
                 .Union(connectorAttributes)
                 .ToList();
 
@@ -31,15 +31,15 @@ namespace Mb.Models.Records
         }
 
         /// <summary>
-        /// Deconstruct and flatten nodes
+        /// Deconstruct and flatten aspectObjects
         /// </summary>
         /// <param name="project">Project to be deconstructed</param>
-        public Task DeconstructNodes(Project project)
+        public Task DeconstructAspectObjects(Project project)
         {
-            if (project?.Nodes == null || !project.Nodes.Any())
+            if (project?.AspectObjects == null || !project.AspectObjects.Any())
                 return Task.CompletedTask;
 
-            Nodes.AddRange(project.Nodes);
+            AspectObjects.AddRange(project.AspectObjects);
             return Task.CompletedTask;
         }
 
@@ -52,9 +52,9 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().ToList();
+            var aspectObjectTerminals = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().ToList();
 
-            var terminals = nodeTerminals
+            var terminals = aspectObjectTerminals
                 .ToList();
 
             Terminals.AddRange(terminals);
@@ -70,9 +70,9 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelation>().ToList();
+            var aspectObjectRelations = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelation>().ToList();
 
-            Relations.AddRange(nodeRelations);
+            Relations.AddRange(aspectObjectRelations);
             return Task.CompletedTask;
         }
 

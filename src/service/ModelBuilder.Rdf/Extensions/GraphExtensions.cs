@@ -13,12 +13,12 @@ namespace ModelBuilder.Rdf.Extensions
         public static Regex IsHttpRegex = new(@"http(s)*");
 
         /// <summary>
-        /// Helper function to get if node exist, otherwise create a new rdf node
+        /// Helper function to get if aspectObject exist, otherwise create a new rdf node
         /// </summary>
         /// <param name="graph"></param>
         /// <param name="iri"></param>
         /// <returns></returns>
-        public static INode GetOrCreateUriNode(this IGraph graph, string iri)
+        public static INode GetOrCreateUriAspectObject(this IGraph graph, string iri)
         {
             if (!IsHttpRegex.IsMatch(iri))
                 return graph.GetUriNode(iri) ?? graph.CreateUriNode(iri);

@@ -9,9 +9,9 @@ namespace Mb.Models.Records
 {
     public record ProjectEditData
     {
-        public List<AspectObject> NodeCreate { get; init; } = new();
-        public List<AspectObject> NodeUpdate { get; init; } = new();
-        public List<AspectObject> NodeDelete { get; init; } = new();
+        public List<AspectObject> AspectObjectCreate { get; init; } = new();
+        public List<AspectObject> AspectObjectUpdate { get; init; } = new();
+        public List<AspectObject> AspectObjectDelete { get; init; } = new();
 
         public List<Connection> ConnectionCreate { get; init; } = new();
         public List<Connection> ConnectionUpdate { get; init; } = new();
@@ -30,12 +30,12 @@ namespace Mb.Models.Records
         public List<ConnectorTerminal> TerminalDelete { get; init; } = new();
 
         public List<Connection> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
-        public List<AspectObject> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
+        public List<AspectObject> AspectObjectCreateAndDelete => AspectObjectCreate.Union(AspectObjectDelete).ToList();
         public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
         public List<ConnectorRelation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
         public List<ConnectorTerminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
-        public List<AspectObject> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
+        public List<AspectObject> AspectObjectUpdateInsert => AspectObjectUpdate.Union(AspectObjectCreate).ToList();
         public List<ConnectorTerminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
         public List<ConnectorRelation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
         public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
@@ -46,7 +46,7 @@ namespace Mb.Models.Records
             var tasks = new List<Task>
             {
                 Task.Run(() => ResolveConnections(original, updated)),
-                Task.Run(() => ResolveNodes(original, updated)),
+                Task.Run(() => ResolveAspectObjects(original, updated)),
                 Task.Run(() => ResolveAttributes(original, updated)),
                 Task.Run(() => ResolveRelations(original, updated)),
                 Task.Run(() => ResolveTerminals(original, updated))
@@ -84,29 +84,29 @@ namespace Mb.Models.Records
 
         #endregion
 
-        #region Nodes
+        #region AspectObjects
 
-        private async Task ResolveNodes(ProjectData original, ProjectData updated)
+        private async Task ResolveAspectObjects(ProjectData original, ProjectData updated)
         {
             var tasks = new List<Task>
             {
-                Task.Run(() => FindDeletedNodes(original, updated)),
-                Task.Run(() => FindCreatedNodes(original, updated))
+                Task.Run(() => FindDeletedAspectObjects(original, updated)),
+                Task.Run(() => FindCreatedAspectObjects(original, updated))
             };
             await Task.WhenAll(tasks);
-            var dict = updated.Nodes.ToDictionary(x => x.Id, x => x);
-            NodeUpdate.AddRange(original.Nodes.Exclude(NodeCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
+            var dict = updated.AspectObjects.ToDictionary(x => x.Id, x => x);
+            AspectObjectUpdate.AddRange(original.AspectObjects.Exclude(AspectObjectCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
         }
 
-        private Task FindDeletedNodes(ProjectData original, ProjectData updated)
+        private Task FindDeletedAspectObjects(ProjectData original, ProjectData updated)
         {
-            NodeDelete.AddRange(original.Nodes.Exclude(updated.Nodes, x => x.Id));
+            AspectObjectDelete.AddRange(original.AspectObjects.Exclude(updated.AspectObjects, x => x.Id));
             return Task.CompletedTask;
         }
 
-        private Task FindCreatedNodes(ProjectData original, ProjectData updated)
+        private Task FindCreatedAspectObjects(ProjectData original, ProjectData updated)
         {
-            NodeCreate.AddRange(updated.Nodes.Exclude(original.Nodes, x => x.Id));
+            AspectObjectCreate.AddRange(updated.AspectObjects.Exclude(original.AspectObjects, x => x.Id));
             return Task.CompletedTask;
         }
 

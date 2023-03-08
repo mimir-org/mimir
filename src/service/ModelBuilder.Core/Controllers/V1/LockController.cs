@@ -67,25 +67,25 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Returns a list of all locked nodes id's
-        /// If param 'projectId' is null all locked nodes in the database will be returned
+        /// Returns a list of all locked aspectObjects id's
+        /// If param 'projectId' is null all locked aspectObjects in the database will be returned
         /// </summary>
-        /// <returns>List of locked node id></returns>
-        [HttpGet("node")]
+        /// <returns>List of locked aspectObject id></returns>
+        [HttpGet("aspectObject")]
         [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetLockedNodes()
+        public IActionResult GetLockedAspectObjects()
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = _lockService.GetLockedNodes().ToList();
+                var result = _lockService.GetLockedAspectObjects().ToList();
                 return Ok(result);
             }
             catch (Exception e)
@@ -96,7 +96,7 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Locks or unlock an attribute, connection or node
+        /// Locks or unlock an attribute, connection or aspectObject
         /// </summary>
         /// <param name="lockAm"></param>
         /// <returns>Status204NoContent</returns>

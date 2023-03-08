@@ -18,10 +18,10 @@ namespace Mb.Models.Data
         public Connector FromConnectorObject { get; set; }
         public string ToConnector { get; set; }
         public Connector ToConnectorObject { get; set; }
-        public string FromNode { get; set; }
-        public AspectObject FromNodeObject { get; set; }
-        public string ToNode { get; set; }
-        public AspectObject ToNodeObject { get; set; }
+        public string FromAspectObject { get; set; }
+        public AspectObject FromAspectObjectObject { get; set; }
+        public string ToAspectObject { get; set; }
+        public AspectObject ToAspectObjectObject { get; set; }
         public virtual string TerminalType { get; set; }
         public virtual string TerminalParentType { get; set; }
 
@@ -54,8 +54,8 @@ namespace Mb.Models.Data
             return Id == other.Id &&
                    FromConnector == other.FromConnector &&
                    ToConnector == other.ToConnector &&
-                   FromNode == other.FromNode &&
-                   ToNode == other.ToNode &&
+                   FromAspectObject == other.FromAspectObject &&
+                   ToAspectObject == other.ToAspectObject &&
                    MainProject == other.MainProject &&
                    Project == other.Project;
         }
@@ -73,8 +73,8 @@ namespace Mb.Models.Data
             hashCode.Add(Id);
             hashCode.Add(FromConnector);
             hashCode.Add(ToConnector);
-            hashCode.Add(FromNode);
-            hashCode.Add(ToNode);
+            hashCode.Add(FromAspectObject);
+            hashCode.Add(ToAspectObject);
             hashCode.Add(MainProject);
             hashCode.Add(Project);
             return hashCode.ToHashCode();

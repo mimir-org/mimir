@@ -26,9 +26,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ConnectorTerminal, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
-                .ForMember(dest => dest.Node, opt => opt.Ignore())
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
+                .ForMember(dest => dest.AspectObject, opt => opt.Ignore())
+                .ForMember(dest => dest.AspectObjectId, opt => opt.MapFrom(src => src.AspectObjectId))
+                .ForMember(dest => dest.AspectObjectIri, opt => opt.MapFrom(src => src.AspectObjectIri))
                 .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
@@ -48,8 +48,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SpecifiedProvenance, opt => opt.MapFrom(src => src.SpecifiedProvenance))
                 .ForMember(dest => dest.RangeSpecifying, opt => opt.MapFrom(src => src.RangeSpecifying))
                 .ForMember(dest => dest.RegularitySpecified, opt => opt.MapFrom(src => src.RegularitySpecified))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
+                .ForMember(dest => dest.AspectObjectId, opt => opt.MapFrom(src => src.AspectObjectId))
+                .ForMember(dest => dest.AspectObjectIri, opt => opt.MapFrom(src => src.AspectObjectIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
         }
     }

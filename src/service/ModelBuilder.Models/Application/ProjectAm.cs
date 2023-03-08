@@ -35,7 +35,7 @@ namespace Mb.Models.Application
 
         public DateTime? Updated { get; set; }
 
-        public ICollection<AspectObjectAm> Nodes { get; set; } = new List<AspectObjectAm>();
+        public ICollection<AspectObjectAm> AspectObjects { get; set; } = new List<AspectObjectAm>();
         public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
 
         #region Validate
@@ -43,7 +43,7 @@ namespace Mb.Models.Application
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
-            validations.AddRange(Nodes.Validate(validationContext));
+            validations.AddRange(AspectObjects.Validate(validationContext));
             validations.AddRange(Connections.Validate(validationContext));
             return validations;
         }
@@ -54,12 +54,12 @@ namespace Mb.Models.Application
 
         public IEnumerable<ConnectionAm> GetParentlessConnectors()
         {
-            return Connections.GetParentlessConnectors(Nodes);
+            return Connections.GetParentlessConnectors(AspectObjects);
         }
 
         public IEnumerable<ConnectionAm> GetNotConnectedConnectors()
         {
-            return Connections.GetNotConnectedConnectors(Nodes);
+            return Connections.GetNotConnectedConnectors(AspectObjects);
         }
 
         #endregion

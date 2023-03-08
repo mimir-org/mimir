@@ -13,18 +13,9 @@ namespace ModelBuilder.Rdf.Extensions
 
             foreach (var typeReference in references)
             {
-                ontologyService.AssertNode(parentIri, Resources.SameAs, typeReference.Iri);
-                ontologyService.AssertNode(typeReference.Iri, Resources.Label, typeReference.Name, true);
-
-                // TODO: Resolve this
-                //ontologyService.AssertNode(typeReference.Iri, Resources.HasSource, typeReference.Source, true);
-                //if (string.IsNullOrWhiteSpace(typeReference.SubIri))
-                //    continue;
-
-                //ontologyService.AssertNode(typeReference.Iri, Resources.DefaultUom, typeReference.SubIri);
-                //ontologyService.AssertNode(typeReference.SubIri, Resources.Label, typeReference.SubName, true);
+                ontologyService.AssertAspectObject(parentIri, Resources.SameAs, typeReference.Iri);
+                ontologyService.AssertAspectObject(typeReference.Iri, Resources.Label, typeReference.Name, true);
             }
-
         }
 
         public static void ResolveTypeReferences(this ICollection<TypeReference> references, string parentIri, IOntologyService ontologyService)

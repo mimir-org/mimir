@@ -26,7 +26,7 @@ namespace Mb.Models.Data
         public string ProjectOwner { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
-        public virtual ICollection<AspectObject> Nodes { get; set; }
+        public virtual ICollection<AspectObject> AspectObjects { get; set; }
         public virtual ICollection<Connection> Connections { get; set; }
 
         #endregion

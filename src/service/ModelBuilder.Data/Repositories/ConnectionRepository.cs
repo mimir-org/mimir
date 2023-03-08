@@ -117,8 +117,8 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.FromConnector)
                 .AddColumn(x => x.ToConnector)
-                .AddColumn(x => x.FromNode)
-                .AddColumn(x => x.ToNode)
+                .AddColumn(x => x.FromAspectObject)
+                .AddColumn(x => x.ToAspectObject)
                 .AddColumn(x => x.MainProject)
                 .AddColumn(x => x.Project)
                 .BulkInsertOrUpdate()
@@ -198,8 +198,8 @@ namespace Mb.Data.Repositories
         {
             connection.FromConnectorObject = null;
             connection.ToConnectorObject = null;
-            connection.FromNodeObject = null;
-            connection.ToNodeObject = null;
+            connection.FromAspectObjectObject = null;
+            connection.ToAspectObjectObject = null;
         }
 
         private void SetConnectionProperties(Connection connection, bool isNewConnection)

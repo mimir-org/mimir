@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions
 {
     public static class ConnectionExtensions
     {
-        public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> nodes)
+        public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> aspectObjects)
         {
             var parentlessConnections = new List<ConnectionAm>();
 
@@ -16,12 +16,12 @@ namespace Mb.Models.Extensions
 
             foreach (var connection in connections)
             {
-                var fromNode = nodes.FirstOrDefault(x => x.Id == connection.FromNodeId);
-                if (fromNode != null)
+                var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
+                if (fromAspectObject != null)
                     continue;
 
-                var toNode = nodes.FirstOrDefault(x => x.Id == connection.ToNodeId);
-                var toConnector = toNode?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnectorId);
+                var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                var toConnector = toAspectObject?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnectorId);
                 if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
                     continue;
 
@@ -31,7 +31,7 @@ namespace Mb.Models.Extensions
             return parentlessConnections;
         }
 
-        public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> nodes)
+        public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> aspectObjects)
         {
             var notConnectedConnections = new List<ConnectionAm>();
 
@@ -40,12 +40,12 @@ namespace Mb.Models.Extensions
 
             foreach (var connection in connections)
             {
-                var fromNode = nodes.FirstOrDefault(x => x.Id == connection.FromNodeId);
-                if (fromNode == null)
+                var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
+                if (fromAspectObject == null)
                     notConnectedConnections.Add(connection);
 
-                var toNode = nodes.FirstOrDefault(x => x.Id == connection.ToNodeId);
-                if (toNode == null)
+                var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                if (toAspectObject == null)
                     notConnectedConnections.Add(connection);
             }
 

@@ -7,18 +7,18 @@ namespace Mb.Models.Extensions
 {
     public static class ValidationExtensions
     {
-        public static List<ValidationResult> Validate(this ICollection<AspectObjectAm> nodes, ValidationContext validationContext)
+        public static List<ValidationResult> Validate(this ICollection<AspectObjectAm> aspectObjects, ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
 
-            if (nodes != null && nodes.Any())
+            if (aspectObjects != null && aspectObjects.Any())
             {
-                if (nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    validations.Add(new ValidationResult($"{nameof(nodes)} list has duplicate node id's", new List<string> { nameof(nodes) }));
+                if (aspectObjects.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
+                    validations.Add(new ValidationResult($"{nameof(aspectObjects)} list has duplicate aspectObject id's", new List<string> { nameof(aspectObjects) }));
 
-                foreach (var node in nodes)
+                foreach (var aspectObject in aspectObjects)
                 {
-                    foreach (var result in node.Validate(validationContext))
+                    foreach (var result in aspectObject.Validate(validationContext))
                     {
                         validations.Add(result);
                     }

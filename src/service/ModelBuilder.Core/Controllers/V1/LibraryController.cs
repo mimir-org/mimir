@@ -33,20 +33,20 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all node types
+        /// Get all aspectObject types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("node")]
+        [HttpGet("aspectObject")]
         [ProducesResponseType(typeof(ICollection<NodeLibCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetNodes()
+        public async Task<IActionResult> GetAspectObjects()
         {
             try
             {
-                var data = await _libraryService.GetNodeTypes(null);
+                var data = await _libraryService.GetAspectObjectTypes(null);
                 return Ok(data);
             }
             catch (Exception e)

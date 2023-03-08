@@ -56,10 +56,10 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public virtual AspectObject Node { get; set; }
+        public virtual AspectObject AspectObject { get; set; }
 
-        public virtual string NodeId { get; set; }
-        public virtual string NodeIri { get; set; }
+        public virtual string AspectObjectId { get; set; }
+        public virtual string AspectObjectIri { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
@@ -94,8 +94,8 @@ namespace Mb.Models.Data
                    RegularitySpecified == other.RegularitySpecified &&
                    TerminalId == other.TerminalId &&
                    TerminalIri == other.TerminalIri &&
-                   NodeId == other.NodeId &&
-                   NodeIri == other.NodeIri;
+                   AspectObjectId == other.AspectObjectId &&
+                   AspectObjectIri == other.AspectObjectIri;
         }
 
         public override bool Equals(object obj)
@@ -122,8 +122,8 @@ namespace Mb.Models.Data
             hashCode.Add(RegularitySpecified);
             hashCode.Add(TerminalId);
             hashCode.Add(TerminalIri);
-            hashCode.Add(NodeId);
-            hashCode.Add(NodeIri);
+            hashCode.Add(AspectObjectId);
+            hashCode.Add(AspectObjectIri);
             return hashCode.ToHashCode();
         }
 

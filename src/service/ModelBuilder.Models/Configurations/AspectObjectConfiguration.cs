@@ -9,7 +9,7 @@ namespace Mb.Models.Configurations
         public void Configure(EntityTypeBuilder<AspectObject> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("Node");
+            builder.ToTable("AspectObject");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.ProjectId).HasColumnName("ProjectId").IsRequired();
@@ -35,7 +35,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
-            builder.Property(p => p.NodeType).HasColumnName("NodeType").IsRequired();
+            builder.Property(p => p.AspectObjectType).HasColumnName("AspectObjectType").IsRequired();
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
             builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false);

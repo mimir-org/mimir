@@ -32,7 +32,7 @@ namespace Mb.Services.Services
             if (editData == null || string.IsNullOrWhiteSpace(projectId))
                 return;
 
-            // TODO: Find changed node and connection based on changed connectorTerminal, attribute etc.
+            // TODO: Find changed aspectObject and connection based on changed connectorTerminal, attribute etc.
             var versionObj = new ProjectVersionCm
             {
                 ProjectId = projectId,
@@ -40,9 +40,9 @@ namespace Mb.Services.Services
             };
             await Task.WhenAll(
                 Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
-                Task.Run(() => SendNodeUpdates(editData.NodeUpdate, WorkerStatus.Update, projectId)),
-                Task.Run(() => SendNodeUpdates(editData.NodeDelete, WorkerStatus.Delete, projectId)),
-                Task.Run(() => SendNodeUpdates(editData.NodeCreate, WorkerStatus.Create, projectId)),
+                Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectUpdate, WorkerStatus.Update, projectId)),
+                Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectDelete, WorkerStatus.Delete, projectId)),
+                Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectCreate, WorkerStatus.Create, projectId)),
                 Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
                 Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId)),
                 Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
@@ -54,11 +54,11 @@ namespace Mb.Services.Services
             await _webSocketRepository.SendProjectVersionData(version, workerStatus);
         }
 
-        public Task SendNodeUpdates(IReadOnlyCollection<(AspectObject node, WorkerStatus workerStatus)> nodeMap, string projectId)
+        public Task SendAspectObjectUpdates(IReadOnlyCollection<(AspectObject aspectObject, WorkerStatus workerStatus)> aspectObjectMap, string projectId)
         {
-            foreach (var tuple in nodeMap)
+            foreach (var tuple in aspectObjectMap)
             {
-                _webSocketRepository.SendNodeData(tuple.node, projectId, tuple.workerStatus);
+                _webSocketRepository.SendAspectObjectData(tuple.aspectObject, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;
@@ -91,20 +91,20 @@ namespace Mb.Services.Services
         #region Private methods
 
         /// <summary>
-        /// Send websocket events for changed nodes
+        /// Send websocket events for changed aspectObjects
         /// </summary>
-        /// <param name="nodes"></param>
+        /// <param name="aspectObjects"></param>
         /// <param name="workerStatus"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private Task SendNodeUpdates(List<AspectObject> nodes, WorkerStatus workerStatus, string projectId)
+        private Task SendAspectObjectUpdates(List<AspectObject> aspectObjects, WorkerStatus workerStatus, string projectId)
         {
-            if (nodes == null || string.IsNullOrWhiteSpace(projectId))
+            if (aspectObjects == null || string.IsNullOrWhiteSpace(projectId))
                 return Task.CompletedTask;
 
-            foreach (var node in nodes)
+            foreach (var aspectObject in aspectObjects)
             {
-                _webSocketRepository.SendNodeData(node, projectId, workerStatus);
+                _webSocketRepository.SendAspectObjectData(aspectObject, projectId, workerStatus);
             }
 
             return Task.CompletedTask;

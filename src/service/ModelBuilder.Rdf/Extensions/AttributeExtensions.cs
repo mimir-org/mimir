@@ -24,30 +24,30 @@ namespace ModelBuilder.Rdf.Extensions
         {
             #region None Mimir specific data
 
-            ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
-            ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
-            ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
+            ontologyService.AssertAspectObject(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
+            ontologyService.AssertAspectObject(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
+            ontologyService.AssertAspectObject(attribute.Iri, Resources.Label, attribute.Entity, true);
 
             var ado = attribute.AttributeDatumObject();
             var adp = attribute.Iri.AttributeDatumPredicate();
-            ontologyService.AssertNode(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
-            ontologyService.AssertNode(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
 
-            ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
+            ontologyService.AssertAspectObject(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
 
             #endregion None Mimir specific data
 
             #region Mimir specific data
 
             if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
-                ontologyService.AssertNode(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
+                ontologyService.AssertAspectObject(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
 
             var allowedUnits = attribute.GetAllowedUnits();
             if (allowedUnits != null && allowedUnits.Any())
                 foreach (var value in allowedUnits)
-                    ontologyService.AssertNode(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+                    ontologyService.AssertAspectObject(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
 
             #endregion Mimir specific data
         }
@@ -65,15 +65,15 @@ namespace ModelBuilder.Rdf.Extensions
 
             var selectedUnit = attribute.GetSelectedUnit(projectData);
 
-            ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
-            ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
+            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
+            ontologyService.AssertAspectObject(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
 
             if (string.IsNullOrWhiteSpace(attribute.SelectedUnitId) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
 
-            ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
-            ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
-            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnitId}");
+            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
+            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnitId}");
         }
 
         /// <summary>
@@ -135,14 +135,14 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService"></param>
         /// <param name="projectData"></param>
         /// <param name="iri"></param>
-        /// <param name="nodeIri"></param>
+        /// <param name="aspectObjectIri"></param>
         /// <param name="terminalIri"></param>
-        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string terminalIri)
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string aspectObjectIri, string terminalIri)
         {
             #region None Mimir specific data
 
             attribute.Iri = iri;
-            attribute.NodeIri = nodeIri;
+            attribute.AspectObjectIri = aspectObjectIri;
             attribute.TerminalIri = terminalIri;
 
             attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
@@ -163,8 +163,8 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
             //attribute.AttributeTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false); // Resolve from Iri, last segment
 
-            var allowedUnitNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
-            attribute.Units = allowedUnitNodes.Select(x =>
+            var allowedUnitAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
+            attribute.Units = allowedUnitAspectObjects.Select(x =>
             {
                 var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
                 return new Unit

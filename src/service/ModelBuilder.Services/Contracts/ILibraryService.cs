@@ -8,10 +8,10 @@ namespace Mb.Services.Contracts
     public interface ILibraryService
     {
         /// <summary>
-        /// Get all node types
+        /// Get all aspectObject types
         /// </summary>
         /// <returns></returns>
-        Task<List<NodeLibCm>> GetNodeTypes(string searchString);
+        Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString);
 
         /// <summary>
         /// Get all terminal types

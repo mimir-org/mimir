@@ -23,16 +23,16 @@ namespace Mb.Services.Services
     public class LockService : ILockService
     {
         private readonly IAttributeRepository _attributeRepository;
-        private readonly IAspectObjectRepository _nodeRepository;
+        private readonly IAspectObjectRepository _aspectObjectRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly ICooperateService _cooperateService;
         private readonly ICacheRepository _cacheRepository;
         private readonly IMapper _mapper;
         private readonly DatabaseConfiguration _databaseConfiguration;
 
-        public LockService(IAspectObjectRepository nodeRepository, IConnectionRepository connectionRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
+        public LockService(IAspectObjectRepository aspectObjectRepository, IConnectionRepository connectionRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
         {
-            _nodeRepository = nodeRepository;
+            _aspectObjectRepository = aspectObjectRepository;
             _connectionRepository = connectionRepository;
             _attributeRepository = attributeRepository;
             _cooperateService = cooperateService;
@@ -51,16 +51,16 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Returns a list of all locked nodes id's
+        /// Returns a list of all locked aspectObjects id's
         /// </summary>
-        /// <returns>List of locked node id></returns>
-        public IEnumerable<string> GetLockedNodes()
+        /// <returns>List of locked aspectObject id></returns>
+        public IEnumerable<string> GetLockedAspectObjects()
         {
-            return _nodeRepository.FindBy(x => x.IsLocked).Select(x => x.Id);
+            return _aspectObjectRepository.FindBy(x => x.IsLocked).Select(x => x.Id);
         }
 
         /// <summary>
-        /// Lock/Unlock Attribute/Connection/Node
+        /// Lock/Unlock Attribute/Connection/AspectObject
         /// </summary>
         /// <param name="lockAm"></param>
         /// <returns></returns>
@@ -80,8 +80,8 @@ namespace Mb.Services.Services
                 case EntityType.Connection:
                     objectIdentity = await _connectionRepository.GetConnectionConnectedData(lockAm.Id);
                     break;
-                case EntityType.Node:
-                    objectIdentity = await _nodeRepository.GetNodeConnectedData(lockAm.Id);
+                case EntityType.AspectObject:
+                    objectIdentity = await _aspectObjectRepository.GetAspectObjectConnectedData(lockAm.Id);
                     break;
                 default:
                     throw new MimirorgBadRequestException("EntityType not found.");
@@ -100,7 +100,7 @@ namespace Mb.Services.Services
                 {
                     _connectionRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Connection).ToList());
                     _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Attribute).ToList());
-                    _nodeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Node).ToList());
+                    _aspectObjectRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.AspectObject).ToList());
                 }
                 trans.Complete();
             }

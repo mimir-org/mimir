@@ -63,14 +63,14 @@ namespace Mb.Services.Services
         /// <returns>A task that updates project data</returns>
         public async Task DeConstruct(Project project, ProjectData data)
         {
-            if (project == null || (project.Connections == null && project.Nodes == null))
+            if (project == null || (project.Connections == null && project.AspectObjects == null))
                 return;
 
             var tasks = new List<Task>
             {
                 Task.Run(() => data.DeconstructAttributes(project)),
                 Task.Run(() => data.DeconstructConnections(project)),
-                Task.Run(() => data.DeconstructNodes(project)),
+                Task.Run(() => data.DeconstructAspectObjects(project)),
                 Task.Run(() => data.DeconstructRelations(project)),
                 Task.Run(() => data.DeconstructTerminals(project))
             };
@@ -91,7 +91,7 @@ namespace Mb.Services.Services
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-            project.Nodes = RemapNodes(replacement, project.Nodes, project.Connections, remap, false).ToList();
+            project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, false).ToList();
             project.Connections = RemapConnections(replacement, project.Connections, remap, false).ToList();
 
             project.Id = replacement.ToId;
@@ -117,15 +117,15 @@ namespace Mb.Services.Services
             replacement.FromId = project.Id;
             replacement.FromIri = project.Iri;
 
-            // We need to connect parentless connections to root nodes of same aspect
+            // We need to connect parentless connections to root aspectObjects of same aspect
             RemapParentlessConnections(project);
 
-            // We need to remove connections that misses connected node
+            // We need to remove connections that misses connected aspectObject
             var connectionsToDelete = project.GetNotConnectedConnectors().ToList();
             project.Connections = project.Connections.Where(x => connectionsToDelete.All(y => x.Id != y.Id)).ToList();
 
             // Create deep clone of whole project
-            project.Nodes = RemapNodes(replacement, project.Nodes, project.Connections, remap, true).ToList();
+            project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, true).ToList();
             project.Connections = RemapConnections(replacement, project.Connections, remap, true).ToList();
 
             project.Id = replacement.ToId;
@@ -135,47 +135,47 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Remap a collection of nodes and all sub objects.
+        /// Remap a collection of aspectObjects and all sub objects.
         /// </summary>
         /// <param name="project">ReplacementId</param>
-        /// <param name="nodes">ICollection&lt;NodeAm&gt; nodes</param>
+        /// <param name="aspectObjects">ICollection&lt;AspectObjectAm&gt; aspectObjects</param>
         /// <param name="connections">ICollection&lt;ConnectionAm&gt; connections</param>
         /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
         /// <param name="createCopy">bool</param>
-        /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
-        /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
+        /// <returns>IEnumerable&lt;AspectObjectAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all aspectObjects and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        public IEnumerable<AspectObjectAm> RemapNodes(ReplacementId project, ICollection<AspectObjectAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
+        public IEnumerable<AspectObjectAm> RemapAspectObjects(ReplacementId project, ICollection<AspectObjectAm> aspectObjects, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
         {
-            if (nodes == null || !nodes.Any())
+            if (aspectObjects == null || !aspectObjects.Any())
                 yield break;
 
-            foreach (var node in nodes)
+            foreach (var aspectObject in aspectObjects)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = node.Id, FromIri = node.Iri };
-                var nodeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = aspectObject.Id, FromIri = aspectObject.Iri };
+                var aspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
-                nodeReplacement.FromId = node.Id;
-                nodeReplacement.FromIri = node.Iri;
+                aspectObjectReplacement.FromId = aspectObject.Id;
+                aspectObjectReplacement.FromIri = aspectObject.Iri;
 
-                if (nodeReplacement.FromId != nodeReplacement.ToId)
-                    remap.Add(nodeReplacement.ToId, nodeReplacement.FromId);
+                if (aspectObjectReplacement.FromId != aspectObjectReplacement.ToId)
+                    remap.Add(aspectObjectReplacement.ToId, aspectObjectReplacement.FromId);
 
-                node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, connections, createCopy).ToList();
-                var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy, AttributeParent.Node).ToList();
-                node.Attributes = attr.Any() ? attr : null;
+                aspectObject.Connectors = RemapConnectors(aspectObjectReplacement, aspectObject.Connectors, connections, createCopy).ToList();
+                var attr = RemapAttributes(aspectObjectReplacement, aspectObject.Attributes, createCopy, AttributeParent.AspectObject).ToList();
+                aspectObject.Attributes = attr.Any() ? attr : null;
 
-                node.Id = nodeReplacement.ToId;
-                node.Iri = nodeReplacement.ToIri;
-                node.ProjectId = project.ToId;
-                node.ProjectIri = project.ToIri;
+                aspectObject.Id = aspectObjectReplacement.ToId;
+                aspectObject.Iri = aspectObjectReplacement.ToIri;
+                aspectObject.ProjectId = project.ToId;
+                aspectObject.ProjectIri = project.ToIri;
 
-                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, node.MasterProjectId, node.MasterProjectIri);
-                node.MasterProjectId = masterProject.Id;
-                node.MasterProjectIri = masterProject.Iri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, aspectObject.MasterProjectId, aspectObject.MasterProjectIri);
+                aspectObject.MasterProjectId = masterProject.Id;
+                aspectObject.MasterProjectIri = masterProject.Iri;
 
-                yield return node;
+                yield return aspectObject;
             }
         }
 
@@ -213,18 +213,18 @@ namespace Mb.Services.Services
 
                 var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToConnectorId, FromIri = connection.ToConnectorIri });
                 var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromConnectorId, FromIri = connection.FromConnectorIri });
-                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToNodeId, FromIri = connection.ToNodeIri });
-                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromNodeId, FromIri = connection.FromNodeIri });
+                var toAspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToAspectObjectId, FromIri = connection.ToAspectObjectIri });
+                var fromAspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromAspectObjectId, FromIri = connection.FromAspectObjectIri });
 
                 connection.ToConnectorId = toConnectorReplacement.ToId;
                 connection.FromConnectorId = fromConnectorReplacement.ToId;
-                connection.ToNodeId = toNodeReplacement.ToId;
-                connection.FromNodeId = fromNodeReplacement.ToId;
+                connection.ToAspectObjectId = toAspectObjectReplacement.ToId;
+                connection.FromAspectObjectId = fromAspectObjectReplacement.ToId;
 
                 connection.ToConnectorIri = toConnectorReplacement.ToIri;
                 connection.FromConnectorIri = fromConnectorReplacement.ToIri;
-                connection.ToNodeIri = toNodeReplacement.ToIri;
-                connection.FromNodeIri = fromNodeReplacement.ToIri;
+                connection.ToAspectObjectIri = toAspectObjectReplacement.ToIri;
+                connection.FromAspectObjectIri = fromAspectObjectReplacement.ToIri;
 
                 var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, connection.MasterProjectId, connection.MasterProjectIri);
                 connection.MasterProjectId = masterProject.Id;
@@ -235,26 +235,26 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Remap all parentless connections to root nodes
+        /// Remap all parentless connections to root aspectObjects
         /// </summary>
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
-        /// a root node in same aspect, and connect the part of relation to that node.</remarks>
+        /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
         public void RemapParentlessConnections(ProjectAm project)
         {
             var parentLessConnections = project.GetParentlessConnectors().ToList();
             foreach (var connection in parentLessConnections)
             {
-                var actualNode = project.Nodes.FirstOrDefault(x => x.Id == connection.ToNodeId);
-                if (actualNode == null)
+                var actualAspectObject = project.AspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                if (actualAspectObject == null)
                     continue;
 
-                var rootNode = project.Nodes.FirstOrDefault(x => x.NodeType == AspectObjectType.Root && x.Aspect == actualNode.Aspect);
-                if (rootNode == null)
+                var rootAspectObject = project.AspectObjects.FirstOrDefault(x => x.AspectObjectType == AspectObjectType.Root && x.Aspect == actualAspectObject.Aspect);
+                if (rootAspectObject == null)
                     continue;
 
-                connection.FromNodeId = rootNode.Id;
-                connection.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+                connection.FromAspectObjectId = rootAspectObject.Id;
+                connection.FromConnectorId = rootAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
         }
 
@@ -324,8 +324,8 @@ namespace Mb.Services.Services
                     {
                         y.FromConnectorIri = connectorReplacement.ToIri;
                         y.FromConnectorId = connectorReplacement.ToId;
-                        y.FromNodeId = replacement.ToId;
-                        y.FromNodeIri = replacement.ToIri;
+                        y.FromAspectObjectId = replacement.ToId;
+                        y.FromAspectObjectIri = replacement.ToIri;
                         return y;
                     }).ToList();
                 }
@@ -335,8 +335,8 @@ namespace Mb.Services.Services
                     {
                         y.FromConnectorIri = connectorReplacement.ToIri;
                         y.FromConnectorId = connectorReplacement.ToId;
-                        y.FromNodeId = replacement.ToId;
-                        y.FromNodeIri = replacement.ToIri;
+                        y.FromAspectObjectId = replacement.ToId;
+                        y.FromAspectObjectIri = replacement.ToIri;
                         return y;
                     }).ToList();
                 }
@@ -347,8 +347,8 @@ namespace Mb.Services.Services
                     {
                         y.ToConnectorIri = connectorReplacement.ToIri;
                         y.ToConnectorId = connectorReplacement.ToId;
-                        y.ToNodeId = replacement.ToId;
-                        y.ToNodeIri = replacement.ToIri;
+                        y.ToAspectObjectId = replacement.ToId;
+                        y.ToAspectObjectIri = replacement.ToIri;
                         return y;
                     }).ToList();
                 }
@@ -358,8 +358,8 @@ namespace Mb.Services.Services
                     {
                         y.ToConnectorIri = connectorReplacement.ToIri;
                         y.ToConnectorId = connectorReplacement.ToId;
-                        y.ToNodeId = replacement.ToId;
-                        y.ToNodeIri = replacement.ToIri;
+                        y.ToAspectObjectId = replacement.ToId;
+                        y.ToAspectObjectIri = replacement.ToIri;
                         return y;
                     }).ToList();
                 }
@@ -373,10 +373,10 @@ namespace Mb.Services.Services
                 connector.Id = connectorReplacement.ToId;
                 connector.Iri = connectorReplacement.ToIri;
 
-                if (connector.NodeId == replacement.FromId)
+                if (connector.AspectObjectId == replacement.FromId)
                 {
-                    connector.NodeId = replacement.ToId;
-                    connector.NodeIri = replacement.ToIri;
+                    connector.AspectObjectId = replacement.ToId;
+                    connector.AspectObjectIri = replacement.ToIri;
                 }
 
                 if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
@@ -424,10 +424,10 @@ namespace Mb.Services.Services
                     attribute.TerminalIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.NodeId, replacement.FromId, attribute.NodeIri, replacement.FromIri) && parent == AttributeParent.Node)
+                if (ShouldReplace(attribute.AspectObjectId, replacement.FromId, attribute.AspectObjectIri, replacement.FromIri) && parent == AttributeParent.AspectObject)
                 {
-                    attribute.NodeId = replacement.ToId;
-                    attribute.NodeIri = replacement.ToIri;
+                    attribute.AspectObjectId = replacement.ToId;
+                    attribute.AspectObjectIri = replacement.ToIri;
                 }
 
                 attribute.Id = attributeReplacement.ToId;

@@ -15,29 +15,29 @@ namespace Mb.Models.Application
         [Required]
         public string Description { get; set; }
 
-        public ICollection<string> Nodes { get; set; }
+        public ICollection<string> AspectObjects { get; set; }
         public ICollection<string> Connections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validateionResults = new List<ValidationResult>();
 
-            if (Nodes == null || Nodes.Count <= 0)
+            if (AspectObjects == null || AspectObjects.Count <= 0)
             {
-                validateionResults.Add(new ValidationResult("Number of nodes must be greater than 0", new List<string> { "Nodes" }));
+                validateionResults.Add(new ValidationResult("Number of aspectObjects must be greater than 0", new List<string> { "AspectObjects" }));
             }
 
-            if (Nodes.HasDuplicateValues())
-                validateionResults.Add(new ValidationResult("Duplicate node id's detected", new List<string> { "Nodes" }));
+            if (AspectObjects.HasDuplicateValues())
+                validateionResults.Add(new ValidationResult("Duplicate aspectObject id's detected", new List<string> { "AspectObjects" }));
 
-            if (Nodes.HasEmptyValues())
-                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Nodes" }));
+            if (AspectObjects.HasEmptyValues())
+                validateionResults.Add(new ValidationResult("Empty aspectObject id's detected", new List<string> { "AspectObjects" }));
 
             if (Connections.HasDuplicateValues())
                 validateionResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
 
             if (Connections.HasEmptyValues())
-                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Connections" }));
+                validateionResults.Add(new ValidationResult("Empty aspectObject id's detected", new List<string> { "Connections" }));
 
             return validateionResults;
         }

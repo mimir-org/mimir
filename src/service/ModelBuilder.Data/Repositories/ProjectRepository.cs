@@ -26,7 +26,7 @@ namespace Mb.Data.Repositories
     public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Project>, IProjectRepository
     {
         private readonly IMapper _mapper;
-        private readonly IAspectObjectRepository _nodeRepository;
+        private readonly IAspectObjectRepository _aspectObjectRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
@@ -34,13 +34,13 @@ namespace Mb.Data.Repositories
         private readonly ICacheRepository _cacheRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository nodeRepository,
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
             IConnectionRepository connectionRepository, IAttributeRepository attributeRepository,
             IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
             ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _mapper = mapper;
-            _nodeRepository = nodeRepository;
+            _aspectObjectRepository = aspectObjectRepository;
             _connectionRepository = connectionRepository;
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
@@ -85,20 +85,20 @@ namespace Mb.Data.Repositories
             var project =
                 FindBy(x => x.Id == id || x.Iri == iri)
                     .Include(x => x.Connections)
-                    .Include("Connections.FromNode")
-                    .Include("Connections.ToNode")
+                    .Include("Connections.FromAspectObject")
+                    .Include("Connections.ToAspectObject")
                     .Include("Connections.FromConnector")
                     .Include("Connections.ToConnector")
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
+                    .Include(x => x.AspectObjects)
+                    .Include("AspectObjects.Attributes")
+                    .Include("AspectObjects.Connectors")
+                    .Include("AspectObjects.Connectors.Attributes")
                     .AsNoTracking()
                     .AsSplitQuery()
                     .FirstOrDefault();
 
-            if (project != null && project.Nodes.Any())
-                project.Nodes = project.Nodes.OrderBy(x => x.Order).Select(x =>
+            if (project != null && project.AspectObjects.Any())
+                project.AspectObjects = project.AspectObjects.OrderBy(x => x.Order).Select(x =>
                 {
                     x.Hidden = false;
                     x.BlockHidden = false;
@@ -189,7 +189,7 @@ namespace Mb.Data.Repositories
                         .MatchTargetOn(x => x.Id)
                         .Commit(conn);
 
-                    _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
+                    _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjectUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                     _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
@@ -200,7 +200,7 @@ namespace Mb.Data.Repositories
                     _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
-                    _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
+                    _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
                 }
 
                 trans.Complete();
@@ -242,7 +242,7 @@ namespace Mb.Data.Repositories
                         .MatchTargetOn(x => x.Id)
                         .Commit(conn);
 
-                    _nodeRepository.BulkUpsert(bulk, conn, data.Nodes);
+                    _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjects);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Relations);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
                     _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
@@ -274,7 +274,7 @@ namespace Mb.Data.Repositories
                     _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
                     _connectorRepository.BulkDelete(bulk, conn, data.Relations);
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
-                    _nodeRepository.BulkDelete(bulk, conn, data.Nodes);
+                    _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
 
                     bulk.Setup<Project>()
                         .ForCollection(new List<Project> { project })

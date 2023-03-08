@@ -23,16 +23,16 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get all node types
+        /// Get all aspectObject types
         /// </summary>
         /// <returns></returns>
-        public async Task<List<NodeLibCm>> GetNodeTypes(string searchString)
+        public async Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString)
         {
-            var nodes = await _libraryRepository.GetNodeTypes();
+            var aspectObjects = await _libraryRepository.GetAspectObjectTypes();
             if (!string.IsNullOrWhiteSpace(searchString))
-                nodes = nodes.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+                aspectObjects = aspectObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-            return nodes;
+            return aspectObjects;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get all node types and send types to connected clients
+        /// Get all aspectObject types and send types to connected clients
         /// </summary>
         /// <returns></returns>
         public async Task SendRefreshLibData()

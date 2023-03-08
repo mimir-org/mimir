@@ -20,7 +20,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasMaxLength(7);
 
-            builder.HasMany(x => x.Nodes).WithOne(y => y.Project).HasForeignKey(y => y.ProjectId).IsRequired();
+            builder.HasMany(x => x.AspectObjects).WithOne(y => y.Project).HasForeignKey(y => y.ProjectId).IsRequired();
             builder.HasMany(x => x.Connections).WithOne(y => y.ProjectObject).HasForeignKey(y => y.Project).IsRequired();
         }
     }

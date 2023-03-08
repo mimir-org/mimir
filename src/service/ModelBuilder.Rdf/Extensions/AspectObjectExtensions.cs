@@ -15,97 +15,97 @@ namespace ModelBuilder.Rdf.Extensions
     public static class AspectObjectExtensions
     {
         /// <summary>
-        /// Assert node data to ontology service graph
+        /// Assert aspectObject data to ontology service graph
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="aspectObject"></param>
         /// <param name="project"></param>
         /// <param name="ontologyService"></param>
         /// <param name="projectData">Record of ICollections</param>
-        public static void AssertNode(this AspectObject node, Project project, IOntologyService ontologyService, ProjectData projectData)
+        public static void AssertAspectObject(this AspectObject aspectObject, Project project, IOntologyService ontologyService, ProjectData projectData)
         {
-            var parentNode = node.GetParent(project);
+            var parentAspectObject = aspectObject.GetParent(project);
 
-            if (parentNode != null && !string.IsNullOrWhiteSpace(parentNode.Iri))
-                ontologyService.AssertNode(node.Iri, Resources.HasParent, parentNode.Iri);
+            if (parentAspectObject != null && !string.IsNullOrWhiteSpace(parentAspectObject.Iri))
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasParent, parentAspectObject.Iri);
 
-            if (!string.IsNullOrWhiteSpace(node.Description))
-                ontologyService.AssertNode(node.Iri, Resources.Desc, node.Description, true);
+            if (!string.IsNullOrWhiteSpace(aspectObject.Description))
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Desc, aspectObject.Description, true);
 
-            ontologyService.AssertNode(node.Iri, Resources.RDS, node.RdsString(project), true);
-            ontologyService.AssertNode(node.Iri, Resources.MimirRds, node.Rds, true);
-            ontologyService.AssertNode(node.Iri, Resources.Domain, node.Domain, true);
-            ontologyService.AssertNode(node.Iri, Resources.HasPositionX, ontologyService.CreateLiteralNode($"{node.PositionX}", Resources.Float));
-            ontologyService.AssertNode(node.Iri, Resources.HasPositionY, ontologyService.CreateLiteralNode($"{node.PositionY}", Resources.Float));
-            ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionX, ontologyService.CreateLiteralNode($"{node.PositionBlockX}", Resources.Float));
-            ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionY, ontologyService.CreateLiteralNode($"{node.PositionBlockY}", Resources.Float));
-            node.TypeReferences.AssertTypeReference(node.Iri, ontologyService);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.RDS, aspectObject.RdsString(project), true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.MimirRds, aspectObject.Rds, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Domain, aspectObject.Domain, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionX}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionY}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionBlockX}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionBlockY}", Resources.Float));
+            aspectObject.TypeReferences.AssertTypeReference(aspectObject.Iri, ontologyService);
 
-            if (node.Width != null)
-                ontologyService.AssertNode(node.Iri, Resources.HasWidth, ontologyService.CreateLiteralNode($"{node.Width}", Resources.Integer));
+            if (aspectObject.Width != null)
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasWidth, ontologyService.CreateLiteralAspectObject($"{aspectObject.Width}", Resources.Integer));
 
-            if (node.Height != null)
-                ontologyService.AssertNode(node.Iri, Resources.HasHeight, ontologyService.CreateLiteralNode($"{node.Height}", Resources.Integer));
+            if (aspectObject.Height != null)
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasHeight, ontologyService.CreateLiteralAspectObject($"{aspectObject.Height}", Resources.Integer));
 
 
-            ontologyService.AssertNode(node.Iri, Resources.HasAspect, $"imf:{node.Aspect}");
-            ontologyService.AssertNode(node.Iri, Resources.Version, node.Version, true);
-            ontologyService.AssertNode(node.Iri, Resources.Name, node.Name, true);
-            ontologyService.AssertNode(node.Iri, Resources.Label, node.Label ?? node.Name, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasAspect, $"imf:{aspectObject.Aspect}");
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Version, aspectObject.Version, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Name, aspectObject.Name, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Label, aspectObject.Label ?? aspectObject.Name, true);
 
-            ontologyService.AssertNode(node.Iri, Resources.UpdatedBy, node.UpdatedBy, true);
-            ontologyService.AssertNode(node.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{node.Updated.ToString("u")}", Resources.DateTime));
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.UpdatedBy, aspectObject.UpdatedBy, true);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated.ToString("u")}", Resources.DateTime));
 
-            if (node.Created != null && !string.IsNullOrWhiteSpace(node.CreatedBy))
+            if (aspectObject.Created != null && !string.IsNullOrWhiteSpace(aspectObject.CreatedBy))
             {
-                ontologyService.AssertNode(node.Iri, Resources.CreatedBy, node.CreatedBy, true);
-                ontologyService.AssertNode(node.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{node.Created?.ToString("u")}", Resources.DateTime));
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.CreatedBy, aspectObject.CreatedBy, true);
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Created, ontologyService.CreateLiteralAspectObject($"{aspectObject.Created?.ToString("u")}", Resources.DateTime));
             }
 
             // TODO: This should be an iri
-            if (!string.IsNullOrWhiteSpace(node.LibraryTypeId))
-                ontologyService.AssertNode(node.Iri, Resources.LibraryType, node.LibraryTypeId, true);
+            if (!string.IsNullOrWhiteSpace(aspectObject.LibraryTypeId))
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.LibraryType, aspectObject.LibraryTypeId, true);
 
-            if (!string.IsNullOrWhiteSpace(node.Rds))
+            if (!string.IsNullOrWhiteSpace(aspectObject.Rds))
             {
-                var strippedRds = node.StrippedRds();
-                ontologyService.AssertNode(node.Iri, Resources.Type, @$"og{strippedRds.Length}:{node.Aspect}{strippedRds}");
+                var strippedRds = aspectObject.StrippedRds();
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Type, @$"og{strippedRds.Length}:{aspectObject.Aspect}{strippedRds}");
             }
 
-            if (node.NodeType == AspectObjectType.Root)
+            if (aspectObject.AspectObjectType == AspectObjectType.Root)
             {
-                ontologyService.AssertNode(node.Iri, Resources.IsAspectOf, project.Iri);
-                ontologyService.AssertNode(node.Iri, Resources.HasMasterProject, project.Iri);
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.IsAspectOf, project.Iri);
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasMasterProject, project.Iri);
                 return;
             }
 
-            ontologyService.AssertNode(node.Iri, Resources.Type, Resources.FSB);
-            ontologyService.AssertNode(node.Iri, Resources.HasMasterProject, node.MasterProjectIri);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Type, Resources.FSB);
+            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasMasterProject, aspectObject.MasterProjectIri);
 
 
-            if (!string.IsNullOrEmpty(node.PurposeString))
-                ontologyService.AssertNode(node.Iri, Resources.HasPurpose, $"mimir:{node.PurposeString}");
+            if (!string.IsNullOrEmpty(aspectObject.PurposeString))
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPurpose, $"mimir:{aspectObject.PurposeString}");
 
-            if (node.Symbol != null)
-                ontologyService.AssertNode(node.Iri, Resources.HasSymbol, node.Symbol, true);
+            if (aspectObject.Symbol != null)
+                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasSymbol, aspectObject.Symbol, true);
         }
 
         /// <summary>
-        /// Get the parent of the node
+        /// Get the parent of the aspectObject
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="aspectObject"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        public static AspectObject GetParent(this AspectObject node, Project project)
+        public static AspectObject GetParent(this AspectObject aspectObject, Project project)
         {
             foreach (var connection in project.Connections)
             {
-                if (connection.ToNode != node.Id) continue;
+                if (connection.ToAspectObject != aspectObject.Id) continue;
 
                 if (!connection.ToConnectorObject.IsPartOf()) continue;
 
                 if (connection.ToConnectorObject.IsConnected(project))
                 {
-                    return connection.FromNodeObject;
+                    return connection.FromAspectObjectObject;
                 }
             }
             return null;
@@ -114,19 +114,19 @@ namespace ModelBuilder.Rdf.Extensions
         /// <summary>
         /// Generate RDS string recursively
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="aspectObject"></param>
         /// <param name="project"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         /// TODO: This is not correct. We have more values ex. ++ etc.
-        public static string RdsString(this AspectObject node, Project project)
+        public static string RdsString(this AspectObject aspectObject, Project project)
         {
-            if (node.NodeType == AspectObjectType.Root)
+            if (aspectObject.AspectObjectType == AspectObjectType.Root)
             {
                 return $"<{project.Name.ToUpper()}>";
             }
 
-            var prefix = node.Aspect switch
+            var prefix = aspectObject.Aspect switch
             {
                 Aspect.Function => "=",
                 Aspect.Location => "+",
@@ -136,8 +136,8 @@ namespace ModelBuilder.Rdf.Extensions
                 _ => string.Empty
             };
 
-            var parent = node.GetParent(project);
-            var rds = node.Rds;
+            var parent = aspectObject.GetParent(project);
+            var rds = aspectObject.Rds;
 
             return parent != null ? $"{parent.RdsString(project)}{prefix}{rds}" : $"{prefix}{rds}";
         }
@@ -145,115 +145,115 @@ namespace ModelBuilder.Rdf.Extensions
         /// <summary>
         /// Strip RDS string
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="aspectObject"></param>
         /// <returns></returns>
-        public static string StrippedRds(this AspectObject node) => Regex.Replace(node.Rds, @"\d+", string.Empty);
+        public static string StrippedRds(this AspectObject aspectObject) => Regex.Replace(aspectObject.Rds, @"\d+", string.Empty);
 
         /// <summary>
-        /// Resolve aspect node and all references
+        /// Resolve aspect aspectObject and all references
         /// </summary>
-        /// <param name="node">The node that should be resolved</param>
+        /// <param name="aspectObject">The aspectObject that should be resolved</param>
         /// <param name="ontologyService">Ontology Service</param>
-        /// <param name="iri">The IRI of the node</param>
+        /// <param name="iri">The IRI of the aspectObject</param>
         /// <param name="projectIri">The IRI of the project</param>
-        /// <param name="nodeType">The type of the node</param>
+        /// <param name="aspectObjectType">The type of the aspectObject</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
-        public static void ResolveNode(this AspectObjectAm node, IOntologyService ontologyService, string iri, string projectIri, AspectObjectType nodeType, ProjectData projectData)
+        public static void ResolveAspectObject(this AspectObjectAm aspectObject, IOntologyService ontologyService, string iri, string projectIri, AspectObjectType aspectObjectType, ProjectData projectData)
         {
-            if (node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
-                throw new InvalidDataException($"Can't resolve a node without required parameters.");
+            if (aspectObject == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
+                throw new InvalidDataException($"Can't resolve a aspectObject without required parameters.");
 
-            node.Iri = iri;
-            node.ProjectIri = projectIri;
-            node.Name = ontologyService.GetValue(iri, Resources.Name, false);
-            node.Version = ontologyService.GetValue(iri, Resources.Version, false);
-            node.Label = ontologyService.GetValue(iri, Resources.Label, false);
-            node.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
-            node.Description = ontologyService.GetValue(iri, Resources.Desc, false);
-            node.PositionX = ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false);
-            node.PositionY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
-            node.PositionBlockX = ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false);
-            node.PositionBlockY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
-            node.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
-            node.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
+            aspectObject.Iri = iri;
+            aspectObject.ProjectIri = projectIri;
+            aspectObject.Name = ontologyService.GetValue(iri, Resources.Name, false);
+            aspectObject.Version = ontologyService.GetValue(iri, Resources.Version, false);
+            aspectObject.Label = ontologyService.GetValue(iri, Resources.Label, false);
+            aspectObject.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
+            aspectObject.Description = ontologyService.GetValue(iri, Resources.Desc, false);
+            aspectObject.PositionX = ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false);
+            aspectObject.PositionY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
+            aspectObject.PositionBlockX = ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false);
+            aspectObject.PositionBlockY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
+            aspectObject.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
+            aspectObject.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
 
-            var masterProjectIriNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
-            node.MasterProjectIri = masterProjectIriNode?.ToString();
+            var masterProjectIriAspectObject = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
+            aspectObject.MasterProjectIri = masterProjectIriAspectObject?.ToString();
 
-            node.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
-            node.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
+            aspectObject.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
+            aspectObject.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
-            node.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);
-            node.Updated = ontologyService.GetDateTimeValue(iri, Resources.LastUpdated, false);
-            node.CreatedBy = ontologyService.GetValue(iri, Resources.CreatedBy, false);
-            node.Created = ontologyService.GetDateTimeValue(iri, Resources.Created, false);
+            aspectObject.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);
+            aspectObject.Updated = ontologyService.GetDateTimeValue(iri, Resources.LastUpdated, false);
+            aspectObject.CreatedBy = ontologyService.GetValue(iri, Resources.CreatedBy, false);
+            aspectObject.Created = ontologyService.GetDateTimeValue(iri, Resources.Created, false);
 
-            node.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
+            aspectObject.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
-            node.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
-            node.NodeType = nodeType;
+            aspectObject.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
+            aspectObject.AspectObjectType = aspectObjectType;
 
-            node.TypeReferences.ResolveTypeReferences(node.Iri, ontologyService);
+            aspectObject.TypeReferences.ResolveTypeReferences(aspectObject.Iri, ontologyService);
 
             // Resolve Attributes
-            node.Attributes = new List<AttributeAm>();
-            var attributes = ontologyService.GetTriplesWithSubjectPredicate(node.Iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
+            aspectObject.Attributes = new List<AttributeAm>();
+            var attributes = ontologyService.GetTriplesWithSubjectPredicate(aspectObject.Iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
 
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
                 attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null);
-                node.Attributes.Add(attribute);
+                aspectObject.Attributes.Add(attribute);
             }
 
-            // Create all relation nodes
-            var existingNode = projectData?.Nodes?.FirstOrDefault(x => x.Iri == iri);
-            var existingRelations = existingNode?.Connectors.OfType<RelationAm>().ToList();
+            // Create all relation aspectObjects
+            var existingAspectObject = projectData?.AspectObjects?.FirstOrDefault(x => x.Iri == iri);
+            var existingRelations = existingAspectObject?.Connectors.OfType<RelationAm>().ToList();
             if (existingRelations != null && existingRelations.Any())
             {
-                node.Connectors = new List<ConnectorAm>();
+                aspectObject.Connectors = new List<ConnectorAm>();
                 foreach (var relation in existingRelations)
-                    node.Connectors.Add(relation);
+                    aspectObject.Connectors.Add(relation);
             }
             else
             {
-                node.Connectors = CreateDefaultConnectors(iri, nodeType == AspectObjectType.Root);
+                aspectObject.Connectors = CreateDefaultConnectors(iri, aspectObjectType == AspectObjectType.Root);
             }
 
             // Create all input terminals
-            var inputTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).ToList();
-            var inputTerminals = ResolveTerminals(inputTerminalNodes, projectData, iri, ontologyService).ToList();
-            node.Connectors = node.Connectors.Union(inputTerminals).ToList();
+            var inputTerminalAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).ToList();
+            var inputTerminals = ResolveTerminals(inputTerminalAspectObjects, projectData, iri, ontologyService).ToList();
+            aspectObject.Connectors = aspectObject.Connectors.Union(inputTerminals).ToList();
 
             // Create all output terminals
-            var outputTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasOutputTerminal).Select(x => x.Object).ToList();
-            var outputTerminals = ResolveTerminals(outputTerminalNodes, projectData, iri, ontologyService).ToList();
-            node.Connectors = node.Connectors.Union(outputTerminals).ToList();
+            var outputTerminalAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasOutputTerminal).Select(x => x.Object).ToList();
+            var outputTerminals = ResolveTerminals(outputTerminalAspectObjects, projectData, iri, ontologyService).ToList();
+            aspectObject.Connectors = aspectObject.Connectors.Union(outputTerminals).ToList();
 
             // Create all bidirectional terminals
-            var bidirectionalTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasBidirectionalTerminal).Select(x => x.Object).ToList();
-            var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalNodes, projectData, iri, ontologyService).ToList();
-            node.Connectors = node.Connectors.Union(bidirectionalTerminals).ToList();
+            var bidirectionalTerminalAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasBidirectionalTerminal).Select(x => x.Object).ToList();
+            var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalAspectObjects, projectData, iri, ontologyService).ToList();
+            aspectObject.Connectors = aspectObject.Connectors.Union(bidirectionalTerminals).ToList();
         }
 
         /// <summary>
         /// Resolve all Terminals from INodes
         /// </summary>
-        /// <param name="nodes">The nodes to be resolved</param>
+        /// <param name="aspectObjects">The aspectObjects to be resolved</param>
         /// <param name="projectData">Project Data</param>
-        /// <param name="nodeIri">Parent node IRI</param>
+        /// <param name="aspectObjectIri">Parent aspectObject IRI</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <returns></returns>
-        public static IEnumerable<ConnectorTerminalAm> ResolveTerminals(List<INode> nodes, ProjectData projectData, string nodeIri, IOntologyService ontologyService)
+        public static IEnumerable<ConnectorTerminalAm> ResolveTerminals(List<INode> aspectObjects, ProjectData projectData, string aspectObjectIri, IOntologyService ontologyService)
         {
-            if (!nodes.Any())
+            if (!aspectObjects.Any())
                 yield break;
 
-            foreach (var node in nodes)
+            foreach (var aspectObject in aspectObjects)
             {
                 var connectorTerminal = new ConnectorTerminalAm();
-                connectorTerminal.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
+                connectorTerminal.ResolveTerminal(ontologyService, projectData, aspectObjectIri, aspectObject.ToString());
                 yield return connectorTerminal;
             }
         }
@@ -261,8 +261,8 @@ namespace ModelBuilder.Rdf.Extensions
         /// <summary>
         /// Create all default relation connectors 
         /// </summary>
-        /// <param name="iri">The node IRI</param>
-        /// <param name="isRoot">Is a root node?</param>
+        /// <param name="iri">The aspectObject IRI</param>
+        /// <param name="isRoot">Is a root aspectObject?</param>
         /// <returns>Returns a list of default connectors</returns>
         public static List<ConnectorAm> CreateDefaultConnectors(string iri, bool isRoot)
         {
@@ -273,7 +273,7 @@ namespace ModelBuilder.Rdf.Extensions
                     Iri = iri.StripAndCreateIdIri(),
                     Name = RelationType.PartOf.GetDisplayName(),
                     Type = ConnectorDirection.Output,
-                    NodeIri = iri,
+                    AspectObjectIri = iri,
                     RelationType = RelationType.PartOf,
                     ConnectorVisibility = ConnectorVisibility.None
                 }
@@ -287,7 +287,7 @@ namespace ModelBuilder.Rdf.Extensions
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.PartOf.GetDisplayName(),
                 Type = ConnectorDirection.Input,
-                NodeIri = iri,
+                AspectObjectIri = iri,
                 RelationType = RelationType.PartOf,
                 ConnectorVisibility = ConnectorVisibility.None
             });
@@ -297,7 +297,7 @@ namespace ModelBuilder.Rdf.Extensions
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
                 Type = ConnectorDirection.Input,
-                NodeIri = iri,
+                AspectObjectIri = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
             });
@@ -307,7 +307,7 @@ namespace ModelBuilder.Rdf.Extensions
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
                 Type = ConnectorDirection.Output,
-                NodeIri = iri,
+                AspectObjectIri = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
             });
@@ -317,7 +317,7 @@ namespace ModelBuilder.Rdf.Extensions
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
                 Type = ConnectorDirection.Input,
-                NodeIri = iri,
+                AspectObjectIri = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None
             });
@@ -327,7 +327,7 @@ namespace ModelBuilder.Rdf.Extensions
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
                 Type = ConnectorDirection.Output,
-                NodeIri = iri,
+                AspectObjectIri = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None
             });

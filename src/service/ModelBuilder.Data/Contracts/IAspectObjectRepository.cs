@@ -12,27 +12,27 @@ namespace Mb.Data.Contracts
 {
     public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObject>
     {
-        IEnumerable<(AspectObject node, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
+        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
             string invokedByDomain);
 
-        IEnumerable<(AspectObject node, WorkerStatus status)> DeleteNodes(ICollection<AspectObject> delete, string projectId,
+        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObject> delete, string projectId,
             string invokedByDomain);
 
         /// <summary>
-        /// Bulk node update
+        /// Bulk aspectObject update
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn"></param>
-        /// <param name="nodes">The nodes to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes);
+        /// <param name="aspectObjects">The aspectObjects to be upserted</param>
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects);
 
         /// <summary>
-        /// Bulk delete nodes
+        /// Bulk delete aspectObjects
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="nodes">The nodes to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes);
+        /// <param name="aspectObjects">The aspectObjects to be deleted</param>
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects);
 
         /// <summary>
         /// Bulk connection update lock status
@@ -43,12 +43,12 @@ namespace Mb.Data.Contracts
         void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
 
         /// <summary>
-        /// Get node connected data
+        /// Get aspectObject connected data
         /// </summary>
-        /// <param name="nodeId">The node you want data from</param>
+        /// <param name="aspectObjectId">The aspectObject you want data from</param>
         /// <returns>A collection connected identity data</returns>
-        /// <remarks>Get det node identifier and all connected children including
-        /// children nodes, children connections and children terminals</remarks>
-        Task<List<ObjectIdentity>> GetNodeConnectedData(string nodeId);
+        /// <remarks>Get det aspectObject identifier and all connected children including
+        /// children aspectObjects, children connections and children terminals</remarks>
+        Task<List<ObjectIdentity>> GetAspectObjectConnectedData(string aspectObjectId);
     }
 }

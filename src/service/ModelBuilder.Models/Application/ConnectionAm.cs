@@ -34,17 +34,17 @@ namespace Mb.Models.Application
         [RequiredOne(nameof(ToConnectorId))]
         public string ToConnectorIri { get; set; }
 
-        [RequiredOne(nameof(FromNodeIri))]
-        public string FromNodeId { get; set; }
+        [RequiredOne(nameof(FromAspectObjectIri))]
+        public string FromAspectObjectId { get; set; }
 
-        [RequiredOne(nameof(FromNodeId))]
-        public string FromNodeIri { get; set; }
+        [RequiredOne(nameof(FromAspectObjectId))]
+        public string FromAspectObjectIri { get; set; }
 
-        [RequiredOne(nameof(ToNodeIri))]
-        public string ToNodeId { get; set; }
+        [RequiredOne(nameof(ToAspectObjectIri))]
+        public string ToAspectObjectId { get; set; }
 
-        [RequiredOne(nameof(ToNodeId))]
-        public string ToNodeIri { get; set; }
+        [RequiredOne(nameof(ToAspectObjectId))]
+        public string ToAspectObjectIri { get; set; }
 
         [RequiredOne(nameof(MasterProjectIri))]
         public string MasterProjectId { get; set; }

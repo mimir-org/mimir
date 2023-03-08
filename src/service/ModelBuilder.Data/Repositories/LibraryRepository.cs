@@ -50,10 +50,10 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<NodeLibCm>> GetNodeTypes()
+        public async Task<List<NodeLibCm>> GetAspectObjectTypes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("librarynode");
+            var url = _applicationSetting.ApiUrl("libraryaspectobject");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectNode.ToString(),
                 async () => await _httpRepository.GetData<List<NodeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 

@@ -43,10 +43,10 @@ namespace Mb.Models.Application
         [ValidIri]
         public string TerminalIri { get; set; }
 
-        public string NodeId { get; set; }
+        public string AspectObjectId { get; set; }
 
         [ValidIri]
-        public string NodeIri { get; set; }
+        public string AspectObjectIri { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
@@ -58,16 +58,16 @@ namespace Mb.Models.Application
 
             if (string.IsNullOrEmpty(TerminalId) &&
                 string.IsNullOrEmpty(TerminalIri) &&
-                string.IsNullOrEmpty(NodeId) &&
-                string.IsNullOrEmpty(NodeIri)
+                string.IsNullOrEmpty(AspectObjectId) &&
+                string.IsNullOrEmpty(AspectObjectIri)
                )
             {
                 validations.Add(new ValidationResult("One of this fields is required", new[]
                 {
                     nameof(TerminalId),
                     nameof(TerminalIri),
-                    nameof(NodeId),
-                    nameof(NodeIri)
+                    nameof(AspectObjectId),
+                    nameof(AspectObjectIri)
                 }));
             }
 

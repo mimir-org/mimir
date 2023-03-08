@@ -50,7 +50,7 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Node",
+                name: "AspectObject",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -76,7 +76,7 @@ namespace Mb.Core.Migrations
                     LibraryTypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Aspect = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NodeType = table.Column<int>(type: "int", nullable: false),
+                    AspectObjectType = table.Column<int>(type: "int", nullable: false),
                     MasterProjectId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MasterProjectIri = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -119,7 +119,7 @@ namespace Mb.Core.Migrations
                     table.ForeignKey(
                         name: "FK_Connector_Node_AspectObject",
                         column: x => x.AspectObject,
-                        principalTable: "Node",
+                        principalTable: "AspectObject",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -142,8 +142,8 @@ namespace Mb.Core.Migrations
                     RegularitySpecified = table.Column<string>(type: "nvarchar(127)", maxLength: 127, nullable: true),
                     TerminalId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TerminalIri = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NodeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    NodeIri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AspectObjectId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AspectObjectIri = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsLockedStatusBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsLockedStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -158,8 +158,8 @@ namespace Mb.Core.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Attribute_Node_NodeId",
-                        column: x => x.NodeId,
-                        principalTable: "Node",
+                        column: x => x.AspectObjectId,
+                        principalTable: "AspectObject",
                         principalColumn: "Id");
                 });
 
@@ -171,8 +171,8 @@ namespace Mb.Core.Migrations
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FromConnector = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ToConnector = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FromNode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ToNode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FromAspectObject = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ToAspectObject = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -193,13 +193,13 @@ namespace Mb.Core.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Connection_Node_FromNode",
-                        column: x => x.FromNode,
-                        principalTable: "Node",
+                        column: x => x.FromAspectObject,
+                        principalTable: "AspectObject",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Connection_Node_ToNode",
-                        column: x => x.ToNode,
-                        principalTable: "Node",
+                        column: x => x.ToAspectObject,
+                        principalTable: "AspectObject",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Connection_Project_Project",
@@ -212,7 +212,7 @@ namespace Mb.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Attribute_NodeId",
                 table: "Attribute",
-                column: "NodeId");
+                column: "AspectObjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attribute_TerminalId",
@@ -227,7 +227,7 @@ namespace Mb.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Connection_FromNode",
                 table: "Connection",
-                column: "FromNode");
+                column: "FromAspectObject");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Connection_Project",
@@ -242,7 +242,7 @@ namespace Mb.Core.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Connection_ToNode",
                 table: "Connection",
-                column: "ToNode");
+                column: "ToAspectObject");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Connector_AspectObject",
@@ -251,17 +251,17 @@ namespace Mb.Core.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Node_Name",
-                table: "Node",
+                table: "AspectObject",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Node_ProjectId",
-                table: "Node",
+                table: "AspectObject",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Node_ProjectIri",
-                table: "Node",
+                table: "AspectObject",
                 column: "ProjectIri");
         }
 
@@ -281,7 +281,7 @@ namespace Mb.Core.Migrations
                 name: "Connector");
 
             migrationBuilder.DropTable(
-                name: "Node");
+                name: "AspectObject");
 
             migrationBuilder.DropTable(
                 name: "Project");

@@ -44,17 +44,17 @@ namespace Mb.Services.Contracts
         IDictionary<string, string> Clone(ProjectAm project);
 
         /// <summary>
-        /// Remap a collection of nodes and all sub objects.
+        /// Remap a collection of aspectObjects and all sub objects.
         /// </summary>
         /// <param name="project">ReplacementId</param>
-        /// <param name="nodes">ICollection&lt;NodeAm&gt; nodes</param>
+        /// <param name="aspectObjects">ICollection&lt;NodeAm&gt; aspectObjects</param>
         /// <param name="connections">ICollection&lt;ConnectionAm&gt; connections</param>
         /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
         /// <param name="createCopy">bool</param>
-        /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
-        /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
+        /// <returns>IEnumerable&lt;AspectObjectAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all aspectObjects and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        IEnumerable<AspectObjectAm> RemapNodes(ReplacementId project, ICollection<AspectObjectAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
+        IEnumerable<AspectObjectAm> RemapAspectObjects(ReplacementId project, ICollection<AspectObjectAm> aspectObjects, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
 
         /// <summary>
         /// Remap a collection of connections and all sub objects.
@@ -69,11 +69,11 @@ namespace Mb.Services.Contracts
         IEnumerable<ConnectionAm> RemapConnections(ReplacementId project, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
 
         /// <summary>
-        /// Remap all parentless connections to root nodes
+        /// Remap all parentless connections to root aspectObjects
         /// </summary>
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
-        /// a root node in same aspect, and connect the part of relation to that node.</remarks>
+        /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
         void RemapParentlessConnections(ProjectAm project);
 
         MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri);
