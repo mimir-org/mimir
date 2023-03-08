@@ -10,12 +10,12 @@ using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
-    public interface INodeRepository : IGenericRepository<ModelBuilderDbContext, Node>
+    public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObject>
     {
-        IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project,
+        IEnumerable<(AspectObject node, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
             string invokedByDomain);
 
-        IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId,
+        IEnumerable<(AspectObject node, WorkerStatus status)> DeleteNodes(ICollection<AspectObject> delete, string projectId,
             string invokedByDomain);
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn"></param>
         /// <param name="nodes">The nodes to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes);
 
         /// <summary>
         /// Bulk delete nodes
@@ -32,7 +32,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="nodes">The nodes to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes);
 
         /// <summary>
         /// Bulk connection update lock status

@@ -9,9 +9,9 @@ namespace Mb.Models.Records
 {
     public record ProjectEditData
     {
-        public List<Node> NodeCreate { get; init; } = new();
-        public List<Node> NodeUpdate { get; init; } = new();
-        public List<Node> NodeDelete { get; init; } = new();
+        public List<AspectObject> NodeCreate { get; init; } = new();
+        public List<AspectObject> NodeUpdate { get; init; } = new();
+        public List<AspectObject> NodeDelete { get; init; } = new();
 
         public List<Connection> ConnectionCreate { get; init; } = new();
         public List<Connection> ConnectionUpdate { get; init; } = new();
@@ -30,12 +30,12 @@ namespace Mb.Models.Records
         public List<ConnectorTerminal> TerminalDelete { get; init; } = new();
 
         public List<Connection> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
-        public List<Node> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
+        public List<AspectObject> NodeCreateAndDelete => NodeCreate.Union(NodeDelete).ToList();
         public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
         public List<ConnectorRelation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
         public List<ConnectorTerminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
-        public List<Node> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
+        public List<AspectObject> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
         public List<ConnectorTerminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
         public List<ConnectorRelation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
         public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();

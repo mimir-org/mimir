@@ -23,14 +23,14 @@ namespace Mb.Services.Services
     public class LockService : ILockService
     {
         private readonly IAttributeRepository _attributeRepository;
-        private readonly INodeRepository _nodeRepository;
+        private readonly IAspectObjectRepository _nodeRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly ICooperateService _cooperateService;
         private readonly ICacheRepository _cacheRepository;
         private readonly IMapper _mapper;
         private readonly DatabaseConfiguration _databaseConfiguration;
 
-        public LockService(INodeRepository nodeRepository, IConnectionRepository connectionRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
+        public LockService(IAspectObjectRepository nodeRepository, IConnectionRepository connectionRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
         {
             _nodeRepository = nodeRepository;
             _connectionRepository = connectionRepository;

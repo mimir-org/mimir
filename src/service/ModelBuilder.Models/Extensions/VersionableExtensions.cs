@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions
     // ReSharper disable once IdentifierTypo
     public static class VersionableExtensions
     {
-        public static bool HasMajorChanges(this Node node, ProjectEditData editData)
+        public static bool HasMajorChanges(this AspectObject node, ProjectEditData editData)
         {
             if (editData == null)
                 return false;
@@ -21,7 +21,7 @@ namespace Mb.Models.Extensions
             return false;
         }
 
-        public static bool HasMinorChanges(this Node node, ProjectEditData editData, Node other)
+        public static bool HasMinorChanges(this AspectObject node, ProjectEditData editData, AspectObject other)
         {
             if (editData == null)
                 return false;

@@ -35,7 +35,7 @@ namespace Mb.Models.Application
 
         public DateTime? Updated { get; set; }
 
-        public ICollection<NodeAm> Nodes { get; set; } = new List<NodeAm>();
+        public ICollection<AspectObjectAm> Nodes { get; set; } = new List<AspectObjectAm>();
         public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
 
         #region Validate

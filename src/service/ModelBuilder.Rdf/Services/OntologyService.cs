@@ -18,14 +18,14 @@ namespace ModelBuilder.Rdf.Services
     {
         private readonly IOntologyRepository _ontologyRepository;
         private readonly ILibraryRepository _libRepository;
-        private readonly INodeRepository _nodeRepository;
+        private readonly IAspectObjectRepository _nodeRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly IMapper _mapper;
 
         #region Constructors
 
         public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
-            INodeRepository nodeRepository, IMapper mapper, IConnectionRepository connectionRepository)
+            IAspectObjectRepository nodeRepository, IMapper mapper, IConnectionRepository connectionRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
@@ -346,7 +346,7 @@ namespace ModelBuilder.Rdf.Services
             var projectData = new ProjectData
             {
                 Connections = _mapper.Map<List<ConnectionAm>>(connections),
-                Nodes = _mapper.Map<List<NodeAm>>(nodes),
+                Nodes = _mapper.Map<List<AspectObjectAm>>(nodes),
                 Units = units,
                 QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
             };

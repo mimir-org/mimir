@@ -8,11 +8,11 @@ using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using INode = VDS.RDF.INode;
-using Node = Mb.Models.Data.Node;
+using AspectObject = Mb.Models.Data.AspectObject;
 
 namespace ModelBuilder.Rdf.Extensions
 {
-    public static class NodeExtensions
+    public static class AspectObjectExtensions
     {
         /// <summary>
         /// Assert node data to ontology service graph
@@ -21,7 +21,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="project"></param>
         /// <param name="ontologyService"></param>
         /// <param name="projectData">Record of ICollections</param>
-        public static void AssertNode(this Node node, Project project, IOntologyService ontologyService, ProjectData projectData)
+        public static void AssertNode(this AspectObject node, Project project, IOntologyService ontologyService, ProjectData projectData)
         {
             var parentNode = node.GetParent(project);
 
@@ -71,7 +71,7 @@ namespace ModelBuilder.Rdf.Extensions
                 ontologyService.AssertNode(node.Iri, Resources.Type, @$"og{strippedRds.Length}:{node.Aspect}{strippedRds}");
             }
 
-            if (node.NodeType == NodeType.Root)
+            if (node.NodeType == AspectObjectType.Root)
             {
                 ontologyService.AssertNode(node.Iri, Resources.IsAspectOf, project.Iri);
                 ontologyService.AssertNode(node.Iri, Resources.HasMasterProject, project.Iri);
@@ -95,7 +95,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="node"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        public static Node GetParent(this Node node, Project project)
+        public static AspectObject GetParent(this AspectObject node, Project project)
         {
             foreach (var connection in project.Connections)
             {
@@ -119,9 +119,9 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         /// TODO: This is not correct. We have more values ex. ++ etc.
-        public static string RdsString(this Node node, Project project)
+        public static string RdsString(this AspectObject node, Project project)
         {
-            if (node.NodeType == NodeType.Root)
+            if (node.NodeType == AspectObjectType.Root)
             {
                 return $"<{project.Name.ToUpper()}>";
             }
@@ -147,7 +147,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public static string StrippedRds(this Node node) => Regex.Replace(node.Rds, @"\d+", string.Empty);
+        public static string StrippedRds(this AspectObject node) => Regex.Replace(node.Rds, @"\d+", string.Empty);
 
         /// <summary>
         /// Resolve aspect node and all references
@@ -159,7 +159,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="nodeType">The type of the node</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
-        public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, NodeType nodeType, ProjectData projectData)
+        public static void ResolveNode(this AspectObjectAm node, IOntologyService ontologyService, string iri, string projectIri, AspectObjectType nodeType, ProjectData projectData)
         {
             if (node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
                 throw new InvalidDataException($"Can't resolve a node without required parameters.");
@@ -218,7 +218,7 @@ namespace ModelBuilder.Rdf.Extensions
             }
             else
             {
-                node.Connectors = CreateDefaultConnectors(iri, nodeType == NodeType.Root);
+                node.Connectors = CreateDefaultConnectors(iri, nodeType == AspectObjectType.Root);
             }
 
             // Create all input terminals

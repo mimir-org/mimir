@@ -27,7 +27,7 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public virtual Node AspectObject { get; set; }
+        public virtual AspectObject AspectObject { get; set; }
 
         [JsonIgnore]
         [TSExclude]

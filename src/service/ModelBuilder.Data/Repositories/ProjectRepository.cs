@@ -26,7 +26,7 @@ namespace Mb.Data.Repositories
     public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Project>, IProjectRepository
     {
         private readonly IMapper _mapper;
-        private readonly INodeRepository _nodeRepository;
+        private readonly IAspectObjectRepository _nodeRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
@@ -34,7 +34,7 @@ namespace Mb.Data.Repositories
         private readonly ICacheRepository _cacheRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository nodeRepository,
             IConnectionRepository connectionRepository, IAttributeRepository attributeRepository,
             IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
             ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)

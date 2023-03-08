@@ -27,7 +27,7 @@ namespace Mb.Services.Services
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IProjectRepository _projectRepository;
         private readonly IAttributeRepository _attributeRepository;
-        private readonly INodeRepository _nodeRepository;
+        private readonly IAspectObjectRepository _nodeRepository;
         private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICommonRepository _commonRepository;
@@ -39,7 +39,7 @@ namespace Mb.Services.Services
 
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
-            IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IConnectionRepository connectionRepository,
+            IHttpContextAccessor contextAccessor, IAspectObjectRepository nodeRepository, IConnectionRepository connectionRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
             IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
             ICooperateService cooperateService, IVersionService versionService)
@@ -202,7 +202,7 @@ namespace Mb.Services.Services
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
                 projectAm.IsSubProject = true;
-                projectAm.Nodes = projectAm.Nodes.Where(x => x.NodeType == NodeType.Root || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                projectAm.Nodes = projectAm.Nodes.Where(x => x.NodeType == AspectObjectType.Root || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
                 projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
 
                 _ = _remapService.Clone(projectAm);
@@ -393,7 +393,7 @@ namespace Mb.Services.Services
             var updatedProject = await GetProject(newSubProject.Id, null);
 
             // Identify root nodes
-            var rootNodes = updatedProject.Nodes.Where(x => x.NodeType == NodeType.Root).Select(x => x.Id).ToList();
+            var rootNodes = updatedProject.Nodes.Where(x => x.NodeType == AspectObjectType.Root).Select(x => x.Id).ToList();
 
             // Position node
             var rootOrigin = updatedProject.Nodes.Where(x => rootNodes.All(y => y != x.Id)).MinBy(x => x.PositionY);
@@ -438,7 +438,7 @@ namespace Mb.Services.Services
         /// <param name="projectId"></param>
         /// <param name="projectIri"></param>
         /// <returns></returns>
-        private Node CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)
+        private AspectObject CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)
         {
             const string version = "1.0";
             const decimal positionY = 5.0m;
@@ -475,7 +475,7 @@ namespace Mb.Services.Services
 
             var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
-            var node = new Node
+            var node = new AspectObject
             {
                 Id = nodeId,
                 Iri = nodeIri,
@@ -486,7 +486,7 @@ namespace Mb.Services.Services
                 Connectors = new List<Connector>(),
                 Version = version,
                 Rds = string.Empty,
-                NodeType = NodeType.Root,
+                NodeType = AspectObjectType.Root,
                 MasterProjectId = projectId,
                 Aspect = aspect,
                 Height = null,
@@ -523,7 +523,7 @@ namespace Mb.Services.Services
             if (project?.Nodes == null || project.Connections == null)
                 return;
 
-            var rootNodes = project.Nodes.Where(x => x.NodeType == NodeType.Root).ToList();
+            var rootNodes = project.Nodes.Where(x => x.NodeType == AspectObjectType.Root).ToList();
             _ = rootNodes.Aggregate(0, (current, node) => ResolveNodeLevelAndOrder(node, project, 0, current) + 1);
         }
 
@@ -535,7 +535,7 @@ namespace Mb.Services.Services
         /// <param name="level"></param>
         /// <param name="order"></param>
         /// <returns></returns>
-        private int ResolveNodeLevelAndOrder(Node node, Project project, int level, int order)
+        private int ResolveNodeLevelAndOrder(AspectObject node, Project project, int level, int order)
         {
             if (node == null)
                 return order;
@@ -592,7 +592,7 @@ namespace Mb.Services.Services
                 Updated = DateTime.Now.ToUniversalTime(),
                 IsSubProject = isSubProject,
                 ProjectOwner = _contextAccessor.GetName(),
-                Nodes = new List<Node>
+                Nodes = new List<AspectObject>
                 {
                     CreateInitAspectNode(Aspect.Function, projectId, projectIri),
                     CreateInitAspectNode(Aspect.Product, projectId, projectIri),

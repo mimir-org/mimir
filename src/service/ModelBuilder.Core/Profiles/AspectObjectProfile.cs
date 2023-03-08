@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles
 {
-    public class NodeProfile : Profile
+    public class AspectObjectProfile : Profile
     {
-        public NodeProfile(IHttpContextAccessor contextAccessor)
+        public AspectObjectProfile(IHttpContextAccessor contextAccessor)
         {
-            CreateMap<NodeAm, Node>()
+            CreateMap<AspectObjectAm, AspectObject>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
@@ -57,7 +57,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsOffPageTarget, opt => opt.Ignore())
                 .ForMember(dest => dest.IsOffPageRequired, opt => opt.Ignore());
 
-            CreateMap<Node, NodeAm>()
+            CreateMap<AspectObject, AspectObjectAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))

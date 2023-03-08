@@ -26,7 +26,7 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
         }
 
-        public async Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus)
+        public async Task SendNodeData(AspectObject node, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(node, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveNodeData, workerStatus, data);

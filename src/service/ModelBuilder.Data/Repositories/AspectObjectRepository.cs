@@ -15,14 +15,14 @@ using Mb.Models.Common;
 
 namespace Mb.Data.Repositories
 {
-    public class NodeRepository : GenericRepository<ModelBuilderDbContext, Node>, INodeRepository
+    public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, AspectObject>, IAspectObjectRepository
     {
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
+        public AspectObjectRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
@@ -30,7 +30,7 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project,
+        public IEnumerable<(AspectObject node, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
             string invokedByDomain)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
@@ -38,7 +38,7 @@ namespace Mb.Data.Repositories
 
             var newNodes = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
-                : new List<Node>();
+                : new List<AspectObject>();
 
             foreach (var node in project.Nodes)
             {
@@ -92,10 +92,10 @@ namespace Mb.Data.Repositories
             }
         }
 
-        public IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId,
+        public IEnumerable<(AspectObject node, WorkerStatus status)> DeleteNodes(ICollection<AspectObject> delete, string projectId,
             string invokedByDomain)
         {
-            var returnValues = new List<(Node connection, WorkerStatus status)>();
+            var returnValues = new List<(AspectObject connection, WorkerStatus status)>();
 
             if (delete == null || projectId == null || !delete.Any())
                 return returnValues;
@@ -125,12 +125,12 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn"></param>
         /// <param name="nodes">The nodes to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes)
         {
             if (nodes == null || !nodes.Any())
                 return;
 
-            bulk.Setup<Node>()
+            bulk.Setup<AspectObject>()
                 .ForCollection(nodes)
                 .WithTable("Node")
                 .AddColumn(x => x.Id)
@@ -176,12 +176,12 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="nodes">The nodes to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> nodes)
         {
             if (nodes == null || !nodes.Any())
                 return;
 
-            bulk.Setup<Node>()
+            bulk.Setup<AspectObject>()
                 .ForCollection(nodes)
                 .WithTable("Node")
                 .AddColumn(x => x.Id)

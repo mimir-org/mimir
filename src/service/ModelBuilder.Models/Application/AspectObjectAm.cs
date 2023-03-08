@@ -9,7 +9,7 @@ using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
-    public class NodeAm : IValidatableObject
+    public class AspectObjectAm : IValidatableObject
     {
         [RequiredOne(nameof(Iri))]
         public string Id { get; set; }
@@ -21,7 +21,7 @@ namespace Mb.Models.Application
         public Aspect Aspect { get; set; }
 
         [Required]
-        public NodeType NodeType { get; set; }
+        public AspectObjectType NodeType { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
@@ -94,7 +94,7 @@ namespace Mb.Models.Application
         {
             var validations = new List<ValidationResult>();
 
-            if (string.IsNullOrWhiteSpace(Rds) && NodeType == NodeType.Aspect)
+            if (string.IsNullOrWhiteSpace(Rds) && NodeType == AspectObjectType.Aspect)
                 validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(NodeType) }));
 
             if (Aspect == Aspect.None)

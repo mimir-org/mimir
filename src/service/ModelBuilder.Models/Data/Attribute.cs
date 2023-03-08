@@ -56,7 +56,7 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public virtual Node Node { get; set; }
+        public virtual AspectObject Node { get; set; }
 
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }

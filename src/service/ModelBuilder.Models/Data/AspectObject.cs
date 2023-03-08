@@ -16,7 +16,7 @@ using Mb.Models.Records;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Node : IEquatable<Node>, IVersionable<Node>
+    public class AspectObject : IEquatable<AspectObject>, IVersionable<AspectObject>
     {
         #region Properties
 
@@ -80,7 +80,7 @@ namespace Mb.Models.Data
 
         public Aspect Aspect { get; set; }
 
-        public NodeType NodeType { get; set; }
+        public AspectObjectType NodeType { get; set; }
 
         [Required]
         public string MasterProjectId { get; set; }
@@ -138,7 +138,7 @@ namespace Mb.Models.Data
 
         #region IEquatable
 
-        public bool Equals(Node other)
+        public bool Equals(AspectObject other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -178,7 +178,7 @@ namespace Mb.Models.Data
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Node) obj);
+            return obj.GetType() == GetType() && Equals((AspectObject) obj);
         }
 
         public override int GetHashCode()
@@ -220,7 +220,7 @@ namespace Mb.Models.Data
 
         #region IVersionable
 
-        public Validation HasIllegalChanges(Node other)
+        public Validation HasIllegalChanges(AspectObject other)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
@@ -229,7 +229,7 @@ namespace Mb.Models.Data
             return validation;
         }
 
-        public VersionStatus CalculateVersionStatus(Node other, ProjectEditData editData)
+        public VersionStatus CalculateVersionStatus(AspectObject other, ProjectEditData editData)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));

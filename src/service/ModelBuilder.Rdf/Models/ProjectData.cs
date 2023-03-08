@@ -5,7 +5,7 @@ namespace ModelBuilder.Rdf.Models
 {
     public record ProjectData
     {
-        public ICollection<NodeAm> Nodes { get; init; } = default!;
+        public ICollection<AspectObjectAm> Nodes { get; init; } = default!;
         public ICollection<ConnectionAm> Connections { get; init; } = default!;
 
         public ICollection<UnitLibCm> Units { get; init; } = default!;

@@ -7,7 +7,7 @@ namespace Mb.Models.Records
 {
     public record ProjectData
     {
-        public List<Node> Nodes { get; init; } = new();
+        public List<AspectObject> Nodes { get; init; } = new();
         public List<Connection> Connections { get; init; } = new();
         public List<Attribute> Attributes { get; init; } = new();
         public List<ConnectorTerminal> Terminals { get; init; } = new();

@@ -19,9 +19,9 @@ namespace Mb.Models.Data
         public string ToConnector { get; set; }
         public Connector ToConnectorObject { get; set; }
         public string FromNode { get; set; }
-        public Node FromNodeObject { get; set; }
+        public AspectObject FromNodeObject { get; set; }
         public string ToNode { get; set; }
-        public Node ToNodeObject { get; set; }
+        public AspectObject ToNodeObject { get; set; }
         public virtual string TerminalType { get; set; }
         public virtual string TerminalParentType { get; set; }
 

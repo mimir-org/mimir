@@ -53,7 +53,7 @@ namespace ModelBuilder.Unit.Tests.Services
             };
 
             // Node data
-            var nodes = new List<NodeAm>
+            var nodes = new List<AspectObjectAm>
             {
                 new()
                 {

@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions
 {
     public static class ValidationExtensions
     {
-        public static List<ValidationResult> Validate(this ICollection<NodeAm> nodes, ValidationContext validationContext)
+        public static List<ValidationResult> Validate(this ICollection<AspectObjectAm> nodes, ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
 

@@ -54,7 +54,7 @@ namespace Mb.Services.Services
             await _webSocketRepository.SendProjectVersionData(version, workerStatus);
         }
 
-        public Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId)
+        public Task SendNodeUpdates(IReadOnlyCollection<(AspectObject node, WorkerStatus workerStatus)> nodeMap, string projectId)
         {
             foreach (var tuple in nodeMap)
             {
@@ -97,7 +97,7 @@ namespace Mb.Services.Services
         /// <param name="workerStatus"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private Task SendNodeUpdates(List<Node> nodes, WorkerStatus workerStatus, string projectId)
+        private Task SendNodeUpdates(List<AspectObject> nodes, WorkerStatus workerStatus, string projectId)
         {
             if (nodes == null || string.IsNullOrWhiteSpace(projectId))
                 return Task.CompletedTask;

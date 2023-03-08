@@ -81,7 +81,7 @@ namespace ModelBuilder.Rdf.Extensions
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-            project.Nodes = new List<NodeAm>();
+            project.Nodes = new List<AspectObjectAm>();
 
             // Resolve root nodes
             var rootNodes = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
@@ -91,8 +91,8 @@ namespace ModelBuilder.Rdf.Extensions
 
             foreach (var n in rootNodes)
             {
-                var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, NodeType.Root, projectData);
+                var node = new AspectObjectAm();
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, AspectObjectType.Root, projectData);
                 project.Nodes.Add(node);
             }
 
@@ -103,8 +103,8 @@ namespace ModelBuilder.Rdf.Extensions
 
             foreach (var n in nodes)
             {
-                var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, NodeType.Aspect, projectData);
+                var node = new AspectObjectAm();
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, AspectObjectType.Aspect, projectData);
                 project.Nodes.Add(node);
             }
         }

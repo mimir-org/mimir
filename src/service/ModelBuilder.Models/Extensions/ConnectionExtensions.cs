@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions
 {
     public static class ConnectionExtensions
     {
-        public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<NodeAm> nodes)
+        public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> nodes)
         {
             var parentlessConnections = new List<ConnectionAm>();
 
@@ -31,7 +31,7 @@ namespace Mb.Models.Extensions
             return parentlessConnections;
         }
 
-        public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<NodeAm> nodes)
+        public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> nodes)
         {
             var notConnectedConnections = new List<ConnectionAm>();
 

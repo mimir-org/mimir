@@ -54,7 +54,7 @@ namespace Mb.Services.Contracts
         /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
         /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
+        IEnumerable<AspectObjectAm> RemapNodes(ReplacementId project, ICollection<AspectObjectAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy);
 
         /// <summary>
         /// Remap a collection of connections and all sub objects.

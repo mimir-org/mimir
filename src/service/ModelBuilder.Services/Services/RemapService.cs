@@ -145,7 +145,7 @@ namespace Mb.Services.Services
         /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
         /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-        public IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
+        public IEnumerable<AspectObjectAm> RemapNodes(ReplacementId project, ICollection<AspectObjectAm> nodes, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
         {
             if (nodes == null || !nodes.Any())
                 yield break;
@@ -249,7 +249,7 @@ namespace Mb.Services.Services
                 if (actualNode == null)
                     continue;
 
-                var rootNode = project.Nodes.FirstOrDefault(x => x.NodeType == NodeType.Root && x.Aspect == actualNode.Aspect);
+                var rootNode = project.Nodes.FirstOrDefault(x => x.NodeType == AspectObjectType.Root && x.Aspect == actualNode.Aspect);
                 if (rootNode == null)
                     continue;
 

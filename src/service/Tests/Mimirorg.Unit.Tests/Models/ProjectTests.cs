@@ -28,9 +28,9 @@ namespace ModelBuilder.Unit.Tests.Models
                 ProjectOwner = "Anna Bond",
                 UpdatedBy = "Anna Bond",
                 Updated = new DateTime(2022, 6, 1, 10, 0, 0),
-                Nodes = new List<NodeAm>
+                Nodes = new List<AspectObjectAm>
                 {
-                    new NodeAm
+                    new AspectObjectAm
                     {
                         Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
                         Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
@@ -79,7 +79,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null,
-                        NodeType = NodeType.Aspect,
+                        NodeType = AspectObjectType.Aspect,
                         Label = "Dummy Node A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                         PositionBlockX = -64.2857m,
@@ -91,7 +91,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         TypeReferences = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     },
-                    new NodeAm
+                    new AspectObjectAm
                     {
                         Id = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
                         Iri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
@@ -140,7 +140,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null,
-                        NodeType = NodeType.Aspect,
+                        NodeType = AspectObjectType.Aspect,
                         Label = "Dummy Node A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                         PositionBlockX = -64.2857m,
@@ -183,7 +183,7 @@ namespace ModelBuilder.Unit.Tests.Models
         public void Project_With_Duplicate_Nodes_Validate_Error()
         {
             var clone = ValidProject().DeepCopy();
-            clone.Nodes.Add(new NodeAm
+            clone.Nodes.Add(new AspectObjectAm
             {
                 Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
                 Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
