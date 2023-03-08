@@ -15,7 +15,6 @@ namespace Mb.Models.Data
 
         public string Id { get; set; }
         public string Iri { get; set; }
-        public string Kind => nameof(Attribute);
         public string Entity { get; set; }
         public string Value { get; set; }
         public string AttributeTypeId { get; set; }
