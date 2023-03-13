@@ -1,5 +1,6 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Extensions
 {
@@ -13,19 +14,24 @@ namespace Mb.Models.Extensions
             if (rootOrigin == null)
                 return current;
 
-            var originX = (decimal) prepare.DropPositionX;
-            var originY = (decimal) prepare.DropPositionY;
+            var originX = (int) prepare.DropPositionX;
+            var originY = (int) prepare.DropPositionY;
 
             if (current.Id == rootOrigin.Id)
             {
                 return current;
             }
 
-            var diffX = current.PositionX - rootOrigin.PositionX;
-            var diffY = current.PositionY - rootOrigin.PositionY;
+            var currentPosition = JsonConvert.DeserializeObject<AspectObjectPosition>(current.Position);
+            var rootOriginPosition = JsonConvert.DeserializeObject<AspectObjectPosition>(current.Position);
 
-            current.PositionX = originX + diffX;
-            current.PositionY = originY + diffY;
+            var diffX = currentPosition.ThreePosX - rootOriginPosition.ThreePosX;
+            var diffY = currentPosition.ThreePosY - rootOriginPosition.ThreePosY;
+
+            currentPosition.ThreePosX = originX + diffX;
+            currentPosition.ThreePosY = originY + diffY;
+
+            current.Position = JsonConvert.SerializeObject(currentPosition);
 
             return current;
         }

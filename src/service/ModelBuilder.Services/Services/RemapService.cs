@@ -152,12 +152,12 @@ namespace Mb.Services.Services
 
             foreach (var aspectObject in aspectObjects)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = aspectObject.Id, FromIri = aspectObject.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = aspectObject.Id, FromIri = aspectObject.Id };
                 var aspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 aspectObjectReplacement.FromId = aspectObject.Id;
-                aspectObjectReplacement.FromIri = aspectObject.Iri;
+                aspectObjectReplacement.FromIri = aspectObject.Id;
 
                 if (aspectObjectReplacement.FromId != aspectObjectReplacement.ToId)
                     remap.Add(aspectObjectReplacement.ToId, aspectObjectReplacement.FromId);
@@ -167,7 +167,7 @@ namespace Mb.Services.Services
                 aspectObject.Attributes = attr.Any() ? attr : null;
 
                 aspectObject.Id = aspectObjectReplacement.ToId;
-                aspectObject.Iri = aspectObjectReplacement.ToIri;
+                aspectObject.Id = aspectObjectReplacement.ToIri;
                 aspectObject.ProjectId = project.ToId;
                 aspectObject.ProjectIri = project.ToIri;
 

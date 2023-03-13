@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Const;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -10,15 +9,15 @@ namespace Mb.Models.Data
 {
     public class ConnectorTerminal : Connector, IEquatable<ConnectorTerminal>
     {
-        public override string Color { get; set; }
-        public override string TerminalType { get; set; }
-        public override string TerminalParentType { get; set; }
-        public override string Discriminator => Discriminators.Terminal;
+        public string Color { get; set; }
+        public string TerminalType { get; set; }
+        public string TerminalParentType { get; set; }
+        public string TypeReference { get; set; }
+
         public ICollection<Attribute> Attributes { get; set; }
-        
-        [JsonIgnore]
-        [TSExclude]
-        public override string TypeReference { get; set; }
+
+        [NotMapped]
+        public override string Discriminator { get; set; }
 
         [NotMapped]
         public ICollection<TypeReference> TypeReferences

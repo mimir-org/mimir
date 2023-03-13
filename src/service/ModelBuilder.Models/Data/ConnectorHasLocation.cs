@@ -2,11 +2,11 @@ using Mb.Models.Const;
 
 namespace Mb.Models.Data
 {
-    public class ConnectorRelationFulfilledBy : ConnectorRelation
+    public class ConnectorHasLocation : ConnectorRelation
     {
-        public override string Discriminator => Discriminators.FulfilledBy;
+        public override string Discriminator => nameof(ConnectorHasLocation);
 
-        private bool Equals(ConnectorRelationFulfilledBy other)
+        private bool Equals(ConnectorHasLocation other)
         {
             if (other is null) 
                 return false;
@@ -22,7 +22,7 @@ namespace Mb.Models.Data
             if (ReferenceEquals(this, obj)) 
                 return true;
 
-            return obj.GetType() == GetType() && Equals((ConnectorRelationFulfilledBy) obj);
+            return obj.GetType() == GetType() && Equals((ConnectorHasLocation) obj);
         }
 
         public override int GetHashCode()

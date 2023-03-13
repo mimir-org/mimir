@@ -11,11 +11,8 @@ namespace Mb.Models.Application
 {
     public class AspectObjectAm : IValidatableObject
     {
-        [RequiredOne(nameof(Iri))]
-        public string Id { get; set; }
-
         [RequiredOne(nameof(Id))]
-        public string Iri { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }
@@ -37,6 +34,9 @@ namespace Mb.Models.Application
         [Required]
         public string Version { get; set; }
 
+        [Required]
+        public AspectObjectPosition Position { get; set; }
+
         public string Label { get; set; }
 
         public string Rds { get; set; }
@@ -44,15 +44,7 @@ namespace Mb.Models.Application
         public ICollection<TypeReference> TypeReferences { get; set; }
 
         public string Description { get; set; }
-
-        public decimal PositionX { get; set; }
-
-        public decimal PositionY { get; set; }
-
-        public decimal PositionBlockX { get; set; }
-
-        public decimal PositionBlockY { get; set; }
-
+        
         public int? Width { get; set; }
 
         public int? Height { get; set; }

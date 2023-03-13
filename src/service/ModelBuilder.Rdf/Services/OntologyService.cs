@@ -392,7 +392,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var attribute in aspectObject.Attributes)
                     {
-                        attribute.AssertAttribute(aspectObject.Iri, this);
+                        attribute.AssertAttribute(aspectObject.Id, this);
                         attribute.AssertAttributeValue(this, projectData);
                     }
                 }
@@ -401,7 +401,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var connector in aspectObject.Connectors)
                     {
-                        connector.AssertConnector(this, aspectObject.Iri, projectData, null, DefaultFlowDirection.NotSet);
+                        connector.AssertConnector(this, aspectObject.Id, projectData, null, DefaultFlowDirection.NotSet);
                     }
                 }
             }

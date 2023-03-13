@@ -47,8 +47,6 @@ namespace Mb.Data.Repositories
 
             foreach (var connection in project.Connections)
             {
-                ResetConnectionBeforeSave(connection);
-
                 if (newConnections.Any(x => x.Id == connection.Id))
                 {
                     SetConnectionProperties(connection, true);
@@ -117,8 +115,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.FromConnector)
                 .AddColumn(x => x.ToConnector)
-                .AddColumn(x => x.FromAspectObject)
-                .AddColumn(x => x.ToAspectObject)
                 .AddColumn(x => x.MainProject)
                 .AddColumn(x => x.Project)
                 .BulkInsertOrUpdate()
@@ -192,14 +188,6 @@ namespace Mb.Data.Repositories
             var attributes =
                 await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("ConnectionLockData", procParams);
             return attributes;
-        }
-
-        private void ResetConnectionBeforeSave(Connection connection)
-        {
-            connection.FromConnectorObject = null;
-            connection.ToConnectorObject = null;
-            connection.FromAspectObjectObject = null;
-            connection.ToAspectObjectObject = null;
         }
 
         private void SetConnectionProperties(Connection connection, bool isNewConnection)

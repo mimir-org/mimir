@@ -7,6 +7,7 @@ using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
+using Newtonsoft.Json;
 using INode = VDS.RDF.INode;
 using AspectObject = Mb.Models.Data.AspectObject;
 
@@ -25,68 +26,68 @@ namespace ModelBuilder.Rdf.Extensions
         {
             var parentAspectObject = aspectObject.GetParent(project);
 
-            if (parentAspectObject != null && !string.IsNullOrWhiteSpace(parentAspectObject.Iri))
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasParent, parentAspectObject.Iri);
+            if (parentAspectObject != null && !string.IsNullOrWhiteSpace(parentAspectObject.Id))
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasParent, parentAspectObject.Id);
 
             if (!string.IsNullOrWhiteSpace(aspectObject.Description))
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Desc, aspectObject.Description, true);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.Desc, aspectObject.Description, true);
 
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.RDS, aspectObject.RdsString(project), true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.MimirRds, aspectObject.Rds, true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Domain, aspectObject.Domain, true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionX}", Resources.Float));
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionY}", Resources.Float));
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionBlockX}", Resources.Float));
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{aspectObject.PositionBlockY}", Resources.Float));
-            aspectObject.TypeReferences.AssertTypeReference(aspectObject.Iri, ontologyService);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.RDS, aspectObject.RdsString(project), true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.MimirRds, aspectObject.Rds, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.Domain, aspectObject.Domain, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPosition>(aspectObject.Position).ThreePosX}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPosition>(aspectObject.Position).ThreePosY}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPosition>(aspectObject.Position).BlockPosX}", Resources.Float));
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPosition>(aspectObject.Position).BlockPosY}", Resources.Float));
+            aspectObject.TypeReferenceObjects.AssertTypeReference(aspectObject.Id, ontologyService);
 
             if (aspectObject.Width != null)
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasWidth, ontologyService.CreateLiteralAspectObject($"{aspectObject.Width}", Resources.Integer));
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasWidth, ontologyService.CreateLiteralAspectObject($"{aspectObject.Width}", Resources.Integer));
 
             if (aspectObject.Height != null)
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasHeight, ontologyService.CreateLiteralAspectObject($"{aspectObject.Height}", Resources.Integer));
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasHeight, ontologyService.CreateLiteralAspectObject($"{aspectObject.Height}", Resources.Integer));
 
 
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasAspect, $"imf:{aspectObject.Aspect}");
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Version, aspectObject.Version, true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Name, aspectObject.Name, true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Label, aspectObject.Label ?? aspectObject.Name, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasAspect, $"imf:{aspectObject.Aspect}");
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.Version, aspectObject.Version, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.Name, aspectObject.Name, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.Label, aspectObject.Label ?? aspectObject.Name, true);
 
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.UpdatedBy, aspectObject.UpdatedBy, true);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated.ToString("u")}", Resources.DateTime));
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.UpdatedBy, aspectObject.UpdatedBy, true);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated.ToString("u")}", Resources.DateTime));
 
             if (aspectObject.Created != null && !string.IsNullOrWhiteSpace(aspectObject.CreatedBy))
             {
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.CreatedBy, aspectObject.CreatedBy, true);
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Created, ontologyService.CreateLiteralAspectObject($"{aspectObject.Created?.ToString("u")}", Resources.DateTime));
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.CreatedBy, aspectObject.CreatedBy, true);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.Created, ontologyService.CreateLiteralAspectObject($"{aspectObject.Created?.ToString("u")}", Resources.DateTime));
             }
 
             // TODO: This should be an iri
             if (!string.IsNullOrWhiteSpace(aspectObject.LibraryTypeId))
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.LibraryType, aspectObject.LibraryTypeId, true);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.LibraryType, aspectObject.LibraryTypeId, true);
 
             if (!string.IsNullOrWhiteSpace(aspectObject.Rds))
             {
                 var strippedRds = aspectObject.StrippedRds();
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Type, @$"og{strippedRds.Length}:{aspectObject.Aspect}{strippedRds}");
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.Type, @$"og{strippedRds.Length}:{aspectObject.Aspect}{strippedRds}");
             }
 
             if (aspectObject.AspectObjectType == AspectObjectType.Root)
             {
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.IsAspectOf, project.Iri);
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasMasterProject, project.Iri);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.IsAspectOf, project.Id);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasMasterProject, project.Id);
                 return;
             }
 
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.Type, Resources.FSB);
-            ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasMasterProject, aspectObject.MasterProjectIri);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.Type, Resources.FSB);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasMasterProject, aspectObject.MasterProjectIri);
 
 
             if (!string.IsNullOrEmpty(aspectObject.PurposeString))
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasPurpose, $"mimir:{aspectObject.PurposeString}");
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPurpose, $"mimir:{aspectObject.PurposeString}");
 
             if (aspectObject.Symbol != null)
-                ontologyService.AssertAspectObject(aspectObject.Iri, Resources.HasSymbol, aspectObject.Symbol, true);
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasSymbol, aspectObject.Symbol, true);
         }
 
         /// <summary>
@@ -97,18 +98,12 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static AspectObject GetParent(this AspectObject aspectObject, Project project)
         {
-            foreach (var connection in project.Connections)
-            {
-                if (connection.ToAspectObject != aspectObject.Id) continue;
+            var connector = aspectObject.Connectors.OfType<ConnectorPartOf>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input);
+            if (connector == null)
+                return null;
 
-                if (!connection.ToConnectorObject.IsPartOf()) continue;
-
-                if (connection.ToConnectorObject.IsConnected(project))
-                {
-                    return connection.FromAspectObjectObject;
-                }
-            }
-            return null;
+            var connection = project.Connections.FirstOrDefault(x => x.ToConnector == connector.Id);
+            return connection == null ? null : project.AspectObjects.FirstOrDefault(x => x.Connectors.Any(y => y.Id == connection.FromConnector));
         }
 
         /// <summary>
@@ -164,17 +159,22 @@ namespace ModelBuilder.Rdf.Extensions
             if (aspectObject == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
                 throw new InvalidDataException($"Can't resolve a aspectObject without required parameters.");
 
-            aspectObject.Iri = iri;
+            aspectObject.Id = iri;
             aspectObject.ProjectIri = projectIri;
             aspectObject.Name = ontologyService.GetValue(iri, Resources.Name, false);
             aspectObject.Version = ontologyService.GetValue(iri, Resources.Version, false);
             aspectObject.Label = ontologyService.GetValue(iri, Resources.Label, false);
             aspectObject.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
             aspectObject.Description = ontologyService.GetValue(iri, Resources.Desc, false);
-            aspectObject.PositionX = ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false);
-            aspectObject.PositionY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
-            aspectObject.PositionBlockX = ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false);
-            aspectObject.PositionBlockY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
+            
+            aspectObject.Position = new AspectObjectPosition
+            {
+                ThreePosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false),
+                ThreePosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false),
+                BlockPosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false),
+                BlockPosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionY, false),
+            };
+
             aspectObject.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
             aspectObject.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
 
@@ -194,11 +194,11 @@ namespace ModelBuilder.Rdf.Extensions
             aspectObject.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
             aspectObject.AspectObjectType = aspectObjectType;
 
-            aspectObject.TypeReferences.ResolveTypeReferences(aspectObject.Iri, ontologyService);
+            aspectObject.TypeReferences.ResolveTypeReferences(aspectObject.Id, ontologyService);
 
             // Resolve Attributes
             aspectObject.Attributes = new List<AttributeAm>();
-            var attributes = ontologyService.GetTriplesWithSubjectPredicate(aspectObject.Iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
+            var attributes = ontologyService.GetTriplesWithSubjectPredicate(aspectObject.Id, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
 
             foreach (var a in attributes)
             {
@@ -208,7 +208,7 @@ namespace ModelBuilder.Rdf.Extensions
             }
 
             // Create all relation aspectObjects
-            var existingAspectObject = projectData?.AspectObjects?.FirstOrDefault(x => x.Iri == iri);
+            var existingAspectObject = projectData?.AspectObjects?.FirstOrDefault(x => x.Id == iri);
             var existingRelations = existingAspectObject?.Connectors.OfType<RelationAm>().ToList();
             if (existingRelations != null && existingRelations.Any())
             {

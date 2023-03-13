@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
@@ -15,16 +14,8 @@ namespace Mb.Models.Data
         public virtual string Discriminator { get; set; }
         public string Domain => Id.ResolveDomain();
         public string FromConnector { get; set; }
-        public Connector FromConnectorObject { get; set; }
         public string ToConnector { get; set; }
-        public Connector ToConnectorObject { get; set; }
-        public string FromAspectObject { get; set; }
-        public AspectObject FromAspectObjectObject { get; set; }
-        public string ToAspectObject { get; set; }
-        public AspectObject ToAspectObjectObject { get; set; }
-        public virtual string TerminalType { get; set; }
-        public virtual string TerminalParentType { get; set; }
-
+        
         [Required]
         public string MainProject { get; set; }
 
@@ -35,16 +26,6 @@ namespace Mb.Models.Data
         [TSExclude]
         public virtual Project ProjectObject { get; set; }
 
-        // Only for client
-        [NotMapped]
-        public bool? Selected { get; set; }
-
-        [NotMapped]
-        public bool? Hidden { get; set; }
-
-        [NotMapped]
-        public bool? BlockHidden { get; set; }
-
         #region IEquatable
 
         public bool Equals(Connection other)
@@ -54,8 +35,6 @@ namespace Mb.Models.Data
             return Id == other.Id &&
                    FromConnector == other.FromConnector &&
                    ToConnector == other.ToConnector &&
-                   FromAspectObject == other.FromAspectObject &&
-                   ToAspectObject == other.ToAspectObject &&
                    MainProject == other.MainProject &&
                    Project == other.Project;
         }
@@ -73,8 +52,6 @@ namespace Mb.Models.Data
             hashCode.Add(Id);
             hashCode.Add(FromConnector);
             hashCode.Add(ToConnector);
-            hashCode.Add(FromAspectObject);
-            hashCode.Add(ToAspectObject);
             hashCode.Add(MainProject);
             hashCode.Add(Project);
             return hashCode.ToHashCode();

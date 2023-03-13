@@ -18,6 +18,7 @@ using Mb.Models.Common;
 using Mb.Models.Application;
 using Mb.Models.Client;
 using Mb.Models.Extensions;
+using Newtonsoft.Json;
 
 namespace Mb.Services.Services
 {
@@ -164,9 +165,6 @@ namespace Mb.Services.Services
             // Map data
             _mapper.Map(project, newProject);
 
-            // Sort aspectObjects
-            ResolveLevelAndOrder(newProject);
-
             // Deconstruct project
             var projectData = new ProjectData();
             await _remapService.DeConstruct(newProject, projectData);
@@ -209,9 +207,6 @@ namespace Mb.Services.Services
 
                 // Map data
                 var newSubProject = _mapper.Map<Project>(projectAm);
-
-                // Sort aspectObjects
-                ResolveLevelAndOrder(newSubProject);
 
                 // Deconstruct project
                 var projectData = new ProjectData();
@@ -273,9 +268,6 @@ namespace Mb.Services.Services
             var updated = _mapper.Map<Project>(project);
             updated.Updated = DateTime.Now.ToUniversalTime();
             updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
-
-            // Sort aspectObjects
-            ResolveLevelAndOrder(updated);
 
             // Get create edit data
             var projectEditData = await _remapService.CreateEditData(original, updated);
@@ -384,7 +376,6 @@ namespace Mb.Services.Services
 
             _ = _remapService.Clone(projectAm);
             var newSubProject = _mapper.Map<Project>(projectAm);
-            ResolveLevelAndOrder(newSubProject);
             var projectData = new ProjectData();
             await _remapService.DeConstruct(newSubProject, projectData);
             await _projectRepository.CreateProject(newSubProject, projectData);
@@ -396,7 +387,7 @@ namespace Mb.Services.Services
             var rootAspectObjects = updatedProject.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).Select(x => x.Id).ToList();
 
             // Position aspectObject
-            var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => x.PositionY);
+            var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<AspectObjectPosition>(x.Position).ThreePosY);
 
             // Set aspectObject and connections project id to merge project, and calculate position
             updatedProject.AspectObjects = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).Select(x =>
@@ -409,15 +400,16 @@ namespace Mb.Services.Services
             // Set root origin to center
             if (rootOrigin != null)
             {
-                rootOrigin.PositionX = (decimal) prepare.DropPositionX;
-                rootOrigin.PositionY = (decimal) prepare.DropPositionY;
+                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosX = (int) prepare.DropPositionX;
+                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosY = (int)prepare.DropPositionY;
             }
 
-            updatedProject.Connections = updatedProject.Connections.Where(x => !rootAspectObjects.Any(y => (y == x.FromAspectObject || y == x.ToAspectObject))).Select(x =>
-            {
-                x.Project = prepare.ProjectId;
-                return x;
-            }).ToList();
+            // TODO: Resolve this
+            //updatedProject.Connections = updatedProject.Connections.Where(x => !rootAspectObjects.Any(y => (y == x.FromAspectObject || y == x.ToAspectObject))).Select(x =>
+            //{
+            //    x.Project = prepare.ProjectId;
+            //    return x;
+            //}).ToList();
 
             var prepareCm = new PrepareCm
             {
@@ -441,32 +433,32 @@ namespace Mb.Services.Services
         private AspectObject CreateInitAspectObject(Aspect aspect, string projectId, string projectIri)
         {
             const string version = "1.0";
-            const decimal positionY = 5.0m;
+            const int positionY = 5;
             const string connectorName = "PartOf";
 
             string name;
-            decimal positionX;
+            int positionX;
 
             switch (aspect)
             {
                 case Aspect.Function:
                     name = "Function";
-                    positionX = 150.0m;
+                    positionX = 150;
                     break;
 
                 case Aspect.Product:
                     name = "Product";
-                    positionX = 600.0m;
+                    positionX = 600;
                     break;
 
                 case Aspect.Location:
                     name = "Location";
-                    positionX = 1050.0m;
+                    positionX = 1050;
                     break;
 
                 default:
                     name = "";
-                    positionX = 0.0m;
+                    positionX = 0;
                     break;
             }
 
@@ -478,11 +470,13 @@ namespace Mb.Services.Services
             var aspectObject = new AspectObject
             {
                 Id = aspectObjectId,
-                Iri = aspectObjectIri,
                 Name = name,
                 Label = name,
-                PositionX = positionX,
-                PositionY = positionY,
+                Position = JsonConvert.SerializeObject(new AspectObjectPosition
+                {
+                    ThreePosX = positionX,
+                    ThreePosY = positionY
+                }),
                 Connectors = new List<Connector>(),
                 Version = version,
                 Rds = string.Empty,
@@ -502,7 +496,7 @@ namespace Mb.Services.Services
             };
             var (connectorId, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
-            var connector = new ConnectorRelation
+            var connector = new ConnectorPartOf
             {
                 Id = connectorId,
                 Name = connectorName,
@@ -512,46 +506,6 @@ namespace Mb.Services.Services
 
             aspectObject.Connectors.Add(connector);
             return aspectObject;
-        }
-
-        /// <summary>
-        /// Resolve level and order for project
-        /// </summary>
-        /// <param name="project"></param>
-        private void ResolveLevelAndOrder(Project project)
-        {
-            if (project?.AspectObjects == null || project.Connections == null)
-                return;
-
-            var rootAspectObjects = project.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).ToList();
-            _ = rootAspectObjects.Aggregate(0, (current, aspectObject) => ResolveAspectObjectLevelAndOrder(aspectObject, project, 0, current) + 1);
-        }
-
-        /// <summary>
-        /// Resolve aspectObject level and order
-        /// </summary>
-        /// <param name="aspectObject"></param>
-        /// <param name="project"></param>
-        /// <param name="level"></param>
-        /// <param name="order"></param>
-        /// <returns></returns>
-        private int ResolveAspectObjectLevelAndOrder(AspectObject aspectObject, Project project, int level, int order)
-        {
-            if (aspectObject == null)
-                return order;
-
-            aspectObject.Level = level;
-            aspectObject.Order = order;
-            var connector = aspectObject.Connectors.OfType<ConnectorRelation>().FirstOrDefault(x =>
-                x.Direction == ConnectorDirection.Output);
-
-            if (connector == null)
-                return order;
-
-            var connections = project.Connections.Where(x => x.FromConnector == connector.Id).ToList();
-            var children = project.AspectObjects.Where(x => connections.Any(y => y.ToAspectObject == x.Id)).ToList();
-            return children.Aggregate(order,
-                (current, child) => ResolveAspectObjectLevelAndOrder(child, project, level + 1, current + 1));
         }
 
         /// <summary>

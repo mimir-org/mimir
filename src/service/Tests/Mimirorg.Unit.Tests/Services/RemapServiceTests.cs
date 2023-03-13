@@ -59,7 +59,6 @@ namespace ModelBuilder.Unit.Tests.Services
                 {
                     Id = "aaa",
                     ProjectId = "runir.net_1234",
-                    Iri = "",
                     Name = "Dummy A",
                     Description = "Description",
                     MasterProjectId = "runir.net_1234",
@@ -69,7 +68,6 @@ namespace ModelBuilder.Unit.Tests.Services
                 {
                     Id = "bbb",
                     ProjectId = "runir.net_1234",
-                    Iri = "",
                     Name = "Dummy B",
                     Description = "Description",
                     MasterProjectId = "runir.net_1234",

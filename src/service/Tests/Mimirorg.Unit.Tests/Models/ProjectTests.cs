@@ -1,4 +1,5 @@
 using Mb.Models.Application;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
@@ -32,8 +33,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 {
                     new AspectObjectAm
                     {
-                        Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                        Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                        Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                         Name = "Dummy AspectObject A",
                         Description = "Dummy AspectObject A",
                         ProjectId = $"runir.net_{ProjectGuid}",
@@ -82,10 +82,13 @@ namespace ModelBuilder.Unit.Tests.Models
                         AspectObjectType = AspectObjectType.Aspect,
                         Label = "Dummy AspectObject A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                        PositionBlockX = -64.2857m,
-                        PositionBlockY = -6.4285m,
-                        PositionX = -99.2857m,
-                        PositionY = 213.5715m,
+                        Position = new AspectObjectPosition
+                        {
+                            ThreePosX = -99,
+                            ThreePosY = 213,
+                            BlockPosX = 64,
+                            BlockPosY = -6
+                        },
                         Purpose = null,
                         Rds = "B0",
                         TypeReferences = null,
@@ -93,8 +96,7 @@ namespace ModelBuilder.Unit.Tests.Models
                     },
                     new AspectObjectAm
                     {
-                        Id = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                        Iri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                        Id = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                         Name = "Dummy AspectObject B",
                         Description = "Dummy AspectObject B",
                         ProjectId = $"runir.net_{ProjectGuid}",
@@ -143,10 +145,13 @@ namespace ModelBuilder.Unit.Tests.Models
                         AspectObjectType = AspectObjectType.Aspect,
                         Label = "Dummy AspectObject A",
                         LibraryTypeId = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                        PositionBlockX = -64.2857m,
-                        PositionBlockY = -6.4285m,
-                        PositionX = -99.2857m,
-                        PositionY = 213.5715m,
+                        Position = new AspectObjectPosition
+                        {
+                            ThreePosX = -99,
+                            ThreePosY = 213,
+                            BlockPosX = 64,
+                            BlockPosY = -6
+                        },
                         Purpose = null,
                         Rds = "B0",
                         TypeReferences = null,
@@ -185,8 +190,7 @@ namespace ModelBuilder.Unit.Tests.Models
             var clone = ValidProject().DeepCopy();
             clone.AspectObjects.Add(new AspectObjectAm
             {
-                Id = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                Iri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
+                Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
             });
 
             var validation = clone.ValidateObject();

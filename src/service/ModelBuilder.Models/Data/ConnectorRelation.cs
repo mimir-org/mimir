@@ -2,7 +2,7 @@ using System;
 
 namespace Mb.Models.Data
 {
-    public class ConnectorRelation : Connector, IEquatable<ConnectorRelation>
+    public abstract class ConnectorRelation : Connector, IEquatable<ConnectorRelation>
     {
         public bool Equals(ConnectorRelation other)
         {

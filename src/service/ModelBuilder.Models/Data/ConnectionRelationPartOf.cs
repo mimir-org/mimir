@@ -1,10 +1,8 @@
-using Mb.Models.Const;
-
 namespace Mb.Models.Data
 {
     public class ConnectionRelationPartOf : ConnectionRelation
     {
-        public override string Discriminator => Discriminators.PartOf;
+        public override string Discriminator => nameof(ConnectionRelationPartOf);
 
         private bool Equals(ConnectionRelationPartOf other)
         {

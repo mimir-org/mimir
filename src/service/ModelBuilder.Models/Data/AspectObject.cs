@@ -21,20 +21,19 @@ namespace Mb.Models.Data
         #region Properties
 
         public string Id { get; set; }
-        public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
         public string Rds { get; set; }
         public string Description { get; set; }
 
         [NotMapped]
-        public virtual ICollection<TypeReference> TypeReferences
+        public virtual ICollection<TypeReference> TypeReferenceObjects
         {
             get
             {
                 if (_typeReferences != null)
                     return _typeReferences;
 
-                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+                return !string.IsNullOrWhiteSpace(TypeReference) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReference) : null;
             }
 
             set => _typeReferences = value;
@@ -42,7 +41,7 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         [TSExclude]
-        public string TypeReferenceString { get; set; }
+        public string TypeReference { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -50,20 +49,11 @@ namespace Mb.Models.Data
         public string Label { get; set; }
 
         [Required]
-        public decimal PositionX { get; set; }
-
-        [Required]
-        public decimal PositionY { get; set; }
+        public string Position { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
-
-        [Required]
-        public decimal PositionBlockX { get; set; }
-
-        [Required]
-        public decimal PositionBlockY { get; set; }
 
         [Required]
         public int Level { get; set; }
@@ -143,16 +133,12 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   Iri == other.Iri &&
                    Rds == other.Rds &&
                    Description == other.Description &&
-                   TypeReferenceString == other.TypeReferenceString &&
+                   TypeReference == other.TypeReference &&
                    Name == other.Name &&
                    Label == other.Label &&
-                   PositionX == other.PositionX &&
-                   PositionY == other.PositionY &&
-                   PositionBlockX == other.PositionBlockX &&
-                   PositionBlockY == other.PositionBlockY &&
+                   Position == other.Position &&
                    Level == other.Level &&
                    Order == other.Order &&
                    UpdatedBy == other.UpdatedBy &&
@@ -185,16 +171,12 @@ namespace Mb.Models.Data
         {
             var hashCode = new HashCode();
             hashCode.Add(Id);
-            hashCode.Add(Iri);
             hashCode.Add(Rds);
             hashCode.Add(Description);
-            hashCode.Add(TypeReferenceString);
+            hashCode.Add(TypeReference);
             hashCode.Add(Name);
             hashCode.Add(Label);
-            hashCode.Add(PositionX);
-            hashCode.Add(PositionY);
-            hashCode.Add(PositionBlockX);
-            hashCode.Add(PositionBlockY);
+            hashCode.Add(Position);
             hashCode.Add(Level);
             hashCode.Add(Order);
             hashCode.Add(UpdatedBy);

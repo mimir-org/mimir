@@ -29,7 +29,7 @@ namespace Mb.Models.Extensions
                 return true;
             if (editData.RelationUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
-            if (editData.AttributeDelete.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri) || editData.AttributeUpdate.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri) || editData.AttributeCreate.Any(x => x.AspectObjectId == aspectObject.Id || x.AspectObjectIri == aspectObject.Iri))
+            if (editData.AttributeDelete.Any(x => x.AspectObjectId == aspectObject.Id) || editData.AttributeUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.AttributeCreate.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;
             if (aspectObject.Description != other.Description)
                 return true;

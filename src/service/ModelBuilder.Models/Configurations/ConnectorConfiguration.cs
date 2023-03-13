@@ -17,10 +17,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
             builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
             builder.Property(p => p.Discriminator).HasColumnName("Discriminator");
-            builder.Property(p => p.Color).HasColumnName("Color");
-            builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired(false);
-            builder.Property(p => p.TerminalParentType).HasColumnName("TerminalParentType").IsRequired(false);
-            builder.Property(p => p.TypeReference).HasColumnName("TypeReference");
 
             builder.HasOne(x => x.AspectObject).WithMany(y => y.Connectors).HasForeignKey(x => x.AspectObjectId).OnDelete(DeleteBehavior.Cascade);
         }

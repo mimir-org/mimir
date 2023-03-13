@@ -1,10 +1,8 @@
-using Mb.Models.Const;
-
 namespace Mb.Models.Data
 {
     public class ConnectionRelationHasLocation : ConnectionRelation
     {
-        public override string Discriminator => Discriminators.HasLocation;
+        public override string Discriminator => nameof(ConnectionRelationHasLocation);
 
         private bool Equals(ConnectionRelationHasLocation other)
         {

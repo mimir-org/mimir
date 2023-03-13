@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
@@ -13,17 +14,16 @@ namespace Mb.Models.Data
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public virtual string Discriminator { get; set; }
         public ConnectorDirection Direction { get; set; }
         public string Inside { get; set; }
         public string Outside { get; set; }
-        public virtual string Color { get; set; }
-        public virtual string AspectObjectId { get; set; }
-        public virtual string TypeReference { get; set; }
-        public virtual string TerminalType { get; set; }
-        public virtual string TerminalParentType { get; set; }
+        public string AspectObjectId { get; set; }
 
         public string Domain => Id.ResolveDomain();
+
+        [NotMapped]
+        public virtual string Discriminator { get; set; }
+
 
         [JsonIgnore]
         [TSExclude]
