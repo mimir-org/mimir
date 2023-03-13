@@ -23,6 +23,7 @@ export class ConnectorRelation implements ConnectorRelationCm {
   direction: Direction;
   id: string;
   inside: string;
+
   name: string;
   outside: string;
   terminalParentType: string | null;
