@@ -20,13 +20,12 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             return new ProjectAm
             {
-                Id = $"runir.net_{ProjectGuid}",
-                Iri = $"https://rdf.runir.net/ID{ProjectGuid}",
+                Id = $"https://rdf.runir.net/ID{ProjectGuid}",
                 IsSubProject = false,
                 Version = "1.0.0",
                 Name = "Dummy Project",
                 Description = "Dummy Project",
-                ProjectOwner = "Anna Bond",
+                CreatedBy = "Anna Bond",
                 UpdatedBy = "Anna Bond",
                 Updated = new DateTime(2022, 6, 1, 10, 0, 0),
                 AspectObjects = new List<AspectObjectAm>
@@ -184,11 +183,10 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             var p = new ProjectAm
             {
-                Id = id,
-                Iri = iri,
+                Id = iri,
                 Name = name,
                 Version = version,
-                ProjectOwner = projectOwner,
+                CreatedBy = projectOwner,
                 AspectObjects = null,
                 Connections = null
             };

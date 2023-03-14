@@ -114,7 +114,7 @@ namespace Mb.Services.Services
             var project = await GetProject(projectId, null);
             var am = _mapper.Map<ProjectAm>(project);
             am.IsSubProject = !am.IsSubProject;
-            await UpdateProject(am.Id, am.Iri, am, _commonRepository.GetDomain());
+            await UpdateProject(am.Id, am.Id, am, _commonRepository.GetDomain());
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Mb.Services.Services
                 throw new MimirorgBadRequestException($"Couldn't create project with name: {project.Name}",
                     validation);
 
-            var existingProject = ProjectExist(project.Id, project.Iri);
+            var existingProject = ProjectExist(project.Id, project.Id);
             ClearAllChangeTracker();
 
             if (existingProject)
@@ -157,7 +157,7 @@ namespace Mb.Services.Services
             // Create an empty project
             var newProject = new Project
             {
-                ProjectOwner = _contextAccessor.GetName(),
+                CreatedBy = _contextAccessor.GetName(),
                 UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime()
             };
@@ -344,7 +344,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public bool ProjectExist(string projectId, string projectIri)
         {
-            var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Iri == projectIri);
+            var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Id == projectIri);
             ClearAllChangeTracker();
             return exist;
         }
@@ -532,15 +532,14 @@ namespace Mb.Services.Services
 
             var project = new Project
             {
-                Id = projectId,
-                Iri = projectIri,
+                Id = projectIri,
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
                 UpdatedBy = _contextAccessor.GetName(),
                 Updated = DateTime.Now.ToUniversalTime(),
                 IsSubProject = isSubProject,
-                ProjectOwner = _contextAccessor.GetName(),
+                CreatedBy = _contextAccessor.GetName(),
                 AspectObjects = new List<AspectObject>
                 {
                     CreateInitAspectObject(Aspect.Function, projectId),

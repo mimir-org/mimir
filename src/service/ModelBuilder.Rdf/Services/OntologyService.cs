@@ -48,7 +48,7 @@ namespace ModelBuilder.Rdf.Services
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
 
-            var applicationData = GetApplicationData(project.Iri);
+            var applicationData = GetApplicationData(project.Id);
 
             _ontologyRepository.LoadData(new Graph());
             project.AssertGraph(this);
@@ -68,10 +68,10 @@ namespace ModelBuilder.Rdf.Services
             var project = new ProjectAm();
             project.ResolveProjectInformation(this);
 
-            if (string.IsNullOrWhiteSpace(project.Iri))
+            if (string.IsNullOrWhiteSpace(project.Id))
                 throw new InvalidDataException("Can't parse a project with missing project IRI");
 
-            var applicationData = GetApplicationData(project.Iri);
+            var applicationData = GetApplicationData(project.Id);
 
             project.ResolveAspectObjects(this, applicationData);
             project.ResolveRelationConnections(this, applicationData);

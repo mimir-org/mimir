@@ -105,8 +105,8 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
-            var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+            var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Id);
             if (project == null)
                 throw new MimirorgNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
@@ -143,15 +143,15 @@ namespace Mb.Services.Services
 
             var project = await ResolveProject(projectFile);
 
-            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
+            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Id)))
                 throw new MimirorgInvalidOperationException(
                     "You can't import an project that is null or missing id");
 
-            var exist = _projectService.ProjectExist(project.Id, project.Iri);
+            var exist = _projectService.ProjectExist(project.Id, project.Id);
 
             if (exist)
             {
-                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
+                await _projectService.UpdateProject(project.Id, project.Id, project, _commonRepository.GetDomain());
                 return;
             }
 

@@ -18,16 +18,16 @@ namespace Mb.Models.Data
         #region Properties
 
         public string Id { get; set; }
-        public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
         public bool IsSubProject { get; set; }
         public string Version { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ProjectOwner { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
-        
+        public string CreatedBy { get; set; }
+        public DateTime? Created { get; set; }
+
         [NotMapped]
         public virtual ICollection<AspectObject> AspectObjects { get; set; }
 
@@ -43,14 +43,14 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   Iri == other.Iri &&
                    IsSubProject == other.IsSubProject &&
                    Version == other.Version &&
                    Name == other.Name &&
                    Description == other.Description &&
-                   ProjectOwner == other.ProjectOwner &&
                    UpdatedBy == other.UpdatedBy &&
-                   Updated.Equals(other.Updated);
+                   Updated.Equals(other.Updated) &&
+                   CreatedBy == other.CreatedBy &&
+                   Created.Equals(other.Created);
         }
 
         public override bool Equals(object obj)
@@ -64,14 +64,14 @@ namespace Mb.Models.Data
         {
             var hashCode = new HashCode();
             hashCode.Add(Id);
-            hashCode.Add(Iri);
             hashCode.Add(IsSubProject);
             hashCode.Add(Version);
             hashCode.Add(Name);
             hashCode.Add(Description);
-            hashCode.Add(ProjectOwner);
             hashCode.Add(UpdatedBy);
             hashCode.Add(Updated);
+            hashCode.Add(CreatedBy);
+            hashCode.Add(Created);
             return hashCode.ToHashCode();
         }
 

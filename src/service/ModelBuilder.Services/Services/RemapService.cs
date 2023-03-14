@@ -88,14 +88,13 @@ namespace Mb.Services.Services
         public IDictionary<string, string> Remap(ProjectAm project)
         {
             var remap = new Dictionary<string, string>();
-            var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
+            var r = new ReplacementId { FromId = project.Id, FromIri = project.Id };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, false).ToList();
             project.Connections = RemapConnections(replacement, project.Connections, remap, false).ToList();
 
-            project.Id = replacement.ToId;
-            project.Iri = replacement.ToIri;
+            project.Id = replacement.ToIri;
 
             return remap;
         }
@@ -115,7 +114,7 @@ namespace Mb.Services.Services
 
             // Need to set this if there is a clone after new Id and Iri is created
             replacement.FromId = project.Id;
-            replacement.FromIri = project.Iri;
+            replacement.FromIri = project.Id;
 
             // We need to connect parentless connections to root aspectObjects of same aspect
             RemapParentlessConnections(project);
@@ -128,8 +127,7 @@ namespace Mb.Services.Services
             project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, true).ToList();
             project.Connections = RemapConnections(replacement, project.Connections, remap, true).ToList();
 
-            project.Id = replacement.ToId;
-            project.Iri = replacement.ToIri;
+            project.Id = replacement.ToIri;
 
             return remap;
         }

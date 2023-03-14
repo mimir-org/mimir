@@ -83,7 +83,7 @@ namespace Mb.Data.Repositories
         public Task<Project> GetProjectAsync(string id, string iri)
         {
             var project =
-                FindBy(x => x.Id == id || x.Iri == iri)
+                FindBy(x => x.Id == id || x.Id == iri)
                     .Include(x => x.Connections)
                     .Include("Connections.FromAspectObject")
                     .Include("Connections.ToAspectObject")
@@ -165,14 +165,14 @@ namespace Mb.Data.Repositories
                         .ForObject(updated)
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
-                        .AddColumn(x => x.Iri)
                         .AddColumn(x => x.IsSubProject)
                         .AddColumn(x => x.Version)
                         .AddColumn(x => x.Name)
                         .AddColumn(x => x.Description)
-                        .AddColumn(x => x.ProjectOwner)
                         .AddColumn(x => x.UpdatedBy)
                         .AddColumn(x => x.Updated)
+                        .AddColumn(x => x.CreatedBy)
+                        .AddColumn(x => x.Created)
                         .Upsert()
                         .MatchTargetOn(x => x.Id)
                         .Commit(conn);
@@ -190,9 +190,9 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = !string.IsNullOrWhiteSpace(updated.Id) ? updated.Id.ResolveKey() : updated.Iri.ResolveKey();
+            var key = updated.Id.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
-            _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Iri));
+            _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Id));
         }
 
         /// <summary>
@@ -214,14 +214,14 @@ namespace Mb.Data.Repositories
                         .ForObject(project)
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
-                        .AddColumn(x => x.Iri)
                         .AddColumn(x => x.IsSubProject)
                         .AddColumn(x => x.Version)
                         .AddColumn(x => x.Name)
                         .AddColumn(x => x.Description)
-                        .AddColumn(x => x.ProjectOwner)
                         .AddColumn(x => x.UpdatedBy)
                         .AddColumn(x => x.Updated)
+                        .AddColumn(x => x.CreatedBy)
+                        .AddColumn(x => x.Created)
                         .Upsert()
                         .MatchTargetOn(x => x.Id)
                         .Commit(conn);
@@ -234,7 +234,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            _cacheRepository.RefreshList.Enqueue((project.Id, project.Iri));
+            _cacheRepository.RefreshList.Enqueue((project.Id, project.Id));
             return Task.CompletedTask;
         }
 
@@ -268,7 +268,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = !string.IsNullOrWhiteSpace(project.Id) ? project.Id.ResolveKey() : project.Iri.ResolveKey();
+            var key = project.Id.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
         }
     }

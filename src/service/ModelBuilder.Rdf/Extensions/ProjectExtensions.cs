@@ -21,23 +21,23 @@ namespace ModelBuilder.Rdf.Extensions
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-            ontologyService.SetBaseUri(new Uri(project.Iri));
+            ontologyService.SetBaseUri(new Uri(project.Id));
 
-            ontologyService.AssertAspectObject(project.Iri, Resources.Label, project.Name, true);
-            ontologyService.AssertAspectObject(project.Iri, Resources.Version, project.Version, true);
-            ontologyService.AssertAspectObject(project.Iri, Resources.Type, Resources.Project);
-            ontologyService.AssertAspectObject(project.Iri, Resources.Type, Resources.IntegratedObject);
-            ontologyService.AssertAspectObject(project.Iri, Resources.Domain, project.Domain, true);
-            ontologyService.AssertAspectObject(project.Iri, Resources.HasOwner, project.ProjectOwner, true);
+            ontologyService.AssertAspectObject(project.Id, Resources.Label, project.Name, true);
+            ontologyService.AssertAspectObject(project.Id, Resources.Version, project.Version, true);
+            ontologyService.AssertAspectObject(project.Id, Resources.Type, Resources.Project);
+            ontologyService.AssertAspectObject(project.Id, Resources.Type, Resources.IntegratedObject);
+            ontologyService.AssertAspectObject(project.Id, Resources.Domain, project.Domain, true);
+            ontologyService.AssertAspectObject(project.Id, Resources.HasOwner, project.CreatedBy, true);
 
             if (!string.IsNullOrWhiteSpace(project.UpdatedBy))
-                ontologyService.AssertAspectObject(project.Iri, Resources.UpdatedBy, project.UpdatedBy, true);
+                ontologyService.AssertAspectObject(project.Id, Resources.UpdatedBy, project.UpdatedBy, true);
 
             if (project.Updated != null)
-                ontologyService.AssertAspectObject(project.Iri, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{project.Updated?.ToString("u")}", Resources.DateTime));
+                ontologyService.AssertAspectObject(project.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{project.Updated?.ToString("u")}", Resources.DateTime));
 
             if (!string.IsNullOrEmpty(project.Description))
-                ontologyService.AssertAspectObject(project.Iri, Resources.Desc, project.Description, true);
+                ontologyService.AssertAspectObject(project.Id, Resources.Desc, project.Description, true);
         }
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace ModelBuilder.Rdf.Extensions
             if (subject == null)
                 throw new MimirorgBadRequestException("Cannot find the project from rdf file.");
 
-            project.Iri = subject.ToString();
-            project.Name = ontologyService.GetValue(project.Iri, Resources.Label);
-            project.Version = ontologyService.GetValue(project.Iri, Resources.Version, false);
+            project.Id = subject.ToString();
+            project.Name = ontologyService.GetValue(project.Id, Resources.Label);
+            project.Version = ontologyService.GetValue(project.Id, Resources.Version, false);
             project.IsSubProject = false; // TODO: Resolve sub project settings
-            project.Description = ontologyService.GetValue(project.Iri, Resources.Desc, false);
-            project.ProjectOwner = ontologyService.GetValue(project.Iri, Resources.HasOwner, false);
-            project.UpdatedBy = ontologyService.GetValue(project.Iri, Resources.UpdatedBy, false);
-            project.Updated = ontologyService.GetDateTimeValue(project.Iri, Resources.LastUpdated, false);
+            project.Description = ontologyService.GetValue(project.Id, Resources.Desc, false);
+            project.CreatedBy = ontologyService.GetValue(project.Id, Resources.HasOwner, false);
+            project.UpdatedBy = ontologyService.GetValue(project.Id, Resources.UpdatedBy, false);
+            project.Updated = ontologyService.GetDateTimeValue(project.Id, Resources.LastUpdated, false);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var n in rootAspectObjects)
             {
                 var aspectObject = new AspectObjectAm();
-                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Iri, AspectObjectType.Root, projectData);
+                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Id, AspectObjectType.Root, projectData);
                 project.AspectObjects.Add(aspectObject);
             }
 
@@ -104,7 +104,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var n in aspectObjects)
             {
                 var aspectObject = new AspectObjectAm();
-                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Iri, AspectObjectType.Aspect, projectData);
+                aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Id, AspectObjectType.Aspect, projectData);
                 project.AspectObjects.Add(aspectObject);
             }
         }

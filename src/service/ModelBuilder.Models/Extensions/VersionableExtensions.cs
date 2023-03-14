@@ -92,7 +92,7 @@ namespace Mb.Models.Extensions
             if (project.IsSubProject != other.IsSubProject)
                 return true;
 
-            if (project.ProjectOwner != other.ProjectOwner)
+            if (project.CreatedBy != other.CreatedBy)
                 return true;
 
             if (project.UpdatedBy != other.UpdatedBy)

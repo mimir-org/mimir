@@ -9,11 +9,8 @@ namespace Mb.Models.Application
 {
     public class ProjectAm : IValidatableObject
     {
-        [RequiredOne(nameof(Iri))]
-        public string Id { get; set; }
-
         [RequiredOne(nameof(Id))]
-        public string Iri { get; set; }
+        public string Id { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
@@ -28,12 +25,12 @@ namespace Mb.Models.Application
 
         public string Description { get; set; }
 
-        [Required]
-        public string ProjectOwner { get; set; }
-
         public string UpdatedBy { get; set; }
 
         public DateTime? Updated { get; set; }
+        public string CreatedBy { get; set; }
+
+        public DateTime? Created { get; set; }
 
         public ICollection<AspectObjectAm> AspectObjects { get; set; } = new List<AspectObjectAm>();
         public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
