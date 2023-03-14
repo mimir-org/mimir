@@ -10,7 +10,6 @@ namespace Mb.Models.Configurations
         {
             builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired();
             builder.Property(p => p.TerminalParentType).HasColumnName("TerminalParentType");
-            builder.Property(p => p.Color).HasColumnName("Color").IsRequired();
         }
     }
 }

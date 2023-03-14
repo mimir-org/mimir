@@ -51,10 +51,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
-                    b.Property<int?>("Height")
-                        .HasColumnType("int")
-                        .HasColumnName("Height");
-
                     b.Property<bool>("IsLocked")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -127,10 +123,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Version");
-
-                    b.Property<int?>("Width")
-                        .HasColumnType("int")
-                        .HasColumnName("Width");
 
                     b.HasKey("Id");
 
@@ -392,11 +384,6 @@ namespace Mb.Core.Migrations
             modelBuilder.Entity("Mb.Models.Data.ConnectionTerminal", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Connection");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Color");
 
                     b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")

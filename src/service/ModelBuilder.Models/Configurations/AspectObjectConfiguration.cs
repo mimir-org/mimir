@@ -34,8 +34,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.AspectObjectType).HasColumnName("AspectObjectType").IsRequired();
             builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
-            builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false);
-            builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false);
             builder.Property(p => p.Symbol).HasColumnName("Symbol").IsRequired(false);
             builder.Property(p => p.Purpose).HasColumnName("PurposeString").IsRequired(false);
         }

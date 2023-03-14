@@ -36,9 +36,7 @@ namespace Mb.Core.Migrations
                     MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PurposeString = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Width = table.Column<int>(type: "int", nullable: true),
-                    Height = table.Column<int>(type: "int", nullable: true)
+                    Project = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,8 +76,7 @@ namespace Mb.Core.Migrations
                     Project = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230314134038_Init")]
+    [Migration("20230314134944_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -53,10 +53,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
-
-                    b.Property<int?>("Height")
-                        .HasColumnType("int")
-                        .HasColumnName("Height");
 
                     b.Property<bool>("IsLocked")
                         .ValueGeneratedOnAdd()
@@ -130,10 +126,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Version");
-
-                    b.Property<int?>("Width")
-                        .HasColumnType("int")
-                        .HasColumnName("Width");
 
                     b.HasKey("Id");
 
@@ -395,11 +387,6 @@ namespace Mb.Core.Migrations
             modelBuilder.Entity("Mb.Models.Data.ConnectionTerminal", b =>
                 {
                     b.HasBaseType("Mb.Models.Data.Connection");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Color");
 
                     b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")

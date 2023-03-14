@@ -482,8 +482,6 @@ namespace Mb.Services.Services
                 AspectObjectType = AspectObjectType.Root,
                 MainProject = project,
                 Aspect = aspect,
-                Height = null,
-                Width = null,
                 Created = dateTimeNow,
                 CreatedBy = userName,
                 Updated = dateTimeNow,

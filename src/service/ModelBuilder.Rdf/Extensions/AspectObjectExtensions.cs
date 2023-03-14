@@ -41,13 +41,6 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPosition>(aspectObject.Position).BlockPosY}", Resources.Float));
             aspectObject.TypeReferenceObjects.AssertTypeReference(aspectObject.Id, ontologyService);
 
-            if (aspectObject.Width != null)
-                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasWidth, ontologyService.CreateLiteralAspectObject($"{aspectObject.Width}", Resources.Integer));
-
-            if (aspectObject.Height != null)
-                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasHeight, ontologyService.CreateLiteralAspectObject($"{aspectObject.Height}", Resources.Integer));
-
-
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasAspect, $"imf:{aspectObject.Aspect}");
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.Version, aspectObject.Version, true);
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.Name, aspectObject.Name, true);

@@ -113,7 +113,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.MainProject)
                 .AddColumn(x => x.Project)
                 //Child
-                .AddColumn(x => x.Color)
                 .AddColumn(x => x.TerminalType)
                 .AddColumn(x => x.TerminalParentType)
                 .AddColumn(x => x.Discriminator)

@@ -96,18 +96,6 @@ namespace Mb.Data.Repositories
                     .AsNoTracking()
                     .AsSplitQuery()
                     .FirstOrDefault();
-
-            if (project != null && project.AspectObjects.Any())
-                project.AspectObjects = project.AspectObjects.Select(x =>
-                {
-                    x.Hidden = false;
-                    x.BlockHidden = false;
-                    x.Selected = false;
-                    x.BlockSelected = false;
-                    return x;
-                })
-                    .ToList();
-
             return Task.FromResult(project);
         }
 

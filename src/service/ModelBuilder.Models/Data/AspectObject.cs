@@ -79,32 +79,6 @@ namespace Mb.Models.Data
 
         public virtual string Project { get; set; }
 
-        public int? Width { get; set; }
-
-        public int? Height { get; set; }
-
-        // Only for client
-        [NotMapped]
-        public string ParentAspectObjectId { get; set; }
-
-        [NotMapped]
-        public bool? Selected { get; set; }
-
-        [NotMapped]
-        public bool? BlockSelected { get; set; }
-
-        [NotMapped]
-        public bool? Hidden { get; set; }
-
-        [NotMapped]
-        public bool? BlockHidden { get; set; }
-
-        [NotMapped]
-        public bool? IsOffPageTarget { get; set; }
-
-        [NotMapped]
-        public bool? IsOffPageRequired { get; set; }
-
         #endregion Properties
 
         #region IEquatable
@@ -131,9 +105,7 @@ namespace Mb.Models.Data
                    MainProject == other.MainProject &&
                    Symbol == other.Symbol &&
                    Purpose == other.Purpose &&
-                   Project == other.Project &&
-                   Width == other.Width &&
-                   Height == other.Height;
+                   Project == other.Project;
 
         }
 
@@ -166,8 +138,6 @@ namespace Mb.Models.Data
             hashCode.Add(Symbol);
             hashCode.Add(Purpose);
             hashCode.Add(Project);
-            hashCode.Add(Width);
-            hashCode.Add(Height);
             return hashCode.ToHashCode();
         }
 

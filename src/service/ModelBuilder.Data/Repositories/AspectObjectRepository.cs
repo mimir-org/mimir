@@ -155,8 +155,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Symbol)
                 .AddColumn(x => x.Purpose)
                 .AddColumn(x => x.Project)
-                .AddColumn(x => x.Width)
-                .AddColumn(x => x.Height)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
