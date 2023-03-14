@@ -260,10 +260,10 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 new RelationAm
                 {
-                    Iri = iri.StripAndCreateIdIri(),
+                    Id = iri.StripAndCreateIdIri(),
                     Name = RelationType.PartOf.GetDisplayName(),
-                    Type = ConnectorDirection.Output,
-                    AspectObjectIri = iri,
+                    Direction = ConnectorDirection.Output,
+                    AspectObject = iri,
                     RelationType = RelationType.PartOf,
                     ConnectorVisibility = ConnectorVisibility.None
                 }
@@ -274,50 +274,50 @@ namespace ModelBuilder.Rdf.Extensions
 
             connectors.Add(new RelationAm
             {
-                Iri = iri.StripAndCreateIdIri(),
+                Id = iri.StripAndCreateIdIri(),
                 Name = RelationType.PartOf.GetDisplayName(),
-                Type = ConnectorDirection.Input,
-                AspectObjectIri = iri,
+                Direction = ConnectorDirection.Input,
+                AspectObject = iri,
                 RelationType = RelationType.PartOf,
                 ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
             {
-                Iri = iri.StripAndCreateIdIri(),
+                Id = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
-                Type = ConnectorDirection.Input,
-                AspectObjectIri = iri,
+                Direction = ConnectorDirection.Input,
+                AspectObject = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
             {
-                Iri = iri.StripAndCreateIdIri(),
+                Id = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
-                Type = ConnectorDirection.Output,
-                AspectObjectIri = iri,
+                Direction = ConnectorDirection.Output,
+                AspectObject = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
             {
-                Iri = iri.StripAndCreateIdIri(),
+                Id = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
-                Type = ConnectorDirection.Input,
-                AspectObjectIri = iri,
+                Direction = ConnectorDirection.Input,
+                AspectObject = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
             {
-                Iri = iri.StripAndCreateIdIri(),
+                Id = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
-                Type = ConnectorDirection.Output,
-                AspectObjectIri = iri,
+                Direction = ConnectorDirection.Output,
+                AspectObject = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None
             });

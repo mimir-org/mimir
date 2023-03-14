@@ -13,19 +13,17 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             _terminal = new ConnectorTerminalAm
             {
-                Id = "runir.com_12345",
-                Iri = "https://dummy.com/ID12345",
+                Id = "https://dummy.com/ID12345",
                 Name = "ConnectorTerminal",
                 Attributes = null,
                 Color = "#ffffff",
-                Type = ConnectorDirection.Input,
+                Direction = ConnectorDirection.Input,
                 ConnectorVisibility = ConnectorVisibility.None,
-                AspectObjectId = null,
-                AspectObjectIri = null,
+                AspectObject = null,
                 IsRequired = false,
                 TerminalTypeIri = "https://rdf.runir.com/1234",
                 TerminalParentTypeName = "TerminalParent",
-                TerminalTypeId = "12345"
+                TerminalType = "12345"
             };
         }
 
@@ -41,7 +39,6 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             var obj = _terminal.DeepCopy();
             obj.Id = "";
-            obj.Iri = "";
 
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
@@ -62,7 +59,7 @@ namespace ModelBuilder.Unit.Tests.Models
         public void Enum_Value_Out_Of_Range_Validate_False(ConnectorDirection connectorType, ConnectorVisibility connectorVisibility)
         {
             var obj = _terminal.DeepCopy();
-            obj.Type = connectorType;
+            obj.Direction = connectorType;
             obj.ConnectorVisibility = connectorVisibility;
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
@@ -76,7 +73,7 @@ namespace ModelBuilder.Unit.Tests.Models
         public void TerminalTypeId_Or_TerminalTypeIri_Must_Be_Set(string terminalTypeId, string terminalTypeIri, bool result)
         {
             var obj = _terminal.DeepCopy();
-            obj.TerminalTypeId = terminalTypeId;
+            obj.TerminalType = terminalTypeId;
             obj.TerminalTypeIri = terminalTypeIri;
 
             var validation = obj.ValidateObject();

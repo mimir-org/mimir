@@ -304,12 +304,12 @@ namespace Mb.Services.Services
 
             foreach (var connector in connectors)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Id };
                 var connectorReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 connectorReplacement.FromId = connector.Id;
-                connectorReplacement.FromIri = connector.Iri;
+                connectorReplacement.FromIri = connector.Id;
                 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
@@ -352,17 +352,17 @@ namespace Mb.Services.Services
                 }
 
                 connector.Id = connectorReplacement.ToId;
-                connector.Iri = connectorReplacement.ToIri;
+                connector.Id = connectorReplacement.ToIri;
 
-                if (connector.AspectObjectId == replacement.FromId)
+                if (connector.AspectObject == replacement.FromId)
                 {
-                    connector.AspectObjectId = replacement.ToId;
-                    connector.AspectObjectIri = replacement.ToIri;
+                    connector.AspectObject = replacement.ToId;
+                    connector.AspectObject = replacement.ToIri;
                 }
 
-                if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
+                if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
                 {
-                    am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalTypeId;
+                    am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalType;
                 }
 
                 yield return connector;
@@ -426,22 +426,22 @@ namespace Mb.Services.Services
             if (connectorTerminal == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connectorTerminal.Id, FromIri = connectorTerminal.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connectorTerminal.Id, FromIri = connectorTerminal.Id };
             var terminalReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
             terminalReplacement.FromId = connectorTerminal.Id;
-            terminalReplacement.FromIri = connectorTerminal.Iri;
+            terminalReplacement.FromIri = connectorTerminal.Id;
 
             var attr = RemapAttributes(terminalReplacement, connectorTerminal.Attributes, createCopy, AttributeParent.Connector).ToList();
             connectorTerminal.Attributes = attr.Any() ? attr : null;
 
             connectorTerminal.Id = terminalReplacement.ToId;
-            connectorTerminal.Iri = terminalReplacement.ToIri;
+            connectorTerminal.Id = terminalReplacement.ToIri;
 
-            if (!string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeId) && string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeIri))
+            if (!string.IsNullOrWhiteSpace(connectorTerminal.TerminalType) && string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeIri))
             {
-                connectorTerminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connectorTerminal.TerminalTypeId;
+                connectorTerminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connectorTerminal.TerminalType;
             }
 
             return connectorTerminal;

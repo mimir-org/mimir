@@ -47,26 +47,22 @@ namespace ModelBuilder.Unit.Tests.Models
                         {
                             new RelationAm
                             {
-                                Id = "runir.net_FF21C487-F075-4073-AF50-B6B5E7620CDF",
-                                Iri = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
+                                Id = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                AspectObjectId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                AspectObjectIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector A",
-                                Type = ConnectorDirection.Input,
+                                Direction = ConnectorDirection.Input,
                                 RelationType = RelationType.PartOf
                             },
                             new RelationAm
                             {
-                                Id = "runir.net_6560A3CC-0499-4A55-8590-1453060A1498",
-                                Iri = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
+                                Id = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                AspectObjectId = "runir.net_17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                AspectObjectIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                                AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector B",
-                                Type = ConnectorDirection.Output,
+                                Direction = ConnectorDirection.Output,
                                 RelationType = RelationType.PartOf
                             }
                         },
@@ -106,26 +102,22 @@ namespace ModelBuilder.Unit.Tests.Models
                         {
                             new RelationAm
                             {
-                                Id = "runir.net_95479872-2249-4E46-8E9F-305589F946CC",
-                                Iri = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
+                                Id = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                AspectObjectId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                                AspectObjectIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector A",
-                                Type = ConnectorDirection.Input,
+                                Direction = ConnectorDirection.Input,
                                 RelationType = RelationType.PartOf
                             },
                             new RelationAm
                             {
-                                Id = "runir.net_B9972C41-C136-4B61-AE3F-7B5181E49B70",
-                                Iri = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
+                                Id = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
                                 ConnectorVisibility = ConnectorVisibility.None,
                                 IsRequired = false,
-                                AspectObjectId = "runir.net_183EA07F-9696-467F-8F12-ACE65BA89670",
-                                AspectObjectIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                                AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector B",
-                                Type = ConnectorDirection.Output,
+                                Direction = ConnectorDirection.Output,
                                 RelationType = RelationType.PartOf
                             }
                         },

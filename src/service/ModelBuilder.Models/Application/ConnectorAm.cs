@@ -8,12 +8,10 @@ namespace Mb.Models.Application
 {
     public class ConnectorAm
     {
-        [RequiredOne(nameof(Iri))]
-        public string Id { get; set; }
-
         [RequiredOne(nameof(Id))]
-        [ValidIri]
-        public string Iri { get; set; }
+        public string Id { get; set; }
+        public string Inside { get; set; }
+        public string Outside { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
@@ -21,15 +19,12 @@ namespace Mb.Models.Application
         public string Name { get; set; }
 
         [EnumDataType(typeof(ConnectorDirection))]
-        public ConnectorDirection Type { get; set; }
+        public ConnectorDirection Direction { get; set; }
 
         [EnumDataType(typeof(ConnectorVisibility))]
         public ConnectorVisibility ConnectorVisibility { get; set; }
 
-        public string AspectObjectId { get; set; }
-
-        [ValidIri]
-        public string AspectObjectIri { get; set; }
+        public string AspectObject { get; set; }
 
         public bool IsRequired { get; set; }
     }

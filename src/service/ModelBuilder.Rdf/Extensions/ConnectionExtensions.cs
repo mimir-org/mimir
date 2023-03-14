@@ -47,22 +47,22 @@ namespace ModelBuilder.Rdf.Extensions
             if (fromAspectObject == null || toAspectObject == null)
                 throw new InvalidDataException($"Can't create an connection. Can't find connected aspectObjects from IRI. From: {fromAspectObject?.Id} to {toAspectObject?.Id}");
 
-            var fromConnector = fromAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == relation.RelationType);
-            var toConnector = toAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Input && x.RelationType == relation.RelationType);
+            var fromConnector = fromAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Output && x.RelationType == relation.RelationType);
+            var toConnector = toAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input && x.RelationType == relation.RelationType);
 
             if (fromConnector == null || toConnector == null)
-                throw new InvalidDataException($"Can't create an connection. Can't find connectors from IRI. From: {fromConnector?.Iri} to {toConnector?.Iri}");
+                throw new InvalidDataException($"Can't create an connection. Can't find connectors from IRI. From: {fromConnector?.Id} to {toConnector?.Id}");
 
             var existingConnection = projectData?.Connections?.FirstOrDefault(x =>
-                x.FromConnector == fromConnector.Iri &&
-                x.ToConnector == toConnector.Iri
+                x.FromConnector == fromConnector.Id &&
+                x.ToConnector == toConnector.Id
             );
 
             connection.Id = existingConnection != null ? existingConnection.Id : toAspectObject.Id.StripAndCreateIdIri();
             connection.MainProject = toAspectObject.MainProject;
             connection.Project = toAspectObject.Project;
-            connection.FromConnector = fromConnector.Iri;
-            connection.ToConnector = toConnector.Iri;
+            connection.FromConnector = fromConnector.Id;
+            connection.ToConnector = toConnector.Id;
         }
     }
 }

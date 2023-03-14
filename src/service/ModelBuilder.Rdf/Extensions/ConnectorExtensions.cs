@@ -119,19 +119,19 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="iri">The connectorTerminal IRI</param>
         public static void ResolveTerminal(this ConnectorTerminalAm connectorTerminal, IOntologyService ontologyService, ProjectData projectData, string aspectObjectIri, string iri)
         {
-            connectorTerminal.Iri = iri;
-            connectorTerminal.AspectObjectIri = aspectObjectIri;
+            connectorTerminal.Id = iri;
+            connectorTerminal.AspectObject = aspectObjectIri;
             connectorTerminal.Name = ontologyService.GetValue(iri, Resources.Label, false);
-            connectorTerminal.Type = ontologyService.GetEnumValue<ConnectorDirection>(iri, Resources.TerminalDirectionType, false);
+            connectorTerminal.Direction = ontologyService.GetEnumValue<ConnectorDirection>(iri, Resources.TerminalDirectionType, false);
             connectorTerminal.ConnectorVisibility = ontologyService.GetEnumValue<ConnectorVisibility>(iri, Resources.Visibility, false);
-            connectorTerminal.TypeReferences.ResolveTypeReferences(connectorTerminal.Iri, ontologyService);
+            connectorTerminal.TypeReferences.ResolveTypeReferences(connectorTerminal.Id, ontologyService);
 
             var isRequiredString = ontologyService.GetValue(iri, Resources.IsRequired, false);
             if (bool.TryParse(isRequiredString, out var isRequired))
                 connectorTerminal.IsRequired = isRequired;
 
             connectorTerminal.Color = ontologyService.GetValue(iri, Resources.HasColor, false);
-            connectorTerminal.TerminalTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
+            connectorTerminal.TerminalType = ontologyService.GetValue(iri, Resources.LibraryType, false);
             connectorTerminal.TerminalTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
             var transmitter = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.Type)?.Select(x => x.Object).FirstOrDefault(x => x.ToString().Contains("Transmitter"));

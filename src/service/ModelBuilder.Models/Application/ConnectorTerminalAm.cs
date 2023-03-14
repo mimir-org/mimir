@@ -11,13 +11,13 @@ namespace Mb.Models.Application
         public string Color { get; set; }
 
         [RequiredOne(nameof(TerminalTypeIri))]
-        public string TerminalTypeId { get; set; }
+        public string TerminalType { get; set; }
 
         [ValidIri]
-        [RequiredOne(nameof(TerminalTypeId))]
+        [RequiredOne(nameof(TerminalType))]
         public string TerminalTypeIri { get; set; }
 
-        public string TerminalParentTypeId { get; set; }
+        public string TerminalParentType { get; set; }
 
         [ValidIri]
         public string TerminalParentTypeIri { get; set; }
