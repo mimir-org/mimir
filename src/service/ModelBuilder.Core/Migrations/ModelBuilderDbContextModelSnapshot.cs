@@ -279,16 +279,19 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(63)
+                        .HasColumnType("nvarchar(63)")
+                        .HasColumnName("CreatedBy");
+
                     b.Property<string>("Description")
                         .HasMaxLength(511)
                         .HasColumnType("nvarchar(511)")
                         .HasColumnName("Description");
-
-                    b.Property<string>("Iri")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsSubProject")
                         .HasColumnType("bit")
@@ -299,12 +302,6 @@ namespace Mb.Core.Migrations
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)")
                         .HasColumnName("Name");
-
-                    b.Property<string>("ProjectOwner")
-                        .IsRequired()
-                        .HasMaxLength(63)
-                        .HasColumnType("nvarchar(63)")
-                        .HasColumnName("ProjectOwner");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
