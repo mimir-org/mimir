@@ -54,19 +54,15 @@ namespace ModelBuilder.Rdf.Extensions
                 throw new InvalidDataException($"Can't create an connection. Can't find connectors from IRI. From: {fromConnector?.Iri} to {toConnector?.Iri}");
 
             var existingConnection = projectData?.Connections?.FirstOrDefault(x =>
-                x.FromConnectorIri == fromConnector.Iri &&
-                x.ToConnectorIri == toConnector.Iri &&
-                x.FromAspectObjectIri == fromAspectObject.Id &&
-                x.ToAspectObjectIri == toAspectObject.Id
+                x.FromConnector == fromConnector.Iri &&
+                x.ToConnector == toConnector.Iri
             );
 
-            connection.Iri = existingConnection != null ? existingConnection.Iri : toAspectObject.Id.StripAndCreateIdIri();
-            connection.MasterProjectIri = toAspectObject.MainProject;
-            connection.ProjectIri = toAspectObject.Project;
-            connection.FromConnectorIri = fromConnector.Iri;
-            connection.ToConnectorIri = toConnector.Iri;
-            connection.FromAspectObjectIri = fromAspectObject.Id;
-            connection.ToAspectObjectIri = toAspectObject.Id;
+            connection.Id = existingConnection != null ? existingConnection.Id : toAspectObject.Id.StripAndCreateIdIri();
+            connection.MainProject = toAspectObject.MainProject;
+            connection.Project = toAspectObject.Project;
+            connection.FromConnector = fromConnector.Iri;
+            connection.ToConnector = toConnector.Iri;
         }
     }
 }

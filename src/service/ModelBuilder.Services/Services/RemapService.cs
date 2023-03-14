@@ -196,39 +196,31 @@ namespace Mb.Services.Services
 
             foreach (var connection in connections)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connection.Id, FromIri = connection.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connection.Id, FromIri = connection.Id };
                 var connectionReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 connectionReplacement.FromId = connection.Id;
-                connectionReplacement.FromIri = connection.Iri;
+                connectionReplacement.FromIri = connection.Id;
 
                 if (connectionReplacement.FromId != connectionReplacement.ToId && !string.IsNullOrWhiteSpace(connectionReplacement.FromId) || connectionReplacement.FromIri != connectionReplacement.ToId && !string.IsNullOrWhiteSpace(connectionReplacement.FromIri))
                     remap.Add(connectionReplacement.ToId, connectionReplacement.FromId);
 
-                connection.Id = connectionReplacement.ToId;
-                connection.Iri = connectionReplacement.ToIri;
-                connection.ProjectId = project.ToId;
-                connection.ProjectIri = project.ToIri;
+                connection.Id = connectionReplacement.ToIri;
+                connection.Project = project.ToId;
+                connection.Project = project.ToIri;
 
-                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToConnectorId, FromIri = connection.ToConnectorIri });
-                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromConnectorId, FromIri = connection.FromConnectorIri });
-                var toAspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToAspectObjectId, FromIri = connection.ToAspectObjectIri });
-                var fromAspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromAspectObjectId, FromIri = connection.FromAspectObjectIri });
+                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.ToConnector, FromIri = connection.ToConnector });
+                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = connection.FromConnector, FromIri = connection.FromConnector });
 
-                connection.ToConnectorId = toConnectorReplacement.ToId;
-                connection.FromConnectorId = fromConnectorReplacement.ToId;
-                connection.ToAspectObjectId = toAspectObjectReplacement.ToId;
-                connection.FromAspectObjectId = fromAspectObjectReplacement.ToId;
+                connection.ToConnector = toConnectorReplacement.ToId;
+                connection.FromConnector = fromConnectorReplacement.ToId;
 
-                connection.ToConnectorIri = toConnectorReplacement.ToIri;
-                connection.FromConnectorIri = fromConnectorReplacement.ToIri;
-                connection.ToAspectObjectIri = toAspectObjectReplacement.ToIri;
-                connection.FromAspectObjectIri = fromAspectObjectReplacement.ToIri;
+                connection.ToConnector = toConnectorReplacement.ToIri;
+                connection.FromConnector = fromConnectorReplacement.ToIri;
 
-                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, connection.MasterProjectId, connection.MasterProjectIri);
-                connection.MasterProjectId = masterProject.Id;
-                connection.MasterProjectIri = masterProject.Iri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, connection.MainProject, connection.MainProject);
+                connection.MainProject = masterProject.Iri;
 
                 yield return connection;
             }
@@ -245,16 +237,17 @@ namespace Mb.Services.Services
             var parentLessConnections = project.GetParentlessConnectors().ToList();
             foreach (var connection in parentLessConnections)
             {
-                var actualAspectObject = project.AspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-                if (actualAspectObject == null)
-                    continue;
+                //TODO Rewrite
+                //var actualAspectObject = project.AspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                //if (actualAspectObject == null)
+                //    continue;
 
-                var rootAspectObject = project.AspectObjects.FirstOrDefault(x => x.AspectObjectType == AspectObjectType.Root && x.Aspect == actualAspectObject.Aspect);
-                if (rootAspectObject == null)
-                    continue;
+                //var rootAspectObject = project.AspectObjects.FirstOrDefault(x => x.AspectObjectType == AspectObjectType.Root && x.Aspect == actualAspectObject.Aspect);
+                //if (rootAspectObject == null)
+                //    continue;
 
-                connection.FromAspectObjectId = rootAspectObject.Id;
-                connection.FromConnectorId = rootAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+                //connection.FromAspectObjectId = rootAspectObject.Id;
+                //connection.FromConnector = rootAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
         }
 
@@ -320,46 +313,34 @@ namespace Mb.Services.Services
                 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    _ = connections?.Where(x => x.FromConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromIri).Select(y =>
                     {
-                        y.FromConnectorIri = connectorReplacement.ToIri;
-                        y.FromConnectorId = connectorReplacement.ToId;
-                        y.FromAspectObjectId = replacement.ToId;
-                        y.FromAspectObjectIri = replacement.ToIri;
+                        y.FromConnector = connectorReplacement.ToId;
                         return y;
                     }).ToList();
                 }
                 else
                 {
-                    _ = connections?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
+                    _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromId).Select(y =>
                     {
-                        y.FromConnectorIri = connectorReplacement.ToIri;
-                        y.FromConnectorId = connectorReplacement.ToId;
-                        y.FromAspectObjectId = replacement.ToId;
-                        y.FromAspectObjectIri = replacement.ToIri;
+                        y.FromConnector = connectorReplacement.ToId;
                         return y;
                     }).ToList();
                 }
 
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    _ = connections?.Where(x => x.ToConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromIri).Select(y =>
                     {
-                        y.ToConnectorIri = connectorReplacement.ToIri;
-                        y.ToConnectorId = connectorReplacement.ToId;
-                        y.ToAspectObjectId = replacement.ToId;
-                        y.ToAspectObjectIri = replacement.ToIri;
+                        y.ToConnector = connectorReplacement.ToId;
                         return y;
                     }).ToList();
                 }
                 else
                 {
-                    _ = connections?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
+                    _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromId).Select(y =>
                     {
-                        y.ToConnectorIri = connectorReplacement.ToIri;
-                        y.ToConnectorId = connectorReplacement.ToId;
-                        y.ToAspectObjectId = replacement.ToId;
-                        y.ToAspectObjectIri = replacement.ToIri;
+                        y.ToConnector = connectorReplacement.ToId;
                         return y;
                     }).ToList();
                 }

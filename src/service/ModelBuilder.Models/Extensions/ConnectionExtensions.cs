@@ -16,16 +16,17 @@ namespace Mb.Models.Extensions
 
             foreach (var connection in connections)
             {
-                var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
-                if (fromAspectObject != null)
-                    continue;
+                //TODO Rewrite
+                //var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
+                //if (fromAspectObject != null)
+                //    continue;
 
-                var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-                var toConnector = toAspectObject?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnectorId);
-                if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
-                    continue;
+                //var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                //var toConnector = toAspectObject?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnector);
+                //if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
+                //    continue;
 
-                parentlessConnections.Add(connection);
+                //parentlessConnections.Add(connection);
             }
 
             return parentlessConnections;
@@ -40,13 +41,14 @@ namespace Mb.Models.Extensions
 
             foreach (var connection in connections)
             {
-                var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
-                if (fromAspectObject == null)
-                    notConnectedConnections.Add(connection);
+                //TODO Rewrite
+                //var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
+                //if (fromAspectObject == null)
+                //    notConnectedConnections.Add(connection);
 
-                var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-                if (toAspectObject == null)
-                    notConnectedConnections.Add(connection);
+                //var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
+                //if (toAspectObject == null)
+                //    notConnectedConnections.Add(connection);
             }
 
             return notConnectedConnections.DistinctBy(x => x.Id).ToList();
