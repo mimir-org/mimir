@@ -339,7 +339,7 @@ namespace ModelBuilder.Rdf.Services
         private ProjectData GetApplicationData(string project)
         {
             var connections = _connectionRepository.GetAll().Where(x => x.Project == project).ToList();
-            var aspectObjects = _aspectObjectRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == project).ToList();
+            var aspectObjects = _aspectObjectRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.Project == project).ToList();
             var quantityDatums = _libRepository.GetQuantityDatums().Result;
             var units = _libRepository.GetUnits().Result;
 

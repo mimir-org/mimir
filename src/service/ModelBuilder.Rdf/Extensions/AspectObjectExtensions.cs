@@ -63,8 +63,8 @@ namespace ModelBuilder.Rdf.Extensions
             }
 
             // TODO: This should be an iri
-            if (!string.IsNullOrWhiteSpace(aspectObject.LibraryTypeId))
-                ontologyService.AssertAspectObject(aspectObject.Id, Resources.LibraryType, aspectObject.LibraryTypeId, true);
+            if (!string.IsNullOrWhiteSpace(aspectObject.LibraryType))
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.LibraryType, aspectObject.LibraryType, true);
 
             if (!string.IsNullOrWhiteSpace(aspectObject.Rds))
             {
@@ -80,11 +80,11 @@ namespace ModelBuilder.Rdf.Extensions
             }
 
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.Type, Resources.FSB);
-            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasMasterProject, aspectObject.MasterProjectIri);
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasMasterProject, aspectObject.MainProject);
 
 
-            if (!string.IsNullOrEmpty(aspectObject.PurposeString))
-                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPurpose, $"mimir:{aspectObject.PurposeString}");
+            if (!string.IsNullOrEmpty(aspectObject.Purpose))
+                ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPurpose, $"mimir:{aspectObject.Purpose}");
 
             if (aspectObject.Symbol != null)
                 ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasSymbol, aspectObject.Symbol, true);

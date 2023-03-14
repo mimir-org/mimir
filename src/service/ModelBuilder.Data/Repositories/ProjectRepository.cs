@@ -98,7 +98,7 @@ namespace Mb.Data.Repositories
                     .FirstOrDefault();
 
             if (project != null && project.AspectObjects.Any())
-                project.AspectObjects = project.AspectObjects.OrderBy(x => x.Order).Select(x =>
+                project.AspectObjects = project.AspectObjects.Select(x =>
                 {
                     x.Hidden = false;
                     x.BlockHidden = false;

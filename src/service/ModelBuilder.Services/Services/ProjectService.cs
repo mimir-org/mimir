@@ -392,8 +392,8 @@ namespace Mb.Services.Services
             // Set aspectObject and connections project id to merge project, and calculate position
             updatedProject.AspectObjects = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).Select(x =>
             {
-                x.ProjectId = prepare.ProjectId;
-                x.ProjectIri = null;
+                x.Project = prepare.ProjectId;
+                x.Project = null;
                 return x.CalculatePosition(rootOrigin, prepare);
             }).ToList();
 
@@ -427,10 +427,9 @@ namespace Mb.Services.Services
         /// Create init aspect aspectObjects
         /// </summary>
         /// <param name="aspect"></param>
-        /// <param name="projectId"></param>
-        /// <param name="projectIri"></param>
+        /// <param name="project"></param>
         /// <returns></returns>
-        private AspectObject CreateInitAspectObject(Aspect aspect, string projectId, string projectIri)
+        private AspectObject CreateInitAspectObject(Aspect aspect, string project)
         {
             const string version = "1.0";
             const int positionY = 5;
@@ -481,7 +480,7 @@ namespace Mb.Services.Services
                 Version = version,
                 Rds = string.Empty,
                 AspectObjectType = AspectObjectType.Root,
-                MasterProjectId = projectId,
+                MainProject = project,
                 Aspect = aspect,
                 Height = null,
                 Width = null,
@@ -489,10 +488,8 @@ namespace Mb.Services.Services
                 CreatedBy = userName,
                 Updated = dateTimeNow,
                 UpdatedBy = userName,
-                LibraryTypeId = name,
-                ProjectId = projectId,
-                ProjectIri = projectIri,
-                MasterProjectIri = projectIri
+                LibraryType = name,
+                Project = project
             };
             var (connectorId, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
@@ -548,9 +545,9 @@ namespace Mb.Services.Services
                 ProjectOwner = _contextAccessor.GetName(),
                 AspectObjects = new List<AspectObject>
                 {
-                    CreateInitAspectObject(Aspect.Function, projectId, projectIri),
-                    CreateInitAspectObject(Aspect.Product, projectId, projectIri),
-                    CreateInitAspectObject(Aspect.Location, projectId, projectIri)
+                    CreateInitAspectObject(Aspect.Function, projectId),
+                    CreateInitAspectObject(Aspect.Product, projectId),
+                    CreateInitAspectObject(Aspect.Location, projectId)
                 }
             };
 
