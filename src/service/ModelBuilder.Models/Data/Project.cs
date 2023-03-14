@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Abstract;
 using Mb.Models.Extensions;
 using Mb.Models.Records;
@@ -26,7 +27,11 @@ namespace Mb.Models.Data
         public string ProjectOwner { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
+        
+        [NotMapped]
         public virtual ICollection<AspectObject> AspectObjects { get; set; }
+
+        [NotMapped]
         public virtual ICollection<Connection> Connections { get; set; }
 
         #endregion

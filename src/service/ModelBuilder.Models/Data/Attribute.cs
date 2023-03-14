@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
-
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -14,14 +13,12 @@ namespace Mb.Models.Data
         #region Properties
 
         public string Id { get; set; }
-        public string Iri { get; set; }
-        public string Entity { get; set; }
+        public string Name { get; set; }
         public string Value { get; set; }
-        public string AttributeTypeId { get; set; }
-        public string AttributeTypeIri { get; set; }
+        public string AttributeType { get; set; }
 
         // Unit
-        public string SelectedUnitId { get; set; }
+        public string SelectedUnit { get; set; }
 
         [NotMapped]
         public virtual ICollection<Unit> Units
@@ -31,9 +28,7 @@ namespace Mb.Models.Data
                 if (_units != null)
                     return _units;
 
-                return !string.IsNullOrWhiteSpace(UnitString) ?
-                    JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) :
-                    null;
+                return !string.IsNullOrWhiteSpace(UnitString) ? JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) : null;
             }
             set => _units = value;
         }
@@ -47,19 +42,8 @@ namespace Mb.Models.Data
         public string RangeSpecifying { get; set; }
         public string RegularitySpecified { get; set; }
 
-        [JsonIgnore]
-        [TSExclude]
-        public virtual ConnectorTerminal ConnectorTerminal { get; set; }
-
-        public virtual string TerminalId { get; set; }
-        public virtual string TerminalIri { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual AspectObject AspectObject { get; set; }
-
-        public virtual string AspectObjectId { get; set; }
-        public virtual string AspectObjectIri { get; set; }
+        public string ConnectorTerminal { get; set; }
+        public string AspectObject { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
@@ -81,21 +65,17 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   Iri == other.Iri &&
-                   Entity == other.Entity &&
+                   Name == other.Name &&
                    Value == other.Value &&
-                   AttributeTypeId == other.AttributeTypeId &&
-                   AttributeTypeIri == other.AttributeTypeIri &&
-                   SelectedUnitId == other.SelectedUnitId &&
+                   AttributeType == other.AttributeType &&
+                   SelectedUnit == other.SelectedUnit &&
                    UnitString == other.UnitString &&
                    SpecifiedScope == other.SpecifiedScope &&
                    SpecifiedProvenance == other.SpecifiedProvenance &&
                    RangeSpecifying == other.RangeSpecifying &&
                    RegularitySpecified == other.RegularitySpecified &&
-                   TerminalId == other.TerminalId &&
-                   TerminalIri == other.TerminalIri &&
-                   AspectObjectId == other.AspectObjectId &&
-                   AspectObjectIri == other.AspectObjectIri;
+                   ConnectorTerminal == other.ConnectorTerminal &&
+                   AspectObject == other.AspectObject;
         }
 
         public override bool Equals(object obj)
@@ -109,21 +89,17 @@ namespace Mb.Models.Data
         {
             var hashCode = new HashCode();
             hashCode.Add(Id);
-            hashCode.Add(Iri);
-            hashCode.Add(Entity);
+            hashCode.Add(Name);
             hashCode.Add(Value);
-            hashCode.Add(AttributeTypeId);
-            hashCode.Add(AttributeTypeIri);
-            hashCode.Add(SelectedUnitId);
+            hashCode.Add(AttributeType);
+            hashCode.Add(SelectedUnit);
             hashCode.Add(UnitString);
             hashCode.Add(SpecifiedScope);
             hashCode.Add(SpecifiedProvenance);
             hashCode.Add(RangeSpecifying);
             hashCode.Add(RegularitySpecified);
-            hashCode.Add(TerminalId);
-            hashCode.Add(TerminalIri);
-            hashCode.Add(AspectObjectId);
-            hashCode.Add(AspectObjectIri);
+            hashCode.Add(ConnectorTerminal);
+            hashCode.Add(AspectObject);
             return hashCode.ToHashCode();
         }
 

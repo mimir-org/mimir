@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230314114959_Init")]
+    [Migration("20230314125748_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -79,12 +79,12 @@ namespace Mb.Core.Migrations
                     b.Property<string>("LibraryType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("LibraryTypeId");
+                        .HasColumnName("LibraryType");
 
                     b.Property<string>("MainProject")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("MasterProjectId");
+                        .HasColumnName("MainProject");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -99,7 +99,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Project")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
+                        .HasColumnName("Project");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)")
@@ -115,7 +115,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("TypeReference")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TypeReferenceString");
+                        .HasColumnName("TypeReference");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
@@ -150,31 +150,17 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("AspectObjectId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("AspectObjectId");
-
-                    b.Property<string>("AspectObjectIri")
+                    b.Property<string>("AspectObject")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AspectObjectIri");
+                        .HasColumnName("AspectObject");
 
-                    b.Property<string>("AttributeTypeId")
+                    b.Property<string>("AttributeType")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AttributeTypeId");
+                        .HasColumnName("AttributeType");
 
-                    b.Property<string>("AttributeTypeIri")
+                    b.Property<string>("ConnectorTerminal")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AttributeTypeIri");
-
-                    b.Property<string>("Entity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Entity");
-
-                    b.Property<string>("Iri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Iri");
+                        .HasColumnName("ConnectorTerminal");
 
                     b.Property<bool>("IsLocked")
                         .ValueGeneratedOnAdd()
@@ -190,6 +176,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("IsLockedStatusDate");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
                     b.Property<string>("RangeSpecifying")
                         .HasMaxLength(127)
                         .HasColumnType("nvarchar(127)")
@@ -200,9 +191,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(127)")
                         .HasColumnName("RegularitySpecified");
 
-                    b.Property<string>("SelectedUnitId")
+                    b.Property<string>("SelectedUnit")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectedUnitId");
+                        .HasColumnName("SelectedUnit");
 
                     b.Property<string>("SpecifiedProvenance")
                         .HasMaxLength(127)
@@ -214,14 +205,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(127)")
                         .HasColumnName("SpecifiedScope");
 
-                    b.Property<string>("TerminalId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("TerminalId");
-
-                    b.Property<string>("TerminalIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalIri");
-
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UnitString");
@@ -232,10 +215,6 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AspectObjectId");
-
-                    b.HasIndex("TerminalId");
-
                     b.ToTable("Attribute", (string)null);
                 });
 
@@ -244,18 +223,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
-
-                    b.Property<string>("AspectObjectId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AspectObjectId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConnectorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConnectorId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -273,7 +240,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Project")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Project");
 
                     b.Property<string>("ToConnector")
@@ -282,16 +249,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("ToConnector");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AspectObjectId");
-
-                    b.HasIndex("AspectObjectId1");
-
-                    b.HasIndex("ConnectorId");
-
-                    b.HasIndex("ConnectorId1");
-
-                    b.HasIndex("Project");
 
                     b.ToTable("Connection", (string)null);
 
@@ -308,7 +265,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("AspectObject")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("AspectObject");
 
                     b.Property<int>("Direction")
@@ -335,8 +292,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Outside");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AspectObject");
 
                     b.ToTable("Connector", (string)null);
 
@@ -545,102 +500,6 @@ namespace Mb.Core.Migrations
                     b.HasBaseType("Mb.Models.Data.ConnectorRelation");
 
                     b.HasDiscriminator().HasValue("ConnectorPartOf");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
-                {
-                    b.HasOne("Mb.Models.Data.Project", "ProjectObject")
-                        .WithMany("AspectObjects")
-                        .HasForeignKey("Project")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProjectObject");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
-                {
-                    b.HasOne("Mb.Models.Data.AspectObject", "AspectObject")
-                        .WithMany("Attributes")
-                        .HasForeignKey("AspectObjectId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Mb.Models.Data.ConnectorTerminal", "ConnectorTerminal")
-                        .WithMany("Attributes")
-                        .HasForeignKey("TerminalId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("AspectObject");
-
-                    b.Navigation("ConnectorTerminal");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Connection", b =>
-                {
-                    b.HasOne("Mb.Models.Data.AspectObject", null)
-                        .WithMany("FromConnections")
-                        .HasForeignKey("AspectObjectId");
-
-                    b.HasOne("Mb.Models.Data.AspectObject", null)
-                        .WithMany("ToConnections")
-                        .HasForeignKey("AspectObjectId1");
-
-                    b.HasOne("Mb.Models.Data.Connector", null)
-                        .WithMany("FromConnections")
-                        .HasForeignKey("ConnectorId");
-
-                    b.HasOne("Mb.Models.Data.Connector", null)
-                        .WithMany("ToConnections")
-                        .HasForeignKey("ConnectorId1");
-
-                    b.HasOne("Mb.Models.Data.Project", "ProjectObject")
-                        .WithMany("Connections")
-                        .HasForeignKey("Project")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProjectObject");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
-                {
-                    b.HasOne("Mb.Models.Data.AspectObject", "AspectObjectObject")
-                        .WithMany("Connectors")
-                        .HasForeignKey("AspectObject")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AspectObjectObject");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
-                {
-                    b.Navigation("Attributes");
-
-                    b.Navigation("Connectors");
-
-                    b.Navigation("FromConnections");
-
-                    b.Navigation("ToConnections");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
-                {
-                    b.Navigation("FromConnections");
-
-                    b.Navigation("ToConnections");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Project", b =>
-                {
-                    b.Navigation("AspectObjects");
-
-                    b.Navigation("Connections");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminal", b =>
-                {
-                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

@@ -65,8 +65,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Inside)
                 .AddColumn(x => x.Outside)
                 .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.FromConnections)
-                .AddColumn(x => x.ToConnections)
                 //Child
                 .AddColumn(x => x.Color)
                 .AddColumn(x => x.TerminalType)
@@ -94,8 +92,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Inside)
                 .AddColumn(x => x.Outside)
                 .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.FromConnections)
-                .AddColumn(x => x.ToConnections)
                 //Operations
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
@@ -117,8 +113,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Inside)
                 .AddColumn(x => x.Outside)
                 .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.FromConnections)
-                .AddColumn(x => x.ToConnections)
                 //Operations
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
@@ -140,8 +134,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Inside)
                 .AddColumn(x => x.Outside)
                 .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.FromConnections)
-                .AddColumn(x => x.ToConnections)
                 //Operations
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)

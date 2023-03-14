@@ -13,11 +13,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Direction).HasColumnName("Direction").IsRequired();
-            builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired();
             builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
             builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
-
-            builder.HasOne(x => x.AspectObjectObject).WithMany(y => y.Connectors).HasForeignKey(x => x.AspectObject).OnDelete(DeleteBehavior.Cascade);
+            builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired();
         }
     }
 }

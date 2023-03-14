@@ -13,8 +13,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnectorId))
                 .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnectorId))
                 .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MasterProjectId))
-                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.ProjectId))
-                .ForMember(dest => dest.ProjectObject, opt => opt.Ignore());
+                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.ProjectId));
                 
             CreateMap<Connection, ConnectionAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

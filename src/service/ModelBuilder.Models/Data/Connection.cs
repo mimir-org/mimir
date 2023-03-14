@@ -22,10 +22,6 @@ namespace Mb.Models.Data
         [Required]
         public virtual string Project { get; set; }
 
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Project ProjectObject { get; set; }
-
         #region IEquatable
 
         public bool Equals(Connection other)

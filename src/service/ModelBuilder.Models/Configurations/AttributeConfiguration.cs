@@ -11,12 +11,10 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
-            builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
-            builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
-            builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
+            builder.Property(p => p.SelectedUnit).HasColumnName("SelectedUnit");
+            builder.Property(p => p.AttributeType).HasColumnName("AttributeType");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
 
             builder.Property(p => p.SpecifiedScope).HasColumnName("SpecifiedScope").HasMaxLength(127).IsRequired(false);
@@ -24,17 +22,12 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.RangeSpecifying).HasColumnName("RangeSpecifying").HasMaxLength(127).IsRequired(false);
             builder.Property(p => p.RegularitySpecified).HasColumnName("RegularitySpecified").HasMaxLength(127).IsRequired(false);
 
-            builder.Property(p => p.AspectObjectId).HasColumnName("AspectObjectId").IsRequired(false);
-            builder.Property(p => p.AspectObjectIri).HasColumnName("AspectObjectIri").IsRequired(false);
-            builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
-            builder.Property(p => p.TerminalIri).HasColumnName("TerminalIri").IsRequired(false);
+            builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired(false);
+            builder.Property(p => p.ConnectorTerminal).HasColumnName("ConnectorTerminal").IsRequired(false);
 
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
-
-            builder.HasOne(x => x.ConnectorTerminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.AspectObject).WithMany(y => y.Attributes).HasForeignKey(x => x.AspectObjectId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

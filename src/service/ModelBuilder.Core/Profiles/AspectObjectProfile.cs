@@ -39,7 +39,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.ProjectId))
-                .ForMember(dest => dest.ProjectObject, opt => opt.Ignore())
                 .ForMember(dest => dest.Purpose, opt => opt.Ignore())
                 .ForMember(dest => dest.ParentAspectObjectId, opt => opt.Ignore())
                 .ForMember(dest => dest.Selected, opt => opt.Ignore())

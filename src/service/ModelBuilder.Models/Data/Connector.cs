@@ -21,18 +21,6 @@ namespace Mb.Models.Data
 
         public string Domain => Id.ResolveDomain();
 
-        [JsonIgnore]
-        [TSExclude]
-        public virtual AspectObject AspectObjectObject { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual ICollection<Connection> FromConnections { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual ICollection<Connection> ToConnections { get; set; }
-
         public bool Equals(Connector other)
         {
             if (other is null) 

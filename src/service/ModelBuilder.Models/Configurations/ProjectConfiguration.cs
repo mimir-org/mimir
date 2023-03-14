@@ -19,9 +19,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false).HasMaxLength(63);
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasMaxLength(7);
-
-            builder.HasMany(x => x.AspectObjects).WithOne(y => y.ProjectObject).HasForeignKey(y => y.Project).IsRequired();
-            builder.HasMany(x => x.Connections).WithOne(y => y.ProjectObject).HasForeignKey(y => y.Project).IsRequired();
         }
     }
 }

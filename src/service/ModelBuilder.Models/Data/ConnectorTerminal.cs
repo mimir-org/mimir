@@ -14,6 +14,7 @@ namespace Mb.Models.Data
         public string TerminalParentType { get; set; }
         public string TypeReference { get; set; }
 
+        [NotMapped]
         public ICollection<Attribute> Attributes { get; set; }
 
         [NotMapped]

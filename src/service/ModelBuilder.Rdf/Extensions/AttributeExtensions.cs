@@ -24,30 +24,30 @@ namespace ModelBuilder.Rdf.Extensions
         {
             #region None Mimir specific data
 
-            ontologyService.AssertAspectObject(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
-            ontologyService.AssertAspectObject(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
-            ontologyService.AssertAspectObject(attribute.Iri, Resources.Label, attribute.Entity, true);
+            ontologyService.AssertAspectObject(attribute.Id, Resources.Type, Resources.PhysicalQuantity);
+            ontologyService.AssertAspectObject(parentIri, Resources.HasPhysicalQuantity, attribute.Id);
+            ontologyService.AssertAspectObject(attribute.Id, Resources.Label, attribute.Name, true);
 
             var ado = attribute.AttributeDatumObject();
-            var adp = attribute.Iri.AttributeDatumPredicate();
+            var adp = attribute.Id.AttributeDatumPredicate();
             ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
             ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
             ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
             ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
 
-            ontologyService.AssertAspectObject(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
+            ontologyService.AssertAspectObject(attribute.Id, Resources.QualityQuantifiedAs, attribute.IriDatum());
 
             #endregion None Mimir specific data
 
             #region Mimir specific data
 
-            if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
-                ontologyService.AssertAspectObject(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
+            if (!string.IsNullOrEmpty(attribute.AttributeType))
+                ontologyService.AssertAspectObject(attribute.Id, Resources.LibraryType, attribute.AttributeType);
 
             var allowedUnits = attribute.GetAllowedUnits();
             if (allowedUnits != null && allowedUnits.Any())
                 foreach (var value in allowedUnits)
-                    ontologyService.AssertAspectObject(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+                    ontologyService.AssertAspectObject(attribute.Id, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
 
             #endregion Mimir specific data
         }
@@ -66,14 +66,14 @@ namespace ModelBuilder.Rdf.Extensions
             var selectedUnit = attribute.GetSelectedUnit(projectData);
 
             ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
-            ontologyService.AssertAspectObject(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
+            ontologyService.AssertAspectObject(attribute.Id, Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
 
-            if (string.IsNullOrWhiteSpace(attribute.SelectedUnitId) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
+            if (string.IsNullOrWhiteSpace(attribute.SelectedUnit) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
 
-            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
-            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
-            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnitId}");
+            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnit}", Resources.Type, Resources.Scale);
+            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnit}", Resources.Label, selectedUnit.Name, true);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnit}");
         }
 
         /// <summary>
@@ -84,10 +84,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns>The selected unit, if not it returns null</returns>
         public static UnitLibCm GetSelectedUnit(this Attribute attribute, ProjectData projectData)
         {
-            if (string.IsNullOrEmpty(attribute.SelectedUnitId) || !projectData.Units.Any())
+            if (string.IsNullOrEmpty(attribute.SelectedUnit) || !projectData.Units.Any())
                 return null;
 
-            return projectData.Units.FirstOrDefault(x => x.Id == attribute.SelectedUnitId);
+            return projectData.Units.FirstOrDefault(x => x.Id == attribute.SelectedUnit);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns>A datum iri</returns>
         public static string IriDatum(this Attribute attribute)
         {
-            return attribute.Iri.IriDatum();
+            return attribute.Id.IriDatum();
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns>A AttributeDatumObject record</returns>
         public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
         {
-            var rootIri = attribute.Iri.RootIri();
+            var rootIri = attribute.Id.RootIri();
             // TODO: This need rewrite logic
             return new AttributeDatumObject
             {

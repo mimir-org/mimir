@@ -71,21 +71,13 @@ namespace Mb.Models.Data
         public string Symbol { get; set; }
         public string Purpose { get; set; }
 
+        [NotMapped]
         public virtual ICollection<Connector> Connectors { get; set; }
+
+        [NotMapped]
         public virtual ICollection<Attribute> Attributes { get; set; }
+
         public virtual string Project { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual Project ProjectObject { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual ICollection<Connection> FromConnections { get; set; }
-
-        [JsonIgnore]
-        [TSExclude]
-        public virtual ICollection<Connection> ToConnections { get; set; }
 
         public int? Width { get; set; }
 
