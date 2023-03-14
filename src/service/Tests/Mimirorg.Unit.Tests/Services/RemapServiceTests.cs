@@ -58,20 +58,18 @@ namespace ModelBuilder.Unit.Tests.Services
                 new()
                 {
                     Id = "aaa",
-                    ProjectId = "runir.net_1234",
+                    Project = "runir.net_1234",
                     Name = "Dummy A",
                     Description = "Description",
-                    MasterProjectId = "runir.net_1234",
-                    MasterProjectIri = "runir.net_5678"
+                    MainProject = "runir.net_5678"
                 },
                 new()
                 {
                     Id = "bbb",
-                    ProjectId = "runir.net_1234",
+                    Project = "runir.net_1234",
                     Name = "Dummy B",
                     Description = "Description",
-                    MasterProjectId = "runir.net_1234",
-                    MasterProjectIri = "runir.net_5678"
+                    MainProject = "runir.net_5678"
                 }
             };
 
@@ -82,10 +80,8 @@ namespace ModelBuilder.Unit.Tests.Services
             {
 
                 Assert.NotNull(testAspectObject);
-                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.ProjectIri);
-                Assert.Equal("runir.net_5678", testAspectObject.ProjectId);
-                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.MasterProjectIri);
-                Assert.Equal("runir.net_5678", testAspectObject.MasterProjectId);
+                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.Project);
+                Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.MainProject);
 
                 var nodeIdSplit = testAspectObject.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
                 Assert.Equal(2, nodeIdSplit.Length);

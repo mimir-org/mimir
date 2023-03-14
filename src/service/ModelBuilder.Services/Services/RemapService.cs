@@ -168,12 +168,12 @@ namespace Mb.Services.Services
 
                 aspectObject.Id = aspectObjectReplacement.ToId;
                 aspectObject.Id = aspectObjectReplacement.ToIri;
-                aspectObject.ProjectId = project.ToId;
-                aspectObject.ProjectIri = project.ToIri;
+                aspectObject.Project = project.ToId;
+                aspectObject.Project = project.ToIri;
 
-                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, aspectObject.MasterProjectId, aspectObject.MasterProjectIri);
-                aspectObject.MasterProjectId = masterProject.Id;
-                aspectObject.MasterProjectIri = masterProject.Iri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, aspectObject.MainProject, aspectObject.MainProject);
+                aspectObject.MainProject = masterProject.Id;
+                aspectObject.MainProject = masterProject.Iri;
 
                 yield return aspectObject;
             }

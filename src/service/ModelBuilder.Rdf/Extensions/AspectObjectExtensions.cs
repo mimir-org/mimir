@@ -143,17 +143,17 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="aspectObject">The aspectObject that should be resolved</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="iri">The IRI of the aspectObject</param>
-        /// <param name="projectIri">The IRI of the project</param>
+        /// <param name="project">The IRI of the project</param>
         /// <param name="aspectObjectType">The type of the aspectObject</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
-        public static void ResolveAspectObject(this AspectObjectAm aspectObject, IOntologyService ontologyService, string iri, string projectIri, AspectObjectType aspectObjectType, ProjectData projectData)
+        public static void ResolveAspectObject(this AspectObjectAm aspectObject, IOntologyService ontologyService, string iri, string project, AspectObjectType aspectObjectType, ProjectData projectData)
         {
-            if (aspectObject == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
+            if (aspectObject == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(project))
                 throw new InvalidDataException($"Can't resolve a aspectObject without required parameters.");
 
             aspectObject.Id = iri;
-            aspectObject.ProjectIri = projectIri;
+            aspectObject.Project = project;
             aspectObject.Name = ontologyService.GetValue(iri, Resources.Name, false);
             aspectObject.Version = ontologyService.GetValue(iri, Resources.Version, false);
             aspectObject.Label = ontologyService.GetValue(iri, Resources.Label, false);
@@ -168,14 +168,11 @@ namespace ModelBuilder.Rdf.Extensions
                 BlockPosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionY, false),
             };
 
-            aspectObject.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
-            aspectObject.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
-
             var masterProjectIriAspectObject = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
-            aspectObject.MasterProjectIri = masterProjectIriAspectObject?.ToString();
+            aspectObject.MainProject = masterProjectIriAspectObject?.ToString();
 
             aspectObject.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
-            aspectObject.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
+            aspectObject.LibraryType = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
             aspectObject.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);
             aspectObject.Updated = ontologyService.GetDateTimeValue(iri, Resources.LastUpdated, false);

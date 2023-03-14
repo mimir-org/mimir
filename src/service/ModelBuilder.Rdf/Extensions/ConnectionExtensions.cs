@@ -61,8 +61,8 @@ namespace ModelBuilder.Rdf.Extensions
             );
 
             connection.Iri = existingConnection != null ? existingConnection.Iri : toAspectObject.Id.StripAndCreateIdIri();
-            connection.MasterProjectIri = toAspectObject.MasterProjectIri;
-            connection.ProjectIri = toAspectObject.ProjectIri;
+            connection.MasterProjectIri = toAspectObject.MainProject;
+            connection.ProjectIri = toAspectObject.Project;
             connection.FromConnectorIri = fromConnector.Iri;
             connection.ToConnectorIri = toConnector.Iri;
             connection.FromAspectObjectIri = fromAspectObject.Id;

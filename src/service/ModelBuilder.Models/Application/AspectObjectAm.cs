@@ -22,11 +22,8 @@ namespace Mb.Models.Application
 
         public string Domain => Id.ResolveDomain();
 
-        [RequiredOne(nameof(ProjectIri))]
-        public string ProjectId { get; set; }
-
-        [RequiredOne(nameof(ProjectId))]
-        public string ProjectIri { get; set; }
+        [RequiredOne(nameof(Project))]
+        public string Project { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -45,21 +42,14 @@ namespace Mb.Models.Application
 
         public string Description { get; set; }
         
-        public int? Width { get; set; }
-
-        public int? Height { get; set; }
-
         public bool IsLocked { get; set; }
 
         public string IsLockedStatusBy { get; set; }
 
         public DateTime? IsLockedStatusDate { get; set; }
 
-        [RequiredOne(nameof(MasterProjectIri))]
-        public string MasterProjectId { get; set; }
-
-        [RequiredOne(nameof(MasterProjectId))]
-        public string MasterProjectIri { get; set; }
+        [RequiredOne(nameof(MainProject))]
+        public string MainProject { get; set; }
 
         public string Symbol { get; set; }
 
@@ -74,7 +64,7 @@ namespace Mb.Models.Application
         public string UpdatedBy { get; set; }
 
         [Required]
-        public string LibraryTypeId { get; set; }
+        public string LibraryType { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 
