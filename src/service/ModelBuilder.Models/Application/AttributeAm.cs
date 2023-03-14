@@ -15,15 +15,12 @@ namespace Mb.Models.Application
         public string Name { get; set; }
         public string Value { get; set; }
 
-        // Type
         [RequiredOne(nameof(AttributeType))]
         public string AttributeType { get; set; }
 
-        // Unit
         public string SelectedUnit { get; set; }
         public ICollection<Unit> Units { get; set; }
-
-        public Qualifiers Qualifiers { get; set; }
+        public ICollection<Qualifier> Qualifiers { get; set; }
 
         // References
         public string ConnectorTerminal { get; set; }

@@ -118,13 +118,13 @@ namespace ModelBuilder.Rdf.Extensions
         public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
         {
             var rootIri = attribute.Id.RootIri();
-            var attributeQualifiers = JsonConvert.DeserializeObject<Qualifiers>(attribute.Qualifiers);
+            var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<Qualifier>>(attribute.Qualifiers);
             return new AttributeDatumObject
             {
-                SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attributeQualifiers.Scope)}",
-                SpecifiedProvenance = $"{rootIri}/provenance/{HttpUtility.UrlEncode(attributeQualifiers.Provenance)}",
-                RangeSpecifying = $"{rootIri}/specifying/{HttpUtility.UrlEncode(attributeQualifiers.Range)}",
-                RegularitySpecified = $"{rootIri}/specified/{HttpUtility.UrlEncode(attributeQualifiers.Regularity)}"
+                SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("scope"))?.ToString())}",
+                SpecifiedProvenance = $"{rootIri}/provenance/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("provenance"))?.ToString())}",
+                RangeSpecifying = $"{rootIri}/specifying/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("specifying"))?.ToString())}",
+                RegularitySpecified = $"{rootIri}/specified/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("specified"))?.ToString())}",
             };
         }
 
@@ -148,15 +148,40 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
             attribute.SelectedUnit = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
 
-            // TODO: This must be rewritten
+            // TODO: This must be rewritten ************
             var adp = iri.AttributeDatumPredicate();
-
-            attribute.Qualifiers = new Qualifiers
+            attribute.Qualifiers = new List<Qualifier>
             {
-                Scope = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),
-                Provenance = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false),
-                Range = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false),
-                Regularity = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false)
+                new() 
+                {
+                    Id = null,
+                    Name = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),
+                    Value = null
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "scope",
+                    Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false)
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "provenance",
+                    Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false)
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "range",
+                    Value = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false)
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "regularity",
+                    Value = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false)
+                }
             };
 
             #endregion None Mimir specific data

@@ -36,7 +36,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
-                .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<Qualifiers>(src.Qualifiers)))
+                .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<Qualifier>(src.Qualifiers)))
                 .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
         }
