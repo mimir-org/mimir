@@ -17,17 +17,13 @@ namespace Mb.Models.Data
         public ConnectorDirection Direction { get; set; }
         public string Inside { get; set; }
         public string Outside { get; set; }
-        public string AspectObjectId { get; set; }
+        public string AspectObject { get; set; }
 
         public string Domain => Id.ResolveDomain();
 
-        [NotMapped]
-        public virtual string Discriminator { get; set; }
-
-
         [JsonIgnore]
         [TSExclude]
-        public virtual AspectObject AspectObject { get; set; }
+        public virtual AspectObject AspectObjectObject { get; set; }
 
         [JsonIgnore]
         [TSExclude]
@@ -48,7 +44,7 @@ namespace Mb.Models.Data
             return Id == other.Id &&
                    Name == other.Name &&
                    Direction == other.Direction &&
-                   AspectObjectId == other.AspectObjectId;
+                   AspectObject == other.AspectObject;
         }
 
         public override bool Equals(object obj)
@@ -64,7 +60,7 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, (int) Direction, AspectObjectId);
+            return HashCode.Combine(Id, Name, (int) Direction, AspectObject);
         }
     }
 }

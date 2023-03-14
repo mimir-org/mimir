@@ -12,8 +12,6 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Connection> Connections { get; set; }
         public virtual DbSet<Attribute> Attributes { get; set; }
         public virtual DbSet<Connector> Connectors { get; set; }
-        public virtual DbSet<ConnectorRelation> ConnectorRelations { get; set; }
-        public virtual DbSet<ConnectorTerminal> ConnectorTerminals { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -25,11 +23,23 @@ namespace Mb.Models.Configurations
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new ConnectionConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectionTerminalConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectionRelationConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectionPartOfConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectionFulfilledByConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectionHasLocationConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectorRelationConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectorPartOfConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectorFulfilledByConfiguration());
+            modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
+
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
             modelBuilder.ApplyConfiguration(new AspectObjectConfiguration());
-            modelBuilder.ApplyConfiguration(new ConnectionConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeConfiguration());
-            modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
         }
     }

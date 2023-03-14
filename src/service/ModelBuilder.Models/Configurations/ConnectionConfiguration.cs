@@ -11,7 +11,6 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Connection");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Discriminator).HasColumnName("Discriminator");
             builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
             builder.Property(p => p.FromConnector).HasColumnName("FromConnector").IsRequired();
             builder.Property(p => p.ToConnector).HasColumnName("ToConnector").IsRequired();

@@ -8,7 +8,7 @@ namespace Mb.Models.Data
         public string TerminalType { get; set; }
         public string TerminalParentType { get; set; }
         public string Color { get; set; }
-        public override string Discriminator => nameof(ConnectionTerminal);
+        public string Discriminator => nameof(ConnectionTerminal);
 
         public bool Equals(ConnectionTerminal other)
         {

@@ -4,7 +4,7 @@ namespace Mb.Models.Data
 {
     public class ConnectorHasLocation : ConnectorRelation
     {
-        public override string Discriminator => nameof(ConnectorHasLocation);
+        public string Discriminator => nameof(ConnectorHasLocation);
 
         private bool Equals(ConnectorHasLocation other)
         {

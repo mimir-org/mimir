@@ -1,10 +1,10 @@
 namespace Mb.Models.Data
 {
-    public class ConnectionRelationHasLocation : ConnectionRelation
+    public class ConnectionFulfilledBy : ConnectionRelation
     {
-        public override string Discriminator => nameof(ConnectionRelationHasLocation);
+        public string Discriminator => nameof(ConnectionFulfilledBy);
 
-        private bool Equals(ConnectionRelationHasLocation other)
+        private bool Equals(ConnectionFulfilledBy other)
         {
             if (other is null) 
                 return false;
@@ -20,7 +20,7 @@ namespace Mb.Models.Data
             if (ReferenceEquals(this, obj)) 
                 return true;
 
-            return obj.GetType() == GetType() && Equals((ConnectionRelationHasLocation) obj);
+            return obj.GetType() == GetType() && Equals((ConnectionFulfilledBy) obj);
         }
 
         public override int GetHashCode()

@@ -190,15 +190,11 @@ namespace Mb.Data.Repositories
                         .Commit(conn);
 
                     _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjectUpdateInsert);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
                     _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                     _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
-                    _connectionRepository.BulkUpsert(bulk, conn, data.ConnectionUpdateInsert);
 
                     // Delete
-                    _connectionRepository.BulkDelete(bulk, conn, data.ConnectionDelete);
                     _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-                    _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
                     _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
                     _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
                 }
@@ -243,10 +239,8 @@ namespace Mb.Data.Repositories
                         .Commit(conn);
 
                     _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjects);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.Relations);
                     _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
                     _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
-                    _connectionRepository.BulkUpsert(bulk, conn, data.Connections);
                 }
 
                 trans.Complete();
@@ -270,9 +264,7 @@ namespace Mb.Data.Repositories
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
-                    _connectionRepository.BulkDelete(bulk, conn, data.Connections);
                     _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
-                    _connectorRepository.BulkDelete(bulk, conn, data.Relations);
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
                     _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
 

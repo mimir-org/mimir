@@ -17,7 +17,7 @@ namespace Mb.Models.Data
         public ICollection<Attribute> Attributes { get; set; }
 
         [NotMapped]
-        public override string Discriminator { get; set; }
+        public string Discriminator { get; set; }
 
         [NotMapped]
         public ICollection<TypeReference> TypeReferences

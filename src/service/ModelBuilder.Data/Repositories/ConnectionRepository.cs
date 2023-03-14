@@ -98,44 +98,140 @@ namespace Mb.Data.Repositories
             return returnValues;
         }
 
-        /// <summary>
-        /// Bulk connection update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="connections">The connections to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connection> connections)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals)
         {
-            if (connections == null || !connections.Any())
+            if (connectionTerminals == null || !connectionTerminals.Any())
                 return;
 
-            bulk.Setup<Connection>()
-                .ForCollection(connections)
+            bulk.Setup<ConnectionTerminal>()
+                .ForCollection(connectionTerminals)
                 .WithTable("Connection")
+                //Parent
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.FromConnector)
                 .AddColumn(x => x.ToConnector)
                 .AddColumn(x => x.MainProject)
                 .AddColumn(x => x.Project)
+                //Child
+                .AddColumn(x => x.Color)
+                .AddColumn(x => x.TerminalType)
+                .AddColumn(x => x.TerminalParentType)
+                .AddColumn(x => x.Discriminator)
+                //Operations
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
         }
 
-
-        /// <summary>
-        /// Bulk delete connections
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="connections">The connections to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connection> connections)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf)
         {
-            if (connections == null || !connections.Any())
+            if (connectionPartOf == null || !connectionPartOf.Any())
                 return;
 
-            bulk.Setup<Connection>()
-                .ForCollection(connections)
+            bulk.Setup<ConnectionPartOf>()
+                .ForCollection(connectionPartOf)
+                .WithTable("Connection")
+                //Parent
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.FromConnector)
+                .AddColumn(x => x.ToConnector)
+                .AddColumn(x => x.MainProject)
+                .AddColumn(x => x.Project)
+                //Operations
+                .BulkInsertOrUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy)
+        {
+            if (connectionFulfilledBy == null || !connectionFulfilledBy.Any())
+                return;
+
+            bulk.Setup<ConnectionFulfilledBy>()
+                .ForCollection(connectionFulfilledBy)
+                .WithTable("Connection")
+                //Parent
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.FromConnector)
+                .AddColumn(x => x.ToConnector)
+                .AddColumn(x => x.MainProject)
+                .AddColumn(x => x.Project)
+                //Operations
+                .BulkInsertOrUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation)
+        {
+            if (connectionHasLocation == null || !connectionHasLocation.Any())
+                return;
+
+            bulk.Setup<ConnectionHasLocation>()
+                .ForCollection(connectionHasLocation)
+                .WithTable("Connection")
+                //Parent
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.FromConnector)
+                .AddColumn(x => x.ToConnector)
+                .AddColumn(x => x.MainProject)
+                .AddColumn(x => x.Project)
+                //Operations
+                .BulkInsertOrUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminal)
+        {
+            if (connectionTerminal == null || !connectionTerminal.Any())
+                return;
+
+            bulk.Setup<ConnectionTerminal>()
+                .ForCollection(connectionTerminal)
+                .WithTable("Connection")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf)
+        {
+            if (connectionPartOf == null || !connectionPartOf.Any())
+                return;
+
+            bulk.Setup<ConnectionPartOf>()
+                .ForCollection(connectionPartOf)
+                .WithTable("Connection")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy)
+        {
+            if (connectionFulfilledBy == null || !connectionFulfilledBy.Any())
+                return;
+
+            bulk.Setup<ConnectionFulfilledBy>()
+                .ForCollection(connectionFulfilledBy)
+                .WithTable("Connection")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation)
+        {
+            if (connectionHasLocation == null || !connectionHasLocation.Any())
+                return;
+
+            bulk.Setup<ConnectionHasLocation>()
+                .ForCollection(connectionHasLocation)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
                 .BulkDelete()

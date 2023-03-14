@@ -18,21 +18,15 @@ namespace Mb.Data.Contracts
         Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete, string projectId,
             string invokedByDomain);
 
-        /// <summary>
-        /// Bulk connection update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="connections">The connections to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connection> connections);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation);
 
-        /// <summary>
-        /// Bulk delete connections
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="connections">The connections to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connection> connections);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation);
 
         /// <summary>
         /// Bulk connection update lock status

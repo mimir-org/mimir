@@ -11,37 +11,15 @@ namespace Mb.Data.Contracts
     public interface IConnectorRepository : IGenericRepository<ModelBuilderDbContext, Connector>
     {
         void AttachWithAttributes(ICollection<Connector> entities, EntityState state);
+    
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> connectorTerminals);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOf> connectorPartOf);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledBy> connectorFulfilledBy);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocation> connectorHasLocation);
 
-        /// <summary>
-        /// Bulk relation update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="relations">The relations to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations);
-
-        /// <summary>
-        /// Bulk relation update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="terminals">The terminals to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals);
-
-        /// <summary>
-        /// Bulk delete relations
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="relations">The relations to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorRelation> relations);
-
-        /// <summary>
-        /// Bulk delete terminals
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="terminals">The terminals to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> terminals);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminal> connectorTerminals);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOf> connectorPartOf);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledBy> connectorFulfilledBy);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocation> connectorHasLocations);
     }
 }

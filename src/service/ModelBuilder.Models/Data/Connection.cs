@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
@@ -11,7 +12,6 @@ namespace Mb.Models.Data
     public class Connection : IEquatable<Connection>
     {
         public string Id { get; set; }
-        public virtual string Discriminator { get; set; }
         public string Domain => Id.ResolveDomain();
         public string FromConnector { get; set; }
         public string ToConnector { get; set; }

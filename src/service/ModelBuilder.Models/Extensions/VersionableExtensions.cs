@@ -12,10 +12,10 @@ namespace Mb.Models.Extensions
             if (editData == null)
                 return false;
 
-            if (editData.TerminalDelete.Any(x => x.AspectObjectId == aspectObject.Id))
+            if (editData.TerminalDelete.Any(x => x.AspectObject == aspectObject.Id))
                 return true;
 
-            if (editData.RelationDelete.Any(x => x.AspectObjectId == aspectObject.Id))
+            if (editData.RelationDelete.Any(x => x.AspectObject == aspectObject.Id))
                 return true;
 
             return false;
@@ -25,9 +25,9 @@ namespace Mb.Models.Extensions
         {
             if (editData == null)
                 return false;
-            if (editData.TerminalUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.TerminalCreate.Any(x => x.AspectObjectId == aspectObject.Id))
+            if (editData.TerminalUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.TerminalCreate.Any(x => x.AspectObject == aspectObject.Id))
                 return true;
-            if (editData.RelationUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObjectId == aspectObject.Id))
+            if (editData.RelationUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObject == aspectObject.Id))
                 return true;
             if (editData.AttributeDelete.Any(x => x.AspectObjectId == aspectObject.Id) || editData.AttributeUpdate.Any(x => x.AspectObjectId == aspectObject.Id) || editData.AttributeCreate.Any(x => x.AspectObjectId == aspectObject.Id))
                 return true;

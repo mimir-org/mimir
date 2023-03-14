@@ -4,7 +4,7 @@ namespace Mb.Models.Data
 {
     public class ConnectorPartOf : ConnectorRelation
     {
-        public override string Discriminator => nameof(ConnectorPartOf);
+        public string Discriminator => nameof(ConnectorPartOf);
 
         private bool Equals(ConnectorPartOf other)
         {

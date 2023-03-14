@@ -4,7 +4,7 @@ namespace Mb.Models.Data
 {
     public class ConnectorFulfilledBy : ConnectorRelation
     {
-        public override string Discriminator => nameof(ConnectorFulfilledBy);
+        public string Discriminator => nameof(ConnectorFulfilledBy);
 
         private bool Equals(ConnectorFulfilledBy other)
         {

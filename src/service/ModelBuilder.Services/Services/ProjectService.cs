@@ -498,7 +498,7 @@ namespace Mb.Services.Services
                 Id = connectorId,
                 Name = connectorName,
                 Direction = ConnectorDirection.Output,
-                AspectObjectId = aspectObject.Id
+                AspectObject = aspectObject.Id
             };
 
             aspectObject.Connectors.Add(connector);
