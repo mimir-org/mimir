@@ -360,9 +360,9 @@ namespace Mb.Services.Services
                     connector.AspectObject = replacement.ToIri;
                 }
 
-                if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
+                if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalType))
                 {
-                    am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalType;
+                    am.TerminalType = GlobalSettings.IriTerminalTypePrefix + am.TerminalType;
                 }
 
                 yield return connector;
@@ -439,9 +439,9 @@ namespace Mb.Services.Services
             connectorTerminal.Id = terminalReplacement.ToId;
             connectorTerminal.Id = terminalReplacement.ToIri;
 
-            if (!string.IsNullOrWhiteSpace(connectorTerminal.TerminalType) && string.IsNullOrWhiteSpace(connectorTerminal.TerminalTypeIri))
+            if (!string.IsNullOrWhiteSpace(connectorTerminal.TerminalType) && string.IsNullOrWhiteSpace(connectorTerminal.TerminalType))
             {
-                connectorTerminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connectorTerminal.TerminalType;
+                connectorTerminal.TerminalType = GlobalSettings.IriTerminalTypePrefix + connectorTerminal.TerminalType;
             }
 
             return connectorTerminal;

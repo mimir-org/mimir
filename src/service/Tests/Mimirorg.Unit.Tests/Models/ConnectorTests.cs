@@ -21,9 +21,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 ConnectorVisibility = ConnectorVisibility.None,
                 AspectObject = null,
                 IsRequired = false,
-                TerminalTypeIri = "https://rdf.runir.com/1234",
-                TerminalParentTypeName = "TerminalParent",
-                TerminalType = "12345"
+                TerminalType = "https://rdf.runir.com/1234"
             };
         }
 
@@ -73,8 +71,7 @@ namespace ModelBuilder.Unit.Tests.Models
         public void TerminalTypeId_Or_TerminalTypeIri_Must_Be_Set(string terminalTypeId, string terminalTypeIri, bool result)
         {
             var obj = _terminal.DeepCopy();
-            obj.TerminalType = terminalTypeId;
-            obj.TerminalTypeIri = terminalTypeIri;
+            obj.TerminalType = terminalTypeIri;
 
             var validation = obj.ValidateObject();
 

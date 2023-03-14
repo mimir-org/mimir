@@ -10,18 +10,10 @@ namespace Mb.Models.Application
         [Required]
         public string Color { get; set; }
 
-        [RequiredOne(nameof(TerminalTypeIri))]
+        [RequiredOne(nameof(TerminalType))]
         public string TerminalType { get; set; }
 
-        [ValidIri]
-        [RequiredOne(nameof(TerminalType))]
-        public string TerminalTypeIri { get; set; }
-
         public string TerminalParentType { get; set; }
-
-        [ValidIri]
-        public string TerminalParentTypeIri { get; set; }
-        public string TerminalParentTypeName { get; set; }
 
         public ICollection<TypeReference> TypeReferences { get; set; }
 

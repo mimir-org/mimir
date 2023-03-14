@@ -131,15 +131,15 @@ namespace ModelBuilder.Rdf.Extensions
                 connectorTerminal.IsRequired = isRequired;
 
             connectorTerminal.Color = ontologyService.GetValue(iri, Resources.HasColor, false);
-            connectorTerminal.TerminalType = ontologyService.GetValue(iri, Resources.LibraryType, false);
-            connectorTerminal.TerminalTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
+            connectorTerminal.TerminalType = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
-            var transmitter = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.Type)?.Select(x => x.Object).FirstOrDefault(x => x.ToString().Contains("Transmitter"));
-            if (transmitter != null)
-            {
-                var terminalParentTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
-                connectorTerminal.TerminalParentTypeName = string.IsNullOrWhiteSpace(terminalParentTypeName) ? null : terminalParentTypeName;
-            }
+            //TODO: Rewrite
+            //var transmitter = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.Type)?.Select(x => x.Object).FirstOrDefault(x => x.ToString().Contains("Transmitter"));
+            //if (transmitter != null)
+            //{
+            //    var terminalParentTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+            //    connectorTerminal.TerminalParentTypeName = string.IsNullOrWhiteSpace(terminalParentTypeName) ? null : terminalParentTypeName;
+            //}
 
             connectorTerminal.Attributes = new List<AttributeAm>();
             var attributes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
