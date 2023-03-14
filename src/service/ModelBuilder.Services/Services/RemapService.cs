@@ -411,31 +411,28 @@ namespace Mb.Services.Services
 
             foreach (var attribute in attributes)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = attribute.Id, FromIri = attribute.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = attribute.Id, FromIri = attribute.Id };
                 var attributeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 attributeReplacement.FromId = attribute.Id;
-                attributeReplacement.FromIri = attribute.Iri;
+                attributeReplacement.FromIri = attribute.Id;
 
-                if (ShouldReplace(attribute.TerminalId, replacement.FromId, attribute.TerminalIri, replacement.FromIri) && parent == AttributeParent.Connector)
+                if (ShouldReplace(attribute.ConnectorTerminal, replacement.FromId, attribute.ConnectorTerminal, replacement.FromIri) && parent == AttributeParent.Connector)
                 {
-                    attribute.TerminalId = replacement.ToId;
-                    attribute.TerminalIri = replacement.ToIri;
+                    attribute.ConnectorTerminal = replacement.ToId;
                 }
 
-                if (ShouldReplace(attribute.AspectObjectId, replacement.FromId, attribute.AspectObjectIri, replacement.FromIri) && parent == AttributeParent.AspectObject)
+                if (ShouldReplace(attribute.AspectObject, replacement.FromId, attribute.AspectObject, replacement.FromIri) && parent == AttributeParent.AspectObject)
                 {
-                    attribute.AspectObjectId = replacement.ToId;
-                    attribute.AspectObjectIri = replacement.ToIri;
+                    attribute.AspectObject = replacement.ToId;
                 }
 
                 attribute.Id = attributeReplacement.ToId;
-                attribute.Iri = attributeReplacement.ToIri;
 
-                if (!string.IsNullOrWhiteSpace(attribute.AttributeTypeId) && string.IsNullOrWhiteSpace(attribute.AttributeTypeIri))
+                if (!string.IsNullOrWhiteSpace(attribute.AttributeType))
                 {
-                    attribute.AttributeTypeIri = GlobalSettings.IriAttributeTypePrefix + attribute.AttributeTypeId;
+                    attribute.AttributeType = GlobalSettings.IriAttributeTypePrefix + attribute.AttributeType;
                 }
 
                 yield return attribute;

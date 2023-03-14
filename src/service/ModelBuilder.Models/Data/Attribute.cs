@@ -37,10 +37,7 @@ namespace Mb.Models.Data
         [TSExclude]
         public string UnitString { get; set; }
 
-        public string SpecifiedScope { get; set; }
-        public string SpecifiedProvenance { get; set; }
-        public string RangeSpecifying { get; set; }
-        public string RegularitySpecified { get; set; }
+        public string Qualifiers { get; set; }
 
         public string ConnectorTerminal { get; set; }
         public string AspectObject { get; set; }
@@ -70,10 +67,7 @@ namespace Mb.Models.Data
                    AttributeType == other.AttributeType &&
                    SelectedUnit == other.SelectedUnit &&
                    UnitString == other.UnitString &&
-                   SpecifiedScope == other.SpecifiedScope &&
-                   SpecifiedProvenance == other.SpecifiedProvenance &&
-                   RangeSpecifying == other.RangeSpecifying &&
-                   RegularitySpecified == other.RegularitySpecified &&
+                   Qualifiers == other.Qualifiers &&
                    ConnectorTerminal == other.ConnectorTerminal &&
                    AspectObject == other.AspectObject;
         }
@@ -94,10 +88,7 @@ namespace Mb.Models.Data
             hashCode.Add(AttributeType);
             hashCode.Add(SelectedUnit);
             hashCode.Add(UnitString);
-            hashCode.Add(SpecifiedScope);
-            hashCode.Add(SpecifiedProvenance);
-            hashCode.Add(RangeSpecifying);
-            hashCode.Add(RegularitySpecified);
+            hashCode.Add(Qualifiers);
             hashCode.Add(ConnectorTerminal);
             hashCode.Add(AspectObject);
             return hashCode.ToHashCode();

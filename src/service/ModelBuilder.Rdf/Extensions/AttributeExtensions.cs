@@ -118,13 +118,13 @@ namespace ModelBuilder.Rdf.Extensions
         public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
         {
             var rootIri = attribute.Id.RootIri();
-            // TODO: This need rewrite logic
+            var attributeQualifiers = JsonConvert.DeserializeObject<Qualifiers>(attribute.Qualifiers);
             return new AttributeDatumObject
             {
-                SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attribute.SpecifiedScope)}",
-                SpecifiedProvenance = $"{rootIri}/provenance/{HttpUtility.UrlEncode(attribute.SpecifiedProvenance)}",
-                RangeSpecifying = $"{rootIri}/specifying/{HttpUtility.UrlEncode(attribute.RangeSpecifying)}",
-                RegularitySpecified = $"{rootIri}/specified/{HttpUtility.UrlEncode(attribute.RegularitySpecified)}"
+                SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attributeQualifiers.Scope)}",
+                SpecifiedProvenance = $"{rootIri}/provenance/{HttpUtility.UrlEncode(attributeQualifiers.Provenance)}",
+                RangeSpecifying = $"{rootIri}/specifying/{HttpUtility.UrlEncode(attributeQualifiers.Range)}",
+                RegularitySpecified = $"{rootIri}/specified/{HttpUtility.UrlEncode(attributeQualifiers.Regularity)}"
             };
         }
 
@@ -135,33 +135,35 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService"></param>
         /// <param name="projectData"></param>
         /// <param name="iri"></param>
-        /// <param name="aspectObjectIri"></param>
-        /// <param name="terminalIri"></param>
-        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string aspectObjectIri, string terminalIri)
+        /// <param name="aspectObject"></param>
+        /// <param name="connectorTerminal"></param>
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string aspectObject, string connectorTerminal)
         {
             #region None Mimir specific data
 
-            attribute.Iri = iri;
-            attribute.AspectObjectIri = aspectObjectIri;
-            attribute.TerminalIri = terminalIri;
+            attribute.AspectObject = aspectObject;
+            attribute.ConnectorTerminal = connectorTerminal;
 
-            attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
+            attribute.Name = ontologyService.GetValue(iri, Resources.Label);
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
-            attribute.SelectedUnitId = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
+            attribute.SelectedUnit = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
 
             // TODO: This must be rewritten
             var adp = iri.AttributeDatumPredicate();
-            attribute.SpecifiedScope = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false);
-            attribute.SpecifiedProvenance = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false);
-            attribute.RangeSpecifying = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false);
-            attribute.RegularitySpecified = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false);
+
+            attribute.Qualifiers = new Qualifiers
+            {
+                Scope = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),
+                Provenance = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false),
+                Range = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false),
+                Regularity = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false)
+            };
 
             #endregion None Mimir specific data
 
             #region None Mimir specific data
 
-            attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
-            //attribute.AttributeTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false); // Resolve from Iri, last segment
+            attribute.AttributeType = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
             var allowedUnitAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
             attribute.Units = allowedUnitAspectObjects.Select(x =>

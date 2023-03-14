@@ -8,45 +8,27 @@ namespace Mb.Models.Application
 {
     public class AttributeAm
     {
-        [RequiredOne(nameof(Iri))]
+        [RequiredOne(nameof(Id))]
         public string Id { get; set; }
 
-        [RequiredOne(nameof(Id))]
-        [ValidIri]
-        public string Iri { get; set; }
-
         [Required]
-        public string Entity { get; set; }
+        public string Name { get; set; }
         public string Value { get; set; }
 
         // Type
-        [RequiredOne(nameof(AttributeTypeIri))]
-        public string AttributeTypeId { get; set; }
-
-        [RequiredOne(nameof(AttributeTypeId))]
-        [ValidIri]
-        public string AttributeTypeIri { get; set; }
+        [RequiredOne(nameof(AttributeType))]
+        public string AttributeType { get; set; }
 
         // Unit
-        public string SelectedUnitId { get; set; }
-        public virtual ICollection<Unit> Units { get; set; }
+        public string SelectedUnit { get; set; }
+        public ICollection<Unit> Units { get; set; }
 
-        // Qualifiers
-        public string SpecifiedScope { get; set; }
-        public string SpecifiedProvenance { get; set; }
-        public string RangeSpecifying { get; set; }
-        public string RegularitySpecified { get; set; }
+        public Qualifiers Qualifiers { get; set; }
 
         // References
-        public string TerminalId { get; set; }
+        public string ConnectorTerminal { get; set; }
 
-        [ValidIri]
-        public string TerminalIri { get; set; }
-
-        public string AspectObjectId { get; set; }
-
-        [ValidIri]
-        public string AspectObjectIri { get; set; }
+        public string AspectObject { get; set; }
 
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
@@ -56,18 +38,12 @@ namespace Mb.Models.Application
         {
             var validations = new List<ValidationResult>();
 
-            if (string.IsNullOrEmpty(TerminalId) &&
-                string.IsNullOrEmpty(TerminalIri) &&
-                string.IsNullOrEmpty(AspectObjectId) &&
-                string.IsNullOrEmpty(AspectObjectIri)
-               )
+            if (string.IsNullOrEmpty(ConnectorTerminal) && string.IsNullOrEmpty(AspectObject))
             {
                 validations.Add(new ValidationResult("One of this fields is required", new[]
                 {
-                    nameof(TerminalId),
-                    nameof(TerminalIri),
-                    nameof(AspectObjectId),
-                    nameof(AspectObjectIri)
+                    nameof(ConnectorTerminal),
+                    nameof(AspectObject)
                 }));
             }
 

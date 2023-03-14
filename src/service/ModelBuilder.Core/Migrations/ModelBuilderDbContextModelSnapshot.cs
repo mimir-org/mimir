@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -178,29 +178,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("RangeSpecifying")
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)")
-                        .HasColumnName("RangeSpecifying");
-
-                    b.Property<string>("RegularitySpecified")
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)")
-                        .HasColumnName("RegularitySpecified");
+                    b.Property<string>("Qualifiers")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Qualifiers");
 
                     b.Property<string>("SelectedUnit")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnit");
-
-                    b.Property<string>("SpecifiedProvenance")
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)")
-                        .HasColumnName("SpecifiedProvenance");
-
-                    b.Property<string>("SpecifiedScope")
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)")
-                        .HasColumnName("SpecifiedScope");
 
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)")
