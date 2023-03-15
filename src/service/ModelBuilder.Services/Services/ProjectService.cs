@@ -17,6 +17,7 @@ using Mimirorg.TypeLibrary.Enums;
 using Mb.Models.Common;
 using Mb.Models.Application;
 using Mb.Models.Client;
+using Mb.Models.Const;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 
@@ -484,8 +485,8 @@ namespace Mb.Services.Services
                 Aspect = aspect,
                 Created = dateTimeNow,
                 CreatedBy = userName,
-                Updated = dateTimeNow,
-                UpdatedBy = userName,
+                Updated = null,
+                UpdatedBy = null,
                 LibraryType = name,
                 Project = project
             };
@@ -528,18 +529,17 @@ namespace Mb.Services.Services
                 throw new MimirorgInvalidOperationException(
                     "There already exist a project with the same name");
 
-            var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+            var projectId = _commonRepository.CreateId(ServerEndpoint.Project);
 
             var project = new Project
             {
-                Id = projectIri,
+                Id = projectId,
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
-                UpdatedBy = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime(),
                 IsSubProject = isSubProject,
                 CreatedBy = _contextAccessor.GetName(),
+                Created = DateTime.Now.ToUniversalTime(),
                 AspectObjects = new List<AspectObject>
                 {
                     CreateInitAspectObject(Aspect.Function, projectId),

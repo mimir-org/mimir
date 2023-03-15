@@ -47,7 +47,7 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.Label, aspectObject.Label ?? aspectObject.Name, true);
 
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.UpdatedBy, aspectObject.UpdatedBy, true);
-            ontologyService.AssertAspectObject(aspectObject.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated.ToString("u")}", Resources.DateTime));
+            ontologyService.AssertAspectObject(aspectObject.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated?.ToString("u")}", Resources.DateTime));
 
             if (aspectObject.Created != null && !string.IsNullOrWhiteSpace(aspectObject.CreatedBy))
             {

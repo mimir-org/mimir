@@ -13,7 +13,7 @@ namespace ModelBuilder.Unit.Tests.Repositories
 
         public CommonRepositoryTests(ModelBuilderCommonFixtures fixture) : base(fixture)
         {
-            _commonRepository = new CommonRepository(fixture.CompanyRepository.Object, Options.Create(fixture.ApplicationSetting));
+            _commonRepository = new CommonRepository(fixture.CompanyRepository.Object, Options.Create(fixture.ApplicationSetting), fixture.HttpContextAccessor.Object);
         }
 
         [Theory]

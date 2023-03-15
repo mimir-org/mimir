@@ -11,6 +11,13 @@ namespace Mb.Data.Contracts
         string CreateId();
 
         /// <summary>
+        /// Create an Id as an Iri
+        /// </summary>
+        /// <param name="serverEndpoint"></param>
+        /// <returns></returns>
+        string CreateId(string serverEndpoint);
+
+        /// <summary>
         /// Get current domain
         /// </summary>
         /// <returns>Registered domain</returns>

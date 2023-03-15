@@ -4,6 +4,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Common;
 using Mimirorg.Common.Exceptions;
 using Mb.Models.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Extensions;
 
@@ -15,6 +16,7 @@ namespace Mb.Data.Repositories
 
         private readonly ICompanyRepository _companyRepository;
         private readonly ApplicationSetting _applicationSetting;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         #endregion
 
@@ -26,9 +28,11 @@ namespace Mb.Data.Repositories
         /// </summary>
         /// <param name="companyRepository"></param>
         /// <param name="applicationSetting"></param>
-        public CommonRepository(ICompanyRepository companyRepository, IOptions<ApplicationSetting> applicationSetting)
+        /// <param name="contextAccessor"></param>
+        public CommonRepository(ICompanyRepository companyRepository, IOptions<ApplicationSetting> applicationSetting, IHttpContextAccessor contextAccessor)
         {
             _companyRepository = companyRepository;
+            _contextAccessor = contextAccessor;
             _applicationSetting = applicationSetting?.Value;
         }
 
@@ -52,6 +56,20 @@ namespace Mb.Data.Repositories
                 throw new MimirorgConfigurationException("The settings for company is not correct or missing registration in Tyle");
 
             return $"{company.Domain}_{Guid.NewGuid().ToString().ToLower()}";
+        }
+
+        /// <summary>
+        /// Creates an Id as an Iri
+        /// </summary>
+        /// <param name="serverEndpoint"></param>
+        /// <returns>A valid Id as an Iri Id</returns>
+        /// <exception cref="MimirorgBadRequestException"></exception>
+        public string CreateId(string serverEndpoint)
+        {
+            if (string.IsNullOrWhiteSpace(serverEndpoint))
+                throw new MimirorgBadRequestException("Can't create Id when 'endpoint' is NULL.");
+
+            return _contextAccessor.GetBaseUrl() + $"{serverEndpoint}/{Guid.NewGuid()}";
         }
 
         /// <summary>
@@ -129,7 +147,7 @@ namespace Mb.Data.Repositories
 
             return (newId, ResolveIri(newId));
         }
-
+        
         /// <summary>
         /// Create an id if the id is not valid
         /// </summary>

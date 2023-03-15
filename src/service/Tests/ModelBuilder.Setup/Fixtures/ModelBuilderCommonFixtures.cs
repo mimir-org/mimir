@@ -1,6 +1,7 @@
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Settings;
+using Microsoft.AspNetCore.Http;
 using Mimirorg.TypeLibrary.Models.Client;
 using Moq;
 
@@ -9,6 +10,7 @@ namespace ModelBuilder.Setup.Fixtures
     public class ModelBuilderCommonFixtures : IDisposable
     {
         public Mock<ICompanyRepository> CompanyRepository { get; set; } = new();
+        public Mock<IHttpContextAccessor> HttpContextAccessor { get; set; } = new();
         public Mock<IMapper> Mapper { get; set; } = new();
         public ApplicationSetting ApplicationSetting = new ApplicationSetting
         {
