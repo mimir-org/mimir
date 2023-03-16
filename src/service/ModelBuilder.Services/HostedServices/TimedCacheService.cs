@@ -66,8 +66,8 @@ namespace Mb.Services.HostedServices
             var repo = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
             try
             {
-                _ = repo.GetAsyncComplete(nextItem.Item1, nextItem.Item2).Result;
-                _logger.LogInformation($"Timed cache service running: {nextItem.Item1} - {nextItem.Item2}");
+                _ = repo.GetAsyncComplete(nextItem.Item1).Result;
+                _logger.LogInformation($"Timed cache service running: {nextItem.Item1}");
             }
             catch (Exception e)
             {

@@ -23,11 +23,10 @@ using Mb.Models.Client;
 
 namespace Mb.Data.Repositories
 {
-    public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Project>, IProjectRepository
+    public class ProjectRepository : GenericRepository<ModelBuilderDbContext, ProjectDm>, IProjectRepository
     {
         private readonly IMapper _mapper;
         private readonly IAspectObjectRepository _aspectObjectRepository;
-        private readonly IConnectionRepository _connectionRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly DatabaseConfiguration _databaseConfiguration;
@@ -35,13 +34,11 @@ namespace Mb.Data.Repositories
         private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
-            IConnectionRepository connectionRepository, IAttributeRepository attributeRepository,
-            IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
+            IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
             ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
         {
             _mapper = mapper;
             _aspectObjectRepository = aspectObjectRepository;
-            _connectionRepository = connectionRepository;
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
             _databaseConfiguration = databaseConfiguration?.Value;
@@ -53,23 +50,22 @@ namespace Mb.Data.Repositories
         /// Get complete project
         /// </summary>
         /// <param name="id">Project id</param>
-        /// <param name="iri">Project Iri</param>
         /// <returns>Complete project</returns>
-        public async Task<Project> GetAsyncComplete(string id, string iri)
+        public async Task<ProjectDm> GetAsyncComplete(string id)
         {
-            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
-                throw new MimirorgNullReferenceException("The ID and IRI can't both be null.");
+            if (string.IsNullOrWhiteSpace(id))
+                throw new MimirorgNullReferenceException("The ID can't be null.");
 
-            var key = !string.IsNullOrWhiteSpace(id) ? id.ResolveKey() : iri.ResolveKey();
+            var key = id.ResolveKey();
 
             if (!string.IsNullOrWhiteSpace(key))
             {
-                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id, iri));
+                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id));
                 return project;
             }
             else
             {
-                var project = await GetProjectAsync(id, iri);
+                var project = await GetProjectAsync(id);
                 return project;
             }
         }
@@ -78,12 +74,11 @@ namespace Mb.Data.Repositories
         /// Get complete project async not read from cache
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="iri"></param>
         /// <returns>Complete project</returns>
-        public Task<Project> GetProjectAsync(string id, string iri)
+        public Task<ProjectDm> GetProjectAsync(string id)
         {
             var project =
-                FindBy(x => x.Id == id || x.Id == iri)
+                FindBy(x => x.Id == id)
                     .Include(x => x.Connections)
                     .Include("Connections.FromAspectObject")
                     .Include("Connections.ToAspectObject")
@@ -106,14 +101,14 @@ namespace Mb.Data.Repositories
         /// <param name="from">Get project from</param>
         /// <param name="number">Get number of project</param>
         /// <returns>A list of project information</returns>
-        public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
+        public IEnumerable<ProjectCm> GetProjectList(string name, int from, int number)
         {
             if (string.IsNullOrEmpty(name))
                 return GetAll()
                     .OrderByDescending(x => x.Updated)
                     .Skip(from)
                     .Take(number)
-                    .ProjectTo<ProjectItemCm>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
                     .ToList();
 
             return GetAll()
@@ -121,7 +116,7 @@ namespace Mb.Data.Repositories
                 .OrderByDescending(x => x.Updated)
                 .Skip(from)
                 .Take(number)
-                .ProjectTo<ProjectItemCm>(_mapper.ConfigurationProvider)
+                .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
                 .ToList();
         }
 
@@ -148,7 +143,7 @@ namespace Mb.Data.Repositories
         /// <param name="updated"></param>
         /// <param name="data"></param>
         /// <returns>A project update task</returns>
-        public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
+        public async Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data)
         {
             if (original == null || updated == null || data == null)
                 throw new MimirorgNullReferenceException(
@@ -161,11 +156,11 @@ namespace Mb.Data.Repositories
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
                     // Upsert
-                    bulk.Setup<Project>()
+                    bulk.Setup<ProjectDm>()
                         .ForObject(updated)
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
-                        .AddColumn(x => x.IsSubProject)
+                        .AddColumn(x => x.SubProject)
                         .AddColumn(x => x.Version)
                         .AddColumn(x => x.Name)
                         .AddColumn(x => x.Description)
@@ -201,7 +196,7 @@ namespace Mb.Data.Repositories
         /// <param name="project">The project that should be created</param>
         /// <param name="data">Project data</param>
         /// <returns>A project create task</returns>
-        public Task CreateProject(Project project, ProjectData data)
+        public Task CreateProject(ProjectDm project, ProjectData data)
         {
             var bulk = new BulkOperations();
 
@@ -210,11 +205,11 @@ namespace Mb.Data.Repositories
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
                     // Upsert
-                    bulk.Setup<Project>()
+                    bulk.Setup<ProjectDm>()
                         .ForObject(project)
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
-                        .AddColumn(x => x.IsSubProject)
+                        .AddColumn(x => x.SubProject)
                         .AddColumn(x => x.Version)
                         .AddColumn(x => x.Name)
                         .AddColumn(x => x.Description)
@@ -244,7 +239,7 @@ namespace Mb.Data.Repositories
         /// <param name="project">The project that should be deleted</param>
         /// <param name="data">Project data</param>
         /// <returns>A project delete task</returns>
-        public async Task DeleteProject(Project project, ProjectData data)
+        public async Task DeleteProject(ProjectDm project, ProjectData data)
         {
             var bulk = new BulkOperations();
 
@@ -256,8 +251,8 @@ namespace Mb.Data.Repositories
                     _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
                     _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
 
-                    bulk.Setup<Project>()
-                        .ForCollection(new List<Project> { project })
+                    bulk.Setup<ProjectDm>()
+                        .ForCollection(new List<ProjectDm> { project })
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
                         .BulkDelete()

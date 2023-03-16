@@ -8,23 +8,21 @@ using Mb.Models.Records;
 
 namespace Mb.Data.Contracts
 {
-    public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, Project>
+    public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, ProjectDm>
     {
         /// <summary>
         /// Get complete project
         /// </summary>
         /// <param name="id">Project id</param>
-        /// <param name="iri">Project Iri</param>
         /// <returns>Complete project</returns>
-        Task<Project> GetAsyncComplete(string id, string iri);
+        Task<ProjectDm> GetAsyncComplete(string id);
 
         /// <summary>
         /// Get complete project async not read from cache
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="iri"></param>
         /// <returns>Complete project</returns>
-        Task<Project> GetProjectAsync(string id, string iri);
+        Task<ProjectDm> GetProjectAsync(string id);
 
         /// <summary>
         /// Get project list
@@ -33,7 +31,7 @@ namespace Mb.Data.Contracts
         /// <param name="from">Get project from</param>
         /// <param name="number">Get number of project</param>
         /// <returns>A list of project information</returns>
-        IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
+        IEnumerable<ProjectCm> GetProjectList(string name, int from, int number);
 
         /// <summary>
         /// Get project version list
@@ -49,7 +47,7 @@ namespace Mb.Data.Contracts
         /// <param name="updated"></param>
         /// <param name="data"></param>
         /// <returns>A project update task</returns>
-        Task UpdateProject(Project original, Project updated, ProjectEditData data);
+        Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data);
 
         /// <summary>
         /// Create a project
@@ -57,7 +55,7 @@ namespace Mb.Data.Contracts
         /// <param name="project">The project that should be created</param>
         /// <param name="data">Project data</param>
         /// <returns>A project create task</returns>
-        Task CreateProject(Project project, ProjectData data);
+        Task CreateProject(ProjectDm project, ProjectData data);
 
         /// <summary>
         /// Delete a project
@@ -65,6 +63,6 @@ namespace Mb.Data.Contracts
         /// <param name="project">The project that should be deleted</param>
         /// <param name="data">Project data</param>
         /// <returns>A project delete task</returns>
-        Task DeleteProject(Project project, ProjectData data);
+        Task DeleteProject(ProjectDm project, ProjectData data);
     }
 }

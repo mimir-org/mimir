@@ -43,7 +43,7 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="project"></param>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public void BuildProject(Project project)
+        public void BuildProject(ProjectDm project)
         {
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
@@ -61,11 +61,11 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="rdf"></param>
         /// <returns></returns>
-        public ProjectAm BuildProject(IGraph rdf)
+        public ProjectUpdateAm BuildProject(IGraph rdf)
         {
             _ontologyRepository.LoadData(rdf);
 
-            var project = new ProjectAm();
+            var project = new ProjectUpdateAm();
             project.ResolveProjectInformation(this);
 
             if (string.IsNullOrWhiteSpace(project.Id))
@@ -379,7 +379,7 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="project"></param>
         /// <param name="projectData">Record of ICollections</param>
-        private void BuildAspectObjects(Project project, ProjectData projectData)
+        private void BuildAspectObjects(ProjectDm project, ProjectData projectData)
         {
             if (project.AspectObjects == null || !project.AspectObjects.Any())
                 return;
@@ -412,7 +412,7 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="project"></param>
         /// <param name="projectData">Record of ICollections</param>
-        private void BuildConnections(Project project, ProjectData projectData)
+        private void BuildConnections(ProjectDm project, ProjectData projectData)
         {
             if (project.Connections == null || !project.Connections.Any())
                 return;

@@ -58,25 +58,25 @@ namespace DefaultParserModule
             };
         }
 
-        public Task<byte[]> SerializeProject(Project project)
+        public Task<byte[]> SerializeProject(ProjectDm project)
         {
-            var projectAm = _mapper.Map<ProjectAm>(project);
+            var projectAm = _mapper.Map<ProjectUpdateAm>(project);
 
             var result = JsonConvert.SerializeObject(projectAm, _serializerSettings);
             return Task.FromResult(Encoding.UTF8.GetBytes(result));
         }
 
-        public Task<Project> DeserializeProject(byte[] data)
+        public Task<ProjectDm> DeserializeProject(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = JsonConvert.DeserializeObject<Project>(valueAsString, _serializerSettings);
+            var project = JsonConvert.DeserializeObject<ProjectDm>(valueAsString, _serializerSettings);
             return Task.FromResult(project);
         }
 
-        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+        public Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = JsonConvert.DeserializeObject<ProjectAm>(valueAsString, _serializerSettings);
+            var project = JsonConvert.DeserializeObject<ProjectUpdateAm>(valueAsString, _serializerSettings);
             return Task.FromResult(project);
         }
     }

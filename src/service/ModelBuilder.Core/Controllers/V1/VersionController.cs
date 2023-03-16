@@ -103,7 +103,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <returns>Project</returns>
         [HttpGet("{id}/project")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectDm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

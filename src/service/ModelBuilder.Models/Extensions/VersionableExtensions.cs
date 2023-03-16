@@ -43,7 +43,7 @@ namespace Mb.Models.Extensions
             return false;
         }
 
-        public static bool HasMajorChanges(this Project project, ProjectEditData editData)
+        public static bool HasMajorChanges(this ProjectDm project, ProjectEditData editData)
         {
             if (editData == null)
                 return false;
@@ -63,7 +63,7 @@ namespace Mb.Models.Extensions
             return false;
         }
 
-        public static bool HasMinorChanges(this Project project, ProjectEditData editData, Project other)
+        public static bool HasMinorChanges(this ProjectDm project, ProjectEditData editData, ProjectDm other)
         {
             if (editData == null)
                 return false;
@@ -89,7 +89,7 @@ namespace Mb.Models.Extensions
             if (project.Name != other.Name)
                 return true;
 
-            if (project.IsSubProject != other.IsSubProject)
+            if (project.SubProject != other.SubProject)
                 return true;
 
             if (project.CreatedBy != other.CreatedBy)

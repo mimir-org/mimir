@@ -17,7 +17,7 @@ namespace Mb.Models.Records
         /// Deconstruct and flatten connections 
         /// </summary>
         /// <param name="project">Project to be deconstructed</param>
-        public Task DeconstructAttributes(Project project)
+        public Task DeconstructAttributes(ProjectDm project)
         {
             var aspectObjectAttributes = project.AspectObjects.Select(x => x.Attributes).SelectMany(y => y).ToList();
             var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().SelectMany(y => y.Attributes).ToList();
@@ -34,7 +34,7 @@ namespace Mb.Models.Records
         /// Deconstruct and flatten aspectObjects
         /// </summary>
         /// <param name="project">Project to be deconstructed</param>
-        public Task DeconstructAspectObjects(Project project)
+        public Task DeconstructAspectObjects(ProjectDm project)
         {
             if (project?.AspectObjects == null || !project.AspectObjects.Any())
                 return Task.CompletedTask;
@@ -47,7 +47,7 @@ namespace Mb.Models.Records
         /// Deconstruct terminals
         /// </summary>
         /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructTerminals(Project project)
+        public Task DeconstructTerminals(ProjectDm project)
         {
             if (project == null)
                 return Task.CompletedTask;
@@ -65,7 +65,7 @@ namespace Mb.Models.Records
         /// Deconstruct relations
         /// </summary>
         /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructRelations(Project project)
+        public Task DeconstructRelations(ProjectDm project)
         {
             if (project == null)
                 return Task.CompletedTask;
@@ -80,7 +80,7 @@ namespace Mb.Models.Records
         /// Deconstruct and flatten connections
         /// </summary>
         /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructConnections(Project project)
+        public Task DeconstructConnections(ProjectDm project)
         {
             if (project.Connections == null || !project.Connections.Any())
                 return Task.CompletedTask;

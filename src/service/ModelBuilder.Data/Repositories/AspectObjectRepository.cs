@@ -30,7 +30,7 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
+        public IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, ProjectDm project,
             string invokedByDomain)
         {
             if (project?.AspectObjects == null || !project.AspectObjects.Any())

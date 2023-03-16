@@ -12,7 +12,7 @@ namespace Mb.Data.Contracts
 {
     public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContext, Connection>
     {
-        IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, Project project,
+        IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, ProjectDm project,
             string invokedByDomain);
 
         Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete, string projectId,

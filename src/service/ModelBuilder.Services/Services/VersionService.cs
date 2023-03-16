@@ -62,13 +62,13 @@ namespace Mb.Services.Services
         /// <param name="typeId"></param>
         /// <param name="version"></param>
         /// <returns>Project</returns>
-        public Task<Project> GetGetByVersion(string typeId, string version)
+        public Task<ProjectDm> GetGetByVersion(string typeId, string version)
         {
             var projectData = _versionRepository.GetAll().FirstOrDefault(x => x.TypeId == typeId && x.Ver == version);
             if (projectData?.Data == null)
                 return null;
 
-            var project = JsonConvert.DeserializeObject<Project>(projectData.Data, DefaultSettings.SerializerSettings);
+            var project = JsonConvert.DeserializeObject<ProjectDm>(projectData.Data, DefaultSettings.SerializerSettings);
             return Task.FromResult(project);
         }
 
@@ -77,14 +77,14 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Project</returns>
-        public async Task<Project> GetProject(int id)
+        public async Task<ProjectDm> GetProject(int id)
         {
             var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
 
             if (data == null)
                 throw new MimirorgInvalidOperationException("Version not found");
 
-            return JsonConvert.DeserializeObject<Project>(data);
+            return JsonConvert.DeserializeObject<ProjectDm>(data);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="project"></param>
         /// <returns>VersionCm</returns>
-        public async Task<VersionCm> CreateVersion(Project project)
+        public async Task<VersionCm> CreateVersion(ProjectDm project)
         {
             if (project == null)
                 throw new MimirorgInvalidOperationException("Can't save new project version. Project is null.");
@@ -103,7 +103,7 @@ namespace Mb.Services.Services
             var version = new Version
             {
                 Ver = project.Version,
-                Type = nameof(Project),
+                Type = nameof(ProjectDm),
                 TypeId = project.Id,
                 Name = project.Name,
                 Created = DateTime.Now.ToUniversalTime(),

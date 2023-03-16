@@ -69,7 +69,7 @@ namespace Mb.Services.Services
         /// <param name="from">From number</param>
         /// <param name="number">Number of items</param>
         /// <returns>A list project list items</returns>
-        public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
+        public IEnumerable<ProjectCm> Get(string name, int from, int number)
         {
             return _projectRepository.GetProjectList(name, from, number);
         }
@@ -79,30 +79,41 @@ namespace Mb.Services.Services
         /// attributes and connectors.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="iri"></param>
         /// <returns>The actual project</returns>
         /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
-        public async Task<Project> GetProject(string id, string iri)
+        public async Task<ProjectCm> Get(string id)
         {
-            var project = await _projectRepository.GetAsyncComplete(id, iri);
+            var project = await _projectRepository.GetAsyncComplete(id);
 
             if (project == null)
-                throw new MimirorgNotFoundException($"Could not find project with id: {id} or iri: {iri}");
+                throw new MimirorgNotFoundException($"Could not find project with id: {id}");
 
-            return project;
+            return _mapper.Map<ProjectCm>(project);
         }
 
         /// <summary>
         /// Create a new empty project. The project wil include the aspect root aspectObjects.
         /// </summary>
-        /// <param name="createProject"></param>
+        /// <param name="projectCreateAm"></param>
         /// <returns></returns>
-        public async Task<Project> CreateProject(CreateProjectAm createProject)
+        public async Task<ProjectCm> Create(ProjectCreateAm projectCreateAm)
         {
-            var project = CreateInitProject(createProject, false);
-            await _projectRepository.CreateAsync(project);
+            if (_projectRepository.FindBy(x => x.Name.ToLower().Equals(projectCreateAm.Name.ToLower())).FirstOrDefault() != null)
+                throw new MimirorgInvalidOperationException("There already exist a project with the same name");
+
+            var projectDm = _mapper.Map<ProjectDm>(projectCreateAm);
+
+            projectDm.AspectObjects = new List<AspectObject>
+            {
+                CreateInitAspectObject(Aspect.Function, projectDm.Id),
+                CreateInitAspectObject(Aspect.Product, projectDm.Id),
+                CreateInitAspectObject(Aspect.Location, projectDm.Id)
+            };
+
+            await _projectRepository.CreateAsync(projectDm);
             await _projectRepository.SaveAsync();
-            return project;
+
+            return _mapper.Map<ProjectCm>(projectDm);
         }
 
         /// <summary>
@@ -112,10 +123,10 @@ namespace Mb.Services.Services
         /// <returns>Completed Task</returns>
         public async Task ConvertSubProject(string projectId)
         {
-            var project = await GetProject(projectId, null);
-            var am = _mapper.Map<ProjectAm>(project);
+            var project = await Get(projectId);
+            var am = _mapper.Map<ProjectUpdateAm>(project);
             am.IsSubProject = !am.IsSubProject;
-            await UpdateProject(am.Id, am.Id, am, _commonRepository.GetDomain());
+            await Update(am.Id, am, _commonRepository.GetDomain());
         }
 
         /// <summary>
@@ -126,7 +137,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, aspectObject or connection with same id.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-        public async Task<Project> CreateProject(ProjectAm project)
+        public async Task<ProjectCm> Create(ProjectUpdateAm project)
         {
             if (project == null)
                 throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -136,7 +147,7 @@ namespace Mb.Services.Services
                 throw new MimirorgBadRequestException($"Couldn't create project with name: {project.Name}",
                     validation);
 
-            var existingProject = ProjectExist(project.Id, project.Id);
+            var existingProject = Exist(project.Id, project.Id);
             ClearAllChangeTracker();
 
             if (existingProject)
@@ -156,7 +167,7 @@ namespace Mb.Services.Services
             var _ = _remapService.Remap(project);
 
             // Create an empty project
-            var newProject = new Project
+            var newProject = new ProjectDm
             {
                 CreatedBy = _contextAccessor.GetName(),
                 UpdatedBy = _contextAccessor.GetName(),
@@ -171,8 +182,8 @@ namespace Mb.Services.Services
             await _remapService.DeConstruct(newProject, projectData);
             await _projectRepository.CreateProject(newProject, projectData);
 
-            var updatedProject = await GetProject(newProject.Id, null);
-            return updatedProject;
+            var updatedProject = await Get(newProject.Id);
+            return _mapper.Map<ProjectCm>(updatedProject);
         }
 
         /// <summary>
@@ -180,7 +191,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
-        public async Task<Project> CreateProject(SubProjectAm subProjectAm)
+        public async Task<ProjectCm> Create(SubProjectAm subProjectAm)
         {
             try
             {
@@ -192,11 +203,11 @@ namespace Mb.Services.Services
                     throw new MimirorgBadRequestException(
                         $"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId, null);
+                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId);
                 if (fromProject == null)
                     throw new MimirorgInvalidOperationException("The original project does not exist");
 
-                var projectAm = _mapper.Map<ProjectAm>(fromProject);
+                var projectAm = _mapper.Map<ProjectUpdateAm>(fromProject);
 
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
@@ -207,15 +218,15 @@ namespace Mb.Services.Services
                 _ = _remapService.Clone(projectAm);
 
                 // Map data
-                var newSubProject = _mapper.Map<Project>(projectAm);
+                var newSubProject = _mapper.Map<ProjectDm>(projectAm);
 
                 // Deconstruct project
                 var projectData = new ProjectData();
                 await _remapService.DeConstruct(newSubProject, projectData);
                 await _projectRepository.CreateProject(newSubProject, projectData);
 
-                var updatedProject = await GetProject(newSubProject.Id, null);
-                return updatedProject;
+                var updatedProject = await Get(newSubProject.Id);
+                return _mapper.Map<ProjectCm>(updatedProject);
             }
             catch (Exception e)
             {
@@ -242,10 +253,10 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         /// TODO: We need to handle invokedByDomain in update process
-        public async Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain)
+        public async Task Update(string id, ProjectUpdateAm project, string invokedByDomain)
         {
-            if ((string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri)) || project == null)
-                throw new MimirorgNullReferenceException("Id or Iri must have value. Project can't be null.");
+            if (string.IsNullOrWhiteSpace(id) || project == null)
+                throw new MimirorgNullReferenceException("Id must have value. Project can't be null.");
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new MimirorgInvalidOperationException("Domain can't be null or empty");
@@ -255,7 +266,7 @@ namespace Mb.Services.Services
                 throw new MimirorgBadRequestException($"Couldn't update project with name: {project.Name}",
                     validation);
 
-            var original = await _projectRepository.GetAsyncComplete(id, iri);
+            var original = await _projectRepository.GetAsyncComplete(id);
             project.Version = original.Version;
             ClearAllChangeTracker();
 
@@ -266,7 +277,7 @@ namespace Mb.Services.Services
             _ = _remapService.Remap(project);
 
             // Map updated project
-            var updated = _mapper.Map<Project>(project);
+            var updated = _mapper.Map<ProjectDm>(project);
             updated.Updated = DateTime.Now.ToUniversalTime();
             updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
 
@@ -306,9 +317,9 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        public async Task DeleteProject(string projectId)
+        public async Task Delete(string projectId)
         {
-            var existingProject = await _projectRepository.GetProjectAsync(projectId, null);
+            var existingProject = await _projectRepository.GetProjectAsync(projectId);
             if (existingProject == null)
                 throw new MimirorgNotFoundException($"There is no project with id: {projectId}");
 
@@ -325,7 +336,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id)
         {
-            var project = await GetProject(projectId, null);
+            var project = await _projectRepository.GetAsyncComplete(projectId);
 
             if (_moduleService.Modules.All(x =>
                     x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
@@ -343,7 +354,7 @@ namespace Mb.Services.Services
         /// <param name="projectId"></param>
         /// <param name="projectIri"></param>
         /// <returns></returns>
-        public bool ProjectExist(string projectId, string projectIri)
+        public bool Exist(string projectId, string projectIri)
         {
             var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Id == projectIri);
             ClearAllChangeTracker();
@@ -358,7 +369,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
         public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
         {
-            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProjectId, null);
+            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProjectId);
             if (subProject == null)
                 throw new MimirorgNotFoundException("There is no sub-project with current id");
 
@@ -368,7 +379,7 @@ namespace Mb.Services.Services
             if (subProject == null)
                 throw new MimirorgNotFoundException("There is no sub-project with current id and version");
 
-            var projectAm = _mapper.Map<ProjectAm>(subProject);
+            var projectAm = _mapper.Map<ProjectUpdateAm>(subProject);
 
             // Save the project as a temporary project, the cleanup hosted service will remove this temp project later
             projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";
@@ -376,13 +387,13 @@ namespace Mb.Services.Services
             projectAm.IsSubProject = true;
 
             _ = _remapService.Clone(projectAm);
-            var newSubProject = _mapper.Map<Project>(projectAm);
+            var newSubProject = _mapper.Map<ProjectDm>(projectAm);
             var projectData = new ProjectData();
             await _remapService.DeConstruct(newSubProject, projectData);
             await _projectRepository.CreateProject(newSubProject, projectData);
 
             // Get the created project
-            var updatedProject = await GetProject(newSubProject.Id, null);
+            var updatedProject = await _projectRepository.GetAsyncComplete(newSubProject.Id);
 
             // Identify root aspectObjects
             var rootAspectObjects = updatedProject.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).Select(x => x.Id).ToList();
@@ -428,14 +439,10 @@ namespace Mb.Services.Services
         /// Create init aspect aspectObjects
         /// </summary>
         /// <param name="aspect"></param>
-        /// <param name="project"></param>
+        /// <param name="projectId"></param>
         /// <returns></returns>
-        private AspectObject CreateInitAspectObject(Aspect aspect, string project)
+        private AspectObject CreateInitAspectObject(Aspect aspect, string projectId)
         {
-            const string version = "1.0";
-            const int positionY = 5;
-            const string connectorName = "PartOf";
-
             string name;
             int positionX;
 
@@ -445,110 +452,53 @@ namespace Mb.Services.Services
                     name = "Function";
                     positionX = 150;
                     break;
-
                 case Aspect.Product:
                     name = "Product";
                     positionX = 600;
                     break;
-
                 case Aspect.Location:
                     name = "Location";
                     positionX = 1050;
                     break;
-
+                case Aspect.NotSet:
+                case Aspect.None:
                 default:
                     name = "";
                     positionX = 0;
                     break;
             }
 
-            var userName = _contextAccessor.GetName();
-            var dateTimeNow = DateTime.Now.ToUniversalTime();
-
-            var (aspectObjectId, aspectObjectIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
-
             var aspectObject = new AspectObject
             {
-                Id = aspectObjectId,
+                Id = _commonRepository.CreateId(ServerEndpoint.AspectObject),
                 Name = name,
                 Label = name,
                 Position = JsonConvert.SerializeObject(new AspectObjectPosition
-                {
-                    ThreePosX = positionX,
-                    ThreePosY = positionY
-                }),
+                    {
+                        ThreePosX = positionX,
+                        ThreePosY = 5
+                    }),
                 Connectors = new List<Connector>(),
-                Version = version,
-                Rds = string.Empty,
+                Version = "1.0",
                 AspectObjectType = AspectObjectType.Root,
-                MainProject = project,
+                MainProject = projectId,
                 Aspect = aspect,
-                Created = dateTimeNow,
-                CreatedBy = userName,
-                Updated = null,
-                UpdatedBy = null,
+                Created = DateTime.Now.ToUniversalTime(),
+                CreatedBy = _contextAccessor.GetName(),
                 LibraryType = name,
-                Project = project
+                Project = projectId
             };
-            var (connectorId, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
             var connector = new ConnectorPartOf
             {
-                Id = connectorId,
-                Name = connectorName,
+                Id = _commonRepository.CreateId(ServerEndpoint.Connector),
+                Name = "PartOf",
                 Direction = ConnectorDirection.Output,
                 AspectObject = aspectObject.Id
             };
 
             aspectObject.Connectors.Add(connector);
             return aspectObject;
-        }
-
-        /// <summary>
-        /// Create a initial project
-        /// </summary>
-        /// <param name="createProject"></param>
-        /// <param name="isSubProject"></param>
-        /// <returns></returns>
-        /// <exception cref="MimirorgInvalidOperationException"></exception>
-        private Project CreateInitProject(CreateProjectAm createProject, bool isSubProject)
-        {
-            const string version = "1.0";
-
-            if (string.IsNullOrWhiteSpace(createProject?.Name))
-                throw new MimirorgInvalidOperationException(
-                    "You need to give the new project a name");
-
-            if (createProject.Name.Length < 2)
-                throw new MimirorgInvalidOperationException(
-                    "Project name must be minimum 2 characters");
-
-            var existingProject = _projectRepository.FindBy(x => x.Name.ToLower() == createProject.Name.ToLower()).FirstOrDefault();
-
-            if (existingProject != null)
-                throw new MimirorgInvalidOperationException(
-                    "There already exist a project with the same name");
-
-            var projectId = _commonRepository.CreateId(ServerEndpoint.Project);
-
-            var project = new Project
-            {
-                Id = projectId,
-                Version = version,
-                Name = createProject.Name,
-                Description = createProject.Description,
-                IsSubProject = isSubProject,
-                CreatedBy = _contextAccessor.GetName(),
-                Created = DateTime.Now.ToUniversalTime(),
-                AspectObjects = new List<AspectObject>
-                {
-                    CreateInitAspectObject(Aspect.Function, projectId),
-                    CreateInitAspectObject(Aspect.Product, projectId),
-                    CreateInitAspectObject(Aspect.Location, projectId)
-                }
-            };
-
-            return project;
         }
 
         /// <summary>

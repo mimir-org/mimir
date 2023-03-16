@@ -15,7 +15,7 @@ namespace Mb.Services.Contracts
         /// <param name="original">Original Mimir project</param>
         /// <param name="updated">The updated Mimir project</param>
         /// <returns>Data object with information about what data should be edited</returns>
-        Task<ProjectEditData> CreateEditData(Project original, Project updated);
+        Task<ProjectEditData> CreateEditData(ProjectDm original, ProjectDm updated);
 
         /// <summary>
         /// Deconstruct a project to array of elements
@@ -23,7 +23,7 @@ namespace Mb.Services.Contracts
         /// <param name="project">The project to deconstruct</param>
         /// <param name="data">Project Data object to fill with data</param>
         /// <returns>A task that updates project data</returns>
-        Task DeConstruct(Project project, ProjectData data);
+        Task DeConstruct(ProjectDm project, ProjectData data);
 
         /// <summary>
         /// Remap a project
@@ -32,7 +32,7 @@ namespace Mb.Services.Contracts
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The remap function will create new id's on project and all sub objects, if the
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
-        IDictionary<string, string> Remap(ProjectAm project);
+        IDictionary<string, string> Remap(ProjectUpdateAm project);
 
         /// <summary>
         /// Clone a project
@@ -41,7 +41,7 @@ namespace Mb.Services.Contracts
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The clone function will create a new project and sub objects, based on
         /// the predefined object.</remarks>
-        IDictionary<string, string> Clone(ProjectAm project);
+        IDictionary<string, string> Clone(ProjectUpdateAm project);
 
         /// <summary>
         /// Remap a collection of aspectObjects and all sub objects.
@@ -74,7 +74,7 @@ namespace Mb.Services.Contracts
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
-        void RemapParentlessConnections(ProjectAm project);
+        void RemapParentlessConnections(ProjectUpdateAm project);
 
         MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri);
     }

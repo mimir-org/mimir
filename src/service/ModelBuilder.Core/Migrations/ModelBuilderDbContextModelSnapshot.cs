@@ -110,7 +110,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TypeReference");
 
-                    b.Property<DateTime>("Updated")
+                    b.Property<DateTime?>("Updated")
+                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
 
@@ -273,17 +274,18 @@ namespace Mb.Core.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Project", b =>
+            modelBuilder.Entity("Mb.Models.Data.ProjectDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<DateTime?>("Created")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)")
                         .HasColumnName("CreatedBy");
@@ -293,15 +295,15 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(511)")
                         .HasColumnName("Description");
 
-                    b.Property<bool>("IsSubProject")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsSubProject");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(63)
                         .HasColumnType("nvarchar(63)")
                         .HasColumnName("Name");
+
+                    b.Property<bool>("SubProject")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsSubProject");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")

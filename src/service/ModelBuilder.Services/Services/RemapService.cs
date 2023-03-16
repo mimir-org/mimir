@@ -35,7 +35,7 @@ namespace Mb.Services.Services
         /// <param name="original">Original Mimir project</param>
         /// <param name="updated">The updated Mimir project</param>
         /// <returns>Data object with information about what data should be edited</returns>
-        public async Task<ProjectEditData> CreateEditData(Project original, Project updated)
+        public async Task<ProjectEditData> CreateEditData(ProjectDm original, ProjectDm updated)
         {
             var originalProjectData = new ProjectData();
             var updatedProjectData = new ProjectData();
@@ -61,7 +61,7 @@ namespace Mb.Services.Services
         /// <param name="project">The project to deconstruct</param>
         /// <param name="data">Project Data object to fill with data</param>
         /// <returns>A task that updates project data</returns>
-        public async Task DeConstruct(Project project, ProjectData data)
+        public async Task DeConstruct(ProjectDm project, ProjectData data)
         {
             if (project == null || (project.Connections == null && project.AspectObjects == null))
                 return;
@@ -85,7 +85,7 @@ namespace Mb.Services.Services
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The remap function will create new id's on project and all sub objects, if the
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
-        public IDictionary<string, string> Remap(ProjectAm project)
+        public IDictionary<string, string> Remap(ProjectUpdateAm project)
         {
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Id };
@@ -106,7 +106,7 @@ namespace Mb.Services.Services
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The clone function will create a new project and sub objects, based on
         /// the predefined object.</remarks>
-        public IDictionary<string, string> Clone(ProjectAm project)
+        public IDictionary<string, string> Clone(ProjectUpdateAm project)
         {
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId();
@@ -230,7 +230,7 @@ namespace Mb.Services.Services
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
-        public void RemapParentlessConnections(ProjectAm project)
+        public void RemapParentlessConnections(ProjectUpdateAm project)
         {
             var parentLessConnections = project.GetParentlessConnectors().ToList();
             foreach (var connection in parentLessConnections)

@@ -48,21 +48,21 @@ namespace JsonLdParser
             };
         }
 
-        public Task<byte[]> SerializeProject(Project project)
+        public Task<byte[]> SerializeProject(ProjectDm project)
         {
             _ontologyService.BuildProject(project);
             var bytes = _ontologyService.GetBytes<ImfJsonLdWriter>();
             return Task.FromResult(bytes);
         }
 
-        public Task<Project> DeserializeProject(byte[] data)
+        public Task<ProjectDm> DeserializeProject(byte[] data)
         {
             var projectAm = DeserializeProjectAm(data);
-            var project = _mapper.Map<Project>(projectAm);
+            var project = _mapper.Map<ProjectDm>(projectAm);
             return Task.FromResult(project);
         }
 
-        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+        public Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
             var graph = LoadGraph(valueAsString);

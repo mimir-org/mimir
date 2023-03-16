@@ -13,20 +13,20 @@ using Mimirorg.TypeLibrary.Enums;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Project : IEquatable<Project>, IVersionable<Project>
+    public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     {
         #region Properties
 
         public string Id { get; set; }
         public string Domain => Id.ResolveDomain();
-        public bool IsSubProject { get; set; }
+        public bool SubProject { get; set; }
         public string Version { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? Created { get; set; }
+        public DateTime Created { get; set; }
 
         [NotMapped]
         public virtual ICollection<AspectObject> AspectObjects { get; set; }
@@ -38,12 +38,12 @@ namespace Mb.Models.Data
 
         #region IEquatable
 
-        public bool Equals(Project other)
+        public bool Equals(ProjectDm other)
         {
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return Id == other.Id &&
-                   IsSubProject == other.IsSubProject &&
+                   SubProject == other.SubProject &&
                    Version == other.Version &&
                    Name == other.Name &&
                    Description == other.Description &&
@@ -57,14 +57,14 @@ namespace Mb.Models.Data
         {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Project) obj);
+            return obj.GetType() == GetType() && Equals((ProjectDm) obj);
         }
 
         public override int GetHashCode()
         {
             var hashCode = new HashCode();
             hashCode.Add(Id);
-            hashCode.Add(IsSubProject);
+            hashCode.Add(SubProject);
             hashCode.Add(Version);
             hashCode.Add(Name);
             hashCode.Add(Description);
@@ -79,7 +79,7 @@ namespace Mb.Models.Data
 
         #region IVersionable
 
-        public Validation HasIllegalChanges(Project other)
+        public Validation HasIllegalChanges(ProjectDm other)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
@@ -88,7 +88,7 @@ namespace Mb.Models.Data
             return validation;
         }
 
-        public VersionStatus CalculateVersionStatus(Project other, ProjectEditData editData)
+        public VersionStatus CalculateVersionStatus(ProjectDm other, ProjectEditData editData)
         {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));

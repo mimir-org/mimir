@@ -45,7 +45,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProjectDm), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -58,7 +58,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var createdSubProject = await _projectService.CreateProject(subProjectAm);
+                var createdSubProject = await _projectService.Create(subProjectAm);
                 return StatusCode(201, createdSubProject);
             }
             catch (MimirorgBadRequestException e)
@@ -115,7 +115,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectDm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -129,9 +129,9 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.GetProject(id, null);
+                var data = await _projectService.Get(id);
 
-                if (data is { IsSubProject: false })
+                if (data is { SubProject: false })
                     return BadRequest("This is not a subProject");
 
                 return Ok(data);

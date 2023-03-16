@@ -39,7 +39,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="relation">Relation connection data</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if aspectObjects and connectors is not defined in RDF file</exception>
-        public static void ResolveConnection(this ConnectionAm connection, IOntologyService ontologyService, ProjectAm project, RelationConnector relation, ProjectData projectData)
+        public static void ResolveConnection(this ConnectionAm connection, IOntologyService ontologyService, ProjectUpdateAm project, RelationConnector relation, ProjectData projectData)
         {
             var fromAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Id == relation.ParentIri);
             var toAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Id == relation.ChildIri);

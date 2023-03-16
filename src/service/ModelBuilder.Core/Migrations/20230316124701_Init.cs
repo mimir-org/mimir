@@ -115,8 +115,8 @@ namespace Mb.Core.Migrations
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

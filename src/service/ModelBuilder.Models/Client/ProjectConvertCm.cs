@@ -1,9 +1,9 @@
 using Mb.Models.Common;
 using System.ComponentModel.DataAnnotations;
 
-namespace Mb.Models.Application
+namespace Mb.Models.Client
 {
-    public class ProjectFileAm
+    public class ProjectConvertCm
     {
         [Required]
         public string ParserId { get; set; }

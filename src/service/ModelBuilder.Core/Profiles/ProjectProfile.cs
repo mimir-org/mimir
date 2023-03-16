@@ -3,9 +3,11 @@ using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Client;
 using Mb.Models.Common;
+using Mb.Models.Const;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
+using System;
 
 namespace Mb.Core.Profiles
 {
@@ -13,48 +15,47 @@ namespace Mb.Core.Profiles
     {
         public ProjectProfile(IHttpContextAccessor contextAccessor, ICommonRepository commonRepository)
         {
-            CreateMap<Project, ProjectItemCm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            CreateMap<ProjectCreateAm, ProjectDm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId(ServerEndpoint.Project)))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => "1.0"))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? "Unknown"))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => DateTime.Now.ToUniversalTime()));
+
+            CreateMap<ProjectDm, ProjectCm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created));
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.AspectObjects, opt => opt.MapFrom(src => src.AspectObjects))
+                .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-            CreateMap<ProjectAm, Project>()
+            CreateMap<ProjectUpdateAm, ProjectDm>()
                 .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Version, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
+                .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.IsSubProject))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? src.UpdatedBy))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? "Unknown"))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? src.CreatedBy))
-                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.UseDestinationValue())
+                .ForMember(dest => dest.Created, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.AspectObjects, opt => opt.MapFrom(src => src.AspectObjects))
                 .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-            CreateMap<Project, ProjectAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
-                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
-                .ForMember(dest => dest.AspectObjects, opt => opt.MapFrom(src => src.AspectObjects))
-                .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
-
-            CreateMap<Project, LibrarySubProjectVersion>()
+            CreateMap<ProjectDm, LibrarySubProjectVersion>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
 
-            CreateMap<Project, LibrarySubProject>()
+            CreateMap<ProjectDm, LibrarySubProject>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))

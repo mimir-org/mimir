@@ -8,8 +8,8 @@ namespace Mb.Models.Abstract
     public interface IModelBuilderParser : IModuleInterface
     {
         FileFormat GetFileFormat();
-        Task<byte[]> SerializeProject(Project project);
-        Task<Project> DeserializeProject(byte[] data);
-        Task<ProjectAm> DeserializeProjectAm(byte[] data);
+        Task<byte[]> SerializeProject(ProjectDm project);
+        Task<ProjectDm> DeserializeProject(byte[] data);
+        Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data);
     }
 }

@@ -60,21 +60,21 @@ namespace Mb.Core.Controllers.V1
         /// <param name="project"></param>
         /// <returns></returns>
         [HttpPost("")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> CreateNewProject([FromBody] CreateProjectAm project)
+        public async Task<IActionResult> Create([FromBody] ProjectCreateAm project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var createdProject = await _projectService.CreateProject(project);
-                return StatusCode(201, createdProject);
+                var projectCm = await _projectService.Create(project);
+                return StatusCode(201, projectCm);
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("search")]
-        [ProducesResponseType(typeof(IEnumerable<ProjectItemCm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProjectCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -98,7 +98,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _projectService.GetProjectList(name, 0, 10).ToList();
+                var data = _projectService.Get(name, 0, 10).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -128,7 +128,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.GetProject(id, null);
+                var data = await _projectService.Get(id);
                 return Ok(data);
             }
             catch (MimirorgNotFoundException)
@@ -148,13 +148,13 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectConverter"></param>
         /// <returns></returns>
         [HttpPost("convert")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectConvertCm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> ConvertProject([FromBody] ProjectConverterAm projectConverter)
+        public async Task<IActionResult> ConvertProject([FromBody] ProjectConvertAm projectConverter)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -198,14 +198,14 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm projectAm)
+        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectUpdateAm projectAm)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _projectService.UpdateProject(id, null, projectAm, _commonRepository.GetDomain());
+                await _projectService.Update(id, projectAm, _commonRepository.GetDomain());
                 return Ok(null);
             }
             catch (MimirorgDuplicateException e)
@@ -229,7 +229,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -238,7 +238,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                await _projectService.DeleteProject(id);
+                await _projectService.Delete(id);
                 return Ok();
             }
             catch (MimirorgNotFoundException e)

@@ -11,6 +11,7 @@ using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
 using Mb.Models.Application;
+using Mb.Models.Client;
 using Mb.Models.Common;
 
 namespace Mb.Services.Services
@@ -20,15 +21,17 @@ namespace Mb.Services.Services
         private readonly IModuleService _moduleService;
         private readonly IProjectService _projectService;
         private readonly ICommonRepository _commonRepository;
+        private readonly IProjectRepository _projectRepository;
 
         #region Constructors
 
         public ProjectFileService(IModuleService moduleService, IProjectService projectService,
-            ICommonRepository commonRepository)
+            ICommonRepository commonRepository, IProjectRepository projectRepository)
         {
             _moduleService = moduleService;
             _projectService = projectService;
             _commonRepository = commonRepository;
+            _projectRepository = projectRepository;
         }
 
         #endregion
@@ -43,7 +46,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgInvalidOperationException"></exception>
         /// <exception cref="MimirorgBadRequestException"></exception>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public async Task<ProjectAm> ResolveProject(ProjectFileAm projectFile)
+        public async Task<ProjectUpdateAm> ResolveProject(ProjectConvertCm projectFile)
         {
             if (projectFile == null)
                 throw new MimirorgInvalidOperationException("ProjectFile is null");
@@ -84,7 +87,7 @@ namespace Mb.Services.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            await ImportProject(new ProjectFileAm { ParserId = id.ToString(), FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
+            await ImportProject(new ProjectConvertCm { ParserId = id.ToString(), FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         /// <exception cref="MimirorgInvalidOperationException"></exception>
         /// <exception cref="MimirorgNullReferenceException"></exception>
-        public async Task<ProjectFileAm> ConvertProject(ProjectConverterAm projectConverter)
+        public async Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter)
         {
             if (!Guid.TryParse(projectConverter.ParserId, out var parserId))
             {
@@ -105,13 +108,15 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
-            var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Id);
+            await _projectService.Update(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+
+            var project = await _projectRepository.GetAsyncComplete(projectConverter.Project.Id);
+
             if (project == null)
                 throw new MimirorgNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(project);
-            var projectFile = new ProjectFileAm
+            var projectFile = new ProjectConvertCm
             {
                 FileContent = Encoding.UTF8.GetString(bytes),
                 ParserId = projectConverter.ParserId,
@@ -131,7 +136,7 @@ namespace Mb.Services.Services
         /// <param name="projectFile"></param>
         /// <returns></returns>
         /// <exception cref="MimirorgInvalidOperationException"></exception>
-        private async Task ImportProject(ProjectFileAm projectFile)
+        private async Task ImportProject(ProjectConvertCm projectFile)
         {
             if (projectFile == null)
                 throw new MimirorgInvalidOperationException("ProjectFile is null");
@@ -147,15 +152,15 @@ namespace Mb.Services.Services
                 throw new MimirorgInvalidOperationException(
                     "You can't import an project that is null or missing id");
 
-            var exist = _projectService.ProjectExist(project.Id, project.Id);
+            var exist = _projectService.Exist(project.Id, project.Id);
 
             if (exist)
             {
-                await _projectService.UpdateProject(project.Id, project.Id, project, _commonRepository.GetDomain());
+                await _projectService.Update(project.Id, project, _commonRepository.GetDomain());
                 return;
             }
 
-            _ = await _projectService.CreateProject(project);
+            _ = await _projectService.Create(project);
         }
 
         #endregion Private

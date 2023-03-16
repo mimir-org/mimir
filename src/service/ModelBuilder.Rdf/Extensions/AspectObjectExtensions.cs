@@ -22,7 +22,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="project"></param>
         /// <param name="ontologyService"></param>
         /// <param name="projectData">Record of ICollections</param>
-        public static void AssertAspectObject(this AspectObject aspectObject, Project project, IOntologyService ontologyService, ProjectData projectData)
+        public static void AssertAspectObject(this AspectObject aspectObject, ProjectDm project, IOntologyService ontologyService, ProjectData projectData)
         {
             var parentAspectObject = aspectObject.GetParent(project);
 
@@ -89,7 +89,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="aspectObject"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        public static AspectObject GetParent(this AspectObject aspectObject, Project project)
+        public static AspectObject GetParent(this AspectObject aspectObject, ProjectDm project)
         {
             var connector = aspectObject.Connectors.OfType<ConnectorPartOf>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input);
             if (connector == null)
@@ -107,7 +107,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         /// TODO: This is not correct. We have more values ex. ++ etc.
-        public static string RdsString(this AspectObject aspectObject, Project project)
+        public static string RdsString(this AspectObject aspectObject, ProjectDm project)
         {
             if (aspectObject.AspectObjectType == AspectObjectType.Root)
             {

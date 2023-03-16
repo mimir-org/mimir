@@ -104,7 +104,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="c"></param>
         /// <param name="project"></param>
         /// <returns></returns>
-        public static bool IsConnected(this Connector c, Project project)
+        public static bool IsConnected(this Connector c, ProjectDm project)
         {
             return project.Connections.Any(connection => connection.FromConnector == c.Id || connection.ToConnector == c.Id);
         }

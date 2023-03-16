@@ -37,7 +37,7 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, Project project,
+        public IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, ProjectDm project,
             string invokedByDomain)
         {
             if (project?.Connections == null || !project.Connections.Any() || original == null)

@@ -12,7 +12,7 @@ namespace Mb.Data.Contracts
 {
     public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObject>
     {
-        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, Project project,
+        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, ProjectDm project,
             string invokedByDomain);
 
         IEnumerable<(AspectObject aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObject> delete, string projectId,
