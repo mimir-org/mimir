@@ -20,7 +20,7 @@ namespace Mb.Models.Data
         public string MainProject { get; set; }
 
         [Required]
-        public virtual string Project { get; set; }
+        public string Project { get; set; }
 
         #region IEquatable
 

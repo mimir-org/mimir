@@ -61,10 +61,11 @@ namespace Mb.Models.Data
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
         public string Domain => Id.ResolveDomain();
+
         [NotMapped]
-        public virtual ICollection<Connector> Connectors { get; set; } = new List<Connector>();
+        public List<Connector> Connectors { get; set; } = new();
         [NotMapped]
-        public virtual ICollection<Attribute> Attributes { get; set; } = new List<Attribute>();
+        public List<Attribute> Attributes { get; set; } = new();
 
         #endregion Properties
 

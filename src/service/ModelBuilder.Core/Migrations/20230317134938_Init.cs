@@ -92,6 +92,7 @@ namespace Mb.Core.Migrations
                     Direction = table.Column<int>(type: "int", nullable: false),
                     Inside = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Outside = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Project = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AspectObject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),

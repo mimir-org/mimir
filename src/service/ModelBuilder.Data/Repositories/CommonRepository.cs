@@ -73,6 +73,15 @@ namespace Mb.Data.Repositories
         }
 
         /// <summary>
+        /// Get the URL for the server
+        /// </summary>
+        /// <returns></returns>
+        public string GetServerUrl(string serverEndpoint)
+        {
+            return _contextAccessor.GetBaseUrl() + $"{serverEndpoint}";
+        }
+
+        /// <summary>
         /// Get current domain
         /// </summary>
         /// <returns>Registered domain</returns>

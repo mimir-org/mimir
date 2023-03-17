@@ -12,6 +12,7 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Inside { get; set; }
         public string Outside { get; set; }
+        public string Project { get; set; }
 
         public string Domain => Id.ResolveDomain();
 

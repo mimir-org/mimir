@@ -18,6 +18,12 @@ namespace Mb.Data.Contracts
         string CreateId(string serverEndpoint);
 
         /// <summary>
+        /// Get the URL for the server
+        /// </summary>
+        /// <returns></returns>
+        string GetServerUrl(string serverEndpoint);
+
+        /// <summary>
         /// Get current domain
         /// </summary>
         /// <returns>Registered domain</returns>

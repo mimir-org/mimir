@@ -13,7 +13,6 @@ using Mb.Models.Data;
 using Mimirorg.Common.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Models.Records;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Mb.Models.Client;
@@ -28,6 +27,7 @@ namespace Mb.Data.Repositories
         private readonly IMapper _mapper;
         private readonly IAspectObjectRepository _aspectObjectRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IConnectionRepository _connectionRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly DatabaseConfiguration _databaseConfiguration;
         private readonly ICacheRepository _cacheRepository;
@@ -35,7 +35,7 @@ namespace Mb.Data.Repositories
 
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
             IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
-            ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
+            ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository, IConnectionRepository connectionRepository) : base(dbContext)
         {
             _mapper = mapper;
             _aspectObjectRepository = aspectObjectRepository;
@@ -44,6 +44,7 @@ namespace Mb.Data.Repositories
             _databaseConfiguration = databaseConfiguration?.Value;
             _cacheRepository = cacheRepository;
             _modelBuilderProcRepository = modelBuilderProcRepository;
+            _connectionRepository = connectionRepository;
         }
 
         /// <summary>
@@ -54,20 +55,9 @@ namespace Mb.Data.Repositories
         public async Task<ProjectDm> GetAsyncComplete(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
-                throw new MimirorgNullReferenceException("The ID can't be null.");
+                throw new MimirorgNullReferenceException("The Id can't be null.");
 
-            var key = id.ResolveKey();
-
-            if (!string.IsNullOrWhiteSpace(key))
-            {
-                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id));
-                return project;
-            }
-            else
-            {
-                var project = await GetProjectAsync(id);
-                return project;
-            }
+            return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id)); 
         }
 
         /// <summary>
@@ -77,20 +67,20 @@ namespace Mb.Data.Repositories
         /// <returns>Complete project</returns>
         public Task<ProjectDm> GetProjectAsync(string id)
         {
-            var project =
-                FindBy(x => x.Id == id)
-                    .Include(x => x.Connections)
-                    .Include("Connections.FromAspectObject")
-                    .Include("Connections.ToAspectObject")
-                    .Include("Connections.FromConnector")
-                    .Include("Connections.ToConnector")
-                    .Include(x => x.AspectObjects)
-                    .Include("AspectObjects.Attributes")
-                    .Include("AspectObjects.Connectors")
-                    .Include("AspectObjects.Connectors.Attributes")
-                    .AsNoTracking()
-                    .AsSplitQuery()
-                    .FirstOrDefault();
+            var project = FindBy(x => x.Id == id).FirstOrDefault();
+
+            if(project == null)
+                throw new MimirorgNotFoundException($"The project with id {id} can't be found.");
+
+            project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
+            project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();
+
+            foreach (var aspectObject in project.AspectObjects)
+            {
+                aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
+                aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id));
+            }
+
             return Task.FromResult(project);
         }
 

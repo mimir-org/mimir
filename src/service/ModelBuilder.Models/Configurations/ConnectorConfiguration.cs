@@ -15,6 +15,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Direction).HasColumnName("Direction").IsRequired();
             builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
             builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
+            builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
             builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired();
         }
     }

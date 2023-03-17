@@ -28,11 +28,11 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public string Domain => Id.ResolveDomain();
 
-        [NotMapped]
-        public virtual ICollection<AspectObject> AspectObjects { get; set; }
+        [NotMapped] 
+        public List<AspectObject> AspectObjects { get; set; } = new();
 
-        [NotMapped]
-        public virtual ICollection<Connection> Connections { get; set; }
+        [NotMapped] 
+        public List<Connection> Connections { get; set; } = new();
 
         #endregion
 

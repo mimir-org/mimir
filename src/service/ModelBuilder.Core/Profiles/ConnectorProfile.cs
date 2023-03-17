@@ -14,6 +14,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
                 .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
                 .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
+                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
                 .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
 
             CreateMap<ConnectorTerminalAm, ConnectorTerminal>()
@@ -32,6 +33,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
                 .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
                 .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
+                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
                 .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
 
             CreateMap<ConnectorTerminal, ConnectorTerminalAm>()

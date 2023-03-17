@@ -83,7 +83,12 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
         public async Task<ProjectCm> GetById(string id)
         {
-            var project = await _projectRepository.GetAsyncComplete(id);
+            if (string.IsNullOrWhiteSpace(id))
+                throw new MimirorgNotFoundException("Id can't be null og empty.");
+
+            var projectId = id.Length > Guid.NewGuid().ToString().Length ? id : _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}";
+
+            var project = await _projectRepository.GetAsyncComplete(projectId);
 
             if (project == null)
                 throw new MimirorgNotFoundException($"Could not find project with id: {id}");
@@ -479,6 +484,7 @@ namespace Mb.Services.Services
                         Name = "PartOf",
                         Inside = Guid.NewGuid().ToString(),
                         Outside = Guid.NewGuid().ToString(),
+                        Project = projectId,
                         Direction = ConnectorDirection.Output,
                         AspectObject = aspectObjectId
                     }

@@ -17,6 +17,7 @@ namespace Mb.Models.Data
         public ConnectorDirection Direction { get; set; }
         public string Inside { get; set; }
         public string Outside { get; set; }
+        public string Project { get; set; }
         public string AspectObject { get; set; }
 
         public string Domain => Id.ResolveDomain();
