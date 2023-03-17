@@ -160,8 +160,8 @@ namespace EventHubModule
 
                 var hasProject = projectService.Exist(project.Id, project.Id);
                 _ = hasProject
-                    ? projectService.Update(project.Id, project, e.SenderDomain)
-                    : projectService.Create(project);
+                    ? projectService.UpdateProject(project.Id, project, e.SenderDomain)
+                    : projectService.UpdateProject(project);
             }
             catch (Exception ex)
             {

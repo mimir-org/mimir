@@ -48,6 +48,11 @@ namespace Mb.Models.Abstract
             return await DbSet.AddAsync(entity);
         }
 
+        public virtual async Task CreateAsync(IEnumerable<TEntity> entities)
+        {
+            await DbSet.AddRangeAsync(entities);
+        }
+
         public virtual void Update(TEntity entity)
         {
             if (Context.Entry(entity).State == EntityState.Detached)

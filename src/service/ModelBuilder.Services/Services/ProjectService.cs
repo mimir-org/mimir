@@ -69,7 +69,7 @@ namespace Mb.Services.Services
         /// <param name="from">From number</param>
         /// <param name="number">Number of items</param>
         /// <returns>A list project list items</returns>
-        public IEnumerable<ProjectCm> Get(string name, int from, int number)
+        public IEnumerable<ProjectCm> GetBySearch(string name, int from, int number)
         {
             return _projectRepository.GetProjectList(name, from, number);
         }
@@ -81,7 +81,7 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <returns>The actual project</returns>
         /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
-        public async Task<ProjectCm> Get(string id)
+        public async Task<ProjectCm> GetById(string id)
         {
             var project = await _projectRepository.GetAsyncComplete(id);
 
@@ -96,7 +96,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectCreateAm"></param>
         /// <returns></returns>
-        public async Task<ProjectCm> Create(ProjectCreateAm projectCreateAm)
+        public async Task<ProjectCm> CreateProject(ProjectCreateAm projectCreateAm)
         {
             if (_projectRepository.FindBy(x => x.Name.ToLower().Equals(projectCreateAm.Name.ToLower())).FirstOrDefault() != null)
                 throw new MimirorgInvalidOperationException("There already exist a project with the same name");
@@ -113,6 +113,12 @@ namespace Mb.Services.Services
             await _projectRepository.CreateAsync(projectDm);
             await _projectRepository.SaveAsync();
 
+            await _aspectObjectRepository.CreateAsync(projectDm.AspectObjects);
+            await _aspectObjectRepository.SaveAsync();
+
+            await _connectorRepository.CreateAsync(projectDm.AspectObjects.SelectMany(x => x.Connectors));
+            await _aspectObjectRepository.SaveAsync();
+
             return _mapper.Map<ProjectCm>(projectDm);
         }
 
@@ -123,10 +129,10 @@ namespace Mb.Services.Services
         /// <returns>Completed Task</returns>
         public async Task ConvertSubProject(string projectId)
         {
-            var project = await Get(projectId);
+            var project = await GetById(projectId);
             var am = _mapper.Map<ProjectUpdateAm>(project);
             am.IsSubProject = !am.IsSubProject;
-            await Update(am.Id, am, _commonRepository.GetDomain());
+            await UpdateProject(am.Id, am, _commonRepository.GetDomain());
         }
 
         /// <summary>
@@ -137,7 +143,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, aspectObject or connection with same id.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-        public async Task<ProjectCm> Create(ProjectUpdateAm project)
+        public async Task<ProjectCm> UpdateProject(ProjectUpdateAm project)
         {
             if (project == null)
                 throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -182,7 +188,7 @@ namespace Mb.Services.Services
             await _remapService.DeConstruct(newProject, projectData);
             await _projectRepository.CreateProject(newProject, projectData);
 
-            var updatedProject = await Get(newProject.Id);
+            var updatedProject = await GetById(newProject.Id);
             return _mapper.Map<ProjectCm>(updatedProject);
         }
 
@@ -191,7 +197,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
-        public async Task<ProjectCm> Create(SubProjectAm subProjectAm)
+        public async Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm)
         {
             try
             {
@@ -225,7 +231,7 @@ namespace Mb.Services.Services
                 await _remapService.DeConstruct(newSubProject, projectData);
                 await _projectRepository.CreateProject(newSubProject, projectData);
 
-                var updatedProject = await Get(newSubProject.Id);
+                var updatedProject = await GetById(newSubProject.Id);
                 return _mapper.Map<ProjectCm>(updatedProject);
             }
             catch (Exception e)
@@ -246,14 +252,13 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <param name="project"></param>
         /// <param name="invokedByDomain"></param>
-        /// <param name="iri"></param>
         /// <returns>Update Project Task</returns>
         /// <exception cref="MimirorgInvalidOperationException">Throws if invoking domain is not set.</exception>
         /// <exception cref="MimirorgNotFoundException">Throws if project is missing from database.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         /// TODO: We need to handle invokedByDomain in update process
-        public async Task Update(string id, ProjectUpdateAm project, string invokedByDomain)
+        public async Task UpdateProject(string id, ProjectUpdateAm project, string invokedByDomain)
         {
             if (string.IsNullOrWhiteSpace(id) || project == null)
                 throw new MimirorgNullReferenceException("Id must have value. Project can't be null.");
@@ -317,7 +322,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        public async Task Delete(string projectId)
+        public async Task DeleteProject(string projectId)
         {
             var existingProject = await _projectRepository.GetProjectAsync(projectId);
             if (existingProject == null)
@@ -334,7 +339,7 @@ namespace Mb.Services.Services
         /// <param name="projectId"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id)
+        public async Task<(byte[] file, FileFormat format)> DownloadProject(string projectId, Guid id)
         {
             var project = await _projectRepository.GetAsyncComplete(projectId);
 
@@ -413,7 +418,7 @@ namespace Mb.Services.Services
             if (rootOrigin != null)
             {
                 JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosX = (int) prepare.DropPositionX;
-                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosY = (int)prepare.DropPositionY;
+                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosY = (int) prepare.DropPositionY;
             }
 
             // TODO: Resolve this
@@ -443,61 +448,52 @@ namespace Mb.Services.Services
         /// <returns></returns>
         private AspectObject CreateInitAspectObject(Aspect aspect, string projectId)
         {
-            string name;
-            int positionX;
-
-            switch (aspect)
-            {
-                case Aspect.Function:
-                    name = "Function";
-                    positionX = 150;
-                    break;
-                case Aspect.Product:
-                    name = "Product";
-                    positionX = 600;
-                    break;
-                case Aspect.Location:
-                    name = "Location";
-                    positionX = 1050;
-                    break;
-                case Aspect.NotSet:
-                case Aspect.None:
-                default:
-                    name = "";
-                    positionX = 0;
-                    break;
-            }
+            var aspectObjectId = _commonRepository.CreateId(ServerEndpoint.AspectObject);
+            var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
             var aspectObject = new AspectObject
             {
-                Id = _commonRepository.CreateId(ServerEndpoint.AspectObject),
-                Name = name,
-                Label = name,
-                Position = JsonConvert.SerializeObject(new AspectObjectPosition
+                Id = aspectObjectId,
+                Name = aspectName,
+                Label = aspectName,
+                Description = $"The root {aspectName.ToLower()} aspect object",
+                TypeReference = JsonConvert.SerializeObject(new List<TypeReference>
+                {
+                    new()
                     {
-                        ThreePosX = positionX,
-                        ThreePosY = 5
-                    }),
-                Connectors = new List<Connector>(),
+                        Name = aspectName,
+                        Iri = aspectObjectId
+                    }
+                }),
+                Position = JsonConvert.SerializeObject(new AspectObjectPosition
+                {
+                    ThreePosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
+                    ThreePosY = 5
+                }),
+
+                Connectors = new List<Connector>
+                {
+                    new ConnectorPartOf
+                    {
+                        Id = _commonRepository.CreateId(ServerEndpoint.Connector),
+                        Name = "PartOf",
+                        Inside = Guid.NewGuid().ToString(),
+                        Outside = Guid.NewGuid().ToString(),
+                        Direction = ConnectorDirection.Output,
+                        AspectObject = aspectObjectId
+                    }
+                },
+
                 Version = "1.0",
                 AspectObjectType = AspectObjectType.Root,
                 MainProject = projectId,
                 Aspect = aspect,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                LibraryType = name,
+                LibraryType = aspectObjectId,
                 Project = projectId
             };
 
-            var connector = new ConnectorPartOf
-            {
-                Id = _commonRepository.CreateId(ServerEndpoint.Connector),
-                Name = "PartOf",
-                Direction = ConnectorDirection.Output,
-                AspectObject = aspectObject.Id
-            };
-
-            aspectObject.Connectors.Add(connector);
             return aspectObject;
         }
 

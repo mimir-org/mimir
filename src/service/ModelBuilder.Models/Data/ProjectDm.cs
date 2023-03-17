@@ -18,15 +18,15 @@ namespace Mb.Models.Data
         #region Properties
 
         public string Id { get; set; }
-        public string Domain => Id.ResolveDomain();
-        public bool SubProject { get; set; }
         public string Version { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string UpdatedBy { get; set; }
-        public DateTime? Updated { get; set; }
+        public bool SubProject { get; set; }
         public string CreatedBy { get; set; }
         public DateTime Created { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime? Updated { get; set; }
+        public string Domain => Id.ResolveDomain();
 
         [NotMapped]
         public virtual ICollection<AspectObject> AspectObjects { get; set; }

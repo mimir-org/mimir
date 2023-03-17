@@ -25,8 +25,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
-            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
-            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
+            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false);
+            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
             builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
             builder.Property(p => p.Created).HasColumnName("Created").IsRequired();
             builder.Property(p => p.LibraryType).HasColumnName("LibraryType").IsRequired();

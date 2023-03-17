@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230316124701_Init")]
+    [Migration("20230317102800_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -114,12 +114,10 @@ namespace Mb.Core.Migrations
                         .HasColumnName("TypeReference");
 
                     b.Property<DateTime?>("Updated")
-                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UpdatedBy");
 

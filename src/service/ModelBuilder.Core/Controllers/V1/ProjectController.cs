@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Data;
 using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -66,14 +65,14 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> Create([FromBody] ProjectCreateAm project)
+        public async Task<IActionResult> CreateNewProject([FromBody] ProjectCreateAm project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var projectCm = await _projectService.Create(project);
+                var projectCm = await _projectService.CreateProject(project);
                 return StatusCode(201, projectCm);
             }
             catch (Exception e)
@@ -98,7 +97,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = _projectService.Get(name, 0, 10).ToList();
+                var data = _projectService.GetBySearch(name, 0, 10).ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -128,7 +127,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.Get(id);
+                var data = await _projectService.GetById(id);
                 return Ok(data);
             }
             catch (MimirorgNotFoundException)
@@ -205,7 +204,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _projectService.Update(id, projectAm, _commonRepository.GetDomain());
+                await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
                 return Ok(null);
             }
             catch (MimirorgDuplicateException e)
@@ -238,7 +237,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                await _projectService.Delete(id);
+                await _projectService.DeleteProject(id);
                 return Ok();
             }
             catch (MimirorgNotFoundException e)
@@ -272,7 +271,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var (file, format) = await _projectService.CreateFile(id, new Guid(parser));
+                var (file, format) = await _projectService.DownloadProject(id, new Guid(parser));
                 return File(file, format.ContentType, $"project_{id}.{format.FileExtension}");
             }
             catch (ModelBuilderModuleException e)
@@ -306,7 +305,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
         [RequestSizeLimit(100_000_000)]
-        public async Task<IActionResult> UploadProject(string parser, IFormFile file,
+        public async Task<IActionResult> ImportProject(string parser, IFormFile file,
             CancellationToken cancellationToken)
         {
             try

@@ -111,12 +111,10 @@ namespace Mb.Core.Migrations
                         .HasColumnName("TypeReference");
 
                     b.Property<DateTime?>("Updated")
-                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UpdatedBy");
 

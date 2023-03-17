@@ -21,10 +21,28 @@ namespace Mb.Models.Data
         #region Properties
 
         public string Id { get; set; }
-        public string Domain => Id.ResolveDomain();
-        public string Rds { get; set; }
+        public string Version { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public string Label { get; set; }
         public string Description { get; set; }
-
+        public Aspect Aspect { get; set; }
+        public AspectObjectType AspectObjectType { get; set; }
+        public virtual string Project { get; set; }
+        [Required]
+        public string MainProject { get; set; }
+        public string LibraryType { get; set; }
+        [Required]
+        public string Position { get; set; }
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReference { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? Created { get; set; }
+        
+        public string UpdatedBy { get; set; }
+        public DateTime? Updated { get; set; }
+        public string Rds { get; set; }
         [NotMapped]
         public virtual ICollection<TypeReference> TypeReferenceObjects
         {
@@ -35,49 +53,18 @@ namespace Mb.Models.Data
 
                 return !string.IsNullOrWhiteSpace(TypeReference) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReference) : null;
             }
-
             set => _typeReferences = value;
         }
-
-        [JsonIgnore]
-        [TSExclude]
-        public string TypeReference { get; set; }
-
-        [Required]
-        public string Name { get; set; }
-
-        public string Label { get; set; }
-
-        [Required]
-        public string Position { get; set; }
-
+        public string Symbol { get; set; }
+        public string Purpose { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
-
-        public string UpdatedBy { get; set; }
-        public DateTime? Updated { get; set; }
-        public DateTime? Created { get; set; }
-        public string CreatedBy { get; set; }
-        public string LibraryType { get; set; }
-        public string Version { get; set; }
-
-        public Aspect Aspect { get; set; }
-        public AspectObjectType AspectObjectType { get; set; }
-
-        [Required]
-        public string MainProject { get; set; }
-
-        public string Symbol { get; set; }
-        public string Purpose { get; set; }
-
+        public string Domain => Id.ResolveDomain();
         [NotMapped]
-        public virtual ICollection<Connector> Connectors { get; set; }
-
+        public virtual ICollection<Connector> Connectors { get; set; } = new List<Connector>();
         [NotMapped]
-        public virtual ICollection<Attribute> Attributes { get; set; }
-
-        public virtual string Project { get; set; }
+        public virtual ICollection<Attribute> Attributes { get; set; } = new List<Attribute>();
 
         #endregion Properties
 

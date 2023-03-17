@@ -108,7 +108,7 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.Update(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
 
             var project = await _projectRepository.GetAsyncComplete(projectConverter.Project.Id);
 
@@ -156,11 +156,11 @@ namespace Mb.Services.Services
 
             if (exist)
             {
-                await _projectService.Update(project.Id, project, _commonRepository.GetDomain());
+                await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
                 return;
             }
 
-            _ = await _projectService.Create(project);
+            _ = await _projectService.UpdateProject(project);
         }
 
         #endregion Private

@@ -58,7 +58,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var createdSubProject = await _projectService.Create(subProjectAm);
+                var createdSubProject = await _projectService.CreateSubProject(subProjectAm);
                 return StatusCode(201, createdSubProject);
             }
             catch (MimirorgBadRequestException e)
@@ -129,7 +129,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.Get(id);
+                var data = await _projectService.GetById(id);
 
                 if (data is { SubProject: false })
                     return BadRequest("This is not a subProject");

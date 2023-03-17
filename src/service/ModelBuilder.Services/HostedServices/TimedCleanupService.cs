@@ -55,7 +55,7 @@ namespace Mb.Services.HostedServices
                     return;
 
                 var service = scope.ServiceProvider.GetRequiredService<IProjectService>();
-                var tasks = cleanUpData.Select(id => service.Delete(id)).ToArray();
+                var tasks = cleanUpData.Select(id => service.DeleteProject(id)).ToArray();
                 Task.WaitAll(tasks);
 
             }

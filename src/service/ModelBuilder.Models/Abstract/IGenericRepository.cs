@@ -17,6 +17,7 @@ namespace Mb.Models.Abstract
         Task<TEntity> GetAsync(int id);
         Task<TEntity> GetAsync(string id);
         Task<EntityEntry<TEntity>> CreateAsync(TEntity entity);
+        Task CreateAsync(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         Task Delete(int id);
         Task Delete(string id);

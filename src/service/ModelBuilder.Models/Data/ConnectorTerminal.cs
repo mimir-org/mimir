@@ -9,10 +9,10 @@ namespace Mb.Models.Data
 {
     public class ConnectorTerminal : Connector, IEquatable<ConnectorTerminal>
     {
-        public string Color { get; set; }
         public string TerminalType { get; set; }
         public string TerminalParentType { get; set; }
         public string TypeReference { get; set; }
+        public string Color { get; set; }
 
         [NotMapped]
         public ICollection<Attribute> Attributes { get; set; }
