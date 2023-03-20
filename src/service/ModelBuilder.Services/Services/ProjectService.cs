@@ -86,7 +86,7 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(id))
                 throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-            var projectId = id.Length > Guid.NewGuid().ToString().Length ? id : _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}";
+            var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}" : id;
 
             var project = await _projectRepository.GetAsyncComplete(projectId);
 
