@@ -135,7 +135,7 @@ namespace Mb.Services.Services
         public async Task ConvertSubProject(string projectId)
         {
             var project = await GetById(projectId);
-            var am = _mapper.Map<ProjectUpdateAm>(project);
+            var am = _mapper.Map<ProjectAm>(project);
             am.IsSubProject = !am.IsSubProject;
             await UpdateProject(am.Id, am, _commonRepository.GetDomain());
         }
@@ -148,7 +148,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, aspectObject or connection with same id.</exception>
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-        public async Task<ProjectCm> UpdateProject(ProjectUpdateAm project)
+        public async Task<ProjectCm> UpdateProject(ProjectAm project)
         {
             if (project == null)
                 throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -218,7 +218,7 @@ namespace Mb.Services.Services
                 if (fromProject == null)
                     throw new MimirorgInvalidOperationException("The original project does not exist");
 
-                var projectAm = _mapper.Map<ProjectUpdateAm>(fromProject);
+                var projectAm = _mapper.Map<ProjectAm>(fromProject);
 
                 projectAm.Name = subProjectAm.Name;
                 projectAm.Description = subProjectAm.Description;
@@ -263,7 +263,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         /// TODO: We need to handle invokedByDomain in update process
-        public async Task UpdateProject(string id, ProjectUpdateAm project, string invokedByDomain)
+        public async Task UpdateProject(string id, ProjectAm project, string invokedByDomain)
         {
             if (string.IsNullOrWhiteSpace(id) || project == null)
                 throw new MimirorgNullReferenceException("Id must have value. Project can't be null.");
@@ -389,7 +389,7 @@ namespace Mb.Services.Services
             if (subProject == null)
                 throw new MimirorgNotFoundException("There is no sub-project with current id and version");
 
-            var projectAm = _mapper.Map<ProjectUpdateAm>(subProject);
+            var projectAm = _mapper.Map<ProjectAm>(subProject);
 
             // Save the project as a temporary project, the cleanup hosted service will remove this temp project later
             projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";

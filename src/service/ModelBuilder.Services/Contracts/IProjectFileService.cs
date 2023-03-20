@@ -10,7 +10,7 @@ namespace Mb.Services.Contracts
 {
     public interface IProjectFileService
     {
-        Task<ProjectUpdateAm> ResolveProject(ProjectConvertCm projectFile);
+        Task<ProjectAm> ResolveProject(ProjectConvertCm projectFile);
         Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id, FileFormat fileFormat);
         Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter);
     }

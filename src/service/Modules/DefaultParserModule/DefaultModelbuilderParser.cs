@@ -60,7 +60,7 @@ namespace DefaultParserModule
 
         public Task<byte[]> SerializeProject(ProjectDm project)
         {
-            var projectAm = _mapper.Map<ProjectUpdateAm>(project);
+            var projectAm = _mapper.Map<ProjectAm>(project);
 
             var result = JsonConvert.SerializeObject(projectAm, _serializerSettings);
             return Task.FromResult(Encoding.UTF8.GetBytes(result));
@@ -73,10 +73,10 @@ namespace DefaultParserModule
             return Task.FromResult(project);
         }
 
-        public Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data)
+        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = JsonConvert.DeserializeObject<ProjectUpdateAm>(valueAsString, _serializerSettings);
+            var project = JsonConvert.DeserializeObject<ProjectAm>(valueAsString, _serializerSettings);
             return Task.FromResult(project);
         }
     }

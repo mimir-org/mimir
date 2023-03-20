@@ -61,11 +61,11 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="rdf"></param>
         /// <returns></returns>
-        public ProjectUpdateAm BuildProject(IGraph rdf)
+        public ProjectAm BuildProject(IGraph rdf)
         {
             _ontologyRepository.LoadData(rdf);
 
-            var project = new ProjectUpdateAm();
+            var project = new ProjectAm();
             project.ResolveProjectInformation(this);
 
             if (string.IsNullOrWhiteSpace(project.Id))

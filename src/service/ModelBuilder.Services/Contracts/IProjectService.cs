@@ -14,8 +14,8 @@ namespace Mb.Services.Contracts
         Task<ProjectCm> CreateProject(ProjectCreateAm projectCreateAm);
         Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm);
         Task<(byte[] file, FileFormat format)> DownloadProject(string projectId, Guid id);
-        Task UpdateProject(string id, ProjectUpdateAm project, string invokedByDomain);
-        Task<ProjectCm> UpdateProject(ProjectUpdateAm project);
+        Task UpdateProject(string id, ProjectAm project, string invokedByDomain);
+        Task<ProjectCm> UpdateProject(ProjectAm project);
         Task ConvertSubProject(string projectId);
         Task<PrepareCm> PrepareForMerge(PrepareAm prepare);
         bool Exist(string projectId, string projectIri);

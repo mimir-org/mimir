@@ -7,7 +7,7 @@ using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Application
 {
-    public class ProjectUpdateAm : IValidatableObject
+    public class ProjectAm : IValidatableObject
     {
         [RequiredOne(nameof(Id))]
         public string Id { get; set; }

@@ -10,6 +10,6 @@ namespace Mb.Models.Abstract
         FileFormat GetFileFormat();
         Task<byte[]> SerializeProject(ProjectDm project);
         Task<ProjectDm> DeserializeProject(byte[] data);
-        Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data);
+        Task<ProjectAm> DeserializeProjectAm(byte[] data);
     }
 }

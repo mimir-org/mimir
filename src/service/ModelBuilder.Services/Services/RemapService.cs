@@ -85,7 +85,7 @@ namespace Mb.Services.Services
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The remap function will create new id's on project and all sub objects, if the
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
-        public IDictionary<string, string> Remap(ProjectUpdateAm project)
+        public IDictionary<string, string> Remap(ProjectAm project)
         {
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Id };
@@ -106,7 +106,7 @@ namespace Mb.Services.Services
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The clone function will create a new project and sub objects, based on
         /// the predefined object.</remarks>
-        public IDictionary<string, string> Clone(ProjectUpdateAm project)
+        public IDictionary<string, string> Clone(ProjectAm project)
         {
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId();
@@ -230,7 +230,7 @@ namespace Mb.Services.Services
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
-        public void RemapParentlessConnections(ProjectUpdateAm project)
+        public void RemapParentlessConnections(ProjectAm project)
         {
             var parentLessConnections = project.GetParentlessConnectors().ToList();
             foreach (var connection in parentLessConnections)

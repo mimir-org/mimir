@@ -62,7 +62,7 @@ namespace JsonLdParser
             return Task.FromResult(project);
         }
 
-        public Task<ProjectUpdateAm> DeserializeProjectAm(byte[] data)
+        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
             var graph = LoadGraph(valueAsString);

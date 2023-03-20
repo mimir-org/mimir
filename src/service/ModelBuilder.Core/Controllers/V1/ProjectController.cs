@@ -197,7 +197,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectUpdateAm projectAm)
+        public async Task<IActionResult> UpdateProject(string id, [FromBody] ProjectAm projectAm)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

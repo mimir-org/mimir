@@ -37,7 +37,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AspectObjects, opt => opt.MapFrom(src => src.AspectObjects))
                 .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-            CreateMap<ProjectUpdateAm, ProjectDm>()
+            CreateMap<ProjectAm, ProjectDm>()
                 .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Version, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

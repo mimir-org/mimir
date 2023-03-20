@@ -47,7 +47,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology service</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if project or ontology service is null</exception>
-        public static void ResolveProjectInformation(this ProjectUpdateAm project, IOntologyService ontologyService)
+        public static void ResolveProjectInformation(this ProjectAm project, IOntologyService ontologyService)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -76,7 +76,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
         /// <exception cref="MimirorgBadRequestException">Throws if missing root aspectObjects in rdf file, or bad rdf declaration</exception>
-        public static void ResolveAspectObjects(this ProjectUpdateAm project, IOntologyService ontologyService, ProjectData projectData)
+        public static void ResolveAspectObjects(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -116,7 +116,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology service</param>
         /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if ontology service or project is null</exception>
-        public static void ResolveRelationConnections(this ProjectUpdateAm project, IOntologyService ontologyService, ProjectData projectData)
+        public static void ResolveRelationConnections(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");

@@ -16,9 +16,9 @@ namespace ModelBuilder.Unit.Tests.Models
         {
         }
 
-        private ProjectUpdateAm ValidProject()
+        private ProjectAm ValidProject()
         {
-            return new ProjectUpdateAm
+            return new ProjectAm
             {
                 Id = $"https://rdf.runir.net/ID{ProjectGuid}",
                 IsSubProject = false,
@@ -181,7 +181,7 @@ namespace ModelBuilder.Unit.Tests.Models
         [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", null, false)]
         public void Project_Validate_Ok(string id, string iri, string name, string version, string projectOwner, bool expectedResult)
         {
-            var p = new ProjectUpdateAm
+            var p = new ProjectAm
             {
                 Id = iri,
                 Name = name,

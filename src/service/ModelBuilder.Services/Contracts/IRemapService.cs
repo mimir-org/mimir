@@ -32,7 +32,7 @@ namespace Mb.Services.Contracts
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The remap function will create new id's on project and all sub objects, if the
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
-        IDictionary<string, string> Remap(ProjectUpdateAm project);
+        IDictionary<string, string> Remap(ProjectAm project);
 
         /// <summary>
         /// Clone a project
@@ -41,7 +41,7 @@ namespace Mb.Services.Contracts
         /// <returns>IDictionary&lt;string, string&gt;</returns>
         /// <remarks>The clone function will create a new project and sub objects, based on
         /// the predefined object.</remarks>
-        IDictionary<string, string> Clone(ProjectUpdateAm project);
+        IDictionary<string, string> Clone(ProjectAm project);
 
         /// <summary>
         /// Remap a collection of aspectObjects and all sub objects.
@@ -74,7 +74,7 @@ namespace Mb.Services.Contracts
         /// <param name="project">ProjectAm</param>
         /// <remarks>If there is some connections that is not connected to a parent, we need to find
         /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
-        void RemapParentlessConnections(ProjectUpdateAm project);
+        void RemapParentlessConnections(ProjectAm project);
 
         MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri);
     }

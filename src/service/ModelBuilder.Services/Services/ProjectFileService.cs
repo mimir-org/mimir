@@ -46,7 +46,7 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgInvalidOperationException"></exception>
         /// <exception cref="MimirorgBadRequestException"></exception>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public async Task<ProjectUpdateAm> ResolveProject(ProjectConvertCm projectFile)
+        public async Task<ProjectAm> ResolveProject(ProjectConvertCm projectFile)
         {
             if (projectFile == null)
                 throw new MimirorgInvalidOperationException("ProjectFile is null");

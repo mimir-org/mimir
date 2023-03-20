@@ -8,7 +8,7 @@ namespace Mb.Models.Application
         public string ParserId { get; set; }
 
         [Required]
-        public ProjectUpdateAm Project { get; set; }
+        public ProjectAm Project { get; set; }
 
         [Required]
         public string FileName { get; set; }
