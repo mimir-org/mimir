@@ -68,7 +68,7 @@ namespace ModelBuilder.Unit.Tests.Models
         [InlineData("1234", null, true)]
         [InlineData(null, "https://rdf.dummy.com/ID1234", true)]
         [InlineData(null, null, false)]
-        public void TerminalTypeId_Or_TerminalTypeIri_Must_Be_Set(string terminalTypeId, string terminalTypeIri, bool result)
+        public void TerminalTypeId_Or_TerminalTypeIri_Must_Be_Set(string terminalTypeIri, bool result)
         {
             var obj = _terminal.DeepCopy();
             obj.TerminalType = terminalTypeIri;

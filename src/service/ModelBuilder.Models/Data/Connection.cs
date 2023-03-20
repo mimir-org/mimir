@@ -15,7 +15,7 @@ namespace Mb.Models.Data
         public string Domain => Id.ResolveDomain();
         public string FromConnector { get; set; }
         public string ToConnector { get; set; }
-        
+
         [Required]
         public string MainProject { get; set; }
 

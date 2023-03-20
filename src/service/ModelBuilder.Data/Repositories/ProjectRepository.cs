@@ -57,7 +57,7 @@ namespace Mb.Data.Repositories
             if (string.IsNullOrWhiteSpace(id))
                 throw new MimirorgNullReferenceException("The Id can't be null.");
 
-            return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id)); 
+            return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id));
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Mb.Data.Repositories
         {
             var project = FindBy(x => x.Id == id).FirstOrDefault();
 
-            if(project == null)
+            if (project == null)
                 throw new MimirorgNotFoundException($"The project with id {id} can't be found.");
 
             project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();

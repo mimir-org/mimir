@@ -179,7 +179,7 @@ namespace ModelBuilder.Unit.Tests.Models
         [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", null, "1.0", "Anna Bond", false)]
         [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", null, "Anna Bond", false)]
         [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", null, false)]
-        public void Project_Validate_Ok(string id, string iri, string name, string version, string projectOwner, bool expectedResult)
+        public void Project_Validate_Ok(string iri, string name, string version, string projectOwner, bool expectedResult)
         {
             var p = new ProjectAm
             {

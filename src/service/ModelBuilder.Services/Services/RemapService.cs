@@ -308,7 +308,7 @@ namespace Mb.Services.Services
                 // Need to set this if there is a clone after new Id and Iri is created
                 connectorReplacement.FromId = connector.Id;
                 connectorReplacement.FromIri = connector.Id;
-                
+
                 if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
                     _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromIri).Select(y =>

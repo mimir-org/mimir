@@ -34,13 +34,13 @@ namespace Mb.Models.Data
             set => _typeReferences = value;
         }
 
-       
+
         public bool Equals(ConnectorTerminal other)
         {
-            if (other is null) 
+            if (other is null)
                 return false;
-            
-            if (ReferenceEquals(this, other)) 
+
+            if (ReferenceEquals(this, other))
                 return true;
 
             return base.Equals(other) &&
@@ -52,10 +52,10 @@ namespace Mb.Models.Data
 
         public override bool Equals(object obj)
         {
-            if (obj is null) 
+            if (obj is null)
                 return false;
 
-            if (ReferenceEquals(this, obj)) 
+            if (ReferenceEquals(this, obj))
                 return true;
 
             return obj.GetType() == GetType() && Equals((ConnectorTerminal) obj);

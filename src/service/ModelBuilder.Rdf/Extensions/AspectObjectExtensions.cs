@@ -159,7 +159,7 @@ namespace ModelBuilder.Rdf.Extensions
             aspectObject.Label = ontologyService.GetValue(iri, Resources.Label, false);
             aspectObject.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
             aspectObject.Description = ontologyService.GetValue(iri, Resources.Desc, false);
-            
+
             aspectObject.Position = new AspectObjectPosition
             {
                 ThreePosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false),

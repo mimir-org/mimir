@@ -156,7 +156,7 @@ namespace Mb.Data.Repositories
 
             return (newId, ResolveIri(newId));
         }
-        
+
         /// <summary>
         /// Create an id if the id is not valid
         /// </summary>

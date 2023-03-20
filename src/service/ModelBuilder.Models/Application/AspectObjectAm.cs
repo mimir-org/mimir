@@ -41,7 +41,7 @@ namespace Mb.Models.Application
         public ICollection<TypeReference> TypeReferences { get; set; }
 
         public string Description { get; set; }
-        
+
         public bool IsLocked { get; set; }
 
         public string IsLockedStatusBy { get; set; }

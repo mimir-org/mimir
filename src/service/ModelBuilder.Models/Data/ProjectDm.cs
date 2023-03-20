@@ -28,10 +28,10 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public string Domain => Id.ResolveDomain();
 
-        [NotMapped] 
+        [NotMapped]
         public List<AspectObject> AspectObjects { get; set; } = new();
 
-        [NotMapped] 
+        [NotMapped]
         public List<Connection> Connections { get; set; } = new();
 
         #endregion

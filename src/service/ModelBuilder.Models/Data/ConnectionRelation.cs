@@ -6,7 +6,7 @@ namespace Mb.Models.Data
     {
         public bool Equals(ConnectionRelation other)
         {
-            if (other is null) 
+            if (other is null)
                 return false;
 
             return ReferenceEquals(this, other) || base.Equals(other);
@@ -14,10 +14,10 @@ namespace Mb.Models.Data
 
         public override bool Equals(object obj)
         {
-            if (obj is null) 
+            if (obj is null)
                 return false;
 
-            if (ReferenceEquals(this, obj)) 
+            if (ReferenceEquals(this, obj))
                 return true;
 
             return obj.GetType() == GetType() && Equals((ConnectionRelation) obj);

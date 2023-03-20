@@ -152,7 +152,7 @@ namespace ModelBuilder.Rdf.Extensions
             var adp = iri.AttributeDatumPredicate();
             attribute.Qualifiers = new List<Qualifier>
             {
-                new() 
+                new()
                 {
                     Id = null,
                     Name = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),

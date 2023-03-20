@@ -10,7 +10,7 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("AspectObject");
-            
+
             builder.HasIndex(x => x.Project).IsUnique(false);
             builder.HasIndex(x => x.Name).IsUnique(false);
 

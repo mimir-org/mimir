@@ -6,7 +6,7 @@ namespace Mb.Models.Data
     [Serializable]
     public class AspectObjectPosition
     {
-        [Required] 
+        [Required]
         public int ThreePosX { get; set; }
         [Required]
         public int ThreePosY { get; set; }
@@ -14,6 +14,6 @@ namespace Mb.Models.Data
         public int BlockPosX { get; set; }
         [Required]
         public int BlockPosY { get; set; }
-        
+
     }
 }
