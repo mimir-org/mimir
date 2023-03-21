@@ -35,7 +35,7 @@ namespace Mb.Services.Services
 
             var aspectObjectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.AspectObject) + $"/{id}" : id;
 
-            var aspectObject = await _aspectObjectRepository.GetAsyncComplete(id);
+            var aspectObject = await _aspectObjectRepository.GetAsyncComplete(aspectObjectId);
 
             if (aspectObject == null)
                 throw new MimirorgNotFoundException($"Could not find aspect object with id: {id}");
