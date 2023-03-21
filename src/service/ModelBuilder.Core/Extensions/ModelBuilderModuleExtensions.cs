@@ -89,6 +89,7 @@ namespace Mb.Core.Extensions
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IAspectObjectService, AspectObjectService>();
+            services.AddScoped<IConnectorService, ConnectorService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IRemapService, RemapService>();
