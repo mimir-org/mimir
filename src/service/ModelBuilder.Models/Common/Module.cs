@@ -10,7 +10,7 @@ namespace Mb.Models.Common
         /// <summary>
         /// Description of the module
         /// </summary>
-        public ModuleDescription ModuleDescription { get; set; }
+        public ModuleDescriptionDm ModuleDescription { get; set; }
 
         /// <summary>
         /// Module instance

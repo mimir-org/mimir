@@ -108,7 +108,7 @@ namespace Mb.Services.Services
 
             var projectDm = _mapper.Map<ProjectDm>(projectCreateAm);
 
-            projectDm.AspectObjects = new List<AspectObject>
+            projectDm.AspectObjects = new List<AspectObjectDm>
             {
                 CreateInitAspectObject(Aspect.Function, projectDm.Id),
                 CreateInitAspectObject(Aspect.Product, projectDm.Id),
@@ -379,12 +379,12 @@ namespace Mb.Services.Services
         /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
         public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
         {
-            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProjectId);
+            var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProject);
             if (subProject == null)
                 throw new MimirorgNotFoundException("There is no sub-project with current id");
 
             if (subProject.Version != prepare.Version)
-                subProject = await _versionService.GetGetByVersion(prepare.SubProjectId, prepare.Version);
+                subProject = await _versionService.GetGetByVersion(prepare.SubProject, prepare.Version);
 
             if (subProject == null)
                 throw new MimirorgNotFoundException("There is no sub-project with current id and version");
@@ -409,12 +409,12 @@ namespace Mb.Services.Services
             var rootAspectObjects = updatedProject.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).Select(x => x.Id).ToList();
 
             // Position aspectObject
-            var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<AspectObjectPosition>(x.Position).ThreePosY);
+            var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<AspectObjectPositionDm>(x.Position).ThreePosY);
 
             // Set aspectObject and connections project id to merge project, and calculate position
             updatedProject.AspectObjects = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).Select(x =>
             {
-                x.Project = prepare.ProjectId;
+                x.Project = prepare.Project;
                 x.Project = null;
                 return x.CalculatePosition(rootOrigin, prepare);
             }).ToList();
@@ -422,8 +422,8 @@ namespace Mb.Services.Services
             // Set root origin to center
             if (rootOrigin != null)
             {
-                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosX = (int) prepare.DropPositionX;
-                JsonConvert.DeserializeObject<AspectObjectPosition>(rootOrigin.Position).ThreePosY = (int) prepare.DropPositionY;
+                JsonConvert.DeserializeObject<AspectObjectPositionDm>(rootOrigin.Position).ThreePosX = (int) prepare.DropPositionX;
+                JsonConvert.DeserializeObject<AspectObjectPositionDm>(rootOrigin.Position).ThreePosY = (int) prepare.DropPositionY;
             }
 
             // TODO: Resolve this
@@ -435,9 +435,9 @@ namespace Mb.Services.Services
 
             var prepareCm = new PrepareCm
             {
-                SubProjectId = prepare.SubProjectId,
-                AspectObjects = updatedProject.AspectObjects,
-                Connections = updatedProject.Connections
+                SubProjectId = prepare.SubProject,
+                AspectObjects = _mapper.Map<List<AspectObjectCm>>(updatedProject.AspectObjects),
+                Connections = _mapper.Map<List<ConnectionCm>>(updatedProject.Connections)
             };
 
             return prepareCm;
@@ -451,34 +451,43 @@ namespace Mb.Services.Services
         /// <param name="aspect"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private AspectObject CreateInitAspectObject(Aspect aspect, string projectId)
+        private AspectObjectDm CreateInitAspectObject(Aspect aspect, string projectId)
         {
             var aspectObjectId = _commonRepository.CreateId(ServerEndpoint.AspectObject);
             var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
-            var aspectObject = new AspectObject
+            var aspectObject = new AspectObjectDm
             {
                 Id = aspectObjectId,
+                Version = "1.0",
                 Name = aspectName,
                 Label = aspectName,
                 Description = $"The root {aspectName.ToLower()} aspect object",
-                TypeReference = JsonConvert.SerializeObject(new List<TypeReference>
-                {
-                    new()
-                    {
-                        Name = aspectName,
-                        Iri = aspectObjectId
-                    }
-                }),
-                Position = JsonConvert.SerializeObject(new AspectObjectPosition
+                Aspect = aspect,
+                AspectObjectType = AspectObjectType.Root,
+                Project = projectId,
+                MainProject = projectId,
+                LibraryType = aspectObjectId,
+                Position = JsonConvert.SerializeObject(new AspectObjectPositionDm
                 {
                     ThreePosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
                     ThreePosY = 5
                 }),
+                ReferenceType = aspectObjectId,
+                CreatedBy = _contextAccessor.GetName(),
+                Created = DateTime.Now.ToUniversalTime(),
+                UpdatedBy = null,
+                Updated = null,
+                Rds = null,
+                Symbol = null,
+                Purpose = null,
+                IsLocked = false,
+                IsLockedStatusBy = null,
+                IsLockedStatusDate = null,
 
-                Connectors = new List<Connector>
+                Connectors = new List<ConnectorDm>
                 {
-                    new ConnectorPartOf
+                    new ConnectorPartOfDm
                     {
                         Id = _commonRepository.CreateId(ServerEndpoint.Connector),
                         Name = "PartOf",
@@ -489,15 +498,7 @@ namespace Mb.Services.Services
                         AspectObject = aspectObjectId
                     }
                 },
-
-                Version = "1.0",
-                AspectObjectType = AspectObjectType.Root,
-                MainProject = projectId,
-                Aspect = aspect,
-                Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = _contextAccessor.GetName(),
-                LibraryType = aspectObjectId,
-                Project = projectId
+                Attributes = new List<AttributeDm>()
             };
 
             return aspectObject;

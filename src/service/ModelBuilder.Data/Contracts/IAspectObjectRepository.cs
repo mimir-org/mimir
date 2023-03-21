@@ -10,13 +10,20 @@ using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
-    public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObject>
+    public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObjectDm>
     {
-        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObject> original, ProjectDm project,
+        IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObjectDm> original, ProjectDm project,
             string invokedByDomain);
 
-        IEnumerable<(AspectObject aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObject> delete, string projectId,
+        IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObjectDm> delete, string projectId,
             string invokedByDomain);
+        
+        /// <summary>
+        /// Get complete aspect object
+        /// </summary>
+        /// <param name="id">Aspect object id</param>
+        /// <returns>Complete aspect object</returns>
+        Task<AspectObjectDm> GetAsyncComplete(string id);
 
         /// <summary>
         /// Bulk aspectObject update
@@ -24,7 +31,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn"></param>
         /// <param name="aspectObjects">The aspectObjects to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects);
 
         /// <summary>
         /// Bulk delete aspectObjects
@@ -32,7 +39,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="aspectObjects">The aspectObjects to be deleted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObject> aspectObjects);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects);
 
         /// <summary>
         /// Bulk connection update lock status
@@ -49,6 +56,6 @@ namespace Mb.Data.Contracts
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det aspectObject identifier and all connected children including
         /// children aspectObjects, children connections and children terminals</remarks>
-        Task<List<ObjectIdentity>> GetAspectObjectConnectedData(string aspectObjectId);
+        Task<List<ObjectIdentityDm>> GetAspectObjectConnectedData(string aspectObjectId);
     }
 }

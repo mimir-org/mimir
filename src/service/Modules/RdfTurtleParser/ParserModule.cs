@@ -38,9 +38,9 @@ namespace RdfTurtleParser
             return new List<Profile>();
         }
 
-        public ModuleDescription GetModuleDescription()
+        public ModuleDescriptionDm GetModuleDescription()
         {
-            return new ModuleDescription
+            return new ModuleDescriptionDm
             {
                 Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6").ToString(),
                 Name = "Mimir RDF Turtle"

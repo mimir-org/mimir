@@ -3,43 +3,43 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 using Mimirorg.Common.Extensions;
-using Attribute = Mb.Models.Data.Attribute;
+using AttributeDm = Mb.Models.Data.AttributeDm;
 
 namespace Mb.Models.Records
 {
     public record ProjectEditData
     {
-        public List<AspectObject> AspectObjectCreate { get; init; } = new();
-        public List<AspectObject> AspectObjectUpdate { get; init; } = new();
-        public List<AspectObject> AspectObjectDelete { get; init; } = new();
+        public List<AspectObjectDm> AspectObjectCreate { get; init; } = new();
+        public List<AspectObjectDm> AspectObjectUpdate { get; init; } = new();
+        public List<AspectObjectDm> AspectObjectDelete { get; init; } = new();
 
-        public List<Connection> ConnectionCreate { get; init; } = new();
-        public List<Connection> ConnectionUpdate { get; init; } = new();
-        public List<Connection> ConnectionDelete { get; init; } = new();
+        public List<ConnectionDm> ConnectionCreate { get; init; } = new();
+        public List<ConnectionDm> ConnectionUpdate { get; init; } = new();
+        public List<ConnectionDm> ConnectionDelete { get; init; } = new();
 
-        public List<Attribute> AttributeCreate { get; init; } = new();
-        public List<Attribute> AttributeUpdate { get; init; } = new();
-        public List<Attribute> AttributeDelete { get; init; } = new();
+        public List<AttributeDm> AttributeCreate { get; init; } = new();
+        public List<AttributeDm> AttributeUpdate { get; init; } = new();
+        public List<AttributeDm> AttributeDelete { get; init; } = new();
 
-        public List<ConnectorRelation> RelationCreate { get; init; } = new();
-        public List<ConnectorRelation> RelationUpdate { get; init; } = new();
-        public List<ConnectorRelation> RelationDelete { get; init; } = new();
+        public List<ConnectorRelationDm> RelationCreate { get; init; } = new();
+        public List<ConnectorRelationDm> RelationUpdate { get; init; } = new();
+        public List<ConnectorRelationDm> RelationDelete { get; init; } = new();
 
-        public List<ConnectorTerminal> TerminalCreate { get; init; } = new();
-        public List<ConnectorTerminal> TerminalUpdate { get; init; } = new();
-        public List<ConnectorTerminal> TerminalDelete { get; init; } = new();
+        public List<ConnectorTerminalDm> TerminalCreate { get; init; } = new();
+        public List<ConnectorTerminalDm> TerminalUpdate { get; init; } = new();
+        public List<ConnectorTerminalDm> TerminalDelete { get; init; } = new();
 
-        public List<Connection> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
-        public List<AspectObject> AspectObjectCreateAndDelete => AspectObjectCreate.Union(AspectObjectDelete).ToList();
-        public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
-        public List<ConnectorRelation> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
-        public List<ConnectorTerminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
+        public List<ConnectionDm> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
+        public List<AspectObjectDm> AspectObjectCreateAndDelete => AspectObjectCreate.Union(AspectObjectDelete).ToList();
+        public List<AttributeDm> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
+        public List<ConnectorRelationDm> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
+        public List<ConnectorTerminalDm> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
-        public List<AspectObject> AspectObjectUpdateInsert => AspectObjectUpdate.Union(AspectObjectCreate).ToList();
-        public List<ConnectorTerminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
-        public List<ConnectorRelation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
-        public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
-        public List<Connection> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
+        public List<AspectObjectDm> AspectObjectUpdateInsert => AspectObjectUpdate.Union(AspectObjectCreate).ToList();
+        public List<ConnectorTerminalDm> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
+        public List<ConnectorRelationDm> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
+        public List<AttributeDm> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
+        public List<ConnectionDm> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
 
         public async Task ResolveEditData(ProjectData original, ProjectData updated)
         {

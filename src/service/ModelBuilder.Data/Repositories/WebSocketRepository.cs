@@ -26,13 +26,13 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
         }
 
-        public async Task SendAspectObjectData(AspectObject aspectObject, string projectId, WorkerStatus workerStatus)
+        public async Task SendAspectObjectData(AspectObjectDm aspectObject, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(aspectObject, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveAspectObjectData, workerStatus, data);
         }
 
-        public async Task SendConnectionData(Connection connection, string projectId, WorkerStatus workerStatus)
+        public async Task SendConnectionData(ConnectionDm connection, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);

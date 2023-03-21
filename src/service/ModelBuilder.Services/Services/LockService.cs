@@ -70,7 +70,7 @@ namespace Mb.Services.Services
                 throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
             var lockDms = new List<LockDm>();
-            var objectIdentity = new List<ObjectIdentity>();
+            var objectIdentity = new List<ObjectIdentityDm>();
 
             switch (lockAm.Type)
             {

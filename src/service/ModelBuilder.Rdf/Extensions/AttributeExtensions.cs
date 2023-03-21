@@ -5,7 +5,7 @@ using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
-using Attribute = Mb.Models.Data.Attribute;
+using AttributeDm = Mb.Models.Data.AttributeDm;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -20,7 +20,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="attribute">Attribute that should be asserted</param>
         /// <param name="parentIri">The ID of the parent</param>
         /// <param name="ontologyService">Ontology Service</param>
-        public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
+        public static void AssertAttribute(this AttributeDm attribute, string parentIri, IOntologyService ontologyService)
         {
             #region None Mimir specific data
 
@@ -58,7 +58,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="attribute">Attribute that should have asserted value</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="projectData">Record of ICollections</param>
-        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
+        public static void AssertAttributeValue(this AttributeDm attribute, IOntologyService ontologyService, ProjectData projectData)
         {
             if (string.IsNullOrEmpty(attribute?.Value))
                 return;
@@ -68,12 +68,12 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertAspectObject(attribute.Id, Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
 
-            if (string.IsNullOrWhiteSpace(attribute.SelectedUnit) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
+            if (string.IsNullOrWhiteSpace(attribute.UnitSelected) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
 
-            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnit}", Resources.Type, Resources.Scale);
-            ontologyService.AssertAspectObject($"mimir:{attribute.SelectedUnit}", Resources.Label, selectedUnit.Name, true);
-            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnit}");
+            ontologyService.AssertAspectObject($"mimir:{attribute.UnitSelected}", Resources.Type, Resources.Scale);
+            ontologyService.AssertAspectObject($"mimir:{attribute.UnitSelected}", Resources.Label, selectedUnit.Name, true);
+            ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.UnitSelected}");
         }
 
         /// <summary>
@@ -82,12 +82,12 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="attribute">Attribute selected unit</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <returns>The selected unit, if not it returns null</returns>
-        public static UnitLibCm GetSelectedUnit(this Attribute attribute, ProjectData projectData)
+        public static UnitLibCm GetSelectedUnit(this AttributeDm attribute, ProjectData projectData)
         {
-            if (string.IsNullOrEmpty(attribute.SelectedUnit) || !projectData.Units.Any())
+            if (string.IsNullOrEmpty(attribute.UnitSelected) || !projectData.Units.Any())
                 return null;
 
-            return projectData.Units.FirstOrDefault(x => x.Id == attribute.SelectedUnit);
+            return projectData.Units.FirstOrDefault(x => x.Id == attribute.UnitSelected);
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns>A list of allowed units</returns>
-        public static List<UnitLibCm> GetAllowedUnits(this Attribute attribute)
+        public static List<UnitLibCm> GetAllowedUnits(this AttributeDm attribute)
         {
-            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.UnitString, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+            return string.IsNullOrWhiteSpace(attribute.Units) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.Units, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns>A datum iri</returns>
-        public static string IriDatum(this Attribute attribute)
+        public static string IriDatum(this AttributeDm attribute)
         {
             return attribute.Id.IriDatum();
         }
@@ -115,10 +115,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns>A AttributeDatumObject record</returns>
-        public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
+        public static AttributeDatumObject AttributeDatumObject(this AttributeDm attribute)
         {
             var rootIri = attribute.Id.RootIri();
-            var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<Qualifier>>(attribute.Qualifiers);
+            var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<QualifierDm>>(attribute.Qualifiers);
             return new AttributeDatumObject
             {
                 SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("scope"))?.ToString())}",
@@ -146,11 +146,11 @@ namespace ModelBuilder.Rdf.Extensions
 
             attribute.Name = ontologyService.GetValue(iri, Resources.Label);
             attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
-            attribute.SelectedUnit = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
+            attribute.UnitSelected = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
 
             // TODO: This must be rewritten ************
             var adp = iri.AttributeDatumPredicate();
-            attribute.Qualifiers = new List<Qualifier>
+            attribute.Qualifiers = new List<QualifierAm>
             {
                 new()
                 {
@@ -194,7 +194,7 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Units = allowedUnitAspectObjects.Select(x =>
             {
                 var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
-                return new Unit
+                return new UnitAm
                 {
                     Name = value?[1].Trim()
                 };

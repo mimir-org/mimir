@@ -18,9 +18,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 Attributes = null,
                 Color = "#ffffff",
                 Direction = ConnectorDirection.Input,
-                ConnectorVisibility = ConnectorVisibility.None,
                 AspectObject = null,
-                IsRequired = false,
                 TerminalType = "https://rdf.runir.com/1234"
             };
         }
@@ -58,7 +56,6 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             var obj = _terminal.DeepCopy();
             obj.Direction = connectorType;
-            obj.ConnectorVisibility = connectorVisibility;
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
         }

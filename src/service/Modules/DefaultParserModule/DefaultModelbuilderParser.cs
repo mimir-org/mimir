@@ -40,9 +40,9 @@ namespace DefaultParserModule
             return null;
         }
 
-        public ModuleDescription GetModuleDescription()
+        public ModuleDescriptionDm GetModuleDescription()
         {
-            return new ModuleDescription
+            return new ModuleDescriptionDm
             {
                 Id = new Guid("5BA4A44C-8E06-49ED-8EE4-CD88FDB78C67").ToString(),
                 Name = "Mimir JSON"

@@ -15,7 +15,7 @@ namespace Mb.Models.Client
         public string UpdatedBy { get; set; }
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
-        public ICollection<AspectObjectAm> AspectObjects { get; set; } = new List<AspectObjectAm>();
-        public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
+        public ICollection<AspectObjectCm> AspectObjects { get; set; } = new List<AspectObjectCm>();
+        public ICollection<ConnectionCm> Connections { get; set; } = new List<ConnectionCm>();
     }
 }

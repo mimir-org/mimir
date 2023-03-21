@@ -7,11 +7,11 @@ namespace Mb.Models.Records
 {
     public record ProjectData
     {
-        public List<AspectObject> AspectObjects { get; init; } = new();
-        public List<Connection> Connections { get; init; } = new();
-        public List<Attribute> Attributes { get; init; } = new();
-        public List<ConnectorTerminal> Terminals { get; init; } = new();
-        public List<ConnectorRelation> Relations { get; init; } = new();
+        public List<AspectObjectDm> AspectObjects { get; init; } = new();
+        public List<ConnectionDm> Connections { get; init; } = new();
+        public List<AttributeDm> Attributes { get; init; } = new();
+        public List<ConnectorTerminalDm> Terminals { get; init; } = new();
+        public List<ConnectorRelationDm> Relations { get; init; } = new();
 
         /// <summary>
         /// Deconstruct and flatten connections 
@@ -20,7 +20,7 @@ namespace Mb.Models.Records
         public Task DeconstructAttributes(ProjectDm project)
         {
             var aspectObjectAttributes = project.AspectObjects.Select(x => x.Attributes).SelectMany(y => y).ToList();
-            var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().SelectMany(y => y.Attributes).ToList();
+            var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().SelectMany(y => y.Attributes).ToList();
 
             var allAttributes = aspectObjectAttributes
                 .Union(connectorAttributes)
@@ -52,7 +52,7 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var aspectObjectTerminals = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminal>().ToList();
+            var aspectObjectTerminals = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
 
             var terminals = aspectObjectTerminals
                 .ToList();
@@ -70,7 +70,7 @@ namespace Mb.Models.Records
             if (project == null)
                 return Task.CompletedTask;
 
-            var aspectObjectRelations = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelation>().ToList();
+            var aspectObjectRelations = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
 
             Relations.AddRange(aspectObjectRelations);
             return Task.CompletedTask;

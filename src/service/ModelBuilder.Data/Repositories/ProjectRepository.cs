@@ -78,7 +78,7 @@ namespace Mb.Data.Repositories
             foreach (var aspectObject in project.AspectObjects)
             {
                 aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
-                aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id));
+                aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
             }
 
             return Task.FromResult(project);
@@ -115,14 +115,14 @@ namespace Mb.Data.Repositories
         /// </summary>
         /// <param name="isSubProject">Get sub-projects or projects</param>
         /// <returns>A list of project version information</returns>
-        public async Task<List<VersionData>> GetProjectVersions(bool isSubProject)
+        public async Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject)
         {
             var procParams = new Dictionary<string, object>
             {
                 {"@IsSubProject", isSubProject}
             };
 
-            var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionData>("GetProjectVersion", procParams);
+            var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionDataDm>("GetProjectVersion", procParams);
             return subProjects;
         }
 

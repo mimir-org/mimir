@@ -38,42 +38,35 @@ namespace ModelBuilder.Unit.Tests.Models
                         Project = $"https://rdf.runir.net/ID{ProjectGuid}",
                         Version = "1.0",
                         MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
-                        Updated = new DateTime(2022,6,1,10,0,0),
-                        UpdatedBy = "Anna Bond",
                         Aspect = Aspect.Function,
                         Attributes = null,
-                        Connectors = new List<ConnectorAm>
-                        {
-                            new RelationAm
-                            {
-                                Id = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
-                                ConnectorVisibility = ConnectorVisibility.None,
-                                IsRequired = false,
-                                AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                Name = "Connector A",
-                                Direction = ConnectorDirection.Input,
-                                RelationType = RelationType.PartOf
-                            },
-                            new RelationAm
-                            {
-                                Id = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
-                                ConnectorVisibility = ConnectorVisibility.None,
-                                IsRequired = false,
-                                AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                                Name = "Connector B",
-                                Direction = ConnectorDirection.Output,
-                                RelationType = RelationType.PartOf
-                            }
-                        },
-                        Created = new DateTime(2022,6,1,10,0,0),
-                        CreatedBy = "Anna Bond",
-                        IsLocked = false,
-                        IsLockedStatusBy = null,
-                        IsLockedStatusDate = null,
+                        //Connectors = new List<ConnectorAm>
+                        //{
+                        //    new RelationAm
+                        //    {
+                        //        Id = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
+                        //        ConnectorVisibility = ConnectorVisibility.None,
+                        //        IsRequired = false,
+                        //        AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                        //        Name = "Connector A",
+                        //        Direction = ConnectorDirection.Input,
+                        //        RelationType = RelationType.PartOf
+                        //    },
+                        //    new RelationAm
+                        //    {
+                        //        Id = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
+                        //        ConnectorVisibility = ConnectorVisibility.None,
+                        //        IsRequired = false,
+                        //        AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                        //        Name = "Connector B",
+                        //        Direction = ConnectorDirection.Output,
+                        //        RelationType = RelationType.PartOf
+                        //    }
+                        //},
                         AspectObjectType = AspectObjectType.Aspect,
                         Label = "Dummy AspectObject A",
                         LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                        Position = new AspectObjectPosition
+                        Position = new AspectObjectPositionAm
                         {
                             ThreePosX = -99,
                             ThreePosY = 213,
@@ -82,7 +75,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         },
                         Purpose = null,
                         Rds = "B0",
-                        TypeReferences = null,
+                        ReferenceType = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     },
                     new AspectObjectAm
@@ -93,42 +86,38 @@ namespace ModelBuilder.Unit.Tests.Models
                         Project = $"https://rdf.runir.net/ID{ProjectGuid}",
                         Version = "1.0",
                         MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
-                        Updated = new DateTime(2022,6,1,10,0,0),
-                        UpdatedBy = "Anna Bond",
                         Aspect = Aspect.Function,
                         Attributes = null,
-                        Connectors = new List<ConnectorAm>
-                        {
-                            new RelationAm
-                            {
-                                Id = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
-                                ConnectorVisibility = ConnectorVisibility.None,
-                                IsRequired = false,
-                                AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
-                                Name = "Connector A",
-                                Direction = ConnectorDirection.Input,
-                                RelationType = RelationType.PartOf
-                            },
-                            new RelationAm
-                            {
-                                Id = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
-                                ConnectorVisibility = ConnectorVisibility.None,
-                                IsRequired = false,
-                                AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
-                                Name = "Connector B",
-                                Direction = ConnectorDirection.Output,
-                                RelationType = RelationType.PartOf
-                            }
-                        },
-                        Created = new DateTime(2022,6,1,10,0,0),
-                        CreatedBy = "Anna Bond",
+                        //Connectors = new List<ConnectorAm>
+                        //{
+                        //    new RelationAm
+                        //    {
+                        //        Id = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
+                        //        ConnectorVisibility = ConnectorVisibility.None,
+                        //        IsRequired = false,
+                        //        AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                        //        Name = "Connector A",
+                        //        Direction = ConnectorDirection.Input,
+                        //        RelationType = RelationType.PartOf
+                        //    },
+                        //    new RelationAm
+                        //    {
+                        //        Id = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
+                        //        ConnectorVisibility = ConnectorVisibility.None,
+                        //        IsRequired = false,
+                        //        AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                        //        Name = "Connector B",
+                        //        Direction = ConnectorDirection.Output,
+                        //        RelationType = RelationType.PartOf
+                        //    }
+                        //},
                         IsLocked = false,
                         IsLockedStatusBy = null,
                         IsLockedStatusDate = null,
                         AspectObjectType = AspectObjectType.Aspect,
                         Label = "Dummy AspectObject A",
                         LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                        Position = new AspectObjectPosition
+                        Position = new AspectObjectPositionAm
                         {
                             ThreePosX = -99,
                             ThreePosY = 213,
@@ -137,7 +126,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         },
                         Purpose = null,
                         Rds = "B0",
-                        TypeReferences = null,
+                        ReferenceType = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     }
                 },
@@ -150,9 +139,6 @@ namespace ModelBuilder.Unit.Tests.Models
                         MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
                         FromConnector = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                         ToConnector = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
-                        IsLocked = false,
-                        IsLockedStatusBy = null,
-                        IsLockedStatusDate = null
                     }
                 }
             };

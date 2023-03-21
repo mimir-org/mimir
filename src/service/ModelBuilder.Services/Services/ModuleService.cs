@@ -68,7 +68,7 @@ namespace Mb.Services.Services
 
                 data.Add(new Models.Common.Module
                 {
-                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription
+                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescriptionDm
                     { Id = Guid.Empty.ToString(), Name = "Missing description" },
                     Instance = obj,
                     ModuleType = moduleType

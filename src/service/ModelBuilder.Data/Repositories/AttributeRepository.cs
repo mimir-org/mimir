@@ -8,11 +8,11 @@ using Mb.Models.Configurations;
 using Mb.Models.Enums;
 using Mimirorg.Common.Exceptions;
 using SqlBulkTools;
-using Attribute = Mb.Models.Data.Attribute;
+using AttributeDm = Mb.Models.Data.AttributeDm;
 
 namespace Mb.Data.Repositories
 {
-    public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attribute>, IAttributeRepository
+    public class AttributeRepository : GenericRepository<ModelBuilderDbContext, AttributeDm>, IAttributeRepository
     {
         public AttributeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
         {
@@ -24,20 +24,20 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
         {
             if (attributes == null || !attributes.Any())
                 return;
 
-            bulk.Setup<Attribute>()
+            bulk.Setup<AttributeDm>()
                 .ForCollection(attributes)
                 .WithTable("Attribute")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.Name)
                 .AddColumn(x => x.Value)
                 .AddColumn(x => x.AttributeType)
-                .AddColumn(x => x.SelectedUnit)
-                .AddColumn(x => x.UnitString)
+                .AddColumn(x => x.UnitSelected)
+                .AddColumn(x => x.Units)
                 .AddColumn(x => x.Qualifiers)
                 .AddColumn(x => x.ConnectorTerminal)
                 .AddColumn(x => x.AspectObject)
@@ -56,12 +56,12 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
         {
             if (attributes == null || !attributes.Any())
                 return;
 
-            bulk.Setup<Attribute>()
+            bulk.Setup<AttributeDm>()
                 .ForCollection(attributes)
                 .WithTable("Attribute")
                 .AddColumn(x => x.Id)
@@ -76,20 +76,20 @@ namespace Mb.Data.Repositories
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be inserted</param>
-        public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
+        public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
         {
             if (attributes == null || !attributes.Any())
                 return;
 
-            bulk.Setup<Attribute>()
+            bulk.Setup<AttributeDm>()
                 .ForCollection(attributes)
                 .WithTable("Attribute")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.Name)
                 .AddColumn(x => x.Value)
                 .AddColumn(x => x.AttributeType)
-                .AddColumn(x => x.SelectedUnit)
-                .AddColumn(x => x.UnitString)
+                .AddColumn(x => x.UnitSelected)
+                .AddColumn(x => x.Units)
                 .AddColumn(x => x.Qualifiers)
                 .AddColumn(x => x.ConnectorTerminal)
                 .AddColumn(x => x.AspectObject)

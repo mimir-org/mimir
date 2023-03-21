@@ -4,7 +4,7 @@ using Mb.Models.Data;
 
 namespace Mb.Data.Contracts
 {
-    public interface IVersionRepository : IGenericRepository<ModelBuilderDbContext, Version>
+    public interface IVersionRepository : IGenericRepository<ModelBuilderDbContext, VersionDm>
     {
     }
 }

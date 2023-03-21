@@ -6,7 +6,7 @@ namespace Mb.Models.Extensions
 {
     public static class AspectObjectExtensions
     {
-        public static AspectObject CalculatePosition(this AspectObject current, AspectObject rootOrigin, PrepareAm prepare)
+        public static AspectObjectDm CalculatePosition(this AspectObjectDm current, AspectObjectDm rootOrigin, PrepareAm prepare)
         {
             if (current == null)
                 return null;
@@ -22,8 +22,8 @@ namespace Mb.Models.Extensions
                 return current;
             }
 
-            var currentPosition = JsonConvert.DeserializeObject<AspectObjectPosition>(current.Position);
-            var rootOriginPosition = JsonConvert.DeserializeObject<AspectObjectPosition>(current.Position);
+            var currentPosition = JsonConvert.DeserializeObject<AspectObjectPositionDm>(current.Position);
+            var rootOriginPosition = JsonConvert.DeserializeObject<AspectObjectPositionDm>(current.Position);
 
             var diffX = currentPosition.ThreePosX - rootOriginPosition.ThreePosX;
             var diffY = currentPosition.ThreePosY - rootOriginPosition.ThreePosY;

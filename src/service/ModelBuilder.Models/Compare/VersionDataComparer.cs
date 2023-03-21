@@ -4,9 +4,9 @@ using Mb.Models.Data;
 
 namespace Mb.Models.Compare
 {
-    public class VersionDataComparer : Comparer<VersionData>
+    public class VersionDataComparer : Comparer<VersionDataDm>
     {
-        public override int Compare(VersionData x, VersionData y)
+        public override int Compare(VersionDataDm x, VersionDataDm y)
         {
             var xVersion = x?.Ver ?? x?.Version;
             var yVersion = y?.Ver ?? y?.Version;

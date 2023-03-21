@@ -22,7 +22,7 @@ namespace Mb.Models.Application
         {
             var validateionResults = new List<ValidationResult>();
 
-            if (AspectObjects == null || AspectObjects.Count <= 0)
+            if (AspectObjects is not {Count: > 0})
             {
                 validateionResults.Add(new ValidationResult("Number of aspectObjects must be greater than 0", new List<string> { "AspectObjects" }));
             }

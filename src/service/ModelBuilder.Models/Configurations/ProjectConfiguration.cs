@@ -10,6 +10,7 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("Project");
+
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
             builder.Property(p => p.SubProject).HasColumnName("IsSubProject").IsRequired();

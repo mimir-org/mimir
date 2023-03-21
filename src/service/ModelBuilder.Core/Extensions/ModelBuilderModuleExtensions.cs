@@ -88,6 +88,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IModelBuilderProcRepository, ModelBuilderProcRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IAspectObjectService, AspectObjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<IRemapService, RemapService>();
@@ -116,13 +117,15 @@ namespace Mb.Core.Extensions
 
             // Auto-mapper
             var cfg = new MapperConfigurationExpression();
+            cfg.AddProfile(new AspectObjectProfile());
             cfg.AddProfile(new AttributeProfile());
-            cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new ConnectionProfile());
-            cfg.AddProfile(new AspectObjectProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new QualifierProfile());
+            cfg.AddProfile(new UnitProfile());
+            cfg.AddProfile(new VersionProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

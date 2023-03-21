@@ -1,5 +1,4 @@
 using AutoMapper;
-using Mb.Data.Contracts;
 using Mb.Models.Client;
 using Mb.Models.Data;
 
@@ -7,9 +6,9 @@ namespace Mb.Core.Profiles
 {
     public class VersionProfile : Profile
     {
-        public VersionProfile(ICommonRepository commonRepository)
+        public VersionProfile()
         {
-            CreateMap<Version, VersionCm>()
+            CreateMap<VersionDm, VersionCm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Ver, opt => opt.MapFrom(src => src.Ver))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))

@@ -1,35 +1,22 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data;
-using Mimirorg.Common.Attributes;
 
 namespace Mb.Models.Application
 {
     public class AttributeAm
     {
-        [RequiredOne(nameof(Id))]
+        [Required]
         public string Id { get; set; }
-
         [Required]
         public string Name { get; set; }
         public string Value { get; set; }
-
-        [RequiredOne(nameof(AttributeType))]
+        [Required]
         public string AttributeType { get; set; }
-
-        public string SelectedUnit { get; set; }
-        public ICollection<Unit> Units { get; set; }
-        public ICollection<Qualifier> Qualifiers { get; set; }
-
-        // References
+        public string UnitSelected { get; set; }
+        public ICollection<UnitAm> Units { get; set; }
+        public ICollection<QualifierAm> Qualifiers { get; set; }
         public string ConnectorTerminal { get; set; }
-
         public string AspectObject { get; set; }
-
-        public bool IsLocked { get; set; }
-        public string IsLockedStatusBy { get; set; }
-        public DateTime? IsLockedStatusDate { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

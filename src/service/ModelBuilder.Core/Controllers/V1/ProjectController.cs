@@ -58,7 +58,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        [HttpPost("")]
+        [HttpPost]
         [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

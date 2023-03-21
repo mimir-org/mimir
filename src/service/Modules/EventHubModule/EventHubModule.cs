@@ -26,9 +26,9 @@ namespace EventHubModule
     {
         private ServiceProvider? _provider;
 
-        public ModuleDescription GetModuleDescription()
+        public ModuleDescriptionDm GetModuleDescription()
         {
-            return new ModuleDescription
+            return new ModuleDescriptionDm
             {
                 Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285").ToString(),
                 Name = "Event Hub Module"

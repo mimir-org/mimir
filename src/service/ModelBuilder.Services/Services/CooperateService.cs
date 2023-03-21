@@ -54,7 +54,7 @@ namespace Mb.Services.Services
             await _webSocketRepository.SendProjectVersionData(version, workerStatus);
         }
 
-        public Task SendAspectObjectUpdates(IReadOnlyCollection<(AspectObject aspectObject, WorkerStatus workerStatus)> aspectObjectMap, string projectId)
+        public Task SendAspectObjectUpdates(IReadOnlyCollection<(AspectObjectDm aspectObject, WorkerStatus workerStatus)> aspectObjectMap, string projectId)
         {
             foreach (var tuple in aspectObjectMap)
             {
@@ -64,7 +64,7 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendConnectionUpdates(IReadOnlyCollection<(Connection connection, WorkerStatus workerStatus)> connectionMap, string projectId)
+        public Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, string projectId)
         {
             foreach (var tuple in connectionMap)
             {
@@ -97,7 +97,7 @@ namespace Mb.Services.Services
         /// <param name="workerStatus"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private Task SendAspectObjectUpdates(List<AspectObject> aspectObjects, WorkerStatus workerStatus, string projectId)
+        private Task SendAspectObjectUpdates(List<AspectObjectDm> aspectObjects, WorkerStatus workerStatus, string projectId)
         {
             if (aspectObjects == null || string.IsNullOrWhiteSpace(projectId))
                 return Task.CompletedTask;
@@ -117,7 +117,7 @@ namespace Mb.Services.Services
         /// <param name="workerStatus"></param>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        private Task SendConnectionUpdates(List<Connection> connections, WorkerStatus workerStatus, string projectId)
+        private Task SendConnectionUpdates(List<ConnectionDm> connections, WorkerStatus workerStatus, string projectId)
         {
             if (connections == null || string.IsNullOrWhiteSpace(projectId))
                 return Task.CompletedTask;

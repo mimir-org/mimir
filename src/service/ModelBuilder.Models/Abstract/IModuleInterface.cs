@@ -10,6 +10,6 @@ namespace Mb.Models.Abstract
     {
         void CreateModule(IServiceCollection services, IConfiguration configuration);
         ICollection<Profile> GetProfiles();
-        ModuleDescription GetModuleDescription();
+        ModuleDescriptionDm GetModuleDescription();
     }
 }

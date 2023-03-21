@@ -38,7 +38,7 @@ namespace Mb.Data.Contracts
         /// </summary>
         /// <param name="isSubProject">Get sub-projects or projects</param>
         /// <returns>A list of project version information</returns>
-        Task<List<VersionData>> GetProjectVersions(bool isSubProject);
+        Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject);
 
         /// <summary>
         /// Update project

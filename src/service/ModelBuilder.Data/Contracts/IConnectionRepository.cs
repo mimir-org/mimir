@@ -10,23 +10,23 @@ using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
-    public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContext, Connection>
+    public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContext, ConnectionDm>
     {
-        IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, ProjectDm project,
+        IEnumerable<(ConnectionDm connection, WorkerStatus status)> UpdateInsert(ICollection<ConnectionDm> original, ProjectDm project,
             string invokedByDomain);
 
-        Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete, string projectId,
+        Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete, string projectId,
             string invokedByDomain);
 
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals);
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf);
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy);
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOfDm> connectionPartOf);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledByDm> connectionFulfilledBy);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocationDm> connectionHasLocation);
 
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals);
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf);
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy);
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOfDm> connectionPartOf);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledByDm> connectionFulfilledBy);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocationDm> connectionHasLocation);
 
         /// <summary>
         /// Bulk connection update lock status
@@ -42,6 +42,6 @@ namespace Mb.Data.Contracts
         /// <param name="connectionId">The connection you want data from</param>
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det connection identifier and all connected attributes from terminals</remarks>
-        Task<List<ObjectIdentity>> GetConnectionConnectedData(string connectionId);
+        Task<List<ObjectIdentityDm>> GetConnectionConnectedData(string connectionId);
     }
 }

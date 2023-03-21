@@ -8,7 +8,7 @@ using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
-    public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, Attribute>
+    public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, AttributeDm>
     {
         /// <summary>
         /// Bulk attributes upsert
@@ -16,7 +16,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be upserted</param>
-        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
 
         /// <summary>
         /// Bulk attributes delete
@@ -24,7 +24,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be upserted</param>
-        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
 
         /// <summary>
         /// Bulk attributes insert
@@ -32,7 +32,7 @@ namespace Mb.Data.Contracts
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
         /// <param name="attributes">The attributes to be inserted</param>
-        void BulkInsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
+        void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
 
         /// <summary>
         /// Bulk attributes update lock status

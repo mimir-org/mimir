@@ -17,7 +17,7 @@ using Mb.Models.Common;
 
 namespace Mb.Data.Repositories
 {
-    public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Connection>, IConnectionRepository
+    public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, ConnectionDm>, IConnectionRepository
     {
         private readonly IAttributeRepository _attributeRepository;
         private readonly IConnectorRepository _connectorRepository;
@@ -37,7 +37,7 @@ namespace Mb.Data.Repositories
             _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, ProjectDm project,
+        public IEnumerable<(ConnectionDm connection, WorkerStatus status)> UpdateInsert(ICollection<ConnectionDm> original, ProjectDm project,
             string invokedByDomain)
         {
             if (project?.Connections == null || !project.Connections.Any() || original == null)
@@ -72,10 +72,10 @@ namespace Mb.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete,
+        public async Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete,
             string projectId, string invokedByDomain)
         {
-            var returnValues = new List<(Connection connection, WorkerStatus status)>();
+            var returnValues = new List<(ConnectionDm connection, WorkerStatus status)>();
 
             if (delete == null || projectId == null || !delete.Any())
                 return returnValues;
@@ -98,12 +98,12 @@ namespace Mb.Data.Repositories
             return returnValues;
         }
 
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminals)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals)
         {
             if (connectionTerminals == null || !connectionTerminals.Any())
                 return;
 
-            bulk.Setup<ConnectionTerminal>()
+            bulk.Setup<ConnectionTerminalDm>()
                 .ForCollection(connectionTerminals)
                 .WithTable("Connection")
                 //Parent
@@ -122,12 +122,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOfDm> connectionPartOf)
         {
             if (connectionPartOf == null || !connectionPartOf.Any())
                 return;
 
-            bulk.Setup<ConnectionPartOf>()
+            bulk.Setup<ConnectionPartOfDm>()
                 .ForCollection(connectionPartOf)
                 .WithTable("Connection")
                 //Parent
@@ -142,12 +142,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledByDm> connectionFulfilledBy)
         {
             if (connectionFulfilledBy == null || !connectionFulfilledBy.Any())
                 return;
 
-            bulk.Setup<ConnectionFulfilledBy>()
+            bulk.Setup<ConnectionFulfilledByDm>()
                 .ForCollection(connectionFulfilledBy)
                 .WithTable("Connection")
                 //Parent
@@ -162,12 +162,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation)
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocationDm> connectionHasLocation)
         {
             if (connectionHasLocation == null || !connectionHasLocation.Any())
                 return;
 
-            bulk.Setup<ConnectionHasLocation>()
+            bulk.Setup<ConnectionHasLocationDm>()
                 .ForCollection(connectionHasLocation)
                 .WithTable("Connection")
                 //Parent
@@ -182,12 +182,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminal> connectionTerminal)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminal)
         {
             if (connectionTerminal == null || !connectionTerminal.Any())
                 return;
 
-            bulk.Setup<ConnectionTerminal>()
+            bulk.Setup<ConnectionTerminalDm>()
                 .ForCollection(connectionTerminal)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
@@ -196,12 +196,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOf> connectionPartOf)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionPartOfDm> connectionPartOf)
         {
             if (connectionPartOf == null || !connectionPartOf.Any())
                 return;
 
-            bulk.Setup<ConnectionPartOf>()
+            bulk.Setup<ConnectionPartOfDm>()
                 .ForCollection(connectionPartOf)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
@@ -210,12 +210,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledBy> connectionFulfilledBy)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionFulfilledByDm> connectionFulfilledBy)
         {
             if (connectionFulfilledBy == null || !connectionFulfilledBy.Any())
                 return;
 
-            bulk.Setup<ConnectionFulfilledBy>()
+            bulk.Setup<ConnectionFulfilledByDm>()
                 .ForCollection(connectionFulfilledBy)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
@@ -224,12 +224,12 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocation> connectionHasLocation)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectionHasLocationDm> connectionHasLocation)
         {
             if (connectionHasLocation == null || !connectionHasLocation.Any())
                 return;
 
-            bulk.Setup<ConnectionHasLocation>()
+            bulk.Setup<ConnectionHasLocationDm>()
                 .ForCollection(connectionHasLocation)
                 .WithTable("Connection")
                 .AddColumn(x => x.Id)
@@ -270,7 +270,7 @@ namespace Mb.Data.Repositories
         /// <param name="connectionId">The connection you want data from</param>
         /// <returns>A collection connected identity data</returns>
         /// <remarks>Get det connection identifier and all connected attributes from terminals</remarks>
-        public async Task<List<ObjectIdentity>> GetConnectionConnectedData(string connectionId)
+        public async Task<List<ObjectIdentityDm>> GetConnectionConnectedData(string connectionId)
         {
             if (string.IsNullOrWhiteSpace(connectionId))
                 return null;
@@ -281,11 +281,11 @@ namespace Mb.Data.Repositories
             };
 
             var attributes =
-                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("ConnectionLockData", procParams);
+                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentityDm>("ConnectionLockData", procParams);
             return attributes;
         }
 
-        private void SetConnectionProperties(Connection connection, bool isNewConnection)
+        private void SetConnectionProperties(ConnectionDm connection, bool isNewConnection)
         {
             var dateTimeNow = DateTime.Now.ToUniversalTime();
             var contextAccessorName = _contextAccessor.GetName();

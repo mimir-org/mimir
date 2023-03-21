@@ -5,7 +5,7 @@ using Mb.Models.Data;
 
 namespace Mb.Data.Repositories
 {
-    public class VersionRepository : GenericRepository<ModelBuilderDbContext, Version>, IVersionRepository
+    public class VersionRepository : GenericRepository<ModelBuilderDbContext, VersionDm>, IVersionRepository
     {
         public VersionRepository(ModelBuilderDbContext dbContext) : base(dbContext)
         {

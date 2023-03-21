@@ -12,7 +12,7 @@ using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
-using Version = Mb.Models.Data.Version;
+using Version = Mb.Models.Data.VersionDm;
 using Mb.Models.Client;
 
 namespace Mb.Services.Services

@@ -29,10 +29,10 @@ namespace Mb.Models.Data
         public string Domain => Id.ResolveDomain();
 
         [NotMapped]
-        public List<AspectObject> AspectObjects { get; set; } = new();
+        public List<AspectObjectDm> AspectObjects { get; set; } = new();
 
         [NotMapped]
-        public List<Connection> Connections { get; set; } = new();
+        public List<ConnectionDm> Connections { get; set; } = new();
 
         #endregion
 

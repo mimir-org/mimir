@@ -1,17 +1,17 @@
 using System;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using Attribute = Mb.Models.Data.Attribute;
+using AttributeDm = Mb.Models.Data.AttributeDm;
 
 namespace Mb.Models.Configurations
 {
     public class ModelBuilderDbContext : DbContext
     {
         public virtual DbSet<ProjectDm> Projects { get; set; }
-        public virtual DbSet<AspectObject> AspectObjects { get; set; }
-        public virtual DbSet<Connection> Connections { get; set; }
-        public virtual DbSet<Attribute> Attributes { get; set; }
-        public virtual DbSet<Connector> Connectors { get; set; }
+        public virtual DbSet<AspectObjectDm> AspectObjects { get; set; }
+        public virtual DbSet<ConnectionDm> Connections { get; set; }
+        public virtual DbSet<AttributeDm> Attributes { get; set; }
+        public virtual DbSet<ConnectorDm> Connectors { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {

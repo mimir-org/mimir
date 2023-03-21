@@ -38,9 +38,9 @@ namespace RdfNTriplesParser
             return new List<Profile>();
         }
 
-        public ModuleDescription GetModuleDescription()
+        public ModuleDescriptionDm GetModuleDescription()
         {
-            return new ModuleDescription
+            return new ModuleDescriptionDm
             {
                 Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581").ToString(),
                 Name = "Mimir RDF N-Triples"

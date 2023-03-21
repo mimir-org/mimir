@@ -22,7 +22,7 @@ namespace Mb.Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mb.Models.Data.AspectObject", b =>
+            modelBuilder.Entity("Mb.Models.Data.AspectObjectDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -37,8 +37,7 @@ namespace Mb.Core.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AspectObjectType");
 
-                    b.Property<DateTime?>("Created")
-                        .IsRequired()
+                    b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
                         .HasColumnName("Created");
 
@@ -81,7 +80,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<string>("Position")
@@ -102,13 +101,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
+                    b.Property<string>("ReferenceType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ReferenceType");
+
                     b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Symbol");
-
-                    b.Property<string>("TypeReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TypeReference");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
@@ -125,14 +124,12 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
-
                     b.HasIndex("Project");
 
                     b.ToTable("AspectObject", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
+            modelBuilder.Entity("Mb.Models.Data.AttributeDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -173,13 +170,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Qualifiers");
 
-                    b.Property<string>("SelectedUnit")
+                    b.Property<string>("UnitSelected")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SelectedUnit");
+                        .HasColumnName("UnitSelected");
 
-                    b.Property<string>("UnitString")
+                    b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UnitString");
+                        .HasColumnName("Units");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)")
@@ -190,7 +187,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Attribute", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Connection", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -224,12 +221,12 @@ namespace Mb.Core.Migrations
 
                     b.ToTable("Connection", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Connection");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ConnectionDm");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -272,7 +269,7 @@ namespace Mb.Core.Migrations
 
                     b.ToTable("Connector", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Connector");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ConnectorDm");
 
                     b.UseTphMappingStrategy();
                 });
@@ -328,7 +325,7 @@ namespace Mb.Core.Migrations
                     b.ToTable("Project", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Version", b =>
+            modelBuilder.Entity("Mb.Models.Data.VersionDm", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -376,16 +373,16 @@ namespace Mb.Core.Migrations
                     b.ToTable("Version", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionRelation", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionRelationDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.Connection");
+                    b.HasBaseType("Mb.Models.Data.ConnectionDm");
 
-                    b.HasDiscriminator().HasValue("ConnectionRelation");
+                    b.HasDiscriminator().HasValue("ConnectionRelationDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionTerminal", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionTerminalDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.Connection");
+                    b.HasBaseType("Mb.Models.Data.ConnectionDm");
 
                     b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")
@@ -396,25 +393,28 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalType");
 
-                    b.HasDiscriminator().HasValue("ConnectionTerminal");
+                    b.HasDiscriminator().HasValue("ConnectionTerminalDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorRelation", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorRelationDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.Connector");
+                    b.HasBaseType("Mb.Models.Data.ConnectorDm");
 
-                    b.HasDiscriminator().HasValue("ConnectorRelation");
+                    b.HasDiscriminator().HasValue("ConnectorRelationDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminal", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminalDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.Connector");
+                    b.HasBaseType("Mb.Models.Data.ConnectorDm");
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Color");
 
+                    b.Property<string>("ReferenceType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalParentType");
@@ -424,52 +424,49 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalType");
 
-                    b.Property<string>("TypeReference")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("ConnectorTerminal");
+                    b.HasDiscriminator().HasValue("ConnectorTerminalDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionFulfilledBy", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionFulfilledByDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectionRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectionRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectionFulfilledBy");
+                    b.HasDiscriminator().HasValue("ConnectionFulfilledByDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionHasLocation", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionHasLocationDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectionRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectionRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectionHasLocation");
+                    b.HasDiscriminator().HasValue("ConnectionHasLocationDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionPartOf", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectionPartOfDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectionRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectionRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectionPartOf");
+                    b.HasDiscriminator().HasValue("ConnectionPartOfDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorFulfilledBy", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorFulfilledByDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectorFulfilledBy");
+                    b.HasDiscriminator().HasValue("ConnectorFulfilledByDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorHasLocation", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorHasLocationDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectorHasLocation");
+                    b.HasDiscriminator().HasValue("ConnectorHasLocationDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorPartOf", b =>
+            modelBuilder.Entity("Mb.Models.Data.ConnectorPartOfDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelation");
+                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
 
-                    b.HasDiscriminator().HasValue("ConnectorPartOf");
+                    b.HasDiscriminator().HasValue("ConnectorPartOfDm");
                 });
 #pragma warning restore 612, 618
         }
