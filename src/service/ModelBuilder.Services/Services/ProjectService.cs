@@ -276,7 +276,9 @@ namespace Mb.Services.Services
                 throw new MimirorgBadRequestException($"Couldn't update project with name: {project.Name}",
                     validation);
 
-            var original = await _projectRepository.GetAsyncComplete(id);
+            var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}" : id;
+
+            var original = await _projectRepository.GetAsyncComplete(projectId);
             project.Version = original.Version;
             ClearAllChangeTracker();
 
