@@ -49,8 +49,6 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
         {
             if (newConnections.Any(x => x.Id == connection.Id))
             {
-                SetConnectionProperties(connection, true);
-
                 Attach(connection, EntityState.Added);
                 yield return (connection, WorkerStatus.Create);
             }
@@ -64,21 +62,19 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
                     continue;
                 }
 
-                SetConnectionProperties(connection, false);
-
                 Attach(connection, EntityState.Modified);
                 yield return (connection, WorkerStatus.Update);
             }
         }
     }
 
-    public async Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete,
+    public Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete,
         string projectId, string invokedByDomain)
     {
         var returnValues = new List<(ConnectionDm connection, WorkerStatus status)>();
 
         if (delete == null || projectId == null || !delete.Any())
-            return returnValues;
+            return Task.FromResult<IEnumerable<(ConnectionDm connection, WorkerStatus status)>>(returnValues);
 
         foreach (var connection in delete)
         {
@@ -95,7 +91,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             returnValues.Add((connection, WorkerStatus.Delete));
         }
 
-        return returnValues;
+        return Task.FromResult<IEnumerable<(ConnectionDm connection, WorkerStatus status)>>(returnValues);
     }
 
     public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals)
@@ -283,18 +279,5 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
         var attributes =
             await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentityDm>("ConnectionLockData", procParams);
         return attributes;
-    }
-
-    private void SetConnectionProperties(ConnectionDm connection, bool isNewConnection)
-    {
-        var dateTimeNow = DateTime.Now.ToUniversalTime();
-        var contextAccessorName = _contextAccessor.GetName();
-
-        if (!isNewConnection)
-            return;
-
-        //TODO: Versioning
-
-        const string version = "1.0";
     }
 }

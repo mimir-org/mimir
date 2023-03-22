@@ -69,7 +69,7 @@ public class ModuleService : IModuleService
             data.Add(new Models.Common.Module
             {
                 ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescriptionDm
-                    { Id = Guid.Empty.ToString(), Name = "Missing description" },
+                { Id = Guid.Empty.ToString(), Name = "Missing description" },
                 Instance = obj,
                 ModuleType = moduleType
             });

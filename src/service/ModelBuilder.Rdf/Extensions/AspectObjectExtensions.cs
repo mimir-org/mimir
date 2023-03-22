@@ -48,7 +48,7 @@ public static class AspectObjectExtensions
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.UpdatedBy, aspectObject.UpdatedBy, true);
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{aspectObject.Updated?.ToString("u")}", Resources.DateTime));
 
-        if (aspectObject.Created != null && !string.IsNullOrWhiteSpace(aspectObject.CreatedBy))
+        if (!string.IsNullOrWhiteSpace(aspectObject.CreatedBy))
         {
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.CreatedBy, aspectObject.CreatedBy, true);
             ontologyService.AssertAspectObject(aspectObject.Id, Resources.Created, ontologyService.CreateLiteralAspectObject($"{aspectObject.Created:u}", Resources.DateTime));

@@ -51,4 +51,8 @@ public class ImfJsonLdWriter : IRdfWriter
     }
 
 
+    protected virtual void OnWarning(string message)
+    {
+        Warning?.Invoke(message);
+    }
 }

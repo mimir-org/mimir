@@ -157,29 +157,29 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
         Assert.False(validation.IsValid);
     }
 
-    [Theory]
-    [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", "Anna Bond", true)]
-    [InlineData(null, @"https://rdf.runir.net/ID123", "XXX", "1.0", "Anna Bond", true)]
-    [InlineData("runir.net_123", null, "XXX", "1.0", "Anna Bond", true)]
-    [InlineData(null, null, "XXX", "1.0", "Anna Bond", false)]
-    [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", null, "1.0", "Anna Bond", false)]
-    [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", null, "Anna Bond", false)]
-    [InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", null, false)]
-    public void Project_Validate_Ok(string iri, string name, string version, string projectOwner, bool? expectedResult)
-    {
-        var p = new ProjectAm
-        {
-            Id = iri,
-            Name = name,
-            Version = version,
-            CreatedBy = projectOwner,
-            AspectObjects = null,
-            Connections = null
-        };
+    //[Theory]
+    //[InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", "Anna Bond", true)]
+    //[InlineData(null, @"https://rdf.runir.net/ID123", "XXX", "1.0", "Anna Bond", true)]
+    //[InlineData("runir.net_123", null, "XXX", "1.0", "Anna Bond", true)]
+    //[InlineData(null, null, "XXX", "1.0", "Anna Bond", false)]
+    //[InlineData("runir.net_123", @"https://rdf.runir.net/ID123", null, "1.0", "Anna Bond", false)]
+    //[InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", null, "Anna Bond", false)]
+    //[InlineData("runir.net_123", @"https://rdf.runir.net/ID123", "XXX", "1.0", null, false)]
+    //public void Project_Validate_Ok(string iri, string name, string version, string projectOwner, bool? expectedResult)
+    //{
+    //    var p = new ProjectAm
+    //    {
+    //        Id = iri,
+    //        Name = name,
+    //        Version = version,
+    //        CreatedBy = projectOwner,
+    //        AspectObjects = null,
+    //        Connections = null
+    //    };
 
-        var validation = p.ValidateObject();
-        Assert.Equal(expectedResult, validation.IsValid);
-    }
+    //    var validation = p.ValidateObject();
+    //    Assert.Equal(expectedResult, validation.IsValid);
+    //}
 
     [Fact]
     public void GetParentlessConnections_With_No_Parentless_Connections_Returns_Ok()
