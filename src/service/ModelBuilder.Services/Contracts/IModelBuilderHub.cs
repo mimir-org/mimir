@@ -1,7 +1,6 @@
-namespace Mb.Services.Contracts
-{
-    public interface IModelBuilderHub
-    {
+namespace Mb.Services.Contracts;
 
-    }
+public interface IModelBuilderHub
+{
+
 }

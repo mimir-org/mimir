@@ -5,235 +5,234 @@ using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
-namespace Mb.Models.Data
+namespace Mb.Models.Data;
+
+#region ConnectorDm
+
+[Serializable]
+public abstract class ConnectorDm : IEquatable<ConnectorDm>
 {
-    #region ConnectorDm
+    public string Id { get; set; }
+    public string Domain => Id.ResolveDomain();
+    public string Name { get; set; }
+    public ConnectorDirection Direction { get; set; }
+    public string Inside { get; set; }
+    public string Outside { get; set; }
+    public string Project { get; set; }
+    public string AspectObject { get; set; }
 
-    [Serializable]
-    public abstract class ConnectorDm : IEquatable<ConnectorDm>
+    public bool Equals(ConnectorDm other)
     {
-        public string Id { get; set; }
-        public string Domain => Id.ResolveDomain();
-        public string Name { get; set; }
-        public ConnectorDirection Direction { get; set; }
-        public string Inside { get; set; }
-        public string Outside { get; set; }
-        public string Project { get; set; }
-        public string AspectObject { get; set; }
+        if (other is null)
+            return false;
 
-        public bool Equals(ConnectorDm other)
-        {
-            if (other is null)
-                return false;
+        if (ReferenceEquals(this, other))
+            return true;
 
-            if (ReferenceEquals(this, other))
-                return true;
-
-            return Id == other.Id &&
-                   Name == other.Name &&
-                   Direction == other.Direction &&
-                   AspectObject == other.AspectObject;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Id, Name, (int) Direction, AspectObject);
-        }
+        return Id == other.Id &&
+               Name == other.Name &&
+               Direction == other.Direction &&
+               AspectObject == other.AspectObject;
     }
 
-    #endregion ConnectorDm
-
-    #region ConnectorTerminalDm
-
-    public class ConnectorTerminalDm : ConnectorDm, IEquatable<ConnectorTerminalDm>
+    public override bool Equals(object obj)
     {
-        public string TerminalType { get; set; }
-        public string TerminalParentType { get; set; }
-        public string ReferenceType { get; set; }
-        public string Color { get; set; }
+        if (obj is null)
+            return false;
 
-        [NotMapped]
-        public ICollection<AttributeDm> Attributes { get; set; }
+        if (ReferenceEquals(this, obj))
+            return true;
 
-        [NotMapped]
-        public string Discriminator { get; set; }
-
-
-        public bool Equals(ConnectorTerminalDm other)
-        {
-            if (other is null)
-                return false;
-
-            if (ReferenceEquals(this, other))
-                return true;
-
-            return base.Equals(other) &&
-                   ReferenceType == other.ReferenceType &&
-                   Color == other.Color &&
-                   TerminalType == other.TerminalType &&
-                   TerminalParentType == other.TerminalParentType;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorTerminalDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalType, ReferenceType);
-        }
+        return obj.GetType() == GetType() && Equals((ConnectorDm) obj);
     }
 
-    #endregion ConnectorTerminalDm
-
-    #region ConnectorRelationDm
-
-    public abstract class ConnectorRelationDm : ConnectorDm, IEquatable<ConnectorRelationDm>
+    public override int GetHashCode()
     {
-        public bool Equals(ConnectorRelationDm other)
-        {
-            if (other is null)
-                return false;
-
-            return ReferenceEquals(this, other) || base.Equals(other);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorRelationDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        return HashCode.Combine(Id, Name, (int) Direction, AspectObject);
     }
-
-    #endregion ConnectorRelationDm
-
-    #region ConnectorFulfilledByDm
-
-    public class ConnectorFulfilledByDm : ConnectorRelationDm
-    {
-        public string Discriminator => nameof(ConnectorFulfilledByDm);
-
-        private bool Equals(ConnectorFulfilledByDm other)
-        {
-            if (other is null)
-                return false;
-
-            return ReferenceEquals(this, other) || base.Equals(other);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorFulfilledByDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-    }
-
-    #endregion ConnectorFulfilledByDm
-
-    #region ConnectorHasLocationDm
-
-    public class ConnectorHasLocationDm : ConnectorRelationDm
-    {
-        public string Discriminator => nameof(ConnectorHasLocationDm);
-
-        private bool Equals(ConnectorHasLocationDm other)
-        {
-            if (other is null)
-                return false;
-
-            return ReferenceEquals(this, other) || base.Equals(other);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorHasLocationDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-    }
-
-    #endregion ConnectorHasLocationDm
-
-    #region ConnectorPartOfDm
-
-    public class ConnectorPartOfDm : ConnectorRelationDm
-    {
-        public string Discriminator => nameof(ConnectorPartOfDm);
-
-        private bool Equals(ConnectorPartOfDm other)
-        {
-            if (other is null)
-                return false;
-
-            return ReferenceEquals(this, other) || base.Equals(other);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            return obj.GetType() == GetType() && Equals((ConnectorPartOfDm) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-    }
-
-    #endregion ConnectorPartOfDm
 }
+
+#endregion ConnectorDm
+
+#region ConnectorTerminalDm
+
+public class ConnectorTerminalDm : ConnectorDm, IEquatable<ConnectorTerminalDm>
+{
+    public string TerminalType { get; set; }
+    public string TerminalParentType { get; set; }
+    public string ReferenceType { get; set; }
+    public string Color { get; set; }
+
+    [NotMapped]
+    public ICollection<AttributeDm> Attributes { get; set; }
+
+    [NotMapped]
+    public string Discriminator { get; set; }
+
+
+    public bool Equals(ConnectorTerminalDm other)
+    {
+        if (other is null)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        return base.Equals(other) &&
+               ReferenceType == other.ReferenceType &&
+               Color == other.Color &&
+               TerminalType == other.TerminalType &&
+               TerminalParentType == other.TerminalParentType;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((ConnectorTerminalDm) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(base.GetHashCode(), Color, TerminalType, ReferenceType);
+    }
+}
+
+#endregion ConnectorTerminalDm
+
+#region ConnectorRelationDm
+
+public abstract class ConnectorRelationDm : ConnectorDm, IEquatable<ConnectorRelationDm>
+{
+    public bool Equals(ConnectorRelationDm other)
+    {
+        if (other is null)
+            return false;
+
+        return ReferenceEquals(this, other) || base.Equals(other);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((ConnectorRelationDm) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+}
+
+#endregion ConnectorRelationDm
+
+#region ConnectorFulfilledByDm
+
+public class ConnectorFulfilledByDm : ConnectorRelationDm
+{
+    public string Discriminator => nameof(ConnectorFulfilledByDm);
+
+    private bool Equals(ConnectorFulfilledByDm other)
+    {
+        if (other is null)
+            return false;
+
+        return ReferenceEquals(this, other) || base.Equals(other);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((ConnectorFulfilledByDm) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+}
+
+#endregion ConnectorFulfilledByDm
+
+#region ConnectorHasLocationDm
+
+public class ConnectorHasLocationDm : ConnectorRelationDm
+{
+    public string Discriminator => nameof(ConnectorHasLocationDm);
+
+    private bool Equals(ConnectorHasLocationDm other)
+    {
+        if (other is null)
+            return false;
+
+        return ReferenceEquals(this, other) || base.Equals(other);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((ConnectorHasLocationDm) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+}
+
+#endregion ConnectorHasLocationDm
+
+#region ConnectorPartOfDm
+
+public class ConnectorPartOfDm : ConnectorRelationDm
+{
+    public string Discriminator => nameof(ConnectorPartOfDm);
+
+    private bool Equals(ConnectorPartOfDm other)
+    {
+        if (other is null)
+            return false;
+
+        return ReferenceEquals(this, other) || base.Equals(other);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is null)
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((ConnectorPartOfDm) obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+}
+
+#endregion ConnectorPartOfDm

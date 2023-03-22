@@ -1,9 +1,8 @@
-namespace Mb.Models.Settings
+namespace Mb.Models.Settings;
+
+public class CollaborationPartnerSetting
 {
-    public class CollaborationPartnerSetting
-    {
-        public string Name { get; set; }
-        public string Domain { get; set; }
-        public string Iris { get; set; }
-    }
+    public string Name { get; set; }
+    public string Domain { get; set; }
+    public string Iris { get; set; }
 }

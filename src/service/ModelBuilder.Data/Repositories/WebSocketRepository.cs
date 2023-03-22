@@ -9,44 +9,43 @@ using Mb.Models.Enums;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 
-namespace Mb.Data.Repositories
+namespace Mb.Data.Repositories;
+
+public class WebSocketRepository : IWebSocketRepository
 {
-    public class WebSocketRepository : IWebSocketRepository
+    private readonly IHubContext<ModelBuilderHub> _hubContext;
+
+    public WebSocketRepository(IHubContext<ModelBuilderHub> hubContext)
     {
-        private readonly IHubContext<ModelBuilderHub> _hubContext;
+        _hubContext = hubContext;
+    }
 
-        public WebSocketRepository(IHubContext<ModelBuilderHub> hubContext)
-        {
-            _hubContext = hubContext;
-        }
+    public async Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus)
+    {
+        var data = JsonConvert.SerializeObject(version, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+        await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
+    }
 
-        public async Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus)
-        {
-            var data = JsonConvert.SerializeObject(version, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-            await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
-        }
+    public async Task SendAspectObjectData(AspectObjectDm aspectObject, string projectId, WorkerStatus workerStatus)
+    {
+        var data = JsonConvert.SerializeObject(aspectObject, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveAspectObjectData, workerStatus, data);
+    }
 
-        public async Task SendAspectObjectData(AspectObjectDm aspectObject, string projectId, WorkerStatus workerStatus)
-        {
-            var data = JsonConvert.SerializeObject(aspectObject, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveAspectObjectData, workerStatus, data);
-        }
+    public async Task SendConnectionData(ConnectionDm connection, string projectId, WorkerStatus workerStatus)
+    {
+        var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
+    }
 
-        public async Task SendConnectionData(ConnectionDm connection, string projectId, WorkerStatus workerStatus)
-        {
-            var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
-        }
+    public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)
+    {
+        var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettingsNoTypeNameHandling);
+        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
+    }
 
-        public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)
-        {
-            var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
-        }
-
-        public async Task SendRefreshLibData()
-        {
-            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLibData);
-        }
+    public async Task SendRefreshLibData()
+    {
+        await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLibData);
     }
 }

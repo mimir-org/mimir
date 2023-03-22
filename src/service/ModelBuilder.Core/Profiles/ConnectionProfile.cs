@@ -3,83 +3,82 @@ using Mb.Models.Application;
 using Mb.Models.Client;
 using Mb.Models.Data;
 
-namespace Mb.Core.Profiles
+namespace Mb.Core.Profiles;
+
+public class ConnectionProfile : Profile
 {
-    public class ConnectionProfile : Profile
+    public ConnectionProfile()
     {
-        public ConnectionProfile()
-        {
-            #region Connection
-            
-            CreateMap<ConnectionAm, ConnectionDm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
-                .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
-                .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
-                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
+        #region Connection
 
-            CreateMap<ConnectionDm, ConnectionCm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
-                .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
-                .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
-                .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
+        CreateMap<ConnectionAm, ConnectionDm>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
+            .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
+            .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
+            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
 
-            #endregion Connection
+        CreateMap<ConnectionDm, ConnectionCm>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
+            .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
+            .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
+            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
 
-            #region ConnectionTerminal
+        #endregion Connection
 
-            CreateMap<ConnectionTerminalAm, ConnectionTerminalDm>()
-                .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-                .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-                .IncludeBase<ConnectionAm, ConnectionDm>();
+        #region ConnectionTerminal
 
-            CreateMap<ConnectionTerminalDm, ConnectionTerminalCm>()
-                .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-                .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-                .IncludeBase<ConnectionDm, ConnectionCm>();
+        CreateMap<ConnectionTerminalAm, ConnectionTerminalDm>()
+            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
+            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
+            .IncludeBase<ConnectionAm, ConnectionDm>();
 
-            #endregion ConnectionTerminal
+        CreateMap<ConnectionTerminalDm, ConnectionTerminalCm>()
+            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
+            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
+            .IncludeBase<ConnectionDm, ConnectionCm>();
 
-            #region ConnectionRelation
+        #endregion ConnectionTerminal
 
-            CreateMap<ConnectionRelationAm, ConnectionRelationDm>()
-                .IncludeBase<ConnectionAm, ConnectionDm>();
+        #region ConnectionRelation
 
-            CreateMap<ConnectionRelationDm, ConnectionRelationCm>()
-                .IncludeBase<ConnectionDm, ConnectionCm>();
+        CreateMap<ConnectionRelationAm, ConnectionRelationDm>()
+            .IncludeBase<ConnectionAm, ConnectionDm>();
 
-            #endregion ConnectionRelation
+        CreateMap<ConnectionRelationDm, ConnectionRelationCm>()
+            .IncludeBase<ConnectionDm, ConnectionCm>();
 
-            #region ConnectionFulfilledBy
+        #endregion ConnectionRelation
 
-            CreateMap<ConnectionFulfilledByAm, ConnectionFulfilledByDm>()
-                .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
+        #region ConnectionFulfilledBy
 
-            CreateMap<ConnectionFulfilledByDm, ConnectionFulfilledByCm>()
-                .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
+        CreateMap<ConnectionFulfilledByAm, ConnectionFulfilledByDm>()
+            .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
 
-            #endregion ConnectionFulfilledBy
+        CreateMap<ConnectionFulfilledByDm, ConnectionFulfilledByCm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
 
-            #region ConnectionHasLocation
+        #endregion ConnectionFulfilledBy
 
-            CreateMap<ConnectionHasLocationAm, ConnectionHasLocationDm>()
-                .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
+        #region ConnectionHasLocation
 
-            CreateMap<ConnectionHasLocationDm, ConnectionHasLocationCm>()
-                .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
+        CreateMap<ConnectionHasLocationAm, ConnectionHasLocationDm>()
+            .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
 
-            #endregion ConnectionHasLocation
+        CreateMap<ConnectionHasLocationDm, ConnectionHasLocationCm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
 
-            #region ConnectionPartOf
+        #endregion ConnectionHasLocation
 
-            CreateMap<ConnectionPartOfAm, ConnectionPartOfDm>()
-                .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
+        #region ConnectionPartOf
 
-            CreateMap<ConnectionPartOfDm, ConnectionPartOfCm>()
-                .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
+        CreateMap<ConnectionPartOfAm, ConnectionPartOfDm>()
+            .IncludeBase<ConnectionRelationAm, ConnectionRelationDm>();
 
-            #endregion ConnectionPartOf
-        }
+        CreateMap<ConnectionPartOfDm, ConnectionPartOfCm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
+
+        #endregion ConnectionPartOf
     }
 }

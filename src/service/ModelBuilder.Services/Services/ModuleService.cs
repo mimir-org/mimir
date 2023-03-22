@@ -11,121 +11,120 @@ using Mb.Models.Enums;
 using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 
-namespace Mb.Services.Services
+namespace Mb.Services.Services;
+
+public class ModuleService : IModuleService
 {
-    public class ModuleService : IModuleService
+    public List<Assembly> Assemblies { get; }
+    public List<Models.Common.Module> Modules { get; set; }
+
+    public ModuleService()
     {
-        public List<Assembly> Assemblies { get; }
-        public List<Models.Common.Module> Modules { get; set; }
+        Assemblies = new List<Assembly>();
+        Modules = new List<Models.Common.Module>();
+        LoadAssemblies();
+        Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
+        Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
+        Modules.AddRange(CreateModules<IModelBuilderSyncService>(ModuleType.SyncService));
+    }
 
-        public ModuleService()
+    public Task InitialModules()
+    {
+        return Task.CompletedTask;
+    }
+
+    public T Resolve<T>(Guid id) where T : IModuleInterface
+    {
+        if (id == Guid.Empty)
+            throw new ModelBuilderModuleException("Module id is required");
+
+        var instance = Modules.FirstOrDefault(x => string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(),
+            StringComparison.CurrentCultureIgnoreCase))?.Instance;
+        if (instance is T obj)
         {
-            Assemblies = new List<Assembly>();
-            Modules = new List<Models.Common.Module>();
-            LoadAssemblies();
-            Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
-            Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
-            Modules.AddRange(CreateModules<IModelBuilderSyncService>(ModuleType.SyncService));
+            return obj;
         }
 
-        public Task InitialModules()
-        {
-            return Task.CompletedTask;
-        }
+        throw new NotSupportedException("The type is not supported or empty");
+    }
 
-        public T Resolve<T>(Guid id) where T : IModuleInterface
-        {
-            if (id == Guid.Empty)
-                throw new ModelBuilderModuleException("Module id is required");
+    private IEnumerable<Models.Common.Module> CreateModules<T>(ModuleType moduleType)
+        where T : IModuleInterface
+    {
+        var data = new List<Models.Common.Module>();
 
-            var instance = Modules.FirstOrDefault(x => string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(),
-                StringComparison.CurrentCultureIgnoreCase))?.Instance;
-            if (instance is T obj)
+        if (Assemblies == null || !Assemblies.Any())
+            return data;
+
+        foreach (var instance in Assemblies
+                     .Select(assembly => assembly.GetTypes()
+                         .Where(x => x.GetInterfaces().Contains(typeof(T)) &&
+                                     x.GetConstructor(Type.EmptyTypes) != null)
+                         .Select(Activator.CreateInstance)
+                         .FirstOrDefault()))
+        {
+            if (instance is not T obj)
+                continue;
+
+            data.Add(new Models.Common.Module
             {
-                return obj;
-            }
-
-            throw new NotSupportedException("The type is not supported or empty");
+                ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescriptionDm
+                    { Id = Guid.Empty.ToString(), Name = "Missing description" },
+                Instance = obj,
+                ModuleType = moduleType
+            });
         }
 
-        private IEnumerable<Models.Common.Module> CreateModules<T>(ModuleType moduleType)
-            where T : IModuleInterface
+        return data;
+    }
+
+    private void LoadAssemblies()
+    {
+        var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        if (path == null)
+            return;
+
+        var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFile).ToList();
+        foreach (var assembly in assemblies)
         {
-            var data = new List<Models.Common.Module>();
-
-            if (Assemblies == null || !Assemblies.Any())
-                return data;
-
-            foreach (var instance in Assemblies
-                         .Select(assembly => assembly.GetTypes()
-                             .Where(x => x.GetInterfaces().Contains(typeof(T)) &&
-                                         x.GetConstructor(Type.EmptyTypes) != null)
-                             .Select(Activator.CreateInstance)
-                             .FirstOrDefault()))
+            try
             {
-                if (instance is not T obj)
+                var hasModuleInterface = assembly.GetTypes().Any(x =>
+                    x.GetInterfaces().Contains(typeof(IModuleInterface)) &&
+                    x.GetConstructor(Type.EmptyTypes) != null);
+                if (!hasModuleInterface)
                     continue;
 
-                data.Add(new Models.Common.Module
-                {
-                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescriptionDm
-                    { Id = Guid.Empty.ToString(), Name = "Missing description" },
-                    Instance = obj,
-                    ModuleType = moduleType
-                });
+                var ass = Assembly.LoadFrom(assembly.Location);
+                Assemblies.Add(ass);
             }
-
-            return data;
-        }
-
-        private void LoadAssemblies()
-        {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            if (path == null)
-                return;
-
-            var assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFile).ToList();
-            foreach (var assembly in assemblies)
+            catch (ReflectionTypeLoadException)
             {
-                try
-                {
-                    var hasModuleInterface = assembly.GetTypes().Any(x =>
-                        x.GetInterfaces().Contains(typeof(IModuleInterface)) &&
-                        x.GetConstructor(Type.EmptyTypes) != null);
-                    if (!hasModuleInterface)
-                        continue;
-
-                    var ass = Assembly.LoadFrom(assembly.Location);
-                    Assemblies.Add(ass);
-                }
-                catch (ReflectionTypeLoadException)
-                {
-                }
-                catch (Exception e)
-                {
-                    throw new ModelBuilderModuleException($"Can't create modules. Error: {e.Message}");
-                }
             }
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine();
-            sb.AppendLine("############## Mimir services started. ######################################");
-
-            if (Modules != null && Modules.Any())
+            catch (Exception e)
             {
-                foreach (var m in Modules.OrderBy(x => x.ModuleType))
-                {
-                    sb.AppendLine(m.ToString());
-                }
+                throw new ModelBuilderModuleException($"Can't create modules. Error: {e.Message}");
+            }
+        }
+    }
 
-                sb.AppendLine("#########################################################################");
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine();
+        sb.AppendLine("############## Mimir services started. ######################################");
+
+        if (Modules != null && Modules.Any())
+        {
+            foreach (var m in Modules.OrderBy(x => x.ModuleType))
+            {
+                sb.AppendLine(m.ToString());
             }
 
-            return sb.ToString();
+            sb.AppendLine("#########################################################################");
         }
+
+        return sb.ToString();
     }
 }

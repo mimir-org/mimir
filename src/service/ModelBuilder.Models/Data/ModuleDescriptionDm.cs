@@ -1,8 +1,7 @@
-namespace Mb.Models.Data
+namespace Mb.Models.Data;
+
+public class ModuleDescriptionDm
 {
-    public class ModuleDescriptionDm
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

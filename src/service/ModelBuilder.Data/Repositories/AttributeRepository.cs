@@ -10,120 +10,119 @@ using Mimirorg.Common.Exceptions;
 using SqlBulkTools;
 using AttributeDm = Mb.Models.Data.AttributeDm;
 
-namespace Mb.Data.Repositories
+namespace Mb.Data.Repositories;
+
+public class AttributeRepository : GenericRepository<ModelBuilderDbContext, AttributeDm>, IAttributeRepository
 {
-    public class AttributeRepository : GenericRepository<ModelBuilderDbContext, AttributeDm>, IAttributeRepository
+    public AttributeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
     {
-        public AttributeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
-        {
-        }
+    }
 
-        /// <summary>
-        /// Bulk attributes update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="attributes">The attributes to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
-        {
-            if (attributes == null || !attributes.Any())
-                return;
+    /// <summary>
+    /// Bulk attributes update
+    /// </summary>
+    /// <param name="bulk">Bulk operations</param>
+    /// <param name="conn">Sql Connection</param>
+    /// <param name="attributes">The attributes to be upserted</param>
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    {
+        if (attributes == null || !attributes.Any())
+            return;
 
-            bulk.Setup<AttributeDm>()
-                .ForCollection(attributes)
-                .WithTable("Attribute")
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.Name)
-                .AddColumn(x => x.Value)
-                .AddColumn(x => x.AttributeType)
-                .AddColumn(x => x.UnitSelected)
-                .AddColumn(x => x.Units)
-                .AddColumn(x => x.Qualifiers)
-                .AddColumn(x => x.ConnectorTerminal)
-                .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.IsLocked)
-                .AddColumn(x => x.IsLockedStatusBy)
-                .AddColumn(x => x.IsLockedStatusDate)
-                .BulkInsertOrUpdate()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<AttributeDm>()
+            .ForCollection(attributes)
+            .WithTable("Attribute")
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Value)
+            .AddColumn(x => x.AttributeType)
+            .AddColumn(x => x.UnitSelected)
+            .AddColumn(x => x.Units)
+            .AddColumn(x => x.Qualifiers)
+            .AddColumn(x => x.ConnectorTerminal)
+            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.IsLocked)
+            .AddColumn(x => x.IsLockedStatusBy)
+            .AddColumn(x => x.IsLockedStatusDate)
+            .BulkInsertOrUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
 
 
-        /// <summary>
-        /// Bulk attributes delete
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="attributes">The attributes to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
-        {
-            if (attributes == null || !attributes.Any())
-                return;
+    /// <summary>
+    /// Bulk attributes delete
+    /// </summary>
+    /// <param name="bulk">Bulk operations</param>
+    /// <param name="conn">Sql Connection</param>
+    /// <param name="attributes">The attributes to be deleted</param>
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    {
+        if (attributes == null || !attributes.Any())
+            return;
 
-            bulk.Setup<AttributeDm>()
-                .ForCollection(attributes)
-                .WithTable("Attribute")
-                .AddColumn(x => x.Id)
-                .BulkDelete()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<AttributeDm>()
+            .ForCollection(attributes)
+            .WithTable("Attribute")
+            .AddColumn(x => x.Id)
+            .BulkDelete()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
 
-        /// <summary>
-        /// Bulk attributes insert
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="attributes">The attributes to be inserted</param>
-        public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
-        {
-            if (attributes == null || !attributes.Any())
-                return;
+    /// <summary>
+    /// Bulk attributes insert
+    /// </summary>
+    /// <param name="bulk">Bulk operations</param>
+    /// <param name="conn">Sql Connection</param>
+    /// <param name="attributes">The attributes to be inserted</param>
+    public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    {
+        if (attributes == null || !attributes.Any())
+            return;
 
-            bulk.Setup<AttributeDm>()
-                .ForCollection(attributes)
-                .WithTable("Attribute")
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.Name)
-                .AddColumn(x => x.Value)
-                .AddColumn(x => x.AttributeType)
-                .AddColumn(x => x.UnitSelected)
-                .AddColumn(x => x.Units)
-                .AddColumn(x => x.Qualifiers)
-                .AddColumn(x => x.ConnectorTerminal)
-                .AddColumn(x => x.AspectObject)
-                .AddColumn(x => x.IsLocked)
-                .AddColumn(x => x.IsLockedStatusBy)
-                .AddColumn(x => x.IsLockedStatusDate)
-                .BulkInsert()
-                .Commit(conn);
-        }
+        bulk.Setup<AttributeDm>()
+            .ForCollection(attributes)
+            .WithTable("Attribute")
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Value)
+            .AddColumn(x => x.AttributeType)
+            .AddColumn(x => x.UnitSelected)
+            .AddColumn(x => x.Units)
+            .AddColumn(x => x.Qualifiers)
+            .AddColumn(x => x.ConnectorTerminal)
+            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.IsLocked)
+            .AddColumn(x => x.IsLockedStatusBy)
+            .AddColumn(x => x.IsLockedStatusDate)
+            .BulkInsert()
+            .Commit(conn);
+    }
 
-        /// <summary>
-        /// Bulk attributes update lock status
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="lockDms">The attributes to be updated</param>
-        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
-        {
-            if (lockDms == null || !lockDms.Any())
-                return;
+    /// <summary>
+    /// Bulk attributes update lock status
+    /// </summary>
+    /// <param name="bulk">Bulk operations</param>
+    /// <param name="conn">Sql Connection</param>
+    /// <param name="lockDms">The attributes to be updated</param>
+    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
+    {
+        if (lockDms == null || !lockDms.Any())
+            return;
 
-            if (lockDms.Any(x => x.Type is not EntityType.Attribute))
-                throw new MimirorgBadRequestException("EntityType is not of type Attribute");
+        if (lockDms.Any(x => x.Type is not EntityType.Attribute))
+            throw new MimirorgBadRequestException("EntityType is not of type Attribute");
 
-            bulk.Setup<LockDm>()
-                .ForCollection(lockDms)
-                .WithTable("Attribute")
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.IsLocked)
-                .AddColumn(x => x.IsLockedStatusBy)
-                .AddColumn(x => x.IsLockedStatusDate)
-                .BulkUpdate()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<LockDm>()
+            .ForCollection(lockDms)
+            .WithTable("Attribute")
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.IsLocked)
+            .AddColumn(x => x.IsLockedStatusBy)
+            .AddColumn(x => x.IsLockedStatusDate)
+            .BulkUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
     }
 }

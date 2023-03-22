@@ -7,120 +7,119 @@ using Mb.Models.Compare;
 using Mb.Services.Contracts;
 using Mimirorg.TypeLibrary.Models.Client;
 
-namespace Mb.Services.Services
+namespace Mb.Services.Services;
+
+public class LibraryService : ILibraryService
 {
-    public class LibraryService : ILibraryService
+    private readonly IProjectRepository _projectRepository;
+    private readonly ILibraryRepository _libraryRepository;
+    private readonly ICooperateService _cooperateService;
+
+    public LibraryService(IProjectRepository projectRepository, ILibraryRepository libraryRepository, ICooperateService cooperateService)
     {
-        private readonly IProjectRepository _projectRepository;
-        private readonly ILibraryRepository _libraryRepository;
-        private readonly ICooperateService _cooperateService;
+        _projectRepository = projectRepository;
+        _libraryRepository = libraryRepository;
+        _cooperateService = cooperateService;
+    }
 
-        public LibraryService(IProjectRepository projectRepository, ILibraryRepository libraryRepository, ICooperateService cooperateService)
+    /// <summary>
+    /// Get all aspectObject types
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString)
+    {
+        var aspectObjects = await _libraryRepository.GetAspectObjectTypes();
+        if (!string.IsNullOrWhiteSpace(searchString))
+            aspectObjects = aspectObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+
+        return aspectObjects;
+    }
+
+    /// <summary>
+    /// Get all terminal types
+    /// </summary>
+    /// <returns>A collection of all registered terminals</returns>
+    public async Task<List<TerminalLibCm>> GetTerminalTypes()
+    {
+        var terminals = await _libraryRepository.GetTerminalTypes();
+        return terminals;
+    }
+
+    /// <summary>
+    /// Get all quantity datums 
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<QuantityDatumCm>> GetQuantityDatums()
+    {
+        var datums = await _libraryRepository.GetQuantityDatums();
+        return datums;
+    }
+
+    /// <summary>
+    /// Get all attribute types
+    /// </summary>
+    /// <returns>A collection of attribute types</returns>
+    public async Task<List<AttributeLibCm>> GetAttributeTypes()
+    {
+        var attributes = await _libraryRepository.GetAttributeTypes();
+        return attributes;
+    }
+
+    /// <summary>
+    /// Get all sub projects
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<LibrarySubProject>> GetSubProjects(string searchString = null)
+    {
+        var projectVersions = await _projectRepository.GetProjectVersions(true);
+        var groups = projectVersions.ToLookup(x => x.Id);
+        var keys = groups.Select(t => t.Key);
+        var versions = new List<LibrarySubProject>();
+
+        foreach (var key in keys)
         {
-            _projectRepository = projectRepository;
-            _libraryRepository = libraryRepository;
-            _cooperateService = cooperateService;
-        }
+            var items = groups[key].OrderByDescending(x => x, new VersionDataComparer()).Take(5).ToList();
+            if (!items.Any())
+                continue;
 
-        /// <summary>
-        /// Get all aspectObject types
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString)
-        {
-            var aspectObjects = await _libraryRepository.GetAspectObjectTypes();
-            if (!string.IsNullOrWhiteSpace(searchString))
-                aspectObjects = aspectObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
-
-            return aspectObjects;
-        }
-
-        /// <summary>
-        /// Get all terminal types
-        /// </summary>
-        /// <returns>A collection of all registered terminals</returns>
-        public async Task<List<TerminalLibCm>> GetTerminalTypes()
-        {
-            var terminals = await _libraryRepository.GetTerminalTypes();
-            return terminals;
-        }
-
-        /// <summary>
-        /// Get all quantity datums 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<QuantityDatumCm>> GetQuantityDatums()
-        {
-            var datums = await _libraryRepository.GetQuantityDatums();
-            return datums;
-        }
-
-        /// <summary>
-        /// Get all attribute types
-        /// </summary>
-        /// <returns>A collection of attribute types</returns>
-        public async Task<List<AttributeLibCm>> GetAttributeTypes()
-        {
-            var attributes = await _libraryRepository.GetAttributeTypes();
-            return attributes;
-        }
-
-        /// <summary>
-        /// Get all sub projects
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<LibrarySubProject>> GetSubProjects(string searchString = null)
-        {
-            var projectVersions = await _projectRepository.GetProjectVersions(true);
-            var groups = projectVersions.ToLookup(x => x.Id);
-            var keys = groups.Select(t => t.Key);
-            var versions = new List<LibrarySubProject>();
-
-            foreach (var key in keys)
+            var version = new LibrarySubProject
             {
-                var items = groups[key].OrderByDescending(x => x, new VersionDataComparer()).Take(5).ToList();
-                if (!items.Any())
-                    continue;
+                Id = items[0].Id,
+                Name = items[0].Name,
+                Version = items[0].Version,
+                Description = items[0].Description,
+                Versions = new List<LibrarySubProjectVersion>()
+            };
 
-                var version = new LibrarySubProject
-                {
-                    Id = items[0].Id,
-                    Name = items[0].Name,
-                    Version = items[0].Version,
-                    Description = items[0].Description,
-                    Versions = new List<LibrarySubProjectVersion>()
-                };
+            // Add the latest project to the list
+            version.Versions.Add(new LibrarySubProjectVersion
+            {
+                Id = items[0].Id,
+                Name = items[0].Name,
+                Version = items[0].Version
+            });
 
-                // Add the latest project to the list
+            foreach (var item in items)
+            {
                 version.Versions.Add(new LibrarySubProjectVersion
                 {
-                    Id = items[0].Id,
-                    Name = items[0].Name,
-                    Version = items[0].Version
+                    Id = item.Id,
+                    Name = item.Name,
+                    Version = item.Ver
                 });
-
-                foreach (var item in items)
-                {
-                    version.Versions.Add(new LibrarySubProjectVersion
-                    {
-                        Id = item.Id,
-                        Name = item.Name,
-                        Version = item.Ver
-                    });
-                }
-                versions.Add(version);
             }
-
-            return versions.OrderBy(x => x.Name).ToList();
+            versions.Add(version);
         }
 
-        /// <summary>
-        /// Get all aspectObject types and send types to connected clients
-        /// </summary>
-        /// <returns></returns>
-        public async Task SendRefreshLibData()
-        {
-            await _cooperateService.SendRefreshLibData();
-        }
+        return versions.OrderBy(x => x.Name).ToList();
+    }
+
+    /// <summary>
+    /// Get all aspectObject types and send types to connected clients
+    /// </summary>
+    /// <returns></returns>
+    public async Task SendRefreshLibData()
+    {
+        await _cooperateService.SendRefreshLibData();
     }
 }

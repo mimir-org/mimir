@@ -20,241 +20,240 @@ using Mb.Models.Client;
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
 
-namespace Mb.Data.Repositories
+namespace Mb.Data.Repositories;
+
+public class ProjectRepository : GenericRepository<ModelBuilderDbContext, ProjectDm>, IProjectRepository
 {
-    public class ProjectRepository : GenericRepository<ModelBuilderDbContext, ProjectDm>, IProjectRepository
+    private readonly IMapper _mapper;
+    private readonly IAspectObjectRepository _aspectObjectRepository;
+    private readonly IConnectorRepository _connectorRepository;
+    private readonly IConnectionRepository _connectionRepository;
+    private readonly IAttributeRepository _attributeRepository;
+    private readonly DatabaseConfiguration _databaseConfiguration;
+    private readonly ICacheRepository _cacheRepository;
+    private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
+
+    public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
+        IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
+        ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository, IConnectionRepository connectionRepository) : base(dbContext)
     {
-        private readonly IMapper _mapper;
-        private readonly IAspectObjectRepository _aspectObjectRepository;
-        private readonly IConnectorRepository _connectorRepository;
-        private readonly IConnectionRepository _connectionRepository;
-        private readonly IAttributeRepository _attributeRepository;
-        private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly ICacheRepository _cacheRepository;
-        private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
+        _mapper = mapper;
+        _aspectObjectRepository = aspectObjectRepository;
+        _connectorRepository = connectorRepository;
+        _attributeRepository = attributeRepository;
+        _databaseConfiguration = databaseConfiguration?.Value;
+        _cacheRepository = cacheRepository;
+        _modelBuilderProcRepository = modelBuilderProcRepository;
+        _connectionRepository = connectionRepository;
+    }
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
-            IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
-            ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository, IConnectionRepository connectionRepository) : base(dbContext)
+    /// <summary>
+    /// Get complete project
+    /// </summary>
+    /// <param name="id">Project id</param>
+    /// <returns>Complete project</returns>
+    public async Task<ProjectDm> GetAsyncComplete(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new MimirorgNullReferenceException("The Id can't be null.");
+
+        return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id));
+    }
+
+    /// <summary>
+    /// Get complete project async not read from cache
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Complete project</returns>
+    public Task<ProjectDm> GetProjectAsync(string id)
+    {
+        var project = FindBy(x => x.Id == id).FirstOrDefault();
+
+        if (project == null)
+            throw new MimirorgNotFoundException($"The project with id {id} can't be found.");
+
+        project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
+        project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();
+
+        foreach (var aspectObject in project.AspectObjects)
         {
-            _mapper = mapper;
-            _aspectObjectRepository = aspectObjectRepository;
-            _connectorRepository = connectorRepository;
-            _attributeRepository = attributeRepository;
-            _databaseConfiguration = databaseConfiguration?.Value;
-            _cacheRepository = cacheRepository;
-            _modelBuilderProcRepository = modelBuilderProcRepository;
-            _connectionRepository = connectionRepository;
+            aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
+            aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
         }
 
-        /// <summary>
-        /// Get complete project
-        /// </summary>
-        /// <param name="id">Project id</param>
-        /// <returns>Complete project</returns>
-        public async Task<ProjectDm> GetAsyncComplete(string id)
-        {
-            if (string.IsNullOrWhiteSpace(id))
-                throw new MimirorgNullReferenceException("The Id can't be null.");
+        return Task.FromResult(project);
+    }
 
-            return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id));
-        }
-
-        /// <summary>
-        /// Get complete project async not read from cache
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Complete project</returns>
-        public Task<ProjectDm> GetProjectAsync(string id)
-        {
-            var project = FindBy(x => x.Id == id).FirstOrDefault();
-
-            if (project == null)
-                throw new MimirorgNotFoundException($"The project with id {id} can't be found.");
-
-            project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
-            project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();
-
-            foreach (var aspectObject in project.AspectObjects)
-            {
-                aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
-                aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
-            }
-
-            return Task.FromResult(project);
-        }
-
-        /// <summary>
-        /// Get project list
-        /// </summary>
-        /// <param name="name">The project to search for</param>
-        /// <param name="from">Get project from</param>
-        /// <param name="number">Get number of project</param>
-        /// <returns>A list of project information</returns>
-        public IEnumerable<ProjectCm> GetProjectList(string name, int from, int number)
-        {
-            if (string.IsNullOrEmpty(name))
-                return GetAll()
-                    .OrderByDescending(x => x.Updated)
-                    .Skip(from)
-                    .Take(number)
-                    .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
-                    .ToList();
-
+    /// <summary>
+    /// Get project list
+    /// </summary>
+    /// <param name="name">The project to search for</param>
+    /// <param name="from">Get project from</param>
+    /// <param name="number">Get number of project</param>
+    /// <returns>A list of project information</returns>
+    public IEnumerable<ProjectCm> GetProjectList(string name, int from, int number)
+    {
+        if (string.IsNullOrEmpty(name))
             return GetAll()
-                .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
                 .OrderByDescending(x => x.Updated)
                 .Skip(from)
                 .Take(number)
                 .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
                 .ToList();
-        }
 
-        /// <summary>
-        /// Get project version list
-        /// </summary>
-        /// <param name="isSubProject">Get sub-projects or projects</param>
-        /// <returns>A list of project version information</returns>
-        public async Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject)
+        return GetAll()
+            .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
+            .OrderByDescending(x => x.Updated)
+            .Skip(from)
+            .Take(number)
+            .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Get project version list
+    /// </summary>
+    /// <param name="isSubProject">Get sub-projects or projects</param>
+    /// <returns>A list of project version information</returns>
+    public async Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject)
+    {
+        var procParams = new Dictionary<string, object>
         {
-            var procParams = new Dictionary<string, object>
-            {
-                {"@IsSubProject", isSubProject}
-            };
+            {"@IsSubProject", isSubProject}
+        };
 
-            var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionDataDm>("GetProjectVersion", procParams);
-            return subProjects;
-        }
+        var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionDataDm>("GetProjectVersion", procParams);
+        return subProjects;
+    }
 
-        /// <summary>
-        /// Update project
-        /// </summary>
-        /// <param name="original"></param>
-        /// <param name="updated"></param>
-        /// <param name="data"></param>
-        /// <returns>A project update task</returns>
-        public async Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data)
+    /// <summary>
+    /// Update project
+    /// </summary>
+    /// <param name="original"></param>
+    /// <param name="updated"></param>
+    /// <param name="data"></param>
+    /// <returns>A project update task</returns>
+    public async Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data)
+    {
+        if (original == null || updated == null || data == null)
+            throw new MimirorgNullReferenceException(
+                "Original project, updated project and project edit can't be null.");
+
+        var bulk = new BulkOperations();
+
+        using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
         {
-            if (original == null || updated == null || data == null)
-                throw new MimirorgNullReferenceException(
-                    "Original project, updated project and project edit can't be null.");
-
-            var bulk = new BulkOperations();
-
-            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
-                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
-                {
-                    // Upsert
-                    bulk.Setup<ProjectDm>()
-                        .ForObject(updated)
-                        .WithTable("Project")
-                        .AddColumn(x => x.Id)
-                        .AddColumn(x => x.SubProject)
-                        .AddColumn(x => x.Version)
-                        .AddColumn(x => x.Name)
-                        .AddColumn(x => x.Description)
-                        .AddColumn(x => x.UpdatedBy)
-                        .AddColumn(x => x.Updated)
-                        .AddColumn(x => x.CreatedBy)
-                        .AddColumn(x => x.Created)
-                        .Upsert()
-                        .MatchTargetOn(x => x.Id)
-                        .Commit(conn);
+                // Upsert
+                bulk.Setup<ProjectDm>()
+                    .ForObject(updated)
+                    .WithTable("Project")
+                    .AddColumn(x => x.Id)
+                    .AddColumn(x => x.SubProject)
+                    .AddColumn(x => x.Version)
+                    .AddColumn(x => x.Name)
+                    .AddColumn(x => x.Description)
+                    .AddColumn(x => x.UpdatedBy)
+                    .AddColumn(x => x.Updated)
+                    .AddColumn(x => x.CreatedBy)
+                    .AddColumn(x => x.Created)
+                    .Upsert()
+                    .MatchTargetOn(x => x.Id)
+                    .Commit(conn);
 
-                    _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjectUpdateInsert);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
-                    _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
+                _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjectUpdateInsert);
+                _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
+                _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
 
-                    // Delete
-                    _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-                    _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
-                    _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
-                }
-
-                trans.Complete();
+                // Delete
+                _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
+                _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
+                _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
             }
 
-            var key = updated.Id.ResolveKey();
-            await _cacheRepository.DeleteCacheAsync(key);
-            _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Id));
+            trans.Complete();
         }
 
-        /// <summary>
-        /// Create a project
-        /// </summary>
-        /// <param name="project">The project that should be created</param>
-        /// <param name="data">Project data</param>
-        /// <returns>A project create task</returns>
-        public Task CreateProject(ProjectDm project, ProjectData data)
+        var key = updated.Id.ResolveKey();
+        await _cacheRepository.DeleteCacheAsync(key);
+        _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Id));
+    }
+
+    /// <summary>
+    /// Create a project
+    /// </summary>
+    /// <param name="project">The project that should be created</param>
+    /// <param name="data">Project data</param>
+    /// <returns>A project create task</returns>
+    public Task CreateProject(ProjectDm project, ProjectData data)
+    {
+        var bulk = new BulkOperations();
+
+        using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
         {
-            var bulk = new BulkOperations();
-
-            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
-                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
-                {
-                    // Upsert
-                    bulk.Setup<ProjectDm>()
-                        .ForObject(project)
-                        .WithTable("Project")
-                        .AddColumn(x => x.Id)
-                        .AddColumn(x => x.SubProject)
-                        .AddColumn(x => x.Version)
-                        .AddColumn(x => x.Name)
-                        .AddColumn(x => x.Description)
-                        .AddColumn(x => x.UpdatedBy)
-                        .AddColumn(x => x.Updated)
-                        .AddColumn(x => x.CreatedBy)
-                        .AddColumn(x => x.Created)
-                        .Upsert()
-                        .MatchTargetOn(x => x.Id)
-                        .Commit(conn);
+                // Upsert
+                bulk.Setup<ProjectDm>()
+                    .ForObject(project)
+                    .WithTable("Project")
+                    .AddColumn(x => x.Id)
+                    .AddColumn(x => x.SubProject)
+                    .AddColumn(x => x.Version)
+                    .AddColumn(x => x.Name)
+                    .AddColumn(x => x.Description)
+                    .AddColumn(x => x.UpdatedBy)
+                    .AddColumn(x => x.Updated)
+                    .AddColumn(x => x.CreatedBy)
+                    .AddColumn(x => x.Created)
+                    .Upsert()
+                    .MatchTargetOn(x => x.Id)
+                    .Commit(conn);
 
-                    _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjects);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
-                    _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
-                }
-
-                trans.Complete();
+                _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjects);
+                _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
+                _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
             }
 
-            _cacheRepository.RefreshList.Enqueue((project.Id, project.Id));
-            return Task.CompletedTask;
+            trans.Complete();
         }
 
-        /// <summary>
-        /// Delete a project
-        /// </summary>
-        /// <param name="project">The project that should be deleted</param>
-        /// <param name="data">Project data</param>
-        /// <returns>A project delete task</returns>
-        public async Task DeleteProject(ProjectDm project, ProjectData data)
+        _cacheRepository.RefreshList.Enqueue((project.Id, project.Id));
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Delete a project
+    /// </summary>
+    /// <param name="project">The project that should be deleted</param>
+    /// <param name="data">Project data</param>
+    /// <returns>A project delete task</returns>
+    public async Task DeleteProject(ProjectDm project, ProjectData data)
+    {
+        var bulk = new BulkOperations();
+
+        using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
         {
-            var bulk = new BulkOperations();
-
-            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
-                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
-                {
-                    _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
-                    _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
-                    _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
+                _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
+                _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
+                _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
 
-                    bulk.Setup<ProjectDm>()
-                        .ForCollection(new List<ProjectDm> { project })
-                        .WithTable("Project")
-                        .AddColumn(x => x.Id)
-                        .BulkDelete()
-                        .MatchTargetOn(x => x.Id)
-                        .Commit(conn);
-                }
-
-                trans.Complete();
+                bulk.Setup<ProjectDm>()
+                    .ForCollection(new List<ProjectDm> { project })
+                    .WithTable("Project")
+                    .AddColumn(x => x.Id)
+                    .BulkDelete()
+                    .MatchTargetOn(x => x.Id)
+                    .Commit(conn);
             }
 
-            var key = project.Id.ResolveKey();
-            await _cacheRepository.DeleteCacheAsync(key);
+            trans.Complete();
         }
+
+        var key = project.Id.ResolveKey();
+        await _cacheRepository.DeleteCacheAsync(key);
     }
 }

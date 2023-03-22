@@ -3,35 +3,34 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
 
-namespace Mb.Models.Common
+namespace Mb.Models.Common;
+
+public class Module
 {
-    public class Module
+    /// <summary>
+    /// Description of the module
+    /// </summary>
+    public ModuleDescriptionDm ModuleDescription { get; set; }
+
+    /// <summary>
+    /// Module instance
+    /// </summary>
+    public IModuleInterface Instance { get; set; }
+
+    /// <summary>
+    /// Module type
+    /// </summary>
+    public ModuleType ModuleType { get; set; }
+
+    /// <summary>
+    /// ToString
+    /// </summary>
+    /// <returns>Object formatted as string</returns>
+    public override string ToString()
     {
-        /// <summary>
-        /// Description of the module
-        /// </summary>
-        public ModuleDescriptionDm ModuleDescription { get; set; }
+        if (ModuleDescription == null)
+            return string.Empty;
 
-        /// <summary>
-        /// Module instance
-        /// </summary>
-        public IModuleInterface Instance { get; set; }
-
-        /// <summary>
-        /// Module type
-        /// </summary>
-        public ModuleType ModuleType { get; set; }
-
-        /// <summary>
-        /// ToString
-        /// </summary>
-        /// <returns>Object formatted as string</returns>
-        public override string ToString()
-        {
-            if (ModuleDescription == null)
-                return string.Empty;
-
-            return $"{ModuleDescription.Id} - {ModuleDescription.Name} - {ModuleType.GetDisplayName()}";
-        }
+        return $"{ModuleDescription.Id} - {ModuleDescription.Name} - {ModuleType.GetDisplayName()}";
     }
 }

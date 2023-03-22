@@ -1,10 +1,9 @@
-namespace Mb.Models.Common
+namespace Mb.Models.Common;
+
+public class ReplacementId
 {
-    public class ReplacementId
-    {
-        public string FromId { get; set; }
-        public string FromIri { get; set; }
-        public string ToId { get; set; }
-        public string ToIri { get; set; }
-    }
+    public string FromId { get; set; }
+    public string FromIri { get; set; }
+    public string ToId { get; set; }
+    public string ToIri { get; set; }
 }

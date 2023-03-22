@@ -12,82 +12,81 @@ using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Mb.Api
+namespace Mb.Api;
+
+public class Startup
 {
-    public class Startup
+    public IConfiguration Configuration { get; }
+    private AzureActiveDirectoryConfiguration _activeDirectoryConfiguration;
+    private SwaggerConfiguration _swaggerConfiguration;
+
+    public Startup(IConfiguration configuration)
     {
-        public IConfiguration Configuration { get; }
-        private AzureActiveDirectoryConfiguration _activeDirectoryConfiguration;
-        private SwaggerConfiguration _swaggerConfiguration;
+        Configuration = configuration;
+    }
 
-        public Startup(IConfiguration configuration)
+    public virtual void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllers().AddNewtonsoftJson(o =>
         {
-            Configuration = configuration;
-        }
+            o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            o.SerializerSettings.TypeNameHandling = TypeNameHandling.None;
+        });
 
-        public virtual void ConfigureServices(IServiceCollection services)
+        // Add Cors policy
+        var origins = Configuration.GetSection("CorsConfiguration")
+            .GetValue<string>("ValidOrigins")?.Split(",");
+
+        services.AddCors(options =>
         {
-            services.AddControllers().AddNewtonsoftJson(o =>
+            options.AddPolicy("CorsPolicy", builder =>
             {
-                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                o.SerializerSettings.TypeNameHandling = TypeNameHandling.None;
-            });
-
-            // Add Cors policy
-            var origins = Configuration.GetSection("CorsConfiguration")
-                .GetValue<string>("ValidOrigins")?.Split(",");
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
+                if (NoOriginsAreProvided(origins))
                 {
-                    if (NoOriginsAreProvided(origins))
-                    {
-                        builder.AllowAnyOrigin();
-                    }
-                    else
-                    {
-                        builder.WithOrigins(origins!)
-                            .AllowCredentials();
-                    }
+                    builder.AllowAnyOrigin();
+                }
+                else
+                {
+                    builder.WithOrigins(origins!)
+                        .AllowCredentials();
+                }
 
-                    builder.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains();
-                });
+                builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains();
             });
+        });
 
-            // Add routing
-            services.AddRouting(o => o.LowercaseUrls = true);
+        // Add routing
+        services.AddRouting(o => o.LowercaseUrls = true);
 
-            // Add Azure Active Directory Module and Swagger Module
-            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
-            _activeDirectoryConfiguration = activeDirectoryConfiguration;
-            _swaggerConfiguration = swaggerConfiguration;
+        // Add Azure Active Directory Module and Swagger Module
+        var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
+        _activeDirectoryConfiguration = activeDirectoryConfiguration;
+        _swaggerConfiguration = swaggerConfiguration;
 
-            services.AddMicrosoftSqlServerModule();
-            services.AddApplicationInsightsLoggingModule();
-            services.AddModelBuilderModule(Configuration);
-        }
+        services.AddMicrosoftSqlServerModule();
+        services.AddApplicationInsightsLoggingModule();
+        services.AddModelBuilderModule(Configuration);
+    }
 
-        public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+    public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
 
-            app.UseCors("CorsPolicy");
-            app.UseRouting();
+        app.UseCors("CorsPolicy");
+        app.UseRouting();
 
-            // Use Azure Active Directory Module and Swagger Module
-            app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
+        // Use Azure Active Directory Module and Swagger Module
+        app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
 
-            app.UseModelBuilderModule();
-        }
+        app.UseModelBuilderModule();
+    }
 
-        private static bool NoOriginsAreProvided(string[] origins)
-        {
-            return origins is null || origins.Length == 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
-        }
+    private static bool NoOriginsAreProvided(string[] origins)
+    {
+        return origins is null || origins.Length == 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
     }
 }

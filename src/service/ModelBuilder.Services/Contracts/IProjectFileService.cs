@@ -6,12 +6,11 @@ using Mb.Models.Client;
 using Mb.Models.Common;
 using Microsoft.AspNetCore.Http;
 
-namespace Mb.Services.Contracts
+namespace Mb.Services.Contracts;
+
+public interface IProjectFileService
 {
-    public interface IProjectFileService
-    {
-        Task<ProjectAm> ResolveProject(ProjectConvertCm projectFile);
-        Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id, FileFormat fileFormat);
-        Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter);
-    }
+    Task<ProjectAm> ResolveProject(ProjectConvertCm projectFile);
+    Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id, FileFormat fileFormat);
+    Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter);
 }

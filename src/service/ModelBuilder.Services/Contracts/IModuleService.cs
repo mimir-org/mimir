@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Module = Mb.Models.Common.Module;
 
-namespace Mb.Services.Contracts
+namespace Mb.Services.Contracts;
+
+public interface IModuleService
 {
-    public interface IModuleService
-    {
-        List<Assembly> Assemblies { get; }
-        List<Module> Modules { get; set; }
-        Task InitialModules();
-        T Resolve<T>(Guid id) where T : IModuleInterface;
-    }
+    List<Assembly> Assemblies { get; }
+    List<Module> Modules { get; set; }
+    Task InitialModules();
+    T Resolve<T>(Guid id) where T : IModuleInterface;
 }

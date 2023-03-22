@@ -1,9 +1,8 @@
-namespace Mb.Models.Application
+namespace Mb.Models.Application;
+
+public class QualifierAm
 {
-    public class QualifierAm
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Value { get; set; }
 }

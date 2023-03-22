@@ -1,7 +1,6 @@
-namespace Mb.Models.Abstract
-{
-    public interface IModelBuilderPlugin : IModuleInterface
-    {
+namespace Mb.Models.Abstract;
 
-    }
+public interface IModelBuilderPlugin : IModuleInterface
+{
+
 }

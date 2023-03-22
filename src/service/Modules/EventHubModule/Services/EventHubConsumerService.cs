@@ -11,96 +11,95 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace EventHubModule.Services
+namespace EventHubModule.Services;
+
+public class EventHubConsumerService<T> : IEventHubConsumerService<T>
 {
-    public class EventHubConsumerService<T> : IEventHubConsumerService<T>
+    public event EventHandler<T> DataReceived;
+    private readonly EventProcessorClient _client;
+    private CancellationToken _cancellationToken;
+    private readonly bool _hasValidConfiguration;
+    private readonly ILogger<EventHubConsumerService<T>> _logger;
+
+    public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration,
+        ILogger<EventHubConsumerService<T>> logger)
     {
-        public event EventHandler<T> DataReceived;
-        private readonly EventProcessorClient _client;
-        private CancellationToken _cancellationToken;
-        private readonly bool _hasValidConfiguration;
-        private readonly ILogger<EventHubConsumerService<T>> _logger;
+        _logger = logger;
+        _hasValidConfiguration = eventHubConfiguration?.Value != null &&
+                                 eventHubConfiguration.Value.HasValidConsumerConfiguration();
 
-        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration,
-            ILogger<EventHubConsumerService<T>> logger)
+        if (!_hasValidConfiguration)
+            return;
+
+        var blobContainerClient = new BlobContainerClient(
+            eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString,
+            eventHubConfiguration?.Value?.ConsumerBlobContainerName);
+        _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName,
+            eventHubConfiguration?.Value?.ConsumerConnectionString,
+            eventHubConfiguration?.Value?.ConsumerEventHubName);
+        _client.ProcessEventAsync += ProcessEventHandler;
+        _client.ProcessErrorAsync += ProcessErrorHandler;
+    }
+
+    public async Task RunAsync(CancellationToken cancellationToken = new())
+    {
+        if (!_hasValidConfiguration)
         {
-            _logger = logger;
-            _hasValidConfiguration = eventHubConfiguration?.Value != null &&
-                                     eventHubConfiguration.Value.HasValidConsumerConfiguration();
-
-            if (!_hasValidConfiguration)
-                return;
-
-            var blobContainerClient = new BlobContainerClient(
-                eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString,
-                eventHubConfiguration?.Value?.ConsumerBlobContainerName);
-            _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName,
-                eventHubConfiguration?.Value?.ConsumerConnectionString,
-                eventHubConfiguration?.Value?.ConsumerEventHubName);
-            _client.ProcessEventAsync += ProcessEventHandler;
-            _client.ProcessErrorAsync += ProcessErrorHandler;
+            _logger.LogWarning("EventHub - missing configuration");
+            return;
         }
 
-        public async Task RunAsync(CancellationToken cancellationToken = new())
+        _cancellationToken = cancellationToken;
+        _logger.LogInformation("EventHub starting processing data");
+
+        await _client.StartProcessingAsync(_cancellationToken);
+
+        while (!_cancellationToken.IsCancellationRequested)
         {
-            if (!_hasValidConfiguration)
-            {
-                _logger.LogWarning("EventHub - missing configuration");
-                return;
-            }
-
-            _cancellationToken = cancellationToken;
-            _logger.LogInformation("EventHub starting processing data");
-
-            await _client.StartProcessingAsync(_cancellationToken);
-
-            while (!_cancellationToken.IsCancellationRequested)
-            {
-                await Task.Delay(1000, _cancellationToken);
-            }
-
-            _logger.LogInformation("EventHub stopping processing data");
+            await Task.Delay(1000, _cancellationToken);
         }
 
-        public async Task StopAsync()
-        {
-            _logger.LogInformation("EventHub shutting down");
-            await Task.Delay(TimeSpan.FromSeconds(30), _cancellationToken);
-            await _client.StopProcessingAsync(_cancellationToken);
-        }
+        _logger.LogInformation("EventHub stopping processing data");
+    }
 
-        protected virtual void OnDataReceived(T e)
-        {
-            DataReceived?.Invoke(this, e);
-        }
+    public async Task StopAsync()
+    {
+        _logger.LogInformation("EventHub shutting down");
+        await Task.Delay(TimeSpan.FromSeconds(30), _cancellationToken);
+        await _client.StopProcessingAsync(_cancellationToken);
+    }
 
-        private async Task ProcessErrorHandler(ProcessErrorEventArgs arg)
-        {
-            _logger.LogError($"EventHub - ProcessErrorHandler - {arg.Exception.Message}");
-            await StopAsync();
-        }
+    protected virtual void OnDataReceived(T e)
+    {
+        DataReceived?.Invoke(this, e);
+    }
 
-        private async Task ProcessEventHandler(ProcessEventArgs arg)
-        {
-            try
-            {
-                var obj = ConvertFromByteArray(arg.Data.Body.ToArray());
-                OnDataReceived(obj);
-                await arg.UpdateCheckpointAsync(arg.CancellationToken);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"EventHub - ProcessEventHandler  Error - {e.Message}");
-            }
-        }
+    private async Task ProcessErrorHandler(ProcessErrorEventArgs arg)
+    {
+        _logger.LogError($"EventHub - ProcessErrorHandler - {arg.Exception.Message}");
+        await StopAsync();
+    }
 
-        private static T ConvertFromByteArray(byte[] data)
+    private async Task ProcessEventHandler(ProcessEventArgs arg)
+    {
+        try
         {
-            if (data == null)
-                return default;
-
-            var dataAsJson = Encoding.UTF8.GetString(data);
-            return JsonConvert.DeserializeObject<T>(dataAsJson);
+            var obj = ConvertFromByteArray(arg.Data.Body.ToArray());
+            OnDataReceived(obj);
+            await arg.UpdateCheckpointAsync(arg.CancellationToken);
         }
+        catch (Exception e)
+        {
+            _logger.LogError($"EventHub - ProcessEventHandler  Error - {e.Message}");
+        }
+    }
+
+    private static T ConvertFromByteArray(byte[] data)
+    {
+        if (data == null)
+            return default;
+
+        var dataAsJson = Encoding.UTF8.GetString(data);
+        return JsonConvert.DeserializeObject<T>(dataAsJson);
     }
 }

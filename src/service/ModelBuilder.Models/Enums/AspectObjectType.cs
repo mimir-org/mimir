@@ -1,9 +1,8 @@
-namespace Mb.Models.Enums
+namespace Mb.Models.Enums;
+
+public enum AspectObjectType
 {
-    public enum AspectObjectType
-    {
-        Root = 0,
-        Aspect = 1,
-        Handler = 2
-    }
+    Root = 0,
+    Aspect = 1,
+    Handler = 2
 }

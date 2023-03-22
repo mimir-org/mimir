@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 
-namespace Mb.Services.Contracts
+namespace Mb.Services.Contracts;
+
+public interface ILockService
 {
-    public interface ILockService
-    {
-        IEnumerable<string> GetLockedAttributes();
-        IEnumerable<string> GetLockedAspectObjects();
-        Task Lock(LockAm lockAm);
-    }
+    IEnumerable<string> GetLockedAttributes();
+    IEnumerable<string> GetLockedAspectObjects();
+    Task Lock(LockAm lockAm);
 }

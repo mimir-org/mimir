@@ -1,21 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 
-namespace Mb.Models.Application
+namespace Mb.Models.Application;
+
+public class LockAm
 {
-    public class LockAm
-    {
-        [Required]
-        public string Id { get; set; }
+    [Required]
+    public string Id { get; set; }
 
-        [Required]
-        public string ProjectId { get; set; }
+    [Required]
+    public string ProjectId { get; set; }
 
-        [Required]
-        public bool IsLocked { get; set; }
+    [Required]
+    public bool IsLocked { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(EntityType))]
-        public EntityType Type { get; set; }
-    }
+    [Required]
+    [EnumDataType(typeof(EntityType))]
+    public EntityType Type { get; set; }
 }

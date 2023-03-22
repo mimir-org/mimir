@@ -14,69 +14,68 @@ using ModelBuilder.Rdf.Services;
 using VDS.RDF;
 using VDS.RDF.Writing;
 
-namespace RdfTurtleParser
+namespace RdfTurtleParser;
+
+public class ParserModule : IModelBuilderParser
 {
-    public class ParserModule : IModelBuilderParser
+    private ServiceProvider _provider;
+    private IOntologyService _ontologyService;
+    private IMapper _mapper;
+
+    public void CreateModule(IServiceCollection services, IConfiguration configuration)
     {
-        private ServiceProvider _provider;
-        private IOntologyService _ontologyService;
-        private IMapper _mapper;
+        services.AddScoped<IOntologyRepository, OntologyRepository>();
+        services.AddScoped<IOntologyService, OntologyService>();
 
-        public void CreateModule(IServiceCollection services, IConfiguration configuration)
+        _provider = services.BuildServiceProvider();
+
+        _ontologyService = _provider.GetService<IOntologyService>();
+        _mapper = _provider.GetService<IMapper>();
+    }
+
+    public ICollection<Profile> GetProfiles()
+    {
+        return new List<Profile>();
+    }
+
+    public ModuleDescriptionDm GetModuleDescription()
+    {
+        return new ModuleDescriptionDm
         {
-            services.AddScoped<IOntologyRepository, OntologyRepository>();
-            services.AddScoped<IOntologyService, OntologyService>();
+            Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6").ToString(),
+            Name = "Mimir RDF Turtle"
+        };
+    }
 
-            _provider = services.BuildServiceProvider();
+    public Task<byte[]> SerializeProject(ProjectDm project)
+    {
+        _ontologyService.BuildProject(project);
+        var bytes = _ontologyService.GetBytes<CompressingTurtleWriter>();
+        return Task.FromResult(bytes);
+    }
 
-            _ontologyService = _provider.GetService<IOntologyService>();
-            _mapper = _provider.GetService<IMapper>();
-        }
+    public Task<ProjectDm> DeserializeProject(byte[] data)
+    {
+        var projectAm = DeserializeProjectAm(data);
+        var project = _mapper.Map<ProjectDm>(projectAm);
+        return Task.FromResult(project);
+    }
 
-        public ICollection<Profile> GetProfiles()
+    public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+    {
+        var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
+        IGraph graph = new Graph();
+        graph.LoadFromString(valueAsString);
+        var project = _ontologyService.BuildProject(graph);
+        return Task.FromResult(project);
+    }
+
+    public FileFormat GetFileFormat()
+    {
+        return new FileFormat
         {
-            return new List<Profile>();
-        }
-
-        public ModuleDescriptionDm GetModuleDescription()
-        {
-            return new ModuleDescriptionDm
-            {
-                Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6").ToString(),
-                Name = "Mimir RDF Turtle"
-            };
-        }
-
-        public Task<byte[]> SerializeProject(ProjectDm project)
-        {
-            _ontologyService.BuildProject(project);
-            var bytes = _ontologyService.GetBytes<CompressingTurtleWriter>();
-            return Task.FromResult(bytes);
-        }
-
-        public Task<ProjectDm> DeserializeProject(byte[] data)
-        {
-            var projectAm = DeserializeProjectAm(data);
-            var project = _mapper.Map<ProjectDm>(projectAm);
-            return Task.FromResult(project);
-        }
-
-        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
-        {
-            var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            IGraph graph = new Graph();
-            graph.LoadFromString(valueAsString);
-            var project = _ontologyService.BuildProject(graph);
-            return Task.FromResult(project);
-        }
-
-        public FileFormat GetFileFormat()
-        {
-            return new FileFormat
-            {
-                ContentType = @"text/turtle",
-                FileExtension = "ttl"
-            };
-        }
+            ContentType = @"text/turtle",
+            FileExtension = "ttl"
+        };
     }
 }
