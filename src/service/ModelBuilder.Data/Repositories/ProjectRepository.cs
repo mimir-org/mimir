@@ -57,7 +57,9 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNullReferenceException("The Id can't be null.");
 
-        return await _cacheRepository.GetOrCreateAsync(id, async () => await GetProjectAsync(id));
+        var project = GetProjectAsync(id);
+
+        return project == null ? null : await _cacheRepository.GetOrCreateAsync(id, () => project);
     }
 
     /// <summary>
@@ -67,10 +69,10 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <returns>Complete project</returns>
     public Task<ProjectDm> GetProjectAsync(string id)
     {
-        var project = FindBy(x => x.Id == id).FirstOrDefault();
+        var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 
         if (project == null)
-            throw new MimirorgNotFoundException($"The project with id {id} can't be found.");
+            return null;
 
         project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
         project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();

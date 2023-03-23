@@ -1,5 +1,4 @@
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
@@ -22,12 +21,8 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
         {
             Id = $"https://rdf.runir.net/ID{ProjectGuid}",
             IsSubProject = false,
-            Version = "1.0.0",
             Name = "Dummy Project",
             Description = "Dummy Project",
-            CreatedBy = "Anna Bond",
-            UpdatedBy = "Anna Bond",
-            Updated = new DateTime(2022, 6, 1, 10, 0, 0),
             AspectObjects = new List<AspectObjectAm>
             {
                 new AspectObjectAm

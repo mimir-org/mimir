@@ -1,3 +1,4 @@
+using System;
 using Mb.Models.Common;
 
 namespace Mb.Data.Contracts;
@@ -13,15 +14,23 @@ public interface ICommonRepository
     /// <summary>
     /// Create an Id as an Iri
     /// </summary>
-    /// <param name="serverEndpoint"></param>
+    /// <param name="endpoint"></param>
+    /// <param name="guid"></param>
     /// <returns></returns>
-    string CreateId(string serverEndpoint);
+    string CreateIdAsIri(string endpoint, string guid);
+
+    /// <summary>
+    /// Check if a string is a valid guid
+    /// </summary>
+    /// <param name="guidAsString"></param>
+    /// <returns>True or false</returns>
+    bool IsValidGuid(string guidAsString);
 
     /// <summary>
     /// Get the URL for the server
     /// </summary>
     /// <returns></returns>
-    string GetServerUrl(string serverEndpoint);
+    string GetEndpoint(string endpoint);
 
     /// <summary>
     /// Get current domain

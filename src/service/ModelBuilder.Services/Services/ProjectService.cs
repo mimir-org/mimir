@@ -62,6 +62,28 @@ public class ProjectService : IProjectService
     }
 
     /// <summary>
+    /// Get a project by Id or Iri. The project will include all connections, aspectObjects,
+    /// attributes and connectors.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>The actual project</returns>
+    /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
+    public async Task<ProjectCm> GetById(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new MimirorgNotFoundException("Id can't be null og empty.");
+
+        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
+
+        var project = await _projectRepository.GetAsyncComplete(projectId);
+
+        if (project == null)
+            throw new MimirorgNotFoundException($"Could not find project with id: {id}");
+
+        return _mapper.Map<ProjectCm>(project);
+    }
+
+    /// <summary>
     /// Get a list of project items from start index and a max number that will be returned.
     /// The list will be filtered on the name parameter.
     /// </summary>
@@ -75,57 +97,125 @@ public class ProjectService : IProjectService
     }
 
     /// <summary>
-    /// Get a project by Id or Iri. The project will include all connections, aspectObjects,
-    /// attributes and connectors.
+    /// Create a new Mimir project based on data
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>The actual project</returns>
-    /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
-    public async Task<ProjectCm> GetById(string id)
+    /// <param name="projectAm">The project that should be created</param>
+    /// <returns>A create project task</returns>
+    /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, aspectObject or connection with same id.</exception>
+    /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
+    public async Task<ProjectCm> CreateOrUpdate(ProjectAm projectAm)
     {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new MimirorgNotFoundException("Id can't be null og empty.");
+        if (projectAm == null)
+            throw new MimirorgNullReferenceException("The project that should be created is null.");
 
-        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}" : id;
+        var validation = projectAm.ValidateObject();
 
-        var project = await _projectRepository.GetAsyncComplete(projectId);
+        if (!validation.IsValid)
+            throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-        if (project == null)
-            throw new MimirorgNotFoundException($"Could not find project with id: {id}");
+        ProjectDm existingProject;
 
-        return _mapper.Map<ProjectCm>(project);
+        if (_commonRepository.IsValidGuid(projectAm.Id))
+            existingProject = await _projectRepository.GetAsyncComplete(_commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{projectAm.Id}");
+        else
+            existingProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+
+        if (existingProject == null)
+            return await CreateNewProject(projectAm);
+
+        var updatedProject = _mapper.Map<ProjectDm>(projectAm);
+
+        // Resolve version changes
+        var projectEditData = await _remapService.CreateEditData(existingProject, updatedProject);
+        var versionStatus = existingProject.CalculateVersionStatus(updatedProject, projectEditData);
+        updatedProject.UpdateVersion(versionStatus);
+
+        updatedProject.UpdatedBy = _contextAccessor.GetName();
+        updatedProject.Updated = DateTime.Now.ToUniversalTime();
+
+        await _projectRepository.SaveAsync();
+        await _aspectObjectRepository.SaveAsync();
+        await _connectorRepository.SaveAsync();
+
+        ClearAllChangeTracker();
+
+        return _mapper.Map<ProjectCm>(updatedProject);
     }
 
     /// <summary>
-    /// Create a new empty project. The project wil include the aspect root aspectObjects.
+    /// Update a project
     /// </summary>
-    /// <param name="projectCreateAm"></param>
-    /// <returns></returns>
-    public async Task<ProjectCm> CreateProject(ProjectCreateAm projectCreateAm)
+    /// <param name="id"></param>
+    /// <param name="project"></param>
+    /// <param name="invokedByDomain"></param>
+    /// <returns>Update Project Task</returns>
+    /// <exception cref="MimirorgInvalidOperationException">Throws if invoking domain is not set.</exception>
+    /// <exception cref="MimirorgNotFoundException">Throws if project is missing from database.</exception>
+    /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
+    /// TODO: We need to handle invokedByDomain in update process
+    public async Task UpdateProject(string id, ProjectAm project, string invokedByDomain)
     {
-        if (_projectRepository.FindBy(x => x.Name.ToLower().Equals(projectCreateAm.Name.ToLower())).FirstOrDefault() != null)
-            throw new MimirorgInvalidOperationException("There already exist a project with the same name");
+        if (string.IsNullOrWhiteSpace(id) || project == null)
+            throw new MimirorgNullReferenceException("Id must have value. Project can't be null.");
 
-        var projectDm = _mapper.Map<ProjectDm>(projectCreateAm);
+        if (string.IsNullOrWhiteSpace(invokedByDomain))
+            throw new MimirorgInvalidOperationException("Domain can't be null or empty");
 
-        projectDm.AspectObjects = new List<AspectObjectDm>
+        var validation = project.ValidateObject();
+        if (!validation.IsValid)
+            throw new MimirorgBadRequestException($"Couldn't update project with name: {project.Name}",
+                validation);
+
+        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
+
+        var original = await _projectRepository.GetAsyncComplete(projectId);
+        //project.Version = original.Version;
+        ClearAllChangeTracker();
+
+        if (original == null)
+            throw new MimirorgNotFoundException($"The project with id:{id}, could not be found.");
+
+        // Remap and create new id's
+        _ = _remapService.Remap(project);
+
+        // Map updated project
+        var updated = _mapper.Map<ProjectDm>(project);
+        updated.Updated = DateTime.Now.ToUniversalTime();
+        updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
+
+        // Get create edit data
+        var projectEditData = await _remapService.CreateEditData(original, updated);
+
+        // Resolve version changes
+        var versionStatus = original.CalculateVersionStatus(updated, projectEditData);
+        updated.UpdateVersion(versionStatus);
+
+        // Resolve aspectObject versions
+        foreach (var aspectObject in updated.AspectObjects)
         {
-            CreateInitAspectObject(Aspect.Function, projectDm.Id),
-            CreateInitAspectObject(Aspect.Product, projectDm.Id),
-            CreateInitAspectObject(Aspect.Location, projectDm.Id)
-        };
+            var originalAspectObject = original.AspectObjects.FirstOrDefault(x => x.Id == aspectObject.Id);
+            if (originalAspectObject == null)
+                continue;
 
-        await _projectRepository.CreateAsync(projectDm);
-        await _projectRepository.SaveAsync();
+            var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(aspectObject, projectEditData);
+            aspectObject.UpdateVersion(aspectObjectVersionStatus);
+        }
 
-        await _aspectObjectRepository.CreateAsync(projectDm.AspectObjects);
-        await _aspectObjectRepository.SaveAsync();
+        // Save last version if there is version changes
+        if (versionStatus != VersionStatus.NoChange)
+            await _versionService.CreateVersion(original);
 
-        await _connectorRepository.CreateAsync(projectDm.AspectObjects.SelectMany(x => x.Connectors));
-        await _aspectObjectRepository.SaveAsync();
+        // Update
+        await _projectRepository.UpdateProject(original, updated, projectEditData);
 
-        return _mapper.Map<ProjectCm>(projectDm);
+        // Find project versions
+
+        // Send websocket data.
+        await _cooperateService.SendDataUpdates(projectEditData, id, updated.Version);
     }
+
 
     /// <summary>
     /// Convert or inverse sub project
@@ -137,65 +227,10 @@ public class ProjectService : IProjectService
         var project = await GetById(projectId);
         var am = _mapper.Map<ProjectAm>(project);
         am.IsSubProject = !am.IsSubProject;
-        await UpdateProject(am.Id, am, _commonRepository.GetDomain());
+        await CreateOrUpdate(am);
     }
 
-    /// <summary>
-    /// Create a new Mimir project based on data
-    /// </summary>
-    /// <param name="project">The project that should be created</param>
-    /// <returns>A create project task</returns>
-    /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, aspectObject or connection with same id.</exception>
-    /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
-    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    public async Task<ProjectCm> UpdateProject(ProjectAm project)
-    {
-        if (project == null)
-            throw new MimirorgNullReferenceException("The project that should be created is null.");
-
-        var validation = project.ValidateObject();
-        if (!validation.IsValid)
-            throw new MimirorgBadRequestException($"Couldn't create project with name: {project.Name}",
-                validation);
-
-        var existingProject = Exist(project.Id, project.Id);
-        ClearAllChangeTracker();
-
-        if (existingProject)
-            throw new MimirorgDuplicateException($"Project already exist - id: {project.Id}");
-
-        if (_connectionRepository.GetAll().AsEnumerable().Any(x => project.Connections.Any(y => y.Id == x.Id)))
-            throw new MimirorgDuplicateException("One or more connections already exist");
-
-        if (_aspectObjectRepository.GetAll().AsEnumerable().Any(x => project.AspectObjects.Any(y => y.Id == x.Id)))
-            throw new MimirorgDuplicateException("One or more aspectObjects already exist");
-
-        var allConnectors = project.AspectObjects.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-        if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-            throw new MimirorgDuplicateException("One or more connectors already exist");
-
-        // Remap and create new id's
-        var _ = _remapService.Remap(project);
-
-        // Create an empty project
-        var newProject = new ProjectDm
-        {
-            CreatedBy = _contextAccessor.GetName(),
-            UpdatedBy = _contextAccessor.GetName(),
-            Updated = DateTime.Now.ToUniversalTime()
-        };
-
-        // Map data
-        _mapper.Map(project, newProject);
-
-        // Deconstruct project
-        var projectData = new ProjectData();
-        await _remapService.DeConstruct(newProject, projectData);
-        await _projectRepository.CreateProject(newProject, projectData);
-
-        var updatedProject = await GetById(newProject.Id);
-        return _mapper.Map<ProjectCm>(updatedProject);
-    }
+    
 
     /// <summary>
     /// Create a new sub project based on an existing project. 
@@ -250,86 +285,13 @@ public class ProjectService : IProjectService
             ClearAllChangeTracker();
         }
     }
-
-    /// <summary>
-    /// Update a project
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="project"></param>
-    /// <param name="invokedByDomain"></param>
-    /// <returns>Update Project Task</returns>
-    /// <exception cref="MimirorgInvalidOperationException">Throws if invoking domain is not set.</exception>
-    /// <exception cref="MimirorgNotFoundException">Throws if project is missing from database.</exception>
-    /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
-    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
-    /// TODO: We need to handle invokedByDomain in update process
-    public async Task UpdateProject(string id, ProjectAm project, string invokedByDomain)
-    {
-        if (string.IsNullOrWhiteSpace(id) || project == null)
-            throw new MimirorgNullReferenceException("Id must have value. Project can't be null.");
-
-        if (string.IsNullOrWhiteSpace(invokedByDomain))
-            throw new MimirorgInvalidOperationException("Domain can't be null or empty");
-
-        var validation = project.ValidateObject();
-        if (!validation.IsValid)
-            throw new MimirorgBadRequestException($"Couldn't update project with name: {project.Name}",
-                validation);
-
-        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.Project) + $"/{id}" : id;
-
-        var original = await _projectRepository.GetAsyncComplete(projectId);
-        project.Version = original.Version;
-        ClearAllChangeTracker();
-
-        if (original == null)
-            throw new MimirorgNotFoundException($"The project with id:{id}, could not be found.");
-
-        // Remap and create new id's
-        _ = _remapService.Remap(project);
-
-        // Map updated project
-        var updated = _mapper.Map<ProjectDm>(project);
-        updated.Updated = DateTime.Now.ToUniversalTime();
-        updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
-
-        // Get create edit data
-        var projectEditData = await _remapService.CreateEditData(original, updated);
-
-        // Resolve version changes
-        var versionStatus = original.CalculateVersionStatus(updated, projectEditData);
-        updated.UpdateVersion(versionStatus);
-
-        // Resolve aspectObject versions
-        foreach (var aspectObject in updated.AspectObjects)
-        {
-            var originalAspectObject = original.AspectObjects.FirstOrDefault(x => x.Id == aspectObject.Id);
-            if (originalAspectObject == null)
-                continue;
-
-            var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(aspectObject, projectEditData);
-            aspectObject.UpdateVersion(aspectObjectVersionStatus);
-        }
-
-        // Save last version if there is version changes
-        if (versionStatus != VersionStatus.NoChange)
-            await _versionService.CreateVersion(original);
-
-        // Update
-        await _projectRepository.UpdateProject(original, updated, projectEditData);
-
-        // Find project versions
-
-        // Send websocket data.
-        await _cooperateService.SendDataUpdates(projectEditData, id, updated.Version);
-    }
-
+    
     /// <summary>
     /// Delete a project from given id
     /// </summary>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    public async Task DeleteProject(string projectId)
+    public async Task Delete(string projectId)
     {
         var existingProject = await _projectRepository.GetProjectAsync(projectId);
         if (existingProject == null)
@@ -346,7 +308,7 @@ public class ProjectService : IProjectService
     /// <param name="projectId"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<(byte[] file, FileFormat format)> DownloadProject(string projectId, Guid id)
+    public async Task<(byte[] file, FileFormat format)> Download(string projectId, Guid id)
     {
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
@@ -364,11 +326,10 @@ public class ProjectService : IProjectService
     /// Check if project exists
     /// </summary>
     /// <param name="projectId"></param>
-    /// <param name="projectIri"></param>
     /// <returns></returns>
-    public bool Exist(string projectId, string projectIri)
+    public bool Exist(string projectId)
     {
-        var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Id == projectIri);
+        var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId);
         ClearAllChangeTracker();
         return exist;
     }
@@ -448,6 +409,42 @@ public class ProjectService : IProjectService
     #region Private
 
     /// <summary>
+    /// Create a new empty project. The project wil include the aspect root aspectObjects.
+    /// </summary>
+    /// <param name="projectAm"></param>
+    /// <returns></returns>
+    private async Task<ProjectCm> CreateNewProject(ProjectAm projectAm)
+    {
+        var projectDm = _mapper.Map<ProjectDm>(projectAm);
+
+        projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id) 
+            ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id) 
+            : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, Guid.NewGuid().ToString());
+
+        projectDm.Version = "1.0";
+        projectDm.CreatedBy = _contextAccessor.GetName();
+        projectDm.Created = DateTime.Now.ToUniversalTime();
+
+        projectDm.AspectObjects = new List<AspectObjectDm>
+        {
+            CreateInitAspectObject(Aspect.Function, projectDm.Id),
+            CreateInitAspectObject(Aspect.Product, projectDm.Id),
+            CreateInitAspectObject(Aspect.Location, projectDm.Id)
+        };
+
+        await _projectRepository.CreateAsync(projectDm);
+        await _projectRepository.SaveAsync();
+
+        await _aspectObjectRepository.CreateAsync(projectDm.AspectObjects);
+        await _aspectObjectRepository.SaveAsync();
+
+        await _connectorRepository.CreateAsync(projectDm.AspectObjects.SelectMany(x => x.Connectors));
+        await _aspectObjectRepository.SaveAsync();
+
+        return _mapper.Map<ProjectCm>(projectDm);
+    }
+
+    /// <summary>
     /// Create init aspect aspectObjects
     /// </summary>
     /// <param name="aspect"></param>
@@ -455,7 +452,7 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private AspectObjectDm CreateInitAspectObject(Aspect aspect, string projectId)
     {
-        var aspectObjectId = _commonRepository.CreateId(ServerEndpoint.AspectObject);
+        var aspectObjectId = _commonRepository.CreateIdAsIri(ServerEndpoint.AspectObject, Guid.NewGuid().ToString());
         var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
         var aspectObject = new AspectObjectDm
@@ -491,7 +488,7 @@ public class ProjectService : IProjectService
             {
                 new ConnectorPartOfDm
                 {
-                    Id = _commonRepository.CreateId(ServerEndpoint.Connector),
+                    Id = _commonRepository.CreateIdAsIri(ServerEndpoint.Connector, Guid.NewGuid().ToString()),
                     Name = "PartOf",
                     Inside = Guid.NewGuid().ToString(),
                     Outside = Guid.NewGuid().ToString(),

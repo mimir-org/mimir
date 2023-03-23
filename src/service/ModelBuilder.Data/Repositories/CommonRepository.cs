@@ -61,24 +61,34 @@ public class CommonRepository : ICommonRepository
     /// <summary>
     /// Creates an Id as an Iri
     /// </summary>
-    /// <param name="serverEndpoint"></param>
+    /// <param name="endpoint"></param>
+    /// <param name="guid"></param>
     /// <returns>A valid Id as an Iri Id</returns>
     /// <exception cref="MimirorgBadRequestException"></exception>
-    public string CreateId(string serverEndpoint)
+    public string CreateIdAsIri(string endpoint, string guid)
     {
-        if (string.IsNullOrWhiteSpace(serverEndpoint))
-            throw new MimirorgBadRequestException("Can't create Id when 'endpoint' is NULL.");
+        if (string.IsNullOrWhiteSpace(endpoint) || !IsValidGuid(guid))
+            throw new MimirorgBadRequestException("Can't create new Id when 'endpoint' is NULL or 'guid' is not valid");
 
-        return _contextAccessor.GetBaseUrl() + $"{serverEndpoint}/{Guid.NewGuid()}";
+        return _contextAccessor.GetBaseUrl() + $"{endpoint}/{guid}";
     }
 
     /// <summary>
     /// Get the URL for the server
     /// </summary>
     /// <returns></returns>
-    public string GetServerUrl(string serverEndpoint)
+    public string GetEndpoint(string endpoint)
     {
-        return _contextAccessor.GetBaseUrl() + $"{serverEndpoint}";
+        return _contextAccessor.GetBaseUrl() + $"{endpoint}";
+    }
+
+    /// <summary>
+    /// Get the URL for the server
+    /// </summary>
+    /// <returns></returns>
+    public bool IsValidGuid(string guidAsString)
+    {
+        return Guid.TryParse(guidAsString, out _);
     }
 
     /// <summary>

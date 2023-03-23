@@ -55,7 +55,7 @@ public class TimedCleanupService : IHostedService, IDisposable
                 return;
 
             var service = scope.ServiceProvider.GetRequiredService<IProjectService>();
-            var tasks = cleanUpData.Select(id => service.DeleteProject(id)).ToArray();
+            var tasks = cleanUpData.Select(id => service.Delete(id)).ToArray();
             Task.WaitAll(tasks);
 
         }

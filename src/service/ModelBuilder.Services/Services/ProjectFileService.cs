@@ -20,17 +20,14 @@ public class ProjectFileService : IProjectFileService
 {
     private readonly IModuleService _moduleService;
     private readonly IProjectService _projectService;
-    private readonly ICommonRepository _commonRepository;
     private readonly IProjectRepository _projectRepository;
 
     #region Constructors
 
-    public ProjectFileService(IModuleService moduleService, IProjectService projectService,
-        ICommonRepository commonRepository, IProjectRepository projectRepository)
+    public ProjectFileService(IModuleService moduleService, IProjectService projectService, IProjectRepository projectRepository)
     {
         _moduleService = moduleService;
         _projectService = projectService;
-        _commonRepository = commonRepository;
         _projectRepository = projectRepository;
     }
 
@@ -108,7 +105,7 @@ public class ProjectFileService : IProjectFileService
         if (par == null)
             throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-        await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+        await _projectService.CreateOrUpdate(projectConverter.Project);
 
         var project = await _projectRepository.GetAsyncComplete(projectConverter.Project.Id);
 
@@ -152,15 +149,15 @@ public class ProjectFileService : IProjectFileService
             throw new MimirorgInvalidOperationException(
                 "You can't import an project that is null or missing id");
 
-        var exist = _projectService.Exist(project.Id, project.Id);
+        var exist = _projectService.Exist(project.Id);
 
         if (exist)
         {
-            await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
+            await _projectService.CreateOrUpdate(project);
             return;
         }
 
-        _ = await _projectService.UpdateProject(project);
+        _ = await _projectService.CreateOrUpdate(project);
     }
 
     #endregion Private

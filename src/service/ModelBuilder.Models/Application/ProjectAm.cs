@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mimirorg.Common.Attributes;
 using Mb.Models.Extensions;
-using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Application;
 
 public class ProjectAm : IValidatableObject
 {
-    [RequiredOne(nameof(Id))]
+    [Required]
     public string Id { get; set; }
-
-    public string Domain => Id.ResolveDomain();
 
     [Required]
     public string Name { get; set; }
@@ -20,20 +15,10 @@ public class ProjectAm : IValidatableObject
     [Required]
     public bool IsSubProject { get; set; }
 
-    [Required]
-    public string Version { get; set; }
-
     public string Description { get; set; }
 
-    public string UpdatedBy { get; set; }
-
-    public DateTime? Updated { get; set; }
-    public string CreatedBy { get; set; }
-
-    public DateTime? Created { get; set; }
-
-    public ICollection<AspectObjectAm> AspectObjects { get; set; } = new List<AspectObjectAm>();
-    public ICollection<ConnectionAm> Connections { get; set; } = new List<ConnectionAm>();
+    public ICollection<AspectObjectAm> AspectObjects { get; set; }
+    public ICollection<ConnectionAm> Connections { get; set; }
 
     #region Validate
 

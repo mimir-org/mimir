@@ -34,7 +34,7 @@ public class ConnectorService : IConnectorService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var connectorId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.Connector) + $"/{id}" : id;
+        var connectorId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Connector) + $"/{id}" : id;
 
         var connector = _connectorRepository.FindBy(x => x.Id == connectorId).FirstOrDefault();
 

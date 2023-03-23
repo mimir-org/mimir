@@ -123,7 +123,7 @@ public static class ModelBuilderModuleExtensions
         cfg.AddProfile(new ConnectionProfile());
         cfg.AddProfile(new ConnectorProfile());
         cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
-        cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+        cfg.AddProfile(new ProjectProfile());
         cfg.AddProfile(new QualifierProfile());
         cfg.AddProfile(new UnitProfile());
         cfg.AddProfile(new VersionProfile());

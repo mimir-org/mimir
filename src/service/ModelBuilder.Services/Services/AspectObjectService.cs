@@ -33,7 +33,7 @@ public class AspectObjectService : IAspectObjectService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var aspectObjectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetServerUrl(ServerEndpoint.AspectObject) + $"/{id}" : id;
+        var aspectObjectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.AspectObject) + $"/{id}" : id;
 
         var aspectObject = await _aspectObjectRepository.GetAsyncComplete(aspectObjectId);
 

@@ -158,10 +158,7 @@ public class EventHubModule : IModelBuilderSyncService
                 return;
             }
 
-            var hasProject = projectService.Exist(project.Id, project.Id);
-            _ = hasProject
-                ? projectService.UpdateProject(project.Id, project, e.SenderDomain)
-                : projectService.UpdateProject(project);
+            projectService.CreateOrUpdate(project);
         }
         catch (Exception ex)
         {
