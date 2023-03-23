@@ -230,7 +230,7 @@ public class ProjectService : IProjectService
         await CreateOrUpdate(am);
     }
 
-    
+
 
     /// <summary>
     /// Create a new sub project based on an existing project. 
@@ -285,7 +285,7 @@ public class ProjectService : IProjectService
             ClearAllChangeTracker();
         }
     }
-    
+
     /// <summary>
     /// Delete a project from given id
     /// </summary>
@@ -417,8 +417,8 @@ public class ProjectService : IProjectService
     {
         var projectDm = _mapper.Map<ProjectDm>(projectAm);
 
-        projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id) 
-            ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id) 
+        projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
+            ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
             : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, Guid.NewGuid().ToString());
 
         projectDm.Version = "1.0";
