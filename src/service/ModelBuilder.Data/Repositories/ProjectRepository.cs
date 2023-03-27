@@ -16,6 +16,7 @@ using Mb.Models.Records;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Mb.Models.Client;
+using Mb.Models.Application;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
@@ -145,7 +146,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
         {
-            using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+            await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
                 // Upsert
                 bulk.Setup<ProjectDm>()
@@ -168,10 +169,51 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                 _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
 
-                // Delete
+                // Delete attributes
                 _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
+
+                // Delete terminals
                 _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
+
+                // Delete aspect objects
                 _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
+
+                //Delete connectors
+                var connectorsToDelete = new List<ConnectorDm>();
+                var connectorTerminalDms = new List<ConnectorTerminalDm>();
+                var connectorPartOfDms = new List<ConnectorPartOfDm>();
+                var connectorFulfilledByDms = new List<ConnectorFulfilledByDm>();
+                var connectorHasLocationDms = new List<ConnectorHasLocationDm>();
+
+                foreach (var item in data.AspectObjectDelete)
+                    connectorsToDelete.AddRange(item.Connectors);
+
+                foreach (var connectorDm in connectorsToDelete)
+                {
+                    switch (connectorDm)
+                    {
+                        case ConnectorTerminalDm dm:
+                            connectorTerminalDms.Add(dm);
+                            break;
+                        case ConnectorPartOfDm dm:
+                            connectorPartOfDms.Add(dm);
+                            break;
+                        case ConnectorFulfilledByDm dm:
+                            connectorFulfilledByDms.Add(dm);
+                            break;
+                        case ConnectorHasLocationDm dm:
+                            connectorHasLocationDms.Add(dm);
+                            break;
+                    }
+                }
+
+                _connectorRepository.BulkDelete(bulk, conn, connectorTerminalDms);
+                _connectorRepository.BulkDelete(bulk, conn, connectorPartOfDms);
+                _connectorRepository.BulkDelete(bulk, conn, connectorFulfilledByDms);
+                _connectorRepository.BulkDelete(bulk, conn, connectorHasLocationDms);
+
+                //TODO: Delete connections
+
             }
 
             trans.Complete();
