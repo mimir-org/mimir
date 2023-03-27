@@ -386,16 +386,17 @@ public class ProjectService : IProjectService
             aspectObject.UpdateVersion(aspectObjectVersionStatus);
         }
 
-        //Update
-        await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
-
-        // Send websocket data.
-        await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version);
-
-        // Save last version if there is version changes
+        // Save original project (if there is a version change)
         if (versionStatus != VersionStatus.NoChange)
             await _versionService.CreateVersion(originalDm);
 
+        //Update
+        await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
+
+        //Send websocket data.
+        await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version);
+
+        //Get the updated project
         var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
 
         return _mapper.Map<ProjectCm>(updatedDm);

@@ -219,7 +219,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             trans.Complete();
         }
 
-        var key = updated.Id.ResolveKey();
+        var key = updated.Id;
         await _cacheRepository.DeleteCacheAsync(key);
         _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Id));
     }
