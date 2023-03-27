@@ -303,7 +303,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<bool>("SubProject")
                         .HasColumnType("bit")
-                        .HasColumnName("IsSubProject");
+                        .HasColumnName("SubProject");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")

@@ -14,7 +14,7 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
             .ForMember(dest => dest.Version, opt => opt.UseDestinationValue())
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.IsSubProject))
+            .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.UpdatedBy, opt => opt.UseDestinationValue())
             .ForMember(dest => dest.Updated, opt => opt.UseDestinationValue())

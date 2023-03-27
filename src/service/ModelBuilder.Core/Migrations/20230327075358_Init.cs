@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -113,7 +113,7 @@ namespace Mb.Core.Migrations
                     Version = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: true),
-                    IsSubProject = table.Column<bool>(type: "bit", nullable: false),
+                    SubProject = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: true),

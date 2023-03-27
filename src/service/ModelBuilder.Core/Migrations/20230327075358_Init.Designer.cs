@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230321113301_Init")]
+    [Migration("20230327075358_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -306,7 +306,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<bool>("SubProject")
                         .HasColumnType("bit")
-                        .HasColumnName("IsSubProject");
+                        .HasColumnName("SubProject");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")

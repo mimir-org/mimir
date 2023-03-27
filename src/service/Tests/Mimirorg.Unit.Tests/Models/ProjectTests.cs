@@ -20,7 +20,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
         return new ProjectAm
         {
             Id = $"https://rdf.runir.net/ID{ProjectGuid}",
-            IsSubProject = false,
+            SubProject = false,
             Name = "Dummy Project",
             Description = "Dummy Project",
             AspectObjects = new List<AspectObjectAm>

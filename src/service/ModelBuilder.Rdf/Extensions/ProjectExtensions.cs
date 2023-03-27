@@ -61,7 +61,7 @@ public static class ProjectExtensions
         project.Id = subject.ToString();
         project.Name = ontologyService.GetValue(project.Id, Resources.Label);
         //project.Version = ontologyService.GetValue(project.Id, Resources.Version, false);
-        project.IsSubProject = false; // TODO: Resolve sub project settings
+        project.SubProject = false; // TODO: Resolve sub project settings
         project.Description = ontologyService.GetValue(project.Id, Resources.Desc, false);
         //project.CreatedBy = ontologyService.GetValue(project.Id, Resources.HasOwner, false);
         //project.UpdatedBy = ontologyService.GetValue(project.Id, Resources.UpdatedBy, false);

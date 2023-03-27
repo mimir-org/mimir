@@ -13,7 +13,7 @@ public class ProjectAm : IValidatableObject
     public string Name { get; set; }
 
     [Required]
-    public bool IsSubProject { get; set; }
+    public bool SubProject { get; set; }
 
     public string Description { get; set; }
 
