@@ -4,11 +4,10 @@ import { useEffect } from "react";
 import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./HandleComponent.styled";
 import { BlockNodeConnector } from "./components/BlockNodeConnector";
-import { ShowHandle } from "./helpers";
-import { Project, Node, Connector } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connector, Project } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   project: Project;
   connectors: Connector[];
   isElectroView: boolean;
@@ -34,7 +33,7 @@ export const HandleComponent = ({ node, project, connectors, isElectroView, isIn
   return (
     <HandleContainer isElectro={isElectroView}>
       {connectors.map((conn) => {
-        if (!ShowHandle(conn, isInput)) return null;
+        if (conn.hidden) return null;
         return (
           <BlockNodeConnector
             key={`handle-${conn.id}`}

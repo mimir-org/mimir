@@ -8,10 +8,10 @@ import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeBox } from "./AspectNode.styled";
 import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { Node, Connector, Aspect } from "@mimirorg/modelbuilder-types";
 import { GetHandleClassName } from "../helpers/GetHandleClassName";
+import { Aspect, AspectObject, Connector } from "lib";
 
-const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
+const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
 

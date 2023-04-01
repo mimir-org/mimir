@@ -12,7 +12,7 @@ import { useFilePicker } from "use-file-picker";
 import { useState } from "react";
 import { OnImportProjectFileClick, OnReturnClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
-import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { ModuleDescription } from "lib";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();

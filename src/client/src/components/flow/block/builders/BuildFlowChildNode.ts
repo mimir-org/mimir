@@ -1,6 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { GetNodeTypeString, SetChildNodePos } from "./helpers";
+import { AspectObject } from "lib";
 
 /**
  * Component to create a child node in BlockView.
@@ -10,11 +10,11 @@ import { GetNodeTypeString, SetChildNodePos } from "./helpers";
  * @param parentNode
  * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildFlowChildNode = (childNode: Node, parentNode: Node) => {
+const BuildFlowChildNode = (childNode: AspectObject, parentNode: AspectObject) => {
   if (!childNode) return null;
 
   const type = GetNodeTypeString(childNode);
-  const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
+  const nodePos = { x: childNode.blockPosX, y: childNode.blockPosY };
   const position = SetChildNodePos(nodePos, parentNode);
 
   return {

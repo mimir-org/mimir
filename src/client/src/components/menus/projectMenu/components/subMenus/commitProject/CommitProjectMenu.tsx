@@ -10,8 +10,8 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
-import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+import { ModuleDescription } from "lib";
 
 export const CommitProjectMenu = () => {
   const dispatch = useAppDispatch();

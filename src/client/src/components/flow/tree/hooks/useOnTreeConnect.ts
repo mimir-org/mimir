@@ -1,19 +1,11 @@
-import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
+import { addEdge, Connection as FlowConnection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { IsPartOfRelation, IsTerminal, IsRelationConnection } from "../../helpers/Connectors";
-import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
-import { Dispatch } from "redux";
-import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
-import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
-import { Node, Edge, Project, Connector } from "@mimirorg/modelbuilder-types";
-import { ConvertEdgeDataToMimirPartOfEdge } from "../../converters";
+import { Project } from "lib";
 
-interface Params {
-  connection: FlowEdge | Connection;
+interface OnTreeDropParameters {
+  connection: FlowEdge | FlowConnection;
   project: Project;
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
-  dispatch: Dispatch;
-  animatedEdge: boolean;
 }
 
 /**
@@ -21,36 +13,19 @@ interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnTreeConnect = (params: Params) => {
+const useOnTreeConnect = (params: OnTreeDropParameters) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, animatedEdge, setEdges, dispatch } = params;
-  const id = CreateId();
-  const source = project.nodes.find((n) => n.id === connection.source);
-  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
-  const target = project.nodes.find((n) => n.id === connection.target);
-  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
-  const existingEdge = GetExistingEdge(project.edges, connection, source, target);
+  const { project, connection, setEdges } = params;
 
-  if (IsRelationConnection(sourceConn, targetConn)) HandleRelationConnectionChange(project.edges, target, targetConn, dispatch);
+  const edge = project.convertFromFlowEdge(connection, null);
+  if (edge == null) return;
 
-  const currentEdge = existingEdge ?? ConvertEdgeDataToMimirPartOfEdge(id, sourceConn, targetConn, source, target, project.id);
-  if (!existingEdge) dispatch(createEdge(currentEdge));
-
-  if (IsPartOfRelation(currentEdge?.fromConnector))
-    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
-
-  const type = GetTreeEdgeType(sourceConn);
-  const animated = animatedEdge && IsTerminal(sourceConn);
+  const [source, target] = project.getConnectorNodes(connection.source, connection.target);
+  const type = edge.getComponentType("Tree");
 
   return setEdges((els) => {
-    return addEdge({ ...connection, id, type, animated, data: { source, target, edge: currentEdge } }, els);
+    return addEdge({ ...connection, id: edge.id, type: type, animated: false, data: { source, target, edge } }, els);
   });
 };
-
-function HandleRelationConnectionChange(edges: Edge[], targetNode: Node, targetConnector: Connector, dispatch: Dispatch) {
-  //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const exixtingEdge = edges.find((edge) => edge.toNodeId === targetNode.id && edge.toConnectorId === targetConnector.id);
-  if (exixtingEdge) dispatch(deleteEdge(exixtingEdge.id));
-}
 
 export default useOnTreeConnect;

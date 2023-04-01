@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
-import { SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
@@ -49,9 +47,8 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const terminals = useAppSelector(selectors.terminalsSelector);
   const library = useAppSelector(selectors.librarySelector);
-  const isElectroView = useAppSelector(selectors.electroViewSelector);
-  const mimirNodes = project?.nodes ?? [];
-  const mimirEdges = project?.edges ?? [];
+  const mimirNodes = project?.aspectObjects ?? [];
+  const mimirEdges = project?.connections ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);
   const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
   const selectedEdge = mimirEdges.find((e) => e.selected);
@@ -69,7 +66,7 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnBlockConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, setEdges });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -120,10 +117,8 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
-      SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
+      setNodes(project.convertToFlowNodes("Block", selectedBlockNode?.id));
+      setEdges(project.convertToFlowEdges("Block"));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -132,13 +127,13 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
-  }, [mimirNodes, isElectroView]);
+    setNodes(project.convertToFlowNodes("Block", selectedBlockNode?.id));
+  }, [mimirNodes, false]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
+    setEdges(project.convertToFlowEdges("Block"));
   }, [mimirEdges, mimirNodes, filter]);
 
   return (

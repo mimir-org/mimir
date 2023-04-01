@@ -1,4 +1,3 @@
-import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
 import {
   InterfaceLibCm,
   NodeLibCm,
@@ -7,6 +6,7 @@ import {
   TransportLibCm,
   AttributeLibCm,
 } from "@mimirorg/typelibrary-types";
+import { LibrarySubProject } from "../../../lib/classes";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 

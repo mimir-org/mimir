@@ -2,9 +2,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import { Dispatch } from "redux";
 import { Size } from "../../../../../../../assets/size/Size";
-import { Node } from "@mimirorg/modelbuilder-types";
-import { updateBlockSize } from "../../../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../helpers/GetFlowNodeByDataId";
+import { AspectObject } from "../../../../../../../lib/classes/AspectObject";
 
 const MIN_HEIGHT = Size.BLOCK_NODE_MIN_HEIGHT;
 const MIN_WIDTH = Size.BLOCK_NODE_MIN_WIDTH;
@@ -19,11 +18,15 @@ const MAX_WIDTH = Size.BLOCK_NODE_MAX_WIDTH;
  * @param resizePanelRef
  * @param dispatch
  */
-export const useResizeParentNode = (node: Node, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
+export const useResizeParentNode = (
+  node: AspectObject,
+  resizePanelRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
+) => {
   const parentRef = useRef(null);
   const parentFlowRef = useRef(null);
-  const nodeHeightRef = useRef(node.height);
-  const nodeWidthRef = useRef(node.width);
+  const nodeHeightRef = useRef(100);
+  const nodeWidthRef = useRef(100);
 
   const prevYRef = useRef(nodeHeightRef.current);
   const prevXRef = useRef(nodeWidthRef.current);
@@ -110,6 +113,6 @@ const onMouseUp = (
   nodeHeightRef: React.MutableRefObject<number>,
   dispatch: Dispatch
 ) => {
-  dispatch(updateBlockSize(id, { width: nodeWidthRef.current, height: nodeHeightRef.current }));
+  // dispatch(updateBlockSize(id, { width: nodeWidthRef.current, height: nodeHeightRef.current }));
   document.removeEventListener("mousemove", resizeCallback);
 };

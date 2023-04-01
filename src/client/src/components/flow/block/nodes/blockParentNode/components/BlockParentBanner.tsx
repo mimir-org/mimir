@@ -1,13 +1,13 @@
-import { GetAspectColor, GetRdsPrefix } from "../../../../../../helpers";
+import { GetAspectColor } from "../../../../../../helpers";
 import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
-import { Node, Connector, ConnectorDirection, NodeType } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+import { AspectObject, Connector, Direction, Project } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   company: MimirorgCompanyCm;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
@@ -15,9 +15,10 @@ interface Props {
   isElectroView: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
+  project: Project;
 }
 
 /**
@@ -36,6 +37,7 @@ export const BlockParentBanner = ({
   onConnectorClick,
   onClickAddTerminal,
   onClickRemoveTerminal,
+  project,
 }: Props) => (
   <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>
     <HeaderGroup gap={"10px"}>
@@ -49,7 +51,7 @@ export const BlockParentBanner = ({
         onClickAddTerminal={onClickAddTerminal}
         onClickRemoveTerminal={onClickRemoveTerminal}
       />
-      {node.nodeType !== NodeType.Root && company && (
+      {node.libraryType != null && company && (
         <LogoBox>
           <img src={company.logo} alt={company.name} />
         </LogoBox>
@@ -57,7 +59,7 @@ export const BlockParentBanner = ({
     </HeaderGroup>
     <HeaderGroup gap={"5px"}>
       <HeaderTitle>
-        {GetRdsPrefix(node)}
+        {node.getRdsPrefix()}
         {node.label ?? node.name}
       </HeaderTitle>
       <Navigation
@@ -65,6 +67,7 @@ export const BlockParentBanner = ({
         node={node}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}
+        project={project}
       />
     </HeaderGroup>
     <TerminalsMenuComponent

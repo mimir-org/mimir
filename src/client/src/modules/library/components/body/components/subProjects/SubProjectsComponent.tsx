@@ -10,8 +10,8 @@ import {
 import { SubProjectCategory, Movable, Version, Latest } from "../../../../../../assets/icons/library";
 import { Icon } from "../../../../../../compLibrary/icon/Icon";
 import { useState } from "react";
-import { LibrarySubProject } from "@mimirorg/modelbuilder-types";
 import { OnDragStart } from "../collections/components/nodeCollection/libNode/handlers";
+import { LibrarySubProject } from "../../../../../../lib";
 
 interface SubProjectProps {
   items: LibrarySubProject[];

@@ -1,4 +1,4 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "lib";
 import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
 
@@ -9,7 +9,7 @@ import { TextResources } from "../../../../assets/text/TextResources";
  * @param node
  * @returns a ParentNode - a large container that allows organizing of the child nodes.
  */
-const BuildFlowParentNode = (node: Node) => {
+const BuildFlowParentNode = (node: AspectObject) => {
   if (!node) return null;
 
   const type = TextResources.BLOCK_PARENTNODE;

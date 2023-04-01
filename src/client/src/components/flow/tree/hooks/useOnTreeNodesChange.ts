@@ -2,8 +2,8 @@ import { MutableRefObject } from "react";
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
+import { AspectObject, Connection } from "lib";
 
 /**
  * Hook that runs whenever a Node has a change in TreeView.
@@ -19,15 +19,15 @@ import { OnNodeDelete } from "../../handlers/";
  * @param inspectorRef
  */
 const useOnTreeNodesChange = (
-  nodes: Node[],
-  edges: Edge[],
+  nodes: AspectObject[],
+  edges: Connection[],
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
   dispatch: Dispatch,
   inspectorRef: MutableRefObject<HTMLDivElement>
 ) => {
   const verifiedFlowChanges = [] as NodeChange[];
-  const nodesToDelete = [] as Node[];
+  const nodesToDelete = [] as AspectObject[];
 
   // Verify changes
   changes.forEach((change) => {
@@ -48,7 +48,12 @@ const useOnTreeNodesChange = (
  * @param nodesToDelete
  * @param nodes
  */
-function HandleRemove(change: NodeRemoveChange, verifiedFlowChanges: NodeChange[], nodesToDelete: Node[], nodes: Node[]) {
+function HandleRemove(
+  change: NodeRemoveChange,
+  verifiedFlowChanges: NodeChange[],
+  nodesToDelete: AspectObject[],
+  nodes: AspectObject[]
+) {
   const mimirNode = nodes?.find((n) => n.id === change.id);
   if (!mimirNode || IsAspectNode(mimirNode) || mimirNode.isLocked) return;
 

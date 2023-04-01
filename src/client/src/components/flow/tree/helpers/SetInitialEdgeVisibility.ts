@@ -1,18 +1,20 @@
 import { Dispatch } from "redux";
-import { Edge } from "@mimirorg/modelbuilder-types";
-import { setEdgeVisibility } from "../../../../redux/store/project/actions";
-import { IsPartOfRelation } from "../../helpers/Connectors";
+// import { setEdgeVisibility } from "../../../../redux/store/project/actions";
+import { Connection } from "lib";
 
 /**
  * Component to set the visibility of partOf edges on first render of TreeView.
  * @param edges
  * @param dispatch
  */
-const SetInitialEdgeVisibility = (edges: Edge[], dispatch: Dispatch) => {
+const SetInitialEdgeVisibility = (edges: Connection[], dispatch: Dispatch) => {
   const hidden = true;
 
   edges?.forEach((e) => {
-    if (!IsPartOfRelation(e.fromConnector)) dispatch(setEdgeVisibility(e.id, hidden));
+    // if (!IsPartOfRelation(e.fromConnector)) {
+    //   // TODO: Resolve this
+    //   // dispatch(setEdgeVisibility(e.id, hidden));
+    // }
   });
 };
 

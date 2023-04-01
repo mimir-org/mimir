@@ -2,16 +2,16 @@ import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponen
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connector, Direction } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
   isElectroView: boolean;
   showMenuButton?: boolean;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 

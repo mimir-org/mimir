@@ -1,7 +1,7 @@
+import { AspectObject } from "lib";
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
 /**
@@ -34,7 +34,7 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   );
 };
 
-function GetRelationColor(node: Node) {
+function GetRelationColor(node: AspectObject) {
   if (IsFunction(node)) return Color.SUNGLOW;
   if (IsLocation(node)) return Color.MAGENTA;
   if (IsProduct(node)) return Color.ELECTRIC_BLUE;

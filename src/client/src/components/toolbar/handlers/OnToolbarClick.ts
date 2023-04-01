@@ -7,14 +7,14 @@ import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
-import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
-import {
-  removeSelectedBlockNode,
-  removeSelectedEdge,
-  removeSelectedNode,
-  setSelectedNode,
-  setSelectedBlockNode,
-} from "../../../redux/store/project/actions";
+// import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+// import {
+//   removeSelectedBlockNode,
+//   removeSelectedEdge,
+//   removeSelectedNode,
+//   setSelectedNode,
+//   setSelectedBlockNode,
+// } from "../../../redux/store/project/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => dispatch(toggleElectroView());
 export const OnFilterClick = (dispatch: Dispatch, open: boolean) => dispatch(setFilterMenuVisibility(!open));
@@ -33,9 +33,9 @@ export const OnBlockViewClick = (
   if (!isTreeView || !ValidateBlockViewClick(selectedFlowNodes.length, dispatch)) return;
 
   SetFitToScreen(viewportData);
-  dispatch(removeSecondaryNode());
-  dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
-  dispatch(setSelectedNode(selectedFlowNodes[0].id));
+  // dispatch(removeSecondaryNode());
+  // dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
+  // dispatch(setSelectedNode(selectedFlowNodes[0].id));
   dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
 };
 
@@ -44,9 +44,9 @@ export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, i
 
   // When opening TreeView all selectedItems are removed
   setSelectedNodes([]);
-  dispatch(removeSelectedNode());
-  dispatch(removeSelectedBlockNode());
-  dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(removeSelectedBlockNode());
+  // dispatch(removeSelectedEdge());
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 

@@ -1,8 +1,8 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { OnEdgeDelete } from "../../handlers/";
+import { AspectObject, Connection, Project } from "lib";
 
 /**
  * Hook that runs whenever an Edge has a change in TreeView.
@@ -21,9 +21,9 @@ import { OnEdgeDelete } from "../../handlers/";
  */
 
 const useOnTreeEdgesChange = (
-  nodes: Node[],
-  edges: Edge[],
-  selectedNode: Node,
+  nodes: AspectObject[],
+  edges: Connection[],
+  selectedNode: AspectObject,
   changes: EdgeChange[],
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
@@ -31,11 +31,12 @@ const useOnTreeEdgesChange = (
   dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
-  const edgesToDelete = [] as Edge[];
+  const edgesToDelete = [] as Connection[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove") return HandleRemove(change, verifiedFlowChanges, edgesToDelete, nodes, edges, selectedNode);
+    if (change.type === "remove")
+      return HandleRemove(change, verifiedFlowChanges, edgesToDelete, nodes, edges, selectedNode, project);
     verifiedFlowChanges.push(change);
   });
 
@@ -57,19 +58,20 @@ const useOnTreeEdgesChange = (
 function HandleRemove(
   change: NodeRemoveChange,
   verifiedFlowChanges: EdgeChange[],
-  edgesToDelete: Edge[],
-  nodes: Node[],
-  edges: Edge[],
-  selectedNode: Node
+  edgesToDelete: Connection[],
+  nodes: AspectObject[],
+  edges: Connection[],
+  selectedNode: AspectObject,
+  project: Project
 ) {
   if (IsAspectNode(selectedNode)) return;
 
   const mimirEdge = edges?.find((n) => n.id === change.id);
-  if (!mimirEdge || mimirEdge.isLocked) return;
+  if (!mimirEdge) return;
 
-  const fromNode = nodes.find((n) => n.id === mimirEdge.fromNodeId);
-  const toNode = nodes.find((n) => n.id === mimirEdge.toNodeId);
-  if (fromNode?.isLocked || toNode?.isLocked) return;
+  const [from, to] = project.getConnectionNodes(mimirEdge);
+
+  if (from?.isLocked || to?.isLocked) return;
 
   edgesToDelete.push(mimirEdge);
 

@@ -1,4 +1,4 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "lib";
 import { XYPosition } from "react-flow-renderer";
 import { Size } from "../../../../../assets/size/Size";
 
@@ -9,17 +9,17 @@ import { Size } from "../../../../../assets/size/Size";
  * @param position
  * @returns a boolean value.
  */
-export const ValidateNodePosition = (parentNode: Node, id: string, position: XYPosition) => {
+export const ValidateNodePosition = (parentNode: AspectObject, id: string, position: XYPosition) => {
   if (!parentNode || !position || id === parentNode.id) return false;
 
   const x = position.x;
   const y = position.y;
 
   const margin = 30;
-  const xMin = parentNode.positionBlockX;
-  const xMax = parentNode.positionBlockX + parentNode.width - Size.NODE_WIDTH;
+  const xMin = parentNode.blockPosX;
+  const xMax = parentNode.blockPosX + 200 - Size.NODE_WIDTH;
   const yMin = margin;
-  const yMax = parentNode.height - Size.NODE_HEIGHT;
+  const yMax = 200 - Size.NODE_HEIGHT;
 
   const validX = x > xMin && x < xMax;
   const validY = y > yMin && y < yMax;

@@ -1,4 +1,4 @@
-import { Attribute } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "lib";
 import { MinusIcon, PlusIcon } from "../../../../../../../../../../../assets/icons/controls";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
@@ -45,7 +45,7 @@ export const AttributeButtonsComponent = ({
               LockComponent
             )}
           </AttributeButton>
-          <AttributeButton onClick={() => onAddAttribute(attribute.attributeTypeId)}>
+          <AttributeButton onClick={() => onAddAttribute(attribute.id)}>
             <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
             <PlusIcon style={{ fill: "#black" }} />
           </AttributeButton>

@@ -2,20 +2,20 @@
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType } from "../../../../../models";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
 import { TreeNodeTerminal } from "./components/TreeNodeTerminal";
 import { useAppDispatch } from "../../../../../redux/store";
 import { FilterTreeTerminals } from "./helpers/FilterTreeTerminals";
+import { AspectObject, Connector } from "lib";
 
 /**
  * Component to display a node in TreeView.
  * @param data the data for the node.
  * @returns a Mimir Node in the FlowTree context.
  */
-const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
+const TreeNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);

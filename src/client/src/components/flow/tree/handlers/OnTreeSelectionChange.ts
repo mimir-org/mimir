@@ -6,12 +6,12 @@ import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers/SetPanelHeight";
 import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
-import {
-  removeSelectedEdge,
-  removeSelectedNode,
-  setSelectedEdge,
-  setSelectedNode,
-} from "../../../../redux/store/project/actions";
+// import {
+//   removeSelectedEdge,
+//   removeSelectedNode,
+//   setSelectedEdge,
+//   setSelectedNode,
+// } from "../../../../redux/store/project/actions";
 
 /**
  * Component to handle selection of Nodes in TreeView.
@@ -34,25 +34,25 @@ export const HandleTreeNodeSelection = (
 };
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
-  dispatch(removeSelectedEdge());
-  dispatch(removeSelectedNode());
-  dispatch(setSelectedNode(flowNode.id));
+  // dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(setSelectedNode(flowNode.id));
 }
 
 function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
-  dispatch(removeSelectedEdge());
-  dispatch(removeSelectedNode());
-  dispatch(setSelectedEdge(flowEdge?.id));
+  // dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(setSelectedEdge(flowEdge?.id));
 }
 
 function HandleMultiSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
-  dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedEdge());
   CloseInspector(inspectorRef, dispatch);
 }
 
 function HandleNoSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
-  dispatch(removeSelectedNode());
-  dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(removeSelectedEdge());
   CloseInspector(inspectorRef, dispatch);
 }
 

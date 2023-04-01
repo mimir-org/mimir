@@ -1,18 +1,17 @@
 import { GetConnectorNode } from "./index";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { Node, Relation, Terminal } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
+import { AspectObject, ConnectorFulfilledBy, ConnectorHasLocation, ConnectorPartOf, ConnectorTerminal } from "lib";
 
-export const VerifyTransportItem = (items: Terminal[], sourceTerminal: Terminal) =>
-  !items.some((conn) => conn.terminalTypeId === sourceTerminal.terminalTypeId) && items.push(sourceTerminal);
+export const VerifyTransportItem = (items: ConnectorTerminal[], sourceTerminal: ConnectorTerminal) =>
+  !items.some((conn) => conn.terminalType === sourceTerminal.terminalType) && items.push(sourceTerminal);
 
-export const VerifyLocationItem = (items: Relation[], sourceRelation: Relation) =>
-  !items.some((conn) => IsLocationRelation(conn)) && items.push(sourceRelation);
+export const VerifyLocationItem = (items: ConnectorHasLocation[], sourceRelation: ConnectorHasLocation) =>
+  !items.some((conn) => items.push(sourceRelation));
 
-export const VerifyFulfilledByItem = (items: Relation[], sourceRelation: Relation) =>
-  !items.some((conn) => IsProductRelation(conn)) && items.push(sourceRelation);
+export const VerifyFulfilledByItem = (items: ConnectorFulfilledBy[], sourceRelation: ConnectorFulfilledBy) =>
+  !items.some((conn) => items.push(sourceRelation));
 
-export const VerifyPartOfItem = (items: Relation[], sourceRelation: Relation, nodes: Node[]) => {
+export const VerifyPartOfItem = (items: ConnectorPartOf[], sourceRelation: ConnectorPartOf, nodes: AspectObject[]) => {
   const sourceNode = GetConnectorNode(sourceRelation, nodes);
   let exists = false;
 

@@ -1,4 +1,4 @@
-import * as selectors from "./helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../assets/size/Size";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
@@ -14,6 +14,7 @@ import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
+import { Project } from "lib";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -27,7 +28,7 @@ interface Props {
  */
 export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector<Project>(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
@@ -40,8 +41,8 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
-  const selectedEdge = project?.edges.find((e) => e.selected);
-  const selectedNode = project?.nodes.find((n) => n.selected);
+  const selectedEdge = project.selectedConnection();
+  const selectedNode = project.selectedAspectObject();
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;

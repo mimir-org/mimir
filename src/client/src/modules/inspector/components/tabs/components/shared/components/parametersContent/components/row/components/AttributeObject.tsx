@@ -1,9 +1,9 @@
 import { AttributeDescriptorComponent } from "./AttributeDescriptorComponent";
 import { AttributeHeaderBox, AttributeObjectBody, AttributeObjectBox } from "./AttributeObject.styled";
-import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeObjectNameComponent } from "./AttributeObjectNameComponent";
 import { AttributeButtonsComponent } from "./AttributeButtonsComponent";
 import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
+import { Attribute } from "lib";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -38,7 +38,7 @@ export const AttributeObject = ({
   onRemoveAttribute,
 }: Props) => {
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
-  const hasTypeReference = attribute?.attributeTypeIri != null && attribute?.attributeTypeIri.length > 0;
+  const hasTypeReference = attribute?.attributeType != null && attribute?.attributeType.length > 0;
 
   return (
     <>

@@ -4,12 +4,11 @@ import { TreeHandleBox } from "../../styled/TreeHandleBox";
 import { Handle } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { SetTopPos } from "../../helpers/SetTopPos";
-import { Aspect, Connector, Node } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation } from "../../../../helpers/Connectors";
 import { GetHandleClassName } from "../../helpers/GetHandleClassName";
+import { AspectObject, Aspect, Connector } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   connector: Connector;
   isHover: boolean;
   setIsHover: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,7 +29,7 @@ export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatc
     <TreeHandleBox
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      visible={(IsPartOfRelation(connector) || IsLocationRelation(connector) || IsProductRelation(connector)) && isHover}
+      visible={true} //{(IsPartOfRelation(connector) || IsLocationRelation(connector) || IsProductRelation(connector)) && isHover}
       position={pos}
       topPos={SetTopPos(pos)}
       isFunctionAspect={node.aspect === Aspect.Function}

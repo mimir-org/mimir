@@ -1,6 +1,6 @@
 import { Size } from "../../../../../assets/size/Size";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { Position } from "../../../../../models/project";
+import { AspectObject } from "lib";
 
 /**
  * Component to force a child node to fit within the parent block in BlockView.
@@ -8,13 +8,15 @@ import { Position } from "../../../../../models/project";
  * @param childNodePos
  * @returns an updated position, containing X and Y values.
  */
-const SetChildNodePos = (childNodePos: Position, parentNode: Node) => {
+const SetChildNodePos = (childNodePos: Position, parentNode: AspectObject) => {
   const margin = 30;
 
-  const xMin = parentNode.positionBlockX;
-  const xMax = parentNode.width - Size.NODE_WIDTH;
+  const xMin = parentNode.blockPosX;
+  // const xMax = parentNode.width - Size.NODE_WIDTH;
+  const xMax = 500 - Size.NODE_WIDTH;
   const yMin = margin;
-  const yMax = parentNode.height - Size.NODE_HEIGHT;
+  // const yMax = parentNode.height - Size.NODE_HEIGHT;
+  const yMax = 500 - Size.NODE_HEIGHT;
 
   let x = childNodePos.x;
   let y = childNodePos.y;

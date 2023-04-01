@@ -1,10 +1,8 @@
-import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
-import { Connection } from "react-flow-renderer";
+import { Aspect, AspectObject, Connection, Connector } from "lib";
+import { Connection as FlowConnection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
-import { IsLocationRelation, IsProductRelation } from "../../../helpers/Connectors";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
@@ -14,7 +12,7 @@ import { IsLocationRelation, IsProductRelation } from "../../../helpers/Connecto
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidBlockConnection = (connection: Connection, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+const IsValidBlockConnection = (connection: FlowConnection, nodes: AspectObject[], edges: Connection[], dispatch: Dispatch) => {
   const sourceNode = nodes.find((n) => n.id === connection.source);
   const sourceTerminal = sourceNode?.connectors.find((c) => c.id === connection.sourceHandle);
   const targetNode = nodes.find((n) => n.id === connection.target);
@@ -32,33 +30,41 @@ const IsValidBlockConnection = (connection: Connection, nodes: Node[], edges: Ed
   return isValidTransport && isValidRelation;
 };
 
-function IsRelationNode(node: Node) {
-  return IsLocation(node) || IsProduct(node);
+function IsRelationNode(node: AspectObject) {
+  return node.aspect === Aspect.Location || node.aspect === Aspect.Product;
 }
 
-function IsRelationConnector(connector: Connector) {
-  return IsLocationRelation(connector) || IsProductRelation(connector);
-}
-
-function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
+function ValidateTransport(
+  source: Connector,
+  target: Connector,
+  sourceNode: AspectObject,
+  targetNode: AspectObject,
+  edges: Connection[]
+) {
   if (IsRelationNode(sourceNode) || IsRelationNode(targetNode)) return true;
 
   return !edges.some(
     (edge) =>
-      edge.fromConnectorId === source.id ||
-      edge.toConnectorId === source.id ||
-      edge.fromConnectorId === target.id ||
-      edge.toConnectorId === target.id
+      edge.fromConnector === source.id ||
+      edge.toConnector === source.id ||
+      edge.fromConnector === target.id ||
+      edge.toConnector === target.id
   );
 }
 
-function ValidateRelation(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
+function ValidateRelation(
+  source: Connector,
+  target: Connector,
+  sourceNode: AspectObject,
+  targetNode: AspectObject,
+  edges: Connection[]
+) {
   if (IsRelationNode(sourceNode)) {
-    const existingEdge = edges.find((e) => e.toConnectorId === target.id && IsRelationConnector(e.toConnector));
+    const existingEdge = edges.find((e) => e.toConnector === target.id);
     if (existingEdge) return false;
   }
   if (IsRelationNode(targetNode)) {
-    const existingEdge = edges.find((e) => e.fromConnectorId === source.id && IsRelationConnector(e.fromConnector));
+    const existingEdge = edges.find((e) => e.fromConnector === source.id);
     if (existingEdge) return false;
   }
   return true;

@@ -1,9 +1,9 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { GetMimirNodes } from "../../../../../../helpers/Selected";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
-import { ValidateFlowTreeEdge } from "../../../builders/helpers";
+// import { ValidateFlowTreeEdge } from "../../../builders/helpers";
+import { AspectObject } from "lib";
 
 /**
  * Function to check if a connection/edge in TreeView is valid.
@@ -12,14 +12,14 @@ import { ValidateFlowTreeEdge } from "../../../builders/helpers";
  * @param dispatch
  * @returns a boolean value.
  */
-export const IsValidTreeConnection = (node: Node, connection: Connection, dispatch: Dispatch) => {
-  const nodes = GetMimirNodes() as Node[];
+export const IsValidTreeConnection = (node: AspectObject, connection: Connection, dispatch: Dispatch) => {
+  const nodes = GetMimirNodes() as AspectObject[];
   const fromNode = nodes.find((n) => n.id === connection.source);
   const toNode = nodes.find((n) => n.id === connection.target);
   const fromConnector = fromNode?.connectors.find((c) => c.id === connection.sourceHandle);
   const toConnector = toNode?.connectors.find((c) => c.id === connection.targetHandle);
 
-  const [status, message] = ValidateFlowTreeEdge(fromNode, toNode, fromConnector, toConnector);
+  const [status, message] = [true, "Manuelt validert"]; // ValidateFlowTreeEdge(fromNode, toNode, fromConnector, toConnector);
   document.addEventListener("mouseup", () => onMouseUp(status, message, dispatch), { once: true });
   return status;
 };

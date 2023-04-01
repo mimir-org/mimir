@@ -2,7 +2,7 @@ import { CollectionsWrapper } from "./CollectionsComponent.styled";
 import { CollectionsActions, LibraryTab } from "../../../../../../models";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Aspect } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Aspect } from "lib";
 import { LibNodeCollectionList } from "./components/nodeCollection/libNode/LibNodeCollectionList";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   selectedLibNode: NodeLibCm | null;
   setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
-  selectedNode: Node;
+  selectedNode: AspectObject;
 }
 
 export const CollectionsComponent = ({

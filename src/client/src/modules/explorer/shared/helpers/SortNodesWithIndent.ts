@@ -1,10 +1,9 @@
 import red from "../../../../redux/store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node } from "@mimirorg/modelbuilder-types";
-import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
+import { AspectObject } from "lib";
 
-const SortNodesWithIndent = (nodes: Node[]) => {
+const SortNodesWithIndent = (nodes: AspectObject[]) => {
   InitialSortNodes(nodes);
   const buckets = GroupNodesByIndentLevel(nodes);
   return SortNodesByIndent(buckets);
@@ -14,7 +13,7 @@ const SortNodesWithIndent = (nodes: Node[]) => {
  * Ensures nodes are sorted according to aspect. On a tie, aspect nodes are placed before non-aspect nodes.
  * @param nodes Nodes to sort.
  */
-export const InitialSortNodes = (nodes: Node[]) => {
+export const InitialSortNodes = (nodes: AspectObject[]) => {
   return nodes?.sort((a, b) => (IsFamily(a, b) ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
 };
 
@@ -23,8 +22,8 @@ export const InitialSortNodes = (nodes: Node[]) => {
  * @param nodes Nodes to group.
  * @returns Map of indent levels and nodes with the corresponding indent level.
  */
-const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
-  const buckets: Map<number, Node[]> = new Map();
+const GroupNodesByIndentLevel = (nodes: AspectObject[]): Map<number, AspectObject[]> => {
+  const buckets: Map<number, AspectObject[]> = new Map();
 
   for (const node of nodes) {
     const indent = SetIndentLevel(node, 0);
@@ -42,8 +41,8 @@ const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
  * @param buckets Mapping between indent level and array of nodes with corresponding indent level.
  * @returns Array of Node and indent level, to be rendered by explorer module.
  */
-const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
-  let sortedNodedWithIndent: [Node, number][] = [];
+const SortNodesByIndent = (buckets: Map<number, AspectObject[]>) => {
+  let sortedNodedWithIndent: [AspectObject, number][] = [];
 
   for (const indent of Array.from(buckets.keys())) {
     const bucket = buckets.get(indent);
@@ -67,18 +66,17 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
  * @param indent Indent level of node
  * @param sortedNodedWithIndent Current (partial) array of nodes with indent.
  */
-const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [Node, number][]) => {
-  for (let i = 0; i < sortedNodedWithIndent.length; i++) {
-    const [otherNode] = sortedNodedWithIndent[i];
-
-    if (IsParentOf(otherNode?.id, node?.id)) {
-      sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
-      return;
-    }
-  }
+const AddNodeFromBucket = (node: AspectObject, indent: number, sortedNodedWithIndent: [AspectObject, number][]) => {
+  // for (let i = 0; i < sortedNodedWithIndent.length; i++) {
+  //   const [otherNode] = sortedNodedWithIndent[i];
+  //   if (IsParentOf(otherNode?.id, node?.id)) {
+  //     sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
+  //     return;
+  //   }
+  // }
 };
 
-const IsAspectNodeNum = (node: Node) => (IsAspectNode(node) ? 1 : 0);
+const IsAspectNodeNum = (node: AspectObject) => (IsAspectNode(node) ? 1 : 0);
 
 /**
  * Recursive function to give each node the correct level based on it's family tree.
@@ -86,19 +84,22 @@ const IsAspectNodeNum = (node: Node) => (IsAspectNode(node) ? 1 : 0);
  * @param count
  * @returns a number that defines the indent in the Explorer Module.
  */
-const SetIndentLevel = (node: Node, count: number): number => {
-  const edges = red.store.getState().projectState.project.edges;
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+const SetIndentLevel = (node: AspectObject, count: number): number => {
+  // TODO: Fix this
+  return 1;
 
-  const edge = edges.find((e) => e.toNode.id === node.id && IsPartOfRelation(e.toConnector));
-  if (!edge) return count;
+  // const edges = red.store.getState().projectState.project.connections;
+  // const nodes = red.store.getState().projectState.project.aspectObjects as Node[];
 
-  count++;
+  // const edge = edges.find((e) => e.toNode.id === node.id && IsPartOfRelation(e.toConnector));
+  // if (!edge) return count;
 
-  const nextNode = nodes?.find((n) => n.id === edge.fromNode?.id);
-  if (!nextNode) return count;
+  // count++;
 
-  return SetIndentLevel(nextNode, count);
+  // const nextNode = nodes?.find((n) => n.id === edge.fromNode?.id);
+  // if (!nextNode) return count;
+
+  // return SetIndentLevel(nextNode, count);
 };
 
 export { SortNodesWithIndent };

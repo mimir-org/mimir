@@ -1,6 +1,5 @@
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
 import { AspectColorType } from "../../../../../models";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { GetAspectColor } from "../../../../../helpers";
 import { CheckboxBlockExplorer } from "../../../../../compLibrary/input/checkbox/explorer/block/CheckboxBlockExplorer";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
@@ -8,18 +7,19 @@ import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
 import { ViewportData } from "../../../../../models/project";
+import { AspectObject } from "lib";
 
 interface Props {
-  node: Node;
-  nodes: Node[];
-  selectedBlockNode: Node;
+  node: AspectObject;
+  nodes: AspectObject[];
+  selectedBlockNode: AspectObject;
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
   viewportData: ViewportData;
-  onChange: (node: Node) => void;
+  onChange: (node: AspectObject) => void;
 }
 
 /**

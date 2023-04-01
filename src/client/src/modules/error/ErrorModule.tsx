@@ -3,7 +3,6 @@ import { ExitButton } from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
 import { TextResources } from "../../assets/text/TextResources";
 import { BadRequestData } from "../../models/webclient";
-import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/commonSlice";
 import { deleteUserError } from "../../redux/store/user/userSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
@@ -36,7 +35,7 @@ const ErrorModule = () => {
     if (errors) {
       errors.forEach((error) => {
         if (error.key) {
-          dispatch(deleteProjectError(error.key));
+          // dispatch(deleteProjectError(error.key));
           dispatch(deleteCommonError(error.key));
           dispatch(deleteUserError(error.key));
         }
@@ -48,11 +47,11 @@ const ErrorModule = () => {
   useEffect(() => {
     const errorList = [];
 
-    if (projectState.apiError) {
-      projectState.apiError.forEach((error) => {
-        if (error) errorList.push({ module: "Project", key: error.key, message: error.errorMessage, errorData: error.errorData });
-      });
-    }
+    // if (projectState.apiError) {
+    //   projectState.apiError.forEach((error) => {
+    //     if (error) errorList.push({ module: "Project", key: error.key, message: error.errorMessage, errorData: error.errorData });
+    //   });
+    // }
 
     if (libraryState.apiError) {
       libraryState.apiError.forEach((error) => {
@@ -74,7 +73,7 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError]);
+  }, [commonState.apiError, libraryState.apiError, userState.apiError]);
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>

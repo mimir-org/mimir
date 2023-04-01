@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../../../../../helpers";
 import { InspectorElement } from "../../../../../../../types";
-import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
-import { Attribute, EntityType } from "@mimirorg/modelbuilder-types";
+// import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
+import { Attribute } from "lib";
 
 export const OnLockParameter = (
   inspectorParentElement: InspectorElement,
@@ -22,7 +22,7 @@ export const OnLockParameter = (
 };
 
 const handleLockOnline = (attribute: Attribute, projectId: string, isLocked: boolean, dispatch: Dispatch) => {
-  dispatch(lockEntity(attribute.id, projectId, isLocked, EntityType.Attribute));
+  // dispatch(lockEntity(attribute.id, projectId, isLocked, EntityType.Attribute));
 };
 
 const handleLockOffline = (
@@ -32,14 +32,14 @@ const handleLockOffline = (
   isLockedBy: string,
   dispatch: Dispatch
 ) => {
-  dispatch(
-    setLockedAttribute({
-      id: attribute.id,
-      projectId: projectId,
-      isLocked: isLocked,
-      isLockedStatusBy: isLockedBy,
-      isLockedStatusDate: new Date(),
-      type: EntityType.Attribute,
-    })
-  );
+  // dispatch(
+  //   setLockedAttribute({
+  //     id: attribute.id,
+  //     projectId: projectId,
+  //     isLocked: isLocked,
+  //     isLockedStatusBy: isLockedBy,
+  //     isLockedStatusDate: new Date(),
+  //     type: EntityType.Attribute,
+  //   })
+  // );
 };

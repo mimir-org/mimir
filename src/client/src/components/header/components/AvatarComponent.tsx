@@ -1,4 +1,4 @@
-import * as selectors from "../helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
 import { AvatarBackground } from "../../../assets/icons/header";

@@ -4,7 +4,7 @@ import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 // import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect } from "../../../../../lib";
 
 interface Props {
   // collectionState: CollectionsActions;

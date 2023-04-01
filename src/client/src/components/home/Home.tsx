@@ -5,7 +5,7 @@ import { StartPage } from "../start/StartPage";
 import { InspectorModule } from "../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu/ProjectSubMenus";
-import { search } from "../../redux/store/project/actions";
+// import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow/FlowModule";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
@@ -61,7 +61,7 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchLibraryTransportTypes());
     dispatch(fetchLibraryTerminals());
     dispatch(fetchLibraryAttributeTypes());
-    dispatch(search(""));
+    // dispatch(search(""));
     dispatch(fetchLibrary());
     dispatch(fetchCompanies());
     dispatch(fetchParsers());

@@ -1,5 +1,5 @@
 import { changeActiveMenu } from "../../redux/menuSlice";
-import { createSubProject } from "../../../../../../../redux/store/project/actions";
+// import { createSubProject } from "../../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 
 const OnSubProjectCreateClick = (
@@ -9,7 +9,7 @@ const OnSubProjectCreateClick = (
   edgeIds: string[],
   dispatch: Dispatch
 ) => {
-  dispatch(createSubProject(fromProjectId, projectName, projectName, nodeIds, edgeIds));
+  // dispatch(createSubProject(fromProjectId, projectName, projectName, nodeIds, edgeIds));
   dispatch(changeActiveMenu(null));
 };
 

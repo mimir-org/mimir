@@ -1,25 +1,26 @@
+import { Connector, ConnectorPartOf, ConnectorRelation, ConnectorTerminal, Direction } from "lib";
 import { HandleType, Position } from "react-flow-renderer";
-import { Connector } from "@mimirorg/modelbuilder-types";
-import {
-  IsInputConnector,
-  IsOutputConnector,
-  IsInputVisible,
-  IsOutputVisible,
-  IsBidirectionalTerminal,
-  IsPartOfRelation,
-  IsTerminal,
-} from "../../../helpers/Connectors";
+
+// import {
+//   IsInputConnector,
+//   IsOutputConnector,
+//   IsInputVisible,
+//   IsOutputVisible,
+//   IsBidirectionalTerminal,
+//   IsPartOfRelation,
+//   IsTerminal,
+// } from "../../../helpers/Connectors";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
-  let sourcePosition = IsPartOfRelation(conn) ? Position.Bottom : Position.Right;
-  let targetPosition = IsPartOfRelation(conn) ? Position.Top : Position.Left;
+  let sourcePosition = conn instanceof ConnectorPartOf ? Position.Bottom : Position.Right;
+  let targetPosition = conn instanceof ConnectorRelation ? Position.Top : Position.Left;
 
-  if (IsTerminal(conn) && conn.isProxy) {
+  if (conn instanceof ConnectorTerminal) {
     sourcePosition = Position.Left;
     targetPosition = Position.Right;
   }
 
-  if (IsInputConnector(conn) || (IsBidirectionalTerminal(conn) && IsInputVisible(conn))) return ["target", targetPosition];
-  if (IsOutputConnector(conn) || (IsBidirectionalTerminal(conn) && IsOutputVisible(conn))) return ["source", sourcePosition];
+  if (conn.direction === Direction.Input || conn.direction === Direction.Bidirectional) return ["target", targetPosition];
+  if (conn.direction === Direction.Output || conn.direction === Direction.Bidirectional) return ["source", sourcePosition];
   return ["source", sourcePosition];
 };

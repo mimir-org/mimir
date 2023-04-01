@@ -10,7 +10,7 @@ import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
-import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { ModuleDescription } from "lib";
 
 export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();

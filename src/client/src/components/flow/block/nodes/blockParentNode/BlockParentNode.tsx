@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/ParentSelectors";
+import * as selectors from "redux/store/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle/HandleComponent";
@@ -9,9 +9,8 @@ import { FilterConnectors } from "../helpers/FilterConnectors";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
-import { InitParentSize } from "./helpers/InitParentSize";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../helpers/Connectors";
+import { AspectObject, Connector } from "lib";
+import { ConnectorTerminal } from "../../../../../lib/classes/Connector";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
@@ -21,17 +20,12 @@ export type Connectors = { inputs: Connector[]; outputs: Connector[] };
  * @param data the data for the node.
  * @returns a Mimir ParentNode.
  */
-const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
+const BlockParentNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const project = useAppSelector(selectors.projectSelector);
-  const isElectroView = useAppSelector(selectors.electroSelector);
-  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-
-  useEffect(() => {
-    InitParentSize(data, dispatch);
-  }, []);
+  const selectedBlockNode = project?.aspectObjects?.find((n) => n.blockSelected);
 
   useEffect(() => {
     setConnectors(FilterConnectors(data?.connectors, selectedBlockNode));
@@ -40,31 +34,31 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   if (!data) return null;
 
   return (
-    <BoxWrapper isElectro={isElectroView}>
+    <BoxWrapper isElectro={false}>
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.outputs.filter((x) => IsTerminal(x) && x.isProxy)}
-        isElectroView={isElectroView}
+        connectors={connectors.outputs.filter((x) => x instanceof ConnectorTerminal)}
+        isElectroView={false}
         dispatch={dispatch}
         isInput
         isParent
       />
       <BlockParentComponent
         node={data}
-        isElectroView={isElectroView}
-        inputConnectors={connectors.inputs.filter((x) => IsTerminal(x) && !x.isProxy)}
-        outputConnectors={connectors.outputs.filter((x) => IsTerminal(x) && !x.isProxy)}
+        isElectroView={false}
+        inputConnectors={connectors.inputs.filter((x) => x instanceof ConnectorTerminal)}
+        outputConnectors={connectors.outputs.filter((x) => x instanceof ConnectorTerminal)}
         isNavigationActive={true}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data, dispatch, project?.connections)}
       />
       <HandleComponent
         node={data}
         project={project}
-        connectors={connectors.inputs.filter((x) => IsTerminal(x) && x.isProxy)}
-        isElectroView={isElectroView}
+        connectors={connectors.inputs.filter((x) => x instanceof ConnectorTerminal)}
+        isElectroView={false}
         dispatch={dispatch}
         isInput={false}
         isParent

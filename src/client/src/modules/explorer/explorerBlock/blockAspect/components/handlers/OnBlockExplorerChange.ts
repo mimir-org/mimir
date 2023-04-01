@@ -1,10 +1,5 @@
 import { Dispatch } from "redux";
-import { Node } from "@mimirorg/modelbuilder-types";
-import {
-  removeSelectedBlockNode,
-  setSelectedBlockNode,
-  setBlockNodeVisibility,
-} from "../../../../../../redux/store/project/actions";
+import { AspectObject } from "lib";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -14,16 +9,16 @@ import {
  * @param nodes
  * @param dispatch
  */
-export const OnBlockExplorerChange = (node: Node, nodes: Node[], dispatch: Dispatch) => {
+export const OnBlockExplorerChange = (node: AspectObject, nodes: AspectObject[], dispatch: Dispatch) => {
   if (!node) return;
-  dispatch(removeSelectedBlockNode());
-  dispatch(setSelectedBlockNode(node.id));
-  dispatch(setBlockNodeVisibility(node, false));
+  // dispatch(removeSelectedBlockNode());
+  // dispatch(setSelectedBlockNode(node.id));
+  // dispatch(setBlockNodeVisibility(node, false));
   ShowChildren(nodes, node, dispatch);
 };
 
-function ShowChildren(nodes: Node[], node: Node, dispatch: Dispatch) {
-  nodes.forEach((n) => {
-    if (n.parentNodeId === node.id) dispatch(setBlockNodeVisibility(n, false));
-  });
+function ShowChildren(nodes: AspectObject[], node: AspectObject, dispatch: Dispatch) {
+  // nodes.forEach((n) => {
+  //   if (n.parentNodeId === node.id) dispatch(setBlockNodeVisibility(n, false));
+  // });
 }

@@ -1,14 +1,13 @@
 import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { addNode } from "../../../../redux/store/project/actions";
-import { ConvertLibNodeToNode } from "../../converters";
+// import { addNode } from "../../../../redux/store/project/actions";
 import { User } from "../../../../models";
-import { Project, Node } from "@mimirorg/modelbuilder-types";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
+import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../assets/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObject, Project } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -16,7 +15,7 @@ interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
   user: User;
-  selectedNode: Node;
+  selectedNode: AspectObject;
   instance: ReactFlowInstance;
   getViewport: GetViewport;
   dispatch: Dispatch;
@@ -47,19 +46,20 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * @param params
  */
 function HandleLibNodeDrop({ event, project, user, selectedNode, getViewport, dispatch, terminals }: OnDropParameters) {
-  const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
   if (!selectedNode) return;
 
   // Position for both treeView and blockView must be set
-  const treePosition = SetTreeNodePosition(selectedNode, project.nodes, project.edges);
+  const treePosition = SetTreeNodePosition(selectedNode, project);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const convertedNode = ConvertLibNodeToNode(nodeLib, selectedNode, treePosition, blockPosition, project.id, user, terminals);
-  convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
+  // const convertedNode = ConvertLibNodeToNode(nodeLib, selectedNode, treePosition, blockPosition, project.id, user, terminals);
+  const aspectObject = new AspectObject(libNode, project.id, treePosition, user.email);
+  // convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
 
-  if (IsFamily(selectedNode, convertedNode)) HandleCreatePartOfEdge(selectedNode, convertedNode, project, dispatch);
-  dispatch(addNode(convertedNode));
+  if (IsFamily(selectedNode, aspectObject)) HandleCreatePartOfEdge(selectedNode, aspectObject, project, dispatch);
+  // dispatch(addNode(convertedNode));
 }
 
 /**

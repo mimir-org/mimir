@@ -1,13 +1,9 @@
-import { IsEdge, IsNode } from "../../../../../helpers/IsType";
+import { AspectObject } from "lib";
+
 import { InspectorElement, InspectorAttributesElement } from "../../../../../types";
 
 export const GetAttributesElement = (element: InspectorElement): InspectorAttributesElement => {
-  if (IsNode(element)) return element;
-
-  if (IsEdge(element)) {
-    if (element.transport) return element.transport;
-    if (element.interface) return element.interface;
-  }
+  if (element instanceof AspectObject) return element;
 
   return null;
 };

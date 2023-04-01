@@ -1,14 +1,5 @@
-import { IsLocation } from "../../../../../helpers/Aspects";
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { Connector, Node } from "@mimirorg/modelbuilder-types";
-import {
-  IsBidirectionalTerminal,
-  IsInputConnector,
-  IsLocationRelation,
-  IsOutputConnector,
-  IsPartOfRelation,
-  IsTerminal,
-} from "../../../helpers/Connectors";
+import { AspectObject, Connector, ConnectorTerminal, Direction } from "lib";
 
 /**
  * Component to filter the connectors displayed on the nodes in BlockView.
@@ -18,20 +9,25 @@ import {
  * @param secondaryNode
  * @returns two filtered lists of connectors sorted by type, name and input/output.
  */
-export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Node) => {
+export const FilterConnectors = (connectors: Connector[], selectedBlockNode: AspectObject) => {
   const sortedConnectors = connectors
     ?.filter((c) => FilterConnector(selectedBlockNode, c))
-    ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
+    ?.sort((a, b) => a.name.localeCompare(b.name));
 
   const inputs =
-    sortedConnectors?.filter((t) => !IsPartOfRelation(t) && (IsInputConnector(t) || IsBidirectionalTerminal(t))) ?? [];
+    sortedConnectors?.filter(
+      (t) => t instanceof ConnectorTerminal && (t.direction === Direction.Input || t.direction === Direction.Bidirectional)
+    ) ?? [];
   const outputs =
-    sortedConnectors?.filter((t) => !IsPartOfRelation(t) && (IsOutputConnector(t) || IsBidirectionalTerminal(t))) ?? [];
+    sortedConnectors?.filter(
+      (t) => t instanceof ConnectorTerminal && (t.direction === Direction.Output || t.direction === Direction.Bidirectional)
+    ) ?? [];
 
   return { inputs, outputs } as Connectors;
 };
 
-function FilterConnector(selectedNode: Node, connector: Connector) {
-  if (IsLocation(selectedNode)) return IsLocationRelation(connector);
-  return IsTerminal(connector);
+function FilterConnector(selectedNode: AspectObject, connector: Connector) {
+  return connector instanceof ConnectorTerminal;
+  // if (selectedNode.aspect === Aspect.Location) return IsLocationRelation(connector);
+  // return IsTerminal(connector);
 }

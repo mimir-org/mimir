@@ -7,15 +7,16 @@ import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { LibraryTab, CollectionsActions } from "../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+// import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
   useAppSelector,
   useParametricAppSelector,
   animatedModuleSelector,
   libOpenSelector,
-  nodesSelector,
+  // nodesSelector,
   libSubProjectorSelector,
 } from "../../redux/store";
+import { Aspect } from "../../lib";
 
 interface Props {
   dispatch: Dispatch;
@@ -33,12 +34,14 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [selectedLibNodes, setSelectedLibNodes] = useState([] as NodeLibCm[]);
   const [selectedLibNode, setSelectedLibNode] = useState<NodeLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
-  const nodes = useAppSelector(nodesSelector);
+  // const nodes = useAppSelector(nodesSelector);
   const subProjects = useAppSelector(libSubProjectorSelector);
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
-  const selectedNode = nodes?.find((n) => n.selected);
+  // const selectedNode = nodes?.find((n) => n.selected);
+  // TODO: Fix this
+  // const selectedNode = nodes[0];
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
@@ -65,7 +68,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
         selectedLibNode={selectedLibNode}
         setSelectedLibNode={setSelectedLibNode}
         aspectFilters={aspectFilters}
-        selectedNode={selectedNode}
+        selectedNode={null} // TODO: Fix this
         subProjects={subProjects}
       />
     </AnimatedModule>

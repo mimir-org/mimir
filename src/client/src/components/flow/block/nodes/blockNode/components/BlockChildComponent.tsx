@@ -3,18 +3,18 @@ import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
-import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { AspectObject, Connector, Direction } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   colorMain: string;
   colorSelected: string;
   isElectroView: boolean;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 

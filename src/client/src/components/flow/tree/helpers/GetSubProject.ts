@@ -1,4 +1,4 @@
-import { Project } from "@mimirorg/modelbuilder-types";
+import { Project } from "lib";
 import Config from "../../../../models/Config";
 import { get } from "../../../../models/webclient";
 

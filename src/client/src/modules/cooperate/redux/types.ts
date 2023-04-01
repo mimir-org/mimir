@@ -1,16 +1,16 @@
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connection } from "lib";
 
 export const COOPERATE_ADD_NODE = "COOPERATE_ADD_NODE";
 export const COOPERATE_ADD_EDGE = "COOPERATE_ADD_EDGE";
 
 interface CooperateAddNode {
   type: typeof COOPERATE_ADD_NODE;
-  payload: Node;
+  payload: AspectObject;
 }
 
 interface CooperateAddEdge {
   type: typeof COOPERATE_ADD_EDGE;
-  payload: Edge;
+  payload: Connection;
 }
 
 export type CooperateActionTypes = CooperateAddNode | CooperateAddEdge;

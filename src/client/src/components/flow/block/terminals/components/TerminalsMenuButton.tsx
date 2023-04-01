@@ -1,10 +1,10 @@
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connector } from "lib";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetMenuIcon } from "../helpers/GetMenuIcon";
 import { TerminalsButtonBox } from "./TerminalsMenuButton.styled";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   isParent: boolean;
   isInput?: boolean;
   showMenuButton: boolean;

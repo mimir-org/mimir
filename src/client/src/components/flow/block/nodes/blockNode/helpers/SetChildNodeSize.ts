@@ -1,6 +1,6 @@
+import { Direction } from "lib";
 import { Size } from "../../../../../../assets/size/Size";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { IsInputConnector, IsConnectorVisible, IsOutputConnector } from "../../../../helpers/Connectors";
 import { Connectors } from "../../blockParentNode/BlockParentNode";
 
 /**
@@ -20,11 +20,11 @@ export const SetChildNodeSize = (terminals: Connectors, electro: boolean): Block
   let height = Size.NODE_HEIGHT;
 
   terminals.inputs.forEach((t) => {
-    IsConnectorVisible(t) && IsInputConnector(t) && inTerminals++;
+    !t.hidden && t.direction === Direction.Input && inTerminals++;
   });
 
   terminals.outputs.forEach((t) => {
-    IsConnectorVisible(t) && IsOutputConnector(t) && outTerminals++;
+    !t.hidden && t.direction === Direction.Output && outTerminals++;
   });
 
   if (electro) {

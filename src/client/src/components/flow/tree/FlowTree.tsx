@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
-import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
+// import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
@@ -44,11 +43,11 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const terminals = useAppSelector(selectors.terminalsSelector);
-  const mimirNodes = project?.nodes;
-  const mimirEdges = project?.edges;
+  const mimirNodes = project?.aspectObjects;
+  const mimirEdges = project?.connections;
   const selectedNode = mimirNodes?.find((n) => n.selected);
   const selectedEdge = mimirEdges?.find((e) => e.selected);
-  const hasAnimation = filter.filters.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
+  // const hasAnimation = filter.filters.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -60,7 +59,7 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   };
 
   const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
-    dispatch(updatePosition(n.id, n.position.x, n.position.y));
+    // dispatch(updatePosition(n.id, n.position.x, n.position.y));
   }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -68,8 +67,6 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
       connection,
       project,
       setEdges,
-      dispatch,
-      animatedEdge: hasAnimation,
     });
   };
 
@@ -101,8 +98,8 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(BuildFlowTreeNodes(mimirNodes));
-      setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter));
+      setNodes(project.convertToFlowNodes("Tree"));
+      setEdges(project.convertToFlowEdges("Tree"));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -111,13 +108,13 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowTreeNodes(mimirNodes));
+    setNodes(project.convertToFlowNodes("Tree"));
   }, [mimirNodes, selectedNode]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter));
+    setEdges(project.convertToFlowEdges("Tree"));
   }, [mimirEdges, filter]);
 
   return (

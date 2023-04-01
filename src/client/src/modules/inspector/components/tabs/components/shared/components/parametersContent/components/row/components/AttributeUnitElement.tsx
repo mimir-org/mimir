@@ -1,4 +1,4 @@
-import { Unit } from "@mimirorg/modelbuilder-types";
+import { Unit } from "lib";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 import { Dropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { AttributeDescriptorBody, AttributeDescriptorValue } from "./AttributeDescriptor.styled";

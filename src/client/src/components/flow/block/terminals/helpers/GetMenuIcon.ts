@@ -1,6 +1,6 @@
 import * as Icons from "../../../../../assets/icons/terminalsMenu";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "lib";
 
 /**
  * Function to get an icon for the terminals menu in BlockView.
@@ -9,7 +9,7 @@ import { Node } from "@mimirorg/modelbuilder-types";
  * @param isInput
  * @returns an icon
  */
-export const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
+export const GetMenuIcon = (node: AspectObject, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
 
   if (IsLocation(node)) {

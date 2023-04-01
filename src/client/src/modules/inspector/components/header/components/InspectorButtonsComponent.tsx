@@ -7,8 +7,6 @@ import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
-import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
-import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
 import { IsBlockView } from "../../../../../helpers";
@@ -19,10 +17,11 @@ import {
   InspectorButtonsToggleTitle,
   InspectorButtonsToggleContainer,
 } from "./InspectorButtonsComponent.styled";
+import { AspectObject, Connection, Project } from "lib";
 
 interface Props {
-  nodes: Node[];
-  edges: Edge[];
+  nodes: AspectObject[];
+  edges: Connection[];
   element: InspectorElement;
   username: string;
   open: boolean;
@@ -53,12 +52,16 @@ export const InspectorButtonsComponent = ({
   dispatch,
 }: Props) => {
   const [onLock, setOnLock] = useState(false);
-  const isLocked = element?.isLocked;
+  // const isLocked = element?.isLocked; TODO: resolve this
+  const isLocked = false; //element?.isLocked;
   const isElementSelected = !!element;
+  // const selectedBlockNode = nodes?.find((n) => n.blockSelected);
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const deleteDisabled =
-    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedBlockNode?.id);
+    isLocked ||
+    (element instanceof AspectObject && IsAspectNode(element)) ||
+    (IsBlockView() && element?.id === selectedBlockNode?.id);
 
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
 
@@ -74,9 +77,9 @@ export const InspectorButtonsComponent = ({
       {isElementSelected && (
         <>
           <InspectorButton
-            onClick={() => OnLockClick(element, !element.isLocked, username, setOnLock, dispatch)}
-            type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
+            onClick={() => OnLockClick(element, !isLocked, username, setOnLock, dispatch)}
+            type={isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
+            description={isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
             disabled={onLock && isGlobalLocking}
           />
           <InspectorButton

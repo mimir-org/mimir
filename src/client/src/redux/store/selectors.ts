@@ -1,9 +1,9 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "../../lib/classes";
 import { MODULE_TYPE } from "../../models/project";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 
 export const isProjectStateFetchingSelector = createAppSelector(
-  (state) => state.projectState.fetching,
+  (state) => state.projectState.fetching?.length > 0,
   (fetching) => fetching
 );
 
@@ -225,33 +225,28 @@ export const projectIsSubProjectSelector = createAppSelector(
   (isSubProject) => isSubProject
 );
 
-export const secondaryNodeSelector = createAppSelector(
-  (state) => state.secondaryNode.node,
-  (node) => node as Node
-);
-
 export const selectedNodeSelector = createAppSelector(
-  (state) => state.projectState.project?.nodes?.find((n: Node) => n.selected),
+  (state) => state.projectState.project.aspectObjects?.find((n: AspectObject) => n.selected),
   (node) => node
 );
 
-export const electroViewSelector = createAppSelector(
-  (state) => state.electro.visible,
-  (visible) => visible
-);
+// export const electroViewSelector = createAppSelector(
+//   (state) => state.electro.visible,
+//   (visible) => visible
+// );
 
 export const nodesSelector = createAppSelector(
-  (state) => state.projectState?.project?.nodes,
+  (state) => state.projectState?.project?.aspectObjects,
   (nodes) => nodes ?? []
 );
 
 export const edgesSelector = createAppSelector(
-  (state) => state.projectState?.project?.edges,
+  (state) => state.projectState?.project?.connections,
   (edges) => edges ?? []
 );
 
 export const nodeSelector = createParametricAppSelector(
-  (state) => state.projectState?.project?.nodes,
+  (state) => state.projectState?.project?.aspectObjects,
   (_, id: string) => id,
-  (nodes, id) => nodes.find((n: Node) => n.id === id)
+  (nodes, id) => nodes.find((n: AspectObject) => n.id === id)
 );

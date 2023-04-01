@@ -1,10 +1,10 @@
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Color } from "../assets/color/Color";
 import { AspectColorType } from "../models";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsProduct } from "./Aspects";
+import { AspectObject } from "lib";
 
-type NodeItem = Node | NodeLibCm;
+type NodeItem = AspectObject | NodeLibCm;
 
 /**
  * Component to get the color for a given item.

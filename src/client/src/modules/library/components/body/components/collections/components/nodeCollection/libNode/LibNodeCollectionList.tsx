@@ -6,7 +6,7 @@ import { LibNodeCollection } from "./LibNodeCollection";
 import { CollectionsActions } from "../../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../../redux/store";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect, AspectObject } from "lib";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -16,7 +16,7 @@ interface Props {
   selectedLibNode: NodeLibCm | null;
   setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
-  selectedNode: Node;
+  selectedNode: AspectObject;
 }
 
 export const LibNodeCollectionList = ({

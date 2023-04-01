@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 import { CommonState, FetchCompaniesFinished, FetchParsersFinished, FetchCompanyFinished } from "./types";
+import { ModuleDescription } from "../../../lib/classes";
 
 const initialCommonState: CommonState = {
   fetching: false,

@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
-import { AreAllPartOfChecked, GetPartOfName } from "./helpers";
+import { GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
-import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connection, Connector } from "lib";
 
 interface Props {
-  edges: Edge[];
-  nodes: Node[];
-  relations: Relation[];
+  edges: Connection[];
+  nodes: AspectObject[];
+  relations: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -24,19 +24,19 @@ export const PartOfRelationsFilter = ({ edges, nodes, relations, dispatch, visib
       <FilterElement
         label={TextResources.PARTOF_RELATIONSHIP}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
-        isChecked={AreAllPartOfChecked(edges)}
+        isChecked={true}
         visible={visible}
         isHeader
       />
       {relations.map((r) => {
-        const edge = edges.find((e) => e.fromConnectorId === r.id);
-        const node = nodes.find((n) => n.id === r.nodeId);
-        const name = GetPartOfName(r, node);
+        const edge = edges.find((e) => e.fromConnector === r.id);
+        // const node = nodes.find((n) => n.id === r.nodeId);
+        // const name = GetPartOfName(r, node);
 
         return (
           <FilterElement
             key={r.id}
-            label={name}
+            label={"Denne må fikses"}
             onChange={() => OnFilterChange(edge, edges, nodes, dispatch)}
             isChecked={!edge.hidden}
             indent={2}

@@ -1,13 +1,12 @@
 import { ReactFlowInstance } from "react-flow-renderer";
-import { addNode, mergeSubProject } from "../../../../redux/store/project/actions";
-import { ConvertLibNodeToNode } from "../../converters";
+// import { addNode, mergeSubProject } from "../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { Node, PrepareAm, Project } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Project } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -53,19 +52,22 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  */
 function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDropParameters) {
   const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
-  const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedNode = project?.aspectObjects?.find((n) => n.selected);
 
   // The dropped node automatically finds a parent
-  const parentNode = SetParentNodeOnDrop(selectedNode, libNode, project.nodes);
+  const parentNode = SetParentNodeOnDrop(selectedNode, libNode, project.aspectObjects);
 
   // Position for both treeView and blockView must be set
-  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
-  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
+  const treePosition = SetTreeNodePosition(parentNode, project);
+  const blockPosition = { x: parentNode.threePosX, y: parentNode.threePosY };
 
-  const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user, terminals);
-  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, dispatch);
+  const aspectObject = new AspectObject(libNode, project.id, treePosition, user.email);
 
-  dispatch(addNode(convertedNode));
+  // const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user, terminals);
+  if (IsFamily(parentNode, aspectObject)) HandleCreatePartOfEdge(parentNode, aspectObject, project, dispatch);
+
+  // TODO: Resolve this
+  // dispatch(addNode(convertedNode));
 }
 
 /**
@@ -77,7 +79,7 @@ function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDrop
  * @param nodes
  * @returns a Node.
  */
-function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[]) {
+function SetParentNodeOnDrop(selectedNode: AspectObject, node: NodeLibCm, nodes: AspectObject[]) {
   return IsFamily(selectedNode, node) ? selectedNode : nodes.find((n) => IsFamily(n, node));
 }
 
@@ -102,15 +104,17 @@ function HandleSubProjectDrop(
     y: event.clientY - reactFlowBounds.top,
   });
 
-  const prepare: PrepareAm = {
-    subProjectId: eventData.id,
-    projectId: project.id,
-    dropPositionX: position.x,
-    dropPositionY: position.y,
-    version: eventData.version,
-  };
+  // TODO: Resolve this
 
-  dispatch(mergeSubProject(prepare));
+  // const prepare: PrepareAm = {
+  //   subProjectId: eventData.id,
+  //   projectId: project.id,
+  //   dropPositionX: position.x,
+  //   dropPositionY: position.y,
+  //   version: eventData.version,
+  // };
+
+  // dispatch(mergeSubProject(prepare));
 }
 
 export default useOnTreeDrop;

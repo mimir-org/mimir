@@ -1,5 +1,4 @@
 import { InspectorElement, InspectorAttributesElement } from "../../../../types";
-import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
 import { useState } from "react";
 import { GetParametersColor } from "../shared/components/parametersContent/helpers/GetParametersColor";
@@ -16,26 +15,14 @@ import {
 import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
 import {
   OnAddNodeAttribute,
-  OnChangeInterfaceAttributeValue,
-  OnChangeInterfaceTerminalAttributeValue,
   OnChangeNodeAttributeValue,
   OnChangeNodeTerminalAttributeValue,
-  OnChangeTransportAttributeValue,
-  OnChangeTransportTerminalAttributeValue,
   OnRemoveNodeAttribute,
   OnRemoveNodeTerminalAttribute,
   OnAddNodeTerminalAttribute,
-  OnAddInterfaceAttribute,
-  OnAddTransportAttribute,
-  OnRemoveInterfaceAttribute,
-  OnRemoveTransportAttribute,
-  OnAddTransportTerminalAttribute,
-  OnAddInterfaceTerminalAttribute,
-  OnRemoveInterfaceTerminalAttribute,
-  OnRemoveTransportTerminalAttribute,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
-import { IsEdge, IsInterface, IsNode, IsTransport, IsTerminal } from "../../../../helpers/IsType";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
+import { AspectObject, Attribute, ConnectorTerminal } from "lib";
 
 interface Props {
   attributesElem: InspectorAttributesElement;
@@ -61,119 +48,36 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
 
   const handleAttributeChange = (attributeId: string, property: string, value: string) => {
     // Node attributes
-    if (IsNode(attributesElem)) OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
+    if (attributesElem instanceof AspectObject)
+      OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
 
     // Node terminal attributes
-    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
       OnChangeNodeTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
-    }
-
-    // Transport attributes
-    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem))
-      OnChangeTransportAttributeValue(attributeId, inspectorParentElem.id, property, value, dispatch);
-
-    // Interface attributes
-    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem))
-      OnChangeInterfaceAttributeValue(attributeId, inspectorParentElem.id, property, value, dispatch);
-
-    // Transport terminal - attributes
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
-      OnChangeTransportTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
-    }
-
-    // Interface terminal - attributes
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
-      OnChangeInterfaceTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
     }
   };
 
   // Remove attribute
   const onRemoveAttribute = (attributeId: string) => {
     // Remove Node attribute
-    if (IsNode(attributesElem)) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
+    if (attributesElem instanceof AspectObject) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
 
     // Remove Node terminal attribute
-    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
       OnRemoveNodeTerminalAttribute(attributeId, inspectorParentElem.id, attributesElem.id, attributes, dispatch);
-    }
-
-    // Remove Transport attribute
-    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem)) {
-      OnRemoveTransportAttribute(attributeId, inspectorParentElem.id, attributes, dispatch);
-    }
-
-    // Remove Interface attribute
-    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem)) {
-      OnRemoveInterfaceAttribute(attributeId, inspectorParentElem.id, attributes, dispatch);
-    }
-
-    // Remove Transport terminal attribute
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
-      OnRemoveTransportTerminalAttribute(
-        attributeId,
-        inspectorParentElem.id,
-        inspectorParentElem.transport?.inputTerminalId === attributesElem.id,
-        attributes,
-        dispatch
-      );
-    }
-
-    // Remove Interface terminal attribute
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
-      OnRemoveInterfaceTerminalAttribute(
-        attributeId,
-        inspectorParentElem.id,
-        inspectorParentElem.interface?.inputTerminalId === attributesElem.id,
-        attributes,
-        dispatch
-      );
     }
   };
 
   // Add attribute
   const onAddAttribute = (attributeTypeId: string) => {
     // Add node attribute
-    if (IsNode(attributesElem)) {
+    if (attributesElem instanceof AspectObject) {
       OnAddNodeAttribute(attributeTypeId, attributesElem.id, attributeTypes, dispatch);
     }
 
     // Add Node terminal attribute
-    if (IsTerminal(attributesElem) && IsNode(inspectorParentElem)) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
       OnAddNodeTerminalAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
-    }
-
-    // Add Transport attribute
-    if (IsTransport(attributesElem) && IsEdge(inspectorParentElem)) {
-      OnAddTransportAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
-    }
-
-    // Add Interface attribute
-    if (IsInterface(attributesElem) && IsEdge(inspectorParentElem)) {
-      OnAddInterfaceAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
-    }
-
-    // Add Transport terminal attribute
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.transport != null) {
-      OnAddTransportTerminalAttribute(
-        attributeTypeId,
-        inspectorParentElem.id,
-        inspectorParentElem.transport?.inputTerminalId === attributesElem.id,
-        attributesElem.id,
-        attributeTypes,
-        dispatch
-      );
-    }
-
-    // Add Interface terminal attribute
-    if (IsTerminal(attributesElem) && IsEdge(inspectorParentElem) && inspectorParentElem.interface != null) {
-      OnAddInterfaceTerminalAttribute(
-        attributeTypeId,
-        inspectorParentElem.id,
-        inspectorParentElem.interface?.inputTerminalId === attributesElem.id,
-        attributesElem.id,
-        attributeTypes,
-        dispatch
-      );
     }
   };
 

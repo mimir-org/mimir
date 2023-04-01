@@ -1,5 +1,5 @@
-import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+import { ModuleDescription } from "../../../lib/classes";
 import { ApiError } from "../../../models/webclient";
 
 // State types

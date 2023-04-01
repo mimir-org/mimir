@@ -1,5 +1,5 @@
 import * as Icons from "../../assets/icons/header";
-import * as selectors from "../header/helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { ViewportData } from "../../models/project";
@@ -27,7 +27,6 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
   const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
-  const isElectro = useAppSelector(selectors.electroSelector);
 
   return (
     <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -41,8 +40,8 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
               borderRight
             />
             <ToolbarElement
-              label={isElectro ? TextResources.ELECTRO_OFF : TextResources.ELECTRO_ON}
-              icon={isElectro ? Icons.Vertical : Icons.Horizontal}
+              label={TextResources.ELECTRO_ON}
+              icon={Icons.Horizontal}
               onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
             />

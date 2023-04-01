@@ -3,34 +3,29 @@ import { RelationsBody } from "./RelationsComponent.styled";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { edgesSelector, useAppSelector } from "../../../../../../redux/store";
 import { InspectorElement } from "../../../../types";
-import { IsEdge, IsNode } from "../../../../helpers/IsType";
 import { useMemo } from "react";
-import { GetConnectors } from "./helpers/GetConnectors";
-import { GetTerminals, GetTransports } from "./helpers/GetTerminals";
 import { OnClickRelation, OnClickTransport, OnClickNode, OnClickTerminal } from "./handlers/OnRelationsClick";
-import { GetRelations } from "./helpers/GetRelations";
-import { GetNameNode, GetNameRelation, GetNameTerminal, GetNameTransport } from "./helpers/GetName";
-import { GetActiveRelationColor, GetListItemColor } from "./helpers/GetColor";
+
 import { useStoreApi } from "react-flow-renderer";
+import { AspectObject, Connection } from "lib";
 
 interface Props {
   element: InspectorElement;
 }
 
 export const RelationsComponent = ({ element }: Props) => {
-  const edges = useAppSelector(edgesSelector);
-  const connectors = useMemo(() => GetConnectors(element), [element]);
-  const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
-  const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
-  const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
-  const setSelectedEdges = useStoreApi().getState().addSelectedEdges;
-  const hasConnectors = connectors.length > 0;
+  // const edges = useAppSelector(edgesSelector);
+  // const connectors = useMemo(() => GetConnectors(element), [element]);
+  // const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
+  // const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
+  // const setSelectedEdges = useStoreApi().getState().addSelectedEdges;
+  // const hasConnectors = connectors.length > 0;
 
   return (
     <RelationsBody>
-      {hasConnectors && (
+      {/* {hasConnectors && (
         <>
-          {IsNode(element) && (
+          {element instanceof AspectObject && (
             <RelationsContent
               items={GetRelations(element, edges)}
               label={TextResources.RELATIONS_RELATIONSHIPS}
@@ -42,18 +37,18 @@ export const RelationsComponent = ({ element }: Props) => {
           <RelationsContent
             items={inputTerminals}
             label={TextResources.RELATIONS_TERMINAL_INPUT}
-            getName={(terminal) => GetNameTerminal(terminal, transports)}
+            // getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
             label={TextResources.RELATIONS_TERMINAL_OUTPUT}
-            getName={(terminal) => GetNameTerminal(terminal, transports)}
+            // getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
-          {IsNode(element) && (
+          {element instanceof AspectObject && (
             <RelationsContent
               items={transports}
               label={TextResources.RELATIONS_TRANSPORT}
@@ -62,9 +57,9 @@ export const RelationsComponent = ({ element }: Props) => {
               onClick={(edge) => OnClickTransport(edge, setSelectedEdges)}
             />
           )}
-          {IsEdge(element) && (
+          {element instanceof Connection && (
             <RelationsContent
-              items={[element.fromNode, element.toNode]}
+              items={[element.fromConnector, element.toConnector]} // TODO: This was from node - tonode
               label={TextResources.RELATIONS_NODES}
               getName={(node) => GetNameNode(element, node)}
               getColor={(_, index) => GetListItemColor(index)}
@@ -72,7 +67,7 @@ export const RelationsComponent = ({ element }: Props) => {
             />
           )}
         </>
-      )}
+      )} */}
     </RelationsBody>
   );
 };

@@ -1,16 +1,15 @@
 import { Handle } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { GetConnectorColor } from "../../helpers";
 import { HandleBox } from "../HandleComponent.styled";
 import { GetBlockHandleType, IsValidBlockConnection } from "../helpers";
 import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetConnectorPosition";
-import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
-import { IsPartOfRelation } from "../../../helpers/Connectors";
 import { TerminalIcon } from "../../terminals/components/helpers/TerminalIcon";
+import { AspectObject, Connector, Project } from "lib";
+import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
 
 interface Props {
   project: Project;
-  node: Node;
+  node: AspectObject;
   connector: Connector;
   dispatch: Dispatch;
   isElectroView: boolean;
@@ -26,7 +25,7 @@ interface Props {
  */
 export const BlockNodeConnector = ({ project, node, connector, dispatch, isElectroView, isParent, visible }: Props) => {
   const [type, pos] = GetBlockHandleType(connector, isElectroView, isParent);
-  const color = GetConnectorColor(connector);
+  const color = connector.getColor();
   const className = "react-flow__handle-block";
 
   return (
@@ -35,7 +34,7 @@ export const BlockNodeConnector = ({ project, node, connector, dispatch, isElect
       visible={visible}
       top={GetHandleTopPosition(node, connector, isElectroView, isParent)}
       left={GetHandleLeftPosition(node, connector, isElectroView, isParent)}
-      isPartOf={IsPartOfRelation(connector)}
+      isPartOf={connector instanceof ConnectorPartOf}
       onMouseEnter={null}
       onMouseLeave={null}
     >
@@ -45,7 +44,9 @@ export const BlockNodeConnector = ({ project, node, connector, dispatch, isElect
         position={pos}
         id={connector.id}
         className={className}
-        isValidConnection={(connection) => IsValidBlockConnection(connection, project.nodes, project.edges, dispatch)}
+        isValidConnection={(connection) =>
+          IsValidBlockConnection(connection, project.aspectObjects, project.connections, dispatch)
+        }
       />
     </HandleBox>
   );

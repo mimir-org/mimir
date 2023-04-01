@@ -14,8 +14,7 @@ import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { projectReducer } from "./project/reducers";
-import { secondaryReducer } from "./secondaryNode/reducers";
+import projectReducer from "store/projectSlice";
 import { rootSaga } from "../sagas";
 
 const rootReducers = combineReducers({
@@ -26,7 +25,6 @@ const rootReducers = combineReducers({
   modules: modulesReducer,
   menu: menuReducer,
   flow: flowReducer,
-  secondaryNode: secondaryReducer,
   electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,

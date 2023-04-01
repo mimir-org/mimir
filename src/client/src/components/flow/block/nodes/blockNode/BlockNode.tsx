@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/BlockNodeSelectors";
-import * as libSelectors from "./../../helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
@@ -15,9 +14,9 @@ import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { Node, ConnectorDirection } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../../helpers/Connectors";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
+import { AspectObject, Direction } from "lib";
+import { ConnectorTerminal } from "../../../../../lib/classes/Connector";
 
 /**
  * Component for a child Node in BlockView.
@@ -25,19 +24,19 @@ import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
  * @param data the data for the node.
  * @returns a Mimir Node.
  */
-const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
+const BlockNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
-  const isElectroView = useAppSelector(selectors.electroSelector);
-  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-  const terminalTypes = useAppSelector(libSelectors.terminalsSelector);
-  const libNodes = useAppSelector(libSelectors.libNodesSelector);
+  // const isElectroView = useAppSelector(selectors.electroSelector);
+  const selectedBlockNode = project?.aspectObjects?.find((n) => n.blockSelected);
+  const terminalTypes = useAppSelector(selectors.terminalsSelector);
+  const libNodes = useAppSelector(selectors.libNodesSelector);
 
-  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: Direction) => {
     return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);
   };
 
@@ -49,37 +48,37 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   useEffect(() => {
     setConnectors(
       FilterConnectors(
-        data?.connectors.filter((x) => IsTerminal(x) && !x.isProxy),
+        data?.connectors.filter((x) => x instanceof ConnectorTerminal),
         selectedBlockNode
       )
     );
   }, [selectedBlockNode, data?.connectors]);
 
   // Update node size based on active connectors
-  useEffect(() => {
-    setSize(SetChildNodeSize(connectors, isElectroView));
-  }, [isElectroView, connectors]);
+  // useEffect(() => {
+  //   setSize(SetChildNodeSize(connectors, isElectroView));
+  // }, [isElectroView, connectors]);
 
   if (!data) return null;
 
   return (
-    <BoxWrapper isElectro={isElectroView}>
+    <BoxWrapper isElectro={false}>
       <HandleComponent
         node={data}
         project={project}
         connectors={connectors.inputs}
-        isElectroView={isElectroView}
+        isElectroView={false}
         dispatch={dispatch}
         isInput
       />
       <BlockChildComponent
         node={data}
-        isElectroView={isElectroView}
+        isElectroView={false}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputConnectors={connectors.inputs}
         outputConnectors={connectors.outputs}
-        onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.edges)}
+        onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.connections)}
         onClickAddTerminal={OnClickAddTerminal}
         onClickRemoveTerminal={OnClickRemoveTerminal}
       />
@@ -87,7 +86,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         project={project}
         connectors={connectors.outputs}
-        isElectroView={isElectroView}
+        isElectroView={false}
         dispatch={dispatch}
         isInput={false}
       />

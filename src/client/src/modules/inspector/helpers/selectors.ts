@@ -5,5 +5,4 @@ export {
   inspectorSelector,
   libOpenSelector,
   usernameSelector,
-  projectSelector,
 } from "../../../redux/store/selectors";

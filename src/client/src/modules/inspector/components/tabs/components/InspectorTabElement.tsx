@@ -9,7 +9,7 @@ import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from ".
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "lib";
 
 interface Props {
   element?: InspectorElement;
@@ -18,7 +18,7 @@ interface Props {
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  nodes: Node[];
+  nodes: AspectObject[];
 }
 
 /**

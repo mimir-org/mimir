@@ -6,7 +6,7 @@ import { ModuleTabs } from "./components/ModuleTabs";
 import { SearchArea } from "./components/SearchArea";
 import { FilterBoxes } from "./components/FilterBoxes";
 import { ExpandButton } from "./components/ExpandButton";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect } from "../../../../lib";
 
 interface Props {
   libOpen: boolean;

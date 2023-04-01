@@ -1,6 +1,6 @@
 import red from "../redux/store";
 import { Node as FlowNode, Edge as FlowEdge, useReactFlow } from "react-flow-renderer";
-import { Edge, Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connection } from "lib";
 
 export const GetSelectedFlowEdges = (selectedNodes: FlowNode[]): FlowEdge[] => {
   return useReactFlow()
@@ -18,10 +18,10 @@ export const GetFlowNodes = () => {
   return useReactFlow().getNodes();
 };
 
-export const GetMimirNodes = (): Node[] => {
-  return red.store.getState().projectState?.project?.nodes;
+export const GetMimirNodes = (): AspectObject[] => {
+  return red.store.getState().projectState?.project?.aspectObjects;
 };
 
-export const GetMimirEdges = (): Edge[] => {
-  return red.store.getState().projectState?.project?.edges;
+export const GetMimirEdges = (): Connection[] => {
+  return red.store.getState().projectState?.project?.connections;
 };

@@ -1,8 +1,6 @@
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Direction } from "lib";
 import { ConnectionLineComponentProps } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { IsInputConnector } from "../../../helpers/Connectors";
-import { GetConnectorColor } from "../../helpers";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in BlockView.
@@ -18,7 +16,6 @@ export const BlockConnectionLine = ({
   sourceNode,
 }: ConnectionLineComponentProps) => {
   const connector = sourceNode.data?.connectors?.find((conn: Connector) => conn.id === sourceHandle.id) as Connector;
-  const isTarget = IsInputConnector(connector);
   const arrowId = `arrow-${connector.id}`;
 
   // These paths define which way the connection line and the markerArrow arrow will point
@@ -39,7 +36,7 @@ export const BlockConnectionLine = ({
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         style={GetStyle(connector)}
-        d={isTarget ? targetPath : sourcePath}
+        d={connector.direction === Direction.Input ? targetPath : sourcePath}
         markerEnd={`url(#${arrowId})`}
       />
     </g>
@@ -47,6 +44,6 @@ export const BlockConnectionLine = ({
 };
 
 function GetStyle(connector: Connector) {
-  const color = GetConnectorColor(connector);
+  const color = connector.getColor();
   return { fill: "none", stroke: color, strokeWidth: 2 };
 }

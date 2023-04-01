@@ -1,8 +1,8 @@
 import { InspectorElement } from "../../../types";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { AspectColorType } from "../../../../../models";
 import { GetAspectColor } from "../../../../../helpers";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connection } from "lib";
+import { Color } from "assets/color/Color";
 
 /**
  * Component to get the color for the tabs in the Inspector Module.
@@ -10,7 +10,8 @@ import { Node } from "@mimirorg/modelbuilder-types";
  * @param element
  * @returns a color.
  */
-export const GetInspectorTabsColor = (nodes: Node[], element: InspectorElement) => {
-  if (IsNode(element)) return GetAspectColor(element, AspectColorType.Tab);
-  if (IsEdge(element)) return GetAspectColor(element.fromNode, AspectColorType.Tab);
+export const GetInspectorTabsColor = (nodes: AspectObject[], element: InspectorElement) => {
+  return Color.LEMON_YELLOW;
+  // if (element instanceof AspectObject) return GetAspectColor(element, AspectColorType.Tab);
+  // if (element instanceof Connection) return GetAspectColor(element.fromNode, AspectColorType.Tab);
 };

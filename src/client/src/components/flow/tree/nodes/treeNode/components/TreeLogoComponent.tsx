@@ -1,12 +1,12 @@
 import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeLogoComponent.styled";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { AspectObject } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
 }
 
 /**

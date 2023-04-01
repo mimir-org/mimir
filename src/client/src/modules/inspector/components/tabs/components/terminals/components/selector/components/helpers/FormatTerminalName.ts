@@ -1,4 +1,4 @@
-import { ConnectorDirection, Terminal } from "@mimirorg/modelbuilder-types";
+import { ConnectorTerminal, Direction } from "lib";
 
-export const FormatTerminalName = (terminal: Terminal) =>
-  `${terminal?.name} [${ConnectorDirection[terminal?.type].toLowerCase()}]`;
+export const FormatTerminalName = (terminal: ConnectorTerminal) =>
+  `${terminal?.name} [${Direction[terminal?.direction].toLowerCase()}]`;

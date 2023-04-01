@@ -1,8 +1,6 @@
 import { Dispatch } from "redux";
-import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { deleteEdge, deleteNode } from "../../../redux/store/project/actions";
-import { IsEdgeConnectedToNode } from "../helpers/IsEdgeConnectedToNode";
 import { CloseInspector } from "../tree/handlers";
+import { AspectObject, Connection } from "lib";
 
 /**
  * Component that runs when a node is deleted from Mimir. This component is used both in TreeView and BlockView.
@@ -16,18 +14,18 @@ import { CloseInspector } from "../tree/handlers";
  * @param selectedBlockNode
  */
 const OnNodeDelete = (
-  nodesToDelete: Node[],
-  nodes: Node[],
-  edges: Edge[],
+  nodesToDelete: AspectObject[],
+  nodes: AspectObject[],
+  edges: Connection[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch,
-  selectedBlockNode?: Node
+  selectedBlockNode?: AspectObject
 ) => {
   nodesToDelete.forEach((node) => {
     if (node.id === selectedBlockNode?.id) return;
     DeleteRelatedEdges(node.id, edges, dispatch);
     HandleRelatedEdges(node.id, nodes, edges, dispatch);
-    dispatch(deleteNode(node.id));
+    // dispatch(deleteNode(node.id));
   });
 
   CloseInspector(inspectorRef, dispatch);
@@ -42,9 +40,9 @@ export default OnNodeDelete;
  * @param edges
  * @param dispatch
  */
-function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
+function DeleteRelatedEdges(nodeId: string, edges: Connection[], dispatch: Dispatch) {
   edges.forEach((edge) => {
-    if (IsEdgeConnectedToNode(edge, nodeId)) dispatch(deleteEdge(edge.id));
+    // if (IsEdgeConnectedToNode(edge, nodeId)) dispatch(deleteEdge(edge.id));
   });
 }
 
@@ -55,9 +53,9 @@ function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
  * @param edges
  * @param dispatch
  */
-function HandleRelatedEdges(nodeToRemoveId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) {
+function HandleRelatedEdges(nodeToRemoveId: string, nodes: AspectObject[], edges: Connection[], dispatch: Dispatch) {
   edges.forEach((edge) => {
-    if (!IsEdgeConnectedToNode(edge, nodeToRemoveId)) return;
-    dispatch(deleteEdge(edge.id));
+    // if (!IsEdgeConnectedToNode(edge, nodeToRemoveId)) return;
+    // dispatch(deleteEdge(edge.id));
   });
 }

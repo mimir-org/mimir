@@ -1,4 +1,4 @@
-import { CommitStatus } from "@mimirorg/modelbuilder-types";
+import { CommitStatus } from "lib";
 
 export interface CommitPackage {
   projectId: string;

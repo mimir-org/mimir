@@ -1,4 +1,3 @@
-import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
   Function,
   FunctionFilterOff,
@@ -7,6 +6,7 @@ import {
   Location,
   LocationFilterOff,
 } from "../../../../../../assets/icons/aspects";
+import { Aspect } from "../../../../../../lib/enums";
 
 export const GetFilterIcon = (aspect: Aspect, selected: boolean) => {
   if (aspect === Aspect.Function) return selected ? Function : FunctionFilterOff;

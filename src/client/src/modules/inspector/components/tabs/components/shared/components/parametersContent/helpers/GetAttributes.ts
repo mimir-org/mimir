@@ -1,4 +1,5 @@
-import { Attribute } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "lib";
+
 import { InspectorAttributesElement } from "../../../../../../../types";
 
 export const GetAttributes = (element: InspectorAttributesElement): Attribute[] => {

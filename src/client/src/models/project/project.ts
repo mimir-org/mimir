@@ -1,5 +1,5 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorTerminal } from "lib";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
 export const ATTRIBUTE_TAB = {
@@ -69,7 +69,7 @@ export interface BlockNodeSize {
 
 export interface TerminalCategoryObject {
   name: string;
-  terminals: Terminal[];
+  terminals: ConnectorTerminal[];
 }
 
 export interface ViewportData {

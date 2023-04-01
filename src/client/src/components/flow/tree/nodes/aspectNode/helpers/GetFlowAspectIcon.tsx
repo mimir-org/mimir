@@ -1,5 +1,5 @@
+import { Aspect } from "lib";
 import * as Icons from "../../../../../../assets/icons/aspects";
-import { Aspect } from "@mimirorg/modelbuilder-types";
 
 export const GetFlowAspectIcon = (aspect: Aspect) => {
   let AspectIcon: string;

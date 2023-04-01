@@ -1,18 +1,18 @@
 import { NavigationButton } from "./Navigation.styled";
 import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../../assets/icons/arrow";
-import { Node } from "@mimirorg/modelbuilder-types";
-import { HasChildren } from "./helpers/HasChildren";
 import { IsAspectNode } from "../../../../../../helpers/Aspects";
+import { AspectObject, Project } from "lib";
 
 interface Props {
   isActive: boolean;
-  node: Node;
+  node: AspectObject;
+  project: Project;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
 }
 
-export const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: Props) => {
-  const canNavigateUp = HasChildren(node);
+export const Navigation = ({ isActive, node, project, onNavigateUpClick, onNavigateDownClick }: Props) => {
+  const canNavigateUp = project.hasChildren(node?.id);
   const canNavigateDown = !IsAspectNode(node);
 
   return (

@@ -1,4 +1,4 @@
-import { EntityType } from "@mimirorg/modelbuilder-types";
+import { EntityType } from "lib";
 
 export interface LockCm {
   id: string;

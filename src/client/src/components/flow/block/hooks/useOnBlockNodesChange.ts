@@ -1,7 +1,5 @@
 import { Dispatch } from "redux";
-import { Node, Project } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
-import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
 import {
   applyNodeChanges,
@@ -11,11 +9,12 @@ import {
   NodeRemoveChange,
   NodeSelectionChange,
 } from "react-flow-renderer";
+import { AspectObject, Project } from "lib";
 
 interface OnChangeParams {
   project: Project;
-  selectedNode: Node;
-  selectedBlockNode: Node;
+  selectedNode: AspectObject;
+  selectedBlockNode: AspectObject;
   changes: NodeChange[];
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>;
   dispatch: Dispatch;
@@ -37,10 +36,10 @@ interface OnChangeParams {
  */
 const useOnBlockNodesChange = (params: OnChangeParams) => {
   const { project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef } = params;
-  const mimirNodes = project.nodes;
-  const mimirEdges = project.edges;
+  const mimirNodes = project.aspectObjects;
+  const mimirEdges = project.connections;
   const verifiedFlowChanges = [] as NodeChange[];
-  const nodesToDelete = [] as Node[];
+  const nodesToDelete = [] as AspectObject[];
 
   // Handle changes
   changes.forEach((c) => {
@@ -63,12 +62,17 @@ const useOnBlockNodesChange = (params: OnChangeParams) => {
  * @param verifiedFlowChanges
  * @param dispatch
  */
-function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedFlowChanges: NodeChange[], dispatch: Dispatch) {
+function HandleSelect(
+  change: NodeSelectionChange,
+  selectedNode: AspectObject,
+  verifiedFlowChanges: NodeChange[],
+  dispatch: Dispatch
+) {
   if (change.id === selectedNode?.id) return;
 
-  dispatch(removeSelectedEdge());
-  dispatch(removeSelectedNode());
-  dispatch(setSelectedNode(change.id));
+  // dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(setSelectedNode(change.id));
   verifiedFlowChanges.push(change);
 }
 
@@ -78,7 +82,12 @@ function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedF
  * @param selectedBlockNode
  * @param filteredList
  */
-function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, selectedNode: Node, filteredList: NodeChange[]) {
+function HandlePosition(
+  change: NodePositionChange,
+  selectedBlockNode: AspectObject,
+  selectedNode: AspectObject,
+  filteredList: NodeChange[]
+) {
   if (!ValidateNodePosition(selectedBlockNode, change.id, change.position)) return;
   filteredList.push(change);
 }
@@ -94,10 +103,10 @@ function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, sel
  */
 function HandleRemove(
   flowRemoveChange: NodeRemoveChange,
-  selectedBlockNode: Node,
+  selectedBlockNode: AspectObject,
   verifiedFlowChanges: NodeChange[],
-  mimirNodesToDelete: Node[],
-  mimirNodes: Node[]
+  mimirNodesToDelete: AspectObject[],
+  mimirNodes: AspectObject[]
 ) {
   if (flowRemoveChange.id === selectedBlockNode?.id) return;
   const nodeToDelete = mimirNodes.find((n) => n.id === flowRemoveChange.id);

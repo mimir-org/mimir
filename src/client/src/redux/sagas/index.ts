@@ -22,46 +22,46 @@ import {
   fetchLibraryAttributeTypes,
   fetchSubProjects,
 } from "../store/library/librarySlice";
-import {
-  COMMIT_PROJECT,
-  CREATING_PROJECT,
-  CREATING_SUB_PROJECT,
-  EXPORT_PROJECT_TO_FILE,
-  FETCHING_PROJECT,
-  IMPORT_PROJECT,
-  LOCK_ENTITY,
-  SAVE_PROJECT,
-  SEARCH_PROJECT,
-  CONVERT_SUB_PROJECT_STATUS,
-  MERGE_SUB_PROJECT,
-} from "../store/project/types";
-import {
-  commitProject,
-  createProject,
-  createSubProject,
-  exportProjectFile,
-  getProject,
-  importProject,
-  lockNode,
-  searchProject,
-  updateProject,
-  convertSubProject,
-  mergeSubProject,
-} from "./project/saga";
+// import {
+//   COMMIT_PROJECT,
+//   CREATING_PROJECT,
+//   CREATING_SUB_PROJECT,
+//   EXPORT_PROJECT_TO_FILE,
+//   FETCHING_PROJECT,
+//   IMPORT_PROJECT,
+//   LOCK_ENTITY,
+//   SAVE_PROJECT,
+//   SEARCH_PROJECT,
+//   CONVERT_SUB_PROJECT_STATUS,
+//   MERGE_SUB_PROJECT,
+// } from "../store/project/types";
+// import {
+//   commitProject,
+//   createProject,
+//   createSubProject,
+//   exportProjectFile,
+//   getProject,
+//   importProject,
+//   lockNode,
+//   searchProject,
+//   updateProject,
+//   convertSubProject,
+//   mergeSubProject,
+// } from "./project/saga";
 
 //TODO: Add takeEvery for LOCK_ on
 function* sagas() {
   yield all([
     takeEvery(fetchUser, getUser),
-    takeEvery(CREATING_PROJECT, createProject),
-    takeEvery(CREATING_SUB_PROJECT, createSubProject),
-    takeEvery(FETCHING_PROJECT, getProject),
-    takeEvery(SEARCH_PROJECT, searchProject),
-    takeEvery(SAVE_PROJECT, updateProject),
-    takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
-    takeEvery(IMPORT_PROJECT, importProject),
-    takeEvery(LOCK_ENTITY, lockNode),
-    takeEvery(COMMIT_PROJECT, commitProject),
+    // takeEvery(CREATING_PROJECT, createProject),
+    // takeEvery(CREATING_SUB_PROJECT, createSubProject),
+    // takeEvery(FETCHING_PROJECT, getProject),
+    // takeEvery(SEARCH_PROJECT, searchProject),
+    // takeEvery(SAVE_PROJECT, updateProject),
+    // takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
+    // takeEvery(IMPORT_PROJECT, importProject),
+    // takeEvery(LOCK_ENTITY, lockNode),
+    // takeEvery(COMMIT_PROJECT, commitProject),
     takeEvery(fetchLibrary, searchLibrary),
     takeEvery(fetchLibraryTerminals, getTerminals),
     takeEvery(fetchLibraryAttributeTypes, getAttributes),
@@ -69,8 +69,8 @@ function* sagas() {
     takeEvery(exportLibraryAction, exportLibrary),
     takeEvery(importLibraryAction, importLibrary),
     takeEvery(fetchQuantityDatums, getQuantityDatums),
-    takeEvery(CONVERT_SUB_PROJECT_STATUS, convertSubProject),
-    takeEvery(MERGE_SUB_PROJECT, mergeSubProject),
+    // takeEvery(CONVERT_SUB_PROJECT_STATUS, convertSubProject),
+    // takeEvery(MERGE_SUB_PROJECT, mergeSubProject),
   ]);
 }
 

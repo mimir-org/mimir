@@ -1,20 +1,19 @@
-import { Connector } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsProductRelation, IsPartOfRelation } from "../../../helpers/Connectors";
+import { Connector } from "lib";
 
 export const GetHandleClassName = (conn: Connector): string => {
-  let className = "function-treeview-handler";
+  const className = "function-treeview-handler";
 
-  if (IsLocationRelation(conn)) {
-    className = className + " locatedAt";
-  }
+  // if (IsLocationRelation(conn)) {
+  //   className = className + " locatedAt";
+  // }
 
-  if (IsProductRelation(conn)) {
-    className = className + " fulfilledBy";
-  }
+  // if (IsProductRelation(conn)) {
+  //   className = className + " fulfilledBy";
+  // }
 
-  if (IsPartOfRelation(conn)) {
-    className = className + " partOf";
-  }
+  // if (IsPartOfRelation(conn)) {
+  //   className = className + " partOf";
+  // }
 
-  return className;
+  return className + " partOf";
 };

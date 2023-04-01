@@ -1,4 +1,4 @@
-import * as selectors from "./../../../helpers/selectors";
+import * as selectors from "redux/store/selectors";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -10,19 +10,19 @@ import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
-import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { AspectObject, Connector, Direction } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   isNavigationActive: boolean;
   isElectroView: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
 }
 
 /**
@@ -50,7 +50,7 @@ export const BlockParentComponent = ({
   const project = useAppSelector(selectors.projectSelector);
   const libNodes = useAppSelector(selectors.libNodesSelector);
 
-  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: Direction) => {
     return useOnAddTerminal(project, typeId, nodeId, terminals, libNodes, direction, dispatch);
   };
 
@@ -59,7 +59,7 @@ export const BlockParentComponent = ({
   };
 
   return (
-    <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={node.width} height={node.height}>
+    <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={500} height={500}>
       <BlockParentBanner
         node={node}
         company={company}
@@ -72,6 +72,7 @@ export const BlockParentComponent = ({
         onConnectorClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
         onClickAddTerminal={OnClickAddTerminal}
         onClickRemoveTerminal={OnClickRemoveTerminal}
+        project={project}
       />
       <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
         <ResizeButton ref={resizePanelRef} visible={true}>

@@ -1,8 +1,8 @@
 import { ProjectData } from "./ProjectData";
 import { Dispatch } from "redux";
-import { ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataContainer, ProjectListBox, ProjectListLabels } from "./ProjectList.styled";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
+import { ProjectItemCm } from "lib";
 
 interface Props {
   projectList: ProjectItemCm[];
@@ -25,7 +25,7 @@ export const ProjectList = ({ projectList, dispatch }: Props) => (
             projects={projectList}
             projectId={project.id}
             projectName={project.name}
-            projectOwner={project.projectOwner}
+            projectOwner={project.createdBy}
             projectVersion={project.version}
             updated={project.updated}
             dispatch={dispatch}

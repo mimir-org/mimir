@@ -1,9 +1,9 @@
 import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "@mimirorg/modelbuilder-types";
-import { useAppSelector, electroViewSelector } from "../../../../../redux/store";
+import { useAppSelector } from "../../../../../redux/store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
+import { AspectObject } from "../../../../../lib/classes/AspectObject";
 
 /**
  * Component for a RelationEdge. The color of the RelationEdge is a combination of the sourceNode and targetNode's AspectColor.
@@ -21,17 +21,17 @@ export const BlockRelationEdge = ({
   data,
 }: EdgeProps) => {
   const visible = !data?.edge?.hidden;
-  const isElectro = useAppSelector(electroViewSelector);
+  const isElectro = false;
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
   const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
   const margin = 28;
-  sourceX += !isElectro && margin;
-  targetX -= !isElectro && margin;
-  sourceY += isElectro && margin;
-  targetY -= isElectro && margin;
+  sourceX += margin;
+  targetX -= margin;
+  sourceY += margin;
+  targetY -= margin;
 
   const bezierPath = getSimpleBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
@@ -63,7 +63,7 @@ export const BlockRelationEdge = ({
   );
 };
 
-function GetRelationColor(node: Node) {
+function GetRelationColor(node: AspectObject) {
   if (IsFunction(node)) return Color.SUNGLOW;
   if (IsLocation(node)) return Color.MAGENTA;
   if (IsProduct(node)) return Color.ELECTRIC_BLUE;

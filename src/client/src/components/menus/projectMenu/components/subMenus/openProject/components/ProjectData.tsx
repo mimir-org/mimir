@@ -1,10 +1,10 @@
 import Moment from "react-moment";
-import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
-import { ProjectItemCm } from "../../../../../../../models";
+// import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
 import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
 import { OnOpenClick } from "../handlers/OnOpenClick";
+import { ProjectItemCm } from "lib";
 
 interface Props {
   projects: ProjectItemCm[];
@@ -21,7 +21,7 @@ export const ProjectData = ({ projects, projectId, projectName, projectVersion, 
   const currentProject = useAppSelector(projectSelector);
 
   const handleClick = (e) => {
-    dispatch(changeSelectedProject(projectId));
+    // dispatch(changeSelectedProject(projectId));
     if (e.detail === 2) OnOpenClick(projectId, currentProject, dispatch);
   };
 
