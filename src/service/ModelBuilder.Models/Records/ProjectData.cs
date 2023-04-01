@@ -3,90 +3,89 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 
-namespace Mb.Models.Records
+namespace Mb.Models.Records;
+
+public record ProjectData
 {
-    public record ProjectData
+    public List<AspectObjectDm> AspectObjects { get; init; } = new();
+    public List<ConnectionDm> Connections { get; init; } = new();
+    public List<AttributeDm> Attributes { get; init; } = new();
+    public List<ConnectorTerminalDm> Terminals { get; init; } = new();
+    public List<ConnectorRelationDm> Relations { get; init; } = new();
+
+    /// <summary>
+    /// Deconstruct and flatten connections 
+    /// </summary>
+    /// <param name="project">Project to be deconstructed</param>
+    public Task DeconstructAttributes(ProjectDm project)
     {
-        public List<Node> Nodes { get; init; } = new();
-        public List<Edge> Edges { get; init; } = new();
-        public List<Attribute> Attributes { get; init; } = new();
-        public List<Terminal> Terminals { get; init; } = new();
-        public List<Relation> Relations { get; init; } = new();
+        var aspectObjectAttributes = project.AspectObjects.Select(x => x.Attributes).SelectMany(y => y).ToList();
+        var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().SelectMany(y => y.Attributes).ToList();
 
-        /// <summary>
-        /// Deconstruct and flatten edges 
-        /// </summary>
-        /// <param name="project">Project to be deconstructed</param>
-        public Task DeconstructAttributes(Project project)
-        {
-            var nodeAttributes = project.Nodes.Select(x => x.Attributes).SelectMany(y => y).ToList();
-            var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<Terminal>().SelectMany(y => y.Attributes).ToList();
+        var allAttributes = aspectObjectAttributes
+            .Union(connectorAttributes)
+            .ToList();
 
-            var allAttributes = nodeAttributes
-                .Union(connectorAttributes)
-                .ToList();
+        Attributes.AddRange(allAttributes);
+        return Task.CompletedTask;
+    }
 
-            Attributes.AddRange(allAttributes);
+    /// <summary>
+    /// Deconstruct and flatten aspectObjects
+    /// </summary>
+    /// <param name="project">Project to be deconstructed</param>
+    public Task DeconstructAspectObjects(ProjectDm project)
+    {
+        if (project?.AspectObjects == null || !project.AspectObjects.Any())
             return Task.CompletedTask;
-        }
 
-        /// <summary>
-        /// Deconstruct and flatten nodes
-        /// </summary>
-        /// <param name="project">Project to be deconstructed</param>
-        public Task DeconstructNodes(Project project)
-        {
-            if (project?.Nodes == null || !project.Nodes.Any())
-                return Task.CompletedTask;
+        AspectObjects.AddRange(project.AspectObjects);
+        return Task.CompletedTask;
+    }
 
-            Nodes.AddRange(project.Nodes);
+    /// <summary>
+    /// Deconstruct terminals
+    /// </summary>
+    /// <param name="project">The project to be deconstructed</param>
+    public Task DeconstructTerminals(ProjectDm project)
+    {
+        if (project == null)
             return Task.CompletedTask;
-        }
 
-        /// <summary>
-        /// Deconstruct terminals
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructTerminals(Project project)
-        {
-            if (project == null)
-                return Task.CompletedTask;
+        var aspectObjectTerminals = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
 
-            var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Terminal>().ToList();
+        var terminals = aspectObjectTerminals
+            .ToList();
 
-            var terminals = nodeTerminals
-                .ToList();
+        Terminals.AddRange(terminals);
+        return Task.CompletedTask;
+    }
 
-            Terminals.AddRange(terminals);
+    /// <summary>
+    /// Deconstruct relations
+    /// </summary>
+    /// <param name="project">The project to be deconstructed</param>
+    public Task DeconstructRelations(ProjectDm project)
+    {
+        if (project == null)
             return Task.CompletedTask;
-        }
 
-        /// <summary>
-        /// Deconstruct relations
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructRelations(Project project)
-        {
-            if (project == null)
-                return Task.CompletedTask;
+        var aspectObjectRelations = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
 
-            var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Relation>().ToList();
+        Relations.AddRange(aspectObjectRelations);
+        return Task.CompletedTask;
+    }
 
-            Relations.AddRange(nodeRelations);
+    /// <summary>
+    /// Deconstruct and flatten connections
+    /// </summary>
+    /// <param name="project">The project to be deconstructed</param>
+    public Task DeconstructConnections(ProjectDm project)
+    {
+        if (project.Connections == null || !project.Connections.Any())
             return Task.CompletedTask;
-        }
 
-        /// <summary>
-        /// Deconstruct and flatten edges
-        /// </summary>
-        /// <param name="project">The project to be deconstructed</param>
-        public Task DeconstructEdges(Project project)
-        {
-            if (project.Edges == null || !project.Edges.Any())
-                return Task.CompletedTask;
-
-            Edges.AddRange(project.Edges);
-            return Task.CompletedTask;
-        }
+        Connections.AddRange(project.Connections);
+        return Task.CompletedTask;
     }
 }

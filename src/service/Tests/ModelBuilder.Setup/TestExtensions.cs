@@ -1,15 +1,14 @@
 using Newtonsoft.Json;
 
-namespace ModelBuilder.Setup
+namespace ModelBuilder.Setup;
+
+public static class TestExtensions
 {
-    public static class TestExtensions
+    public static async Task<T> GetAndDeserialize<T>(this HttpClient client, string requestUri)
     {
-        public static async Task<T> GetAndDeserialize<T>(this HttpClient client, string requestUri)
-        {
-            var response = await client.GetAsync(requestUri);
-            response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(result);
-        }
+        var response = await client.GetAsync(requestUri);
+        response.EnsureSuccessStatusCode();
+        var result = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<T>(result);
     }
 }

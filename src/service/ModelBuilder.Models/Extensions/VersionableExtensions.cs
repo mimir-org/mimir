@@ -1,106 +1,103 @@
 using Mb.Models.Data;
 using System.Linq;
 using Mb.Models.Records;
-using System;
-using Mb.Models.Application;
 
-namespace Mb.Models.Extensions
+namespace Mb.Models.Extensions;
+
+// ReSharper disable once IdentifierTypo
+public static class VersionableExtensions
 {
-    // ReSharper disable once IdentifierTypo
-    public static class VersionableExtensions
+    public static bool HasMajorChanges(this AspectObjectDm aspectObject, ProjectEditData editData)
     {
-        public static bool HasMajorChanges(this Node node, ProjectEditData editData)
-        {
-            if (editData == null)
-                return false;
-
-            if (editData.TerminalDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
-                return true;
-
-            if (editData.RelationDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
-                return true;
-
+        if (editData == null)
             return false;
-        }
 
-        public static bool HasMinorChanges(this Node node, ProjectEditData editData, Node other)
-        {
-            if (editData == null)
-                return false;
-            if (editData.TerminalUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.TerminalCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
-                return true;
-            if (editData.RelationUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.RelationCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
-                return true;
-            if (editData.AttributeDelete.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeUpdate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri) || editData.AttributeCreate.Any(x => x.NodeId == node.Id || x.NodeIri == node.Iri))
-                return true;
-            if (node.Description != other.Description)
-                return true;
-            if (node.Name != other.Name)
-                return true;
-            if (node.Label != other.Label)
-                return true;
-            if (node.UpdatedBy != other.UpdatedBy)
-                return true;
+        if (editData.TerminalDelete.Any(x => x.AspectObject == aspectObject.Id))
+            return true;
 
+        if (editData.RelationDelete.Any(x => x.AspectObject == aspectObject.Id))
+            return true;
+
+        return false;
+    }
+
+    public static bool HasMinorChanges(this AspectObjectDm aspectObject, ProjectEditData editData, AspectObjectDm other)
+    {
+        if (editData == null)
             return false;
-        }
+        if (editData.TerminalUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.TerminalCreate.Any(x => x.AspectObject == aspectObject.Id))
+            return true;
+        if (editData.RelationUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObject == aspectObject.Id))
+            return true;
+        if (editData.AttributeDelete.Any(x => x.AspectObject == aspectObject.Id) || editData.AttributeUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.AttributeCreate.Any(x => x.AspectObject == aspectObject.Id))
+            return true;
+        if (aspectObject.Description != other.Description)
+            return true;
+        if (aspectObject.Name != other.Name)
+            return true;
+        if (aspectObject.Label != other.Label)
+            return true;
+        if (aspectObject.UpdatedBy != other.UpdatedBy)
+            return true;
 
-        public static bool HasMajorChanges(this Project project, ProjectEditData editData)
-        {
-            if (editData == null)
-                return false;
+        return false;
+    }
 
-            if (editData.EdgeDelete.Any())
-                return true;
-
-            if (editData.NodeDelete.Any())
-                return true;
-
-            if (editData.TerminalDelete.Any())
-                return true;
-
-            if (editData.RelationDelete.Any())
-                return true;
-
+    public static bool HasMajorChanges(this ProjectDm project, ProjectEditData editData)
+    {
+        if (editData == null)
             return false;
-        }
 
-        public static bool HasMinorChanges(this Project project, ProjectEditData editData, Project other)
-        {
-            if (editData == null)
-                return false;
+        if (editData.ConnectionDelete.Any())
+            return true;
 
-            if (editData.EdgeUpdate.Any() || editData.EdgeCreate.Any())
-                return true;
+        if (editData.AspectObjectDelete.Any())
+            return true;
 
-            if (editData.NodeUpdate.Any() || editData.NodeCreate.Any())
-                return true;
+        if (editData.TerminalDelete.Any())
+            return true;
 
-            if (editData.TerminalUpdate.Any() || editData.TerminalCreate.Any())
-                return true;
+        if (editData.RelationDelete.Any())
+            return true;
 
-            if (editData.RelationUpdate.Any() || editData.RelationCreate.Any())
-                return true;
+        return false;
+    }
 
-            if (editData.AttributeDelete.Any() || editData.AttributeUpdate.Any() || editData.AttributeCreate.Any())
-                return true;
-
-            if (project.Description != other.Description)
-                return true;
-
-            if (project.Name != other.Name)
-                return true;
-
-            if (project.IsSubProject != other.IsSubProject)
-                return true;
-
-            if (project.ProjectOwner != other.ProjectOwner)
-                return true;
-
-            if (project.UpdatedBy != other.UpdatedBy)
-                return true;
-
+    public static bool HasMinorChanges(this ProjectDm project, ProjectEditData editData, ProjectDm other)
+    {
+        if (editData == null)
             return false;
-        }
+
+        if (editData.ConnectionUpdate.Any() || editData.ConnectionCreate.Any())
+            return true;
+
+        if (editData.AspectObjectUpdate.Any() || editData.AspectObjectCreate.Any())
+            return true;
+
+        if (editData.TerminalUpdate.Any() || editData.TerminalCreate.Any())
+            return true;
+
+        if (editData.RelationUpdate.Any() || editData.RelationCreate.Any())
+            return true;
+
+        if (editData.AttributeDelete.Any() || editData.AttributeUpdate.Any() || editData.AttributeCreate.Any())
+            return true;
+
+        if (project.Description != other.Description)
+            return true;
+
+        if (project.Name != other.Name)
+            return true;
+
+        if (project.SubProject != other.SubProject)
+            return true;
+
+        if (project.CreatedBy != other.CreatedBy)
+            return true;
+
+        if (project.UpdatedBy != other.UpdatedBy)
+            return true;
+
+        return false;
     }
 }

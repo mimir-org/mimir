@@ -1,9 +1,8 @@
-namespace Mb.Models.Client
+namespace Mb.Models.Client;
+
+public class UserCm
 {
-    public class UserCm
-    {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
-    }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string Role { get; set; }
 }

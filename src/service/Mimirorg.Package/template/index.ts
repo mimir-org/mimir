@@ -20,7 +20,7 @@ export interface SubProjectAm
 	fromProjectId: string;
 	name: string;
 	description: string;
-	nodes: string[];
+	aspectObjects: string[];
 	edges: string[];
 }
 export interface RelationAm extends ConnectorAm
@@ -52,7 +52,7 @@ export interface ProjectAm
 	projectOwner: string;
 	updatedBy: string;
 	updated: Date;
-	nodes: NodeAm[];
+	aspectObjects: NodeAm[];
 	edges: EdgeAm[];
 }
 export interface PrepareAm
@@ -68,7 +68,7 @@ export interface NodeAm
 	id: string;
 	iri: string;
 	aspect: Aspect;
-	nodeType: NodeType;
+	nodeType: AspectObjectType;
 	domain: string;
 	projectId: string;
 	projectIri: string;
@@ -140,8 +140,8 @@ export interface ConnectorAm
 	name: string;
 	type: ConnectorDirection;
 	connectorVisibility: ConnectorVisibility;
-	nodeId: string;
-	nodeIri: string;
+	aspectObjectId: string;
+	aspectObjectIri: string;
 	isRequired: boolean;
 }
 export interface CommitPackageAm
@@ -174,8 +174,8 @@ export interface AttributeAm
 	regularitySpecified: string;
 	terminalId: string;
 	terminalIri: string;
-	nodeId: string;
-	nodeIri: string;
+	aspectObjectId: string;
+	aspectObjectIri: string;
 	isLocked: boolean;
 	isLockedStatusBy: string;
 	isLockedStatusDate: Date;
@@ -216,7 +216,7 @@ export interface ProjectItemCm
 export interface PrepareCm
 {
 	subProjectId: string;
-	nodes: Node[];
+	aspectObjects: AspectObject[];
 	edges: Edge[];
 }
 export interface LockCm
@@ -378,7 +378,7 @@ export interface Project
 	projectOwner: string;
 	updatedBy: string;
 	updated: Date;
-	nodes: Node[];
+	aspectObjects: AspectObject[];
 	edges: Edge[];
 }
 export interface ObjectIdentity
@@ -386,7 +386,7 @@ export interface ObjectIdentity
 	id: string;
 	type: EntityType;
 }
-export interface Node
+export interface AspectObject
 {
 	id: string;
 	iri: string;
@@ -413,7 +413,7 @@ export interface Node
 	libraryTypeId: string;
 	version: string;
 	aspect: Aspect;
-	nodeType: NodeType;
+	nodeType: AspectObjectType;
 	masterProjectId: string;
 	masterProjectIri: string;
 	symbol: string;
@@ -451,10 +451,10 @@ export interface Edge
 	toConnector: Connector;
 	fromNodeId: string;
 	fromNodeIri: string;
-	fromNode: Node;
+	fromAspectObject: AspectObject;
 	toNodeId: string;
 	toNodeIri: string;
-	toNode: Node;
+	toAspectObject: AspectObject;
 	isLocked: boolean;
 	isLockedStatusBy: string;
 	isLockedStatusDate: Date;
@@ -475,8 +475,8 @@ export interface Connector
 	name: string;
 	type: ConnectorDirection;
 	connectorVisibility: ConnectorVisibility;
-	nodeId: string;
-	nodeIri: string;
+	aspectObjectId: string;
+	aspectObjectIri: string;
 	isRequired: boolean;
 }
 export interface Attribute
@@ -496,8 +496,8 @@ export interface Attribute
 	regularitySpecified: string;
 	terminalId: string;
 	terminalIri: string;
-	nodeId: string;
-	nodeIri: string;
+	aspectObjectId: string;
+	aspectObjectIri: string;
 	isLocked: boolean;
 	isLockedStatusBy: string;
 	isLockedStatusDate: Date;
@@ -509,7 +509,7 @@ export enum RelationType
 	PartOf = 2,
 	FulfilledBy = 3,
 }
-export enum NodeType
+export enum AspectObjectType
 {
 	Root = 0,
 	Aspect = 1,
@@ -517,7 +517,7 @@ export enum NodeType
 }
 export enum EntityType
 {
-	Node = 0,
+	AspectObject = 0,
 	Edge = 1,
 	Attribute = 2,
 }

@@ -10,146 +10,145 @@ using Microsoft.Extensions.Logging;
 using Mimirorg.TypeLibrary.Models.Client;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Mb.Core.Controllers.V1
+namespace Mb.Core.Controllers.V1;
+
+/// <summary>
+/// Library services
+/// </summary>
+[Produces("application/json")]
+[Authorize]
+[ApiController]
+[ApiVersion("1.0")]
+[Route("V{version:apiVersion}/[controller]")]
+[SwaggerTag("Library")]
+public class LibraryController : ControllerBase
 {
-    /// <summary>
-    /// Library services
-    /// </summary>
-    [Produces("application/json")]
-    [Authorize]
-    [ApiController]
-    [ApiVersion("1.0")]
-    [Route("V{version:apiVersion}/[controller]")]
-    [SwaggerTag("Library")]
-    public class LibraryController : ControllerBase
+    private readonly ILogger<ProjectController> _logger;
+    private readonly ILibraryService _libraryService;
+
+    public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService)
     {
-        private readonly ILogger<ProjectController> _logger;
-        private readonly ILibraryService _libraryService;
+        _logger = logger;
+        _libraryService = libraryService;
+    }
 
-        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService)
+    /// <summary>
+    /// Get all aspectObject types
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("aspectObject")]
+    [ProducesResponseType(typeof(ICollection<NodeLibCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetAspectObjects()
+    {
+        try
         {
-            _logger = logger;
-            _libraryService = libraryService;
+            var data = await _libraryService.GetAspectObjectTypes(null);
+            return Ok(data);
         }
-
-        /// <summary>
-        /// Get all node types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("node")]
-        [ProducesResponseType(typeof(ICollection<NodeLibCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetNodes()
+        catch (Exception e)
         {
-            try
-            {
-                var data = await _libraryService.GetNodeTypes(null);
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
+    }
 
-        /// <summary>
-        /// Get subProjects
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("subProject")]
-        [ProducesResponseType(typeof(ICollection<LibrarySubProjectVersion>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetSubProjects()
+    /// <summary>
+    /// Get subProjects
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("subProject")]
+    [ProducesResponseType(typeof(ICollection<LibrarySubProjectVersion>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetSubProjects()
+    {
+        try
         {
-            try
-            {
-                var subProjects = await _libraryService.GetSubProjects();
-                return Ok(subProjects);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            var subProjects = await _libraryService.GetSubProjects();
+            return Ok(subProjects);
         }
-
-        /// <summary>
-        /// Get all terminal types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("terminal")]
-        [ProducesResponseType(typeof(ICollection<TerminalLibCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetTerminals()
+        catch (Exception e)
         {
-            try
-            {
-                var data = await _libraryService.GetTerminalTypes();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
+    }
 
-        /// <summary>
-        /// Get all terminal types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("attribute")]
-        [ProducesResponseType(typeof(ICollection<AttributeLibCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetAttributes()
+    /// <summary>
+    /// Get all connectorTerminal types
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("connectorTerminal")]
+    [ProducesResponseType(typeof(ICollection<TerminalLibCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetTerminals()
+    {
+        try
         {
-            try
-            {
-                var data = await _libraryService.GetAttributeTypes();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            var data = await _libraryService.GetTerminalTypes();
+            return Ok(data);
         }
-
-        /// <summary>
-        /// Get all quantity datum types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("quantity-datums")]
-        [ProducesResponseType(typeof(ICollection<QuantityDatumCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetQuantityDatums()
+        catch (Exception e)
         {
-            try
-            {
-                var data = await _libraryService.GetQuantityDatums();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
+
+    /// <summary>
+    /// Get all connectorTerminal types
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("attribute")]
+    [ProducesResponseType(typeof(ICollection<AttributeLibCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetAttributes()
+    {
+        try
+        {
+            var data = await _libraryService.GetAttributeTypes();
+            return Ok(data);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
+
+    /// <summary>
+    /// Get all quantity datum types
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("quantity-datums")]
+    [ProducesResponseType(typeof(ICollection<QuantityDatumCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetQuantityDatums()
+    {
+        try
+        {
+            var data = await _libraryService.GetQuantityDatums();
+            return Ok(data);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
     }
 }

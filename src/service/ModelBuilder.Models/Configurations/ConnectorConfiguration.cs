@@ -1,26 +1,72 @@
 using Mb.Models.Data;
-using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 
-namespace Mb.Models.Configurations
+namespace Mb.Models.Configurations;
+
+#region ConnectorConfiguration
+public class ConnectorConfiguration : IEntityTypeConfiguration<ConnectorDm>
 {
-    public class ConnectorConfiguration : IEntityTypeConfiguration<Connector>
+    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
     {
-        public void Configure(EntityTypeBuilder<Connector> builder)
-        {
-            builder.HasKey(x => x.Id);
-            builder.ToTable("Connector");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
-            builder.Property(p => p.Type).HasColumnName("Type").IsRequired();
-            builder.Property(p => p.ConnectorVisibility).HasColumnName("ConnectorVisibility").IsRequired().HasDefaultValue(ConnectorVisibility.None);
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
-            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
-            builder.Property(p => p.IsRequired).HasColumnName("IsRequired").IsRequired().HasDefaultValue(false);
-
-            builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
-        }
+        builder.HasKey(x => x.Id);
+        builder.ToTable("Connector");
+        builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+        builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
+        builder.Property(p => p.Direction).HasColumnName("Direction").IsRequired();
+        builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
+        builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
+        builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
+        builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired();
     }
 }
+#endregion ConnectorConfiguration
+
+#region ConnectorTerminalConfiguration
+public class ConnectorTerminalConfiguration : IEntityTypeConfiguration<ConnectorTerminalDm>
+{
+    public void Configure(EntityTypeBuilder<ConnectorTerminalDm> builder)
+    {
+        builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired();
+        builder.Property(p => p.TerminalParentType).HasColumnName("TerminalParentType").IsRequired(false);
+        builder.Property(p => p.Color).HasColumnName("Color").IsRequired();
+    }
+}
+#endregion ConnectorTerminalConfiguration
+
+#region ConnectorRelationConfiguration
+public class ConnectorRelationConfiguration : IEntityTypeConfiguration<ConnectorRelationDm>
+{
+    public void Configure(EntityTypeBuilder<ConnectorRelationDm> builder)
+    {
+    }
+}
+#endregion ConnectorRelationConfiguration
+
+#region ConnectorFulfilledByConfiguration
+public class ConnectorFulfilledByConfiguration : IEntityTypeConfiguration<ConnectorFulfilledByDm>
+{
+    public void Configure(EntityTypeBuilder<ConnectorFulfilledByDm> builder)
+    {
+    }
+}
+#endregion ConnectorFulfilledByConfiguration
+
+#region ConnectorHasLocationConfiguration
+public class ConnectorHasLocationConfiguration : IEntityTypeConfiguration<ConnectorHasLocationDm>
+{
+    public void Configure(EntityTypeBuilder<ConnectorHasLocationDm> builder)
+    {
+    }
+}
+#endregion ConnectorHasLocationConfiguration
+
+#region ConnectorPartOfConfiguration
+public class ConnectorPartOfConfiguration : IEntityTypeConfiguration<ConnectorPartOfDm>
+{
+    public void Configure(EntityTypeBuilder<ConnectorPartOfDm> builder)
+    {
+    }
+}
+#endregion ConnectorPartOfConfiguration

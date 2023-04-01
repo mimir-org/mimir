@@ -6,46 +6,45 @@ using Microsoft.Extensions.Options;
 using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 
-namespace Mb.Data.Repositories
+namespace Mb.Data.Repositories;
+
+public class CompanyRepository : ICompanyRepository
 {
-    public class CompanyRepository : ICompanyRepository
+    private readonly IHttpRepository _httpRepository;
+    private readonly ICacheRepository _cacheRepository;
+    private readonly ApplicationSetting _applicationSetting;
+
+    public CompanyRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
     {
-        private readonly IHttpRepository _httpRepository;
-        private readonly ICacheRepository _cacheRepository;
-        private readonly ApplicationSetting _applicationSetting;
+        _httpRepository = httpRepository;
+        _cacheRepository = cacheRepository;
+        _applicationSetting = applicationSetting?.Value;
+    }
 
-        public CompanyRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
+    public async Task<List<MimirorgCompanyCm>> GetCompanies()
+    {
+        // ReSharper disable once StringLiteralTypo
+        var url = _applicationSetting.ApiUrl("mimirorgcompany");
+        var data = await _cacheRepository.GetOrCreateAsync("companies",
+            async () => await _httpRepository.GetData<List<MimirorgCompanyCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);
+
+        return data;
+    }
+
+    public async Task<MimirorgCompanyCm> GetCurrentCompany()
+    {
+        var auth = new MimirorgCompanyAuthAm
         {
-            _httpRepository = httpRepository;
-            _cacheRepository = cacheRepository;
-            _applicationSetting = applicationSetting?.Value;
-        }
+            Domain = _applicationSetting.TypeLibraryDomain,
+            Secret = _applicationSetting.TypeLibrarySecret
+        };
 
-        public async Task<List<MimirorgCompanyCm>> GetCompanies()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("mimirorgcompany");
-            var data = await _cacheRepository.GetOrCreateAsync("companies",
-                async () => await _httpRepository.GetData<List<MimirorgCompanyCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);
+        // ReSharper disable once StringLiteralTypo
+        var url = _applicationSetting.ApiUrl("mimirorgcompany/auth");
 
-            return data;
-        }
+        var data = await _cacheRepository.GetOrCreateAsync("company",
+            async () => await _httpRepository.PostData<MimirorgCompanyCm, MimirorgCompanyAuthAm>(url, auth), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);
 
-        public async Task<MimirorgCompanyCm> GetCurrentCompany()
-        {
-            var auth = new MimirorgCompanyAuthAm
-            {
-                Domain = _applicationSetting.TypeLibraryDomain,
-                Secret = _applicationSetting.TypeLibrarySecret
-            };
-
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("mimirorgcompany/auth");
-
-            var data = await _cacheRepository.GetOrCreateAsync("company",
-                async () => await _httpRepository.PostData<MimirorgCompanyCm, MimirorgCompanyAuthAm>(url, auth), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);
-
-            return data;
-        }
+        return data;
     }
 }

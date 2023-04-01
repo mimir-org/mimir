@@ -1,8 +1,7 @@
-namespace Mb.Models.Enums
+namespace Mb.Models.Enums;
+
+public enum AttributeParent
 {
-    public enum AttributeParent
-    {
-        Connector = 0,
-        Node = 1
-    }
+    Connector = 0,
+    AspectObject = 1
 }

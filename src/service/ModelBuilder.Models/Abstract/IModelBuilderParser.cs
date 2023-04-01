@@ -3,13 +3,12 @@ using Mb.Models.Application;
 using Mb.Models.Common;
 using Mb.Models.Data;
 
-namespace Mb.Models.Abstract
+namespace Mb.Models.Abstract;
+
+public interface IModelBuilderParser : IModuleInterface
 {
-    public interface IModelBuilderParser : IModuleInterface
-    {
-        FileFormat GetFileFormat();
-        Task<byte[]> SerializeProject(Project project);
-        Task<Project> DeserializeProject(byte[] data);
-        Task<ProjectAm> DeserializeProjectAm(byte[] data);
-    }
+    FileFormat GetFileFormat();
+    Task<byte[]> SerializeProject(ProjectDm project);
+    Task<ProjectDm> DeserializeProject(byte[] data);
+    Task<ProjectAm> DeserializeProjectAm(byte[] data);
 }

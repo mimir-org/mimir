@@ -15,84 +15,83 @@ using ModelBuilder.Rdf.Repositories;
 using ModelBuilder.Rdf.Services;
 using VDS.RDF;
 
-namespace JsonLdParser
+namespace JsonLdParser;
+
+public class ParserModule : IModelBuilderParser
 {
-    public class ParserModule : IModelBuilderParser
+    private ServiceProvider _provider;
+    private IOntologyService _ontologyService;
+    private IMapper _mapper;
+
+    public void CreateModule(IServiceCollection services, IConfiguration configuration)
     {
-        private ServiceProvider _provider;
-        private IOntologyService _ontologyService;
-        private IMapper _mapper;
+        services.AddScoped<IOntologyRepository, OntologyRepository>();
+        services.AddScoped<IOntologyService, OntologyService>();
 
-        public void CreateModule(IServiceCollection services, IConfiguration configuration)
+        _provider = services.BuildServiceProvider();
+
+        _ontologyService = _provider.GetService<IOntologyService>();
+        _mapper = _provider.GetService<IMapper>();
+    }
+
+    public ICollection<Profile> GetProfiles()
+    {
+        return new List<Profile>();
+    }
+
+    public ModuleDescriptionDm GetModuleDescription()
+    {
+        return new ModuleDescriptionDm
         {
-            services.AddScoped<IOntologyRepository, OntologyRepository>();
-            services.AddScoped<IOntologyService, OntologyService>();
+            Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943").ToString(),
+            Name = "Mimir IMF JSON-LD"
+        };
+    }
 
-            _provider = services.BuildServiceProvider();
+    public Task<byte[]> SerializeProject(ProjectDm project)
+    {
+        _ontologyService.BuildProject(project);
+        var bytes = _ontologyService.GetBytes<ImfJsonLdWriter>();
+        return Task.FromResult(bytes);
+    }
 
-            _ontologyService = _provider.GetService<IOntologyService>();
-            _mapper = _provider.GetService<IMapper>();
-        }
+    public Task<ProjectDm> DeserializeProject(byte[] data)
+    {
+        var projectAm = DeserializeProjectAm(data);
+        var project = _mapper.Map<ProjectDm>(projectAm);
+        return Task.FromResult(project);
+    }
 
-        public ICollection<Profile> GetProfiles()
+    public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+    {
+        var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
+        var graph = LoadGraph(valueAsString);
+        var project = _ontologyService.BuildProject(graph);
+        return Task.FromResult(project);
+    }
+
+    public static IGraph LoadGraph(string valueAsString)
+    {
+        var parser = new VDS.RDF.Parsing.JsonLdParser();
+        var store = new TripleStore();
+        using (TextReader reader = new StringReader(valueAsString))
         {
-            return new List<Profile>();
+            parser.Load(store, reader);
         }
-
-        public ModuleDescription GetModuleDescription()
+        if (store.Graphs.Count != 1)
         {
-            return new ModuleDescription
-            {
-                Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943").ToString(),
-                Name = "Mimir IMF JSON-LD"
-            };
+            throw new InvalidDataException("Input JSON contained more than one graph, this is an error");
         }
+        return store.Graphs.First();
 
-        public Task<byte[]> SerializeProject(Project project)
+    }
+
+    public FileFormat GetFileFormat()
+    {
+        return new FileFormat
         {
-            _ontologyService.BuildProject(project);
-            var bytes = _ontologyService.GetBytes<ImfJsonLdWriter>();
-            return Task.FromResult(bytes);
-        }
-
-        public Task<Project> DeserializeProject(byte[] data)
-        {
-            var projectAm = DeserializeProjectAm(data);
-            var project = _mapper.Map<Project>(projectAm);
-            return Task.FromResult(project);
-        }
-
-        public Task<ProjectAm> DeserializeProjectAm(byte[] data)
-        {
-            var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var graph = LoadGraph(valueAsString);
-            var project = _ontologyService.BuildProject(graph);
-            return Task.FromResult(project);
-        }
-
-        public static IGraph LoadGraph(string valueAsString)
-        {
-            var parser = new VDS.RDF.Parsing.JsonLdParser();
-            var store = new TripleStore();
-            using (TextReader reader = new StringReader(valueAsString))
-            {
-                parser.Load(store, reader);
-            }
-            if (store.Graphs.Count != 1)
-            {
-                throw new InvalidDataException("Input JSON contained more than one graph, this is an error");
-            }
-            return store.Graphs.First();
-
-        }
-
-        public FileFormat GetFileFormat()
-        {
-            return new FileFormat
-            {
-                ContentType = @"application/ld+json",
-                FileExtension = "jsonld"
-            };
-        }
+            ContentType = @"application/ld+json",
+            FileExtension = "jsonld"
+        };
     }
 }

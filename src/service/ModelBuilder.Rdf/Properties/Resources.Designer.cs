@@ -205,6 +205,24 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasAspectObjectFromConnection.
+        /// </summary>
+        public static string HasAspectObjectFromConnection {
+            get {
+                return ResourceManager.GetString("HasAspectObjectFromConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:hasAspectObjectToConnection.
+        /// </summary>
+        public static string HasAspectObjectToConnection {
+            get {
+                return ResourceManager.GetString("HasAspectObjectToConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:hasBidirectionalTerminal.
         /// </summary>
         public static string HasBidirectionalTerminal {
@@ -300,24 +318,6 @@ namespace ModelBuilder.Rdf.Properties {
         public static string HasMasterProject {
             get {
                 return ResourceManager.GetString("HasMasterProject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mimir:hasNodeFromConnection.
-        /// </summary>
-        public static string HasNodeFromConnection {
-            get {
-                return ResourceManager.GetString("HasNodeFromConnection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mimir:hasNodeToConnection.
-        /// </summary>
-        public static string HasNodeToConnection {
-            get {
-                return ResourceManager.GetString("HasNodeToConnection", resourceCulture);
             }
         }
         

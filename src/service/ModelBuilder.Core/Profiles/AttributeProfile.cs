@@ -1,56 +1,41 @@
 using AutoMapper;
 using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Models.Data;
 using Newtonsoft.Json;
-using Attribute = Mb.Models.Data.Attribute;
 
-namespace Mb.Core.Profiles
+namespace Mb.Core.Profiles;
+
+public class AttributeProfile : Profile
 {
-    public class AttributeProfile : Profile
+    public AttributeProfile()
     {
-        public AttributeProfile()
-        {
-            CreateMap<AttributeAm, Attribute>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
-                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
-                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
-                .ForMember(dest => dest.SpecifiedScope, opt => opt.MapFrom(src => src.SpecifiedScope))
-                .ForMember(dest => dest.SpecifiedProvenance, opt => opt.MapFrom(src => src.SpecifiedProvenance))
-                .ForMember(dest => dest.RangeSpecifying, opt => opt.MapFrom(src => src.RangeSpecifying))
-                .ForMember(dest => dest.RegularitySpecified, opt => opt.MapFrom(src => src.RegularitySpecified))
-                .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-                .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
-                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
-                .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
-                .ForMember(dest => dest.Terminal, opt => opt.Ignore())
-                .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
-                .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
-                .ForMember(dest => dest.Node, opt => opt.Ignore())
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
-                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
-                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
+        CreateMap<AttributeAm, AttributeDm>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+            .ForMember(dest => dest.AttributeType, opt => opt.MapFrom(src => src.AttributeType))
+            .ForMember(dest => dest.UnitSelected, opt => opt.MapFrom(src => src.UnitSelected))
+            .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Units)))
+            .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Qualifiers)))
+            .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
+            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
+            .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
+            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
+            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
 
-            CreateMap<Attribute, AttributeAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
-                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
-                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
-                .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-                .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
-                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
-                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
-                .ForMember(dest => dest.SpecifiedScope, opt => opt.MapFrom(src => src.SpecifiedScope))
-                .ForMember(dest => dest.SpecifiedProvenance, opt => opt.MapFrom(src => src.SpecifiedProvenance))
-                .ForMember(dest => dest.RangeSpecifying, opt => opt.MapFrom(src => src.RangeSpecifying))
-                .ForMember(dest => dest.RegularitySpecified, opt => opt.MapFrom(src => src.RegularitySpecified))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
-        }
+        CreateMap<AttributeDm, AttributeCm>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+            .ForMember(dest => dest.AttributeType, opt => opt.MapFrom(src => src.AttributeType))
+            .ForMember(dest => dest.UnitSelected, opt => opt.MapFrom(src => src.UnitSelected))
+            .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<UnitCm>(src.Units)))
+            .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<QualifierCm>(src.Qualifiers)))
+            .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
+            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
+            .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
     }
 }

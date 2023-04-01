@@ -1,14 +1,13 @@
 using Mb.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 
-namespace ModelBuilder.Rdf.Models
-{
-    public record ProjectData
-    {
-        public ICollection<NodeAm> Nodes { get; init; } = default!;
-        public ICollection<EdgeAm> Edges { get; init; } = default!;
+namespace ModelBuilder.Rdf.Models;
 
-        public ICollection<UnitLibCm> Units { get; init; } = default!;
-        public Dictionary<string, QuantityDatumCm> QuantityDatums { get; init; } = default!;
-    }
+public record ProjectData
+{
+    public ICollection<AspectObjectAm> AspectObjects { get; init; } = default!;
+    public ICollection<ConnectionAm> Connections { get; init; } = default!;
+
+    public ICollection<UnitLibCm> Units { get; init; } = default!;
+    public Dictionary<string, QuantityDatumCm> QuantityDatums { get; init; } = default!;
 }

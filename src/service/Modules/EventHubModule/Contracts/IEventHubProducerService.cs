@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Attributes;
 
-namespace EventHubModule.Contracts
+namespace EventHubModule.Contracts;
+
+[Singleton]
+public interface IEventHubProducerService
 {
-    [Singleton]
-    public interface IEventHubProducerService
-    {
-        Task SendDataAsync<T>(List<T> data) where T : class;
-    }
+    Task SendDataAsync<T>(List<T> data) where T : class;
 }

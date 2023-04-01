@@ -2,56 +2,55 @@ using System;
 using System.Collections.Generic;
 using Mb.Models.Data;
 
-namespace Mb.Models.Compare
+namespace Mb.Models.Compare;
+
+public class VersionDataComparer : Comparer<VersionDataDm>
 {
-    public class VersionDataComparer : Comparer<VersionData>
+    public override int Compare(VersionDataDm x, VersionDataDm y)
     {
-        public override int Compare(VersionData x, VersionData y)
+        var xVersion = x?.Ver ?? x?.Version;
+        var yVersion = y?.Ver ?? y?.Version;
+
+        if (xVersion == null || yVersion == null)
         {
-            var xVersion = x?.Ver ?? x?.Version;
-            var yVersion = y?.Ver ?? y?.Version;
-
-            if (xVersion == null || yVersion == null)
-            {
-                if (xVersion == null && yVersion == null)
-                    return 0;
-                if (xVersion == null)
-                    return -1;
-                return 1;
-            }
-
-            var verX = VersionNumber(xVersion);
-            var verY = VersionNumber(yVersion);
-
-            if (verX.major > verY.major)
-                return 1;
-
-            if (verX.major < verY.major)
+            if (xVersion == null && yVersion == null)
+                return 0;
+            if (xVersion == null)
                 return -1;
-
-            return verX.minor.CompareTo(verY.minor);
+            return 1;
         }
 
-        public (int major, int minor) VersionNumber(string version)
-        {
-            var result = (0, 0);
+        var verX = VersionNumber(xVersion);
+        var verY = VersionNumber(yVersion);
 
-            if (string.IsNullOrWhiteSpace(version))
-                return result;
+        if (verX.major > verY.major)
+            return 1;
 
-            var replace = version.Replace("v", "");
-            var split = replace.Split('.', StringSplitOptions.RemoveEmptyEntries);
+        if (verX.major < verY.major)
+            return -1;
 
-            if (split.Length != 2)
-                return result;
+        return verX.minor.CompareTo(verY.minor);
+    }
 
-            if (int.TryParse(split[0], out var major))
-                result.Item1 = major;
+    public (int major, int minor) VersionNumber(string version)
+    {
+        var result = (0, 0);
 
-            if (int.TryParse(split[1], out var minor))
-                result.Item2 = minor;
+        if (string.IsNullOrWhiteSpace(version))
+            return result;
 
-            return (result.Item1, result.Item2);
-        }
+        var replace = version.Replace("v", "");
+        var split = replace.Split('.', StringSplitOptions.RemoveEmptyEntries);
+
+        if (split.Length != 2)
+            return result;
+
+        if (int.TryParse(split[0], out var major))
+            result.Item1 = major;
+
+        if (int.TryParse(split[1], out var minor))
+            result.Item2 = minor;
+
+        return (result.Item1, result.Item2);
     }
 }

@@ -17,143 +17,142 @@ using Swashbuckle.AspNetCore.Annotations;
 using Mimirorg.TypeLibrary.Models.Client;
 using Mimirorg.TypeLibrary.Models.Common;
 
-namespace Mb.Core.Controllers.V1
+namespace Mb.Core.Controllers.V1;
+
+/// <summary>
+/// Common services
+/// </summary>
+[Produces("application/json")]
+[Authorize]
+[ApiController]
+[ApiVersion("1.0")]
+[Route("V{version:apiVersion}/[controller]")]
+[SwaggerTag("Common")]
+public class CommonController : ControllerBase
 {
-    /// <summary>
-    /// Common services
-    /// </summary>
-    [Produces("application/json")]
-    [Authorize]
-    [ApiController]
-    [ApiVersion("1.0")]
-    [Route("V{version:apiVersion}/[controller]")]
-    [SwaggerTag("Common")]
-    public class CommonController : ControllerBase
+    private readonly ILogger<CommonController> _logger;
+    private readonly ICommonService _commonService;
+    private readonly IModuleService _moduleService;
+    private readonly ICacheRepository _cacheRepository;
+    private readonly ApplicationSetting _applicationSetting;
+    private readonly ILibraryService _libraryService;
+
+    public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting, ILibraryService libraryService)
     {
-        private readonly ILogger<CommonController> _logger;
-        private readonly ICommonService _commonService;
-        private readonly IModuleService _moduleService;
-        private readonly ICacheRepository _cacheRepository;
-        private readonly ApplicationSetting _applicationSetting;
-        private readonly ILibraryService _libraryService;
+        _commonService = commonService;
+        _logger = logger;
+        _moduleService = moduleService;
+        _cacheRepository = cacheRepository;
+        _libraryService = libraryService;
+        _applicationSetting = applicationSetting?.Value;
+    }
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting, ILibraryService libraryService)
+    /// <summary>
+    /// Get all companies
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("company")]
+    [ProducesResponseType(typeof(ICollection<MimirorgCompanyCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetCompanies()
+    {
+        try
         {
-            _commonService = commonService;
-            _logger = logger;
-            _moduleService = moduleService;
-            _cacheRepository = cacheRepository;
-            _libraryService = libraryService;
-            _applicationSetting = applicationSetting?.Value;
+            var data = await _commonService.GetAllCompanies();
+            return Ok(data);
         }
-
-        /// <summary>
-        /// Get all companies
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("company")]
-        [ProducesResponseType(typeof(ICollection<MimirorgCompanyCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetCompanies()
+        catch (Exception e)
         {
-            try
-            {
-                var data = await _commonService.GetAllCompanies();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
+    }
 
-        /// <summary>
-        /// Get current company
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("company/current")]
-        [ProducesResponseType(typeof(MimirorgCompanyCm), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetCurrentCompany()
+    /// <summary>
+    /// Get current company
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("company/current")]
+    [ProducesResponseType(typeof(MimirorgCompanyCm), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetCurrentCompany()
+    {
+        try
         {
-            try
-            {
-                var data = await _commonService.GetCurrentCompany();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            var data = await _commonService.GetCurrentCompany();
+            return Ok(data);
         }
-
-        /// <summary>
-        /// Get all registered parsers
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("parser")]
-        [ProducesResponseType(typeof(ICollection<ModuleDescription>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetParsers()
+        catch (Exception e)
         {
-            try
-            {
-                var data = _moduleService.Modules
-                    .Where(x => x.Instance is IModelBuilderParser)
-                    .Select(x => x.ModuleDescription)
-                    .ToList();
-
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
+    }
 
-        /// <summary>
-        /// Invalidate cache
-        /// </summary>
-        /// <returns>No content</returns>
-        [HttpPost("cache/invalidate")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [AllowAnonymous]
-        public async Task<IActionResult> InvalidateCache([FromBody] CacheInvalidation cacheInvalidation)
+    /// <summary>
+    /// Get all registered parsers
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("parser")]
+    [ProducesResponseType(typeof(ICollection<ModuleDescriptionDm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Policy = "Read")]
+    public IActionResult GetParsers()
+    {
+        try
         {
-            try
-            {
-                if (cacheInvalidation == null || string.IsNullOrWhiteSpace(cacheInvalidation.Secret) ||
-                    _applicationSetting == null || string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret))
-                    return new ForbidResult();
+            var data = _moduleService.Modules
+                .Where(x => x.Instance is IModelBuilderParser)
+                .Select(x => x.ModuleDescription)
+                .ToList();
 
-                if (!cacheInvalidation.Secret.Equals(_applicationSetting.TypeLibrarySecret))
-                    return new ForbidResult();
+            return Ok(data);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
 
-                await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
+    /// <summary>
+    /// Invalidate cache
+    /// </summary>
+    /// <returns>No content</returns>
+    [HttpPost("cache/invalidate")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [AllowAnonymous]
+    public async Task<IActionResult> InvalidateCache([FromBody] CacheInvalidation cacheInvalidation)
+    {
+        try
+        {
+            if (cacheInvalidation == null || string.IsNullOrWhiteSpace(cacheInvalidation.Secret) ||
+                _applicationSetting == null || string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret))
+                return new ForbidResult();
 
-                if (cacheInvalidation.Key is CacheKey.AspectNode)
-                    await _libraryService.SendRefreshLibData();
+            if (!cacheInvalidation.Secret.Equals(_applicationSetting.TypeLibrarySecret))
+                return new ForbidResult();
 
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
+            await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
+
+            if (cacheInvalidation.Key is CacheKey.AspectNode)
+                await _libraryService.SendRefreshLibData();
+
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
         }
     }
 }

@@ -1,77 +1,36 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data;
-using Mimirorg.Common.Attributes;
 
-namespace Mb.Models.Application
+namespace Mb.Models.Application;
+
+public class AttributeAm
 {
-    public class AttributeAm
+    [Required]
+    public string Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    public string Value { get; set; }
+    [Required]
+    public string AttributeType { get; set; }
+    public string UnitSelected { get; set; }
+    public ICollection<UnitAm> Units { get; set; }
+    public ICollection<QualifierAm> Qualifiers { get; set; }
+    public string ConnectorTerminal { get; set; }
+    public string AspectObject { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        [RequiredOne(nameof(Iri))]
-        public string Id { get; set; }
+        var validations = new List<ValidationResult>();
 
-        [RequiredOne(nameof(Id))]
-        [ValidIri]
-        public string Iri { get; set; }
-
-        [Required]
-        public string Entity { get; set; }
-        public string Value { get; set; }
-
-        // Type
-        [RequiredOne(nameof(AttributeTypeIri))]
-        public string AttributeTypeId { get; set; }
-
-        [RequiredOne(nameof(AttributeTypeId))]
-        [ValidIri]
-        public string AttributeTypeIri { get; set; }
-
-        // Unit
-        public string SelectedUnitId { get; set; }
-        public virtual ICollection<Unit> Units { get; set; }
-
-        // Qualifiers
-        public string SpecifiedScope { get; set; }
-        public string SpecifiedProvenance { get; set; }
-        public string RangeSpecifying { get; set; }
-        public string RegularitySpecified { get; set; }
-
-        // References
-        public string TerminalId { get; set; }
-
-        [ValidIri]
-        public string TerminalIri { get; set; }
-
-        public string NodeId { get; set; }
-
-        [ValidIri]
-        public string NodeIri { get; set; }
-
-        public bool IsLocked { get; set; }
-        public string IsLockedStatusBy { get; set; }
-        public DateTime? IsLockedStatusDate { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        if (string.IsNullOrEmpty(ConnectorTerminal) && string.IsNullOrEmpty(AspectObject))
         {
-            var validations = new List<ValidationResult>();
-
-            if (string.IsNullOrEmpty(TerminalId) &&
-                string.IsNullOrEmpty(TerminalIri) &&
-                string.IsNullOrEmpty(NodeId) &&
-                string.IsNullOrEmpty(NodeIri)
-               )
+            validations.Add(new ValidationResult("One of this fields is required", new[]
             {
-                validations.Add(new ValidationResult("One of this fields is required", new[]
-                {
-                    nameof(TerminalId),
-                    nameof(TerminalIri),
-                    nameof(NodeId),
-                    nameof(NodeIri)
-                }));
-            }
-
-            return validations;
+                nameof(ConnectorTerminal),
+                nameof(AspectObject)
+            }));
         }
+
+        return validations;
     }
 }

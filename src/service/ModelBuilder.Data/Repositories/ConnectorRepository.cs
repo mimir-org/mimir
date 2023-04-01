@@ -6,149 +6,191 @@ using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SqlBulkTools;
 
-namespace Mb.Data.Repositories
+namespace Mb.Data.Repositories;
+
+public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, ConnectorDm>, IConnectorRepository
 {
-    public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Connector>, IConnectorRepository
+    private readonly IAttributeRepository _attributeRepository;
+
+    public ConnectorRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
     {
-        private readonly IAttributeRepository _attributeRepository;
+        _attributeRepository = attributeRepository;
+    }
 
-        public ConnectorRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
+    public void AttachWithAttributes(ICollection<ConnectorDm> entities, EntityState state)
+    {
+        if (entities == null)
+            return;
+
+        foreach (var connector in entities.OfType<ConnectorTerminalDm>())
         {
-            _attributeRepository = attributeRepository;
-        }
-
-        public void AttachWithAttributes(ICollection<Connector> entities, EntityState state)
-        {
-            if (entities == null)
-                return;
-
-            foreach (var connector in entities.OfType<Terminal>())
+            if (connector.Attributes != null)
             {
-                if (connector.Attributes != null)
+                foreach (var attribute in connector.Attributes)
                 {
-                    foreach (var attribute in connector.Attributes)
-                    {
-                        attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
-                        _attributeRepository.Attach(attribute, state);
-                    }
+                    _attributeRepository.Attach(attribute, state);
                 }
-                Attach(connector, state);
             }
-
-            foreach (var connector in entities.OfType<Relation>())
-            {
-                Attach(connector, state);
-            }
+            Attach(connector, state);
         }
 
-        /// <summary>
-        /// Bulk relation update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="relations">The relations to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Relation> relations)
+        foreach (var connector in entities.OfType<ConnectorRelationDm>())
         {
-            if (relations == null || !relations.Any())
-                return;
-
-            bulk.Setup<Relation>()
-                .ForCollection(relations)
-                .WithTable("Connector")
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.Iri)
-                .AddColumn(x => x.Name)
-                .AddColumn(x => x.Type)
-                .AddColumn(x => x.ConnectorVisibility)
-                .AddColumn(x => x.NodeId)
-                .AddColumn(x => x.NodeIri)
-                .AddColumn(x => x.IsRequired)
-                .AddColumn(x => x.RelationType)
-                .AddColumn(x => x.Discriminator)
-                .BulkInsertOrUpdate()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
+            Attach(connector, state);
         }
+    }
 
-        /// <summary>
-        /// Bulk relation update
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="terminals">The terminals to be upserted</param>
-        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals)
-        {
-            if (terminals == null || !terminals.Any())
-                return;
+    /// <summary>
+    /// Bulk update
+    /// </summary>
+    /// <param name="bulk">Bulk operations</param>
+    /// <param name="conn">Sql Connection</param>
+    /// <param name="connectorTerminals">The objects to be upserted</param>
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminalDm> connectorTerminals)
+    {
+        if (connectorTerminals == null || !connectorTerminals.Any())
+            return;
 
-            bulk.Setup<Terminal>()
-                .ForCollection(terminals)
-                .WithTable("Connector")
-                .AddColumn(x => x.Id)
-                .AddColumn(x => x.Iri)
-                .AddColumn(x => x.Name)
-                .AddColumn(x => x.Type)
-                .AddColumn(x => x.ConnectorVisibility)
-                .AddColumn(x => x.NodeId)
-                .AddColumn(x => x.NodeIri)
-                .AddColumn(x => x.IsRequired)
-                .AddColumn(x => x.Color)
-                .AddColumn(x => x.TerminalParentTypeName)
-                .AddColumn(x => x.TerminalTypeId)
-                .AddColumn(x => x.TerminalTypeIri)
-                .AddColumn(x => x.TerminalParentTypeId)
-                .AddColumn(x => x.TerminalParentTypeIri)
-                .AddColumn(x => x.Discriminator)
-                .AddColumn(x => x.TypeReferenceString)
-                .AddColumn(x => x.IsProxy)
-                .AddColumn(x => x.ProxyParent)
-                .AddColumn(x => x.ProxySibling)
-                .BulkInsertOrUpdate()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<ConnectorTerminalDm>()
+            .ForCollection(connectorTerminals)
+            .WithTable("Connector")
+            //Parent
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Direction)
+            .AddColumn(x => x.Inside)
+            .AddColumn(x => x.Outside)
+            .AddColumn(x => x.AspectObject)
+            //Child
+            .AddColumn(x => x.Color)
+            .AddColumn(x => x.TerminalType)
+            .AddColumn(x => x.TerminalParentType)
+            .AddColumn(x => x.Discriminator)
+            .AddColumn(x => x.ReferenceType)
+            //Operations
+            .BulkInsertOrUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
 
-        /// <summary>
-        /// Bulk delete relations
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="relations">The relations to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Relation> relations)
-        {
-            if (relations == null || !relations.Any())
-                return;
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOfDm> connectorPartOf)
+    {
+        if (connectorPartOf == null || !connectorPartOf.Any())
+            return;
 
-            bulk.Setup<Relation>()
-                .ForCollection(relations)
-                .WithTable("Connector")
-                .AddColumn(x => x.Id)
-                .BulkDelete()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<ConnectorPartOfDm>()
+            .ForCollection(connectorPartOf)
+            .WithTable("Connector")
+            //Parent
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Direction)
+            .AddColumn(x => x.Inside)
+            .AddColumn(x => x.Outside)
+            .AddColumn(x => x.AspectObject)
+            //Operations
+            .BulkInsertOrUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
 
-        /// <summary>
-        /// Bulk delete terminals
-        /// </summary>
-        /// <param name="bulk">Bulk operations</param>
-        /// <param name="conn">Sql Connection</param>
-        /// <param name="terminals">The terminals to be deleted</param>
-        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Terminal> terminals)
-        {
-            if (terminals == null || !terminals.Any())
-                return;
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledByDm> connectorFulfilledBy)
+    {
+        if (connectorFulfilledBy == null || !connectorFulfilledBy.Any())
+            return;
 
-            bulk.Setup<Terminal>()
-                .ForCollection(terminals)
-                .WithTable("Connector")
-                .AddColumn(x => x.Id)
-                .BulkDelete()
-                .MatchTargetOn(x => x.Id)
-                .Commit(conn);
-        }
+        bulk.Setup<ConnectorFulfilledByDm>()
+            .ForCollection(connectorFulfilledBy)
+            .WithTable("Connector")
+            //Parent
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Direction)
+            .AddColumn(x => x.Inside)
+            .AddColumn(x => x.Outside)
+            .AddColumn(x => x.AspectObject)
+            //Operations
+            .BulkInsertOrUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
+
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocationDm> connectorHasLocation)
+    {
+        if (connectorHasLocation == null || !connectorHasLocation.Any())
+            return;
+
+        bulk.Setup<ConnectorHasLocationDm>()
+            .ForCollection(connectorHasLocation)
+            .WithTable("Connector")
+            //Parent
+            .AddColumn(x => x.Id)
+            .AddColumn(x => x.Name)
+            .AddColumn(x => x.Direction)
+            .AddColumn(x => x.Inside)
+            .AddColumn(x => x.Outside)
+            .AddColumn(x => x.AspectObject)
+            //Operations
+            .BulkInsertOrUpdate()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
+
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminalDm> connectorTerminals)
+    {
+        if (connectorTerminals == null || !connectorTerminals.Any())
+            return;
+
+        bulk.Setup<ConnectorTerminalDm>()
+            .ForCollection(connectorTerminals)
+            .WithTable("Connector")
+            .AddColumn(x => x.Id)
+            .BulkDelete()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
+
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOfDm> connectorPartOf)
+    {
+        if (connectorPartOf == null || !connectorPartOf.Any())
+            return;
+
+        bulk.Setup<ConnectorPartOfDm>()
+            .ForCollection(connectorPartOf)
+            .WithTable("Connector")
+            .AddColumn(x => x.Id)
+            .BulkDelete()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
+
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledByDm> connectorFulfilledBy)
+    {
+        if (connectorFulfilledBy == null || !connectorFulfilledBy.Any())
+            return;
+
+        bulk.Setup<ConnectorFulfilledByDm>()
+            .ForCollection(connectorFulfilledBy)
+            .WithTable("Connector")
+            .AddColumn(x => x.Id)
+            .BulkDelete()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
+    }
+
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocationDm> connectorHasLocations)
+    {
+        if (connectorHasLocations == null || !connectorHasLocations.Any())
+            return;
+
+        bulk.Setup<ConnectorHasLocationDm>()
+            .ForCollection(connectorHasLocations)
+            .WithTable("Connector")
+            .AddColumn(x => x.Id)
+            .BulkDelete()
+            .MatchTargetOn(x => x.Id)
+            .Commit(conn);
     }
 }
