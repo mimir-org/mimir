@@ -13,12 +13,10 @@ namespace Mb.Models.Data;
 public abstract class ConnectorDm : IEquatable<ConnectorDm>
 {
     public string Id { get; set; }
-    public string Domain => Id.ResolveDomain();
     public string Name { get; set; }
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
     public string Outside { get; set; }
-    public string Project { get; set; }
     public string AspectObject { get; set; }
 
     public bool Equals(ConnectorDm other)

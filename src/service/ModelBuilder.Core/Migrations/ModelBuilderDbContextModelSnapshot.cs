@@ -260,11 +260,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Outside");
 
-                    b.Property<string>("Project")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Project");
-
                     b.HasKey("Id");
 
                     b.ToTable("Connector", (string)null);

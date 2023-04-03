@@ -128,7 +128,7 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
         if (aspectObject == null)
             throw new MimirorgNotFoundException($"The aspect object with id {id} can't be found.");
 
-        aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
+        aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.AspectObject == id).ToList());
         aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
 
         return Task.FromResult(aspectObject);

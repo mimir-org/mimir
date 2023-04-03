@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 
@@ -13,6 +11,7 @@ namespace Mb.Models.Client;
 public abstract class ConnectorCm
 {
     public string Id { get; set; }
+    public string Domain => Id.ResolveDomain();
     public string Name { get; set; }
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }

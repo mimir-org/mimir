@@ -450,7 +450,6 @@ public class ProjectService : IProjectService
                     Name = "PartOf",
                     Inside = Guid.NewGuid().ToString(),
                     Outside = Guid.NewGuid().ToString(),
-                    Project = projectId,
                     Direction = ConnectorDirection.Output,
                     AspectObject = aspectObjectId
                 }

@@ -16,7 +16,6 @@ using Mb.Models.Records;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Mb.Models.Client;
-using Mb.Models.Application;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
@@ -80,7 +79,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         foreach (var aspectObject in project.AspectObjects)
         {
-            aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Project == id && x.AspectObject == aspectObject.Id).ToList());
+            aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
             aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
         }
 
