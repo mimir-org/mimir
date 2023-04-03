@@ -11,8 +11,8 @@ public class AspectObjectProfile : Profile
     public AspectObjectProfile()
     {
         CreateMap<AspectObjectAm, AspectObjectDm>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.Version, opt => opt.Ignore())
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))

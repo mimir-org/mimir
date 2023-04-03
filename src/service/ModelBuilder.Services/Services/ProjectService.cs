@@ -360,7 +360,7 @@ public class ProjectService : IProjectService
 
         var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
 
-        //Set values that the mapping profile don't set
+        //Set 'Project' values that the mapping profile don't set
         updatedProject.Id = originalDm.Id;
         updatedProject.Version = originalDm.Version;
         updatedProject.Updated = DateTime.Now.ToUniversalTime();
@@ -372,22 +372,32 @@ public class ProjectService : IProjectService
         var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
 
         // Resolve version changes
-        var versionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
-        updatedProject.UpdateVersion(versionStatus);
+        var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
+        updatedProject.UpdateVersion(projectVersionStatus);
 
         // Resolve aspectObject versions
-        foreach (var aspectObject in updatedProject.AspectObjects)
+        foreach (var updatedAspectObject in updatedProject.AspectObjects)
         {
-            var originalAspectObject = originalDm.AspectObjects.FirstOrDefault(x => x.Id == aspectObject.Id);
+            var originalAspectObject = originalDm.AspectObjects.FirstOrDefault(x => x.Id == updatedAspectObject.Id);
+            
             if (originalAspectObject == null)
                 continue;
 
-            var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(aspectObject, projectEditData);
-            aspectObject.UpdateVersion(aspectObjectVersionStatus);
+            updatedAspectObject.CreatedBy = originalAspectObject.CreatedBy;
+            updatedAspectObject.Created = originalAspectObject.Created;
+
+            var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(updatedAspectObject, projectEditData);
+
+            if (aspectObjectVersionStatus != VersionStatus.NoChange)
+            {
+                updatedAspectObject.Updated = DateTime.Now.ToUniversalTime();
+                updatedAspectObject.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
+                updatedAspectObject.UpdateVersion(aspectObjectVersionStatus);
+            }
         }
 
         // Save original project (if there is a version change)
-        if (versionStatus != VersionStatus.NoChange)
+        if (projectVersionStatus != VersionStatus.NoChange)
             await _versionService.CreateVersion(originalDm);
 
         //Update

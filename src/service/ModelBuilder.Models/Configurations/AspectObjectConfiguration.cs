@@ -30,7 +30,7 @@ public class AspectObjectConfiguration : IEntityTypeConfiguration<AspectObjectDm
         builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
         builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
         builder.Property(p => p.Symbol).HasColumnName("Symbol").IsRequired(false);
-        builder.Property(p => p.Purpose).HasColumnName("PurposeString").IsRequired(false);
+        builder.Property(p => p.Purpose).HasColumnName("Purpose").IsRequired(false);
         builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
         builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
         builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);

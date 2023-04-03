@@ -98,7 +98,7 @@ public class VersionService : IVersionService
             throw new MimirorgInvalidOperationException("Can't save new project version. Project is null.");
 
         if (_versionRepository.GetAll().Any(x => x.TypeId == project.Id && x.Ver == project.Version))
-            throw new MimirorgInvalidOperationException($"Project with id {project.Id} and version {project.Version} already exist");
+            return null;
 
         var version = new Version
         {

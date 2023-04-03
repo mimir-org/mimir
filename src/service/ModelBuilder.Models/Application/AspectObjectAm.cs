@@ -34,10 +34,6 @@ public class AspectObjectAm : IValidatableObject
     public string Rds { get; set; }
     public string Symbol { get; set; }
     public string Purpose { get; set; }
-    public bool IsLocked { get; set; }
-    public string IsLockedStatusBy { get; set; }
-    public DateTime? IsLockedStatusDate { get; set; }
-    public string Domain => Id.ResolveDomain();
 
     public ICollection<ConnectorAm> Connectors { get; set; }
     public ICollection<AttributeAm> Attributes { get; set; }

@@ -10,7 +10,7 @@ namespace Mb.Models.Data;
 #region ConnectorDm
 
 [Serializable]
-public abstract class ConnectorDm : IEquatable<ConnectorDm>
+public class ConnectorDm : IEquatable<ConnectorDm>
 {
     public string Id { get; set; }
     public string Name { get; set; }
