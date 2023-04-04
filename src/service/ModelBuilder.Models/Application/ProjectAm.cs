@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
@@ -10,12 +11,20 @@ public class ProjectAm : IValidatableObject
     public string Id { get; set; }
 
     [Required]
+    public string Version { get; set; }
+
+    [Required]
     public string Name { get; set; }
+
+    public string Description { get; set; }
 
     [Required]
     public bool SubProject { get; set; }
 
-    public string Description { get; set; }
+    public string CreatedBy { get; set; }
+    public DateTime Created { get; set; }
+    public string UpdatedBy { get; set; }
+    public DateTime? Updated { get; set; }
 
     public ICollection<AspectObjectAm> AspectObjects { get; set; }
     public ICollection<ConnectionAm> Connections { get; set; }

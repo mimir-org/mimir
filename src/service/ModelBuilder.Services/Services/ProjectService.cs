@@ -117,8 +117,8 @@ public class ProjectService : IProjectService
             ? await _projectRepository.GetAsyncComplete(_commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{projectAm.Id}")
             : await _projectRepository.GetAsyncComplete(projectAm.Id);
 
-        return originalProject == null 
-            ? await CreateProject(projectAm) 
+        return originalProject == null
+            ? await CreateProject(projectAm)
             : await UpdateProject(projectAm, originalProject);
     }
 
@@ -360,14 +360,6 @@ public class ProjectService : IProjectService
 
         var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
 
-        //Set 'Project' values that the mapping profile don't set
-        updatedProject.Id = originalDm.Id;
-        updatedProject.Version = originalDm.Version;
-        updatedProject.Updated = DateTime.Now.ToUniversalTime();
-        updatedProject.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-        updatedProject.CreatedBy = originalDm.CreatedBy;
-        updatedProject.Created = originalDm.Created;
-
         // Get create edit data
         var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
 
@@ -379,12 +371,9 @@ public class ProjectService : IProjectService
         foreach (var updatedAspectObject in updatedProject.AspectObjects)
         {
             var originalAspectObject = originalDm.AspectObjects.FirstOrDefault(x => x.Id == updatedAspectObject.Id);
-            
-            if (originalAspectObject == null)
-                continue;
 
-            updatedAspectObject.CreatedBy = originalAspectObject.CreatedBy;
-            updatedAspectObject.Created = originalAspectObject.Created;
+            if (originalAspectObject == null) //TODO: New aspectObject
+                continue;
 
             var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(updatedAspectObject, projectEditData);
 
@@ -451,20 +440,19 @@ public class ProjectService : IProjectService
             IsLocked = false,
             IsLockedStatusBy = null,
             IsLockedStatusDate = null,
-
+            Attributes = new List<AttributeDm>(),
             Connectors = new List<ConnectorDm>
             {
                 new ConnectorPartOfDm
-                {
-                    Id = _commonRepository.CreateIdAsIri(ServerEndpoint.Connector, Guid.NewGuid().ToString()),
-                    Name = "PartOf",
-                    Inside = Guid.NewGuid().ToString(),
-                    Outside = Guid.NewGuid().ToString(),
-                    Direction = ConnectorDirection.Output,
-                    AspectObject = aspectObjectId
-                }
-            },
-            Attributes = new List<AttributeDm>()
+                    {
+                        Id = _commonRepository.CreateIdAsIri(ServerEndpoint.Connector, Guid.NewGuid().ToString()),
+                        Name = "PartOf",
+                        Inside = Guid.NewGuid().ToString(),
+                        Outside = Guid.NewGuid().ToString(),
+                        Direction = ConnectorDirection.Output,
+                        AspectObject = aspectObjectId
+                    }
+            }
         };
 
         return aspectObject;
