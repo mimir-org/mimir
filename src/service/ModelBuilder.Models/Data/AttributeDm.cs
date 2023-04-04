@@ -16,9 +16,6 @@ public class AttributeDm : IEquatable<AttributeDm>
     public string Qualifiers { get; set; }
     public string ConnectorTerminal { get; set; }
     public string AspectObject { get; set; }
-    public bool IsLocked { get; set; }
-    public string IsLockedStatusBy { get; set; }
-    public DateTime? IsLockedStatusDate { get; set; }
 
     #region IEquatable
 

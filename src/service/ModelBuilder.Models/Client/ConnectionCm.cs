@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Mb.Models.Client;
 
 #region ConnectionCm class
@@ -9,6 +11,7 @@ public class ConnectionCm
     public string ToConnector { get; set; }
     public string MainProject { get; set; }
     public string Project { get; set; }
+    public ICollection<HandleCm> Handles { get; set; }
 }
 
 #endregion ConnectionCm

@@ -1,3 +1,4 @@
+using Mb.Models.Client;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,8 @@ public class ConnectionAm : IValidatableObject
     public string MainProject { get; set; }
     [Required]
     public string Project { get; set; }
+
+    public ICollection<HandleAm> Handles { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

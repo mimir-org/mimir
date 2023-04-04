@@ -69,8 +69,8 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.BlockPosY, opt => opt.MapFrom(src => src.BlockPosY));
 
         CreateMap<AspectObjectPositionDm, AspectObjectPositionCm>()
-            .ForMember(dest => dest.ThreePosX, opt => opt.MapFrom(src => src.ThreePosX))
-            .ForMember(dest => dest.ThreePosY, opt => opt.MapFrom(src => src.ThreePosY))
+            .ForMember(dest => dest.TreePosX, opt => opt.MapFrom(src => src.ThreePosX))
+            .ForMember(dest => dest.TreePosY, opt => opt.MapFrom(src => src.ThreePosY))
             .ForMember(dest => dest.BlockPosX, opt => opt.MapFrom(src => src.BlockPosX))
             .ForMember(dest => dest.BlockPosY, opt => opt.MapFrom(src => src.BlockPosY));
     }

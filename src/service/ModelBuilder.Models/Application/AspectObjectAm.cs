@@ -29,7 +29,8 @@ public class AspectObjectAm : IValidatableObject
     [Required]
     public string LibraryType { get; set; }
     [Required]
-    public AspectObjectPositionAm Position { get; set; }
+    public PositionAm PositionTree { get; set; }
+    public PositionAm PositionBlock { get; set; }
     public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }

@@ -1,4 +1,6 @@
 using System;
+using Mb.Models.Client;
+using System.Collections.Generic;
 using Mimirorg.Common.Extensions;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -15,6 +17,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
     public string ToConnector { get; set; }
     public string MainProject { get; set; }
     public string Project { get; set; }
+    public ICollection<HandleDm> Handles { get; set; }
 
     public bool Equals(ConnectionDm other)
     {

@@ -11,7 +11,4 @@ public class LockCm
     public bool IsLocked { get; set; }
     public string IsLockedStatusBy { get; set; }
     public DateTime? IsLockedStatusDate { get; set; }
-
-    [EnumDataType(typeof(EntityType))]
-    public EntityType Type { get; set; }
 }

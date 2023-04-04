@@ -34,7 +34,6 @@ public static class AspectObjectExtensions
 
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.RDS, aspectObject.RdsString(project), true);
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.MimirRds, aspectObject.Rds, true);
-        ontologyService.AssertAspectObject(aspectObject.Id, Resources.Domain, aspectObject.Domain, true);
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).ThreePosX}", Resources.Float));
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).ThreePosY}", Resources.Float));
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).BlockPosX}", Resources.Float));

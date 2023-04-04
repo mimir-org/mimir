@@ -9,6 +9,7 @@ using Mimirorg.TypeLibrary.Enums;
 using Mimirorg.Common.Extensions;
 using Mb.Models.Records;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Client;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data;
@@ -26,7 +27,8 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }
-    public string Position { get; set; }
+    public string PositionTree { get; set; }
+    public string PositionBlock { get; set; }
     public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
@@ -38,8 +40,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     public bool IsLocked { get; set; }
     public string IsLockedStatusBy { get; set; }
     public DateTime? IsLockedStatusDate { get; set; }
-    public string Domain => Id.ResolveDomain();
-
+    
     [NotMapped]
     public List<ConnectorDm> Connectors { get; set; } = new();
     [NotMapped]
