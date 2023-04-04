@@ -1,4 +1,5 @@
 import { all, spawn, takeEvery } from "redux-saga/effects";
+import { projectSaga } from "store/sagas/project";
 import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
 import { webSocketSaga } from "../../modules/cooperate/saga";
@@ -79,4 +80,5 @@ export function* rootSaga() {
   yield spawn(commonSaga);
   yield spawn(nodeSaga);
   yield spawn(webSocketSaga);
+  yield spawn(projectSaga);
 }

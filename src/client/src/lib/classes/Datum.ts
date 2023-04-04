@@ -1,5 +1,13 @@
+import { jsonMember, jsonObject } from "typedjson";
+
+@jsonObject
 export class Datum {
-  id: string;
-  name: string;
-  value: string;
+  @jsonMember(String)
+  public id: string;
+
+  @jsonMember(String)
+  public name: string;
+
+  @jsonMember(String)
+  public value: string;
 }

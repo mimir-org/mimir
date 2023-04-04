@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { Size } from "../../../../../assets/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
-import { useAppDispatch } from "../../../../../redux/store";
+import { useAppDispatch } from "store";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
 import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";

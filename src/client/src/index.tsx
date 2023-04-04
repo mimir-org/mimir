@@ -6,7 +6,7 @@ import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-import Config from "./models/Config";
+import Config from "./lib/Config";
 
 const rootElement = document.getElementById("root");
 const isSilent = Config.SILENT === "true";

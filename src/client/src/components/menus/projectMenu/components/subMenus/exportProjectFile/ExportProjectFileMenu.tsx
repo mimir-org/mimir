@@ -9,7 +9,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { ModuleDescription } from "lib";
 
 export const ExportProjectFileMenu = () => {

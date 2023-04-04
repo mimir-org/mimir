@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { search } from "../../../../../../../redux/store/project/actions";
-import { useAppDispatch } from "../../../../../../../redux/store";
+import { useAppDispatch } from "store";
 import { SearchBarContainer, SearchBarInput } from "./ProjectSearchBarComponent.styled";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 

@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";

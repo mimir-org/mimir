@@ -8,7 +8,7 @@ import { deleteUserError } from "../../redux/store/user/userSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
 import { Color } from "../../assets/color/Color";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
 
 interface ErrorMessage {

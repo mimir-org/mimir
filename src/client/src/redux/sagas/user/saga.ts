@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { User } from "../../../models";
-import Config from "../../../models/Config";
+import Config from "../../../lib/Config";
 import { ApiError, get } from "../../../models/webclient";
 import { fetchUserSuccessOrError } from "../../store/user/userSlice";
 

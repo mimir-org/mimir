@@ -1,5 +1,13 @@
+import { jsonMember, jsonObject } from "typedjson";
+
+@jsonObject
 export class Qualifier {
-  id: string;
-  name: string;
-  value: string;
+  @jsonMember(String)
+  id = "";
+
+  @jsonMember(String)
+  name = "";
+
+  @jsonMember(String)
+  value = "";
 }

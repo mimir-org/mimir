@@ -5,7 +5,7 @@ import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnSubProjectConvertClick, OnSubProjectReturnClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { projectSelector } from "../../../../../../redux/store/selectors";
 
 export const ConvertSubProjectMenu = () => {
@@ -14,7 +14,7 @@ export const ConvertSubProjectMenu = () => {
   const onAction = () => OnSubProjectConvertClick(currentProject.id, dispatch);
 
   const currentProject = useAppSelector(projectSelector);
-  const text = currentProject.isSubProject ? TextResources.MAKE_DISABLE_SUBPROJECT : TextResources.MAKE_AVAILABLE_SUBPROJECT;
+  const text = currentProject.subProject ? TextResources.MAKE_DISABLE_SUBPROJECT : TextResources.MAKE_AVAILABLE_SUBPROJECT;
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>

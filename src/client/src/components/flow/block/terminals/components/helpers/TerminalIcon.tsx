@@ -1,4 +1,4 @@
-import { Connector, Direction } from "lib";
+import { Connector, ConnectorDirection } from "lib";
 import {
   ConnectorIcon,
   ConnectorVerticalIcon,
@@ -20,12 +20,13 @@ interface Props {
  */
 export const TerminalIcon = ({ connector, color, className, isElectroView }: Props) => {
   if (isElectroView) return VerticalIcon(connector, color, className);
-  if (connector.direction === Direction.Bidirectional) return <BidirectionalIcon style={{ fill: color }} className={className} />;
+  if (connector.direction === ConnectorDirection.Bidirectional)
+    return <BidirectionalIcon style={{ fill: color }} className={className} />;
   return <ConnectorIcon style={{ fill: color }} className={className} />;
 };
 
 function VerticalIcon(connector: Connector, color: string, className: string) {
-  if (connector.direction === Direction.Bidirectional)
+  if (connector.direction === ConnectorDirection.Bidirectional)
     return <BidirectionalVerticalIcon style={{ fill: color }} className={className} />;
   return <ConnectorVerticalIcon style={{ fill: color }} className={className} />;
 }

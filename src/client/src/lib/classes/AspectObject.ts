@@ -1,38 +1,105 @@
-import { Attribute, Connector, TypeReference, AspectObjectAm } from ".";
-import { Aspect, ConnectorTerminal, Direction } from "..";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Connector,
+  ConnectorFulfilledBy,
+  ConnectorHasLocation,
+  ConnectorPartOf,
+  ConnectorRelation,
+  ConnectorTerminal,
+} from "./Connector";
+import { Attribute } from "./Attribute";
+import { Aspect, AspectObjectType, ConnectorDirection } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { CreateId } from "components/flow/helpers";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Position } from "models/project";
+import type { NodeLibCm } from "@mimirorg/typelibrary-types";
+import type { Position } from "models/project";
+import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 
+@jsonObject({
+  knownTypes: [ConnectorTerminal, ConnectorRelation, ConnectorPartOf, ConnectorFulfilledBy, ConnectorHasLocation],
+})
 export class AspectObject {
   // Domain members
-  id: string;
-  rds: string;
-  description: string;
-  typeReferences: TypeReference[];
-  name: string;
-  label: string;
-  threePosX: number;
-  threePosY: number;
-  blockPosX: number;
-  blockPosY: number;
-  updated: Date;
-  updatedBy: string;
-  created: Date;
-  createdBy: string;
-  libraryType: string;
-  version: string;
-  aspect: Aspect;
-  mainProject: string;
-  symbol: string;
-  purpose: string;
-  project: string;
-  attributes: Attribute[];
-  connectors: Connector[];
-  isLocked: boolean;
-  isLockedStatusBy: string;
-  isLockedStatusDate: Date | null;
+  @jsonMember(String)
+  public id: string;
+
+  @jsonMember(String)
+  public version: string;
+
+  @jsonMember(String)
+  public name: string;
+
+  @jsonMember(String)
+  public label: string;
+
+  @jsonMember(String)
+  public description: string;
+
+  @jsonMember(Number)
+  public aspect: Aspect;
+
+  @jsonMember(Number)
+  public aspectObjectType: AspectObjectType;
+
+  @jsonMember(String)
+  public project: string;
+
+  @jsonMember(String)
+  public mainProject: string;
+
+  @jsonMember(String)
+  public libraryType: string;
+
+  @jsonMember(Number)
+  public threePosX: number;
+
+  @jsonMember(Number)
+  public threePosY: number;
+
+  @jsonMember(Number)
+  public blockPosX: number;
+
+  @jsonMember(Number)
+  public blockPosY: number;
+
+  @jsonMember(String)
+  public referenceType: string;
+
+  @jsonMember(String)
+  public createdBy: string;
+
+  @jsonMember(Date)
+  public created: Date;
+
+  @jsonMember(String)
+  public updatedBy: string;
+
+  @jsonMember(Date)
+  public updated: Date | null;
+
+  @jsonMember(String)
+  public rds: string;
+
+  @jsonMember(String)
+  public symbol: string;
+
+  @jsonMember(String)
+  public purpose: string;
+
+  @jsonMember(Boolean)
+  public isLocked: boolean;
+
+  @jsonMember(String)
+  public isLockedStatusBy: string;
+
+  @jsonMember(Date)
+  public isLockedStatusDate: Date | null;
+
+  @jsonArrayMember(Attribute)
+  public attributes: Attribute[] | null = [];
+
+  @jsonArrayMember(Connector)
+  public connectors: Connector[] | null = [];
 
   // Client members
   selected: boolean;
@@ -40,12 +107,18 @@ export class AspectObject {
   hidden: boolean;
   domain: string;
 
-  // Constructor
+  /**
+   * Constructor.
+   * @params lib The library type to be constructed from.
+   * @params project Current project id.
+   * @params position The aspect object position from top left corner.
+   * @params mainProject The originally project owner id.
+   */
   public constructor(lib: NodeLibCm, project: string, position?: Position, createdBy?: string, mainProject?: string) {
     this.id = CreateId();
     this.rds = lib.rdsCode;
     this.description = lib.description;
-    this.typeReferences = [];
+    this.referenceType = lib.typeReferences != null && lib.typeReferences.length > 0 ? lib.typeReferences[0].iri : null;
     this.name = lib.name;
     this.label = null;
 
@@ -67,7 +140,7 @@ export class AspectObject {
     this.attributes = lib.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
     // TODO: Also create default connectors
-    this.connectors = lib.nodeTerminals?.map((x) => new ConnectorTerminal(x.terminal, Direction.Input, this.id)) ?? []; // TODO: Resolve direction
+    this.connectors = lib.nodeTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
     this.isLocked = false;
     this.isLockedStatusBy = null;
     this.isLockedStatusDate = null;
@@ -76,10 +149,6 @@ export class AspectObject {
     this.blockSelected = false;
     this.hidden = false;
     this.domain = ""; // TODO: Resolve domain
-  }
-
-  public toAm(): AspectObjectAm {
-    return new AspectObjectAm(this);
   }
 
   public convertToFlowNode(name: "Block" | "Tree"): FlowNode {

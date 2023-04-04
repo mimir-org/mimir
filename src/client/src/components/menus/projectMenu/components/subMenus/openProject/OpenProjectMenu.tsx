@@ -8,7 +8,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnOpenClick } from "./handlers/OnOpenClick";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 
 /**
  * Open project menu component

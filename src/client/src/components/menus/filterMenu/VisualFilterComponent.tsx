@@ -4,7 +4,7 @@ import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } fro
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists } from "./helpers";
-import { useAppSelector } from "../../../redux/store";
+import { useAppSelector } from "store";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
 import { VisualFilterDataCategoryComponent } from "./VisualFilterDataCategoryComponent";
 import { ConnectorPartOf, ConnectorRelation, ConnectorTerminal } from "lib";

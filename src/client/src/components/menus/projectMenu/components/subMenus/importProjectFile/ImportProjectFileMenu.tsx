@@ -11,7 +11,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useFilePicker } from "use-file-picker";
 import { useState } from "react";
 import { OnImportProjectFileClick, OnReturnClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { ModuleDescription } from "lib";
 
 export const ImportProjectFileMenu = () => {

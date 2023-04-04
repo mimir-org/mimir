@@ -2,7 +2,7 @@
 import * as selectors from "redux/store/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { FilterConnectors } from "../helpers/FilterConnectors";
@@ -15,7 +15,7 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
-import { AspectObject, Direction } from "lib";
+import { AspectObject, ConnectorDirection } from "lib";
 import { ConnectorTerminal } from "../../../../../lib/classes/Connector";
 
 /**
@@ -36,7 +36,7 @@ const BlockNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const terminalTypes = useAppSelector(selectors.terminalsSelector);
   const libNodes = useAppSelector(selectors.libNodesSelector);
 
-  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: Direction) => {
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
     return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);
   };
 

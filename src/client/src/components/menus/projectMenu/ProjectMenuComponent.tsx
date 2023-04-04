@@ -6,7 +6,8 @@ import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { activeMenuSelector, projectSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { GetSelectedFlowNodes } from "../../../helpers/Selected";
 
 interface Props {
@@ -33,7 +34,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   };
 
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
-  const convertProjectText = project?.isSubProject
+  const convertProjectText = project?.subProject
     ? TextResources.MAKE_DISABLE_SUBPROJECT
     : TextResources.MAKE_AVAILABLE_SUBPROJECT;
 

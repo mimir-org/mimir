@@ -4,7 +4,7 @@ import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParen
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
-import { AspectObject, Connector, Direction, Project } from "lib";
+import { AspectObject, Connector, ConnectorDirection, Project } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -16,7 +16,7 @@ interface Props {
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
   onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
   project: Project;
 }

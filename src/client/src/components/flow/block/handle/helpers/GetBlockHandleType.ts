@@ -1,4 +1,4 @@
-import { Connector, Direction } from "lib";
+import { Connector, ConnectorDirection } from "lib";
 import { HandleType, Position } from "react-flow-renderer";
 import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
 
@@ -15,8 +15,8 @@ const GetBlockHandleType = (conn: Connector, electro: boolean, isParent: boolean
   const sourcePosition = electro ? Position.Top : Position.Left;
   const targetPosition = electro ? Position.Bottom : Position.Right;
 
-  if (conn.direction === Direction.Input) return ["target", targetPosition];
-  if (conn.direction === Direction.Output) return ["source", sourcePosition];
+  if (conn.direction === ConnectorDirection.Input) return ["target", targetPosition];
+  if (conn.direction === ConnectorDirection.Output) return ["source", sourcePosition];
 };
 
 function GetPartOfHandleType(conn: Connector, electro: boolean, isParent: boolean): [HandleType, Position] {
@@ -25,8 +25,8 @@ function GetPartOfHandleType(conn: Connector, electro: boolean, isParent: boolea
   const sourcePosition = electro ? Position.Right : Position.Bottom;
   const targetPosition = electro ? Position.Left : Position.Top;
 
-  if (conn.direction === Direction.Input) return ["target", targetPosition];
-  if (conn.direction === Direction.Output) return ["source", sourcePosition];
+  if (conn.direction === ConnectorDirection.Input) return ["target", targetPosition];
+  if (conn.direction === ConnectorDirection.Output) return ["source", sourcePosition];
 }
 
 /**
@@ -36,12 +36,12 @@ function GetPartOfHandleType(conn: Connector, electro: boolean, isParent: boolea
  * @returns
  */
 function GetParentPartOfHandleType(conn: Connector, electro: boolean): [HandleType, Position] {
-  if (conn.direction === Direction.Input) {
+  if (conn.direction === ConnectorDirection.Input) {
     const inputPos = electro ? Position.Right : Position.Bottom;
     return ["target", inputPos];
   }
 
-  if (conn.direction === Direction.Output) {
+  if (conn.direction === ConnectorDirection.Output) {
     const outputPos = electro ? Position.Left : Position.Top;
     return ["source", outputPos];
   }

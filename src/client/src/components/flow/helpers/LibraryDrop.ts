@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
 // import { IsOutputConnector, IsInputConnector, IsPartOfRelation } from "./Connectors";
-import { AspectObject, ConnectionPartOf, Direction, Project } from "lib";
+import { AspectObject, ConnectionPartOf, ConnectorDirection, Project } from "lib";
 import { ConnectorPartOf } from "../../../lib/classes/Connector";
 
 /**
@@ -15,10 +15,14 @@ import { ConnectorPartOf } from "../../../lib/classes/Connector";
  * @param dispatch
  */
 export function HandleCreatePartOfEdge(parentNode: AspectObject, childNode: AspectObject, project: Project, dispatch: Dispatch) {
-  const parentConnector = parentNode.connectors?.find((c) => c instanceof ConnectorPartOf && c.direction === Direction.Output);
-  const childConnector = childNode.connectors?.find((c) => c instanceof ConnectorPartOf && c.direction === Direction.Input);
+  const parentConnector = parentNode.connectors?.find(
+    (c) => c instanceof ConnectorPartOf && c.direction === ConnectorDirection.Output
+  );
+  const childConnector = childNode.connectors?.find(
+    (c) => c instanceof ConnectorPartOf && c.direction === ConnectorDirection.Input
+  );
 
-  const partofEdge = new ConnectionPartOf(null, parentConnector.id, childConnector.id, null, project.id);
+  const partofEdge = new ConnectionPartOf(null, parentConnector.id, childConnector.id, project.id);
 
   // TODO: Resolve this
   // SetSiblingIndexOnNodeDrop(childNode, project.nodes, project.edges, parentNode.id);

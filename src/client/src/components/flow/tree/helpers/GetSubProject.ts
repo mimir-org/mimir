@@ -1,5 +1,5 @@
 import { Project } from "lib";
-import Config from "../../../../models/Config";
+import Config from "../../../../lib/Config";
 import { get } from "../../../../models/webclient";
 
 const GetSubProject = async (projectId: string): Promise<Project> => {

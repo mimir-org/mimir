@@ -1,6 +1,7 @@
 import { Home } from "../home/Home";
 import { GlobalStyle } from "../../compLibrary/GlobalStyle";
-import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
+import { isFetchingSelector, projectStateSelector } from "../../redux/store";
+import { useAppSelector } from "store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text/TextResources";

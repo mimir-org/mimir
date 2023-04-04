@@ -1,5 +1,6 @@
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
-import { commonStateCompaniesSelector, useAppSelector } from "../redux/store";
+import { commonStateCompaniesSelector } from "../redux/store";
+import { useAppSelector } from "store";
 
 /**
  * Hook used for getting company based on domain.

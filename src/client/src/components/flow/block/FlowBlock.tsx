@@ -2,7 +2,7 @@
 import * as selectors from "redux/store/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
@@ -117,8 +117,8 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(project.convertToFlowNodes("Block", selectedBlockNode?.id));
-      setEdges(project.convertToFlowEdges("Block"));
+      setNodes(project.toFlowNodes("Block", selectedBlockNode?.id));
+      setEdges(project.toFlowEdges("Block"));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -127,13 +127,13 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(project.convertToFlowNodes("Block", selectedBlockNode?.id));
+    setNodes(project.toFlowNodes("Block", selectedBlockNode?.id));
   }, [mimirNodes, false]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(project.convertToFlowEdges("Block"));
+    setEdges(project.toFlowEdges("Block"));
   }, [mimirEdges, mimirNodes, filter]);
 
   return (

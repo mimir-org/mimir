@@ -9,7 +9,7 @@ import { GetSelectedFlowElementsIds } from "../../../../../../helpers/GetSelecte
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnSubProjectCreateClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 
 export const CreateSubProjectMenu = () => {
   const dispatch = useAppDispatch();

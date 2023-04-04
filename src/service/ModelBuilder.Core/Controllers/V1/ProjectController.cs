@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Core.Controllers.temp;
 using Mb.Models.Abstract;
 using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
@@ -97,7 +98,11 @@ public class ProjectController : ControllerBase
     {
         try
         {
-            var data = _projectService.GetBySearch(name, 0, 10).ToList();
+            //var data = _projectService.GetBySearch(name, 0, 10).ToList();
+            var data = new ProjectSearchResultCm();
+            data.CreateDummyData();
+
+
             return Ok(data);
         }
         catch (Exception e)

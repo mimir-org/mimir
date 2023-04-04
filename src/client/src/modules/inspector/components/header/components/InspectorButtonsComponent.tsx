@@ -10,7 +10,8 @@ import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
 import { IsBlockView } from "../../../../../helpers";
-import { isProjectStateGloballyLockingSelector, useAppSelector } from "../../../../../redux/store";
+import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
+import { useAppSelector } from "store";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
   InspectorButtonsContainer,

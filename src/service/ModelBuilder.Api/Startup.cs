@@ -31,7 +31,7 @@ public class Startup
         {
             o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            o.SerializerSettings.TypeNameHandling = TypeNameHandling.None;
+            o.SerializerSettings.TypeNameHandling = TypeNameHandling.Objects;
         });
 
         // Add Cors policy

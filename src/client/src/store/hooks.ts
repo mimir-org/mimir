@@ -1,5 +1,5 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { RootState } from ".";
+import { RootState } from "../redux/store";
 import { OutputParametricSelector, OutputSelector, ParametricSelector, Selector, createSelector } from "@reduxjs/toolkit";
 
 type UnknownFunction = (...args: unknown[]) => unknown;

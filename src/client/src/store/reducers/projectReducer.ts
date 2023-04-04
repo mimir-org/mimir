@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Project, ProjectItemCm } from "lib";
+import { Project, ProjectItem } from "lib";
 
 // State definition
 export interface IProjectState {
   fetching: string[];
   creating: boolean;
   isLocking: boolean;
-  project: Project;
-  projectList: ProjectItemCm[];
+  project: Project | null;
+  projectList: ProjectItem[];
 }
 
 // Payload action
@@ -19,13 +19,21 @@ export interface FetchProjectFinishedAction {
   project: Project;
 }
 
+export interface FetchProjectsAction {
+  name: string;
+}
+
+export interface FetchProjectsFinishedAction {
+  projects: ProjectItem[];
+}
+
 // Initial state
 const initState: IProjectState = {
   fetching: [],
   creating: false,
   isLocking: false,
   project: null,
-  projectList: null,
+  projectList: [],
 };
 
 export const projectSlice = createSlice({
@@ -41,8 +49,17 @@ export const projectSlice = createSlice({
       state.fetching = state.fetching.filter((elem) => elem !== fetchProject.type);
       state.project = action.payload.project;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    fetchProjects: (state, action: PayloadAction<FetchProjectsAction>) => {
+      state.fetching.push(fetchProjects.type);
+      state.project = null;
+    },
+    fetchProjectsFinished: (state, action: PayloadAction<FetchProjectsFinishedAction>) => {
+      state.fetching = state.fetching.filter((elem) => elem !== fetchProjects.type);
+      state.projectList = action.payload.projects;
+    },
   },
 });
 
-export const { fetchProject, fetchProjectFinished } = projectSlice.actions;
+export const { fetchProject, fetchProjectFinished, fetchProjects, fetchProjectsFinished } = projectSlice.actions;
 export default projectSlice.reducer;

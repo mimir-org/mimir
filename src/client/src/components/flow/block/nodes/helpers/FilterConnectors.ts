@@ -1,5 +1,5 @@
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { AspectObject, Connector, ConnectorTerminal, Direction } from "lib";
+import { AspectObject, Connector, ConnectorTerminal, ConnectorDirection } from "lib";
 
 /**
  * Component to filter the connectors displayed on the nodes in BlockView.
@@ -16,11 +16,15 @@ export const FilterConnectors = (connectors: Connector[], selectedBlockNode: Asp
 
   const inputs =
     sortedConnectors?.filter(
-      (t) => t instanceof ConnectorTerminal && (t.direction === Direction.Input || t.direction === Direction.Bidirectional)
+      (t) =>
+        t instanceof ConnectorTerminal &&
+        (t.direction === ConnectorDirection.Input || t.direction === ConnectorDirection.Bidirectional)
     ) ?? [];
   const outputs =
     sortedConnectors?.filter(
-      (t) => t instanceof ConnectorTerminal && (t.direction === Direction.Output || t.direction === Direction.Bidirectional)
+      (t) =>
+        t instanceof ConnectorTerminal &&
+        (t.direction === ConnectorDirection.Output || t.direction === ConnectorDirection.Bidirectional)
     ) ?? [];
 
   return { inputs, outputs } as Connectors;

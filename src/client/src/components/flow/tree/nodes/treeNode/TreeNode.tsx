@@ -6,7 +6,7 @@ import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
 import { TreeNodeTerminal } from "./components/TreeNodeTerminal";
-import { useAppDispatch } from "../../../../../redux/store";
+import { useAppDispatch } from "store";
 import { FilterTreeTerminals } from "./helpers/FilterTreeTerminals";
 import { AspectObject, Connector } from "lib";
 

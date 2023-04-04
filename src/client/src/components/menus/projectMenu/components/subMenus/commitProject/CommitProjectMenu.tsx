@@ -9,7 +9,7 @@ import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/i
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 import { ModuleDescription } from "lib";
 

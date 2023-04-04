@@ -7,11 +7,10 @@ import {
   isProjectStateGloballyLockingSelector,
   projectIdSelector,
   qunatityDatumSelector,
-  useAppDispatch,
-  useAppSelector,
   usernameSelector,
   libraryAttributeTypeSelector,
 } from "../../../../../../redux/store";
+import { useAppSelector, useAppDispatch } from "store";
 import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
 import {
   OnAddNodeAttribute,

@@ -1,7 +1,7 @@
-import { Connector, ConnectorTerminal, Direction } from "lib";
+import { Connector, ConnectorTerminal, ConnectorDirection } from "lib";
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { useAppSelector } from "redux/store";
+import { useAppSelector } from "store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
@@ -26,7 +26,8 @@ export const BlockTransportEdge = ({
   const targetConn: ConnectorTerminal = data.source.connectors?.find(
     (conn: Connector) => conn instanceof ConnectorTerminal && conn.id === data.edge?.toConnectorId
   );
-  const isBidirectional = sourceConn.direction === Direction.Bidirectional || targetConn.direction === Direction.Bidirectional;
+  const isBidirectional =
+    sourceConn.direction === ConnectorDirection.Bidirectional || targetConn.direction === ConnectorDirection.Bidirectional;
   const visible = !data?.edge?.hidden;
   const color = sourceConn?.color ?? Color.BLACK;
   const borderRadius = 20;

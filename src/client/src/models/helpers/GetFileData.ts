@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Config from "../Config";
+import Config from "../../lib/Config";
 import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
 import { IsAspectNode } from "../../helpers/Aspects";
 import { IsFamily } from "../../helpers/Family";
-import { AspectObject, Connection, ConnectorPartOf, Direction, Project, ProjectAm } from "lib";
+import { AspectObject, Connection, ConnectorPartOf, ConnectorDirection, Project } from "lib";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {

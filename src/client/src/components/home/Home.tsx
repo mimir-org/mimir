@@ -13,7 +13,8 @@ import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
-import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { isActiveViewSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "store";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
 import { fetchCompanies, fetchCompany, fetchParsers } from "../../redux/store/common/commonSlice";
@@ -29,6 +30,7 @@ import {
 } from "../../redux/store/library/librarySlice";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { defaultFilter, VisualFilterData } from "../../models/application/VisualFilter";
+import { fetchProjects } from "store/reducers/projectReducer";
 
 interface Props {
   dispatch: Dispatch;
@@ -56,17 +58,18 @@ export const Home = ({ dispatch }: Props) => {
 
   useEffect(() => {
     dispatch(fetchCompany());
-    dispatch(fetchSubProjects());
-    dispatch(fetchLibraryInterfaceTypes());
-    dispatch(fetchLibraryTransportTypes());
-    dispatch(fetchLibraryTerminals());
-    dispatch(fetchLibraryAttributeTypes());
+    // dispatch(fetchSubProjects());
+    // dispatch(fetchLibraryInterfaceTypes());
+    // dispatch(fetchLibraryTransportTypes());
+    // dispatch(fetchLibraryTerminals());
+    // dispatch(fetchLibraryAttributeTypes());
     // dispatch(search(""));
-    dispatch(fetchLibrary());
+    // dispatch(fetchLibrary());
     dispatch(fetchCompanies());
     dispatch(fetchParsers());
     dispatch(fetchUser());
-    dispatch(fetchQuantityDatums());
+    dispatch(fetchProjects({ name: "" }));
+    // dispatch(fetchQuantityDatums());
   }, [dispatch]);
 
   useEffect(() => {

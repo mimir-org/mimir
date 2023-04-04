@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 // import { setNodeVisibility } from "../../../../../redux/store/project/actions";
-import { AspectObject, Connection, Direction, Project } from "lib";
+import { AspectObject, Connection, ConnectorDirection, Project } from "lib";
 import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
 
 /**
@@ -32,7 +32,9 @@ const resolveChildren = (project: Project, current: AspectObject, children: stri
   children.push(current.id);
 
   // There should only be one output PartOf connector
-  const partofConnector = current.connectors.find((c) => c instanceof ConnectorPartOf && c.direction === Direction.Output);
+  const partofConnector = current.connectors.find(
+    (c) => c instanceof ConnectorPartOf && c.direction === ConnectorDirection.Output
+  );
   if (partofConnector == null) return;
 
   const connectedEdges = project.connections.filter((e) => e.fromConnector === partofConnector.id);

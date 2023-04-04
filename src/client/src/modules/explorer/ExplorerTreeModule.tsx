@@ -8,7 +8,8 @@ import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon/Icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
-import { useAppSelector, explorerSelector } from "../../redux/store";
+import { explorerSelector } from "../../redux/store";
+import { useAppSelector } from "store";
 import { Dispatch } from "redux";
 
 interface Props {

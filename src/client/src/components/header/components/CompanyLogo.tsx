@@ -1,4 +1,5 @@
-import { commonStateCompanySelector, useAppSelector } from "../../../redux/store";
+import { commonStateCompanySelector } from "../../../redux/store";
+import { useAppSelector } from "store";
 import { CompanyLogoBox } from "./../HeaderComponent.styled";
 
 /**

@@ -8,7 +8,7 @@ import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnProjectCreateClick } from "./handlers/OnProjectCreateClick";
-import { useAppDispatch } from "../../../../../../redux/store";
+import { useAppDispatch } from "store";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();

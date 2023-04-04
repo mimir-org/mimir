@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { TerminalLibCm, NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Direction, Project } from "lib";
+import { ConnectorDirection, Project } from "lib";
 import { ConnectorTerminal } from "../../../../lib/classes/Connector";
 
 /**
@@ -19,7 +19,7 @@ export const useOnAddTerminal = (
   nodeId: string,
   terminalTypes: TerminalLibCm[],
   nodeTypes: NodeLibCm[],
-  direction: Direction,
+  direction: ConnectorDirection,
   dispatch: Dispatch
 ) => {
   if (terminalTypes == null) return;

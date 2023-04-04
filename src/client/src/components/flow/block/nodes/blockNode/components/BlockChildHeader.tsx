@@ -2,7 +2,7 @@ import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponen
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { AspectObject, Connector, Direction } from "lib";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -11,7 +11,7 @@ interface Props {
   onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
   isElectroView: boolean;
   showMenuButton?: boolean;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 

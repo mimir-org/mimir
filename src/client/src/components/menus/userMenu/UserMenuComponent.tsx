@@ -6,7 +6,8 @@ import { memo, useRef } from "react";
 import { OnToggleDarkMode, OnLogOutClick } from "./handlers/OnUserMenuClick";
 import { Icon } from "../../../compLibrary/icon/Icon";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
-import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
+import { userStateSelector } from "../../../redux/store";
+import { useAppSelector, useAppDispatch } from "store";
 import { Box, Element, Text, UserNameBox, UserNameRoleText, UserNameText } from "./UserMenuComponent.styled";
 
 interface Props {

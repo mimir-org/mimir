@@ -4,7 +4,7 @@ import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
-import { AspectObject, Connector, Direction } from "lib";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -14,7 +14,7 @@ interface Props {
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 

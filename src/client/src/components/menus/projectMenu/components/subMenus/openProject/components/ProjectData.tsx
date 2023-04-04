@@ -2,12 +2,13 @@ import Moment from "react-moment";
 // import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
-import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
+import { projectSelector } from "../../../../../../../redux/store";
+import { useAppSelector } from "store";
 import { OnOpenClick } from "../handlers/OnOpenClick";
-import { ProjectItemCm } from "lib";
+import { ProjectItem } from "lib";
 
 interface Props {
-  projects: ProjectItemCm[];
+  projects: ProjectItem[];
   projectId: string;
   projectName: string;
   projectOwner: string;

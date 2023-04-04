@@ -6,7 +6,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnClose } from "./handlers";
-import { useAppDispatch } from "../../../../../../redux/store";
+import { useAppDispatch } from "store";
 
 export const CloseProjectMenu = () => {
   const dispatch = useAppDispatch();

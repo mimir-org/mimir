@@ -1,7 +1,7 @@
 import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { useAppSelector } from "../../../../../redux/store";
+import { useAppSelector } from "store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 import { AspectObject } from "../../../../../lib/classes/AspectObject";
 

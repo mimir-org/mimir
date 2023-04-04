@@ -5,17 +5,17 @@ import { ProjectDescription } from "./ProjectDescription";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../../../assets/icons/project";
 import { Button } from "../../../../../../../compLibrary/buttons/standard";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
-import { useAppDispatch } from "../../../../../../../redux/store";
+import { useAppDispatch } from "store";
 import {
   ProjectDetailsContainer,
   ProjectOptionsButtons,
   ProjectDetailsRightContainer,
   ProjectDetailsSearchContainer,
 } from "./ProjectDetails.styled";
-import { ProjectItemCm } from "lib";
+import { ProjectItem } from "lib";
 
 interface Props {
-  projects: ProjectItemCm[];
+  projects: ProjectItem[];
   projectDescription: string;
 }
 

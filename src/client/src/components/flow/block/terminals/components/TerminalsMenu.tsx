@@ -3,7 +3,7 @@ import { AspectColorType } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
-import { AspectObject, Connector, Direction } from "lib";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -14,7 +14,7 @@ interface Props {
   isElectroView: boolean;
   onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
   onBlur: () => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 

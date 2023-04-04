@@ -1,4 +1,4 @@
-import { Connector, Direction } from "lib";
+import { Connector, ConnectorDirection } from "lib";
 import { ConnectionLineComponentProps } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 
@@ -36,7 +36,7 @@ export const BlockConnectionLine = ({
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         style={GetStyle(connector)}
-        d={connector.direction === Direction.Input ? targetPath : sourcePath}
+        d={connector.direction === ConnectorDirection.Input ? targetPath : sourcePath}
         markerEnd={`url(#${arrowId})`}
       />
     </g>

@@ -3,7 +3,6 @@ import {
   Connection,
   ConnectorPartOf,
   ConnectorTerminal,
-  ProjectAm,
   ConnectionTerminal,
   ConnectionPartOf,
   ConnectorFulfilledBy,
@@ -11,41 +10,79 @@ import {
   ConnectorHasLocation,
   ConnectionHasLocation,
   Connector,
+  ConnectionRelation,
+  ConnectorRelation,
 } from ".";
 import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
-import { Direction } from "../enums/Direction";
+import { ConnectorDirection } from "../enums/Direction";
+import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
+import { CreateId } from "components/flow/helpers";
 
+@jsonObject({
+  knownTypes: [ConnectionTerminal, ConnectionRelation, ConnectionFulfilledBy, ConnectionHasLocation, ConnectionPartOf],
+})
 export class Project {
+  // Domain members
+  @jsonMember(String)
   public id: string;
-  public isSubProject: boolean;
-  public version: string;
+
+  @jsonMember(String)
   public name: string;
+
+  @jsonMember(String)
+  public version: string;
+
+  @jsonMember(Boolean)
+  public subProject: boolean;
+
+  @jsonMember(String)
   public description: string | null;
+
+  @jsonMember(Date)
   public updated: Date | null;
+
+  @jsonMember(String)
   public updatedBy: string | null;
+
+  @jsonMember(Date)
   public created: Date;
+
+  @jsonMember(String)
   public createdBy: string;
-  public aspectObjects: AspectObject[] | null;
-  public connections: Connection[] | null;
 
-  public convertFromFlowEdge(edge: FlowConnection | FlowEdge, mainProject: string | null): Connection | null {
-    const actualFromConnector = this.getConnector(edge.source);
-    if (actualFromConnector == null) return null;
+  @jsonArrayMember(AspectObject)
+  public aspectObjects: Array<AspectObject> | null;
 
-    if (actualFromConnector instanceof ConnectorTerminal)
-      return new ConnectionTerminal(null, edge.source, edge.target, mainProject ?? this.id, this.id);
+  @jsonArrayMember(Connection)
+  public connections: Array<Connection> | null;
 
-    if (actualFromConnector instanceof ConnectorPartOf)
-      return new ConnectionPartOf(null, edge.source, edge.target, mainProject ?? this.id, this.id);
-
-    if (actualFromConnector instanceof ConnectorFulfilledBy)
-      return new ConnectionFulfilledBy(null, edge.source, edge.target, mainProject ?? this.id, this.id);
-
-    if (actualFromConnector instanceof ConnectorHasLocation)
-      return new ConnectionHasLocation(null, edge.source, edge.target, mainProject ?? this.id, this.id);
+  /**
+   * Constructor.
+   * @params name The name of the project.
+   * @params createdBy The username/email of the creator.
+   * @params description The project description. Default is null.
+   */
+  public constructor(name: string, createdBy: string, description: string = null) {
+    this.id = CreateId();
+    this.name = name;
+    this.version = "1.0";
+    this.subProject = false;
+    this.description = description;
+    this.updated = null;
+    this.updatedBy = null;
+    this.created = new Date(new Date().toUTCString());
+    this.createdBy = createdBy;
+    this.aspectObjects = [];
+    this.connections = [];
   }
 
-  public convertToFlowNodes(type: "Block" | "Tree", parent?: string): FlowNode[] {
+  /**
+   * Convert aspect objects to flow nodes.
+   * @params type Usage type. Could be block or tree.
+   * @params parent Set parent id if you want to only convert direct children of an aspect object. The collection will also include the parent aspect object.
+   * @returns A collection of converted flow nodes.
+   */
+  public toFlowNodes(type: "Block" | "Tree", parent?: string): FlowNode[] {
     if (this.aspectObjects == null) return [];
     if (parent == null) {
       return this.aspectObjects.map((x) => x.convertToFlowNode(type));
@@ -60,19 +97,37 @@ export class Project {
     }
   }
 
-  public convertToFlowEdges(type: "Block" | "Tree"): FlowEdge[] {
+  /**
+   * Convert connections to flow edges.
+   * @params type Usage type. Could be Block or Tree.
+   * @returns A collection of converted flow edges.
+   */
+  public toFlowEdges(type: "Block" | "Tree"): FlowEdge[] {
     if (this.connections == null) return [];
     return this.connections.map((x) => {
       const [from, to] = this.getConnectionNodes(x);
-      return x.convertToFlowEdge(type, from.id, to.id);
+      return x.toFlowEdge(type, from.id, to.id);
     });
   }
 
-  public toAm(): ProjectAm {
-    return new ProjectAm(this);
+  public convertFromFlowEdge(edge: FlowConnection | FlowEdge, mainProject: string | null): Connection | null {
+    const actualFromConnector = this.getConnector(edge.source);
+    if (actualFromConnector == null) return null;
+
+    if (actualFromConnector instanceof ConnectorTerminal)
+      return new ConnectionTerminal(edge.source, edge.target, this.id, mainProject);
+
+    if (actualFromConnector instanceof ConnectorPartOf)
+      return new ConnectionPartOf(edge.source, edge.target, this.id, mainProject);
+
+    if (actualFromConnector instanceof ConnectorFulfilledBy)
+      return new ConnectionFulfilledBy(edge.source, edge.target, this.id, mainProject);
+
+    if (actualFromConnector instanceof ConnectorHasLocation)
+      return new ConnectionHasLocation(edge.source, edge.target, this.id, mainProject);
   }
 
-  public selectedAspectObject(): AspectObject {
+  public getSelectedAspectObject(): AspectObject | null {
     return this.aspectObjects.find((x) => x.selected);
   }
 
@@ -149,7 +204,7 @@ export class Project {
     const obj = this.aspectObjects.find((x) => x.id === aspectObject);
     if (obj == null) return null;
 
-    const inConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === Direction.Input);
+    const inConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Input);
     if (inConnector == null) return null;
 
     return this.connections.find((x) => x instanceof ConnectionPartOf && x.toConnector === inConnector.id);
@@ -166,7 +221,7 @@ export class Project {
     const obj = this.aspectObjects.find((x) => x.id === aspectObject);
     if (obj == null) throw new Error("Can't find aspect object with id " + aspectObject);
 
-    const outConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === Direction.Output);
+    const outConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Output);
     if (outConnector == null) throw new Error("Missing output partof connector on node with id " + aspectObject);
 
     return this.connections.filter((x) => x instanceof ConnectionPartOf && x.fromConnector === outConnector.id);
@@ -183,7 +238,7 @@ export class Project {
     const obj = this.aspectObjects.find((x) => x.id === aspectObject);
     if (obj == null) throw new Error("Can't find aspect object with id " + aspectObject);
 
-    const outConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === Direction.Output);
+    const outConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Output);
     if (outConnector == null) throw new Error("Missing output partof connector on node with id " + aspectObject);
 
     return this.connections.some((x) => x instanceof ConnectionPartOf && x.fromConnector === outConnector.id);

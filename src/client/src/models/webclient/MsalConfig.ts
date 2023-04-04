@@ -1,5 +1,5 @@
 import { Configuration, RedirectRequest } from "@azure/msal-browser";
-import Config from "../Config";
+import Config from "../../lib/Config";
 
 // Config object to be passed to Msal on creation
 export const msalConfig: Configuration = {

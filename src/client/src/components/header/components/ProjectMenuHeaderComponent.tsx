@@ -7,7 +7,8 @@ import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { ProjectHeaderButtonContainer, ProjectHeaderButton } from "./ProjectMenuHeaderComponent.styled";
-import { useAppSelector, useParametricAppSelector, isActiveMenuSelector, projectNameSelector } from "../../../redux/store";
+import { isActiveMenuSelector, projectNameSelector } from "../../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "store";
 
 /**
  * Component for the ProjectMenu element in the header of Mimir.

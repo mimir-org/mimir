@@ -1,4 +1,4 @@
-import Config from "../Config";
+import Config from "../../lib/Config";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
 import { ProjectVersionCm, WorkerStatus } from "../index";
@@ -24,7 +24,7 @@ import {
   fetchLibraryTransportTypes,
   fetchSubProjects,
 } from "../../redux/store/library/librarySlice";
-import { IProjectState } from "store/projectSlice";
+import { IProjectState } from "store/reducers/projectReducer";
 import { AspectObject, Connection, EntityType } from "lib";
 
 let instance = null;

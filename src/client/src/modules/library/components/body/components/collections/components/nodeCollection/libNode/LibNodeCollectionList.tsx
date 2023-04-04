@@ -4,9 +4,10 @@ import { IsBlockView } from "../../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { LibNodeCollection } from "./LibNodeCollection";
 import { CollectionsActions } from "../../../../../../../../../models";
-import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../../redux/store";
+import { customCategorySelector, librarySelector } from "../../../../../../../../../redux/store";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Aspect, AspectObject } from "lib";
+import { useAppSelector } from "store";
 
 interface Props {
   collectionState: CollectionsActions;

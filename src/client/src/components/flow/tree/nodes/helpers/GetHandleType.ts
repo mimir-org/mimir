@@ -1,4 +1,4 @@
-import { Connector, ConnectorPartOf, ConnectorRelation, ConnectorTerminal, Direction } from "lib";
+import { Connector, ConnectorPartOf, ConnectorRelation, ConnectorTerminal, ConnectorDirection } from "lib";
 import { HandleType, Position } from "react-flow-renderer";
 
 // import {
@@ -20,7 +20,9 @@ export const GetHandleType = (conn: Connector): [HandleType, Position] => {
     targetPosition = Position.Right;
   }
 
-  if (conn.direction === Direction.Input || conn.direction === Direction.Bidirectional) return ["target", targetPosition];
-  if (conn.direction === Direction.Output || conn.direction === Direction.Bidirectional) return ["source", sourcePosition];
+  if (conn.direction === ConnectorDirection.Input || conn.direction === ConnectorDirection.Bidirectional)
+    return ["target", targetPosition];
+  if (conn.direction === ConnectorDirection.Output || conn.direction === ConnectorDirection.Bidirectional)
+    return ["source", sourcePosition];
   return ["source", sourcePosition];
 };

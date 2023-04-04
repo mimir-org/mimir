@@ -3,7 +3,7 @@ import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 // import { updatePosition } from "../../../redux/store/project/actions";
-import { useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../assets/size/Size";
@@ -98,8 +98,8 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(project.convertToFlowNodes("Tree"));
-      setEdges(project.convertToFlowEdges("Tree"));
+      setNodes(project.toFlowNodes("Tree"));
+      setEdges(project.toFlowEdges("Tree"));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -108,13 +108,13 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(project.convertToFlowNodes("Tree"));
+    setNodes(project.toFlowNodes("Tree"));
   }, [mimirNodes, selectedNode]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
-    setEdges(project.convertToFlowEdges("Tree"));
+    setEdges(project.toFlowEdges("Tree"));
   }, [mimirEdges, filter]);
 
   return (

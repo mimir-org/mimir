@@ -1,11 +1,11 @@
 import { StartPageBackground, StartPageImage, StartPageVersion } from "./StartPage.styled";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch } from "store";
 import { MENU_TYPE } from "../../models/project";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { useEffectOnce } from "../../hooks/useEffectOnce";
 import { IsReleaseVersion } from "./helpers/IsReleaseVersion";
-import config from "../../models/Config";
+import config from "../../lib/Config";
 
 /**
  * The start page for Mimir.

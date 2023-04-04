@@ -4,7 +4,7 @@ import { TerminalIcon } from "./helpers/TerminalIcon";
 import { TerminalIconBox, TerminalBox, TerminalElementBox, TerminalNameBox } from "./TerminalsMenuElement.styled";
 import { AddTerminalComponent } from "./AddTerminalComponent";
 import { RemoveTerminalComponent } from "./RemoveTerminalComponent";
-import { AspectObject, Connector, ConnectorTerminal, Direction } from "lib";
+import { AspectObject, Connector, ConnectorTerminal, ConnectorDirection } from "lib";
 
 interface Props {
   connector: Connector;
@@ -12,7 +12,7 @@ interface Props {
   node: AspectObject;
   isElectroView: boolean;
   onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: Direction) => void;
+  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
 }
 
@@ -53,7 +53,7 @@ export const TerminalsMenuElement = ({
         color={color}
         typeId={connector instanceof ConnectorTerminal && connector.terminalType}
         nodeId={node.id}
-        direction={isInput ? Direction.Input : Direction.Output}
+        direction={isInput ? ConnectorDirection.Input : ConnectorDirection.Output}
         onClick={onClickAddTerminal}
       />
     </TerminalElementBox>

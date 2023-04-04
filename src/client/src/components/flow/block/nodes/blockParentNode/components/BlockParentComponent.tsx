@@ -6,13 +6,13 @@ import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
-import { AspectObject, Connector, Direction } from "lib";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -50,7 +50,7 @@ export const BlockParentComponent = ({
   const project = useAppSelector(selectors.projectSelector);
   const libNodes = useAppSelector(selectors.libNodesSelector);
 
-  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: Direction) => {
+  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
     return useOnAddTerminal(project, typeId, nodeId, terminals, libNodes, direction, dispatch);
   };
 

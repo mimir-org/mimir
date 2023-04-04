@@ -1,7 +1,8 @@
 import { RelationsContent } from "./components/RelationsContent";
 import { RelationsBody } from "./RelationsComponent.styled";
 import { TextResources } from "../../../../../../assets/text/TextResources";
-import { edgesSelector, useAppSelector } from "../../../../../../redux/store";
+import { edgesSelector } from "../../../../../../redux/store";
+import { useAppSelector } from "store";
 import { InspectorElement } from "../../../../types";
 import { useMemo } from "react";
 import { OnClickRelation, OnClickTransport, OnClickNode, OnClickTerminal } from "./handlers/OnRelationsClick";

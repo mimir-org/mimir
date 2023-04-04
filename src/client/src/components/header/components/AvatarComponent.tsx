@@ -3,7 +3,7 @@ import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
 import { AvatarBackground } from "../../../assets/icons/header";
 import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
-import { useAppSelector } from "../../../redux/store";
+import { useAppSelector } from "store";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
 import { Icon } from "../../../compLibrary/icon/Icon";

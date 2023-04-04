@@ -1,6 +1,6 @@
 import { AspectObject } from "../../lib/classes";
 import { MODULE_TYPE } from "../../models/project";
-import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
+import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "../../store/hooks";
 
 export const isProjectStateFetchingSelector = createAppSelector(
   (state) => state.projectState.fetching?.length > 0,
@@ -221,8 +221,8 @@ export const projectListSelector = createAppSelector(
 );
 
 export const projectIsSubProjectSelector = createAppSelector(
-  (state) => state.projectState?.project?.isSubProject,
-  (isSubProject) => isSubProject
+  (state) => state.projectState?.project?.subProject,
+  (subProject) => subProject
 );
 
 export const selectedNodeSelector = createAppSelector(

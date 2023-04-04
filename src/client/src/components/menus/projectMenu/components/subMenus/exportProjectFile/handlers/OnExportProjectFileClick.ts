@@ -4,7 +4,7 @@ import { changeActiveMenu } from "../../redux/menuSlice";
 // import { Project, ProjectConverterAm } from "@mimirorg/modelbuilder-types";
 // import { ConvertProjectToProjectAm } from "../../../../../../../redux/sagas/project";
 import { Dispatch } from "redux";
-import { Project, ProjectConverterAm } from "lib";
+import { Project } from "lib";
 
 const OnExportProjectFileClick = (dispatch: Dispatch, project: Project, fileName: string, parserId: string) => {
   if (!project) throw Error(TextResources.ERROR_EXPORT_PROJECT);

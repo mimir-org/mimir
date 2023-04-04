@@ -36,7 +36,7 @@
 // } from "../../../models/webclient";
 // import { Project, ProjectFileAm } from "../../../lib/classes";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { FetchProjectAction } from "store/projectSlice";
+import { FetchProjectAction } from "store/reducers/projectReducer";
 
 export function* getProject(action: PayloadAction<FetchProjectAction>) {
   // try {

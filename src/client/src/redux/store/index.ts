@@ -14,7 +14,7 @@ import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import projectReducer from "store/projectSlice";
+import projectReducer from "store/reducers/projectReducer";
 import { rootSaga } from "../sagas";
 
 const rootReducers = combineReducers({
@@ -52,7 +52,6 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof rootReducers>;
 export type AppDispatch = typeof store.dispatch;
-export * from "./hooks";
 export * from "./selectors";
 export default { store };
 

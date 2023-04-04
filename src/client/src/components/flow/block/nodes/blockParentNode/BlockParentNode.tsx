@@ -6,7 +6,7 @@ import { HandleComponent } from "../../handle/HandleComponent";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterConnectors } from "../helpers/FilterConnectors";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { AspectObject, Connector } from "lib";

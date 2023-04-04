@@ -5,7 +5,7 @@ import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../assets/font";
 // import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
-import { useAppDispatch } from "../../../../../../../redux/store";
+import { useAppDispatch } from "store";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
 import { IsAspectNode } from "../../../../../../../helpers/Aspects";
 import { AspectObject, Project } from "lib";

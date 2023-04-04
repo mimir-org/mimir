@@ -9,13 +9,12 @@ import { LibraryTab, CollectionsActions } from "../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 // import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
-  useAppSelector,
-  useParametricAppSelector,
   animatedModuleSelector,
   libOpenSelector,
   // nodesSelector,
   libSubProjectorSelector,
 } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "store";
 import { Aspect } from "../../lib";
 
 interface Props {

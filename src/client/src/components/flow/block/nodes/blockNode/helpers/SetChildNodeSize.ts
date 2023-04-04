@@ -1,4 +1,4 @@
-import { Direction } from "lib";
+import { ConnectorDirection } from "lib";
 import { Size } from "../../../../../../assets/size/Size";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { Connectors } from "../../blockParentNode/BlockParentNode";
@@ -20,11 +20,11 @@ export const SetChildNodeSize = (terminals: Connectors, electro: boolean): Block
   let height = Size.NODE_HEIGHT;
 
   terminals.inputs.forEach((t) => {
-    !t.hidden && t.direction === Direction.Input && inTerminals++;
+    !t.hidden && t.direction === ConnectorDirection.Input && inTerminals++;
   });
 
   terminals.outputs.forEach((t) => {
-    !t.hidden && t.direction === Direction.Output && outTerminals++;
+    !t.hidden && t.direction === ConnectorDirection.Output && outTerminals++;
   });
 
   if (electro) {

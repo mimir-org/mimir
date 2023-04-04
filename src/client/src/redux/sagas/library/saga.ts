@@ -3,7 +3,7 @@ import { saveAs } from "file-saver";
 import { NodeLibCm, QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
-import Config from "../../../models/Config";
+import Config from "../../../lib/Config";
 import {
   exportLibrarySuccessOrError,
   fetchLibrary,

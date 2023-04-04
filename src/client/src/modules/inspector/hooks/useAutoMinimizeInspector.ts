@@ -4,7 +4,7 @@ import { SetPanelHeight } from "../helpers/SetPanelHeight";
 import { Size } from "../../../assets/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
-import { useAppDispatch } from "../../../redux/store";
+import { useAppDispatch } from "store";
 import { MODULE_TYPE } from "../../../models/project";
 
 /**

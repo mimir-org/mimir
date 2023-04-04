@@ -1,31 +1,59 @@
-import { ConnectionAm } from ".";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import CreateId from "../../components/flow/helpers/CreateId";
 import { Edge as FlowEdge } from "react-flow-renderer";
+import { jsonMember, jsonObject } from "typedjson";
 
-export class Connection {
+/**
+ * Abstract Connection class.
+ * This is the parent class for all connection types.
+ */
+@jsonObject
+export abstract class Connection {
+  // Domain members
+  @jsonMember(String)
   public id: string;
+
+  @jsonMember(String)
   public fromConnector: string;
+
+  @jsonMember(String)
   public toConnector: string;
-  public mainProject: string;
+
+  @jsonMember(String)
   public project: string;
+
+  @jsonMember(String)
+  public mainProject: string;
+
+  // Client members
   public selected: boolean;
   public hidden: boolean;
 
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    this.id = id == null ? CreateId() : id;
+  /**
+   * Constructor.
+   * @params fromConnector Connection from connector id.
+   * @params toConnector Connection to connector id.
+   * @params project Current project id.
+   * @params mainProject The originally project owner id.
+   */
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    this.id = CreateId();
     this.fromConnector = fromConnector;
     this.toConnector = toConnector;
-    this.mainProject = mainProject;
     this.project = project;
+    this.mainProject = mainProject != null ? mainProject : project;
     this.selected = false;
     this.hidden = false;
   }
 
-  public toAm(): ConnectionAm {
-    return new ConnectionAm(this);
-  }
-
-  public convertToFlowEdge(type: "Block" | "Tree", source: string, target: string): FlowEdge {
+  /**
+   * Convert connection to flow edge.
+   * @params type Usage type. Could be Block or Tree.
+   * @params source The source node id.
+   * @params target The target node id.
+   * @returns Converted flow edge
+   */
+  public toFlowEdge(type: "Block" | "Tree", source: string, target: string): FlowEdge {
     const edge: FlowEdge = {
       id: this.id,
       type: this.getComponentType(type),
@@ -56,33 +84,38 @@ export class Connection {
   }
 }
 
+@jsonObject
 export class ConnectionTerminal extends Connection {
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    super(id, fromConnector, toConnector, mainProject, project);
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    super(fromConnector, toConnector, project, mainProject);
   }
 }
 
-export class ConnectionRelation extends Connection {
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    super(id, fromConnector, toConnector, mainProject, project);
+@jsonObject
+export abstract class ConnectionRelation extends Connection {
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    super(fromConnector, toConnector, project, mainProject);
   }
 }
 
+@jsonObject
 export class ConnectionFulfilledBy extends ConnectionRelation {
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    super(id, fromConnector, toConnector, mainProject, project);
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    super(fromConnector, toConnector, project, mainProject);
   }
 }
 
+@jsonObject
 export class ConnectionHasLocation extends ConnectionRelation {
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    super(id, fromConnector, toConnector, mainProject, project);
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    super(fromConnector, toConnector, project, mainProject);
   }
 }
 
+@jsonObject
 export class ConnectionPartOf extends ConnectionRelation {
-  public constructor(id: string | null, fromConnector: string, toConnector: string, mainProject: string, project: string) {
-    super(id, fromConnector, toConnector, mainProject, project);
+  public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
+    super(fromConnector, toConnector, project, mainProject);
   }
 }
 

@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import Config from "../../../models/Config";
+import Config from "../../../lib/Config";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../../models/webclient";
 import {
   fetchCompanySuccessOrError,

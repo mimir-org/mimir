@@ -12,7 +12,7 @@ import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
 import { Project } from "lib";
 
@@ -42,7 +42,7 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
   const selectedEdge = project.selectedConnection();
-  const selectedNode = project.selectedAspectObject();
+  const selectedNode = project.getSelectedAspectObject();
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;

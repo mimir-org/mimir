@@ -5,7 +5,7 @@ import { ToolbarElement } from "./components/ToolbarElement";
 import { ViewportData } from "../../models/project";
 import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
-import { useAppSelector } from "../../redux/store";
+import { useAppSelector } from "store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
 import { useReactFlow, useStoreApi } from "react-flow-renderer";
 import { Dispatch } from "redux";

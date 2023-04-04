@@ -1,5 +1,6 @@
 import { MENU_TYPE } from "../../../models/project";
-import { projectIsSubProjectSelector, useAppSelector } from "../../../redux/store";
+import { projectIsSubProjectSelector } from "../../../redux/store";
+import { useAppSelector } from "store";
 import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
 import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
 import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";

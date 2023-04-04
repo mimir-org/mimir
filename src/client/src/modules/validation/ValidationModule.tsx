@@ -4,7 +4,8 @@ import { Modal } from "../../compLibrary/modal/Modal";
 import { Button } from "../../compLibrary/buttons/standard";
 import { TextResources } from "../../assets/text/TextResources";
 import { NotificationModalContent } from "../../compLibrary/modal/variants/alert/NotificationModalContent";
-import { useAppDispatch, useAppSelector, validationSelector } from "../../redux/store";
+import { validationSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "store";
 
 /**
  * Component to handle validation in Mimir. If an action requires a feedback a box with information will appear.
