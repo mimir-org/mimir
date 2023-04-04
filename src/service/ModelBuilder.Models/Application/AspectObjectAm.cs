@@ -30,6 +30,7 @@ public class AspectObjectAm : IValidatableObject
     public string LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }
+    [Required]
     public PositionAm PositionBlock { get; set; }
     public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
