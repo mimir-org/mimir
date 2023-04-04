@@ -1,6 +1,6 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Enums;
+using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
@@ -22,7 +22,7 @@ public static class ConnectorExtensions
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static void AssertConnector(this ConnectorDm connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, ConnectionDm connection, DefaultFlowDirection flowDirection)
     {
-        ontologyService.AssertAspectObject(connector.Id, Resources.Domain, connector.Domain, true);
+        ontologyService.AssertAspectObject(connector.Id, Resources.Domain, connector.Id.ResolveDomain(), true);
         switch (connector)
         {
             case ConnectorTerminalDm connectorTerminal:

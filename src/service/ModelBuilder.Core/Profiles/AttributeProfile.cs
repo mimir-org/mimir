@@ -20,9 +20,9 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
             .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
-            .ForMember(dest => dest.IsLocked, opt => opt.Ignore())
-            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.Ignore())
-            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.Ignore());
+            .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
 
         CreateMap<AttributeDm, AttributeCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

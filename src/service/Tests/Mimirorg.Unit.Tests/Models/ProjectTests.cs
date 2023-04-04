@@ -106,9 +106,6 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //        RelationType = RelationType.PartOf
                     //    }
                     //},
-                    IsLocked = false,
-                    IsLockedStatusBy = null,
-                    IsLockedStatusDate = null,
                     AspectObjectType = AspectObjectType.Aspect,
                     Label = "Dummy AspectObject A",
                     LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
