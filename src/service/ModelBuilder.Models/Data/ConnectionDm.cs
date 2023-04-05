@@ -27,7 +27,8 @@ public class ConnectionDm : IEquatable<ConnectionDm>
                FromConnector == other.FromConnector &&
                ToConnector == other.ToConnector &&
                MainProject == other.MainProject &&
-               Project == other.Project;
+               Project == other.Project &&
+               Handles == other.Handles;
     }
 
     public override bool Equals(object obj)
@@ -45,6 +46,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
         hashCode.Add(ToConnector);
         hashCode.Add(MainProject);
         hashCode.Add(Project);
+        hashCode.Add(Handles);
         return hashCode.ToHashCode();
     }
 }

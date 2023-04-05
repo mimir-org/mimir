@@ -1,21 +1,21 @@
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Mb.Data.Contracts;
+using Mb.Models.Abstract;
+using Mb.Models.Client;
+using Mb.Models.Configurations;
+using Mb.Models.Data;
+using Mb.Models.Extensions;
+using Mb.Models.Records;
+using Microsoft.Extensions.Options;
+using Mimirorg.Common.Exceptions;
+using SqlBulkTools;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Mb.Data.Contracts;
-using Mb.Models.Abstract;
-using Mb.Models.Configurations;
-using Mb.Models.Data;
-using Mimirorg.Common.Exceptions;
-using Mb.Models.Extensions;
-using Mb.Models.Records;
-using Microsoft.Extensions.Options;
-using SqlBulkTools;
-using Mb.Models.Client;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo

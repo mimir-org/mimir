@@ -76,6 +76,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Child
             .AddColumn(x => x.TerminalType)
             .AddColumn(x => x.TerminalParentType)
@@ -100,6 +101,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -120,6 +122,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -140,6 +143,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
