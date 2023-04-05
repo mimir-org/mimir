@@ -76,7 +76,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
         project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();
-        
+
         foreach (var aspectObject in project.AspectObjects)
         {
             aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
