@@ -2,6 +2,7 @@ using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Client;
 using Mb.Models.Data;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles;
 
@@ -16,14 +17,16 @@ public class ConnectionProfile : Profile
             .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
             .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
-            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
+            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
+            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Handles)));
 
         CreateMap<ConnectionDm, ConnectionCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
             .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
-            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project));
+            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
+            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleCm>(src.Handles)));
 
         #endregion Connection
 

@@ -19,8 +19,5 @@ public class AttributeConfiguration : IEntityTypeConfiguration<AttributeDm>
         builder.Property(p => p.Qualifiers).HasColumnName("Qualifiers").IsRequired(false);
         builder.Property(p => p.ConnectorTerminal).HasColumnName("ConnectorTerminal").IsRequired(false);
         builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired(false);
-        builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
-        builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
-        builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
     }
 }

@@ -22,7 +22,8 @@ public class AspectObjectConfiguration : IEntityTypeConfiguration<AspectObjectDm
         builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
         builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
         builder.Property(p => p.LibraryType).HasColumnName("LibraryType").IsRequired();
-        builder.Property(p => p.Position).HasColumnName("Position").IsRequired();
+        builder.Property(p => p.PositionTree).HasColumnName("PositionTree").IsRequired();
+        builder.Property(p => p.PositionBlock).HasColumnName("PositionBlock").IsRequired(false);
         builder.Property(p => p.ReferenceType).HasColumnName("ReferenceType").IsRequired(false);
         builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
         builder.Property(p => p.Created).HasColumnName("Created").IsRequired();

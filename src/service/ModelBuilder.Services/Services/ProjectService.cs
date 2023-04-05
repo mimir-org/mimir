@@ -1,25 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Models.Common;
+using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mimirorg.Common.Exceptions;
+using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Mimirorg.Common.Exceptions;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
-using Mb.Models.Common;
-using Mb.Models.Application;
-using Mb.Models.Client;
-using Mb.Models.Const;
-using Mb.Models.Extensions;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mb.Services.Services;
 
@@ -275,7 +275,7 @@ public class ProjectService : IProjectService
         var rootAspectObjects = updatedProject.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).Select(x => x.Id).ToList();
 
         // Position aspectObject
-        var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<AspectObjectPositionDm>(x.Position).ThreePosY);
+        var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
 
         // Set aspectObject and connections project id to merge project, and calculate position
         updatedProject.AspectObjects = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).Select(x =>
@@ -288,8 +288,8 @@ public class ProjectService : IProjectService
         // Set root origin to center
         if (rootOrigin != null)
         {
-            JsonConvert.DeserializeObject<AspectObjectPositionDm>(rootOrigin.Position).ThreePosX = (int) prepare.DropPositionX;
-            JsonConvert.DeserializeObject<AspectObjectPositionDm>(rootOrigin.Position).ThreePosY = (int) prepare.DropPositionY;
+            JsonConvert.DeserializeObject<PositionDm>(rootOrigin.PositionTree).PosX = (int) prepare.DropPositionX;
+            JsonConvert.DeserializeObject<PositionDm>(rootOrigin.PositionTree).PosY = (int) prepare.DropPositionY;
         }
 
         // TODO: Resolve this
@@ -424,10 +424,10 @@ public class ProjectService : IProjectService
             Project = projectId,
             MainProject = projectId,
             LibraryType = aspectObjectId,
-            Position = JsonConvert.SerializeObject(new AspectObjectPositionDm
+            PositionTree = JsonConvert.SerializeObject(new PositionDm
             {
-                ThreePosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
-                ThreePosY = 5
+                PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
+                PosY = 5
             }),
             ReferenceType = aspectObjectId,
             CreatedBy = _contextAccessor.GetName(),

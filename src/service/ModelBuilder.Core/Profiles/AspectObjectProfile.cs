@@ -21,7 +21,8 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.LibraryType, opt => opt.MapFrom(src => src.LibraryType))
-            .ForMember(dest => dest.Position, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Position)))
+            .ForMember(dest => dest.PositionTree, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.PositionTree)))
+            .ForMember(dest => dest.PositionBlock, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.PositionBlock)))
             .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
@@ -47,7 +48,8 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.LibraryType, opt => opt.MapFrom(src => src.LibraryType))
-            .ForMember(dest => dest.Position, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<AspectObjectPositionCm>(src.Position)))
+            .ForMember(dest => dest.PositionTree, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<PositionCm>(src.PositionTree)))
+            .ForMember(dest => dest.PositionBlock, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<PositionCm>(src.PositionBlock)))
             .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
@@ -61,17 +63,5 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
-
-        CreateMap<AspectObjectPositionAm, AspectObjectPositionDm>()
-            .ForMember(dest => dest.ThreePosX, opt => opt.MapFrom(src => src.ThreePosX))
-            .ForMember(dest => dest.ThreePosY, opt => opt.MapFrom(src => src.ThreePosY))
-            .ForMember(dest => dest.BlockPosX, opt => opt.MapFrom(src => src.BlockPosX))
-            .ForMember(dest => dest.BlockPosY, opt => opt.MapFrom(src => src.BlockPosY));
-
-        CreateMap<AspectObjectPositionDm, AspectObjectPositionCm>()
-            .ForMember(dest => dest.TreePosX, opt => opt.MapFrom(src => src.ThreePosX))
-            .ForMember(dest => dest.TreePosY, opt => opt.MapFrom(src => src.ThreePosY))
-            .ForMember(dest => dest.BlockPosX, opt => opt.MapFrom(src => src.BlockPosX))
-            .ForMember(dest => dest.BlockPosY, opt => opt.MapFrom(src => src.BlockPosY));
     }
 }

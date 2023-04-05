@@ -61,12 +61,15 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     AspectObjectType = AspectObjectType.Aspect,
                     Label = "Dummy AspectObject A",
                     LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                    Position = new AspectObjectPositionAm
+                    PositionTree = new PositionAm
                     {
-                        ThreePosX = -99,
-                        ThreePosY = 213,
-                        BlockPosX = 64,
-                        BlockPosY = -6
+                        PosX = -99,
+                        PosY = 213,
+                    },
+                    PositionBlock = new PositionAm
+                    {
+                        PosX = 64,
+                        PosY = -6
                     },
                     Purpose = null,
                     Rds = "B0",
@@ -109,12 +112,15 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     AspectObjectType = AspectObjectType.Aspect,
                     Label = "Dummy AspectObject A",
                     LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
-                    Position = new AspectObjectPositionAm
+                    PositionTree = new PositionAm
                     {
-                        ThreePosX = -99,
-                        ThreePosY = 213,
-                        BlockPosX = 64,
-                        BlockPosY = -6
+                        PosX = -99,
+                        PosY = 213,
+                    },
+                    PositionBlock = new PositionAm
+                    {
+                        PosX = 64,
+                        PosY = -6
                     },
                     Purpose = null,
                     Rds = "B0",

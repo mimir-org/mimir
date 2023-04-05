@@ -22,16 +22,16 @@ public static class AspectObjectExtensions
             return current;
         }
 
-        var currentPosition = JsonConvert.DeserializeObject<AspectObjectPositionDm>(current.Position);
-        var rootOriginPosition = JsonConvert.DeserializeObject<AspectObjectPositionDm>(current.Position);
+        var currentPosition = JsonConvert.DeserializeObject<PositionDm>(current.PositionTree);
+        var rootOriginPosition = JsonConvert.DeserializeObject<PositionDm>(current.PositionTree);
 
-        var diffX = currentPosition.ThreePosX - rootOriginPosition.ThreePosX;
-        var diffY = currentPosition.ThreePosY - rootOriginPosition.ThreePosY;
+        var diffX = currentPosition.PosX - rootOriginPosition.PosX;
+        var diffY = currentPosition.PosY - rootOriginPosition.PosY;
 
-        currentPosition.ThreePosX = originX + diffX;
-        currentPosition.ThreePosY = originY + diffY;
+        currentPosition.PosX = originX + diffX;
+        currentPosition.PosY = originY + diffY;
 
-        current.Position = JsonConvert.SerializeObject(currentPosition);
+        current.PositionTree = JsonConvert.SerializeObject(currentPosition);
 
         return current;
     }

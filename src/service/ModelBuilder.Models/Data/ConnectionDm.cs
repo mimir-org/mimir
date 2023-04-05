@@ -1,7 +1,6 @@
 using System;
-using Mb.Models.Client;
-using System.Collections.Generic;
-using Mimirorg.Common.Extensions;
+using System.ComponentModel.DataAnnotations.Schema;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data;
@@ -12,12 +11,13 @@ namespace Mb.Models.Data;
 public class ConnectionDm : IEquatable<ConnectionDm>
 {
     public string Id { get; set; }
-    public string Domain => Id.ResolveDomain();
     public string FromConnector { get; set; }
     public string ToConnector { get; set; }
     public string MainProject { get; set; }
     public string Project { get; set; }
-    public ICollection<HandleDm> Handles { get; set; }
+
+    [NotMapped]
+    public string Handles { get; set; }
 
     public bool Equals(ConnectionDm other)
     {

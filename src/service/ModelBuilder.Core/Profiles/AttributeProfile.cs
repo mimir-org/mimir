@@ -19,10 +19,7 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Units)))
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
-            .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
-            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
+            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
 
         CreateMap<AttributeDm, AttributeCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -33,9 +30,6 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<UnitCm>(src.Units)))
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<QualifierCm>(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject))
-            .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-            .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
-            .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
+            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
     }
 }

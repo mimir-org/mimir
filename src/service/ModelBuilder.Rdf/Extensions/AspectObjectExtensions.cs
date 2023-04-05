@@ -1,15 +1,14 @@
-using System.Text.RegularExpressions;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
-using INode = VDS.RDF.INode;
+using System.Text.RegularExpressions;
 using AspectObjectDm = Mb.Models.Data.AspectObjectDm;
+using INode = VDS.RDF.INode;
 
 namespace ModelBuilder.Rdf.Extensions;
 
@@ -34,10 +33,10 @@ public static class AspectObjectExtensions
 
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.RDS, aspectObject.RdsString(project), true);
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.MimirRds, aspectObject.Rds, true);
-        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).ThreePosX}", Resources.Float));
-        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).ThreePosY}", Resources.Float));
-        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).BlockPosX}", Resources.Float));
-        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<AspectObjectPositionDm>(aspectObject.Position).BlockPosY}", Resources.Float));
+        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<PositionDm>(aspectObject.PositionTree).PosX}", Resources.Float));
+        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<PositionDm>(aspectObject.PositionTree).PosY}", Resources.Float));
+        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionX, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<PositionDm>(aspectObject.PositionBlock).PosX}", Resources.Float));
+        ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasBlockPositionY, ontologyService.CreateLiteralAspectObject($"{JsonConvert.DeserializeObject<PositionDm>(aspectObject.PositionBlock).PosY}", Resources.Float));
 
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.HasAspect, $"imf:{aspectObject.Aspect}");
         ontologyService.AssertAspectObject(aspectObject.Id, Resources.Version, aspectObject.Version, true);
@@ -158,12 +157,16 @@ public static class AspectObjectExtensions
         aspectObject.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
         aspectObject.Description = ontologyService.GetValue(iri, Resources.Desc, false);
 
-        aspectObject.Position = new AspectObjectPositionAm
+        aspectObject.PositionTree = new PositionAm
         {
-            ThreePosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false),
-            ThreePosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false),
-            BlockPosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false),
-            BlockPosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionY, false),
+            PosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionX, false),
+            PosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false),
+        };
+
+        aspectObject.PositionBlock = new PositionAm
+        {
+            PosX = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false),
+            PosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionY, false),
         };
 
         var masterProjectIriAspectObject = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();

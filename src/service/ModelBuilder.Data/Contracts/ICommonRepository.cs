@@ -1,4 +1,3 @@
-using System;
 using Mb.Models.Common;
 
 namespace Mb.Data.Contracts;

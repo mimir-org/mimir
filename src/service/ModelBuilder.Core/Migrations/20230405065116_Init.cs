@@ -25,7 +25,8 @@ namespace Mb.Core.Migrations
                     Project = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LibraryType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PositionTree = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PositionBlock = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReferenceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -33,7 +34,7 @@ namespace Mb.Core.Migrations
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Rds = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Symbol = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurposeString = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsLockedStatusBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsLockedStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -55,10 +56,7 @@ namespace Mb.Core.Migrations
                     Units = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qualifiers = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConnectorTerminal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AspectObject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    IsLockedStatusBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsLockedStatusDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    AspectObject = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,6 +72,7 @@ namespace Mb.Core.Migrations
                     ToConnector = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Project = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Handles = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true)

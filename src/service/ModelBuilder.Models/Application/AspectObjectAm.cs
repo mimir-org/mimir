@@ -1,10 +1,8 @@
+using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data;
-using Mb.Models.Enums;
-using Mimirorg.Common.Extensions;
-using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application;
 
@@ -30,7 +28,6 @@ public class AspectObjectAm : IValidatableObject
     public string LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }
-    [Required]
     public PositionAm PositionBlock { get; set; }
     public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
@@ -93,17 +90,4 @@ public class AspectObjectAm : IValidatableObject
     }
 
     #endregion Validate
-}
-
-public class AspectObjectPositionAm
-{
-    [Required]
-    public int ThreePosX { get; set; }
-    [Required]
-    public int ThreePosY { get; set; }
-    [Required]
-    public int BlockPosX { get; set; }
-    [Required]
-    public int BlockPosY { get; set; }
-
 }

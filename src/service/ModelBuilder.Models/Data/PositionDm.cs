@@ -1,6 +1,6 @@
-namespace Mb.Models.Client
+namespace Mb.Models.Data
 {
-    public class PositionCm
+    public class PositionDm
     {
         public int PosX { get; set; }
         public int PosY { get; set; }

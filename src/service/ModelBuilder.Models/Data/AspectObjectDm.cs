@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Abstract;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mb.Models.Records;
+using Mimirorg.Common.Extensions;
 using Mimirorg.Common.Models;
 using Mimirorg.TypeLibrary.Enums;
-using Mimirorg.Common.Extensions;
-using Mb.Models.Records;
-using System.ComponentModel.DataAnnotations;
-using Mb.Models.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data;
@@ -40,7 +38,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     public bool IsLocked { get; set; }
     public string IsLockedStatusBy { get; set; }
     public DateTime? IsLockedStatusDate { get; set; }
-    
+
     [NotMapped]
     public List<ConnectorDm> Connectors { get; set; } = new();
     [NotMapped]
@@ -58,7 +56,8 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
                ReferenceType == other.ReferenceType &&
                Name == other.Name &&
                Label == other.Label &&
-               Position == other.Position &&
+               PositionTree == other.PositionTree &&
+               PositionBlock == other.PositionBlock &&
                UpdatedBy == other.UpdatedBy &&
                Updated.Equals(other.Updated) &&
                Nullable.Equals(Created, other.Created) &&
@@ -89,7 +88,8 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
         hashCode.Add(ReferenceType);
         hashCode.Add(Name);
         hashCode.Add(Label);
-        hashCode.Add(Position);
+        hashCode.Add(PositionTree);
+        hashCode.Add(PositionBlock);
         hashCode.Add(UpdatedBy);
         hashCode.Add(Updated);
         hashCode.Add(Created);
@@ -143,18 +143,4 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     }
 
     #endregion
-}
-
-[Serializable]
-public class AspectObjectPositionDm
-{
-    [Required]
-    public int ThreePosX { get; set; }
-    [Required]
-    public int ThreePosY { get; set; }
-    [Required]
-    public int BlockPosX { get; set; }
-    [Required]
-    public int BlockPosY { get; set; }
-
 }
