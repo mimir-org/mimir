@@ -17,18 +17,13 @@ export const isLibraryStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
-export const isUserStateFetchingSelector = createAppSelector(
-  (state) => state.userState.fetching,
-  (fetching) => fetching
-);
-
 export const isCommonStateFetchingSelector = createAppSelector(
   (state) => state.commonState.fetching,
   (fetching) => fetching
 );
 
 export const isFetchingSelector = combineAppSelectors(
-  [isProjectStateFetchingSelector, isLibraryStateFetchingSelector, isUserStateFetchingSelector, isCommonStateFetchingSelector],
+  [isProjectStateFetchingSelector, isLibraryStateFetchingSelector],
   (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching) =>
     isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching
 );
@@ -41,36 +36,6 @@ export const projectStateSelector = createAppSelector(
 export const projectNameSelector = createAppSelector(
   (state) => state.projectState?.project?.name,
   (name) => name
-);
-
-export const userStateSelector = createAppSelector(
-  (state) => state.userState,
-  (userState) => userState
-);
-
-export const usernameSelector = createAppSelector(
-  (state) => state.userState.user?.name,
-  (username) => username
-);
-
-export const commonStateSelector = createAppSelector(
-  (state) => state.commonState,
-  (commonState) => commonState
-);
-
-export const commonStateParsersSelector = createAppSelector(
-  (state) => state.commonState.parsers,
-  (parsers) => parsers
-);
-
-export const commonStateCompaniesSelector = createAppSelector(
-  (state) => state.commonState.companies,
-  (companies) => companies
-);
-
-export const commonStateCompanySelector = createAppSelector(
-  (state) => state.commonState.company,
-  (company) => company
 );
 
 export const librarySelector = createAppSelector(
@@ -141,17 +106,6 @@ export const customCategorySelector = createAppSelector(
 export const nodeSizeSelector = createAppSelector(
   (state) => state.blockNodeSize.size,
   (size) => size
-);
-
-export const flowViewSelector = createAppSelector(
-  (state) => state.flow.view,
-  (view) => view
-);
-
-export const isActiveViewSelector = createParametricAppSelector(
-  (state) => state.flow.view,
-  (_, viewType: string) => viewType,
-  (activeView, menuType) => activeView === menuType
 );
 
 export const validationSelector = createAppSelector(

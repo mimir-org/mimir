@@ -3,10 +3,11 @@ import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { SetFitToScreen } from "../../../helpers";
-import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
-import { changeFlowView } from "../../../redux/store/flow/flowSlice";
+import { ViewportData } from "../../../models/project";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
+import { setViewType } from "store/reducers/commonReducer";
+import { ViewType } from "lib";
 // import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 // import {
 //   removeSelectedBlockNode,
@@ -36,7 +37,7 @@ export const OnBlockViewClick = (
   // dispatch(removeSecondaryNode());
   // dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
   // dispatch(setSelectedNode(selectedFlowNodes[0].id));
-  dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
+  dispatch(setViewType({ view: ViewType.Block }));
 };
 
 export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, isTreeView: boolean, dispatch: Dispatch) => {
@@ -47,7 +48,7 @@ export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, i
   // dispatch(removeSelectedNode());
   // dispatch(removeSelectedBlockNode());
   // dispatch(removeSelectedEdge());
-  dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
+  dispatch(setViewType({ view: ViewType.Tree }));
 };
 
 function ValidateBlockViewClick(numberOfSelectedElements: number, dispatch: Dispatch) {

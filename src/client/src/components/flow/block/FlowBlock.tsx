@@ -18,6 +18,8 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
+import { commonStateSelector } from "store";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -43,7 +45,8 @@ export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
-  const user = useAppSelector(selectors.userStateSelector).user;
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const user = commonState?.user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const terminals = useAppSelector(selectors.terminalsSelector);
   const library = useAppSelector(selectors.librarySelector);

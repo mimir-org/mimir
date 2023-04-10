@@ -2,9 +2,8 @@ import { Dispatch } from "redux";
 // import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 // import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../assets/size/Size";
-import { Position } from "../../../models/project";
 // import { IsOutputConnector, IsInputConnector, IsPartOfRelation } from "./Connectors";
-import { AspectObject, ConnectionPartOf, ConnectorDirection, Project } from "lib";
+import { AspectObject, ConnectionPartOf, ConnectorDirection, Position, Project } from "lib";
 import { ConnectorPartOf } from "../../../lib/classes/Connector";
 
 /**
@@ -39,9 +38,9 @@ export function HandleCreatePartOfEdge(parentNode: AspectObject, childNode: Aspe
 export function SetTreeNodePosition(parentNode: AspectObject, project: Project) {
   const marginY = 220;
   const x = SetTreeNodeXPosition(parentNode, project);
-  const y = parentNode.threePosY + marginY;
+  const y = parentNode.positionTree.posX + marginY;
 
-  return { x, y } as Position;
+  return new Position(x, y);
 }
 
 /**
@@ -60,14 +59,14 @@ export function SetTreeNodeXPosition(parentNode: AspectObject, project: Project)
 
   const marginX = Size.NODE_WIDTH + 70;
   const aspectMarginX = 35;
-  let xPos = parentNode.threePosX;
+  let xPos = parentNode.positionTree.posX;
 
   if (siblings.length === 0) return isAspect ? xPos - aspectMarginX : xPos;
   if (siblings.length === 2) return isAspect ? xPos + marginX - aspectMarginX : xPos + marginX;
 
   // Find siblings' highest or lowest X position
   siblings.forEach((s) => {
-    if ((increaseX && s?.threePosX > xPos) || (!increaseX && s?.threePosX < xPos)) xPos = s?.threePosX;
+    if ((increaseX && s?.positionTree.posX > xPos) || (!increaseX && s?.positionTree.posX < xPos)) xPos = s?.positionTree.posX;
   });
 
   return increaseX ? xPos + marginX : xPos - marginX;

@@ -1,18 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Project, ProjectItem } from "lib";
+import { Project } from "lib";
 
 // State definition
-export interface IProjectState {
+export interface ProjectState {
   fetching: string[];
   creating: boolean;
   isLocking: boolean;
   project: Project | null;
-  projectList: ProjectItem[];
+  projectList: Project[];
 }
 
 // Payload action
 export interface FetchProjectAction {
-  url: string;
+  id: string;
 }
 
 export interface FetchProjectFinishedAction {
@@ -24,11 +24,11 @@ export interface FetchProjectsAction {
 }
 
 export interface FetchProjectsFinishedAction {
-  projects: ProjectItem[];
+  projects: Project[];
 }
 
 // Initial state
-const initState: IProjectState = {
+const initState: ProjectState = {
   fetching: [],
   creating: false,
   isLocking: false,

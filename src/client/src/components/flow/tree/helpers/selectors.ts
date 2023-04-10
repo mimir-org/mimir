@@ -1,6 +1,5 @@
 export {
   projectSelector,
-  userStateSelector,
   animatedEdgeSelector,
   terminalsSelector,
   libraryAttributeTypeSelector,

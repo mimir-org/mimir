@@ -43,9 +43,6 @@ export const MENU_TYPE = {
   CONVERT_SUB_PROJECT_MENU: "ConvertSubProjectMenu",
 };
 
-export type ViewType = keyof typeof VIEW_TYPE;
-export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview" };
-
 export interface LibraryCategory {
   name: string;
   nodes: NodeLibCm[];

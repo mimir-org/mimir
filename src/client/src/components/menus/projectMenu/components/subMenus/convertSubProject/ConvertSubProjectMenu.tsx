@@ -1,5 +1,5 @@
 import { Button } from "../../../../../../compLibrary/buttons/standard";
-import { ButtonBox } from "../shared/styled/ButtonBox";
+import { ButtonBox } from "../../../../../../compLibrary/buttons/ButtonBox";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../assets/text/TextResources";

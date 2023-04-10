@@ -1,1 +1,2 @@
-export { projectApi } from "store/api/project.api";
+export { projectApi } from "./project.api";
+export { commonApi } from "./common.api";

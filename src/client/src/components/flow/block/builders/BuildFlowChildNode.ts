@@ -14,7 +14,7 @@ const BuildFlowChildNode = (childNode: AspectObject, parentNode: AspectObject) =
   if (!childNode) return null;
 
   const type = GetNodeTypeString(childNode);
-  const nodePos = { x: childNode.blockPosX, y: childNode.blockPosY };
+  const nodePos = { x: childNode.positionBlock.posX, y: childNode.positionBlock.posY };
   const position = SetChildNodePos(nodePos, parentNode);
 
   return {

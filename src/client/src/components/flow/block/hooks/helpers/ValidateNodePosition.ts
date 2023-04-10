@@ -16,8 +16,8 @@ export const ValidateNodePosition = (parentNode: AspectObject, id: string, posit
   const y = position.y;
 
   const margin = 30;
-  const xMin = parentNode.blockPosX;
-  const xMax = parentNode.blockPosX + 200 - Size.NODE_WIDTH;
+  const xMin = parentNode.positionBlock.posX;
+  const xMax = parentNode.positionBlock.posX + 200 - Size.NODE_WIDTH;
   const yMin = margin;
   const yMax = 200 - Size.NODE_HEIGHT;
 

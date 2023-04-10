@@ -1,10 +1,11 @@
-import { jsonArrayMember, jsonObject, jsonMember } from "typedjson";
-import { ProjectItem } from "./ProjectItem";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { jsonArrayMember, jsonObject } from "typedjson";
+import { Project } from "./Project";
 
 @jsonObject
 export class ProjectSearchResult {
   // Domain members
 
-  @jsonArrayMember(ProjectItem)
-  public projects: Array<ProjectItem> = [];
+  @jsonArrayMember(Project)
+  public projects: Array<Project> = [];
 }

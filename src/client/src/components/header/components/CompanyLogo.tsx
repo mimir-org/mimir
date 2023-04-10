@@ -1,5 +1,5 @@
-import { commonStateCompanySelector } from "../../../redux/store";
-import { useAppSelector } from "store";
+import { commonStateSelector, useAppSelector } from "store";
+import { CommonState } from "store/reducers/commonReducer";
 import { CompanyLogoBox } from "./../HeaderComponent.styled";
 
 /**
@@ -7,7 +7,8 @@ import { CompanyLogoBox } from "./../HeaderComponent.styled";
  * @returns an avatar.
  */
 export const CompanyLogo = () => {
-  const company = useAppSelector(commonStateCompanySelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const company = commonState?.company;
 
   return (
     <>

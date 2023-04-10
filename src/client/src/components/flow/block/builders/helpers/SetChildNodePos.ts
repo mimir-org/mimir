@@ -11,7 +11,7 @@ import { AspectObject } from "lib";
 const SetChildNodePos = (childNodePos: Position, parentNode: AspectObject) => {
   const margin = 30;
 
-  const xMin = parentNode.blockPosX;
+  const xMin = parentNode.positionBlock.posX;
   // const xMax = parentNode.width - Size.NODE_WIDTH;
   const xMax = 500 - Size.NODE_WIDTH;
   const yMin = margin;

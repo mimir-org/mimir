@@ -73,12 +73,12 @@ export class ConnectorTerminal extends Connector {
 
   // Constructor
   public constructor(lib: TerminalLibCm, direction: ConnectorDirection, aspectObject?: string) {
-    super(lib.name, direction, aspectObject);
-    this.terminalType = lib.iri;
-    this.terminalParentType = lib.parentIri;
-    this.referenceType = lib.typeReferences[0].iri;
-    this.color = lib.color;
-    this.attributes = lib.attributes?.map((x) => new Attribute(x, null, this.id)) ?? [];
+    super(lib?.name, direction, aspectObject);
+    this.terminalType = lib?.iri;
+    this.terminalParentType = lib?.parentIri;
+    this.referenceType = lib?.typeReferences[0].iri;
+    this.color = lib?.color;
+    this.attributes = lib?.attributes?.map((x) => new Attribute(x, null, this.id)) ?? [];
   }
 
   // Implementation of extended abstrackt method for converting to application model

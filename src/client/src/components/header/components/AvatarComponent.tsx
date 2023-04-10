@@ -1,14 +1,14 @@
-import * as selectors from "redux/store/selectors";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
 import { AvatarBackground } from "../../../assets/icons/header";
 import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
-import { useAppSelector } from "store";
+import { commonStateSelector, useAppSelector } from "store";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
 import { Icon } from "../../../compLibrary/icon/Icon";
 import { useState } from "react";
 import { UserMenuComponent } from "../../menus/userMenu/";
+import { CommonState } from "store/reducers/commonReducer";
 
 /**
  * Component for the avatar icon in the header of Mimir.
@@ -16,7 +16,8 @@ import { UserMenuComponent } from "../../menus/userMenu/";
  */
 export const AvatarComponent = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const username = useAppSelector(selectors.usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const userName = commonState?.user?.email ?? "";
 
   return (
     <AvatarComponentContainer>
@@ -24,7 +25,7 @@ export const AvatarComponent = () => {
         <AvatarButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
           <AvatarCircle>
             <Icon size={35} src={AvatarBackground} alt="avatar" />
-            <AvatarInitials>{GetAvatarInitials(username)}</AvatarInitials>
+            <AvatarInitials>{GetAvatarInitials(userName)}</AvatarInitials>
           </AvatarCircle>
           <Icon size={10} src={isUserMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="icon" />
         </AvatarButton>

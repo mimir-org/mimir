@@ -12,8 +12,8 @@ import { Aspect, AspectObjectType, ConnectorDirection } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { CreateId } from "components/flow/helpers";
 import type { NodeLibCm } from "@mimirorg/typelibrary-types";
-import type { Position } from "models/project";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
+import { Position } from "./Position";
 
 @jsonObject({
   knownTypes: [ConnectorTerminal, ConnectorRelation, ConnectorPartOf, ConnectorFulfilledBy, ConnectorHasLocation],
@@ -50,17 +50,11 @@ export class AspectObject {
   @jsonMember(String)
   public libraryType: string;
 
-  @jsonMember(Number)
-  public threePosX: number;
+  @jsonMember(Position)
+  public positionTree: Position;
 
-  @jsonMember(Number)
-  public threePosY: number;
-
-  @jsonMember(Number)
-  public blockPosX: number;
-
-  @jsonMember(Number)
-  public blockPosY: number;
+  @jsonMember(Position)
+  public positionBlock: Position;
 
   @jsonMember(String)
   public referenceType: string;
@@ -111,36 +105,43 @@ export class AspectObject {
    * Constructor.
    * @params lib The library type to be constructed from.
    * @params project Current project id.
-   * @params position The aspect object position from top left corner.
+   * @params positionTree The x,y position or coordinate in tree view.
+   * @params positionBlock The x,y position or coordinate in block view.
+   * @params createdBy The creator username.
    * @params mainProject The originally project owner id.
    */
-  public constructor(lib: NodeLibCm, project: string, position?: Position, createdBy?: string, mainProject?: string) {
+  public constructor(
+    lib: NodeLibCm,
+    project: string,
+    positionTree: Position,
+    positionBlock: Position,
+    createdBy?: string,
+    mainProject?: string
+  ) {
     this.id = CreateId();
-    this.rds = lib.rdsCode;
-    this.description = lib.description;
-    this.referenceType = lib.typeReferences != null && lib.typeReferences.length > 0 ? lib.typeReferences[0].iri : null;
-    this.name = lib.name;
+    this.rds = lib?.rdsCode;
+    this.description = lib?.description;
+    this.referenceType = lib?.typeReferences != null && lib.typeReferences.length > 0 ? lib.typeReferences[0].iri : null;
+    this.name = lib?.name;
     this.label = null;
 
-    this.threePosX = position == null ? 50.0 : position.x;
-    this.threePosY = position == null ? 50.0 : position.y;
-    this.blockPosX = position == null ? 50.0 : position.x;
-    this.blockPosY = position == null ? 50.0 : position.y;
+    this.positionTree = positionTree;
+    this.positionBlock = positionBlock;
     this.updated = null;
     this.updatedBy = null;
     this.created = new Date();
     this.createdBy = createdBy == null ? "system" : createdBy;
-    this.libraryType = lib.iri;
+    this.libraryType = lib?.iri;
     this.version = "1.0";
-    this.aspect = lib.aspect;
+    this.aspect = lib?.aspect;
     this.mainProject = mainProject == null ? project : mainProject;
-    this.symbol = lib.symbol;
-    this.purpose = lib.purposeName;
+    this.symbol = lib?.symbol;
+    this.purpose = lib?.purposeName;
     this.project = project;
-    this.attributes = lib.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
+    this.attributes = lib?.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
     // TODO: Also create default connectors
-    this.connectors = lib.nodeTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
+    this.connectors = lib?.nodeTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
     this.isLocked = false;
     this.isLockedStatusBy = null;
     this.isLockedStatusDate = null;
@@ -151,8 +152,11 @@ export class AspectObject {
     this.domain = ""; // TODO: Resolve domain
   }
 
-  public convertToFlowNode(name: "Block" | "Tree"): FlowNode {
-    const position: XYPosition = { x: this.threePosX, y: this.threePosY };
+  public toFlowNode(name: "Block" | "Tree"): FlowNode {
+    const position: XYPosition = {
+      x: name === "Block" ? this.positionBlock.posX : this.positionTree.posX,
+      y: name === "Block" ? this.positionBlock.posY : this.positionTree.posY,
+    };
     const node: FlowNode = {
       id: this.id,
       type: this.getComponentType(),

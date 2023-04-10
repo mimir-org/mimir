@@ -1,11 +1,9 @@
 import createSagaMiddleware from "redux-saga";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
-import userReducer from "./user/userSlice";
 import modulesReducer from "./modules/modulesSlice";
 import menuReducer from "../../components/menus/projectMenu/components/subMenus/redux/menuSlice";
-import flowReducer from "./flow/flowSlice";
 import electroReducer from "./electro/electroSlice";
-import commonReducer from "./common/commonSlice";
+import commonReducer from "store/reducers/commonReducer";
 import darkModeReducer from "./darkMode/darkModeSlice";
 import customCategoryReducer from "./customCategory/customCategorySlice";
 import validationReducer from "./validation/validationSlice";
@@ -20,11 +18,9 @@ import { rootSaga } from "../sagas";
 const rootReducers = combineReducers({
   library: libraryReducer,
   inspector: inspectorReducer,
-  userState: userReducer,
   projectState: projectReducer,
   modules: modulesReducer,
   menu: menuReducer,
-  flow: flowReducer,
   electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,

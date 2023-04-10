@@ -81,6 +81,7 @@ export const InspectorHeader = ({
         changeInspectorHeightAction={changeInspectorHeightAction}
         project={project}
         dispatch={dispatch}
+        isBlockView={isBlockView}
       />
     </InspectorHeaderBox>
   );

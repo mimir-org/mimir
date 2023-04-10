@@ -1,12 +1,11 @@
 import { ReactFlowInstance } from "react-flow-renderer";
 // import { addNode, mergeSubProject } from "../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
-import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { AspectObject, Project } from "lib";
+import { AspectObject, Position, Project, User } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -59,9 +58,9 @@ function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDrop
 
   // Position for both treeView and blockView must be set
   const treePosition = SetTreeNodePosition(parentNode, project);
-  const blockPosition = { x: parentNode.threePosX, y: parentNode.threePosY };
+  const blockPosition = new Position(parentNode.positionBlock.posX, parentNode.positionBlock.posY);
 
-  const aspectObject = new AspectObject(libNode, project.id, treePosition, user.email);
+  const aspectObject = new AspectObject(libNode, project.id, treePosition, blockPosition, user.email);
 
   // const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user, terminals);
   if (IsFamily(parentNode, aspectObject)) HandleCreatePartOfEdge(parentNode, aspectObject, project, dispatch);

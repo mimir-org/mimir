@@ -9,7 +9,6 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
-import { IsBlockView } from "../../../../../helpers";
 import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
 import { useAppSelector } from "store";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
@@ -32,6 +31,7 @@ interface Props {
   changeInspectorHeightAction: (height: number) => Action;
   project: Project;
   dispatch: Dispatch;
+  isBlockView: boolean;
 }
 
 /**
@@ -51,6 +51,7 @@ export const InspectorButtonsComponent = ({
   changeInspectorHeightAction,
   project,
   dispatch,
+  isBlockView,
 }: Props) => {
   const [onLock, setOnLock] = useState(false);
   // const isLocked = element?.isLocked; TODO: resolve this
@@ -62,7 +63,7 @@ export const InspectorButtonsComponent = ({
   const deleteDisabled =
     isLocked ||
     (element instanceof AspectObject && IsAspectNode(element)) ||
-    (IsBlockView() && element?.id === selectedBlockNode?.id);
+    (isBlockView && element?.id === selectedBlockNode?.id);
 
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
 

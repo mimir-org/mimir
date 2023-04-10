@@ -1,1 +1,1 @@
-export { usernameSelector, projectStateSelector } from "../../../../redux/store/selectors";
+export { projectStateSelector } from "../../../../redux/store/selectors";

@@ -1,12 +1,12 @@
 import { changeActiveMenu } from "../../redux/menuSlice";
 // import { changeSelectedProject, closeProject } from "../../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
-import { changeFlowView } from "../../../../../../../redux/store/flow/flowSlice";
-import { ViewType, VIEW_TYPE } from "../../../../../../../models/project";
+import { setViewType } from "store/reducers/commonReducer";
+import { ViewType } from "lib";
 
 const OnProjectCloseClick = (dispatch: Dispatch) => {
   dispatch(changeActiveMenu(null));
-  dispatch(changeFlowView(VIEW_TYPE.STARTPAGE as ViewType));
+  dispatch(setViewType({ view: ViewType.Home }));
   // dispatch(changeSelectedProject(null));
   // dispatch(closeProject());
 };

@@ -1,39 +1,82 @@
 using System;
 using System.Collections.Generic;
+using Mb.Models.Client;
+using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Core.Controllers.temp
 {
     public class ProjectSearchResultCm
     {
-        public ICollection<ProjectItemCm> Projects { get; set; } = new List<ProjectItemCm>();
+        public ICollection<ProjectCm> Projects { get; set; } = new List<ProjectCm>();
 
         public void CreateDummyData()
         {
-            Projects.Add(new ProjectItemCm
+            Projects.Add(new ProjectCm
             {
                 Id = "1234",
-                Iri = "https://runir.net/1234",
                 Description = "This is a description",
-                Domain = "runir.net",
                 Name = "Reidar test project",
-                ProjectOwner = "Reidar Liabø",
                 Updated = DateTime.Now.AddDays(-5),
                 UpdatedBy = "reidar-liabo@gmail.com",
-                Version = "1.0"
+                Version = "1.0",
+                Connections = new List<ConnectionCm>(),
+                AspectObjects = CreateDummyAspectObjects(),
+                Created = DateTime.Now,
+                CreatedBy = "Reidar Liabø",
+                SubProject = false
             });
+        }
+
+        private ICollection<AspectObjectCm> CreateDummyAspectObjects()
+        {
+            var obj = new List<AspectObjectCm>();
+
+            obj.Add(new AspectObjectCm
+            {
+                Id = "3456",
+                Created = DateTime.Now,
+                CreatedBy = "Reidar Laibø",
+                Aspect = Aspect.Function,
+                AspectObjectType = AspectObjectType.Aspect,
+                Attributes = new List<AttributeCm>
+                {
+                    new AttributeCm
+                    {
+                        Id = "hoig64tfd",
+                        Name = "Test Attribute",
+                        AspectObject = "3456"
+                    }
+                },
+                Connectors = new List<ConnectorCm>
+                {
+                    new ConnectorPartOfCm
+                    {
+                        Id = "cp123",
+                        AspectObject = "3456",
+                        Name = "Part Of A",
+                        Direction = ConnectorDirection.Output,
+                        Inside = "fgerde-in",
+                        Outside = "fgerde-out",
+                    },
+                    new ConnectorTerminalCm()
+                    {
+                        Id = "cp123",
+                        AspectObject = "3456",
+                        Name = "Part Of A",
+                        Direction = ConnectorDirection.Output,
+                        Inside = "fgerde-in",
+                        Outside = "fgerde-out",
+                        Attributes = new List<AttributeCm>(),
+                        Color = "#CCCCCC",
+                        
+                    }
+                }
+            });
+
+            return obj;
         }
     }
 
-    public class ProjectItemCm
-    {
-        public string Id { get; set; }
-        public string Iri { get; set; }
-        public string Domain { get; set; }
-        public string Name { get; set; }
-        public string Version { get; set; }
-        public string Description { get; set; }
-        public string ProjectOwner { get; set; }
-        public DateTime Updated { get; set; }
-        public string UpdatedBy { get; set; }
-    }
+    
 }

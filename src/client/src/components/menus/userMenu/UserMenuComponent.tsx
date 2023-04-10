@@ -1,4 +1,3 @@
-import * as selectors from "../../home/helpers/selectors";
 import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
@@ -6,9 +5,9 @@ import { memo, useRef } from "react";
 import { OnToggleDarkMode, OnLogOutClick } from "./handlers/OnUserMenuClick";
 import { Icon } from "../../../compLibrary/icon/Icon";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
-import { userStateSelector } from "../../../redux/store";
-import { useAppSelector, useAppDispatch } from "store";
+import { useAppSelector, useAppDispatch, commonStateSelector } from "store";
 import { Box, Element, Text, UserNameBox, UserNameRoleText, UserNameText } from "./UserMenuComponent.styled";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   setIsUserMenuOpen: (value: boolean) => void;
@@ -21,8 +20,8 @@ interface Props {
  */
 export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
-  const userState = useAppSelector(userStateSelector);
-  const isDarkMode = useAppSelector(selectors.darkModeSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const isDarkMode = false;
 
   const menuRef = useRef(null);
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
@@ -30,8 +29,8 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   return (
     <Box id={MENU_TYPE.USER_MENU} ref={menuRef}>
       <UserNameBox>
-        <UserNameText>{userState.user && userState.user.name}</UserNameText>
-        <UserNameRoleText>{userState?.user?.role ?? TextResources.USER}</UserNameRoleText>
+        <UserNameText>{commonState?.user?.name ?? ""}</UserNameText>
+        <UserNameRoleText>{commonState?.user?.role ?? TextResources.USER}</UserNameRoleText>
       </UserNameBox>
 
       <Element onClick={() => OnToggleDarkMode(dispatch, isDarkMode)}>

@@ -40,11 +40,11 @@ export class Attribute {
 
   public constructor(lib: AttributeLibCm, aspectObject?: string, connectorTerminal?: string) {
     this.id = CreateId();
-    this.name = lib.name;
+    this.name = lib?.name;
     this.value = null;
-    this.attributeType = lib.iri;
-    this.unitSelected = lib.units?.find((x) => x.isDefault)?.iri;
-    this.units = lib.units?.map((x) => new Unit(x)) ?? [];
+    this.attributeType = lib?.iri;
+    this.unitSelected = lib?.units?.find((x) => x.isDefault)?.iri;
+    this.units = lib?.units?.map((x) => new Unit(x)) ?? [];
     this.connectorTerminal = connectorTerminal == null ? null : connectorTerminal;
     this.aspectObject = aspectObject == null ? null : aspectObject;
     this.isLocked = false;

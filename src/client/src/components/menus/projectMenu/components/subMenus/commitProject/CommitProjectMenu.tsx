@@ -1,27 +1,25 @@
-import * as selectors from "./helpers/selectors";
 import { Button } from "../../../../../../compLibrary/buttons/standard";
-import { ButtonBox } from "../shared/styled/ButtonBox";
+import { ButtonBox } from "../../../../../../compLibrary/buttons/ButtonBox";
 import { CommitProjectIcon } from "../../../../../../assets/icons/project";
-import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
+import { Dropdown } from "compLibrary/dropdown/Dropdown";
 import { Label } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "store";
+import { commonStateSelector, useAppDispatch, useAppSelector } from "store";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 import { ModuleDescription } from "lib";
+import { CommonState } from "store/reducers/commonReducer";
 
 export const CommitProjectMenu = () => {
   const dispatch = useAppDispatch();
-  const parsers = useAppSelector(selectors.commonStateParsersSelector);
-  const projectId = useAppSelector(selectors.projectIdSelector);
-  const companies = useAppSelector(selectors.commonStateCompaniesSelector);
-  const [parser, setParser] = useState(parsers[0]);
-  const [collaborationPartner, setCollaborationPartner] = useState(companies[0]);
-  const isActionDisabled = !(collaborationPartner && parser && projectId);
-  const onAction = () => OnCommitProjectClick(dispatch, projectId, parser.id, collaborationPartner.domain);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const [parser, setParser] = useState(commonState?.parsers[0]);
+  const [collaborationPartner, setCollaborationPartner] = useState(commonState?.companies[0]);
+  const isActionDisabled = !(collaborationPartner && parser && null); // TODO: projectId
+  const onAction = () => OnCommitProjectClick(dispatch, null, parser.id, collaborationPartner.domain);
   const onExit = () => OnReturnClick(dispatch);
 
   return (
@@ -31,7 +29,7 @@ export const CommitProjectMenu = () => {
         <Dropdown
           label="Collaboration partner"
           valueProp="name"
-          items={companies}
+          items={commonState?.companies ?? []}
           keyProp="id"
           onChange={(item: MimirorgCompanyCm) => setCollaborationPartner(item)}
         />
@@ -39,7 +37,7 @@ export const CommitProjectMenu = () => {
         <Dropdown
           label="Collaboration partner"
           valueProp="name"
-          items={parsers}
+          items={commonState?.parsers ?? []}
           keyProp="id"
           onChange={(item: ModuleDescription) => setParser(item)}
         />

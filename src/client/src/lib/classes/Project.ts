@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   AspectObject,
   Connection,
@@ -17,6 +18,7 @@ import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode } from
 import { ConnectorDirection } from "../enums/Direction";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { CreateId } from "components/flow/helpers";
+import { ProjectListItem } from "components/dialogs/project/types";
 
 @jsonObject({
   knownTypes: [ConnectionTerminal, ConnectionRelation, ConnectionFulfilledBy, ConnectionHasLocation, ConnectionPartOf],
@@ -76,6 +78,20 @@ export class Project {
     this.connections = [];
   }
 
+  public toProjectListItem(): ProjectListItem {
+    const item: ProjectListItem = {
+      id: this.id,
+      name: this.name,
+      creator: this.createdBy,
+      version: this.version,
+      updated: this.updated,
+      description: this.description,
+      selected: false,
+    };
+
+    return item;
+  }
+
   /**
    * Convert aspect objects to flow nodes.
    * @params type Usage type. Could be block or tree.
@@ -85,7 +101,7 @@ export class Project {
   public toFlowNodes(type: "Block" | "Tree", parent?: string): FlowNode[] {
     if (this.aspectObjects == null) return [];
     if (parent == null) {
-      return this.aspectObjects.map((x) => x.convertToFlowNode(type));
+      return this.aspectObjects.map((x) => x.toFlowNode(type));
     } else {
       const parentObject = this.aspectObjects.find((x) => x.id === parent);
       if (parentObject == null) return [];
@@ -93,7 +109,7 @@ export class Project {
       const children = this.getChildrenAspectObject(parent);
       children.unshift(parentObject);
 
-      return children.map((x) => x.convertToFlowNode(type));
+      return children.map((x) => x.toFlowNode(type));
     }
   }
 

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import CreateId from "../../components/flow/helpers/CreateId";
 import { Edge as FlowEdge } from "react-flow-renderer";
-import { jsonMember, jsonObject } from "typedjson";
+import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
+import { Handle } from "./Handle";
 
 /**
  * Abstract Connection class.
@@ -25,6 +26,9 @@ export abstract class Connection {
   @jsonMember(String)
   public mainProject: string;
 
+  @jsonArrayMember(Handle)
+  public handles: Array<Handle>;
+
   // Client members
   public selected: boolean;
   public hidden: boolean;
@@ -42,6 +46,7 @@ export abstract class Connection {
     this.toConnector = toConnector;
     this.project = project;
     this.mainProject = mainProject != null ? mainProject : project;
+    this.handles = [];
     this.selected = false;
     this.hidden = false;
   }

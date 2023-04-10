@@ -1,12 +1,13 @@
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
-import { usernameSelector, projectStateSelector } from "../../../redux/store";
-import { useAppSelector } from "store";
+import { projectStateSelector } from "../../../redux/store";
+import { commonStateSelector, useAppSelector } from "store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 // import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   dispatch: Dispatch;
@@ -17,7 +18,7 @@ interface Props {
  * @returns drop-down menus with checkboxes for each Aspect.
  */
 export const TreeProjectComponent = ({ dispatch }: Props) => {
-  const username = useAppSelector(usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const projectState = useAppSelector(projectStateSelector);
   const project = projectState?.project;
   const nodes = project?.aspectObjects;
@@ -44,7 +45,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
         return (
           <TreeAspectComponent
             key={node.id}
-            username={username}
+            username={commonState?.user?.email ?? ""}
             node={node}
             indent={indent}
             isExpanded={expanded}

@@ -21,10 +21,10 @@ export { LibrarySubProject, LibrarySubProjectVersion } from "./LibrarySubProject
 export { ModuleDescription } from "./ModuleDescription";
 export { Project } from "./Project";
 export { ProjectSearchResult } from "./ProjectSearchResult";
-export { ProjectItem } from "./ProjectItem";
 export { TypeReference } from "./TypeReference";
 export { Unit } from "./Unit";
 export { Prepare } from "./Prepare";
 export { Lock } from "./Lock";
 export { Qualifier } from "./Qualifier";
 export { FileFormat, ProjectFileAm } from "./ProjectFileAm";
+export { Position } from "./Position";

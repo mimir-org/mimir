@@ -7,10 +7,9 @@ import {
   isProjectStateGloballyLockingSelector,
   projectIdSelector,
   qunatityDatumSelector,
-  usernameSelector,
   libraryAttributeTypeSelector,
 } from "../../../../../../redux/store";
-import { useAppSelector, useAppDispatch } from "store";
+import { useAppSelector, useAppDispatch, commonStateSelector } from "store";
 import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
 import {
   OnAddNodeAttribute,
@@ -22,6 +21,7 @@ import {
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
 import { AspectObject, Attribute, ConnectorTerminal } from "lib";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   attributesElem: InspectorAttributesElement;
@@ -38,7 +38,7 @@ interface Props {
 export const AttributesComponent = ({ attributesElem, inspectorParentElem, attributeItems }: Props) => {
   const attributes = attributeItems ?? GetAttributes(attributesElem);
   const dispatch = useAppDispatch();
-  const username = useAppSelector(usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
   const quantityDatums = useAppSelector(qunatityDatumSelector);
@@ -100,7 +100,15 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
                   handleAttributeChange(attributeId, property, value)
                 }
                 onLock={(attr, isLocked) =>
-                  OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
+                  OnLockParameter(
+                    inspectorParentElem,
+                    attr,
+                    projectId,
+                    isLocked,
+                    commonState?.user?.email ?? "",
+                    setLockingAttribute,
+                    dispatch
+                  )
                 }
                 onAddAttribute={onAddAttribute}
                 onRemoveAttribute={onRemoveAttribute}

@@ -7,7 +7,6 @@ import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { LibraryTab, CollectionsActions } from "../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-// import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
   animatedModuleSelector,
   libOpenSelector,

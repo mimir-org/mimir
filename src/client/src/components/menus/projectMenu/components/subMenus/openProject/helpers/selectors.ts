@@ -1,7 +1,1 @@
-export {
-  isActiveMenuSelector,
-  isActiveViewSelector,
-  projectListSelector,
-  projectSelector,
-  flowViewSelector,
-} from "../../../../../../../redux/store/selectors";
+export { isActiveMenuSelector, projectListSelector, projectSelector } from "../../../../../../../redux/store/selectors";

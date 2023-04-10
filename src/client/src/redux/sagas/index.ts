@@ -1,10 +1,8 @@
 import { all, spawn, takeEvery } from "redux-saga/effects";
 import { projectSaga } from "store/sagas/project";
-import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
 import { webSocketSaga } from "../../modules/cooperate/saga";
-import { getUser } from "./user/saga";
-import { fetchUser } from "../store/user/userSlice";
+import { commonSaga } from "store/sagas/common";
 import {
   exportLibrary,
   getQuantityDatums,
@@ -53,7 +51,7 @@ import {
 //TODO: Add takeEvery for LOCK_ on
 function* sagas() {
   yield all([
-    takeEvery(fetchUser, getUser),
+    // takeEvery(fetchUser, getUser),
     // takeEvery(CREATING_PROJECT, createProject),
     // takeEvery(CREATING_SUB_PROJECT, createSubProject),
     // takeEvery(FETCHING_PROJECT, getProject),

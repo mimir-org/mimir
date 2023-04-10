@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import * as Icons from "../../../assets/icons/project";
-import { MenuElement } from "./components/MenuElement";
+import { MenuElement } from "../../../compLibrary/menu/MenuElement";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -9,6 +9,8 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { activeMenuSelector, projectSelector } from "../../../redux/store";
 import { useAppDispatch, useAppSelector } from "store";
 import { GetSelectedFlowNodes } from "../../../helpers/Selected";
+import { DialogType } from "lib";
+import { setDialogType } from "store/reducers/commonReducer";
 
 interface Props {
   setIsUserMenuOpen: (value: boolean) => void;
@@ -33,6 +35,11 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
     callback();
   };
 
+  const OnOpenClick = (dialog: DialogType) => {
+    // dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+    dispatch(setDialogType({ dialog: dialog }));
+  };
+
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
   const convertProjectText = project?.subProject
     ? TextResources.MAKE_DISABLE_SUBPROJECT
@@ -43,12 +50,12 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <MenuElement
         text={TextResources.PROJECT_OPEN}
         icon={Icons.OpenProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnOpenClick(dispatch))}
+        onClick={() => projectMenuAction(() => OnOpenClick(DialogType.Project))}
       />
       <MenuElement
         text={TextResources.PROJECT_CREATE}
         icon={Icons.CreateProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnCreateClick(dispatch))}
+        onClick={() => projectMenuAction(() => OnOpenClick(DialogType.CreateProject))}
       />
       <MenuElement
         text={TextResources.PROJECT_SAVE}
@@ -66,7 +73,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <MenuElement
         text={TextResources.PROJECT_IMPORT}
         icon={Icons.ImportProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnImportProjectFile(dispatch))}
+        onClick={() => projectMenuAction(() => OnOpenClick(DialogType.ImportProject))}
       />
       <MenuElement
         text={TextResources.PROJECT_EXPORT}

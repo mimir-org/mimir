@@ -1,6 +1,6 @@
 import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
 import { FontSize } from "../../../../../../../../../../../assets/font";
-import { Dropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
+import { Dropdown } from "compLibrary/dropdown/Dropdown";
 import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptorValue } from "./AttributeDescriptor.styled";
 
 interface Props {

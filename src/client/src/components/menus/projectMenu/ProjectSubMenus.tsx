@@ -2,13 +2,14 @@ import { MENU_TYPE } from "../../../models/project";
 import { projectIsSubProjectSelector } from "../../../redux/store";
 import { useAppSelector } from "store";
 import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
-import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
+// import { CreateProjectMenu } from "../../dialogs/createProject/CreateProject";
 import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";
 import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
 import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
-import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
-import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMenu";
+// import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
 import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
+import { setDialogType } from "store/reducers/commonReducer";
+import { DialogType } from "lib";
 
 interface Props {
   activeMenu: string;
@@ -34,10 +35,16 @@ export const ProjectSubMenus = ({ activeMenu }: Props) => {
 
   return (
     <>
-      {isOpenProjectMenuOpen && <OpenProjectMenu />}
-      {isCreateProjectMenuOpen && <CreateProjectMenu />}
+      {/* <ProjectDialog
+        onOpenProject={onOpenProject}
+        onSearchBarChange={onSearchBarChange}
+        projects={[]}
+        open={isOpenProjectMenuOpen}
+      /> */}
+
+      {/* {isCreateProjectMenuOpen && <CreateProjectMenu />} */}
       {isCloseProjectMenuOpen && <CloseProjectMenu />}
-      {isImportProjectFileMenuOpen && <ImportProjectFileMenu />}
+      {/* {isImportProjectFileMenuOpen && <ImportProjectFileMenu />} */}
       {isExportProjectFileMenuOpen && <ExportProjectFileMenu />}
       {isCommitProjectMenuOpen && !isSubProject && <CommitProjectMenu />}
       {isCreateSubProjectMenu && <CreateSubProjectMenu />}

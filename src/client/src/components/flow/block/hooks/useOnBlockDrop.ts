@@ -1,13 +1,11 @@
 import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Dispatch } from "redux";
 // import { addNode } from "../../../../redux/store/project/actions";
-import { User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../assets/size/Size";
-import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { AspectObject, Project } from "lib";
+import { AspectObject, Position, Project, User } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -55,7 +53,7 @@ function HandleLibNodeDrop({ event, project, user, selectedNode, getViewport, di
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
   // const convertedNode = ConvertLibNodeToNode(nodeLib, selectedNode, treePosition, blockPosition, project.id, user, terminals);
-  const aspectObject = new AspectObject(libNode, project.id, treePosition, user.email);
+  const aspectObject = new AspectObject(libNode, project.id, treePosition, blockPosition, user.email);
   // convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
 
   if (IsFamily(selectedNode, aspectObject)) HandleCreatePartOfEdge(selectedNode, aspectObject, project, dispatch);
@@ -68,7 +66,7 @@ function HandleLibNodeDrop({ event, project, user, selectedNode, getViewport, di
  * @param event
  * @returns a Position object.
  */
-function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<HTMLDivElement>) {
+function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<HTMLDivElement>): Position {
   const defaultMarginX = 45;
   const defaultMarginY = 43;
 
@@ -82,7 +80,7 @@ function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<H
     y = event.clientY + absY;
   }
 
-  return { x, y } as Position;
+  return new Position(x, y);
 }
 
 export default useOnBlockDrop;

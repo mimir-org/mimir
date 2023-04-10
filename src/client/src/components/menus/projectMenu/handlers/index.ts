@@ -1,4 +1,3 @@
-export { OnOpenClick } from "./OnOpenClick";
 export { OnCreateClick } from "./OnCreateClick";
 export { OnSaveProjectClick } from "./OnSaveProjectClick";
 export { OnCloseProjectClick } from "./OnCloseProjectClick";

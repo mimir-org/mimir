@@ -1,13 +1,13 @@
 import * as helpers from "./helpers";
 import { useMemo } from "react";
-import { IsBlockView } from "../../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { LibNodeCollection } from "./LibNodeCollection";
 import { CollectionsActions } from "../../../../../../../../../models";
 import { customCategorySelector, librarySelector } from "../../../../../../../../../redux/store";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect, AspectObject } from "lib";
-import { useAppSelector } from "store";
+import { Aspect, AspectObject, ViewType } from "lib";
+import { commonStateSelector, useAppSelector } from "store";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -32,12 +32,12 @@ export const LibNodeCollectionList = ({
 }: Props) => {
   const dispatch = useDispatch();
   const libState = useAppSelector(librarySelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const customCategory = useAppSelector(customCategorySelector);
-  const isBlockView = IsBlockView();
 
   const validLibItems = useMemo(
-    () => helpers.GetValidLibItems(selectedNode, libState, isBlockView),
-    [selectedNode, libState, isBlockView]
+    () => helpers.GetValidLibItems(selectedNode, libState, commonState?.view === ViewType.Block),
+    [selectedNode, libState, commonState]
   );
 
   const allLibItems = helpers.GetSharedCategory(validLibItems);

@@ -9,12 +9,12 @@ import { InspectorResizePanel } from "./InspectorModule.styled";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
-import { useAppSelector, useParametricAppSelector } from "store";
+import { useAppSelector, useParametricAppSelector, commonStateSelector } from "store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
-import { Project } from "lib";
+import { Project, ViewType } from "lib";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -29,13 +29,12 @@ interface Props {
 export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector<Project>(selectors.projectSelector);
-  const username = useAppSelector(selectors.usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
   const inspectorOpen = useAppSelector(selectors.inspectorSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
-  const isBlockView = IsBlockView();
   const selectedFlowNodes = GetSelectedFlowNodes();
 
   const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
@@ -47,7 +46,7 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
 
-  useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
+  useAutoMinimizeInspector(inspectorRef, commonState?.view === ViewType.Block, selectedFlowNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
   const changeInspectorVisibilityAction = useCallback(
@@ -74,10 +73,10 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
       <InspectorHeader
         project={project}
         element={element}
-        username={username}
+        username={commonState?.user?.email ?? ""}
         dispatch={dispatch}
         open={inspectorOpen}
-        isBlockView={isBlockView}
+        isBlockView={commonState?.view === ViewType.Block}
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}

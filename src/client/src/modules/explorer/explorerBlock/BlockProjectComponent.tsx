@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { useAppDispatch, useAppSelector } from "store";
+import { commonStateSelector, useAppDispatch, useAppSelector } from "store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
@@ -7,6 +7,7 @@ import { ProjectContentContainer } from "../shared/styled/ProjectComponent.style
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { useReactFlow } from "react-flow-renderer";
 import { ViewportData } from "../../../models/project";
+import { CommonState } from "store/reducers/commonReducer";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -19,7 +20,7 @@ export const BlockProjectComponent = () => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
   const projectState = useAppSelector(selectors.projectStateSelector);
-  const username = useAppSelector(selectors.usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const project = projectState?.project;
   const nodes = project?.aspectObjects;
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
@@ -39,7 +40,7 @@ export const BlockProjectComponent = () => {
         return (
           <BlockAspectComponent
             key={node.id}
-            username={username}
+            username={commonState?.user?.email ?? ""}
             node={node}
             nodes={nodes}
             selectedBlockNode={selectedBlockNode}

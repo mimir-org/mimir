@@ -24,7 +24,7 @@ import {
   fetchLibraryTransportTypes,
   fetchSubProjects,
 } from "../../redux/store/library/librarySlice";
-import { IProjectState } from "store/reducers/projectReducer";
+import { ProjectState } from "store/reducers/projectReducer";
 import { AspectObject, Connection, EntityType } from "lib";
 
 let instance = null;
@@ -33,7 +33,7 @@ export class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
   private _dispatch: Dispatch;
-  private _projectState: IProjectState;
+  private _projectState: ProjectState;
   private _group: string;
 
   constructor() {
@@ -92,7 +92,7 @@ export class WebSocket {
     this._dispatch = dispatch;
   }
 
-  public setProjectState(projectState: IProjectState) {
+  public setProjectState(projectState: ProjectState) {
     this._projectState = projectState;
   }
 
