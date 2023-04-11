@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
 
 namespace Mb.Api;
 
@@ -31,7 +31,7 @@ public class Startup
         {
             o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            o.SerializerSettings.TypeNameHandling = TypeNameHandling.None;
+            o.SerializerSettings.TypeNameHandling = TypeNameHandling.Objects;
         });
 
         // Add Cors policy

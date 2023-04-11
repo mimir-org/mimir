@@ -1,8 +1,7 @@
+using Mimirorg.TypeLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mimirorg.Common.Extensions;
-using Mimirorg.TypeLibrary.Enums;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data;
@@ -66,7 +65,6 @@ public class ConnectorTerminalDm : ConnectorDm, IEquatable<ConnectorTerminalDm>
 
     [NotMapped]
     public string Discriminator { get; set; }
-
 
     public bool Equals(ConnectorTerminalDm other)
     {
