@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Mb.Services.Services;
 
@@ -73,7 +74,9 @@ public class ProjectService : IProjectService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
+        var urlDecodedId = HttpUtility.UrlDecode(id);
+
+        var projectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{urlDecodedId}" : urlDecodedId;
 
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
