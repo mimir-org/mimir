@@ -67,7 +67,7 @@ public class ProjectService : IProjectService
     /// attributes and connectors.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>The actual project</returns>
+    /// <returns>The actual project as CM</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
     public async Task<ProjectCm> GetById(string id)
     {
@@ -75,15 +75,29 @@ public class ProjectService : IProjectService
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
         var urlDecodedId = HttpUtility.UrlDecode(id);
-
         var projectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{urlDecodedId}" : urlDecodedId;
-
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
-        if (project == null)
-            throw new MimirorgNotFoundException($"Could not find project with id: {id}");
+        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectCm>(project);
+    }
 
-        return _mapper.Map<ProjectCm>(project);
+    /// <summary>
+    /// Get a project by Id or Iri. The project will include all connections, aspectObjects,
+    /// attributes and connectors.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>The actual project as AM</returns>
+    /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
+    public async Task<ProjectAm> GetAmById(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new MimirorgNotFoundException("Id can't be null og empty.");
+
+        var urlDecodedId = HttpUtility.UrlDecode(id);
+        var projectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{urlDecodedId}" : urlDecodedId;
+        var project = await _projectRepository.GetAsyncComplete(projectId);
+
+        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectAm>(project);
     }
 
     /// <summary>

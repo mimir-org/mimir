@@ -16,6 +16,10 @@ namespace Mb.Core.Profiles
             CreateMap<PositionDm, PositionCm>()
                 .ForMember(dest => dest.PosX, opt => opt.MapFrom(src => src.PosX))
                 .ForMember(dest => dest.PosY, opt => opt.MapFrom(src => src.PosY));
+
+            CreateMap<PositionDm, PositionAm>()
+                .ForMember(dest => dest.PosX, opt => opt.MapFrom(src => src.PosX))
+                .ForMember(dest => dest.PosY, opt => opt.MapFrom(src => src.PosY));
         }
     }
 }

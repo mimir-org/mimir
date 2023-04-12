@@ -28,6 +28,14 @@ public class ConnectionProfile : Profile
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleCm>(src.Handles)));
 
+        CreateMap<ConnectionDm, ConnectionAm>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
+            .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
+            .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
+            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
+            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleAm>(src.Handles)));
+
         #endregion Connection
 
         #region ConnectionTerminal
@@ -42,6 +50,11 @@ public class ConnectionProfile : Profile
             .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
             .IncludeBase<ConnectionDm, ConnectionCm>();
 
+        CreateMap<ConnectionTerminalDm, ConnectionTerminalAm>()
+            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
+            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
+            .IncludeBase<ConnectionDm, ConnectionAm>();
+
         #endregion ConnectionTerminal
 
         #region ConnectionRelation
@@ -51,6 +64,9 @@ public class ConnectionProfile : Profile
 
         CreateMap<ConnectionRelationDm, ConnectionRelationCm>()
             .IncludeBase<ConnectionDm, ConnectionCm>();
+
+        CreateMap<ConnectionRelationDm, ConnectionRelationAm>()
+            .IncludeBase<ConnectionDm, ConnectionAm>();
 
         #endregion ConnectionRelation
 
@@ -62,6 +78,9 @@ public class ConnectionProfile : Profile
         CreateMap<ConnectionFulfilledByDm, ConnectionFulfilledByCm>()
             .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
 
+        CreateMap<ConnectionFulfilledByDm, ConnectionFulfilledByAm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationAm>();
+
         #endregion ConnectionFulfilledBy
 
         #region ConnectionHasLocation
@@ -72,6 +91,9 @@ public class ConnectionProfile : Profile
         CreateMap<ConnectionHasLocationDm, ConnectionHasLocationCm>()
             .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
 
+        CreateMap<ConnectionHasLocationDm, ConnectionHasLocationAm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationAm>();
+
         #endregion ConnectionHasLocation
 
         #region ConnectionPartOf
@@ -81,6 +103,9 @@ public class ConnectionProfile : Profile
 
         CreateMap<ConnectionPartOfDm, ConnectionPartOfCm>()
             .IncludeBase<ConnectionRelationDm, ConnectionRelationCm>();
+
+        CreateMap<ConnectionPartOfDm, ConnectionPartOfAm>()
+            .IncludeBase<ConnectionRelationDm, ConnectionRelationAm>();
 
         #endregion ConnectionPartOf
     }

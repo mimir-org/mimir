@@ -1,19 +1,20 @@
+using AutoMapper;
+using Mb.Models.Abstract;
+using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Mimirorg.Common.Exceptions;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Mb.Models.Abstract;
-using Mimirorg.Common.Exceptions;
-using Mb.Services.Contracts;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Annotations;
-using Mb.Models.Application;
-using Mb.Models.Client;
 
 namespace Mb.Core.Controllers.V1;
 
@@ -32,6 +33,7 @@ public class ProjectController : ControllerBase
     private readonly ILogger<ProjectController> _logger;
     private readonly IProjectFileService _projectFileService;
     private readonly IModuleService _moduleService;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Project Controller Constructor
@@ -40,12 +42,13 @@ public class ProjectController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="projectFileService"></param>
     /// <param name="moduleService"></param>
-    public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, IModuleService moduleService)
+    public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, IModuleService moduleService, IMapper mapper)
     {
         _projectService = projectService;
         _logger = logger;
         _projectFileService = projectFileService;
         _moduleService = moduleService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -69,6 +72,40 @@ public class ProjectController : ControllerBase
         try
         {
             var data = await _projectService.GetById(id);
+            return Ok(data);
+        }
+        catch (MimirorgNotFoundException)
+        {
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
+
+    /// <summary>
+    /// Get project by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("am/{id}")]
+    [ProducesResponseType(typeof(ProjectAm), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Policy = "Read")]
+    public async Task<IActionResult> GetAmById(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return BadRequest("The id can not be null or empty");
+
+        try
+        {
+            var data = await _projectService.GetAmById(id);
             return Ok(data);
         }
         catch (MimirorgNotFoundException)
