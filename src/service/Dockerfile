@@ -19,7 +19,7 @@ COPY . .
 
 FROM base as format
 RUN dotnet tool install -g dotnet-format --version "7.*" --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet7/nuget/v3/index.json
-# RUN /root/.dotnet/tools/dotnet-format . --verify-no-changes --verbosity diagnostic --no-restore
+RUN /root/.dotnet/tools/dotnet-format . --verify-no-changes --verbosity diagnostic --no-restore
 
 FROM base as build
 RUN dotnet test -c Release
