@@ -1,4 +1,3 @@
-using AutoMapper;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Client;
@@ -33,7 +32,6 @@ public class ProjectController : ControllerBase
     private readonly ILogger<ProjectController> _logger;
     private readonly IProjectFileService _projectFileService;
     private readonly IModuleService _moduleService;
-    private readonly IMapper _mapper;
 
     /// <summary>
     /// Project Controller Constructor
@@ -42,13 +40,12 @@ public class ProjectController : ControllerBase
     /// <param name="logger"></param>
     /// <param name="projectFileService"></param>
     /// <param name="moduleService"></param>
-    public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, IModuleService moduleService, IMapper mapper)
+    public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, IModuleService moduleService)
     {
         _projectService = projectService;
         _logger = logger;
         _projectFileService = projectFileService;
         _moduleService = moduleService;
-        _mapper = mapper;
     }
 
     /// <summary>

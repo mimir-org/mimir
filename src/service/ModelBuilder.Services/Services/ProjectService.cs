@@ -74,8 +74,9 @@ public class ProjectService : IProjectService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var urlDecodedId = HttpUtility.UrlDecode(id);
-        var projectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{urlDecodedId}" : urlDecodedId;
+        id = HttpUtility.UrlDecode(id);
+
+        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
         return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectCm>(project);
@@ -93,8 +94,9 @@ public class ProjectService : IProjectService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var urlDecodedId = HttpUtility.UrlDecode(id);
-        var projectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{urlDecodedId}" : urlDecodedId;
+        id = HttpUtility.UrlDecode(id);
+
+        var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
         return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectAm>(project);
@@ -125,6 +127,8 @@ public class ProjectService : IProjectService
         if (projectAm == null)
             throw new MimirorgNullReferenceException("The project that should be created is null.");
 
+        projectAm.Id = HttpUtility.UrlDecode(projectAm.Id);
+
         var validation = projectAm.ValidateObject();
 
         if (!validation.IsValid)
@@ -146,8 +150,8 @@ public class ProjectService : IProjectService
     /// <returns>Completed Task</returns>
     public async Task ConvertSubProject(string projectId)
     {
-        var project = await GetById(projectId);
-        var am = _mapper.Map<ProjectAm>(project);
+        projectId = HttpUtility.UrlDecode(projectId);
+        var am = await GetAmById(projectId);
         am.SubProject = !am.SubProject;
         await CreateOrUpdate(am);
     }
@@ -164,12 +168,15 @@ public class ProjectService : IProjectService
             if (subProjectAm == null)
                 throw new MimirorgNullReferenceException("Sub-project is null");
 
+            subProjectAm.FromProjectId = HttpUtility.UrlDecode(subProjectAm.FromProjectId);
+
             var validation = subProjectAm.ValidateObject();
             if (!validation.IsValid)
                 throw new MimirorgBadRequestException(
                     $"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
             var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId);
+
             if (fromProject == null)
                 throw new MimirorgInvalidOperationException("The original project does not exist");
 
@@ -188,11 +195,13 @@ public class ProjectService : IProjectService
 
             // Deconstruct project
             var projectData = new ProjectData();
+
             await _remapService.DeConstruct(newSubProject, projectData);
             await _projectRepository.CreateProject(newSubProject, projectData);
 
             var updatedProject = await GetById(newSubProject.Id);
-            return _mapper.Map<ProjectCm>(updatedProject);
+
+            return updatedProject;
         }
         catch (Exception e)
         {
@@ -213,7 +222,13 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     public async Task Delete(string projectId)
     {
+        if (string.IsNullOrWhiteSpace(projectId))
+            throw new MimirorgNullReferenceException("Id is null or empty");
+
+        projectId = HttpUtility.UrlDecode(projectId);
+
         var existingProject = await _projectRepository.GetProjectAsync(projectId);
+
         if (existingProject == null)
             throw new MimirorgNotFoundException($"There is no project with id: {projectId}");
 
@@ -230,6 +245,11 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     public async Task<(byte[] file, FileFormat format)> Download(string projectId, Guid id)
     {
+        if (string.IsNullOrWhiteSpace(projectId))
+            throw new MimirorgNullReferenceException("Id is null or empty");
+
+        projectId = HttpUtility.UrlDecode(projectId);
+
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
         if (_moduleService.Modules.All(x =>
@@ -249,6 +269,11 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     public bool Exist(string projectId)
     {
+        if (string.IsNullOrWhiteSpace(projectId))
+            throw new MimirorgNullReferenceException("Id is null or empty");
+
+        projectId = HttpUtility.UrlDecode(projectId);
+
         var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId);
         ClearAllChangeTracker();
         return exist;
@@ -262,7 +287,13 @@ public class ProjectService : IProjectService
     /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
     public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
     {
+        if (prepare == null)
+            throw new MimirorgNullReferenceException("PrepareAm is null");
+
+        prepare.SubProject = HttpUtility.UrlDecode(prepare.SubProject);
+
         var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProject);
+
         if (subProject == null)
             throw new MimirorgNotFoundException("There is no sub-project with current id");
 
@@ -335,6 +366,11 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<ProjectCm> CreateProject(ProjectAm projectAm)
     {
+        if (projectAm == null)
+            throw new MimirorgNullReferenceException("ProjectAm is null");
+
+        projectAm.Id = HttpUtility.UrlDecode(projectAm.Id);
+
         var projectDm = _mapper.Map<ProjectDm>(projectAm);
 
         projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
@@ -372,8 +408,10 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<ProjectCm> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
-        // Remap and create new id's
-        //_ = _remapService.Remap(projectAm);
+        if (updatedAm == null || originalDm == null)
+            throw new MimirorgNullReferenceException("updated or original project is null");
+
+        updatedAm.Id = HttpUtility.UrlDecode(updatedAm.Id);
 
         var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
 
@@ -426,6 +464,11 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private AspectObjectDm CreateInitAspectObject(Aspect aspect, string projectId)
     {
+        if (string.IsNullOrWhiteSpace(projectId))
+            throw new MimirorgNullReferenceException("projectId is null or empty");
+
+        projectId = HttpUtility.UrlDecode(projectId);
+
         var aspectObjectId = _commonRepository.CreateIdAsIri(ServerEndpoint.AspectObject, Guid.NewGuid().ToString());
         var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
