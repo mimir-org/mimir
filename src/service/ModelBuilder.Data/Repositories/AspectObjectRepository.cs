@@ -199,27 +199,4 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
             .MatchTargetOn(x => x.Id)
             .Commit(conn);
     }
-
-
-    /// <summary>
-    /// Get aspectObject connected data
-    /// </summary>
-    /// <param name="aspectObjectId">The aspectObject you want data from</param>
-    /// <returns>A collection connected identity data</returns>
-    /// <remarks>Get det aspectObject identifier and all connected children including
-    /// children aspectObjects, children connections and children terminals</remarks>
-    public async Task<List<ObjectIdentityDm>> GetAspectObjectConnectedData(string aspectObjectId)
-    {
-        if (string.IsNullOrWhiteSpace(aspectObjectId))
-            return null;
-
-        var procParams = new Dictionary<string, object>
-        {
-            {"@AspectObjectId", aspectObjectId}
-        };
-
-        var attributes = await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentityDm>("AspectObjectLockData", procParams);
-        return attributes;
-    }
-
 }

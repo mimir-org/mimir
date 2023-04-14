@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using SqlBulkTools;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Mb.Data.Contracts;
 
@@ -48,13 +48,4 @@ public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbCont
     /// <param name="conn">Sql Connection</param>
     /// <param name="lockDms">The attributes to be updated</param>
     void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
-
-    /// <summary>
-    /// Get aspectObject connected data
-    /// </summary>
-    /// <param name="aspectObjectId">The aspectObject you want data from</param>
-    /// <returns>A collection connected identity data</returns>
-    /// <remarks>Get det aspectObject identifier and all connected children including
-    /// children aspectObjects, children connections and children terminals</remarks>
-    Task<List<ObjectIdentityDm>> GetAspectObjectConnectedData(string aspectObjectId);
 }

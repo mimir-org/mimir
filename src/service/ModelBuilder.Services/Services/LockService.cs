@@ -55,14 +55,8 @@ public class LockService : ILockService
         if (string.IsNullOrWhiteSpace(lockAm?.Id))
             throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
-        var objectIdentity = await _aspectObjectRepository.GetAspectObjectConnectedData(lockAm.Id);
-
-        if (!objectIdentity.Any())
-            throw new MimirorgBadRequestException("EntityType not found.");
-
-        var lockDms = new List<LockDm>();
-        var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, ProjectId = lockAm.ProjectId, IsLocked = lockAm.IsLocked }).ToList();
-        lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
+        var lockDm = _mapper.Map<LockDm>(lockAm);
+        var lockDms = new List<LockDm> { lockDm };
 
         if (!lockDms.Any())
             return;
