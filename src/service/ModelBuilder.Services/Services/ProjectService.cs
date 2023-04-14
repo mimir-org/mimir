@@ -291,6 +291,7 @@ public class ProjectService : IProjectService
             throw new MimirorgNullReferenceException("PrepareAm is null");
 
         prepare.SubProject = HttpUtility.UrlDecode(prepare.SubProject);
+        prepare.Project = HttpUtility.UrlDecode(prepare.Project);
 
         var subProject = await _projectRepository.GetAsyncComplete(prepare.SubProject);
 
