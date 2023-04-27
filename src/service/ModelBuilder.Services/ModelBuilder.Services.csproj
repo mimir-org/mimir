@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
     <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.264" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.264" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.277" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
