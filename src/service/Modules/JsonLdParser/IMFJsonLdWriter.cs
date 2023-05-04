@@ -1,5 +1,6 @@
-using System.IO;
 using Newtonsoft.Json.Linq;
+using System.IO;
+using System.Text;
 using VDS.RDF;
 using VDS.RDF.JsonLd;
 
@@ -28,6 +29,12 @@ public class ImfJsonLdWriter : IRdfWriter
     public void Save(IGraph g, string filename)
     {
         using TextWriter writer = new StreamWriter(filename);
+        Save(g, writer);
+    }
+
+    public void Save(IGraph g, string filename, Encoding fileEncoding)
+    {
+        using TextWriter writer = new StreamWriter(filename, false, fileEncoding);
         Save(g, writer);
     }
 

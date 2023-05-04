@@ -1,10 +1,11 @@
-using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Client;
-using Mimirorg.Common.Exceptions;
-using Mb.Services.Contracts;
 using Mb.Models.Const;
+using Mb.Services.Contracts;
+using Mimirorg.Common.Exceptions;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Mb.Services.Services;
 
@@ -33,7 +34,9 @@ public class AspectObjectService : IAspectObjectService
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
-        var aspectObjectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.AspectObject) + $"/{id}" : id;
+        var urlDecodedId = HttpUtility.UrlDecode(id);
+
+        var aspectObjectId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.AspectObject) + $"/{urlDecodedId}" : urlDecodedId;
 
         var aspectObject = await _aspectObjectRepository.GetAsyncComplete(aspectObjectId);
 

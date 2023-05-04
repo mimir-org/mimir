@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20230403063923_Init")]
+    [Migration("20230405065116_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -86,10 +86,14 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("Position")
+                    b.Property<string>("PositionBlock")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PositionBlock");
+
+                    b.Property<string>("PositionTree")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Position");
+                        .HasColumnName("PositionTree");
 
                     b.Property<string>("Project")
                         .IsRequired()
@@ -98,7 +102,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("PurposeString");
+                        .HasColumnName("Purpose");
 
                     b.Property<string>("Rds")
                         .HasColumnType("nvarchar(max)")
@@ -150,20 +154,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ConnectorTerminal");
 
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -204,6 +194,10 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("FromConnector");
+
+                    b.Property<string>("Handles")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Handles");
 
                     b.Property<string>("MainProject")
                         .IsRequired()

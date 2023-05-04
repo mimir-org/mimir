@@ -1,5 +1,6 @@
 using System;
-using Mimirorg.Common.Extensions;
+using System.ComponentModel.DataAnnotations.Schema;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data;
@@ -10,11 +11,13 @@ namespace Mb.Models.Data;
 public class ConnectionDm : IEquatable<ConnectionDm>
 {
     public string Id { get; set; }
-    public string Domain => Id.ResolveDomain();
     public string FromConnector { get; set; }
     public string ToConnector { get; set; }
     public string MainProject { get; set; }
     public string Project { get; set; }
+
+    [NotMapped]
+    public string Handles { get; set; }
 
     public bool Equals(ConnectionDm other)
     {
@@ -24,7 +27,8 @@ public class ConnectionDm : IEquatable<ConnectionDm>
                FromConnector == other.FromConnector &&
                ToConnector == other.ToConnector &&
                MainProject == other.MainProject &&
-               Project == other.Project;
+               Project == other.Project &&
+               Handles == other.Handles;
     }
 
     public override bool Equals(object obj)
@@ -42,6 +46,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
         hashCode.Add(ToConnector);
         hashCode.Add(MainProject);
         hashCode.Add(Project);
+        hashCode.Add(Handles);
         return hashCode.ToHashCode();
     }
 }

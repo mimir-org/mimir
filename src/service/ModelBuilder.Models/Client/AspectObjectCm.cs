@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Enums;
 using Mimirorg.Common.Extensions;
@@ -19,7 +18,8 @@ public class AspectObjectCm
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }
-    public AspectObjectPositionCm Position { get; set; }
+    public PositionCm PositionTree { get; set; }
+    public PositionCm PositionBlock { get; set; }
     public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
@@ -35,12 +35,4 @@ public class AspectObjectCm
 
     public List<ConnectorCm> Connectors { get; set; } = new();
     public List<AttributeCm> Attributes { get; set; } = new();
-}
-
-public class AspectObjectPositionCm
-{
-    public int ThreePosX { get; set; }
-    public int ThreePosY { get; set; }
-    public int BlockPosX { get; set; }
-    public int BlockPosY { get; set; }
 }

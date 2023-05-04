@@ -1,13 +1,10 @@
+using Mb.Data.Contracts;
+using Mb.Models.Abstract;
+using Mb.Models.Configurations;
+using SqlBulkTools;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using Mb.Data.Contracts;
-using Mb.Models.Abstract;
-using Mb.Models.Common;
-using Mb.Models.Configurations;
-using Mb.Models.Enums;
-using Mimirorg.Common.Exceptions;
-using SqlBulkTools;
 using AttributeDm = Mb.Models.Data.AttributeDm;
 
 namespace Mb.Data.Repositories;
@@ -41,9 +38,6 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
             .AddColumn(x => x.Qualifiers)
             .AddColumn(x => x.ConnectorTerminal)
             .AddColumn(x => x.AspectObject)
-            .AddColumn(x => x.IsLocked)
-            .AddColumn(x => x.IsLockedStatusBy)
-            .AddColumn(x => x.IsLockedStatusDate)
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
             .Commit(conn);
@@ -93,36 +87,7 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
             .AddColumn(x => x.Qualifiers)
             .AddColumn(x => x.ConnectorTerminal)
             .AddColumn(x => x.AspectObject)
-            .AddColumn(x => x.IsLocked)
-            .AddColumn(x => x.IsLockedStatusBy)
-            .AddColumn(x => x.IsLockedStatusDate)
             .BulkInsert()
-            .Commit(conn);
-    }
-
-    /// <summary>
-    /// Bulk attributes update lock status
-    /// </summary>
-    /// <param name="bulk">Bulk operations</param>
-    /// <param name="conn">Sql Connection</param>
-    /// <param name="lockDms">The attributes to be updated</param>
-    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
-    {
-        if (lockDms == null || !lockDms.Any())
-            return;
-
-        if (lockDms.Any(x => x.Type is not EntityType.Attribute))
-            throw new MimirorgBadRequestException("EntityType is not of type Attribute");
-
-        bulk.Setup<LockDm>()
-            .ForCollection(lockDms)
-            .WithTable("Attribute")
-            .AddColumn(x => x.Id)
-            .AddColumn(x => x.IsLocked)
-            .AddColumn(x => x.IsLockedStatusBy)
-            .AddColumn(x => x.IsLockedStatusDate)
-            .BulkUpdate()
-            .MatchTargetOn(x => x.Id)
             .Commit(conn);
     }
 }

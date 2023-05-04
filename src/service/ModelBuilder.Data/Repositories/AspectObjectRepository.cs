@@ -1,16 +1,16 @@
+using Mb.Data.Contracts;
+using Mb.Models.Abstract;
+using Mb.Models.Common;
+using Mb.Models.Configurations;
+using Mb.Models.Data;
+using Mb.Models.Enums;
+using Microsoft.EntityFrameworkCore;
+using Mimirorg.Common.Exceptions;
+using SqlBulkTools;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Data.Contracts;
-using Mb.Models.Abstract;
-using Mb.Models.Configurations;
-using Mb.Models.Data;
-using Mb.Models.Enums;
-using Mimirorg.Common.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using SqlBulkTools;
-using Mb.Models.Common;
 
 namespace Mb.Data.Repositories;
 
@@ -52,10 +52,6 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
                     }
                 }
 
-                aspectObject.Version = _commonRepository.GetDomain() != aspectObject.Domain
-                    ? string.IsNullOrEmpty(aspectObject.Version) ? "1.0" : aspectObject.Version
-                    : "1.0";
-
                 _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Added);
 
                 yield return (aspectObject, WorkerStatus.Create);
@@ -63,14 +59,6 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
             }
             else
             {
-                // Parties is not allowed changed our aspectObject
-                if (_commonRepository.GetDomain() == aspectObject.Domain &&
-                    _commonRepository.GetDomain() != invokedByDomain)
-                {
-                    Detach(aspectObject);
-                    continue;
-                }
-
                 if (aspectObject.Attributes != null)
                 {
                     foreach (var attribute in aspectObject.Attributes)
@@ -96,13 +84,6 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
 
         foreach (var aspectObject in delete)
         {
-            // Parties is not allowed delete our aspectObject
-            if (_commonRepository.GetDomain() == aspectObject.Domain && _commonRepository.GetDomain() != invokedByDomain)
-            {
-                Detach(aspectObject);
-                continue;
-            }
-
             _attributeRepository.Attach(aspectObject.Attributes, EntityState.Deleted);
             _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Deleted);
             Attach(aspectObject, EntityState.Deleted);
@@ -154,7 +135,8 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
             .AddColumn(x => x.ReferenceType)
             .AddColumn(x => x.Name)
             .AddColumn(x => x.Label)
-            .AddColumn(x => x.Position)
+            .AddColumn(x => x.PositionTree)
+            .AddColumn(x => x.PositionBlock)
             .AddColumn(x => x.IsLocked)
             .AddColumn(x => x.IsLockedStatusBy)
             .AddColumn(x => x.IsLockedStatusDate)
@@ -206,9 +188,6 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
         if (lockDms == null || !lockDms.Any())
             return;
 
-        if (lockDms.Any(x => x.Type is not EntityType.AspectObject))
-            throw new MimirorgBadRequestException("EntityType is not of type AspectObject");
-
         bulk.Setup<LockDm>()
             .ForCollection(lockDms)
             .WithTable("AspectObject")
@@ -220,27 +199,4 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
             .MatchTargetOn(x => x.Id)
             .Commit(conn);
     }
-
-
-    /// <summary>
-    /// Get aspectObject connected data
-    /// </summary>
-    /// <param name="aspectObjectId">The aspectObject you want data from</param>
-    /// <returns>A collection connected identity data</returns>
-    /// <remarks>Get det aspectObject identifier and all connected children including
-    /// children aspectObjects, children connections and children terminals</remarks>
-    public async Task<List<ObjectIdentityDm>> GetAspectObjectConnectedData(string aspectObjectId)
-    {
-        if (string.IsNullOrWhiteSpace(aspectObjectId))
-            return null;
-
-        var procParams = new Dictionary<string, object>
-        {
-            {"@AspectObjectId", aspectObjectId}
-        };
-
-        var attributes = await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentityDm>("AspectObjectLockData", procParams);
-        return attributes;
-    }
-
 }

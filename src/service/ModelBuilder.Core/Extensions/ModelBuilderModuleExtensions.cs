@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 using AutoMapper;
 using AzureActiveDirectoryModule.Models;
 using Mb.Core.Profiles;
@@ -28,6 +22,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Module = Mb.Models.Common.Module;
 
@@ -121,6 +121,8 @@ public static class ModelBuilderModuleExtensions
         cfg.AddProfile(new AspectObjectProfile());
         cfg.AddProfile(new AttributeProfile());
         cfg.AddProfile(new ConnectionProfile());
+        cfg.AddProfile(new HandleProfile());
+        cfg.AddProfile(new PositionProfile());
         cfg.AddProfile(new ConnectorProfile());
         cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
         cfg.AddProfile(new ProjectProfile());

@@ -13,8 +13,4 @@ public class LockAm
 
     [Required]
     public bool IsLocked { get; set; }
-
-    [Required]
-    [EnumDataType(typeof(EntityType))]
-    public EntityType Type { get; set; }
 }

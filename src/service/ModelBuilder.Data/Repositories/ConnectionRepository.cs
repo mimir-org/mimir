@@ -1,39 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Mimirorg.Common.Extensions;
 using SqlBulkTools;
-using Mimirorg.Common.Exceptions;
-using Mb.Models.Common;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mb.Data.Repositories;
 
 public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, ConnectionDm>, IConnectionRepository
 {
-    private readonly IAttributeRepository _attributeRepository;
-    private readonly IConnectorRepository _connectorRepository;
-    private readonly IHttpContextAccessor _contextAccessor;
-    private readonly ICommonRepository _commonRepository;
     private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-    public ConnectionRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository,
-        IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor,
-        ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(
-        dbContext)
+    public ConnectionRepository(ModelBuilderDbContext dbContext, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
     {
-        _attributeRepository = attributeRepository;
-        _connectorRepository = connectorRepository;
-        _contextAccessor = contextAccessor;
-        _commonRepository = commonRepository;
         _modelBuilderProcRepository = modelBuilderProcRepository;
     }
 
@@ -54,14 +38,6 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             }
             else
             {
-                // Parties is not allowed changed our connection
-                if (_commonRepository.GetDomain() == connection.Domain &&
-                    _commonRepository.GetDomain() != invokedByDomain)
-                {
-                    Detach(connection);
-                    continue;
-                }
-
                 Attach(connection, EntityState.Modified);
                 yield return (connection, WorkerStatus.Update);
             }
@@ -78,14 +54,6 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
 
         foreach (var connection in delete)
         {
-            // Parties is not allowed delete our connection
-            if (_commonRepository.GetDomain() == connection.Domain && _commonRepository.GetDomain() != invokedByDomain)
-            {
-                Detach(connection);
-                continue;
-            }
-
-            //Connection - (delete)
             Attach(connection, EntityState.Deleted);
 
             returnValues.Add((connection, WorkerStatus.Delete));
@@ -108,6 +76,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Child
             .AddColumn(x => x.TerminalType)
             .AddColumn(x => x.TerminalParentType)
@@ -132,6 +101,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -152,6 +122,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -172,6 +143,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .AddColumn(x => x.ToConnector)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Project)
+            .AddColumn(x => x.Handles)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -230,32 +202,6 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             .WithTable("Connection")
             .AddColumn(x => x.Id)
             .BulkDelete()
-            .MatchTargetOn(x => x.Id)
-            .Commit(conn);
-    }
-
-    /// <summary>
-    /// Bulk attributes update lock status
-    /// </summary>
-    /// <param name="bulk">Bulk operations</param>
-    /// <param name="conn">Sql Connection</param>
-    /// <param name="lockDms">The attributes to be updated</param>
-    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
-    {
-        if (lockDms == null || !lockDms.Any())
-            return;
-
-        if (lockDms.Any(x => x.Type is not EntityType.Connection))
-            throw new MimirorgBadRequestException("EntityType is not of type Connection");
-
-        bulk.Setup<LockDm>()
-            .ForCollection(lockDms)
-            .WithTable("Connection")
-            .AddColumn(x => x.Id)
-            .AddColumn(x => x.IsLocked)
-            .AddColumn(x => x.IsLockedStatusBy)
-            .AddColumn(x => x.IsLockedStatusDate)
-            .BulkUpdate()
             .MatchTargetOn(x => x.Id)
             .Commit(conn);
     }

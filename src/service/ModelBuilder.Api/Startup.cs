@@ -1,4 +1,3 @@
-using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
 
 namespace Mb.Api;
 

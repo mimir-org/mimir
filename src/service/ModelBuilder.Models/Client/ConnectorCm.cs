@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
+using System.Collections.Generic;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -16,7 +16,6 @@ public abstract class ConnectorCm
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
     public string Outside { get; set; }
-    public string Project { get; set; }
     public string AspectObject { get; set; }
 }
 
@@ -31,7 +30,6 @@ public class ConnectorTerminalCm : ConnectorCm
     public string ReferenceType { get; set; }
     public string Color { get; set; }
     public ICollection<AttributeCm> Attributes { get; set; }
-    public string Discriminator { get; set; }
 }
 
 #endregion ConnectorTerminalCm
@@ -48,7 +46,6 @@ public abstract class ConnectorRelationCm : ConnectorCm
 
 public class ConnectorFulfilledByCm : ConnectorRelationCm
 {
-    public string Discriminator { get; set; }
 }
 
 #endregion ConnectorFulfilledByCm
@@ -57,7 +54,6 @@ public class ConnectorFulfilledByCm : ConnectorRelationCm
 
 public class ConnectorHasLocationCm : ConnectorRelationCm
 {
-    public string Discriminator { get; set; }
 }
 
 #endregion ConnectorHasLocationCm
@@ -66,7 +62,6 @@ public class ConnectorHasLocationCm : ConnectorRelationCm
 
 public class ConnectorPartOfCm : ConnectorRelationCm
 {
-    public string Discriminator { get; set; }
 }
 
 #endregion ConnectorPartOfCm

@@ -16,6 +16,7 @@ public class ConnectionConfiguration : IEntityTypeConfiguration<ConnectionDm>
         builder.Property(p => p.FromConnector).HasColumnName("FromConnector").IsRequired();
         builder.Property(p => p.ToConnector).HasColumnName("ToConnector").IsRequired();
         builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
+        builder.Property(p => p.Handles).HasColumnName("Handles").IsRequired(false);
     }
 }
 #endregion ConnectionConfiguration
