@@ -4,8 +4,8 @@ import { Dispatch } from "redux";
 import { Size } from "../../../../assets/size/Size";
 import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers/SetPanelHeight";
-import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
-import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
+// import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
+// import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
 // import {
 //   removeSelectedEdge,
 //   removeSelectedNode,
@@ -57,7 +57,7 @@ function HandleNoSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, di
 }
 
 export function CloseInspector(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
-  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  // dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
+  // dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
   SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 }

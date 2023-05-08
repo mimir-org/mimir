@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
-import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject, Position, Project, User } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -50,7 +50,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * @param OnDropParameters
  */
 function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDropParameters) {
-  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as AspectObjectLibCm;
   const selectedNode = project?.aspectObjects?.find((n) => n.selected);
 
   // The dropped node automatically finds a parent
@@ -78,7 +78,7 @@ function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDrop
  * @param nodes
  * @returns a Node.
  */
-function SetParentNodeOnDrop(selectedNode: AspectObject, node: NodeLibCm, nodes: AspectObject[]) {
+function SetParentNodeOnDrop(selectedNode: AspectObject, node: AspectObjectLibCm, nodes: AspectObject[]) {
   return IsFamily(selectedNode, node) ? selectedNode : nodes.find((n) => IsFamily(n, node));
 }
 

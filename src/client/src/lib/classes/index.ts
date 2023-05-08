@@ -21,7 +21,6 @@ export { LibrarySubProject, LibrarySubProjectVersion } from "./LibrarySubProject
 export { ModuleDescription } from "./ModuleDescription";
 export { Project } from "./Project";
 export { ProjectSearchResult } from "./ProjectSearchResult";
-export { TypeReference } from "./TypeReference";
 export { Unit } from "./Unit";
 export { Prepare } from "./Prepare";
 export { Lock } from "./Lock";

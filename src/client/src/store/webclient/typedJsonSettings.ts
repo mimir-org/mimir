@@ -1,5 +1,4 @@
-import { ITypedJSONSettings, TypedJSON } from "typedjson";
-import { ProjectSearchResult } from "lib";
+import { ITypedJSONSettings } from "typedjson";
 
 export const typedJsonSetting = (): ITypedJSONSettings => {
   return {

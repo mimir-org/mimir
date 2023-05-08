@@ -3,21 +3,20 @@ import { InstructionBoxComponent } from "./InstructionBoxComponent";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
 import { Icon } from "../../../compLibrary/icon/Icon";
-import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { ProjectHeaderButtonContainer, ProjectHeaderButton } from "./ProjectMenuHeaderComponent.styled";
-import { isActiveMenuSelector, projectNameSelector } from "../../../redux/store";
-import { useAppSelector, useParametricAppSelector } from "store";
+
+interface ProjectMenuHeaderComponentProps {
+  projectName: string;
+}
 
 /**
  * Component for the ProjectMenu element in the header of Mimir.
  * @returns a clickable element that toggles the ProjectMenuComponent.
  */
-export const ProjectMenuHeaderComponent = () => {
+export const ProjectMenuHeaderComponent = ({ projectName }: ProjectMenuHeaderComponentProps) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const projectName = useAppSelector(projectNameSelector);
-  const isInstructionOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU) && !isUserMenuOpen;
 
   return (
     <ProjectHeaderButtonContainer>
@@ -28,7 +27,7 @@ export const ProjectMenuHeaderComponent = () => {
         </ProjectHeaderButton>
       </Tooltip>
       {isUserMenuOpen && <ProjectMenuComponent setIsUserMenuOpen={setIsUserMenuOpen} />}
-      {isInstructionOpen && <InstructionBoxComponent />}
+      {projectName == null && !isUserMenuOpen && <InstructionBoxComponent />}
     </ProjectHeaderButtonContainer>
   );
 };

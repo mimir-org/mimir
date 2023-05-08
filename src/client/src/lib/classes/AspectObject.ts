@@ -11,7 +11,7 @@ import { Attribute } from "./Attribute";
 import { Aspect, AspectObjectType, ConnectorDirection } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { CreateId } from "components/flow/helpers";
-import type { NodeLibCm } from "@mimirorg/typelibrary-types";
+import type { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Position } from "./Position";
 
@@ -111,7 +111,7 @@ export class AspectObject {
    * @params mainProject The originally project owner id.
    */
   public constructor(
-    lib: NodeLibCm,
+    lib: AspectObjectLibCm,
     project: string,
     positionTree: Position,
     positionBlock: Position,
@@ -121,7 +121,7 @@ export class AspectObject {
     this.id = CreateId();
     this.rds = lib?.rdsCode;
     this.description = lib?.description;
-    this.referenceType = lib?.typeReferences != null && lib.typeReferences.length > 0 ? lib.typeReferences[0].iri : null;
+    this.referenceType = lib?.typeReference;
     this.name = lib?.name;
     this.label = null;
 
@@ -141,7 +141,8 @@ export class AspectObject {
     this.attributes = lib?.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
     // TODO: Also create default connectors
-    this.connectors = lib?.nodeTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
+    this.connectors =
+      lib?.aspectObjectTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
     this.isLocked = false;
     this.isLockedStatusBy = null;
     this.isLockedStatusDate = null;

@@ -1,15 +1,18 @@
 import { MENU_TYPE } from "../../../models/project";
-import { projectIsSubProjectSelector } from "../../../redux/store";
+// import { projectIsSubProjectSelector } from "../../../redux/store";
 import { useAppSelector } from "store";
-import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
+
 // import { CreateProjectMenu } from "../../dialogs/createProject/CreateProject";
-import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";
-import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
-import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
+
 // import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
-import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
+
 import { setDialogType } from "store/reducers/commonReducer";
 import { DialogType } from "lib";
+import { CloseProjectMenu } from "./closeProject/CloseProjectMenu";
+import { ExportProjectFileMenu } from "./exportProjectFile/ExportProjectFileMenu";
+import { CommitProjectMenu } from "./commitProject/CommitProjectMenu";
+import { CreateSubProjectMenu } from "./createSubProject/CreateSubProjectMenu";
+import { ConvertSubProjectMenu } from "./convertSubProject/ConvertSubProjectMenu";
 
 interface Props {
   activeMenu: string;
@@ -22,7 +25,7 @@ interface Props {
  * @returns all sub-menus.
  */
 export const ProjectSubMenus = ({ activeMenu }: Props) => {
-  const isSubProject = useAppSelector(projectIsSubProjectSelector);
+  const isSubProject = false; //useAppSelector(projectIsSubProjectSelector);
 
   const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;

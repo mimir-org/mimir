@@ -3,13 +3,8 @@ import { GetAttributes } from "../shared/components/parametersContent/helpers/Ge
 import { useState } from "react";
 import { GetParametersColor } from "../shared/components/parametersContent/helpers/GetParametersColor";
 import { AttributesBox } from "./AttributesComponent.styled";
-import {
-  isProjectStateGloballyLockingSelector,
-  projectIdSelector,
-  qunatityDatumSelector,
-  libraryAttributeTypeSelector,
-} from "../../../../../../redux/store";
-import { useAppSelector, useAppDispatch, commonStateSelector } from "store";
+// import { isProjectStateGloballyLockingSelector, projectIdSelector } from "../../../../../../redux/store";
+import { useAppSelector, useAppDispatch, commonStateSelector, libraryStateSelector, projectStateSelector } from "store";
 import { AttributeObject } from "../shared/components/parametersContent/components/row/components/AttributeObject";
 import {
   OnAddNodeAttribute,
@@ -39,11 +34,10 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   const attributes = attributeItems ?? GetAttributes(attributesElem);
   const dispatch = useAppDispatch();
   const commonState = useAppSelector<CommonState>(commonStateSelector);
-  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
+  const isGlobalLocking = false; //useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const quantityDatums = useAppSelector(qunatityDatumSelector);
-  const projectId = useAppSelector(projectIdSelector);
-  const attributeTypes = useAppSelector(libraryAttributeTypeSelector);
+  const projectState = useAppSelector(projectStateSelector);
+  const libraryState = useAppSelector(libraryStateSelector);
 
   const handleAttributeChange = (attributeId: string, property: string, value: string) => {
     // Node attributes
@@ -71,12 +65,18 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   const onAddAttribute = (attributeTypeId: string) => {
     // Add node attribute
     if (attributesElem instanceof AspectObject) {
-      OnAddNodeAttribute(attributeTypeId, attributesElem.id, attributeTypes, dispatch);
+      OnAddNodeAttribute(attributeTypeId, attributesElem.id, libraryState.attributeTypes, dispatch);
     }
 
     // Add Node terminal attribute
     if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
-      OnAddNodeTerminalAttribute(attributeTypeId, inspectorParentElem.id, attributesElem.id, attributeTypes, dispatch);
+      OnAddNodeTerminalAttribute(
+        attributeTypeId,
+        inspectorParentElem.id,
+        attributesElem.id,
+        libraryState.attributeTypes,
+        dispatch
+      );
     }
   };
 
@@ -95,7 +95,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
                 bodyColor={bodyColor}
                 isGloballyLocking={isGlobalLocking}
                 lockingAttribute={lockingAttribute}
-                quantityDatums={quantityDatums}
+                quantityDatums={libraryState.quantityDatumTypes}
                 onChange={(attributeId: string, property: string, value: string) =>
                   handleAttributeChange(attributeId, property, value)
                 }
@@ -103,7 +103,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
                   OnLockParameter(
                     inspectorParentElem,
                     attr,
-                    projectId,
+                    projectState.project?.id,
                     isLocked,
                     commonState?.user?.email ?? "",
                     setLockingAttribute,

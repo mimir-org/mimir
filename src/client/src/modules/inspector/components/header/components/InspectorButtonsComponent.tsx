@@ -9,7 +9,7 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
-import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
+// import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
 import { useAppSelector } from "store";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
@@ -65,7 +65,7 @@ export const InspectorButtonsComponent = ({
     (element instanceof AspectObject && IsAspectNode(element)) ||
     (isBlockView && element?.id === selectedBlockNode?.id);
 
-  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
+  const isGlobalLocking = false; //useAppSelector(isProjectStateGloballyLockingSelector);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
   if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;

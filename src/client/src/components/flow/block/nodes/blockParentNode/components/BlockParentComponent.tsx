@@ -1,4 +1,3 @@
-import * as selectors from "redux/store/selectors";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -6,13 +5,15 @@ import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useAppDispatch, useAppSelector } from "store";
+import { libraryStateSelector, projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
 import { AspectObject, Connector, ConnectorDirection } from "lib";
+import { LibraryState } from "store/reducers/libraryReducer";
+import { ProjectState } from "store/reducers/projectReducer";
 
 interface Props {
   node: AspectObject;
@@ -46,12 +47,16 @@ export const BlockParentComponent = ({
   const resizePanelRef = useRef(null);
   const company = useCompanySelector(node.domain, node.id);
   useResizeParentNode(node, resizePanelRef, dispatch);
-  const terminals = useAppSelector(selectors.terminalsSelector);
-  const project = useAppSelector(selectors.projectSelector);
-  const libNodes = useAppSelector(selectors.libNodesSelector);
+
+  const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
+
+  const terminals = libraryState.terminalTypes;
+  const project = projectState.project;
+  const aspectObjects = libraryState.aspectObjectTypes;
 
   const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
-    return useOnAddTerminal(project, typeId, nodeId, terminals, libNodes, direction, dispatch);
+    return useOnAddTerminal(project, typeId, nodeId, terminals, aspectObjects, direction, dispatch);
   };
 
   const OnClickRemoveTerminal = (nodeId: string, terminalId: string) => {

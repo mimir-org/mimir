@@ -1,5 +1,5 @@
 import { addEdge, Connection as FlowConnection, Edge as FlowEdge } from "react-flow-renderer";
-import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
+// import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { Project } from "lib";
 
 export interface OnBlockDropParameters {
@@ -14,7 +14,7 @@ export interface OnBlockDropParameters {
  * @returns an Edge connection.
  */
 const useOnBlockConnect = (params: OnBlockDropParameters) => {
-  SaveEventData(null, "edgeEvent");
+  // SaveEventData(null, "edgeEvent");
   const { project, connection, setEdges } = params;
 
   const edge = project.convertFromFlowEdge(connection, null);

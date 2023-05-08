@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "redux/store/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterConnectors } from "../helpers/FilterConnectors";
-import { useAppDispatch, useAppSelector } from "store";
+import { projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { AspectObject, Connector } from "lib";
 import { ConnectorTerminal } from "../../../../../lib/classes/Connector";
+import { ProjectState } from "store/reducers/projectReducer";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
@@ -24,7 +24,10 @@ const BlockParentNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialConnectors = { inputs: [], outputs: [] } as Connectors;
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
-  const project = useAppSelector(selectors.projectSelector);
+
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
+
+  const project = projectState.project;
   const selectedBlockNode = project?.aspectObjects?.find((n) => n.blockSelected);
 
   useEffect(() => {

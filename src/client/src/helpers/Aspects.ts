@@ -1,7 +1,7 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject, Aspect } from "lib";
 
-type Item = AspectObject | NodeLibCm;
+type Item = AspectObject | AspectObjectLibCm;
 
 export const IsAspectNode = (node: AspectObject) => {
   return node?.libraryType == null;

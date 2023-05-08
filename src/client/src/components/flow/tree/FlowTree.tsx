@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 // import { updatePosition } from "../../../redux/store/project/actions";
@@ -21,8 +20,10 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
-import { commonStateSelector } from "store";
+import { commonStateSelector, libraryStateSelector, projectStateSelector } from "store";
 import { CommonState } from "store/reducers/commonReducer";
+import { ProjectState } from "store/reducers/projectReducer";
+import { LibraryState } from "store/reducers/libraryReducer";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -42,10 +43,12 @@ export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
   const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
+  const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
+  const project = projectState.project;
   const commonState = useAppSelector<CommonState>(commonStateSelector);
   const user = commonState?.user;
-  const terminals = useAppSelector(selectors.terminalsSelector);
+  const terminals = libraryState.terminalTypes;
   const mimirNodes = project?.aspectObjects;
   const mimirEdges = project?.connections;
   const selectedNode = mimirNodes?.find((n) => n.selected);

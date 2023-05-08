@@ -2,8 +2,8 @@ import { Action } from "redux";
 import { Size } from "../../../../../assets/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { useAppDispatch } from "store";
-import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
-import { changeInspectorHeight } from "../../../redux/inspectorSlice";
+// import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
+// import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabElement.styled";
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
@@ -43,8 +43,8 @@ export const InspectorTabElement = ({
     dispatch(changeInspectorTabAction(index));
     if (isInspectorOpen) return;
 
-    dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
-    dispatch(changeInspectorHeight(Size.MODULE_OPEN));
+    // dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
+    // dispatch(changeInspectorHeight(Size.MODULE_OPEN));
     SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
   }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
 

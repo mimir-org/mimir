@@ -1,4 +1,4 @@
-import red from "../../../redux/store";
+import red from "store";
 
 const CreateId = () => {
   // const company = red.store.getState().commonState.company.domain;

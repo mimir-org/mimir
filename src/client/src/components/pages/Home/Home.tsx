@@ -1,4 +1,4 @@
-import { activeMenuSelector } from "redux/store";
+// import { activeMenuSelector } from "redux/store";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../Start/StartPage";
@@ -8,27 +8,18 @@ import { ProjectSubMenus } from "../../menus/projectMenu/ProjectSubMenus";
 // import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../../flow/FlowModule";
 import { ErrorModule } from "../../../modules/error";
-import { ValidationModule } from "../../../modules/validation";
+// import { ValidationModule } from "../../../modules/validation";
 import { ExplorerTreeModule, ExplorerBlockModule } from "../../../modules/explorer";
 import { ToggleColorProfile } from "../../../helpers/ToggleColorProfile";
-import { useAppSelector } from "store";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../../toolbar/ToolbarComponent";
 // import { fetchCompanies, fetchCompany, fetchParsers } from "../../redux/store/common/commonSlice";
 import { HeaderComponent } from "../../header/HeaderComponent";
-import {
-  fetchLibrary,
-  fetchLibraryAttributeTypes,
-  fetchLibraryInterfaceTypes,
-  fetchLibraryTerminals,
-  fetchLibraryTransportTypes,
-  fetchQuantityDatums,
-  fetchSubProjects,
-} from "../../../redux/store/library/librarySlice";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { defaultFilter, VisualFilterData } from "../../../models/application/VisualFilter";
 import { fetchProjects, ProjectState } from "store/reducers/projectReducer";
 import { CommonState, fetchCompanies, fetchCompany, fetchParsers, fetchUser } from "store/reducers/commonReducer";
+import { fetchAspectObjects } from "store/reducers/libraryReducer";
 import { ViewType } from "lib";
 import { HomeDialogs } from "./HomeDialogs";
 
@@ -51,11 +42,19 @@ export const Home = ({ dispatch, projectState, commonState }: Props) => {
   const isTreeView = commonState.view === ViewType.Tree;
   const isFilterOpen = false;
 
-  const activeMenu = useAppSelector(activeMenuSelector);
-  const isProjectMenuOpen = activeMenu != null;
+  // const activeMenu = useAppSelector(activeMenuSelector);
+  const isProjectMenuOpen = false; //activeMenu != null;
 
   const onFilterChange = (filter: VisualFilterData) => {
     setFilter(filter);
+  };
+
+  const onDarkMode = (value: boolean) => {
+    console.log("DARK-MODE", value);
+  };
+
+  const onLogOut = () => {
+    console.log("LOG OUT");
   };
 
   useEffect(() => {
@@ -63,7 +62,7 @@ export const Home = ({ dispatch, projectState, commonState }: Props) => {
     // dispatch(fetchSubProjects());
     // dispatch(fetchLibraryInterfaceTypes());
     // dispatch(fetchLibraryTransportTypes());
-    // dispatch(fetchLibraryTerminals());
+    dispatch(fetchAspectObjects());
     // dispatch(fetchLibraryAttributeTypes());
     // dispatch(search(""));
     // dispatch(fetchLibrary());
@@ -80,7 +79,14 @@ export const Home = ({ dispatch, projectState, commonState }: Props) => {
 
   return (
     <>
-      <HeaderComponent />
+      <HeaderComponent
+        projectName={projectState.project?.name}
+        userName={commonState.user?.name}
+        userRole={commonState.user?.role}
+        isDarkMode={false}
+        onDarkMode={onDarkMode}
+        onLogOut={onLogOut}
+      />
       {commonState.view === ViewType.Home ? (
         <StartPage />
       ) : (
@@ -90,12 +96,12 @@ export const Home = ({ dispatch, projectState, commonState }: Props) => {
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
           <FlowModule inspectorRef={inspectorRef} flowView={commonState.view} dispatch={dispatch} filter={filter} />
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
-          <LibraryModule dispatch={dispatch} />
+          <LibraryModule />
           {isFilterOpen && <VisualFilterComponent filter={filter} onFilterChange={onFilterChange} />}
-          <ValidationModule />
+          {/* <ValidationModule  /> */}
         </>
       )}
-      {isProjectMenuOpen && <ProjectSubMenus activeMenu={activeMenu} />}
+      {isProjectMenuOpen && <ProjectSubMenus activeMenu="" />}
       <HomeDialogs dispatch={dispatch} commonState={commonState} projectState={projectState} />
       <ErrorModule />
     </>

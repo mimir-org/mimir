@@ -18,12 +18,7 @@ import { LockCm } from "../application/LockCm";
 //   updateNode,
 //   updateProjectVersion,
 // } from "../../redux/store/project/actions";
-import {
-  fetchLibrary,
-  fetchLibraryInterfaceTypes,
-  fetchLibraryTransportTypes,
-  fetchSubProjects,
-} from "../../redux/store/library/librarySlice";
+import { fetchAspectObjects, fetchSubProjects } from "store/reducers/libraryReducer";
 import { ProjectState } from "store/reducers/projectReducer";
 import { AspectObject, Connection, EntityType } from "lib";
 
@@ -163,9 +158,7 @@ export class WebSocket {
   };
 
   private handleUpdateLibData = () => {
-    this._dispatch(fetchLibrary());
-    this._dispatch(fetchLibraryTransportTypes());
-    this._dispatch(fetchLibraryInterfaceTypes());
+    this._dispatch(fetchAspectObjects());
     this._dispatch(fetchSubProjects());
   };
 

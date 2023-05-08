@@ -1,8 +1,8 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 
 export interface Collection {
   id: string;
   name: string;
-  libNodes: NodeLibCm[];
+  libNodes: AspectObjectLibCm[];
   created: Date;
 }

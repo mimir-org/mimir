@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../assets/size/Size";
 import { IsFamily } from "../../../../helpers/Family";
-import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject, Position, Project, User } from "lib";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -44,7 +44,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * @param params
  */
 function HandleLibNodeDrop({ event, project, user, selectedNode, getViewport, dispatch, terminals }: OnDropParameters) {
-  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as AspectObjectLibCm;
 
   if (!selectedNode) return;
 

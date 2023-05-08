@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { MENU_TYPE } from "../../../../models/project";
-import { changeActiveMenu } from "../components/subMenus/redux/menuSlice";
+// import { changeActiveMenu } from "../components/subMenus/redux/menuSlice";
 
 export const OnConvertSubProject = (dispatch: Dispatch) => {
-  dispatch(changeActiveMenu(MENU_TYPE.CONVERT_SUB_PROJECT_MENU));
+  // dispatch(changeActiveMenu(MENU_TYPE.CONVERT_SUB_PROJECT_MENU));
 };

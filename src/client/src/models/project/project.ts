@@ -1,4 +1,4 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { ConnectorTerminal } from "lib";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
@@ -45,7 +45,7 @@ export const MENU_TYPE = {
 
 export interface LibraryCategory {
   name: string;
-  nodes: NodeLibCm[];
+  nodes: AspectObjectLibCm[];
 }
 
 export interface EdgeEvent {

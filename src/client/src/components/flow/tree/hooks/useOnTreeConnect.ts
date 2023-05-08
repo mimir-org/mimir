@@ -1,5 +1,5 @@
 import { addEdge, Connection as FlowConnection, Edge as FlowEdge } from "react-flow-renderer";
-import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
+// import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { Project } from "lib";
 
 interface OnTreeDropParameters {
@@ -14,7 +14,7 @@ interface OnTreeDropParameters {
  * @returns an Edge connection.
  */
 const useOnTreeConnect = (params: OnTreeDropParameters) => {
-  SaveEventData(null, "edgeEvent");
+  // SaveEventData(null, "edgeEvent");
   const { project, connection, setEdges } = params;
 
   const edge = project.convertFromFlowEdge(connection, null);

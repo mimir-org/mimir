@@ -43,8 +43,8 @@ export class Attribute {
     this.name = lib?.name;
     this.value = null;
     this.attributeType = lib?.iri;
-    this.unitSelected = lib?.units?.find((x) => x.isDefault)?.iri;
-    this.units = lib?.units?.map((x) => new Unit(x)) ?? [];
+    this.unitSelected = lib?.attributeUnits?.find((x) => x.isDefault)?.unit?.iri;
+    this.units = lib?.attributeUnits?.map((x) => new Unit(x.unit)) ?? [];
     this.connectorTerminal = connectorTerminal == null ? null : connectorTerminal;
     this.aspectObject = aspectObject == null ? null : aspectObject;
     this.isLocked = false;

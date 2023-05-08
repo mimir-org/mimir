@@ -1,6 +1,5 @@
 import { MutableRefObject, useEffect, useState } from "react";
 import { Action } from "redux";
-import { changeInspectorTab } from "../../redux/inspectorSlice";
 import { GetInspectorHeaderText } from "./helpers";
 import { InspectorElement } from "../../types";
 import { GetAttributesElement } from "./components/parameters/helpers/GetAttributesElement";
@@ -33,7 +32,7 @@ export const InspectorTabsComponent = ({
   element,
   activeTabIndex,
   attributes,
-  changeInspectorTabAction = changeInspectorTab,
+  changeInspectorTabAction = null,
   inspectorRef,
   isInspectorOpen,
 }: Props) => {

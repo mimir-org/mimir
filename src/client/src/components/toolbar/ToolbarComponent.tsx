@@ -1,5 +1,4 @@
 import * as Icons from "../../assets/icons/header";
-import * as selectors from "redux/store/selectors";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { ViewportData } from "../../models/project";
@@ -24,9 +23,9 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
   const selectedFlowNodes = GetSelectedFlowNodes();
   const viewportData = { setViewport, setCenter } as ViewportData;
-  const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
-  const isExplorerOpen = useAppSelector(selectors.explorerSelector);
-  const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
+  const isLibraryOpen = false; // useAppSelector(selectors.libOpenSelector);
+  const isExplorerOpen = false; //useAppSelector(selectors.explorerSelector);
+  const isVisualFilterOpen = false; //useAppSelector(selectors.filterSelector);
 
   return (
     <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -42,7 +41,8 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
             <ToolbarElement
               label={TextResources.ELECTRO_ON}
               icon={Icons.Horizontal}
-              onClick={() => handlers.OnElectroClick(dispatch)}
+              onClick={() => null}
+              // onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
             />
           </>
@@ -69,7 +69,8 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
           active={isVisualFilterOpen}
           label={isVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
           icon={isVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
-          onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
+          // onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
+          onClick={() => null}
           borderLeft
         />
       </ToolbarButtonGroup>

@@ -2,7 +2,7 @@ import { Aspect, AspectObject, Connection, Connector } from "lib";
 import { Connection as FlowConnection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { setValidation } from "../../../../../redux/store/validation/validationSlice";
+// import { setValidation } from "../../../../../redux/store/validation/validationSlice";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
@@ -78,7 +78,7 @@ const onMouseUp = (
   dispatch: Dispatch
 ) => {
   if (!sourceTerminal || !targetTerminal) return;
-  if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
+  // if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validTransport, validRelation, dispatch)

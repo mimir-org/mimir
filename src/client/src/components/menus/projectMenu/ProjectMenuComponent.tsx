@@ -6,8 +6,7 @@ import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { activeMenuSelector, projectSelector } from "../../../redux/store";
-import { useAppDispatch, useAppSelector } from "store";
+import { useAppDispatch, useAppSelector, projectStateSelector } from "store";
 import { GetSelectedFlowNodes } from "../../../helpers/Selected";
 import { DialogType } from "lib";
 import { setDialogType } from "store/reducers/commonReducer";
@@ -22,9 +21,9 @@ interface Props {
  */
 const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
-  const activeMenu = useAppSelector(activeMenuSelector);
-  const hasActiveProject = project && project.id;
+  const projectState = useAppSelector(projectStateSelector);
+  // const activeMenu = useAppSelector(activeMenuSelector);
+  const hasActiveProject = projectState && projectState.project && projectState.project.id;
   const selectedFlowNodes = GetSelectedFlowNodes();
   const hasSelectedNodes = selectedFlowNodes.length > 0;
 
@@ -41,12 +40,12 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   };
 
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
-  const convertProjectText = project?.subProject
+  const convertProjectText = projectState.project?.subProject
     ? TextResources.MAKE_DISABLE_SUBPROJECT
     : TextResources.MAKE_AVAILABLE_SUBPROJECT;
 
   return (
-    <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={!!activeMenu}>
+    <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={true}>
       <MenuElement
         text={TextResources.PROJECT_OPEN}
         icon={Icons.OpenProjectIcon}
@@ -60,7 +59,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <MenuElement
         text={TextResources.PROJECT_SAVE}
         icon={!hasActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
-        onClick={() => projectMenuAction(() => Click.OnSaveProjectClick(dispatch, project))}
+        onClick={() => projectMenuAction(() => Click.OnSaveProjectClick(dispatch, projectState.project))}
         disabled={!hasActiveProject}
       />
       <MenuElement

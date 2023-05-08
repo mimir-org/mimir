@@ -1,4 +1,4 @@
-import red from "./redux/store/index";
+import red from "store";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { App } from "./components/pages/App";

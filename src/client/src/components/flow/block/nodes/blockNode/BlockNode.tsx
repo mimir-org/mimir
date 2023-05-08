@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "redux/store/selectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useAppDispatch, useAppSelector } from "store";
+import { libraryStateSelector, projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle/HandleComponent";
 import { FilterConnectors } from "../helpers/FilterConnectors";
@@ -17,6 +16,8 @@ import { Connectors } from "../blockParentNode/BlockParentNode";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../hooks";
 import { AspectObject, ConnectorDirection } from "lib";
 import { ConnectorTerminal } from "../../../../../lib/classes/Connector";
+import { ProjectState } from "store/reducers/projectReducer";
+import { LibraryState } from "store/reducers/libraryReducer";
 
 /**
  * Component for a child Node in BlockView.
@@ -30,11 +31,13 @@ const BlockNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [, setSize] = useState<BlockNodeSize>(initialSize);
-  const project = useAppSelector(selectors.projectSelector);
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
+  const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
+  const project = projectState.project;
   // const isElectroView = useAppSelector(selectors.electroSelector);
   const selectedBlockNode = project?.aspectObjects?.find((n) => n.blockSelected);
-  const terminalTypes = useAppSelector(selectors.terminalsSelector);
-  const libNodes = useAppSelector(selectors.libNodesSelector);
+  const terminalTypes = libraryState.terminalTypes;
+  const libNodes = libraryState.aspectObjectTypes;
 
   const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
     return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);

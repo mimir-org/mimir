@@ -1,4 +1,4 @@
-import red from "../../../../redux/store";
+import red from "store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { AspectObject } from "lib";

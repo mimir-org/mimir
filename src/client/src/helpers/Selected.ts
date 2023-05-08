@@ -1,4 +1,4 @@
-import red from "../redux/store";
+import red from "store";
 import { Node as FlowNode, Edge as FlowEdge, useReactFlow } from "react-flow-renderer";
 import { AspectObject, Connection } from "lib";
 

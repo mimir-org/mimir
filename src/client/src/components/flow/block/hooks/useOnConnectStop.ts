@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
 import { EdgeEvent } from "../../../../models/project";
-import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
-import { setValidation } from "../../../../redux/store/validation/validationSlice";
+// import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
+// import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { AspectObject, Connector, ConnectorTerminal, Project } from "lib";
 
 const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) => {
   e.preventDefault();
-  const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
+  const edgeEvent = null; // = LoadEventData("edgeEvent") as EdgeEvent;
   if (!edgeEvent) return;
 
   const nodes = project?.aspectObjects ?? [];
@@ -26,7 +26,7 @@ const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) =
   );
 
   if (existingEdge) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
+    // dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
     return;
   }
 
@@ -35,11 +35,11 @@ const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) =
     targetConnector instanceof ConnectorTerminal &&
     sourceConnector.terminalType !== targetConnector.terminalType
   ) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
+    // dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
     return;
   }
 
-  SaveEventData(null, "edgeEvent");
+  // SaveEventData(null, "edgeEvent");
 };
 
 export const ResolveTarget = (project: Project, e: MouseEvent): [targetNode: AspectObject, targetConnector: Connector] => {

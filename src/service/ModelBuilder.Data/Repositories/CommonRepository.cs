@@ -237,7 +237,7 @@ public class CommonRepository : ICommonRepository
         if (companies == null || !companies.Any())
             return null;
 
-        var company = companies.FirstOrDefault(c => c.Iris.Any(i => i.Equals(iriHost, StringComparison.InvariantCultureIgnoreCase)));
+        var company = companies.FirstOrDefault(c => iriHost.Contains(c.Domain, StringComparison.InvariantCultureIgnoreCase));
 
         if (company == null)
             return null;
@@ -268,19 +268,7 @@ public class CommonRepository : ICommonRepository
         if (string.IsNullOrWhiteSpace(domain))
             throw new MimirorgConfigurationException($"Missing domain from id {id}");
 
-        var companies = _companyRepository.GetCompanies().Result?.ToList();
-
-        if (companies == null || !companies.Any() || companies.All(x => x.Domain != domain))
-            throw new MimirorgConfigurationException($"There are missing company settings in Tyle for domain {domain}");
-
-        var iri = companies.FirstOrDefault(x => x.Domain == domain)?.Iris?.FirstOrDefault();
-
-        if (iri == null)
-            throw new MimirorgConfigurationException($"There are missing company settings in Tyle for domain {domain}");
-
-        return iri.StartsWith("http")
-            ? $"{iri.TrimEnd('/')}/ID{SplitId(id)}"
-            : $"https://{iri.TrimEnd('/')}/ID{SplitId(id)}";
+        return $"https://{domain}/ID{SplitId(id)}";
     }
 
     /// <summary>

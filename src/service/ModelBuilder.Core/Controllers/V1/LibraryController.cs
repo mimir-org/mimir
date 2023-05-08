@@ -37,7 +37,7 @@ public class LibraryController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("aspectObject")]
-    [ProducesResponseType(typeof(ICollection<NodeLibCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ICollection<AspectObjectLibCm>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -133,7 +133,7 @@ public class LibraryController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("quantity-datums")]
-    [ProducesResponseType(typeof(ICollection<QuantityDatumCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ICollection<QuantityDatumLibCm>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

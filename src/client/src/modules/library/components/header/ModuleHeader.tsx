@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { LibraryTab } from "../../../../models";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { LibHeader } from "./ModuleHeader.styled";
@@ -10,12 +9,12 @@ import { Aspect } from "../../../../lib";
 
 interface Props {
   libOpen: boolean;
-  dispatch: Dispatch;
   activeTab: LibraryTab;
   setActiveTab: (tab: LibraryTab) => void;
   search: (text: string) => void;
   aspectFilters: Aspect[];
   setAspectFilters: (value: Aspect[]) => void;
+  onOpen: (state: boolean) => void;
 }
 
 /**
@@ -23,14 +22,13 @@ interface Props {
  * @param interface
  * @returns Library Module tabs, search input and filters.
  */
-
-export const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => (
+export const ModuleHeader = ({ libOpen, activeTab, setActiveTab, search, aspectFilters, setAspectFilters, onOpen }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.EXPAND_LIB_PANEL} offset={[0, 5]} dispatch={dispatch} />
+      <ExpandButton text={TextResources.EXPAND_LIB_PANEL} offset={[0, 5]} onOpen={onOpen} />
     ) : (
       <>
-        <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
+        <ModuleTabs activeTab={activeTab} setActiveTab={setActiveTab} onOpen={onOpen} />
         <SearchArea activeTab={activeTab} search={search} />
         <FilterBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
       </>

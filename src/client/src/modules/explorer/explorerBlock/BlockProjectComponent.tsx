@@ -1,5 +1,4 @@
-import * as selectors from "./helpers/selectors";
-import { commonStateSelector, useAppDispatch, useAppSelector } from "store";
+import { commonStateSelector, useAppDispatch, useAppSelector, projectStateSelector } from "store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
@@ -19,7 +18,7 @@ export const BlockProjectComponent = () => {
   const viewportData = { setViewport, setCenter } as ViewportData;
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
-  const projectState = useAppSelector(selectors.projectStateSelector);
+  const projectState = useAppSelector(projectStateSelector);
   const commonState = useAppSelector<CommonState>(commonStateSelector);
   const project = projectState?.project;
   const nodes = project?.aspectObjects;

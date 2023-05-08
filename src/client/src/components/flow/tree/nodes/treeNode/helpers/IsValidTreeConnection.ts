@@ -1,7 +1,7 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { GetMimirNodes } from "../../../../../../helpers/Selected";
-import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
+// import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
 // import { ValidateFlowTreeEdge } from "../../../builders/helpers";
 import { AspectObject } from "lib";
 
@@ -25,6 +25,6 @@ export const IsValidTreeConnection = (node: AspectObject, connection: Connection
 };
 
 const onMouseUp = (status: boolean, message: string, dispatch: Dispatch) => {
-  if (!status) dispatch(setValidation({ valid: false, message: message }));
+  // if (!status) dispatch(setValidation({ valid: false, message: message }));
   return document.removeEventListener("mouseup", () => onMouseUp(status, message, dispatch));
 };

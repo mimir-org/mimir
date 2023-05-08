@@ -1,7 +1,5 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 
 export interface Library {
-  libNodes: NodeLibCm[];
-  // interfaces: LibItem[];
-  // transports: LibItem[];
+  libNodes: AspectObjectLibCm[];
 }

@@ -1,7 +1,7 @@
-import { changeActiveMenu } from "../components/subMenus/redux/menuSlice";
+// import { changeActiveMenu } from "../components/subMenus/redux/menuSlice";
 import { MENU_TYPE } from "../../../../models/project";
 import { Dispatch } from "redux";
 
 export const OnCommitClick = (dispatch: Dispatch) => {
-  dispatch(changeActiveMenu(MENU_TYPE.COMMIT_PROJECT_MENU));
+  // dispatch(changeActiveMenu(MENU_TYPE.COMMIT_PROJECT_MENU));
 };

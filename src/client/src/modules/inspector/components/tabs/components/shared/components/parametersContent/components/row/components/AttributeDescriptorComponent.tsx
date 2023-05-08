@@ -1,4 +1,4 @@
-import { QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
+import { QuantityDatumLibCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { AttributeDescriptorBox, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
 import { AttributeQuantityDatumElement } from "./AttributeQuantityDatumElement";
@@ -10,7 +10,7 @@ import { Attribute } from "lib";
 interface Props {
   headerColor: string;
   attribute: Attribute;
-  quantityDatums: QuantityDatumCm[];
+  quantityDatums: QuantityDatumLibCm[];
   onChange: (attributeId: string, property: string, value: string) => void;
 }
 

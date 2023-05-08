@@ -1,8 +1,8 @@
-import red from "../redux/store/index";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import red from "store";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject } from "lib";
 
-type Item = AspectObject | NodeLibCm;
+type Item = AspectObject | AspectObjectLibCm;
 
 export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;

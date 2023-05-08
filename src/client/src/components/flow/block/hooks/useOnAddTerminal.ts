@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TerminalLibCm, NodeLibCm } from "@mimirorg/typelibrary-types";
+import { TerminalLibCm, AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { ConnectorDirection, Project } from "lib";
 import { ConnectorTerminal } from "../../../../lib/classes/Connector";
 
@@ -18,7 +18,7 @@ export const useOnAddTerminal = (
   typeId: string,
   nodeId: string,
   terminalTypes: TerminalLibCm[],
-  nodeTypes: NodeLibCm[],
+  nodeTypes: AspectObjectLibCm[],
   direction: ConnectorDirection,
   dispatch: Dispatch
 ) => {
@@ -35,7 +35,7 @@ export const useOnAddTerminal = (
   const nodeType = nodeTypes.find((x) => x.id === node.libraryType);
   if (nodeType == null) return;
 
-  const nodeTerrminalType = nodeType.nodeTerminals.find((x) => x.terminal.id === typeId);
+  const nodeTerrminalType = nodeType.aspectObjectTerminals.find((x) => x.terminal.id === typeId);
   if (nodeTerrminalType == null) return;
 
   const terminalsOfTheSameType = node.connectors?.filter(

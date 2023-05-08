@@ -1,8 +1,7 @@
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
-import { projectStateSelector } from "../../../redux/store";
-import { commonStateSelector, useAppSelector } from "store";
+import { commonStateSelector, useAppSelector, projectStateSelector } from "store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 // import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";

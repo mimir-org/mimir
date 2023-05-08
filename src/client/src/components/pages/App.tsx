@@ -1,8 +1,7 @@
 import { commonStateSelector, projectStateSelector } from "store/selectors";
 import { Home } from "./Home/Home";
 import { GlobalStyle } from "../../compLibrary/GlobalStyle";
-import { isFetchingSelector } from "../../redux/store";
-import { useAppDispatch, useAppSelector } from "store";
+import { useAppDispatch, useAppSelector, fetchingSelector } from "store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text/TextResources";
@@ -24,7 +23,7 @@ export const App = ({ pca }: AppProps) => {
   const projectState = useAppSelector<ProjectState>(projectStateSelector);
   const commonState = useAppSelector<CommonState>(commonStateSelector);
 
-  const isFetching = useAppSelector(isFetchingSelector);
+  const isFetching = useAppSelector(fetchingSelector);
 
   const login = () => msalInstance && msalInstance.loginRedirect();
 

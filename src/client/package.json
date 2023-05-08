@@ -8,7 +8,7 @@
     "@headlessui/react": "^1.7.11",
     "@microsoft/applicationinsights-web": "^2.8.10",
     "@microsoft/signalr": "^7.0.3",
-    "@mimirorg/typelibrary-types": "^0.23.0",
+    "@mimirorg/typelibrary-types": "^1.0.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@styled-icons/heroicons-outline": "^10.46.0",
     "@tippyjs/react": "^4.2.6",
@@ -81,6 +81,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.55.0",
     "source-map-explorer": "^2.5.3",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "redux-devtools-extension": "^2.13.9"
   }
 }

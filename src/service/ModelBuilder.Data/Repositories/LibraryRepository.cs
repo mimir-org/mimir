@@ -23,7 +23,7 @@ public class LibraryRepository : ILibraryRepository
         _applicationSetting = applicationSetting?.Value;
     }
 
-    public async Task<List<QuantityDatumCm>> GetQuantityDatums()
+    public async Task<List<QuantityDatumLibCm>> GetQuantityDatums()
     {
         var task1 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedScope);
         var task2 = GetQuantityDatumAsync(QuantityDatumType.QuantityDatumSpecifiedProvenance);
@@ -50,12 +50,12 @@ public class LibraryRepository : ILibraryRepository
         return data;
     }
 
-    public async Task<List<NodeLibCm>> GetAspectObjectTypes()
+    public async Task<List<AspectObjectLibCm>> GetAspectObjectTypes()
     {
         // ReSharper disable once StringLiteralTypo
         var url = _applicationSetting.ApiUrl("libraryaspectobject");
-        var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectNode.ToString(),
-            async () => await _httpRepository.GetData<List<NodeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+        var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectObject.ToString(),
+            async () => await _httpRepository.GetData<List<AspectObjectLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
         return data;
     }
@@ -78,12 +78,12 @@ public class LibraryRepository : ILibraryRepository
         return data;
     }
 
-    private async Task<List<QuantityDatumCm>> GetQuantityDatumAsync(QuantityDatumType type)
+    private async Task<List<QuantityDatumLibCm>> GetQuantityDatumAsync(QuantityDatumType type)
     {
         // ReSharper disable once StringLiteralTypo
         var url = _applicationSetting.ApiUrl($"libraryattribute/datum/{(int) type}");
-        var data = await _cacheRepository.GetOrCreateAsync(type.ToString(),
-            async () => await _httpRepository.GetData<List<QuantityDatumCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+        var data = await _cacheRepository.GetOrCreateAsync(CacheKey.QuantityDatum.ToString(),
+            async () => await _httpRepository.GetData<List<QuantityDatumLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
         return data;
     }
 }

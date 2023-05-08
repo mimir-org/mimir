@@ -1,4 +1,3 @@
-import * as selectors from "./helpers/selectors";
 import { ExitButton } from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
 import { TextResources } from "../../assets/text/TextResources";
@@ -8,7 +7,7 @@ import { BadRequestData } from "../../models/webclient";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
 import { Color } from "../../assets/color/Color";
-import { useAppDispatch, useAppSelector } from "store";
+import { projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
 
 interface ErrorMessage {
@@ -26,8 +25,8 @@ const ErrorModule = () => {
   const dispatch = useAppDispatch();
   const [visible, setVisible] = useState(true);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
-  const projectState = useAppSelector(selectors.projectStateSelector);
-  const libraryState = useAppSelector(selectors.librarySelector);
+  const projectState = useAppSelector(projectStateSelector);
+  // const libraryState = useAppSelector(selectors.librarySelector);
   // const userState = useAppSelector(selectors.userStateSelector);
   // const commonState = useAppSelector(selectors.commonStateSelector);
 
@@ -53,11 +52,11 @@ const ErrorModule = () => {
     //   });
     // }
 
-    if (libraryState.apiError) {
-      libraryState.apiError.forEach((error) => {
-        if (error) errorList.push({ module: "Library", key: error.key, message: error.errorMessage, errorData: error.errorData });
-      });
-    }
+    // if (libraryState.apiError) {
+    //   libraryState.apiError.forEach((error) => {
+    //     if (error) errorList.push({ module: "Library", key: error.key, message: error.errorMessage, errorData: error.errorData });
+    //   });
+    // }
 
     // if (commonState.apiError) {
     //   commonState.apiError.forEach((error) => {
@@ -73,7 +72,7 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [libraryState.apiError]);
+  }, []);
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>
