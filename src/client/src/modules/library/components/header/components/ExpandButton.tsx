@@ -1,7 +1,7 @@
+import { Icon } from "@mimirorg/component-library";
 import { LibraryIcon } from "../../../../../assets/icons/modules";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { ExpandButtonContainer } from "./ExpandButton.styled";
-import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { useState } from "react";
 
 interface Props {

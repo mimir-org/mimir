@@ -4,11 +4,11 @@ import { CheckboxTreeExplorer } from "../../../../../compLibrary/input/checkbox/
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
-import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { GetAspectColor, GetAspectIcon } from "assets";
 import { GetIndentLevel } from "../../../shared/helpers/";
 import { Dispatch } from "redux";
 import { AspectObject } from "lib";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   node: AspectObject;

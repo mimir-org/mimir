@@ -5,9 +5,9 @@ import { GetAspectColor } from "assets";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../../models";
 import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
-import { Icon } from "../../../../../../../../../compLibrary/icon/Icon";
 import { OnCheckboxChange, OnDragStart } from "./handlers";
 import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   libNode: AspectObjectLibCm;

@@ -2,9 +2,8 @@ import { useState } from "react";
 import { InstructionBoxComponent } from "./InstructionBoxComponent";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
-import { Icon } from "../../../compLibrary/icon/Icon";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
-import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
+import { CollapseWhiteIcon, ExpandedWhiteIcon } from "@mimirorg/component-library";
 import { ProjectHeaderButtonContainer, ProjectHeaderButton } from "./ProjectMenuHeaderComponent.styled";
 import { DialogType } from "lib";
 
@@ -35,7 +34,7 @@ export const ProjectMenuHeaderComponent = ({
         <Tooltip content={TextResources.PROJECT_DESCRIPTION} placement={"bottom"} offset={[0, 8]}>
           <ProjectHeaderButton isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <span>{projectName ?? TextResources.PROJECT}</span>
-            <Icon size={10} src={isMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="" />
+            {isMenuOpen ? <CollapseWhiteIcon size={10} alt={"icon"} /> : <ExpandedWhiteIcon size={10} alt={"icon"} />}
           </ProjectHeaderButton>
         </Tooltip>
         {isMenuOpen && (

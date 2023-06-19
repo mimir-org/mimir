@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { TerminalsCategoryListBox } from "./components/ActiveTerminalsList.styled";
 import { TerminalsCategoryElement } from "../../../shared/styled/TerminalsCategoryElement";
-import { CollapseAccordionIcon, ExpandAccordionIcon } from "../../../../../../../../assets/icons/toogle";
 import { TerminalElementList } from "./TerminalElementList";
 import { TerminalsListElementWrapper } from "../../../shared/styled/TerminalsListElementWrapper";
 import { ConnectorTerminal } from "lib";
+import { CollapseAccordionIcon, ExpandedAccordionIcon } from "@mimirorg/component-library";
 
 interface Props {
   terminals: ConnectorTerminal[];
@@ -39,7 +39,7 @@ export const TerminalsSelector = ({ terminals, selectedTerminalId, onSelect }: P
             <TerminalsCategoryElement radius={0} onClick={() => OnCategoryClick(category)} index={i} isCategoryHeader>
               {category}
               <img
-                src={expandedCategories?.includes(category) ? CollapseAccordionIcon : ExpandAccordionIcon}
+                src={expandedCategories?.includes(category) ? CollapseAccordionIcon : ExpandedAccordionIcon}
                 className="dropdownIcon"
                 alt="expand-icon"
               />

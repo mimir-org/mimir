@@ -1,7 +1,7 @@
 import { CheckboxWrapper } from "./CheckboxTreeExplorer.styled";
-import { Icon } from "../../../../icon/Icon";
 import { Tooltip } from "../../../../tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   onChange: () => void;

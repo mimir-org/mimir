@@ -2,7 +2,6 @@ import { Home } from "./Home/Home";
 import { GlobalStyle } from "../../compLibrary/GlobalStyle";
 import { useAppDispatch, useAppSelector, fetchingSelector } from "store";
 import { LoginBox } from "./App.styled";
-import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text/TextResources";
 
 import { IPublicClientApplication } from "@azure/msal-browser";
@@ -14,7 +13,7 @@ import { fetchProjects } from "store/reducers/projectReducer";
 import { fetchCompanies, fetchCompany, fetchParsers, fetchUser } from "store/reducers/commonReducer";
 import { fetchAspectObjects, fetchTerminals } from "store/reducers/libraryReducer";
 import { useEffect } from "react";
-import { MimirorgThemeProvider } from "@mimirorg/component-library";
+import { MimirorgThemeProvider, LogoutIcon } from "@mimirorg/component-library";
 
 type AppProps = {
   pca: IPublicClientApplication;

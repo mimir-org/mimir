@@ -1,22 +1,21 @@
 import { ReactElement } from "react";
 import { InspectorButtonType } from "../InspectorButton";
 import { LockClosedComponent, LockOpenComponent } from "../../../../assets/icons/lock";
-import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
-import { DeleteDisabledIconComponent, DeleteIconComponent } from "../../../../assets/icons/delete";
+import { CheckmarkCheckedIcon, CheckmarkEmptyIcon, DeleteDisabledIcon, DeleteIcon } from "@mimirorg/component-library";
 
 export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {
   switch (type) {
     case InspectorButtonType.Validate:
-      return <CheckmarkEmptyComponent />;
+      return <CheckmarkEmptyIcon />;
     case InspectorButtonType.ValidateCorrect:
-      return <CheckmarkCheckedComponent />;
+      return <CheckmarkCheckedIcon />;
     case InspectorButtonType.Lock:
       return <LockClosedComponent />;
     case InspectorButtonType.Unlock:
       return <LockOpenComponent />;
     case InspectorButtonType.Delete:
-      return <DeleteIconComponent />;
+      return <DeleteIcon />;
     case InspectorButtonType.DeleteDisabled:
-      return <DeleteDisabledIconComponent />;
+      return <DeleteDisabledIcon />;
   }
 };

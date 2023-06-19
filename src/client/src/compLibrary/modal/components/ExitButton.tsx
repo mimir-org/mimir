@@ -1,8 +1,8 @@
 import { ExitButtonContainer } from "./ExitButton.styled";
 import { VisuallyHidden } from "../../util";
-import { Icon } from "../../icon/Icon";
 import { CloseIcon } from "../../../assets/icons/close";
 import { TextResources } from "../../../assets/text/TextResources";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   onClick: () => void;

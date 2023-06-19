@@ -1,4 +1,4 @@
-import { Icon } from "../icon/Icon";
+import { Icon } from "@mimirorg/component-library";
 import { MenuElementButton, MenuElementText } from "./MenuElement.styled";
 
 interface Props {

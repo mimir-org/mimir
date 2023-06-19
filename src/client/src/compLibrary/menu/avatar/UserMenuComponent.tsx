@@ -2,9 +2,8 @@ import { MENU_TYPE } from "models/project";
 import { TextResources } from "assets/text/TextResources";
 import { useOutsideClick } from "hooks/useOutsideClick";
 import { memo, useRef } from "react";
-import { Icon } from "compLibrary/icon/Icon";
-import { DarkMode, LightMode, LogoutIcon } from "assets/icons/header";
 import { Box, Element, Text, UserNameBox, UserNameRoleText, UserNameText } from "./UserMenuComponent.styled";
+import { Icon, DarkModeIcon, LightModeIcon, LogoutIcon } from "@mimirorg/component-library";
 
 interface Props {
   userName: string;
@@ -32,7 +31,7 @@ export const UserMenuComponent = ({ userName, userRole, isDarkMode, setIsUserMen
       </UserNameBox>
 
       <Element onClick={() => onDarkMode(!isDarkMode)}>
-        <Icon size={20} src={isDarkMode ? LightMode : DarkMode} />
+        <Icon size={20} src={isDarkMode ? LightModeIcon : DarkModeIcon} />
         <Text>{isDarkMode ? TextResources.LIGHT_MODE : TextResources.DARK_MODE}</Text>
       </Element>
 

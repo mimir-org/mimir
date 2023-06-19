@@ -2,9 +2,7 @@ import { OnLockClick } from "../handlers/OnLockClick";
 import { OnInspectorDeleteClick } from "../handlers/OnInspectorDeleteClick";
 import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
-import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
@@ -17,6 +15,7 @@ import {
   InspectorButtonsToggleContainer,
 } from "./InspectorButtonsComponent.styled";
 import { AspectObject, Connection, Project } from "lib";
+import { Icon, ToogleDownIcon, ToogleUpIcon } from "@mimirorg/component-library";
 
 interface Props {
   nodes: AspectObject[];
@@ -98,7 +97,7 @@ export const InspectorButtonsComponent = ({
             }
           >
             <InspectorButtonsToggleTitle>{TextResources.INSPECTOR}</InspectorButtonsToggleTitle>
-            <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
+            <Icon size={15} src={open ? ToogleDownIcon : ToogleUpIcon} alt="toggle-icon" />
           </InspectorButtonsToggleContainer>
         </span>
       </Tooltip>

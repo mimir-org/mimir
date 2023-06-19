@@ -1,4 +1,3 @@
-import * as Icons from "../../assets/icons/header";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { ViewportData } from "../../models/project";
@@ -16,6 +15,17 @@ import { onViewTypeChange } from "components/handlers/commonHandlers";
 import { useDispatch } from "react-redux";
 import { onTerminalAdd, onTerminalChecked, onTerminalRemove } from "components/handlers/ProjectHandlers";
 import { LibraryState } from "store/reducers/libraryReducer";
+import { Size } from "../../assets/size/Size";
+import {
+  BlockViewActiveIcon,
+  BlockViewIcon,
+  FilterActiveIcon,
+  FilterIcon,
+  FitViewIcon,
+  HorizontalIcon,
+  TreeViewActiveIcon,
+  TreeViewIcon,
+} from "@mimirorg/component-library";
 
 interface Props {
   isVisualFilterOpen: boolean;
@@ -56,13 +66,13 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           <>
             <ToolbarElement
               label={TextResources.FITSCREEN}
-              icon={Icons.FitScreenIcon}
+              icon={<FitViewIcon size={15} alt={TextResources.FITSCREEN} />}
               onClick={() => handlers.OnFitToScreenClick(false, viewportData)}
               borderRight
             />
             <ToolbarElement
               label={TextResources.ELECTRO_ON}
-              icon={Icons.Horizontal}
+              icon={<HorizontalIcon size={15} alt={TextResources.ELECTRO_ON} />}
               onClick={() => null}
               // onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
@@ -95,7 +105,13 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
         <ToolbarElement
           active={viewType === ViewType.Tree}
           label={TextResources.TREEVIEW}
-          icon={viewType === ViewType.Tree ? Icons.TreeViewActive : Icons.TreeView}
+          icon={
+            viewType === ViewType.Tree ? (
+              <TreeViewActiveIcon size={15} alt={TextResources.TREEVIEW} />
+            ) : (
+              <TreeViewIcon size={15} alt={TextResources.TREEVIEW} />
+            )
+          }
           // onClick={() => handlers.OnTreeViewClick(setSelectedNodes, viewType === ViewType.Tree, dispatch)}
           onClick={() => onViewTypeChange(ViewType.Tree, dispatch)}
           borderLeft
@@ -104,7 +120,13 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
         <ToolbarElement
           active={viewType === ViewType.Block}
           label={TextResources.BLOCKVIEW}
-          icon={viewType === ViewType.Tree ? Icons.BlockView : Icons.BlockViewActive}
+          icon={
+            viewType === ViewType.Tree ? (
+              <BlockViewIcon size={15} alt={TextResources.BLOCKVIEW} />
+            ) : (
+              <BlockViewActiveIcon size={15} alt={TextResources.BLOCKVIEW} />
+            )
+          }
           onClick={() => onViewTypeChange(ViewType.Block, dispatch)}
           borderLeft
           clickable={viewType !== ViewType.Block && aspectObject != null}
@@ -112,7 +134,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
         <ToolbarElement
           active={isVisualFilterOpen}
           label={isVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
-          icon={isVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
+          icon={isVisualFilterOpen ? <FilterActiveIcon size={15} /> : <FilterIcon size={15} />}
           // onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
           onClick={() => null}
           borderLeft

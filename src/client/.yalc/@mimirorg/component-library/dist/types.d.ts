@@ -581,6 +581,51 @@ interface MimirorgThemeProviderProps {
  * @constructor
  */
 export const MimirorgThemeProvider: ({ theme, children }: PropsWithChildren<MimirorgThemeProviderProps>) => import("react/jsx-runtime").JSX.Element;
+export const FunctionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const FunctionFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const LocationIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const LocationFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ProductIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ProductFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CheckmarkIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CheckmarkCheckedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CheckmarkEmptyIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
 export const DeleteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
     title?: string | undefined;
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
@@ -592,6 +637,81 @@ export const DeleteActiveIcon: import("styled-components").StyledComponent<impor
     size?: number | undefined;
 }, never>;
 export const DeleteDisabledIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const AvatarBackgroundIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const BlockViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const BlockViewActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const DarkModeIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const FilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const FilterActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const FitViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const HorizontalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const LightModeIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const LogoutIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const NotificationsIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const SettingsIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const TreeViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const TreeViewActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const VerticalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
     title?: string | undefined;
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
     size?: number | undefined;
@@ -627,6 +747,46 @@ export const ToogleDownIcon: import("styled-components").StyledComponent<import(
     size?: number | undefined;
 }, never>;
 export const ToogleUpIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ExpandedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ExpandedWhiteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CollapseIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CollapseAccordionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CollapseAccordionNestedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const CollapseWhiteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ExpandedAccordionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ExpandedAccordionNestedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
     title?: string | undefined;
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
     size?: number | undefined;

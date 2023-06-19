@@ -1,12 +1,12 @@
 import { FunctionComponent } from "react";
 import { Dialog } from "@headlessui/react";
-import { Icon } from "../../../icon/Icon";
 import {
   InfoModalContentContainer,
   InfoModalHeader,
   InfoModalHeaderDescription,
   InfoModalHeaderTitle,
 } from "./InfoModalContent.styled";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   title?: string;

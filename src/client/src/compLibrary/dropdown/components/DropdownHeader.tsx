@@ -1,6 +1,6 @@
 import { DropdownHeaderBox } from "../Dropdown.styled";
 import { Symbol } from "../../symbol";
-import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
+import { CollapseIcon, ExpandedIcon } from "@mimirorg/component-library";
 import { DropdownItem } from "../Dropdown";
 
 interface Props {
@@ -44,7 +44,7 @@ export const DropdownHeader = ({
       <>
         {valueImageProp && <Symbol source={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
         <p>{selectedItem[valueProp] ?? selectedItem.name ?? selectedItem.key}</p>
-        <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+        <img src={isListOpen ? ExpandedIcon : CollapseIcon} alt="expand-icon" />
       </>
     )}
   </DropdownHeaderBox>

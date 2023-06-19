@@ -4,11 +4,11 @@ import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
 import { Size } from "../../assets/size/Size";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../compLibrary/icon/Icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
 import { useAppSelector } from "store";
 import { Dispatch } from "redux";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   dispatch: Dispatch;

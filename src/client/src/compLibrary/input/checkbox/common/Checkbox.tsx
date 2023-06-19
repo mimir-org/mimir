@@ -1,6 +1,6 @@
 import { CheckboxWrapper } from "./Checkbox.styled";
 import { Color } from "../../../../assets/color/Color";
-import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
+import { CheckmarkCheckedIcon, CheckmarkEmptyIcon } from "@mimirorg/component-library";
 
 interface Props {
   isChecked: boolean;
@@ -18,7 +18,7 @@ interface Props {
  */
 export const Checkbox = ({ isChecked, onChange, color = Color.DAVYS_GREY, readOnly, id, marginLeft = 0 }: Props) => (
   <CheckboxWrapper color={color} marginLeft={marginLeft}>
-    {isChecked ? <CheckmarkCheckedComponent /> : <CheckmarkEmptyComponent />}
+    {isChecked ? <CheckmarkCheckedIcon /> : <CheckmarkEmptyIcon />}
     <input id={id} type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />
   </CheckboxWrapper>
 );

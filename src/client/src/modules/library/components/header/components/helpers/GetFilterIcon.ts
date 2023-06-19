@@ -1,15 +1,15 @@
 import {
-  Function,
-  FunctionFilterOff,
-  Product,
-  ProductFilterOff,
-  Location,
-  LocationFilterOff,
-} from "../../../../../../assets/icons/aspects";
+  FunctionFilterIcon,
+  FunctionIcon,
+  LocationFilterIcon,
+  LocationIcon,
+  ProductFilterIcon,
+  ProductIcon,
+} from "@mimirorg/component-library";
 import { Aspect } from "../../../../../../lib/enums";
 
 export const GetFilterIcon = (aspect: Aspect, selected: boolean) => {
-  if (aspect === Aspect.Function) return selected ? Function : FunctionFilterOff;
-  if (aspect === Aspect.Product) return selected ? Product : ProductFilterOff;
-  if (aspect === Aspect.Location) return selected ? Location : LocationFilterOff;
+  if (aspect === Aspect.Function) return selected ? FunctionIcon : FunctionFilterIcon;
+  if (aspect === Aspect.Product) return selected ? ProductIcon : ProductFilterIcon;
+  if (aspect === Aspect.Location) return selected ? LocationIcon : LocationFilterIcon;
 };

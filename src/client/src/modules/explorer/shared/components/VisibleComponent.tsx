@@ -1,7 +1,7 @@
 import { AspectButton } from "../styled/AspectButton";
-import { Icon } from "../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";
 import { VisibleOffIcon, VisibleOnIcon } from "../../../../assets/icons/visible";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   isHidden: boolean;

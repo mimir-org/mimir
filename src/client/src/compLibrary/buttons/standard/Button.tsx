@@ -1,4 +1,4 @@
-import { Icon } from "../../icon/Icon";
+import { Icon } from "@mimirorg/component-library";
 import { ButtonBase, WhiteButton, GreyButton } from "./Button.styled";
 
 interface Props {

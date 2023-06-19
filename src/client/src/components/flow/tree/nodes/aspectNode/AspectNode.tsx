@@ -5,7 +5,7 @@ import { AspectColorType } from "../../../../../models";
 import { AspectNodeBox } from "./AspectNode.styled";
 import { GetAspectColor } from "assets";
 import { Aspect, AspectObject, Connector, ViewType } from "lib";
-import * as Icons from "assets/icons/aspects";
+import { FunctionIcon, LocationIcon, ProductIcon, Icon } from "@mimirorg/component-library";
 
 const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
   const SetTopPos = (position: Position) => {
@@ -15,10 +15,10 @@ const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
 
   const GetFlowAspectIcon = (aspect: Aspect) => {
     let AspectIcon: string;
-    if (aspect === Aspect.Function) AspectIcon = Icons.Function;
-    if (aspect === Aspect.Product) AspectIcon = Icons.Product;
-    if (aspect === Aspect.Location) AspectIcon = Icons.Location;
-    return <img src={AspectIcon} className="aspect-icon" alt={Aspect[aspect]} draggable={false} />;
+    if (aspect === Aspect.Function) AspectIcon = FunctionIcon;
+    if (aspect === Aspect.Product) AspectIcon = ProductIcon;
+    if (aspect === Aspect.Location) AspectIcon = LocationIcon;
+    return <AspectIcon />;
   };
 
   return (

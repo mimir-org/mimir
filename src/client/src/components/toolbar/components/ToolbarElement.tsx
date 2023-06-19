@@ -1,11 +1,11 @@
 import { ToolElementBox } from "./ToolbarElement.styled";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../../compLibrary/icon/Icon";
+import { ReactNode } from "react";
 
 interface Props {
   active?: boolean;
   onClick: () => void;
-  icon: string;
+  icon: ReactNode;
   label: string;
   borderLeft?: boolean;
   borderRight?: boolean;
@@ -26,7 +26,7 @@ export const ToolbarElement = ({ active, onClick, icon, label, borderLeft, borde
       clickable={clickable}
       onClick={() => (clickable ? onClick() : null)}
     >
-      <Icon size={15} src={icon} alt={label} />
+      {icon}
     </ToolElementBox>
   </Tooltip>
 );
