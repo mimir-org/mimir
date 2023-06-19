@@ -2,7 +2,7 @@ import { AspectObject } from "lib";
 import styled from "styled-components";
 import { Color } from "../../../../assets/color/Color";
 import { FontSize } from "../../../../assets/font";
-import { GetAspectColor } from "../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType } from "../../../../models";
 
 interface Props {

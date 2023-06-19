@@ -1,12 +1,10 @@
 import { BlockTransportEdge } from "../block/edges/transport/BlockTransportEdge";
 import { BlockRelationEdge } from "../block/edges/relation/BlockRelationEdge";
 import { BlockPartOfEdge } from "../block/edges/partOf/BlockPartOfEdge";
-import { TreePartOfEdge } from "../tree/edges/partOf";
-import { TreeRelationEdge } from "../tree/edges/relation/TreeRelationEdge";
-import { TreeTransportEdge } from "../tree/edges/transport/TreeTransportEdge";
+import { TreeRelationEdge, TreeTransportEdge, TreeConnectionPartOf } from "../tree/edges";
 
 const GetEdgeTypes = {
-  TreePartOfEdgeType: TreePartOfEdge,
+  TreeConnectionPartOf: TreeConnectionPartOf,
   TreeRelationEdgeType: TreeRelationEdge,
   TreeTransportEdgeType: TreeTransportEdge,
   BlockTransportEdgeType: BlockTransportEdge,

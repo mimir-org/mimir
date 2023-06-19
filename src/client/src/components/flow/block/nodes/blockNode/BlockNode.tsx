@@ -7,7 +7,7 @@ import { HandleComponent } from "../../handle/HandleComponent";
 import { FilterConnectors } from "../helpers/FilterConnectors";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { Size } from "../../../../../assets/size/Size";
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { BlockNodeSize } from "../../../../../models/project";
 import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";

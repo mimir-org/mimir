@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
+
 import { Size } from "../../assets/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { LibraryTab, CollectionsActions } from "../../models";
 import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
-import { libraryStateSelector, useAppSelector } from "store";
-import { Aspect } from "../../lib";
+import { libraryStateSelector, modulesSelector, useAppDispatch, useAppSelector } from "store";
+import { Aspect, ModuleType } from "../../lib";
 import { LibraryState } from "store/reducers/libraryReducer";
+import { setModule } from "store/reducers/commonReducer";
+import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
 
 /**
  * Component for Mimir's type library, templates and subprojects.
@@ -16,7 +18,7 @@ import { LibraryState } from "store/reducers/libraryReducer";
  * @returns a module with tabs and its contents
  */
 export const LibraryModule = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
@@ -24,6 +26,10 @@ export const LibraryModule = () => {
   const [selectedLibNodes, setSelectedLibNodes] = useState([] as AspectObjectLibCm[]);
   const [selectedLibNode, setSelectedLibNode] = useState<AspectObjectLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
+  const modules = useAppSelector<ModuleType[]>(modulesSelector);
+
+  const open = modules.some((x) => x === ModuleType.Library);
+
   const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
   const lib = MODULE_TYPE.LIBRARY;
 
@@ -46,7 +52,7 @@ export const LibraryModule = () => {
         search={(text: string) => setSearchString(text)}
         aspectFilters={aspectFilters}
         setAspectFilters={setAspectFilters}
-        onOpen={setOpen}
+        onOpen={() => dispatch(setModule({ module: ModuleType.Library, open: !open }))}
       />
       <ModuleBody
         libOpen={open}
@@ -61,6 +67,7 @@ export const LibraryModule = () => {
         aspectFilters={aspectFilters}
         selectedNode={null} // TODO: Fix this
         subProjects={libraryState.subProjects}
+        aspectObjects={libraryState.aspectObjectTypes}
       />
     </AnimatedModule>
   );

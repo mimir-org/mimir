@@ -24,7 +24,7 @@ export const ToolbarElement = ({ active, onClick, icon, label, borderLeft, borde
       borderLeft={borderLeft}
       borderRight={borderRight}
       clickable={clickable}
-      onClick={() => onClick()}
+      onClick={() => (clickable ? onClick() : null)}
     >
       <Icon size={15} src={icon} alt={label} />
     </ToolElementBox>

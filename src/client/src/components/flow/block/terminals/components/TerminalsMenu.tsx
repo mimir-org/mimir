@@ -1,4 +1,4 @@
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";

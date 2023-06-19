@@ -1,4 +1,3 @@
-import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../../assets/color/Color";
@@ -11,7 +10,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
 import { useOnAddTerminal, useOnRemoveTerminal } from "../../../hooks";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
-import { AspectObject, Connector, ConnectorDirection } from "lib";
+import { Aspect, AspectObject, Connector, ConnectorDirection } from "lib";
 import { LibraryState } from "store/reducers/libraryReducer";
 import { ProjectState } from "store/reducers/projectReducer";
 
@@ -43,7 +42,7 @@ export const BlockParentComponent = ({
   onConnectorClick,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const isLocation = IsLocation(node);
+  const isLocation = node.aspect === Aspect.Location;
   const resizePanelRef = useRef(null);
   const company = useCompanySelector(node.domain, node.id);
   useResizeParentNode(node, resizePanelRef, dispatch);
@@ -64,7 +63,7 @@ export const BlockParentComponent = ({
   };
 
   return (
-    <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={500} height={500}>
+    <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={800} height={800}>
       <BlockParentBanner
         node={node}
         company={company}

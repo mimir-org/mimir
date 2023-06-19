@@ -1,7 +1,7 @@
 import { Color } from "../../../../../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../../models/project";
-import { GetAspectColor } from "../../../../../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../../models";
 import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
@@ -11,7 +11,6 @@ import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
 
 interface Props {
   libNode: AspectObjectLibCm;
-  customCategory: LibraryCategory;
   selectedLibNode: AspectObjectLibCm;
   setSelectedLibNode: (value: AspectObjectLibCm) => void;
   selectedLibNodes: AspectObjectLibCm[];

@@ -1,6 +1,5 @@
 import { InspectorElement } from "../../../types";
 import { Dispatch } from "redux";
-import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handlers";
 import { AspectObject, Connection, Project } from "lib";
 
@@ -34,7 +33,7 @@ function HandleInspectorNodeDelete(
 ) {
   const nodesToDelete = [] as AspectObject[];
 
-  if (!IsAspectNode(node) && !node.isLocked) {
+  if (!node.isRoot() && !node.isLocked) {
     nodesToDelete.push(node);
     // UpdateSiblingIndexOnNodeDelete(node?.id, nodes, edges, dispatch);
   }

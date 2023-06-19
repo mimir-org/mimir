@@ -10,5 +10,5 @@ export const ExpandButtonContainer = styled.button<ExpandButtonContainerProps>`
   border: 0;
   cursor: pointer;
 
-  padding: ${(props) => !props.isOpen && "24px"} 10px 10px;
+  padding: ${(props) => !props.isOpen && "18px"} 10px 10px;
 `;

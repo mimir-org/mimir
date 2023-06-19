@@ -8,12 +8,14 @@ import {
   ConnectorTerminal,
 } from "./Connector";
 import { Attribute } from "./Attribute";
-import { Aspect, AspectObjectType, ConnectorDirection } from "../enums";
+import { Aspect, AspectObjectType, ConnectorDirection, ViewType } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { CreateId } from "components/flow/helpers";
-import type { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import type { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Position } from "./Position";
+import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
+import { AspectObjectData } from "lib/interfaces/AspectObjectData";
 
 @jsonObject({
   knownTypes: [ConnectorTerminal, ConnectorRelation, ConnectorPartOf, ConnectorFulfilledBy, ConnectorHasLocation],
@@ -120,10 +122,11 @@ export class AspectObject {
   ) {
     this.id = CreateId();
     this.rds = lib?.rdsCode;
+    this.aspectObjectType = lib != null ? AspectObjectType.Aspect : AspectObjectType.Root;
     this.description = lib?.description;
     this.referenceType = lib?.typeReference;
     this.name = lib?.name;
-    this.label = null;
+    this.label = lib?.name;
 
     this.positionTree = positionTree;
     this.positionBlock = positionBlock;
@@ -140,9 +143,9 @@ export class AspectObject {
     this.project = project;
     this.attributes = lib?.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
-    // TODO: Also create default connectors
     this.connectors =
-      lib?.aspectObjectTerminals?.map((x) => new ConnectorTerminal(x.terminal, ConnectorDirection.Input, this.id)) ?? []; // TODO: Resolve direction
+      lib?.aspectObjectTerminals?.map((x) => new ConnectorTerminal(x.terminal, x.connectorDirection, this.id)) ?? [];
+
     this.isLocked = false;
     this.isLockedStatusBy = null;
     this.isLockedStatusDate = null;
@@ -151,16 +154,65 @@ export class AspectObject {
     this.blockSelected = false;
     this.hidden = false;
     this.domain = ""; // TODO: Resolve domain
+    this.createDefaultConnectors();
   }
 
-  public toFlowNode(name: "Block" | "Tree"): FlowNode {
+  /**
+   * Create all default connectors to connect between aspects.
+   */
+  public createDefaultConnectors() {
+    this.connectors.push(new ConnectorPartOf("partof", ConnectorDirection.Output, this.id));
+    if (this.aspectObjectType == AspectObjectType.Root) return;
+
+    this.connectors.push(new ConnectorPartOf("partof", ConnectorDirection.Input, this.id));
+
+    switch (this.aspect) {
+      case Aspect.Function:
+        this.connectors.push(new ConnectorFulfilledBy("fulfilledby", ConnectorDirection.Output, this.id));
+        break;
+      case Aspect.Product:
+        this.connectors.push(new ConnectorFulfilledBy("fulfilledby", ConnectorDirection.Input, this.id));
+        this.connectors.push(new ConnectorHasLocation("haslocation", ConnectorDirection.Output, this.id));
+        break;
+      case Aspect.Location:
+        this.connectors.push(new ConnectorHasLocation("haslocation", ConnectorDirection.Input, this.id));
+        break;
+    }
+  }
+
+  /**
+   * Create a new terminal for this aspect object
+   * If it is not allowed to create a new terminal, the function will return.
+   * @param terminalType
+   * @param direction
+   */
+  public createTerminal(terminalType: TerminalLibCm, direction: ConnectorDirection): void {
+    if (terminalType == null || direction == null)
+      throw new Error("Can't create terminal. terminalType or direction is null or undefined.");
+
+    // TODO: Check if it is allowed to add more terminals
+
+    const terminal = new ConnectorTerminal(terminalType, direction, this.id);
+    this.connectors.push(terminal);
+  }
+
+  /** Convert Aspect Object to a flow node based on different views
+   *  @params view There are two diffenrent views in Mimir "Block" | "Tree"
+   */
+  public toFlowNode(viewType: ViewType): FlowNode {
     const position: XYPosition = {
-      x: name === "Block" ? this.positionBlock.posX : this.positionTree.posX,
-      y: name === "Block" ? this.positionBlock.posY : this.positionTree.posY,
+      x: viewType === ViewType.Block ? this.positionBlock.posX : this.positionTree.posX,
+      y: viewType === ViewType.Block ? this.positionBlock.posY : this.positionTree.posY,
     };
+
+    // const data: AspectObjectData = {
+    //   aspectObject: this,
+    //   // onAddTerminal: onAddTerminal,
+    // };
+
     const node: FlowNode = {
       id: this.id,
-      type: this.getComponentType(),
+      type: this.getComponentType(viewType),
       data: this,
       position: position,
       hidden: false, // Opacity is controlled by the styled component
@@ -172,12 +224,34 @@ export class AspectObject {
     return node;
   }
 
+  public toMenuItems(orientation: "Left" | "Right"): MenuItem[] {
+    if (this.connectors == null) return [];
+    if (orientation === "Left") {
+      return this.connectors
+        .filter((x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Input)
+        .map((x) => x instanceof ConnectorTerminal && x.toMenuItem());
+    } else {
+      return this.connectors
+        .filter((x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Output)
+        .map((x) => x instanceof ConnectorTerminal && x.toMenuItem());
+    }
+  }
+
+  /**
+   * Update or replace a connector with given connector
+   * @param connector The connector to update
+   */
+  public updateConnector(connector: Connector): void {
+    if (this.connectors == null) return;
+    this.connectors = this.connectors.map((x) => (x.id === connector.id ? connector : x));
+  }
+
   public hasConnector(connector: string): boolean {
     return this.connectors?.some((x) => x.id === connector);
   }
 
-  public getComponentType(): string | null {
-    let typeName = this.libraryType == null ? "Aspect" : "";
+  public getComponentType(viewType: ViewType): string | null {
+    let typeName = this.libraryType == null ? "Aspect" : viewType === ViewType.Block ? "Block" : "Tree";
     typeName += Aspect[this.aspect];
     return typeName;
   }
@@ -190,6 +264,11 @@ export class AspectObject {
     return this.connectors.filter((g) => g instanceof ConnectorTerminal) as ConnectorTerminal[];
   }
 
+  public getTerminal(id: string): ConnectorTerminal {
+    const terminal = this.getTerminals().find((x) => x.id === id);
+    return terminal != null ? terminal : null;
+  }
+
   public getRdsId(): string {
     if (this.rds == null || this.rds.length < 1) return "";
     return this.getRdsPrefix() + this.rds;
@@ -200,6 +279,10 @@ export class AspectObject {
     if (this.aspect === Aspect.Product) return "-";
     if (this.aspect === Aspect.Location) return "+";
     return "";
+  }
+
+  public isRoot(): boolean {
+    return this.aspectObjectType === AspectObjectType.Root;
   }
 }
 

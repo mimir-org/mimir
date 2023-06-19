@@ -19,7 +19,7 @@ export type InspectorTerminalsElement = AspectObject;
 export type InspectorAttributesElement = InspectorTerminalsElement | ConnectorTerminal;
 export type TerminalLikeItem = Connector | ConnectorTerminal;
 
-export type ChangeInspectorVisibilityAction = (visibility: boolean) => Action;
+export type ChangeInspectorVisibilityAction = () => Action;
 export type ChangeInspectorHeightAction = (height: number) => Action;
 export type ChangeInspectorTabAction = (index: number) => Action;
 export type OnToogleHandler = (

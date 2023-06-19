@@ -1,6 +1,5 @@
 import { AspectObject, Connector } from "lib";
-import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetMenuIcon } from "../helpers/GetMenuIcon";
+import { GetMenuIcon } from "../../../../../assets/icons/GetMenuIcon";
 import { TerminalsButtonBox } from "./TerminalsMenuButton.styled";
 
 interface Props {
@@ -20,7 +19,7 @@ interface Props {
 export const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, connectors, onClick }: Props) => (
   <TerminalsButtonBox
     id={`terminals-menu-button-${node.id}`}
-    visible={showMenuButton && !IsAspectNode(node) && !!connectors.length}
+    visible={showMenuButton && !node.isRoot() && !!connectors.length}
     isInput={isInput}
     onClick={() => onClick()}
   >

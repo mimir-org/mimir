@@ -3,6 +3,8 @@ import CreateId from "../../components/flow/helpers/CreateId";
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Handle } from "./Handle";
+import { Color } from "assets/color/Color";
+import { ViewType } from "lib";
 
 /**
  * Abstract Connection class.
@@ -58,10 +60,10 @@ export abstract class Connection {
    * @params target The target node id.
    * @returns Converted flow edge
    */
-  public toFlowEdge(type: "Block" | "Tree", source: string, target: string): FlowEdge {
+  public toFlowEdge(viewType: ViewType, source: string, target: string): FlowEdge {
     const edge: FlowEdge = {
       id: this.id,
-      type: this.getComponentType(type),
+      type: this.getComponentType(viewType),
       source: source,
       target: target,
       sourceHandle: this.fromConnector,
@@ -76,6 +78,7 @@ export abstract class Connection {
         selected: this.selected,
         parentType: null,
         targetType: null,
+        color: Color.LEMON_YELLOW,
       },
       hidden: this.hidden,
       selected: this.selected,
@@ -84,7 +87,8 @@ export abstract class Connection {
     return edge;
   }
 
-  public getComponentType(name: "Block" | "Tree"): string | null {
+  public getComponentType(viewType: ViewType): string | null {
+    const name = viewType === ViewType.Block ? "Block" : "Tree";
     return name + this.constructor["name"];
   }
 }

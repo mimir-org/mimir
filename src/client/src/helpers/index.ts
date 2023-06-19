@@ -1,5 +1,3 @@
-export { default as GetAspectColor } from "./GetAspectColor";
-
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
 export { default as SetFitToScreen } from "./SetFitToScreen";
 

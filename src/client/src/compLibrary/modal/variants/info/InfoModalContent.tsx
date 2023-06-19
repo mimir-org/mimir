@@ -13,6 +13,7 @@ interface Props {
   description?: string;
   color?: string;
   icon?: string;
+  children?: React.ReactNode;
 }
 
 export const InfoModalContent: FunctionComponent<Props> = ({ title, description, color, icon, children }) => (

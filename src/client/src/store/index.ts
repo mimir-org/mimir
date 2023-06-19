@@ -20,7 +20,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // TODO: Re-enable checks after rewrite of most reducers/actions
-      immutableCheck: false,
+      immutableCheck: true,
       serializableCheck: false,
       // serializableCheck: {
       //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]

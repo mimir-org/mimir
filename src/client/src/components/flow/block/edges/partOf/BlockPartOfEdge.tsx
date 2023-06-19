@@ -1,5 +1,5 @@
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType } from "../../../../../models";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 

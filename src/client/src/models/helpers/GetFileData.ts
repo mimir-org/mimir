@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Config from "../../lib/Config";
-import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
-import { IsAspectNode } from "../../helpers/Aspects";
 import { IsFamily } from "../../helpers/Family";
 import { AspectObject, Connection, ConnectorPartOf, ConnectorDirection, Project } from "lib";
 

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DialogType, ModuleDescription, User, ViewType } from "lib";
+import { DialogType, ModuleDescription, ModuleType, User, ViewType } from "lib";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 // State definition
@@ -11,6 +11,7 @@ export interface CommonState {
   user: User;
   view: ViewType;
   dialog: DialogType;
+  modules: ModuleType[];
 }
 
 // Payload action
@@ -38,6 +39,11 @@ export interface ActionSetDialogType {
   dialog: DialogType;
 }
 
+export interface ActionSetModuleType {
+  module: ModuleType;
+  open: boolean;
+}
+
 // Initial state
 const initState: CommonState = {
   fetching: [],
@@ -47,6 +53,7 @@ const initState: CommonState = {
   user: null,
   view: ViewType.Home,
   dialog: DialogType.None,
+  modules: [],
 };
 
 export const commonSlize = createSlice({
@@ -91,6 +98,13 @@ export const commonSlize = createSlice({
     setDialogType: (state, action: PayloadAction<ActionSetDialogType>) => {
       state.dialog = action.payload.dialog;
     },
+    setModule: (state, action: PayloadAction<ActionSetModuleType>) => {
+      if (action.payload.open && !state.modules.some((x) => x === action.payload.module)) {
+        state.modules.push(action.payload.module);
+      } else {
+        state.modules = state.modules.filter((x) => x !== action.payload.module);
+      }
+    },
   },
 });
 
@@ -105,5 +119,6 @@ export const {
   fetchUserFinished,
   setViewType,
   setDialogType,
+  setModule,
 } = commonSlize.actions;
 export default commonSlize.reducer;

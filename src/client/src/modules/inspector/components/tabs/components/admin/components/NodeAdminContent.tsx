@@ -7,7 +7,6 @@ import { FontSize } from "../../../../../../../assets/font";
 // import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
 import { useAppDispatch } from "store";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
-import { IsAspectNode } from "../../../../../../../helpers/Aspects";
 import { AspectObject, Project } from "lib";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
@@ -99,7 +98,7 @@ export const NodeAdminContent = ({ node, project }: Props) => {
           <TextArea
             height={200}
             value={node.description ?? ""}
-            readOnly={IsAspectNode(node) || node.isLocked}
+            readOnly={node.isRoot() || node.isLocked}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></TextArea>
         </div>

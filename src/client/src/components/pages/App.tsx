@@ -1,18 +1,20 @@
-import { commonStateSelector, projectStateSelector } from "store/selectors";
 import { Home } from "./Home/Home";
 import { GlobalStyle } from "../../compLibrary/GlobalStyle";
 import { useAppDispatch, useAppSelector, fetchingSelector } from "store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text/TextResources";
-import { WebSocket } from "../../models";
+
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons/standard";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner";
-import { ProjectState } from "store/reducers/projectReducer";
-import { CommonState } from "store/reducers/commonReducer";
+import { fetchProjects } from "store/reducers/projectReducer";
+import { fetchCompanies, fetchCompany, fetchParsers, fetchUser } from "store/reducers/commonReducer";
+import { fetchAspectObjects, fetchTerminals } from "store/reducers/libraryReducer";
+import { useEffect } from "react";
+import { MimirorgThemeProvider } from "@mimirorg/component-library";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -20,28 +22,38 @@ type AppProps = {
 
 export const App = ({ pca }: AppProps) => {
   const dispatch = useAppDispatch();
-  const projectState = useAppSelector<ProjectState>(projectStateSelector);
-  const commonState = useAppSelector<CommonState>(commonStateSelector);
+
+  useEffect(() => {
+    dispatch(fetchCompany());
+    // dispatch(fetchSubProjects());
+    // dispatch(fetchLibraryInterfaceTypes());
+    dispatch(fetchAspectObjects());
+    dispatch(fetchTerminals());
+    // dispatch(fetchLibraryAttributeTypes());
+    // dispatch(search(""));
+    // dispatch(fetchLibrary());
+    dispatch(fetchCompanies());
+    dispatch(fetchParsers());
+    dispatch(fetchUser());
+    dispatch(fetchProjects({ name: "" }));
+    // dispatch(fetchQuantityDatums());
+  }, [dispatch]);
 
   const isFetching = useAppSelector(fetchingSelector);
-
   const login = () => msalInstance && msalInstance.loginRedirect();
-
-  const websocket = new WebSocket();
-  websocket.setDispatcher(dispatch);
-  websocket.setProjectState(projectState);
-  websocket.start();
 
   return (
     <>
       {pca ? (
         <MsalProvider instance={pca}>
           <AuthenticatedTemplate>
-            <GlobalStyle />
-            <SpinnerWrapper fetching={isFetching}>
-              <Spinner variant="big" />
-            </SpinnerWrapper>
-            <Home dispatch={dispatch} projectState={projectState} commonState={commonState} />
+            {/* <GlobalStyle /> */}
+            <MimirorgThemeProvider>
+              <SpinnerWrapper fetching={isFetching}>
+                <Spinner variant="big" />
+              </SpinnerWrapper>
+              <Home />
+            </MimirorgThemeProvider>
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>
             <LoginBox>
@@ -51,11 +63,13 @@ export const App = ({ pca }: AppProps) => {
         </MsalProvider>
       ) : (
         <>
-          <GlobalStyle />
-          <SpinnerWrapper fetching={isFetching}>
-            <Spinner variant="big" />
-          </SpinnerWrapper>
-          <Home dispatch={dispatch} projectState={projectState} commonState={commonState} />
+          {/* <GlobalStyle /> */}
+          <MimirorgThemeProvider>
+            <SpinnerWrapper fetching={isFetching}>
+              <Spinner variant="big" />
+            </SpinnerWrapper>
+            <Home />
+          </MimirorgThemeProvider>
         </>
       )}
     </>

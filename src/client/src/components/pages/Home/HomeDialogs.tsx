@@ -6,17 +6,28 @@ import { useAppSelector } from "store";
 // import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
 // import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
 // import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
-import { ProjectDialog, CreateProjectDialog, ImportProjectDialog } from "components/dialogs";
-import { CommonState, setDialogType } from "store/reducers/commonReducer";
-import { ConnectorTerminal, DialogType } from "lib";
+import {
+  ProjectDialog,
+  CreateProjectDialog,
+  ImportProjectDialog,
+  CloseProjectDialog,
+  CreateSubProjectDialog,
+  ConvertProjectDialog,
+  ExportProjectDialog,
+} from "components/dialogs";
+import { CommonState, setDialogType, setViewType } from "store/reducers/commonReducer";
+import { DialogType, Position, Project, ViewType } from "lib";
 // import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
 import { Dispatch } from "redux";
-import { ProjectState } from "store/reducers/projectReducer";
+import { ProjectState, createProject } from "store/reducers/projectReducer";
+import { LibraryState } from "store/reducers/libraryReducer";
 
 interface Props {
   dispatch: Dispatch;
-  projectState: ProjectState;
+  projects: Project[];
   commonState: CommonState;
+  libraryState: LibraryState;
+  onCreateProject: (name: string, description: string) => void;
 }
 
 /**
@@ -25,7 +36,7 @@ interface Props {
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-export const HomeDialogs = ({ dispatch, commonState, projectState }: Props) => {
+export const HomeDialogs = ({ dispatch, commonState, projects, libraryState, onCreateProject }: Props) => {
   // const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   // const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
   // const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
@@ -35,12 +46,28 @@ export const HomeDialogs = ({ dispatch, commonState, projectState }: Props) => {
   // const isCreateSubProjectMenu = activeMenu === MENU_TYPE.CREATE_SUB_PROJECT_MENU;
   // const isConvertSubProjectMenu = activeMenu === MENU_TYPE.CONVERT_SUB_PROJECT_MENU;
 
-  const onCreateProject = (name: string) => {
-    console.log("onCreateProject", name);
-  };
+  // const onCreateProject = (name: string) => {
+  //   console.log("onCreateProject", name);
+  //   const project = new Project(name, "reidar.liabo@bouvet.no", "This is the project description");
+  //   const randomObject = libraryState?.aspectObjectTypes[0];
+  //   project.addAspectObject(randomObject, new Position(100, 100), new Position(0, 0), "reidar.liabo@bouvet.no");
+  //   // project.addAspectObject(randomObject, new Position(300, 300), new Position(0, 0), "reidar.liabo@bouvet.no");
+
+  //   dispatch(createProject({ project: project }));
+  //   dispatch(setDialogType({ dialog: DialogType.None }));
+  //   dispatch(setViewType({ view: ViewType.Tree }));
+  // };
 
   const onOpenProject = (id: string) => {
     console.log("onOpenProject", id);
+  };
+
+  const onCreateClick = () => {
+    console.log("onCreateClick");
+  };
+
+  const onImportProjectClick = () => {
+    console.log("onImportProjectClick");
   };
 
   const onProjectSearchBarChange = (id: string) => {
@@ -51,11 +78,36 @@ export const HomeDialogs = ({ dispatch, commonState, projectState }: Props) => {
     console.log("onProjectImport", file.name, parserId);
   };
 
+  const onCloseProject = () => {
+    console.log("onOCloseProject");
+  };
+
+  const onConvertProject = () => {
+    console.log("onConvertProject");
+  };
+
   const onExit = () => {
     dispatch(setDialogType({ dialog: DialogType.None }));
   };
 
-  const projects = projectState?.projectList?.map((x) => x.toProjectListItem());
+  const onCreateSubProject = (name: string) => {
+    console.log("onCreateSubProject", name);
+  };
+
+  const onExportProjectFileClick = (fileName: string, parserId: string) => {
+    // const convertedProject = ConvertProjectToProjectAm(project);
+
+    // const converter: ProjectConverterAm = {
+    //   project: convertedProject,
+    //   fileName: fileName,
+    //   parserId: parserId,
+    // };
+
+    // dispatch(exportProjectToFile(converter));
+    // dispatch(changeActiveMenu(null));
+    console.log("onExportProjectFileClick", fileName, parserId);
+  };
+
   const parsers = commonState?.parsers;
 
   return (
@@ -64,15 +116,19 @@ export const HomeDialogs = ({ dispatch, commonState, projectState }: Props) => {
         <ProjectDialog
           onOpenProject={onOpenProject}
           onSearchBarChange={onProjectSearchBarChange}
-          projects={projects}
+          projects={projects?.map((x) => x.toProjectListItem())}
           open={commonState.dialog === DialogType.Project}
           onExit={onExit}
+          onCreateClick={onCreateClick}
+          onImportProjectClick={onImportProjectClick}
         />
       )}
 
       {commonState.dialog === DialogType.CreateProject && (
         <CreateProjectDialog
-          onCreateProject={onCreateProject}
+          onCreateProject={(name) => {
+            onCreateProject(name, null);
+          }}
           open={commonState.dialog === DialogType.CreateProject}
           onExit={onExit}
         />
@@ -84,6 +140,40 @@ export const HomeDialogs = ({ dispatch, commonState, projectState }: Props) => {
           onImportProject={onProjectImport}
           open={commonState.dialog === DialogType.ImportProject}
           onExit={onExit}
+        />
+      )}
+
+      {commonState.dialog === DialogType.CloseProject && (
+        <CloseProjectDialog
+          onCloseProject={onCloseProject}
+          open={commonState.dialog === DialogType.CloseProject}
+          onExit={onExit}
+        />
+      )}
+
+      {commonState.dialog === DialogType.CreateSubProject && (
+        <CreateSubProjectDialog
+          onCreateSubProject={onCreateSubProject}
+          open={commonState.dialog === DialogType.CreateSubProject}
+          onExit={onExit}
+        />
+      )}
+
+      {commonState.dialog === DialogType.ConvertProject && (
+        <ConvertProjectDialog
+          isSubProject={false}
+          onConvertProject={onConvertProject}
+          open={commonState.dialog === DialogType.ConvertProject}
+          onExit={onExit}
+        />
+      )}
+
+      {commonState.dialog === DialogType.ExportProject && (
+        <ExportProjectDialog
+          parsers={commonState.parsers}
+          open={commonState.dialog === DialogType.ExportProject}
+          onExit={onExit}
+          onExportProjectFileClick={onExportProjectFileClick}
         />
       )}
 

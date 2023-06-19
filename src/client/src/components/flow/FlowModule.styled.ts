@@ -91,7 +91,7 @@ export const FlowModuleContainer = styled.div`
     cursor: grab;
   }
 
-  .react-flow__edge-TreePartOfEdgeType,
+  .react-flow__edge-TreeConnectionPartOf,
   .react-flow__edge-TreeTransportEdgeType,
   .react-flow__edge-TreeRelationEdgeType {
     &.selected {

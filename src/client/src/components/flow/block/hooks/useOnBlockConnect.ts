@@ -1,6 +1,6 @@
 import { addEdge, Connection as FlowConnection, Edge as FlowEdge } from "react-flow-renderer";
 // import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { Project } from "lib";
+import { Project, ViewType } from "lib";
 
 export interface OnBlockDropParameters {
   connection: FlowEdge | FlowConnection;
@@ -21,7 +21,7 @@ const useOnBlockConnect = (params: OnBlockDropParameters) => {
   if (edge == null) return;
 
   const [source, target] = project.getConnectorNodes(connection.source, connection.target);
-  const type = edge.getComponentType("Block");
+  const type = edge.getComponentType(ViewType.Block);
 
   return setEdges((els) => {
     return addEdge({ ...connection, id: edge.id, type: type, animated: false, data: { source, target, edge } }, els);

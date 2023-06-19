@@ -14,7 +14,7 @@ export const EDGE_TYPE = {
   BLOCK_TRANSPORT: "BlockTransportEdgeType",
   BLOCK_RELATION: "BlockRelationEdgeType",
   BLOCK_PARTOF: "BlockPartOfEdgeType",
-  TREE_PARTOF: "TreePartOfEdgeType",
+  TREE_PARTOF: "TreeConnectionPartOf",
   TREE_RELATION: "TreeRelationEdgeType",
   TREE_TRANSPORT: "TreeTransportEdgeType",
 };

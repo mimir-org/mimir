@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { CloseInspector } from "../tree/handlers";
 import { Connection, Project } from "lib";
 
 /**
@@ -22,7 +21,7 @@ const OnEdgeDelete = (
     // ResolveSubStreams(project, dispatch, edge, null);
   });
 
-  CloseInspector(inspectorRef, dispatch);
+  // CloseInspector(inspectorRef, dispatch);
 };
 
 export default OnEdgeDelete;

@@ -1,7 +1,6 @@
-import { EntityType } from "lib";
+import { EntityType, LockCm } from "lib";
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
-import { LockCm } from "../../../../../models";
 import { InspectorElement } from "../../../types";
 import { AspectObject } from "../../../../../lib/classes/AspectObject";
 import { Connection } from "../../../../../lib/classes/Connection";

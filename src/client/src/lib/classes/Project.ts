@@ -13,12 +13,16 @@ import {
   Connector,
   ConnectionRelation,
   ConnectorRelation,
+  Position,
 } from ".";
 import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
 import { ConnectorDirection } from "../enums/Direction";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { CreateId } from "components/flow/helpers";
-import { ProjectListItem } from "components/dialogs/project/types";
+import { ProjectListItem } from "../interfaces/ProjectListItem";
+import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { Aspect } from "lib/enums";
+import { ViewType } from "../enums/ViewType";
 
 @jsonObject({
   knownTypes: [ConnectionTerminal, ConnectionRelation, ConnectionFulfilledBy, ConnectionHasLocation, ConnectionPartOf],
@@ -75,7 +79,105 @@ export class Project {
     this.created = new Date(new Date().toUTCString());
     this.createdBy = createdBy;
     this.aspectObjects = [];
+    this.aspectObjects.push();
     this.connections = [];
+
+    const rootFunction = new AspectObject(
+      null,
+      this.id,
+      new Position(150, 5),
+      new Position(0, 0),
+      "reidar.liabo@bouvet.no",
+      this.id
+    );
+    rootFunction.aspect = Aspect.Function;
+    rootFunction.name = "Function";
+    rootFunction.label = "Function";
+    this.aspectObjects.push(rootFunction);
+
+    const rootProduct = new AspectObject(
+      null,
+      this.id,
+      new Position(600, 5),
+      new Position(0, 0),
+      "reidar.liabo@bouvet.no",
+      this.id
+    );
+    rootProduct.aspect = Aspect.Product;
+    rootProduct.name = "Product";
+    rootProduct.label = "Product";
+    this.aspectObjects.push(rootProduct);
+
+    const rootLocation = new AspectObject(
+      null,
+      this.id,
+      new Position(1050, 5),
+      new Position(0, 0),
+      "reidar.liabo@bouvet.no",
+      this.id
+    );
+    rootLocation.aspect = Aspect.Location;
+    rootLocation.name = "Location";
+    rootLocation.label = "Location";
+    this.aspectObjects.push(rootLocation);
+  }
+
+  /**
+   * Delete an aspect object from project
+   * @param id The id of the aspect object to delete
+   */
+  public deleteAspectObject(id: string): void {
+    if (this.aspectObjects == null) return;
+    this.aspectObjects = this.aspectObjects.filter((x) => x.id !== id);
+  }
+
+  /**
+   * Update the position for an aspect object, The type wil define if this is the block position
+   * or the tree position.
+   * @param id The id of the aspect object that should be updated
+   * @param position The new position of the aspect object
+   * @param type The type position to be updated
+   */
+  public updateAspectObjectPosition(id: string, position: Position, viewType: ViewType) {
+    if (this.aspectObjects == null || position == null)
+      throw new Error("Can't update aspect object position. AspectObjects is null or position is null.");
+
+    this.aspectObjects = this.aspectObjects.map((x) => {
+      if (x.id === id) {
+        if (viewType === ViewType.Tree) x.positionTree = position;
+        if (viewType === ViewType.Block) x.positionBlock = position;
+        return x;
+      } else {
+        return x;
+      }
+    });
+  }
+
+  /**
+   *
+   * @param id The id of the aspect object that should be updated
+   * @param selected The new select value
+   */
+  public updateAspectObjectSelected(id: string, selected: boolean, viewType: ViewType): void {
+    if (this.aspectObjects == null) return;
+    this.aspectObjects = this.aspectObjects.map((x) => {
+      if (x.id === id) {
+        x.selected = selected;
+        if (viewType === ViewType.Tree) x.blockSelected = selected;
+        return x;
+      } else {
+        return x;
+      }
+    });
+  }
+
+  public updateAspectObject(aspectObject: AspectObject) {
+    this.aspectObjects = this.aspectObjects.map((x) => (x.id === aspectObject.id ? aspectObject : x));
+  }
+
+  public addAspectObject(lib: AspectObjectLibCm, positionTree: Position, positionBlock: Position, createdBy: string) {
+    const obj = new AspectObject(lib, this.id, positionTree, positionBlock, createdBy, this.id);
+    this.aspectObjects.push(obj);
   }
 
   public toProjectListItem(): ProjectListItem {
@@ -88,28 +190,23 @@ export class Project {
       description: this.description,
       selected: false,
     };
-
     return item;
   }
 
   /**
    * Convert aspect objects to flow nodes.
    * @params type Usage type. Could be block or tree.
-   * @params parent Set parent id if you want to only convert direct children of an aspect object. The collection will also include the parent aspect object.
    * @returns A collection of converted flow nodes.
    */
-  public toFlowNodes(type: "Block" | "Tree", parent?: string): FlowNode[] {
+  public toFlowNodes(viewType: ViewType): FlowNode[] {
     if (this.aspectObjects == null) return [];
+    const parent = viewType === ViewType.Block ? this.getBlockSelectedAspectObject() : null;
+
     if (parent == null) {
-      return this.aspectObjects.map((x) => x.toFlowNode(type));
+      return this.aspectObjects.map((x) => x.toFlowNode(viewType));
     } else {
-      const parentObject = this.aspectObjects.find((x) => x.id === parent);
-      if (parentObject == null) return [];
-
-      const children = this.getChildrenAspectObject(parent);
-      children.unshift(parentObject);
-
-      return children.map((x) => x.toFlowNode(type));
+      const objects = this.getChildrenAspectObject(parent.id).map((x) => x.toFlowNode(viewType));
+      return objects;
     }
   }
 
@@ -118,37 +215,114 @@ export class Project {
    * @params type Usage type. Could be Block or Tree.
    * @returns A collection of converted flow edges.
    */
-  public toFlowEdges(type: "Block" | "Tree"): FlowEdge[] {
+  public toFlowEdges(viewType: ViewType): FlowEdge[] {
     if (this.connections == null) return [];
     return this.connections.map((x) => {
       const [from, to] = this.getConnectionNodes(x);
-      return x.toFlowEdge(type, from.id, to.id);
+      return x.toFlowEdge(viewType, from.id, to.id);
     });
   }
 
+  /**
+   *
+   * @param id The id of the connection object that should be updated
+   * @param selected The new select value
+   */
+  public updateConnectionSelected(id: string, selected: boolean): void {
+    if (this.connections == null) return;
+    this.connections = this.connections.map((x) => {
+      if (x.id === id) {
+        x.selected = selected;
+        return x;
+      } else {
+        return x;
+      }
+    });
+  }
+
+  /**
+   *
+   * @param aspectObjectId The id of the aspect object that owns the connector
+   * @param id The id of the connector object that should be updated
+   * @param selected The new select value
+   */
+  public updateConnectorSelected(aspectObjectId: string, id: string, selected: boolean): void {
+    if (this.aspectObjects == null) throw new Error("The project does not have any aspect objects");
+    const actualAspectObject = this.aspectObjects.find((x) => x.id === aspectObjectId);
+    if (actualAspectObject == null) throw new Error("Can't find aspect object with id " + aspectObjectId);
+
+    if (actualAspectObject.connectors == null)
+      throw new Error("The aspect object with id" + aspectObjectId + " does not have any connectors");
+
+    const actualConnector = actualAspectObject.connectors.find((x) => x.id === id);
+    if (actualConnector == null) throw new Error("Can't find connector object with id " + id);
+
+    actualConnector.selected = selected;
+    actualAspectObject.updateConnector(actualConnector);
+  }
+
+  /**
+   * Create a new terminal based on an existing terminal.
+   * If it is not allowed to create a new terminal, nothing will be created.
+   * @param aspectObjectId The parent aspect object that owns the terminal
+   * @param terminalTypes A collection of all terminal types
+   * @param terminalId The existing terminal id
+   */
+  public createTerminal(aspectObjectId: string, terminalTypes: TerminalLibCm[], terminalId: string): void {
+    if (aspectObjectId == null || terminalTypes == null || terminalId == null)
+      throw new Error("Can't create terminal from null or undefined objects");
+
+    if (this.aspectObjects == null)
+      throw new Error("Can't create terminal when no aspect objects is found. The collection is null or undefined.");
+
+    const aspectObject = this.aspectObjects.find((x) => x.id === aspectObjectId);
+    if (aspectObject == null) throw new Error("Can't create terminal when aspect object is missing.");
+
+    const existingTerminal = aspectObject.getTerminal(terminalId);
+    if (existingTerminal == null) throw new Error("Can't create terminal. Existing terminal is not found.");
+
+    const terminalType = terminalTypes.find((x) => x.iri === existingTerminal.terminalType);
+    if (terminalType == null) throw new Error("Can't create terminal. The terminal type could not be found.");
+
+    aspectObject.createTerminal(terminalType, existingTerminal.direction);
+  }
+
+  /**
+   * Delete a connection object from project
+   * @param id The id of the connection object to delete
+   */
+  public deleteConnection(id: string): void {
+    if (this.connections == null) return;
+    this.connections = this.connections.filter((x) => x.id !== id);
+  }
+
   public convertFromFlowEdge(edge: FlowConnection | FlowEdge, mainProject: string | null): Connection | null {
-    const actualFromConnector = this.getConnector(edge.source);
+    const actualFromConnector = this.getConnector(edge.sourceHandle);
     if (actualFromConnector == null) return null;
 
     if (actualFromConnector instanceof ConnectorTerminal)
-      return new ConnectionTerminal(edge.source, edge.target, this.id, mainProject);
+      return new ConnectionTerminal(edge.sourceHandle, edge.targetHandle, this.id, mainProject);
 
     if (actualFromConnector instanceof ConnectorPartOf)
-      return new ConnectionPartOf(edge.source, edge.target, this.id, mainProject);
+      return new ConnectionPartOf(edge.sourceHandle, edge.targetHandle, this.id, mainProject);
 
     if (actualFromConnector instanceof ConnectorFulfilledBy)
-      return new ConnectionFulfilledBy(edge.source, edge.target, this.id, mainProject);
+      return new ConnectionFulfilledBy(edge.sourceHandle, edge.targetHandle, this.id, mainProject);
 
     if (actualFromConnector instanceof ConnectorHasLocation)
-      return new ConnectionHasLocation(edge.source, edge.target, this.id, mainProject);
+      return new ConnectionHasLocation(edge.sourceHandle, edge.targetHandle, this.id, mainProject);
   }
 
   public getSelectedAspectObject(): AspectObject | null {
-    return this.aspectObjects.find((x) => x.selected);
+    return this.aspectObjects?.find((x) => x.selected);
   }
 
-  public selectedConnection(): Connection {
-    return this.connections.find((x) => x.selected);
+  public getBlockSelectedAspectObject(): AspectObject | null {
+    return this.aspectObjects?.find((x) => x.blockSelected);
+  }
+
+  public getSelectedConnection(): Connection {
+    return this.connections?.find((x) => x.selected);
   }
 
   public getSiblingAspectNodes(parent: string): AspectObject[] {
@@ -190,7 +364,6 @@ export class Project {
       const parent = this.getParentAspectObject(x.id);
       return parent != null && parent.id === aspectObject;
     });
-
     return children != null ? children : [];
   }
 
@@ -286,6 +459,11 @@ export class Project {
       if (actualConnector != null) return actualConnector;
     }
     return null;
+  }
+
+  public hasSelectedAspectObjects(): boolean {
+    if (this.aspectObjects == null) return false;
+    return this.aspectObjects.some((x) => x.selected);
   }
 }
 

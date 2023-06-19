@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { CloseInspector } from "../tree/handlers";
 import { AspectObject, Connection } from "lib";
 
 /**
@@ -28,7 +27,7 @@ const OnNodeDelete = (
     // dispatch(deleteNode(node.id));
   });
 
-  CloseInspector(inspectorRef, dispatch);
+  // CloseInspector(inspectorRef, dispatch);
 };
 
 export default OnNodeDelete;

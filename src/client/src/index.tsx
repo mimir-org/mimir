@@ -1,15 +1,13 @@
 import red from "store";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { App } from "./components/pages/App";
-import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-import Config from "./lib/Config";
+import { config, loginRequest, msalConfig } from "lib";
 
-const rootElement = document.getElementById("root");
-const isSilent = Config.SILENT === "true";
+const isSilent = config.SILENT === "true";
 
 export const msalInstance = isSilent ? null : new PublicClientApplication(msalConfig);
 
@@ -33,17 +31,19 @@ if (!isSilent) {
   });
 }
 
-if (Config.APP_INSIGHTS_CONNECTION_STRING) {
-  const appInsights = new ApplicationInsights({ config: { connectionString: Config.APP_INSIGHTS_CONNECTION_STRING } });
+if (config.APP_INSIGHTS_CONNECTION_STRING) {
+  const appInsights = new ApplicationInsights({ config: { connectionString: config.APP_INSIGHTS_CONNECTION_STRING } });
   appInsights.loadAppInsights();
   appInsights.trackPageView();
 }
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
   <Provider store={red.store}>
     <ReactFlowProvider>
       <App pca={isSilent ? null : msalInstance} />
     </ReactFlowProvider>
-  </Provider>,
-  rootElement
+  </Provider>
 );

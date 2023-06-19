@@ -1,6 +1,5 @@
 import { NavigationButton } from "./Navigation.styled";
 import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../../assets/icons/arrow";
-import { IsAspectNode } from "../../../../../../helpers/Aspects";
 import { AspectObject, Project } from "lib";
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 
 export const Navigation = ({ isActive, node, project, onNavigateUpClick, onNavigateDownClick }: Props) => {
   const canNavigateUp = project.hasChildren(node?.id);
-  const canNavigateDown = !IsAspectNode(node);
+  const canNavigateDown = !node.isRoot();
 
   return (
     isActive && (

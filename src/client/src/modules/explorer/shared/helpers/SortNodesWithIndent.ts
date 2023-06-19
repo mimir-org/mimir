@@ -1,6 +1,5 @@
 import red from "store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
-import { IsAspectNode } from "../../../../helpers/Aspects";
 import { AspectObject } from "lib";
 
 const SortNodesWithIndent = (nodes: AspectObject[]) => {
@@ -76,7 +75,7 @@ const AddNodeFromBucket = (node: AspectObject, indent: number, sortedNodedWithIn
   // }
 };
 
-const IsAspectNodeNum = (node: AspectObject) => (IsAspectNode(node) ? 1 : 0);
+const IsAspectNodeNum = (node: AspectObject) => (node.isRoot() ? 1 : 0);
 
 /**
  * Recursive function to give each node the correct level based on it's family tree.

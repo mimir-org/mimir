@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ConnectorDirection } from "../enums";
+import { Aspect, ConnectorDirection, ViewType } from "../enums";
 import { Attribute } from "./Attribute";
 import { CreateId } from "components/flow/helpers";
 import type { TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Color } from "assets/color/Color";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
+import { HandleType, Position } from "react-flow-renderer";
+import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
 
 /**
  * Abstract Connector class.
@@ -33,6 +35,7 @@ export abstract class Connector {
 
   // Client members
   public hidden: boolean;
+  public selected: boolean;
 
   // Constructor
   public constructor(name: string, direction: ConnectorDirection, aspectObject?: string) {
@@ -43,10 +46,17 @@ export abstract class Connector {
     this.outside = CreateId();
     this.aspectObject = aspectObject == null ? null : aspectObject;
     this.hidden = false;
+    this.selected = false;
   }
 
   // Abstract function definition of connector color
   public abstract getColor(): string;
+
+  // Abstract function definition of connector class name
+  public abstract getClassName(aspect: Aspect, viewtype: ViewType): string;
+
+  // Abstract function definition of connector class name
+  public abstract GetHandleType(): [HandleType, Position];
 }
 
 /**
@@ -81,9 +91,35 @@ export class ConnectorTerminal extends Connector {
     this.attributes = lib?.attributes?.map((x) => new Attribute(x, null, this.id)) ?? [];
   }
 
-  // Implementation of extended abstrackt method for converting to application model
+  // Implementation of extended abstrackt method
   public getColor(): string {
     return this.color;
+  }
+
+  // Implementation of extended abstrackt method
+  public getClassName(aspect: Aspect, viewtype: ViewType): string {
+    const aspectName = Aspect[aspect].toLowerCase();
+    const viewTypeName = ViewType[viewtype].toLowerCase() + "view";
+    return `${aspectName}-${viewTypeName}-handler partOf`;
+  }
+
+  // Implementation of extended abstrackt method
+  public GetHandleType(): [HandleType, Position] {
+    if (this.direction === ConnectorDirection.Input || this.direction === ConnectorDirection.Bidirectional)
+      return ["target", Position.Right];
+    if (this.direction === ConnectorDirection.Output || this.direction === ConnectorDirection.Bidirectional)
+      return ["source", Position.Left];
+    return ["source", Position.Left];
+  }
+
+  public toMenuItem(): MenuItem {
+    const item: MenuItem = {
+      id: this.id,
+      name: this.name,
+      checked: this.selected,
+      color: this.color,
+    };
+    return item;
   }
 }
 
@@ -108,11 +144,24 @@ export class ConnectorPartOf extends ConnectorRelation {
     super(name, direction, aspectObject);
   }
 
-  // Implementation of extended abstrackt method for converting to application model
+  // Implementation of extended abstrackt method
   public getColor(): string {
     //   if (IsProductRelation(connector)) return Color.VIRIDIAN_GREEN;
     // if (IsLocationRelation(connector)) return Color.PURPLE_MUNSELL;
     return Color.BLACK;
+  }
+
+  // Implementation of extended abstrackt method
+  public getClassName(aspect: Aspect, viewtype: ViewType): string {
+    const aspectName = Aspect[aspect].toLowerCase();
+    const viewTypeName = ViewType[viewtype].toLowerCase() + "view";
+    return `${aspectName}-${viewTypeName}-handler partOf`;
+  }
+
+  // Implementation of extended abstrackt method
+  public GetHandleType(): [HandleType, Position] {
+    if (this.direction === ConnectorDirection.Input) return ["target", Position.Top];
+    else return ["source", Position.Bottom];
   }
 }
 
@@ -131,6 +180,19 @@ export class ConnectorFulfilledBy extends ConnectorRelation {
     // if (IsLocationRelation(connector)) return Color.PURPLE_MUNSELL;
     return Color.BLACK;
   }
+
+  // Implementation of extended abstrackt method
+  public getClassName(aspect: Aspect, viewtype: ViewType): string {
+    const aspectName = Aspect[aspect].toLowerCase();
+    const viewTypeName = ViewType[viewtype].toLowerCase() + "view";
+    return `${aspectName}-${viewTypeName}-handler fulfilledBy`;
+  }
+
+  // Implementation of extended abstrackt method
+  public GetHandleType(): [HandleType, Position] {
+    if (this.direction === ConnectorDirection.Input) return ["target", Position.Left];
+    else return ["source", Position.Right];
+  }
 }
 
 /**
@@ -147,5 +209,18 @@ export class ConnectorHasLocation extends ConnectorRelation {
     //   if (IsProductRelation(connector)) return Color.VIRIDIAN_GREEN;
     // if (IsLocationRelation(connector)) return Color.PURPLE_MUNSELL;
     return Color.BLACK;
+  }
+
+  // Implementation of extended abstrackt method
+  public getClassName(aspect: Aspect, viewtype: ViewType): string {
+    const aspectName = Aspect[aspect].toLowerCase();
+    const viewTypeName = ViewType[viewtype].toLowerCase() + "view";
+    return `${aspectName}-${viewTypeName}-handler locatedAt`;
+  }
+
+  // Implementation of extended abstrackt method
+  public GetHandleType(): [HandleType, Position] {
+    if (this.direction === ConnectorDirection.Input) return ["target", Position.Left];
+    else return ["source", Position.Right];
   }
 }

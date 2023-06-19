@@ -2,7 +2,7 @@ import Config from "../../lib/Config";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
 import { ProjectVersionCm, WorkerStatus } from "../index";
-import { LockCm } from "../application/LockCm";
+import { LockCm } from "../../lib/interfaces/LockCm";
 // import {
 //   addNode,
 //   createEdge,
@@ -20,7 +20,7 @@ import { LockCm } from "../application/LockCm";
 // } from "../../redux/store/project/actions";
 import { fetchAspectObjects, fetchSubProjects } from "store/reducers/libraryReducer";
 import { ProjectState } from "store/reducers/projectReducer";
-import { AspectObject, Connection, EntityType } from "lib";
+import { AspectObject, Connection, EntityType, Project } from "lib";
 
 let instance = null;
 
@@ -28,7 +28,7 @@ export class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
   private _dispatch: Dispatch;
-  private _projectState: ProjectState;
+  private _project: Project;
   private _group: string;
 
   constructor() {
@@ -60,9 +60,9 @@ export class WebSocket {
           console.log("Websocket connection ok");
 
           // Joins the project group if any
-          if (this._projectState?.project?.id) {
-            this._connection.send("JoinGroup", this._projectState.project.id);
-            this._group = this._projectState.project.id;
+          if (this._project?.id) {
+            this._connection.send("JoinGroup", this._project.id);
+            this._group = this._project.id;
           }
 
           this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
@@ -87,8 +87,8 @@ export class WebSocket {
     this._dispatch = dispatch;
   }
 
-  public setProjectState(projectState: ProjectState) {
-    this._projectState = projectState;
+  public setProject(project: Project) {
+    this._project = project;
   }
 
   public isRunning(): boolean {
@@ -103,12 +103,12 @@ export class WebSocket {
     const node = JSON.parse(data) as AspectObject;
 
     if (eventType === WorkerStatus.Create) {
-      if (this._projectState?.project.aspectObjects.some((x) => x.id === node.id)) return;
+      if (this._project.aspectObjects.some((x) => x.id === node.id)) return;
 
       // this._dispatch(addNode(node));
     }
 
-    if (!this._projectState?.project.aspectObjects.some((x) => x.id === node.id)) return;
+    if (!this._project.aspectObjects.some((x) => x.id === node.id)) return;
     if (eventType === WorkerStatus.Delete) {
       // this._dispatch(deleteNode(node.id));
     }
@@ -121,12 +121,12 @@ export class WebSocket {
     const edge = JSON.parse(data) as Connection;
 
     if (eventType === WorkerStatus.Create) {
-      if (this._projectState?.project.connections.some((x) => x.id === edge.id)) return;
+      if (this._project.connections.some((x) => x.id === edge.id)) return;
 
       // this._dispatch(createEdge(edge));
     }
 
-    if (!this._projectState?.project.connections.some((x) => x.id === edge.id)) return;
+    if (!this._project.connections.some((x) => x.id === edge.id)) return;
     if (eventType === WorkerStatus.Delete) {
       // this._dispatch(deleteEdge(edge.id));
     }

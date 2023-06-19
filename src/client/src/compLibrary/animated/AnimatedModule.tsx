@@ -12,7 +12,7 @@ interface Props {
 const Animation = ({ start, stop, run, type }: Props) => keyframes`
 ${!run ? (start = stop) : null}
   from {${IsInspector(type) ? "height" : "width"}: ${start}px;}
-  to {${IsInspector(type) ? "height" : "width"}: ${stop}px;}  
+  to {${IsInspector(type) ? "height" : "width"}: ${stop}px;}
 `;
 
 export const AnimatedModule = styled((props) => <ModuleBox {...props} />)`

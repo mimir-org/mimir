@@ -1,10 +1,8 @@
 // import { activeMenuSelector } from "redux/store";
-import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../Start/StartPage";
-import { InspectorModule } from "../../../modules/inspector/InspectorModule";
+// import { InspectorModule } from "../../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../../modules/library/LibraryModule";
-import { ProjectSubMenus } from "../../menus/projectMenu/ProjectSubMenus";
 // import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../../flow/FlowModule";
 import { ErrorModule } from "../../../modules/error";
@@ -17,33 +15,45 @@ import { ToolbarComponent } from "../../toolbar/ToolbarComponent";
 import { HeaderComponent } from "../../header/HeaderComponent";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { defaultFilter, VisualFilterData } from "../../../models/application/VisualFilter";
-import { fetchProjects, ProjectState } from "store/reducers/projectReducer";
-import { CommonState, fetchCompanies, fetchCompany, fetchParsers, fetchUser } from "store/reducers/commonReducer";
-import { fetchAspectObjects } from "store/reducers/libraryReducer";
-import { ViewType } from "lib";
+import { CommonState, setDialogType } from "store/reducers/commonReducer";
+import { LibraryState } from "store/reducers/libraryReducer";
+import { DialogType, Project, ViewType } from "lib";
 import { HomeDialogs } from "./HomeDialogs";
-
-interface Props {
-  dispatch: Dispatch;
-  projectState: ProjectState;
-  commonState: CommonState;
-}
+import {
+  commonStateSelector,
+  libraryStateSelector,
+  projectSelector,
+  projectListSelector,
+  useAppDispatch,
+  useAppSelector,
+} from "store";
+import { WebSocket } from "models";
+import { createNewProject } from "components/handlers/ProjectHandlers";
+import { InspectorModule } from "components/modules/inspector/InspectorModule";
 
 /**
  * The main component for Mimir.
  * @param interface
  * @returns all the modules and components in the Mimir application.
  */
-export const Home = ({ dispatch, projectState, commonState }: Props) => {
+export const Home = () => {
   const [filter, setFilter] = useLocalStorage("visual_filter", defaultFilter);
   const inspectorRef = useRef(null);
 
-  const isDarkMode = false;
-  const isTreeView = commonState.view === ViewType.Tree;
-  const isFilterOpen = false;
+  const dispatch = useAppDispatch();
+  const project = useAppSelector<Project>(projectSelector);
+  const projects = useAppSelector<Project[]>(projectListSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
+  const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
 
-  // const activeMenu = useAppSelector(activeMenuSelector);
-  const isProjectMenuOpen = false; //activeMenu != null;
+  const websocket = new WebSocket();
+  websocket.setDispatcher(dispatch);
+  websocket.setProject(project);
+  websocket.start();
+
+  const isDarkMode = false;
+  // const isTreeView = commonState.view === ViewType.Tree;
+  const isFilterOpen = false;
 
   const onFilterChange = (filter: VisualFilterData) => {
     setFilter(filter);
@@ -57,52 +67,62 @@ export const Home = ({ dispatch, projectState, commonState }: Props) => {
     console.log("LOG OUT");
   };
 
-  useEffect(() => {
-    dispatch(fetchCompany());
-    // dispatch(fetchSubProjects());
-    // dispatch(fetchLibraryInterfaceTypes());
-    // dispatch(fetchLibraryTransportTypes());
-    dispatch(fetchAspectObjects());
-    // dispatch(fetchLibraryAttributeTypes());
-    // dispatch(search(""));
-    // dispatch(fetchLibrary());
-    dispatch(fetchCompanies());
-    dispatch(fetchParsers());
-    dispatch(fetchUser());
-    dispatch(fetchProjects({ name: "" }));
-    // dispatch(fetchQuantityDatums());
-  }, [dispatch]);
+  const onOpenClick = (dialogType: DialogType) => {
+    dispatch(setDialogType({ dialog: dialogType }));
+  };
 
-  useEffect(() => {
-    ToggleColorProfile(isDarkMode);
-  }, [isDarkMode, isTreeView]);
+  // useEffect(() => {
+  //   // console.log("Use effect Home");
+  //   ToggleColorProfile(isDarkMode);
+  //   // updateFlowNodesFromState(flowRef, project, commonState.view);
+  //   // updateFlowEdgesFromState(flowRef, project, commonState.view);
+  // }, [isDarkMode]);
 
   return (
     <>
       <HeaderComponent
-        projectName={projectState.project?.name}
+        projectName={project?.name}
         userName={commonState.user?.name}
         userRole={commonState.user?.role}
         isDarkMode={false}
         onDarkMode={onDarkMode}
         onLogOut={onLogOut}
+        onOpenClick={onOpenClick}
+        isSubProject={project?.subProject ?? false}
+        hasActiveProject={project != null ? true : false}
+        hasSelectedNodes={project?.hasSelectedAspectObjects() ?? false}
       />
       {commonState.view === ViewType.Home ? (
         <StartPage />
       ) : (
         <>
-          <ToolbarComponent isTreeView={commonState.view === ViewType.Tree} dispatch={dispatch} />
+          <ToolbarComponent isVisualFilterOpen={false} />
           {commonState.view === ViewType.Tree && <ExplorerTreeModule dispatch={dispatch} />}
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
-          <FlowModule inspectorRef={inspectorRef} flowView={commonState.view} dispatch={dispatch} filter={filter} />
-          <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
+          <FlowModule />
+          <InspectorModule />
+          {/* <AnimatedModule
+            content="<div><p>Her er tekst</p><p>Her er mer tekst</p></div>"
+            trigger={<InspectorModuleTrigger name="Inspector" />}
+            direction="vertical"
+            height={450}
+            initialHeight={0}
+          /> */}
+          {/* <CalendarComponent /> */}
           <LibraryModule />
           {isFilterOpen && <VisualFilterComponent filter={filter} onFilterChange={onFilterChange} />}
           {/* <ValidationModule  /> */}
         </>
       )}
-      {isProjectMenuOpen && <ProjectSubMenus activeMenu="" />}
-      <HomeDialogs dispatch={dispatch} commonState={commonState} projectState={projectState} />
+      <HomeDialogs
+        dispatch={dispatch}
+        commonState={commonState}
+        projects={projects}
+        libraryState={libraryState}
+        onCreateProject={(name, description) => {
+          createNewProject(name, "reidar.liabo@bouvet.no", description, dispatch);
+        }}
+      />
       <ErrorModule />
     </>
   );

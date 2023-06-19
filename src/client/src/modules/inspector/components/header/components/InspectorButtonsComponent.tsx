@@ -11,7 +11,6 @@ import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../type
 import { MutableRefObject, useEffect, useState } from "react";
 // import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
 import { useAppSelector } from "store";
-import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
   InspectorButtonsContainer,
   InspectorButtonsToggleTitle,
@@ -61,9 +60,7 @@ export const InspectorButtonsComponent = ({
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const deleteDisabled =
-    isLocked ||
-    (element instanceof AspectObject && IsAspectNode(element)) ||
-    (isBlockView && element?.id === selectedBlockNode?.id);
+    isLocked || (element instanceof AspectObject && element.isRoot()) || (isBlockView && element?.id === selectedBlockNode?.id);
 
   const isGlobalLocking = false; //useAppSelector(isProjectStateGloballyLockingSelector);
 

@@ -1,4 +1,4 @@
-import { GetAspectColor } from "../../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";

@@ -1,9 +1,8 @@
 import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { useAppSelector } from "store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
-import { AspectObject } from "../../../../../lib/classes/AspectObject";
+import { GetRelationColor } from "assets";
 
 /**
  * Component for a RelationEdge. The color of the RelationEdge is a combination of the sourceNode and targetNode's AspectColor.
@@ -62,9 +61,3 @@ export const BlockRelationEdge = ({
     </>
   );
 };
-
-function GetRelationColor(node: AspectObject) {
-  if (IsFunction(node)) return Color.SUNGLOW;
-  if (IsLocation(node)) return Color.MAGENTA;
-  if (IsProduct(node)) return Color.ELECTRIC_BLUE;
-}

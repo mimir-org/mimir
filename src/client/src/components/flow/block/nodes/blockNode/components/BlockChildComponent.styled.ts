@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled";
 import { Color } from "../../../../../../assets/color/Color";
 import { Size } from "../../../../../../assets/size/Size";
-import { IsProduct } from "../../../../../../helpers/Aspects";
-import { AspectObject } from "lib";
+import { Aspect, AspectObject } from "lib";
 
 interface NodeBoxProps {
   node: AspectObject;
@@ -38,7 +37,7 @@ export const NodeBox = styled.div<NodeBoxProps>`
   .line {
     height: 1px;
     width: auto;
-    background-color: ${(props) => (IsProduct(props.node) ? Color.VIRIDIAN_GREEN : Color.SUNGLOW)};
+    background-color: ${(props) => (props.node.aspect === Aspect.Product ? Color.VIRIDIAN_GREEN : Color.SUNGLOW)};
     position: relative;
     bottom: 15px;
     left: 0;

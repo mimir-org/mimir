@@ -1,6 +1,6 @@
 import { InspectorElement } from "../../../types";
 import { AspectColorType } from "../../../../../models";
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectObject, Connection } from "lib";
 import { Color } from "assets/color/Color";
 

@@ -1,11 +1,11 @@
 import { ExitButton } from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
 import { TextResources } from "../../assets/text/TextResources";
-import { BadRequestData } from "../../models/webclient";
+
 // import { deleteCommonError } from "../../redux/store/common/commonSlice";
 // import { deleteUserError } from "../../redux/store/user/userSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
-import { Modal } from "../../compLibrary/modal/Modal";
+import { Modal } from "compLibrary/modal/Modal";
 import { Color } from "../../assets/color/Color";
 import { projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
@@ -14,7 +14,6 @@ interface ErrorMessage {
   key: string;
   module: string;
   message: string;
-  errorData: BadRequestData;
 }
 
 /**
@@ -84,13 +83,13 @@ const ErrorModule = () => {
               <ErrorItem key={err.module + index}>
                 <ErrorItemTitle>{err.module}</ErrorItemTitle>
                 <ErrorItemText>{err.message}</ErrorItemText>
-                {err.errorData?.items?.map((item) => {
+                {/* {err.errorData?.items?.map((item) => {
                   return (
                     <ErrorItemText key={item.key}>
                       {item.key}: {JSON.stringify(item.value)}
                     </ErrorItemText>
                   );
-                })}
+                })} */}
               </ErrorItem>
             );
           })}

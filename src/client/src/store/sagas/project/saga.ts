@@ -11,11 +11,9 @@ import { call, put } from "redux-saga/effects";
 
 export function* getProject(action: PayloadAction<FetchProjectAction>) {
   try {
-    console.log("GET PROJECT");
     const response: Project = yield call(projectApi.getProject, action.payload.id);
     yield put(fetchProjectFinished({ project: response }));
   } catch (error) {
-    console.log("GET PROJECT", error);
     yield put(fetchProjectFinished({ project: null }));
   }
 }

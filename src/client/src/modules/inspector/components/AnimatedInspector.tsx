@@ -21,9 +21,9 @@ ${!run ? (start = stop) : null}
   }
   to {
     height: ${stop}px;
-  }  
+  }
 `;
 
 export const AnimatedInspector = styled((props) => <AnimatedInspectorContainer ref={props.forwardRef} {...props} />)`
-  animation: ${Animation} 0.1s ease-in-out;
+  animation: ${Animation} 0.2s ease-in-out;
 `;

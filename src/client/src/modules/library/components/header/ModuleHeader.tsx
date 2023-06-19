@@ -14,7 +14,7 @@ interface Props {
   search: (text: string) => void;
   aspectFilters: Aspect[];
   setAspectFilters: (value: Aspect[]) => void;
-  onOpen: (state: boolean) => void;
+  onOpen: () => void;
 }
 
 /**

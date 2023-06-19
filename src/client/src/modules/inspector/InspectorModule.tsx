@@ -5,14 +5,14 @@ import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InspectorModule.styled";
-import { useAutoMinimizeInspector } from "./hooks";
+import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useRef, useState } from "react";
-import { useAppSelector, commonStateSelector, projectStateSelector } from "store";
-import { GetSelectedFlowNodes } from "../../helpers/Selected";
-import { ViewType } from "lib";
-import { CommonState } from "store/reducers/commonReducer";
+import { useAppSelector, commonStateSelector, projectStateSelector, modulesSelector } from "store";
+import { ModuleType, ViewType } from "lib";
+import { CommonState, setModule } from "store/reducers/commonReducer";
 import { ProjectState } from "store/reducers/projectReducer";
+import { useGetSelectedFlowNodes } from "hooks/useGetSelectedFlowNodes";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -25,25 +25,24 @@ interface Props {
  * @returns a module with multiple tabs for different operations.
  */
 export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [activeTab, setctiveTab] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
   const type = MODULE_TYPE.INSPECTOR;
   const projectState = useAppSelector<ProjectState>(projectStateSelector);
   const commonState = useAppSelector<CommonState>(commonStateSelector);
 
-  const selectedFlowNodes = GetSelectedFlowNodes();
+  const selectedFlowNodes = useGetSelectedFlowNodes();
 
-  const stop = open ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
-  const start = open ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
-
-  const selectedEdge = projectState.project.selectedConnection();
+  const selectedEdge = projectState.project.getSelectedConnection();
   const selectedNode = projectState.project.getSelectedAspectObject();
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
 
   useAutoMinimizeInspector(inspectorRef, commonState?.view === ViewType.Block, selectedFlowNodes);
+  const modules = useAppSelector<ModuleType[]>(modulesSelector);
+  const open = modules.some((x) => x === ModuleType.Inspector);
+
   // useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
   // const changeInspectorVisibilityAction = useCallback(
@@ -58,9 +57,9 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
       isLibraryOpen={false}
       isExplorerOpen={false}
       isInspectorOpen={open}
-      start={start}
-      stop={stop}
-      run={!open}
+      start={open ? Size.MODULE_CLOSED : Size.MODULE_OPEN}
+      stop={open ? Size.MODULE_OPEN : Size.MODULE_CLOSED}
+      run={true}
       zIndex={5}
       forwardRef={inspectorRef}
     >
@@ -77,7 +76,7 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
         activeTabIndex={activeTab}
         inspectorRef={inspectorRef}
         isInspectorOpen={open}
-        changeInspectorVisibilityAction={null}
+        changeInspectorVisibilityAction={() => setModule({ module: ModuleType.Inspector, open: !open })}
         changeInspectorHeightAction={null}
         selectedFlowNodes={selectedFlowNodes}
       />
