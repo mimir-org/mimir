@@ -15,7 +15,6 @@ import { onViewTypeChange } from "components/handlers/commonHandlers";
 import { useDispatch } from "react-redux";
 import { onTerminalAdd, onTerminalChecked, onTerminalRemove } from "components/handlers/ProjectHandlers";
 import { LibraryState } from "store/reducers/libraryReducer";
-import { Size } from "../../assets/size/Size";
 import {
   BlockViewActiveIcon,
   BlockViewIcon,
@@ -87,7 +86,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
             onAdd={(id) => onTerminalAdd(aspectObject.id, libraryState.terminalTypes, id, project, dispatch)}
-            onRemove={(id) => onTerminalRemove(aspectObject.id, id)}
+            onRemove={(id) => onTerminalRemove(aspectObject.id, id, dispatch)}
             items={leftMenuItems}
           ></OverflowComponent>
           <OverflowComponentTitle>{aspectObject?.name ?? "Missing"}</OverflowComponentTitle>
@@ -96,7 +95,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
             onAdd={(id) => onTerminalAdd(aspectObject.id, libraryState.terminalTypes, id, project, dispatch)}
-            onRemove={(id) => onTerminalRemove(aspectObject.id, id)}
+            onRemove={(id) => onTerminalRemove(aspectObject.id, id, dispatch)}
             items={rightMenuItems}
           ></OverflowComponent>
         </ToolbarParentContainer>

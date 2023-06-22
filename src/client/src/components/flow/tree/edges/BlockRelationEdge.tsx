@@ -1,8 +1,7 @@
 import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
-import { Color } from "../../../../../assets/color/Color";
-import { useAppSelector } from "store";
-import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
+import { Color } from "../../../../assets/color/Color";
 import { GetRelationColor } from "assets";
+import { memo } from "react";
 
 /**
  * Component for a RelationEdge. The color of the RelationEdge is a combination of the sourceNode and targetNode's AspectColor.
@@ -32,6 +31,18 @@ export const BlockRelationEdge = ({
   sourceY += margin;
   targetY -= margin;
 
+  const sourceStyle = {
+    stroke: sourceColor,
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+
+  const targetStyle = {
+    stroke: targetColor,
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+
   const bezierPath = getSimpleBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
@@ -48,10 +59,10 @@ export const BlockRelationEdge = ({
         <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       </marker>
 
-      <path style={GetBlockEdgeStyle(sourceColor, visible)} className="path-blockRelationSourceEdge" d={bezierPath} />
+      <path style={sourceStyle} className="path-blockRelationSourceEdge" d={bezierPath} />
 
       <path
-        style={GetBlockEdgeStyle(targetColor, visible)}
+        style={targetStyle}
         strokeDasharray="5,10"
         strokeLinecap="square"
         className="path-blockRelationTargetEdge"
@@ -61,3 +72,5 @@ export const BlockRelationEdge = ({
     </>
   );
 };
+
+export default memo(BlockRelationEdge);

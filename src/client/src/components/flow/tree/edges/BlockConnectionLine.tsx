@@ -1,6 +1,7 @@
 import { Connector, ConnectorDirection } from "lib";
 import { ConnectionLineComponentProps } from "react-flow-renderer";
-import { Color } from "../../../../../assets/color/Color";
+import { Color } from "../../../../assets/color/Color";
+import { memo } from "react";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in BlockView.
@@ -47,3 +48,5 @@ function GetStyle(connector: Connector) {
   const color = connector.getColor();
   return { fill: "none", stroke: color, strokeWidth: 2 };
 }
+
+export default memo(BlockConnectionLine);

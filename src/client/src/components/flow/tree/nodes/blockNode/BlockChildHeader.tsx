@@ -1,7 +1,7 @@
-import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
-import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
-import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
-import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
+import { TerminalsMenuComponent } from "../../../block/terminals/TerminalsMenuComponent";
+import { NodeBoxHeader, BlockNodeNameBox } from "./BlockNode.styled";
+import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { useIsOverflowing } from "../../../../../hooks/useIsOverflowing";
 import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {

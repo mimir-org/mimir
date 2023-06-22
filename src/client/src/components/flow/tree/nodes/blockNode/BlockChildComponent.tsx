@@ -1,9 +1,8 @@
-import { OnHover, OnMouseOut } from "./handlers";
-import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
-import { Symbol } from "../../../../../../compLibrary/symbol";
+import { NodeBox, SymbolBox, LogoBox } from "./BlockNode.styled";
+import { Symbol } from "../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
-import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { useCompanySelector } from "../../../../../hooks/useCompanySelector";
 import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
@@ -36,14 +35,18 @@ export const BlockChildComponent = ({
   const [showMenuButton, setShowMenuButton] = useState(false);
   const company = useCompanySelector(node.domain, node.id);
 
+  const ShowTerminalButton = (status: boolean) => {
+    setShowMenuButton(status);
+  };
+
   return (
     <NodeBox
       node={node}
       colorMain={colorMain}
       colorSelected={colorSelected}
       selected={node.selected}
-      onMouseEnter={() => OnHover(setShowMenuButton)}
-      onMouseLeave={() => OnMouseOut(setShowMenuButton)}
+      onMouseEnter={() => ShowTerminalButton(true)}
+      onMouseLeave={() => ShowTerminalButton(false)}
     >
       <BlockChildHeader
         node={node}

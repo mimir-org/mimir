@@ -1,12 +1,10 @@
-import { BlockNode } from "../block/nodes/blockNode";
-import { BlockParentNode } from "../block/nodes/blockParentNode";
+import { BlockNode } from "../tree/nodes/blockNode";
 import { AspectNode, TreeNode } from "../tree/nodes/";
 
 const GetNodeTypes = {
   AspectFunction: AspectNode,
   AspectLocation: AspectNode,
   AspectProduct: AspectNode,
-  BlockParent: BlockParentNode,
   BlockFunction: BlockNode,
   BlockProduct: BlockNode,
   BlockLocation: BlockNode,

@@ -1,7 +1,7 @@
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "assets";
-import { AspectColorType } from "../../../../../models";
-import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
+import { AspectColorType } from "../../../../models";
+import { memo } from "react";
 
 /**
  * Component for a partOf edge in BlockView.
@@ -18,11 +18,17 @@ export const BlockPartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, source
   sourceX += 0;
   targetX -= margin;
 
-  const style = GetBlockEdgeStyle(color, visible);
+  const style = {
+    stroke: color,
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
   const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
 
   return <path id={id} style={style} className="path-blockPartOfEdge" d={smoothPath} />;
 };
+
+export default memo(BlockPartOfEdge);
 
 // TODO: fix this on next Edge update
 // function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {

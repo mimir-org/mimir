@@ -1,4 +1,4 @@
-import { TreeHandleBox } from "../../aspectNode/TreeHandleBox";
+import { TreeHandleBox } from "../aspectNode/TreeHandleBox";
 import { Handle, Position } from "react-flow-renderer";
 import { AspectObject, Aspect, Connector, ConnectorPartOf, ConnectorHasLocation, ConnectorFulfilledBy, ViewType } from "lib";
 

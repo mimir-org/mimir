@@ -13,7 +13,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
 import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
-import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
+import { BlockConnectionLine } from "../tree/edges/BlockConnectionLine";
 
 /**
  * Coponent props

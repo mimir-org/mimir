@@ -115,6 +115,6 @@ export const onTerminalAdd = (
   dispatch(updateProject({ project }));
 };
 
-export const onTerminalRemove = (aspectObjectId: string, terminalId: string) => {
+export const onTerminalRemove = (aspectObjectId: string, terminalId: string, dispatch: Dispatch) => {
   console.log("onTerminalRemove");
 };

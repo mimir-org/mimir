@@ -1,8 +1,8 @@
-import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeLogoComponent.styled";
-import { Symbol } from "../../../../../../compLibrary/symbol";
-import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
-import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeNode.styled";
+import { Symbol } from "../../../../../compLibrary/symbol";
+import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { useIsOverflowing } from "../../../../../hooks/useIsOverflowing";
+import { useCompanySelector } from "../../../../../hooks/useCompanySelector";
 import { AspectObject } from "lib";
 
 interface Props {

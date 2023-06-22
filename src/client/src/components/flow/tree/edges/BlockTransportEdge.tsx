@@ -1,8 +1,7 @@
 import { Connector, ConnectorTerminal, ConnectorDirection } from "lib";
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
-import { Color } from "../../../../../assets/color/Color";
-import { useAppSelector } from "store";
-import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
+import { Color } from "../../../../assets/color/Color";
+import { memo } from "react";
 
 /**
  * Component for a TransportEdge.
@@ -40,6 +39,12 @@ export const BlockTransportEdge = ({
   const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
+  const style = {
+    stroke: color,
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+
   return (
     <>
       <marker
@@ -55,7 +60,7 @@ export const BlockTransportEdge = ({
       </marker>
       <path
         id={id}
-        style={GetBlockEdgeStyle(color, visible)}
+        style={style}
         className="path-blockTransportEdge"
         d={transportPath}
         markerStart={isBidirectional ? `url(#${arrowId})` : null}
@@ -98,3 +103,5 @@ function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targe
 
   return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }
+
+export default memo(BlockTransportEdge);

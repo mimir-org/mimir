@@ -40,8 +40,8 @@ export const InspectorModule = () => {
         onTabChange={onTabChange}
         spacing={{ pl: "45px", pr: "45px" }}
         tabColor="#FFDE7A"
-        name="Reidar tester"
-        icon="http://localhost:5001/symbol/dd20b5da-98a6-4afe-b390-4e649afc5807.svg"
+        name="Pump"
+        icon="http://localhost:5001/symbol/1cd2b7cc-0b27-415a-ad7b-3f16ab7c741d.svg"
         selectedTab={selectedTab}
       >
         {selectedTab === "admin" && (

@@ -3,9 +3,9 @@ import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType } from "../../../../../models";
 import { TreeNodeBox } from "./TreeNode.styled";
-import { TreeLogoComponent } from "./components/TreeLogoComponent";
+import { TreeLogoComponent } from "./TreeLogoComponent";
 import { GetAspectColor } from "assets";
-import { TreeNodeTerminal } from "./components/TreeNodeTerminal";
+import { TreeNodeTerminal } from "./TreeNodeTerminal";
 import { AspectObject } from "lib";
 
 /**

@@ -2,8 +2,8 @@
 import { Dispatch } from "redux";
 import { useEffect } from "react";
 import { useUpdateNodeInternals } from "react-flow-renderer";
-import { HandleContainer } from "./HandleComponent.styled";
-import { BlockNodeConnector } from "./components/BlockNodeConnector";
+import { HandleContainer } from "./BlockNode.styled";
+import { BlockNodeConnector } from "./BlockNodeConnector";
 import { AspectObject, Connector, Project } from "lib";
 
 interface Props {
