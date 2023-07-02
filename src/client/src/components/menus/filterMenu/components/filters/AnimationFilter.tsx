@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { FilterElement } from "../FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { toggleEdgeAnimation } from "../../../../../redux/store/edgeAnimation/edgeAnimationSlice";
+// import { toggleEdgeAnimation } from "../../../../../redux/store/edgeAnimation/edgeAnimationSlice";
 import { memo } from "react";
 
 interface Props {
@@ -18,7 +18,8 @@ interface Props {
 const AnimationFilter = ({ isAnimated, visible, dispatch }: Props) => (
   <FilterElement
     label={TextResources.ANIMATION}
-    onChange={() => dispatch(toggleEdgeAnimation())}
+    onChange={null}
+    // onChange={() => dispatch(toggleEdgeAnimation())}
     isChecked={isAnimated}
     visible={visible}
   />

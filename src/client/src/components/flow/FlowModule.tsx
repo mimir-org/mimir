@@ -1,25 +1,53 @@
 import { FlowTree } from "./tree/FlowTree";
-import { FlowBlock } from "./block/FlowBlock";
-import { VIEW_TYPE, ViewType } from "../../models/project";
 import { FlowModuleContainer } from "./FlowModule.styled";
-import { Dispatch } from "redux";
-import { VisualFilterData } from "../../models/application/VisualFilter";
-
-interface Props {
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
-  flowView: ViewType;
-  dispatch: Dispatch;
-  filter: VisualFilterData;
-}
+import { Project, ViewType } from "lib";
+import { useEffect, useRef } from "react";
+import { projectSelector, useAppDispatch, useAppSelector, viewTypeSelector } from "store";
+import {
+  onEdgeConnect,
+  onEdgeDelete,
+  onEdgeSelect,
+  onNodeDelete,
+  onNodeDrop,
+  onNodePositionChange,
+  onNodeSelect,
+  updateFlowEdgesFromState,
+  updateFlowNodesFromState,
+} from "components/handlers/ProjectHandlers";
 
 /**
  * Component to display a module in Flow.
- * @param interface
- * @returns a JSX element containing either TreeView or BlockView.
+ * @returns a JSX element containing Flow view.
  */
-export const FlowModule = ({ inspectorRef, flowView, dispatch, filter }: Props) => (
-  <FlowModuleContainer>
-    {flowView === VIEW_TYPE.TREEVIEW && <FlowTree inspectorRef={inspectorRef} dispatch={dispatch} filter={filter} />}
-    {flowView === VIEW_TYPE.BLOCKVIEW && <FlowBlock inspectorRef={inspectorRef} dispatch={dispatch} filter={filter} />}
-  </FlowModuleContainer>
-);
+export const FlowModule = () => {
+  const flowRef = useRef(null);
+  const dispatch = useAppDispatch();
+  const project = useAppSelector<Project>(projectSelector);
+  const viewType = useAppSelector<ViewType>(viewTypeSelector);
+
+  useEffect(() => {
+    updateFlowNodesFromState(flowRef, project, viewType);
+    updateFlowEdgesFromState(flowRef, project, viewType);
+  }, [project, viewType]);
+
+  return (
+    <>
+      {project && (
+        <FlowModuleContainer>
+          <FlowTree
+            ref={flowRef}
+            nodes={project.toFlowNodes(viewType)}
+            edges={project.toFlowEdges(viewType)}
+            onNodePositionChange={(id, x, y) => onNodePositionChange(id, x, y, viewType, project, dispatch)}
+            onNodeDelete={(id) => onNodeDelete(id, project, dispatch)}
+            onNodeDrop={(type, posX, posY) => onNodeDrop(type, posX, posY, project, dispatch)}
+            onNodeSelect={(id, selected) => onNodeSelect(id, selected, project, viewType, dispatch)}
+            onEdgeDelete={(id) => onEdgeDelete(id, project, dispatch)}
+            onEdgeConnect={(edge) => onEdgeConnect(edge, project, dispatch)}
+            onEdgeSelect={(id, selected) => onEdgeSelect(id, selected, project, dispatch)}
+          />
+        </FlowModuleContainer>
+      )}
+    </>
+  );
+};

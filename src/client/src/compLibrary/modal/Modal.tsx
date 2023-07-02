@@ -1,12 +1,13 @@
-import { Dialog } from "@headlessui/react";
 import { ModalContainer, ModalContentContainer, ModalOverlay } from "./Modal.styled";
 import { FunctionComponent } from "react";
+import { Dialog } from "@headlessui/react";
 
 interface Props {
   onExit: () => void;
   isOpen: boolean;
   isBlurred?: boolean;
   isFaded?: boolean;
+  children?: React.ReactNode;
 }
 
 /**

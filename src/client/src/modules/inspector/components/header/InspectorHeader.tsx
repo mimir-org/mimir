@@ -5,7 +5,6 @@ import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { InspectorHeaderBox } from "./InspectorHeader.styled";
 import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
 import { Dispatch } from "redux";
-import { Project, Attribute } from "@mimirorg/modelbuilder-types";
 import {
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
@@ -13,6 +12,7 @@ import {
   InspectorElement,
   OnToogleHandler,
 } from "../../types";
+import { Attribute, Project } from "lib";
 
 interface Props {
   project: Project;
@@ -56,7 +56,7 @@ export const InspectorHeader = ({
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
 
   return (
-    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, tabsVisible)}>
+    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.aspectObjects, element, tabsVisible)}>
       {tabsVisible && (
         <InspectorTabsComponent
           project={project}
@@ -70,8 +70,8 @@ export const InspectorHeader = ({
       )}
 
       <InspectorButtonsComponent
-        nodes={project?.nodes}
-        edges={project?.edges}
+        nodes={project?.aspectObjects}
+        edges={project?.connections}
         element={element}
         username={username}
         open={open}
@@ -81,6 +81,7 @@ export const InspectorHeader = ({
         changeInspectorHeightAction={changeInspectorHeightAction}
         project={project}
         dispatch={dispatch}
+        isBlockView={isBlockView}
       />
     </InspectorHeaderBox>
   );

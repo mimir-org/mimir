@@ -3,7 +3,7 @@ import { AspectButton } from "../styled/AspectButton";
 import { ExplorerLockSpinner } from "../styled/ExplorerLockSpinner";
 import { Spinner } from "../../../../compLibrary/spinner/Spinner";
 import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../../../compLibrary/icon/Icon";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   isLocked: boolean;

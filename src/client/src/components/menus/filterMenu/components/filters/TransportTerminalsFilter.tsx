@@ -1,15 +1,15 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
-import { PopulateTerminalCategoriesForVisualFilter, AreAllTransportsChecked } from "./helpers";
+import { PopulateTerminalCategoriesForVisualFilter } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { memo } from "react";
+import { Connection, ConnectorTerminal } from "lib";
 
 interface Props {
-  edges: Edge[];
-  terminals: Terminal[];
+  edges: Connection[];
+  terminals: ConnectorTerminal[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -29,7 +29,7 @@ const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
         <FilterElement
           label={TextResources.TRANSPORTS}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
-          isChecked={AreAllTransportsChecked(edges)}
+          isChecked={true}
           visible={visible}
           isHeader
         />

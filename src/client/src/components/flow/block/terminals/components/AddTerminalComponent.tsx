@@ -1,6 +1,6 @@
-import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { PlusIcon } from "../../../../../assets/icons/controls";
 import { TerminalAddRemoveIconBox } from "./TerminalsMenuElement.styled";
+import { ConnectorDirection } from "../../../../../lib/enums/Direction";
 
 interface Props {
   color: string;

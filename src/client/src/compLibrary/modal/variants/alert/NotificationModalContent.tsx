@@ -10,6 +10,7 @@ import {
 interface Props {
   description?: string;
   isWarning?: boolean;
+  children: JSX.Element | JSX.Element[];
 }
 
 export const NotificationModalContent: FunctionComponent<Props> = ({ description, isWarning, children }) => (

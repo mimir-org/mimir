@@ -1,8 +1,8 @@
-import { Project } from "@mimirorg/modelbuilder-types";
 import { AdminContentWrapper, AdminLogo } from "./AdminComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { GetAdminContent } from "./helpers/GetAdminContent";
 import { useCompanySelector } from "../../../../../../hooks/useCompanySelector";
+import { Project } from "lib";
 
 interface Props {
   element: InspectorElement;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const AdminComponent = ({ element, project }: Props) => {
-  const company = useCompanySelector(element.domain, element.id);
+  const company = useCompanySelector("", element.id); // TODO: Fix this
 
   return (
     <>

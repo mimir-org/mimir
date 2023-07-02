@@ -1,4 +1,4 @@
-import { Attribute } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "lib";
 import { LinkIcon } from "../../../../../../../../../../../assets/icons/link";
 
 interface Props {
@@ -14,12 +14,12 @@ interface Props {
 export const AttributeObjectNameComponent = ({ attribute, hasTypeReference }: Props) => {
   return attribute && hasTypeReference ? (
     <span>
-      <a href={attribute.attributeTypeIri} target="_blank" rel="noopener noreferrer">
-        {attribute.entity}
+      <a href={attribute.attributeType} target="_blank" rel="noopener noreferrer">
+        {attribute.name}
         <img src={LinkIcon} alt="link" className="linkIcon" />
       </a>
     </span>
   ) : (
-    <span>{attribute?.entity}</span>
+    <span>{attribute?.name}</span>
   );
 };

@@ -1,4 +1,3 @@
-import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../assets/size/Size";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
@@ -7,13 +6,13 @@ import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InspectorModule.styled";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
-import { changeInspectorHeight } from "./redux/inspectorSlice";
-import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
-import { MutableRefObject, useCallback, useRef } from "react";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { GetSelectedFlowNodes } from "../../helpers/Selected";
+import { MutableRefObject, useRef, useState } from "react";
+import { useAppSelector, commonStateSelector, projectStateSelector, modulesSelector } from "store";
+import { ModuleType, ViewType } from "lib";
+import { CommonState, setModule } from "store/reducers/commonReducer";
+import { ProjectState } from "store/reducers/projectReducer";
+import { useGetSelectedFlowNodes } from "hooks/useGetSelectedFlowNodes";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -26,62 +25,59 @@ interface Props {
  * @returns a module with multiple tabs for different operations.
  */
 export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
+  const [activeTab, setActiveTab] = useState<number>(0);
+
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(selectors.projectSelector);
-  const username = useAppSelector(selectors.usernameSelector);
-  const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
-  const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
-  const inspectorOpen = useAppSelector(selectors.inspectorSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
-  const isBlockView = IsBlockView();
-  const selectedFlowNodes = GetSelectedFlowNodes();
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
 
-  const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
-  const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
+  const selectedFlowNodes = useGetSelectedFlowNodes();
 
-  const selectedEdge = project?.edges.find((e) => e.selected);
-  const selectedNode = project?.nodes.find((n) => n.selected);
+  const selectedEdge = projectState.project.getSelectedConnection();
+  const selectedNode = projectState.project.getSelectedAspectObject();
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
 
-  useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
-  useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
+  useAutoMinimizeInspector(inspectorRef, commonState?.view === ViewType.Block, selectedFlowNodes);
+  const modules = useAppSelector<ModuleType[]>(modulesSelector);
+  const open = modules.some((x) => x === ModuleType.Inspector);
 
-  const changeInspectorVisibilityAction = useCallback(
-    (open: boolean) => setModuleVisibility({ type, visible: open, animate: true }),
-    [type]
-  );
+  // useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
+
+  // const changeInspectorVisibilityAction = useCallback(
+  //   (open: boolean) => setModuleVisibility({ type, visible: open, animate: true }),
+  //   [type]
+  // );
 
   return (
     <AnimatedInspector
       id="InspectorModule"
       type={type}
-      isLibraryOpen={libOpen}
-      isExplorerOpen={explorerOpen}
-      isInspectorOpen={inspectorOpen}
-      start={start}
-      stop={stop}
-      run={animate}
+      isLibraryOpen={false}
+      isExplorerOpen={false}
+      isInspectorOpen={open}
+      start={open ? Size.MODULE_CLOSED : Size.MODULE_OPEN}
+      stop={open ? Size.MODULE_OPEN : Size.MODULE_CLOSED}
+      run={true}
       zIndex={5}
       forwardRef={inspectorRef}
     >
       <Tooltip content={TextResources.RESIZE} offset={[0, 10]} delay={150}>
-        <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+        <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={open} />
       </Tooltip>
       <InspectorHeader
-        project={project}
+        project={projectState.project}
         element={element}
-        username={username}
+        username={commonState?.user?.email ?? ""}
         dispatch={dispatch}
-        open={inspectorOpen}
-        isBlockView={isBlockView}
-        activeTabIndex={activeTabIndex}
+        open={open}
+        isBlockView={commonState?.view === ViewType.Block}
+        activeTabIndex={activeTab}
         inspectorRef={inspectorRef}
-        isInspectorOpen={inspectorOpen}
-        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
-        changeInspectorHeightAction={changeInspectorHeight}
+        isInspectorOpen={open}
+        changeInspectorVisibilityAction={() => setModule({ module: ModuleType.Inspector, open: !open })}
+        changeInspectorHeightAction={null}
         selectedFlowNodes={selectedFlowNodes}
       />
     </AnimatedInspector>

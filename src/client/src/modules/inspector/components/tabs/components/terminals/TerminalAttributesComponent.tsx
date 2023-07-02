@@ -2,12 +2,12 @@ import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useState } from "react";
 import { TerminalsBox, TerminalAttributesBox } from "./TerminalAttributesComponent.styled";
 import { InspectorElement } from "../../../../types";
-import { Terminal } from "@mimirorg/modelbuilder-types";
 import { AttributesComponent } from "../parameters/AttributesComponent";
+import { ConnectorTerminal } from "lib";
 
 interface Props {
   element: InspectorElement;
-  terminals?: Terminal[];
+  terminals?: ConnectorTerminal[];
 }
 
 /**

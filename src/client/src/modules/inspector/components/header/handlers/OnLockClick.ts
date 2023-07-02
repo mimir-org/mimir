@@ -1,10 +1,9 @@
-import { EntityType } from "@mimirorg/modelbuilder-types";
+import { EntityType, LockCm } from "lib";
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
-import { LockCm } from "../../../../../models";
-import { lockEntity, setLockedEdge, setLockedNode } from "../../../../../redux/store/project/actions";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
+import { AspectObject } from "../../../../../lib/classes/AspectObject";
+import { Connection } from "../../../../../lib/classes/Connection";
 
 export const OnLockClick = (
   element: InspectorElement,
@@ -19,7 +18,8 @@ export const OnLockClick = (
 };
 
 const handleLockOnline = (element: InspectorElement, isLocked: boolean, dispatch: Dispatch) => {
-  dispatch(lockEntity(element.id, element.projectId, isLocked, IsNode(element) ? EntityType.Node : EntityType.Edge));
+  // TODO: Handle this
+  // dispatch(lockEntity(element.id, element.project, isLocked, element instanceof AspectObject ? EntityType.AspectObject : EntityType.Connection));
 };
 
 const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
@@ -29,9 +29,14 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
     isLocked,
     isLockedStatusBy: isLockedBy,
     isLockedStatusDate: new Date(),
-    type: IsNode(element) ? EntityType.Node : EntityType.Edge,
+    type: element instanceof AspectObject ? EntityType.AspectObject : EntityType.Connection,
   };
 
-  if (IsNode(element)) dispatch(setLockedNode(lockObj));
-  if (IsEdge(element)) dispatch(setLockedEdge(lockObj));
+  if (element instanceof AspectObject) {
+    // TODO: Handle this
+    // dispatch(setLockedNode(lockObj));
+  }
+  if (element instanceof Connection) {
+    // dispatch(setLockedEdge(lockObj));
+  }
 };

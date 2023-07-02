@@ -1,8 +1,8 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
+import { ConnectorTerminal } from "lib";
 import { TerminalElement } from "./components/TerminalElement";
 
 interface Props {
-  terminals: Terminal[];
+  terminals: ConnectorTerminal[];
   selectedTerminal: string;
   visible: boolean;
   onSelect: (id: string) => void;

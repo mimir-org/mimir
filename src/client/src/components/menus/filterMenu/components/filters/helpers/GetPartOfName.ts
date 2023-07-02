@@ -1,5 +1,5 @@
-import { Node, Connector, Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect, AspectObject, Connector } from "lib";
 
-export const GetPartOfName = (conn: Connector, node: Node) => {
+export const GetPartOfName = (conn: Connector, node: AspectObject) => {
   return `${conn.name} ${Aspect[node.aspect]}`;
 };

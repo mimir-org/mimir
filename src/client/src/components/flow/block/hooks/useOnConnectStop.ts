@@ -1,18 +1,17 @@
 import { Dispatch } from "redux";
 import { EdgeEvent } from "../../../../models/project";
-import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
-import { Connector, Project, Node } from "@mimirorg/modelbuilder-types";
-import { IsTerminal } from "../../helpers/Connectors";
-import { setValidation } from "../../../../redux/store/validation/validationSlice";
+// import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
+// import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { AspectObject, Connector, ConnectorTerminal, Project } from "lib";
 
 const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) => {
   e.preventDefault();
-  const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
+  const edgeEvent = null; // = LoadEventData("edgeEvent") as EdgeEvent;
   if (!edgeEvent) return;
 
-  const nodes = project?.nodes ?? [];
-  const edges = project?.edges ?? [];
+  const nodes = project?.aspectObjects ?? [];
+  const edges = project?.connections ?? [];
 
   const sourceNode = nodes.find((n) => n.id === edgeEvent.nodeId);
   const sourceConnector = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
@@ -20,38 +19,38 @@ const useOnConnectStop = (e: MouseEvent, project: Project, dispatch: Dispatch) =
 
   const existingEdge = edges.find(
     (edge) =>
-      (edge.fromConnectorId === sourceConnector?.id && IsTerminal(edge.fromConnector)) ||
-      (edge.toConnectorId === sourceConnector?.id && IsTerminal(edge.toConnector)) ||
-      (edge.fromConnectorId === targetConnector?.id && IsTerminal(edge.fromConnector)) ||
-      (edge.toConnectorId === targetConnector?.id && IsTerminal(edge.toConnector))
+      edge.fromConnector === sourceConnector?.id ||
+      edge.toConnector === sourceConnector?.id ||
+      edge.fromConnector === targetConnector?.id ||
+      edge.toConnector === targetConnector?.id
   );
 
   if (existingEdge) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
+    // dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
     return;
   }
 
   if (
-    IsTerminal(sourceConnector) &&
-    IsTerminal(targetConnector) &&
-    sourceConnector.terminalTypeId !== targetConnector.terminalTypeId
+    sourceConnector instanceof ConnectorTerminal &&
+    targetConnector instanceof ConnectorTerminal &&
+    sourceConnector.terminalType !== targetConnector.terminalType
   ) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
+    // dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
     return;
   }
 
-  SaveEventData(null, "edgeEvent");
+  // SaveEventData(null, "edgeEvent");
 };
 
-export const ResolveTarget = (project: Project, e: MouseEvent): [targetNode: Node, targetConnector: Connector] => {
-  let data: [Node, Connector] = [null, null];
+export const ResolveTarget = (project: Project, e: MouseEvent): [targetNode: AspectObject, targetConnector: Connector] => {
+  let data: [AspectObject, Connector] = [null, null];
 
   const element = e.target as HTMLElement;
   if (element == null) return data;
 
   const targetNodeId = element.getAttribute("data-nodeid");
   const targetConnectorId = element.getAttribute("data-handleid");
-  const targetNode = project?.nodes.find((x) => x.id === targetNodeId);
+  const targetNode = project?.aspectObjects.find((x) => x.id === targetNodeId);
   const targetConnector = targetNode?.connectors.find((x) => x.id === targetConnectorId);
   data = [targetNode, targetConnector];
   return data;

@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { setNodeVisibility } from "../../../../../redux/store/project/actions";
-import { ConnectorDirection, Edge, Node, Project, RelationType } from "@mimirorg/modelbuilder-types";
-import { IsRelation } from "../../../../inspector/helpers/IsType";
+// import { setNodeVisibility } from "../../../../../redux/store/project/actions";
+import { AspectObject, Connection, ConnectorDirection, Project } from "lib";
+import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
 
 /**
  * Handler for changing visibility of a node in the TreeView's Explorer.
@@ -9,12 +9,12 @@ import { IsRelation } from "../../../../inspector/helpers/IsType";
  * @param node
  * @param dispatch
  */
-export const OnTreeExplorerChange = (project: Project, node: Node, dispatch: Dispatch) => {
+export const OnTreeExplorerChange = (project: Project, node: AspectObject, dispatch: Dispatch) => {
   const { nodes, edges } = findChildren(project, node);
-  dispatch(setNodeVisibility(nodes, edges, !node.hidden));
+  // dispatch(setNodeVisibility(nodes, edges, !node.hidden));
 };
 
-const findChildren = (project: Project, current: Node): { nodes: string[]; edges: string[] } => {
+const findChildren = (project: Project, current: AspectObject): { nodes: string[]; edges: string[] } => {
   const childrenNodes = [] as string[];
   const childrenEdges = [] as string[];
   resolveChildren(project, current, childrenNodes);
@@ -28,22 +28,22 @@ const findChildren = (project: Project, current: Node): { nodes: string[]; edges
  * @param current The current node
  * @param children The current node and the affected children
  */
-const resolveChildren = (project: Project, current: Node, children: string[]): void => {
+const resolveChildren = (project: Project, current: AspectObject, children: string[]): void => {
   children.push(current.id);
 
   // There should only be one output PartOf connector
   const partofConnector = current.connectors.find(
-    (c) => IsRelation(c) && c.type === ConnectorDirection.Output && c.relationType === RelationType.PartOf
+    (c) => c instanceof ConnectorPartOf && c.direction === ConnectorDirection.Output
   );
   if (partofConnector == null) return;
 
-  const connectedEdges = project.edges.filter((e) => e.fromConnectorId === partofConnector.id);
+  const connectedEdges = project.connections.filter((e) => e.fromConnector === partofConnector.id);
   if (connectedEdges == null || connectedEdges.length < 1) return;
 
   connectedEdges.forEach((edge) => {
-    const node = project.nodes.find((n) => n.id == edge.toNodeId);
-    if (node != null) {
-      resolveChildren(project, node, children);
+    const [, to] = project.getConnectionNodes(edge);
+    if (to != null) {
+      resolveChildren(project, to, children);
     }
   });
 };
@@ -56,10 +56,11 @@ const resolveChildren = (project: Project, current: Node, children: string[]): v
  * @param hidden The new hidden state
  */
 const resolveEdges = (project: Project, nodes: string[], edges: string[], hidden: boolean): void => {
-  const affected = [] as Edge[];
+  const affected = [] as Connection[];
 
-  project.edges.forEach((e) => {
-    const anyNodes = nodes.some((n) => n === e.fromNodeId || n === e.toNodeId);
+  project.connections.forEach((e) => {
+    const [from, to] = project.getConnectionNodes(e);
+    const anyNodes = nodes.some((n) => n === from.id || n === to?.id);
     if (anyNodes) affected.push(e);
   });
 
@@ -68,13 +69,14 @@ const resolveEdges = (project: Project, nodes: string[], edges: string[], hidden
       edges.push(e.id);
     }
     if (!hidden) {
-      let otherNode = {} as Node;
-      const isEdgeFrom = nodes.some((n) => n === e.fromNodeId);
+      const [from, to] = project.getConnectionNodes(e);
+      let otherNode = {} as AspectObject;
+      const isEdgeFrom = nodes.some((n) => n === from?.id);
 
       if (isEdgeFrom) {
-        otherNode = project.nodes.find((n) => n.id == e.toNodeId);
+        otherNode = project.aspectObjects.find((n) => n.id == to?.id);
       } else {
-        otherNode = project.nodes.find((n) => n.id == e.fromNodeId);
+        otherNode = project.aspectObjects.find((n) => n.id == from?.id);
       }
 
       if (nodes.some((x) => x === otherNode.id) || !otherNode.hidden) {

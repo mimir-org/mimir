@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../assets/color/Color";
-import { Icon } from "../../../icon/Icon";
+import { Icon } from "@mimirorg/component-library";
 
 interface NotificationModalContentContainerProps {
   isWarning: boolean;

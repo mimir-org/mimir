@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Mb.Core.Controllers.temp;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Client;
@@ -8,12 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mimirorg.Common.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Mb.Core.Controllers.V1;
 
@@ -131,7 +132,11 @@ public class ProjectController : ControllerBase
     {
         try
         {
-            var data = _projectService.GetBySearch(name, 0, 10).ToList();
+            //var data = _projectService.GetBySearch(name, 0, 10).ToList();
+            var data = new ProjectSearchResultCm();
+            data.CreateDummyData();
+
+
             return Ok(data);
         }
         catch (Exception e)

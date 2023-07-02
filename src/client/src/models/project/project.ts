@@ -1,5 +1,5 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorTerminal } from "lib";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
 export const ATTRIBUTE_TAB = {
@@ -14,7 +14,7 @@ export const EDGE_TYPE = {
   BLOCK_TRANSPORT: "BlockTransportEdgeType",
   BLOCK_RELATION: "BlockRelationEdgeType",
   BLOCK_PARTOF: "BlockPartOfEdgeType",
-  TREE_PARTOF: "TreePartOfEdgeType",
+  TREE_PARTOF: "TreeConnectionPartOf",
   TREE_RELATION: "TreeRelationEdgeType",
   TREE_TRANSPORT: "TreeTransportEdgeType",
 };
@@ -43,12 +43,9 @@ export const MENU_TYPE = {
   CONVERT_SUB_PROJECT_MENU: "ConvertSubProjectMenu",
 };
 
-export type ViewType = keyof typeof VIEW_TYPE;
-export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview" };
-
 export interface LibraryCategory {
   name: string;
-  nodes: NodeLibCm[];
+  nodes: AspectObjectLibCm[];
 }
 
 export interface EdgeEvent {
@@ -69,7 +66,7 @@ export interface BlockNodeSize {
 
 export interface TerminalCategoryObject {
   name: string;
-  terminals: Terminal[];
+  terminals: ConnectorTerminal[];
 }
 
 export interface ViewportData {

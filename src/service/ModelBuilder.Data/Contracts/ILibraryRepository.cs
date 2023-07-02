@@ -6,9 +6,9 @@ namespace Mb.Data.Contracts;
 
 public interface ILibraryRepository
 {
-    Task<List<QuantityDatumCm>> GetQuantityDatums();
+    Task<List<QuantityDatumLibCm>> GetQuantityDatums();
     Task<List<UnitLibCm>> GetUnits();
-    Task<List<NodeLibCm>> GetAspectObjectTypes();
+    Task<List<AspectObjectLibCm>> GetAspectObjectTypes();
     Task<List<TerminalLibCm>> GetTerminalTypes();
     Task<List<AttributeLibCm>> GetAttributeTypes();
 

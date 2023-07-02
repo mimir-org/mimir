@@ -1,16 +1,16 @@
-import { Attribute } from "@mimirorg/modelbuilder-types";
-import { QuantityDatumCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
+import { QuantityDatumLibCm, QuantityDatumType } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { AttributeDescriptorBox, AttributeDescriptorRow } from "./AttributeDescriptor.styled";
 import { AttributeQuantityDatumElement } from "./AttributeQuantityDatumElement";
 import { AttributeInputElement } from "./AttributeInputElement";
 import { AttributeUnitElement } from "./AttributeUnitElement";
 import { nameof } from "../../../../../../../../../../../helpers/ObjectFunctions";
+import { Attribute } from "lib";
 
 interface Props {
   headerColor: string;
   attribute: Attribute;
-  quantityDatums: QuantityDatumCm[];
+  quantityDatums: QuantityDatumLibCm[];
   onChange: (attributeId: string, property: string, value: string) => void;
 }
 
@@ -25,7 +25,7 @@ export const AttributeDescriptorComponent = ({ headerColor, attribute, quantityD
       {attribute && (
         <AttributeDescriptorBox>
           <AttributeDescriptorRow>
-            <AttributeQuantityDatumElement
+            {/* <AttributeQuantityDatumElement
               attributeId={attribute.id}
               property={nameof<Attribute>("specifiedScope")}
               headerText={TextResources.SPECIFIED_SCOPE}
@@ -44,7 +44,7 @@ export const AttributeDescriptorComponent = ({ headerColor, attribute, quantityD
               values={quantityDatums.filter((x) => x.quantityDatumType === QuantityDatumType.QuantityDatumSpecifiedProvenance)}
               isLocked={attribute.isLocked}
               onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
-            />
+            /> */}
             <AttributeInputElement
               attributeId={attribute.id}
               property={nameof<Attribute>("value")}
@@ -54,7 +54,7 @@ export const AttributeDescriptorComponent = ({ headerColor, attribute, quantityD
             />
           </AttributeDescriptorRow>
           <AttributeDescriptorRow>
-            <AttributeQuantityDatumElement
+            {/* <AttributeQuantityDatumElement
               attributeId={attribute.id}
               property={nameof<Attribute>("rangeSpecifying")}
               headerText={TextResources.RANGE_SPECIFYING}
@@ -81,7 +81,7 @@ export const AttributeDescriptorComponent = ({ headerColor, attribute, quantityD
               values={attribute.units}
               isLocked={attribute.isLocked}
               onChange={(attributeId: string, property: string, value: string) => onChange(attributeId, property, value)}
-            />
+            /> */}
           </AttributeDescriptorRow>
         </AttributeDescriptorBox>
       )}

@@ -1,18 +1,17 @@
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
 import { AspectColorType } from "../../../../../models";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { CheckboxTreeExplorer } from "../../../../../compLibrary/input/checkbox/explorer/tree/CheckboxTreeExplorer";
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
-import { Icon } from "../../../../../compLibrary/icon/Icon";
-import { GetAspectColor } from "../../../../../helpers";
-import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
+import { GetAspectColor, GetAspectIcon } from "assets";
+import { GetIndentLevel } from "../../../shared/helpers/";
 import { Dispatch } from "redux";
+import { AspectObject } from "lib";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
@@ -30,7 +29,7 @@ export const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, 
 
   return (
     <AspectElementWrapper indent={GetIndentLevel(indent)}>
-      {IsAspectNode(node) ? (
+      {node.isRoot() ? (
         <>
           <Icon size={22} src={GetAspectIcon(node)} alt="" />
           <span>{node.label}</span>

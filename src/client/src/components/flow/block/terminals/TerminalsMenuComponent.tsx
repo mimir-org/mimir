@@ -1,14 +1,13 @@
 import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
-import { IsConnectorVisible } from "../../helpers/Connectors";
 import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminalClick";
-import { Node, Connector, ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   connectors: Connector[];
-  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
   isInput: boolean;
   isElectroView: boolean;
   isParent?: boolean;
@@ -50,7 +49,7 @@ export const TerminalsMenuComponent = ({
           node={node}
           isInput={isInput}
           connectors={connectors}
-          hasActiveTerminals={connectors.some((conn) => IsConnectorVisible(conn))}
+          hasActiveTerminals={connectors.some((conn) => !conn.hidden)}
           isParent={isParent}
           isElectroView={isElectroView}
           onClick={onClick}

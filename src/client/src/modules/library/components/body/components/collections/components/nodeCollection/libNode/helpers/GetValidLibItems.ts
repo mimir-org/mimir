@@ -1,14 +1,12 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { IsFamily } from "../../../../../../../../../../helpers/Family";
-import { Node } from "@mimirorg/modelbuilder-types";
-import { LibraryState } from "../../../../../../../../../../redux/store/library/types";
+import { AspectObject } from "lib";
 
-const GetValidLibItems = (selectedNode: Node, state: LibraryState, isBlockView: boolean) => {
-  const allLibItems = [...state.libNodes];
-  return allLibItems.filter((i) => IsValidLibComponent(i, selectedNode, isBlockView));
+const GetValidLibItems = (selectedNode: AspectObject, aspectObjects: AspectObjectLibCm[], isBlockView: boolean) => {
+  return aspectObjects.filter((i) => IsValidLibComponent(i, selectedNode, isBlockView));
 };
 
-function IsValidLibComponent(libNode: NodeLibCm, selectedNode: Node, isBlockView: boolean) {
+function IsValidLibComponent(libNode: AspectObjectLibCm, selectedNode: AspectObject, isBlockView: boolean) {
   return isBlockView ? IsFamily(selectedNode, libNode) : true;
 }
 

@@ -1,10 +1,10 @@
-import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 // import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect } from "../../../../../lib";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
   // collectionState: CollectionsActions;

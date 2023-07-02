@@ -2,27 +2,24 @@ import { OnLockClick } from "../handlers/OnLockClick";
 import { OnInspectorDeleteClick } from "../handlers/OnInspectorDeleteClick";
 import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
-import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector";
-import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
-import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
-import { IsBlockView } from "../../../../../helpers";
-import { isProjectStateGloballyLockingSelector, useAppSelector } from "../../../../../redux/store";
-import { IsAspectNode } from "../../../../../helpers/Aspects";
+// import { isProjectStateGloballyLockingSelector } from "../../../../../redux/store";
+import { useAppSelector } from "store";
 import {
   InspectorButtonsContainer,
   InspectorButtonsToggleTitle,
   InspectorButtonsToggleContainer,
 } from "./InspectorButtonsComponent.styled";
+import { AspectObject, Connection, Project } from "lib";
+import { Icon, ToogleDownIcon, ToogleUpIcon } from "@mimirorg/component-library";
 
 interface Props {
-  nodes: Node[];
-  edges: Edge[];
+  nodes: AspectObject[];
+  edges: Connection[];
   element: InspectorElement;
   username: string;
   open: boolean;
@@ -32,6 +29,7 @@ interface Props {
   changeInspectorHeightAction: (height: number) => Action;
   project: Project;
   dispatch: Dispatch;
+  isBlockView: boolean;
 }
 
 /**
@@ -51,16 +49,19 @@ export const InspectorButtonsComponent = ({
   changeInspectorHeightAction,
   project,
   dispatch,
+  isBlockView,
 }: Props) => {
   const [onLock, setOnLock] = useState(false);
-  const isLocked = element?.isLocked;
+  // const isLocked = element?.isLocked; TODO: resolve this
+  const isLocked = false; //element?.isLocked;
   const isElementSelected = !!element;
+  // const selectedBlockNode = nodes?.find((n) => n.blockSelected);
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const deleteDisabled =
-    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedBlockNode?.id);
+    isLocked || (element instanceof AspectObject && element.isRoot()) || (isBlockView && element?.id === selectedBlockNode?.id);
 
-  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
+  const isGlobalLocking = false; //useAppSelector(isProjectStateGloballyLockingSelector);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
   if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;
@@ -74,9 +75,9 @@ export const InspectorButtonsComponent = ({
       {isElementSelected && (
         <>
           <InspectorButton
-            onClick={() => OnLockClick(element, !element.isLocked, username, setOnLock, dispatch)}
-            type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
+            onClick={() => OnLockClick(element, !isLocked, username, setOnLock, dispatch)}
+            type={isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
+            description={isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
             disabled={onLock && isGlobalLocking}
           />
           <InspectorButton
@@ -96,7 +97,7 @@ export const InspectorButtonsComponent = ({
             }
           >
             <InspectorButtonsToggleTitle>{TextResources.INSPECTOR}</InspectorButtonsToggleTitle>
-            <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
+            <Icon size={15} src={open ? ToogleDownIcon : ToogleUpIcon} alt="toggle-icon" />
           </InspectorButtonsToggleContainer>
         </span>
       </Tooltip>

@@ -1,12 +1,13 @@
-import * as selectors from "./helpers/selectors";
-import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
+// import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists } from "./helpers";
-import { useAppSelector } from "../../../redux/store";
+import { projectStateSelector, useAppSelector } from "store";
 import { VisualFilterData } from "../../../models/application/VisualFilter";
 import { VisualFilterDataCategoryComponent } from "./VisualFilterDataCategoryComponent";
+import { ConnectorPartOf, ConnectorRelation, ConnectorTerminal } from "lib";
+import { ProjectState } from "store/reducers/projectReducer";
 
 interface Props {
   filter: VisualFilterData;
@@ -18,13 +19,15 @@ interface Props {
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
 export const VisualFilterComponent = ({ filter, onFilterChange }: Props) => {
-  const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const nodes = useAppSelector(selectors.nodesSelector);
-  const edges = useAppSelector(selectors.edgesSelector);
+  const libOpen = false; //useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
+  const projectSelector = useAppSelector<ProjectState>(projectStateSelector);
 
-  const transportTerminals = [] as Terminal[];
-  const productAndLocationRelations = [] as Relation[];
-  const partOfRelations = [] as Relation[];
+  const nodes = projectSelector.project.aspectObjects; // useAppSelector(selectors.nodesSelector);
+  const edges = projectSelector.project.connections; //useAppSelector(selectors.edgesSelector);
+
+  const transportTerminals = [] as ConnectorTerminal[];
+  const productAndLocationRelations = [] as ConnectorRelation[];
+  const partOfRelations = [] as ConnectorPartOf[];
 
   PopulateFilterLists(edges, nodes, transportTerminals, productAndLocationRelations, partOfRelations);
 

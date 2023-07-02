@@ -23,6 +23,6 @@ export const ToolElementBox = styled.button<ToolElementBoxProps>`
   cursor: ${(props) => (props.clickable ? "pointer" : "not-allowed")};
 
   :hover {
-    background-color: ${Color.LAVANDER_WEB_HOVER};
+    background-color: ${(props) => props.clickable && Color.LAVANDER_WEB_HOVER};
   }
 `;

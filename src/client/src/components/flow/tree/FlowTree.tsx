@@ -1,32 +1,33 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/selectors";
-import * as hooks from "./hooks";
-import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
-import { useAppSelector } from "../../../redux/store/hooks";
-import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { HandleTreeNodeSelection } from "./handlers";
-import { Size } from "../../../assets/size/Size";
-import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
-import { Dispatch } from "redux";
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { TreeConnectionLine } from "./edges";
+import { Size } from "assets/size/Size";
 import ReactFlow, {
   Background,
-  Edge as FlowEdge,
+  Edge,
   Connection,
-  Node as FlowNode,
+  Node,
   ReactFlowInstance,
-  OnSelectionChangeParams,
   NodeChange,
   EdgeChange,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
-import { VisualFilterData, VisualFilterId } from "../../../models/application/VisualFilter";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 
+/**
+ * Coponent props
+ */
 interface Props {
-  inspectorRef: MutableRefObject<HTMLDivElement>;
-  dispatch: Dispatch;
-  filter: VisualFilterData;
+  nodes: Node[];
+  edges: Edge[];
+  onNodePositionChange: (id: string, x: number, y: number) => void;
+  onNodeDelete: (id: string) => void;
+  onNodeDrop: (type: AspectObjectLibCm, posX: number, posY: number) => void;
+  onNodeSelect: (id: string, selected: boolean) => void;
+  onEdgeDelete: (id: string) => void;
+  onEdgeConnect: (edge: Connection | Edge) => void;
+  onEdgeSelect: (id: string, selected: boolean) => void;
 }
 
 /**
@@ -34,124 +35,168 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
-export const FlowTree = ({ inspectorRef, dispatch, filter }: Props) => {
-  const flowWrapper = useRef(null);
-  const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
-  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
-  const [hasRendered, setHasRendered] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
-  const user = useAppSelector(selectors.userStateSelector)?.user;
-  const terminals = useAppSelector(selectors.terminalsSelector);
-  const mimirNodes = project?.nodes;
-  const mimirEdges = project?.edges;
-  const selectedNode = mimirNodes?.find((n) => n.selected);
-  const selectedEdge = mimirEdges?.find((e) => e.selected);
-  const hasAnimation = filter.filters.find((x) => x.id == VisualFilterId.ANIMATION)?.checked ?? false;
+export const FlowTree = forwardRef(
+  (
+    {
+      nodes,
+      edges,
+      onNodePositionChange,
+      onNodeDelete,
+      onNodeDrop,
+      onNodeSelect,
+      onEdgeDelete,
+      onEdgeConnect,
+      onEdgeSelect,
+    }: Props,
+    ref
+  ) => {
+    /** Local state */
+    const flowWrapper = useRef(null);
+    const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
+    const [flowNodes, setNodes] = useState<Node[]>(nodes);
+    const [flowEdges, setEdges] = useState<Edge[]>(edges);
+    const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
-  const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
-    return setFlowInstance(_reactFlowInstance);
-  }, []);
+    /**
+     * Hook that can be connected from parent components
+     * Used to redraw stage after outside changes
+     */
+    useImperativeHandle(ref, () => ({
+      updateNodes(value: Node[]) {
+        // console.log("useImperativeHandle", value);
+        setNodes(value);
+      },
+      updateEdges(value: Edge[]) {
+        setEdges(value);
+      },
+    }));
 
-  const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
+    /**
+     * React flow init function.
+     * This function is setting the react flow instance
+     */
+    const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
+      return setFlowInstance(_reactFlowInstance);
+    }, []);
 
-  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
-    dispatch(updatePosition(n.id, n.position.x, n.position.y));
-  }, []);
+    /**
+     * When an item from another component is moving over a flow element, this function will trigger
+     */
+    const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+      // console.log("OnDragOver");
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move";
+    };
 
-  const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnTreeConnect({
-      connection,
-      project,
-      setEdges,
-      dispatch,
-      animatedEdge: hasAnimation,
-    });
-  };
+    /**
+     * Fire when a react flow drag stop
+     */
+    const OnNodeDragStop = useCallback(
+      (_event: React.DragEvent<HTMLDivElement>, _node: Node, nodes: Node[]) => {
+        nodes.forEach((x) => {
+          onNodePositionChange(x.id, x.position.x, x.position.y);
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowNodes, flowEdges]
+    );
 
-  const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, terminals, user, flowInstance, flowWrapper, dispatch });
-  };
+    /**
+     * Fire when two connectors is connected by an edge
+     * @param connection
+     * @returns void
+     */
+    const OnConnect = (connection: Connection): void => {
+      if (connection == null) throw new Error("Can't connect edge. The connection object is null or undefined.");
+      onEdgeConnect(connection);
+    };
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
-    if (!project) return;
-    return HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
-  };
+    /**
+     * Fires when a aspect object type is dropped on the stage
+     * TODO: Implement sub-project funtionality
+     * const IsSubProject = (event: React.DragEvent<HTMLDivElement>) => {
+     * const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE));
+     *   return !Object.prototype.hasOwnProperty.call(data, "aspect");
+     * };
+     * @param event Drop event
+     */
+    const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if (!event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE)) return;
 
-  const OnNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
-    },
-    [selectedNode]
-  );
+      const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as AspectObjectLibCm;
+      const reactFlowBounds = flowWrapper.current.getBoundingClientRect();
 
-  const OnEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
-      if (!project) return;
-      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, project, dispatch);
-    },
-    [selectedEdge]
-  );
+      const position = flowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+      onNodeDrop(data, position.x, position.y);
+    };
 
-  // Build initial elements from Project
-  useEffect(() => {
-    if (!hasRendered && project) {
-      setIsFetching(true);
-      setNodes(BuildFlowTreeNodes(mimirNodes));
-      setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter));
-      setHasRendered(true);
-      setIsFetching(false);
-    }
-  }, []);
+    /**
+     * Node change events
+     */
+    const OnNodesChange = useCallback(
+      (changes: NodeChange[]) => {
+        changes.forEach((x) => {
+          if (x.type === "remove") onNodeDelete(x.id);
+          if (x.type === "select") onNodeSelect(x.id, x.selected);
+          setNodes((n) => applyNodeChanges(changes, n));
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowNodes]
+    );
 
-  // Rebuild nodes
-  useEffect(() => {
-    if (!project) return;
-    setNodes(BuildFlowTreeNodes(mimirNodes));
-  }, [mimirNodes, selectedNode]);
+    /**
+     * Edge change events
+     */
+    const OnEdgesChange = useCallback(
+      (changes: EdgeChange[]) => {
+        changes.forEach((x) => {
+          if (x.type === "remove") onEdgeDelete(x.id);
+          if (x.type === "select") onEdgeSelect(x.id, x.selected);
+          setEdges((e) => applyEdgeChanges(changes, e));
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowEdges]
+    );
 
-  // Rebuild edges
-  useEffect(() => {
-    if (!project) return;
-    setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, filter));
-  }, [mimirEdges, filter]);
+    /**
+     * Render function
+     */
+    return (
+      <div className="reactflow-wrapper" ref={flowWrapper}>
+        <ReactFlow
+          onInit={OnInit}
+          nodes={flowNodes}
+          edges={flowEdges}
+          onNodesChange={OnNodesChange}
+          onEdgesChange={OnEdgesChange}
+          onConnect={OnConnect}
+          onDrop={OnDrop}
+          onDragOver={OnDragOver}
+          onNodeDragStop={OnNodeDragStop}
+          onNodesDelete={null}
+          nodeTypes={useMemo(() => GetNodeTypes, [])}
+          edgeTypes={useMemo(() => GetEdgeTypes, [])}
+          defaultZoom={0.7}
+          minZoom={0.1}
+          defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
+          zoomOnDoubleClick={false}
+          multiSelectionKeyCode={"ControlLeft"}
+          connectionLineComponent={TreeConnectionLine}
+          deleteKeyCode={"Delete"}
+        >
+          <Background />
+        </ReactFlow>
+      </div>
+    );
+  }
+);
 
-  return (
-    <div className="reactflow-wrapper" ref={flowWrapper}>
-      <SpinnerWrapper fetching={isFetching}>
-        <Spinner />
-      </SpinnerWrapper>
-
-      <ReactFlow
-        onInit={OnInit}
-        nodes={flowNodes}
-        edges={flowEdges}
-        onNodesChange={OnNodesChange}
-        onEdgesChange={OnEdgesChange}
-        onConnect={OnConnect}
-        onDrop={OnDrop}
-        onDragOver={OnDragOver}
-        onNodeDragStop={OnNodeDragStop}
-        onNodesDelete={null}
-        nodeTypes={useMemo(() => GetNodeTypes, [])}
-        edgeTypes={useMemo(() => GetEdgeTypes, [])}
-        defaultZoom={0.7}
-        minZoom={0.1}
-        defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
-        zoomOnDoubleClick={false}
-        multiSelectionKeyCode={"Control"}
-        onSelectionChange={(e) => OnSelectionChange(e)}
-        connectionLineComponent={TreeConnectionLine}
-        deleteKeyCode={"Delete"}
-      >
-        <Background />
-      </ReactFlow>
-    </div>
-  );
-};
-
+FlowTree.displayName = "FlowTree";
 export default FlowTree;

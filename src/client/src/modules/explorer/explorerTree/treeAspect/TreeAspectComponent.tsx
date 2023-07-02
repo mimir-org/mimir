@@ -1,23 +1,22 @@
-import { Node, Project } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Divider } from "../../../../compLibrary/divider";
 import { LockComponent } from "../../shared/components/LockComponent";
 import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { VisibleComponent } from "../../shared/components/VisibleComponent";
-import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TreeAspectElement } from "../../explorerTree/treeAspect/components/TreeAspectElement";
 import { OnTreeExplorerChange } from "../../explorerTree/treeAspect/handlers/OnTreeExplorerChange";
+import { AspectObject, Project } from "lib";
 
 interface Props {
   username: string;
-  node: Node;
+  node: AspectObject;
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
   isNodeLocking: boolean;
   isGlobalLocking: boolean;
-  setLockingNode: (node: Node) => void;
+  setLockingNode: (node: AspectObject) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
   project: Project;
@@ -54,7 +53,7 @@ export const TreeAspectComponent = ({
       nodeIsLocking={isNodeLocking}
       unlockText={TextResources.UNLOCK_OBJECT}
       lockText={TextResources.LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
+      onToggleLocked={() => null}
       disabled={isGlobalLocking}
     />
     <Divider variant={"vertical"} />

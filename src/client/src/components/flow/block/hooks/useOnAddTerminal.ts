@@ -1,9 +1,7 @@
 import { Dispatch } from "redux";
-import { TerminalLibCm, NodeLibCm } from "@mimirorg/typelibrary-types";
-import ConvertTerminalLibCmToTerminal from "../../converters/ConvertTerminalLibCmToTerminal";
-import { ConnectorDirection, Project } from "@mimirorg/modelbuilder-types";
-import { addTerminal } from "../../../../redux/store/project/actions";
-import { IsTerminal } from "../../helpers/Connectors";
+import { TerminalLibCm, AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorDirection, Project } from "lib";
+import { ConnectorTerminal } from "../../../../lib/classes/Connector";
 
 /**
  * Hook that runs when a user click on add terminal.
@@ -20,7 +18,7 @@ export const useOnAddTerminal = (
   typeId: string,
   nodeId: string,
   terminalTypes: TerminalLibCm[],
-  nodeTypes: NodeLibCm[],
+  nodeTypes: AspectObjectLibCm[],
   direction: ConnectorDirection,
   dispatch: Dispatch
 ) => {
@@ -30,27 +28,28 @@ export const useOnAddTerminal = (
   if (matchingTerminalType == null) return;
 
   // Find actual node
-  const node = project?.nodes?.find((x) => x.id === nodeId);
+  const node = project?.aspectObjects?.find((x) => x.id === nodeId);
   if (node == null) return;
 
   // Check if it is allowed to add more terminals
-  const nodeType = nodeTypes.find((x) => x.id === node.libraryTypeId);
+  const nodeType = nodeTypes.find((x) => x.id === node.libraryType);
   if (nodeType == null) return;
 
-  const nodeTerrminalType = nodeType.nodeTerminals.find((x) => x.terminal.id === typeId);
+  const nodeTerrminalType = nodeType.aspectObjectTerminals.find((x) => x.terminal.id === typeId);
   if (nodeTerrminalType == null) return;
 
   const terminalsOfTheSameType = node.connectors?.filter(
-    (x) => IsTerminal(x) && x.terminalTypeId === typeId && x.type === direction && !x.isProxy
+    (x) => x instanceof ConnectorTerminal && x.terminalType === typeId && x.direction === direction
   );
 
   if (terminalsOfTheSameType.length >= nodeTerrminalType.maxQuantity) return;
 
   // Convert and create terminal
-  const terminal = ConvertTerminalLibCmToTerminal(matchingTerminalType, direction, terminalTypes);
-  terminal.nodeId = nodeId;
+  const terminal = new ConnectorTerminal(matchingTerminalType, direction, node.id);
+  // const terminal = ConvertTerminalLibCmToTerminal(matchingTerminalType, direction, terminalTypes);
+  // terminal.nodeId = nodeId;
 
-  dispatch(addTerminal(terminal));
+  // dispatch(addTerminal(terminal));
 };
 
 export default useOnAddTerminal;

@@ -1,54 +1,46 @@
-import { FC, memo, useEffect, useState } from "react";
-import { Handle, NodeProps } from "react-flow-renderer";
-import { TreeHandleBox } from "../styled/TreeHandleBox";
+import { FC, memo } from "react";
+import { Handle, NodeProps, Position } from "react-flow-renderer";
+import { TreeHandleBox } from "./TreeHandleBox";
 import { AspectColorType } from "../../../../../models";
-import { GetHandleType } from "../helpers/GetHandleType";
-import { GetFlowAspectIcon } from "./helpers/GetFlowAspectIcon";
-import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeBox } from "./AspectNode.styled";
-import { GetAspectColor } from "../../../../../helpers";
-import { SetTopPos } from "../helpers/SetTopPos";
-import { Node, Connector, Aspect } from "@mimirorg/modelbuilder-types";
-import { GetHandleClassName } from "../helpers/GetHandleClassName";
+import { GetAspectColor } from "assets";
+import { Aspect, AspectObject, Connector, ViewType } from "lib";
+import { FunctionIcon, LocationIcon, ProductIcon, Icon } from "@mimirorg/component-library";
 
-const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
-  const [isHover, setIsHover] = useState(false);
-  const [timer, setTimer] = useState(false);
+const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
+  const SetTopPos = (position: Position) => {
+    if (position === Position.Top) return "-20px";
+    if (position === Position.Right || position === Position.Left) return "50%";
+  };
 
-  useEffect(() => {
-    if (timer) {
-      const clock = window.setInterval(() => {
-        setTimer(false);
-        setIsHover(false);
-      }, 5000);
-      return () => {
-        window.clearInterval(clock);
-      };
-    }
-  }, [timer]);
+  const GetFlowAspectIcon = (aspect: Aspect) => {
+    let AspectIcon: string;
+    if (aspect === Aspect.Function) AspectIcon = FunctionIcon;
+    if (aspect === Aspect.Product) AspectIcon = ProductIcon;
+    if (aspect === Aspect.Location) AspectIcon = LocationIcon;
+    return <AspectIcon />;
+  };
 
   return (
-    <AspectNodeBox
-      colorMain={GetAspectColor(data, AspectColorType.Main)}
-      selected={data.selected}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => OnMouseLeave(setTimer)}
-    >
+    <AspectNodeBox colorMain={GetAspectColor(data, AspectColorType.Main)} selected={data.selected}>
       {data.connectors?.map((conn: Connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(conn);
-        const className = GetHandleClassName(conn);
+        const [type, pos] = conn.GetHandleType();
 
         return (
           <TreeHandleBox
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
             key={conn.id}
-            visible={isHover}
-            position={positionHandler}
-            topPos={SetTopPos(positionHandler)}
+            visible={!data.hidden}
+            position={pos}
+            topPos={SetTopPos(pos)}
             isFunctionAspect={data.aspect === Aspect.Function}
           >
-            <Handle type={typeHandler} position={positionHandler} id={conn.id} key={conn.id} className={className} />
+            <Handle
+              type={type}
+              position={pos}
+              id={conn.id}
+              key={conn.id}
+              className={conn.getClassName(data.aspect, ViewType.Tree)}
+            />
           </TreeHandleBox>
         );
       })}

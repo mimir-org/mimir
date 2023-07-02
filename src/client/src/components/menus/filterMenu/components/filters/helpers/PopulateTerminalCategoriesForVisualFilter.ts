@@ -1,4 +1,4 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
+import { ConnectorTerminal } from "lib";
 import { TerminalCategoryObject } from "../../../../../../models/project";
 
 /**
@@ -6,17 +6,17 @@ import { TerminalCategoryObject } from "../../../../../../models/project";
  * @param transportTerminals
  * @returns a list of the type TerminalCategory, used by Visual Filter.
  */
-export const PopulateTerminalCategoriesForVisualFilter = (transportTerminals: Terminal[]) => {
+export const PopulateTerminalCategoriesForVisualFilter = (transportTerminals: ConnectorTerminal[]) => {
   const categories = [] as TerminalCategoryObject[];
 
   transportTerminals?.forEach((t) => {
-    const name = t.terminalParentTypeName;
+    const name = t.terminalParentType;
 
     if (categories.some((c) => c.name === name)) return;
 
     const category = {
-      name: t.terminalParentTypeName,
-      terminals: transportTerminals.filter((tf) => tf.terminalParentTypeName === t.terminalParentTypeName),
+      name: t.terminalParentType,
+      terminals: transportTerminals.filter((tf) => tf.terminalParentType === t.terminalParentType),
     } as TerminalCategoryObject;
 
     categories.push(category);

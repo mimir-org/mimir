@@ -26,7 +26,7 @@ public class LibraryService : ILibraryService
     /// Get all aspectObject types
     /// </summary>
     /// <returns></returns>
-    public async Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString)
+    public async Task<List<AspectObjectLibCm>> GetAspectObjectTypes(string searchString)
     {
         var aspectObjects = await _libraryRepository.GetAspectObjectTypes();
         if (!string.IsNullOrWhiteSpace(searchString))
@@ -49,7 +49,7 @@ public class LibraryService : ILibraryService
     /// Get all quantity datums 
     /// </summary>
     /// <returns></returns>
-    public async Task<List<QuantityDatumCm>> GetQuantityDatums()
+    public async Task<List<QuantityDatumLibCm>> GetQuantityDatums()
     {
         var datums = await _libraryRepository.GetQuantityDatums();
         return datums;

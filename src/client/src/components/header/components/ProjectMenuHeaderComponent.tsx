@@ -2,32 +2,52 @@ import { useState } from "react";
 import { InstructionBoxComponent } from "./InstructionBoxComponent";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
-import { Icon } from "../../../compLibrary/icon/Icon";
-import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
-import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
+import { CollapseWhiteIcon, ExpandedWhiteIcon } from "@mimirorg/component-library";
 import { ProjectHeaderButtonContainer, ProjectHeaderButton } from "./ProjectMenuHeaderComponent.styled";
-import { useAppSelector, useParametricAppSelector, isActiveMenuSelector, projectNameSelector } from "../../../redux/store";
+import { DialogType } from "lib";
+
+interface ProjectMenuHeaderComponentProps {
+  projectName: string;
+  isSubProject: boolean;
+  hasActiveProject: boolean;
+  hasSelectedNodes: boolean;
+  onOpenClick: (dialogType: DialogType) => void;
+}
 
 /**
  * Component for the ProjectMenu element in the header of Mimir.
  * @returns a clickable element that toggles the ProjectMenuComponent.
  */
-export const ProjectMenuHeaderComponent = () => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const projectName = useAppSelector(projectNameSelector);
-  const isInstructionOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU) && !isUserMenuOpen;
+export const ProjectMenuHeaderComponent = ({
+  projectName,
+  isSubProject,
+  hasActiveProject,
+  hasSelectedNodes,
+  onOpenClick,
+}: ProjectMenuHeaderComponentProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
-    <ProjectHeaderButtonContainer>
-      <Tooltip content={TextResources.PROJECT_DESCRIPTION} placement={"bottom"} offset={[0, 8]}>
-        <ProjectHeaderButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-          <span>{projectName ?? TextResources.PROJECT}</span>
-          <Icon size={10} src={isUserMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="" />
-        </ProjectHeaderButton>
-      </Tooltip>
-      {isUserMenuOpen && <ProjectMenuComponent setIsUserMenuOpen={setIsUserMenuOpen} />}
-      {isInstructionOpen && <InstructionBoxComponent />}
-    </ProjectHeaderButtonContainer>
+    <>
+      <ProjectHeaderButtonContainer>
+        <Tooltip content={TextResources.PROJECT_DESCRIPTION} placement={"bottom"} offset={[0, 8]}>
+          <ProjectHeaderButton isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span>{projectName ?? TextResources.PROJECT}</span>
+            {isMenuOpen ? <CollapseWhiteIcon size={10} alt={"icon"} /> : <ExpandedWhiteIcon size={10} alt={"icon"} />}
+          </ProjectHeaderButton>
+        </Tooltip>
+        {isMenuOpen && (
+          <ProjectMenuComponent
+            setIsMenuOpen={() => null}
+            onOpenClick={onOpenClick}
+            isSubProject={isSubProject}
+            hasActiveProject={hasActiveProject}
+            hasSelectedNodes={hasSelectedNodes}
+          />
+        )}
+        {projectName == null && !isMenuOpen && <InstructionBoxComponent />}
+      </ProjectHeaderButtonContainer>
+    </>
   );
 };

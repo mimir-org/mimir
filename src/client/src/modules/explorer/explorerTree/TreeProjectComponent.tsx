@@ -1,13 +1,12 @@
-import { Node } from "@mimirorg/modelbuilder-types";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
-import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
-import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
+import { commonStateSelector, useAppSelector, projectStateSelector } from "store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 // import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
+import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
   dispatch: Dispatch;
@@ -18,17 +17,16 @@ interface Props {
  * @returns drop-down menus with checkboxes for each Aspect.
  */
 export const TreeProjectComponent = ({ dispatch }: Props) => {
-  const username = useAppSelector(usernameSelector);
+  const commonState = useAppSelector<CommonState>(commonStateSelector);
   const projectState = useAppSelector(projectStateSelector);
   const project = projectState?.project;
-  const nodes = project?.nodes;
-  const edges = project?.edges;
+  const nodes = project?.aspectObjects;
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   // const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
 
-  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, edges);
+  // const ancestorsCollapsed = (elem: AspectObject) => IsAncestorInSet(elem, closedNodes, edges);
   // const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, edges);
   // const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
@@ -41,17 +39,16 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   return (
     <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if (ancestorsCollapsed(node)) return null;
         const expanded = !closedNodes.has(node.id);
 
         return (
           <TreeAspectComponent
             key={node.id}
-            username={username}
+            username={commonState?.user?.email ?? ""}
             node={node}
             indent={indent}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node.id, edges)}
+            isLeaf={!project.hasChildren(node.id)}
             // isAncestorVisible={ancestorsVisible(node)}
             // isVisible={!node.hidden}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}

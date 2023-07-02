@@ -1,10 +1,10 @@
 import { TerminalsListElementWrapper } from "../../../../shared/styled/TerminalsListElementWrapper";
 import { TerminalElementBox } from "./TerminalElementBox.styled";
 import { FormatTerminalName } from "./helpers/FormatTerminalName";
-import { Terminal } from "@mimirorg/modelbuilder-types";
+import { ConnectorTerminal } from "lib";
 
 interface Props {
-  terminal: Terminal;
+  terminal: ConnectorTerminal;
   selectedTerminalId: string;
   onSelectTerminal: (id: string) => void;
 }

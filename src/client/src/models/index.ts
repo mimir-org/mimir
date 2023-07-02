@@ -10,10 +10,3 @@ export { WorkerStatus } from "./enums/WorkerStatus";
 export { LibraryFilter } from "./enums/LibraryFilter";
 export { AspectColorType } from "./enums/AspectColorType";
 export { CollectionsActions } from "./enums/CollectionsActions";
-
-export type { User } from "./application/User";
-export type { LockCm } from "./application/LockCm";
-
-export type { Library } from "./application/Library";
-export type { CommitPackage } from "./application/CommitPackage";
-export type { ProjectItemCm } from "./application/ProjectItemCm";

@@ -1,175 +1,201 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "./helpers/selectors";
-import * as hooks from "./hooks";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
-import { useAppSelector } from "../../../redux/store/hooks";
-import { SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
-import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
-import { Size } from "../../../assets/size/Size";
-import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
-import { Dispatch } from "redux";
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { Size } from "assets/size/Size";
 import ReactFlow, {
-  Node as FlowNode,
-  Edge as FlowEdge,
+  Background,
+  Edge,
   Connection,
-  useReactFlow,
+  Node,
   ReactFlowInstance,
   NodeChange,
   EdgeChange,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "../helpers";
-import { VisualFilterData } from "../../../models/application/VisualFilter";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockConnectionLine } from "../tree/edges/BlockConnectionLine";
 
+/**
+ * Coponent props
+ */
 interface Props {
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
-  dispatch: Dispatch;
-  filter: VisualFilterData;
+  nodes: Node[];
+  edges: Edge[];
+  onNodePositionChange: (id: string, x: number, y: number) => void;
+  onNodeDelete: (id: string) => void;
+  onNodeDrop: (type: AspectObjectLibCm, posX: number, posY: number) => void;
+  onNodeSelect: (id: string, selected: boolean) => void;
+  onEdgeDelete: (id: string) => void;
+  onEdgeConnect: (edge: Connection | Edge) => void;
+  onEdgeSelect: (id: string, selected: boolean) => void;
 }
 
 /**
- * Component for the Flow library in BlockView. This is the main component in Mimir.
- * In BlockView the selectedBlockNode is the node marked with a full checkbox in the Explorer, and functions as a ParentNode.
- * The selectedNode is the child node that is selected on the canvas.
- * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
- * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called Split View.
+ * Component for the Flow library in BlocView.
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
-export const FlowBlock = ({ inspectorRef, dispatch, filter }: Props) => {
-  const { getViewport } = useReactFlow();
-  const flowWrapper = useRef(null);
-  const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
-  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
-  const [hasRendered, setHasRendered] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
-  const user = useAppSelector(selectors.userStateSelector).user;
-  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const terminals = useAppSelector(selectors.terminalsSelector);
-  const library = useAppSelector(selectors.librarySelector);
-  const isElectroView = useAppSelector(selectors.electroViewSelector);
-  const mimirNodes = project?.nodes ?? [];
-  const mimirEdges = project?.edges ?? [];
-  const selectedNode = mimirNodes.find((n) => n.selected);
-  const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
-  const selectedEdge = mimirEdges.find((e) => e.selected);
+export const FlowBlock = forwardRef(
+  (
+    {
+      nodes,
+      edges,
+      onNodePositionChange,
+      onNodeDelete,
+      onNodeDrop,
+      onNodeSelect,
+      onEdgeDelete,
+      onEdgeConnect,
+      onEdgeSelect,
+    }: Props,
+    ref
+  ) => {
+    /** Local state */
+    const flowWrapper = useRef(null);
+    const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
+    const [flowNodes, setNodes] = useState<Node[]>(nodes);
+    const [flowEdges, setEdges] = useState<Edge[]>(edges);
+    const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
-  const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
-    return setFlowInstance(_reactFlowInstance);
-  }, []);
+    /**
+     * Hook that can be connected from parent components
+     * Used to redraw stage after outside changes
+     */
+    useImperativeHandle(ref, () => ({
+      updateNodes(value: Node[]) {
+        setNodes(value);
+      },
+      updateEdges(value: Edge[]) {
+        setEdges(value);
+      },
+    }));
 
-  const OnConnectStart = (e: React.MouseEvent, { nodeId, handleType, handleId }) => {
-    return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+    /**
+     * React flow init function.
+     * This function is setting the react flow instance
+     */
+    const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
+      return setFlowInstance(_reactFlowInstance);
+    }, []);
 
-  const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, dispatch);
-  };
+    /**
+     * When an item from another component is moving over a flow element, this function will trigger
+     */
+    const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+      // console.log("OnDragOver");
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "move";
+    };
 
-  const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnBlockConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
-  };
+    /**
+     * Fire when a react flow drag stop
+     */
+    const OnNodeDragStop = useCallback(
+      (_event: React.DragEvent<HTMLDivElement>, _node: Node, nodes: Node[]) => {
+        nodes.forEach((x) => {
+          onNodePositionChange(x.id, x.position.x, x.position.y);
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowNodes, flowEdges]
+    );
 
-  const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
+    /**
+     * Fire when two connectors is connected by an edge
+     * @param connection
+     * @returns void
+     */
+    const OnConnect = (connection: Connection): void => {
+      if (connection == null) throw new Error("Can't connect edge. The connection object is null or undefined.");
+      onEdgeConnect(connection);
+    };
 
-  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
-    return hooks.useOnDragStop(activeNode, dispatch);
-  }, []);
+    /**
+     * Fires when a aspect object type is dropped on the stage
+     * TODO: Implement sub-project funtionality
+     * const IsSubProject = (event: React.DragEvent<HTMLDivElement>) => {
+     * const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE));
+     *   return !Object.prototype.hasOwnProperty.call(data, "aspect");
+     * };
+     * @param event Drop event
+     */
+    const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+      if (!event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE)) return;
 
-  const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnBlockDrop({
-      event,
-      project,
-      user,
-      selectedNode,
-      instance,
-      getViewport,
-      dispatch,
-      terminals,
-    });
-  };
+      const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as AspectObjectLibCm;
+      const reactFlowBounds = flowWrapper.current.getBoundingClientRect();
 
-  const OnNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      return hooks.useOnBlockNodesChange({
-        project,
-        selectedNode,
-        selectedBlockNode,
-        changes,
-        setNodes,
-        dispatch,
-        inspectorRef,
+      const position = flowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
       });
-    },
-    [selectedNode]
-  );
+      onNodeDrop(data, position.x, position.y);
+    };
 
-  const OnEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
-      return hooks.useOnBlockEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
-    },
-    [selectedEdge]
-  );
+    /**
+     * Node change events
+     */
+    const OnNodesChange = useCallback(
+      (changes: NodeChange[]) => {
+        changes.forEach((x) => {
+          if (x.type === "remove") onNodeDelete(x.id);
+          if (x.type === "select") onNodeSelect(x.id, x.selected);
+          setNodes((n) => applyNodeChanges(changes, n));
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowNodes]
+    );
 
-  // Build initial elements from Project on first render
-  useEffect(() => {
-    if (!hasRendered && project) {
-      setIsFetching(true);
-      SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
-      SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
-      setHasRendered(true);
-      setIsFetching(false);
-    }
-  }, []);
+    /**
+     * Edge change events
+     */
+    const OnEdgesChange = useCallback(
+      (changes: EdgeChange[]) => {
+        changes.forEach((x) => {
+          if (x.type === "remove") onEdgeDelete(x.id);
+          if (x.type === "select") onEdgeSelect(x.id, x.selected);
+          setEdges((e) => applyEdgeChanges(changes, e));
+        });
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [flowEdges]
+    );
 
-  // Rerender nodes
-  useEffect(() => {
-    if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode));
-  }, [mimirNodes, isElectroView]);
+    /**
+     * Render function
+     */
+    return (
+      <div className="reactflow-wrapper" ref={flowWrapper}>
+        <ReactFlow
+          onInit={OnInit}
+          nodes={flowNodes}
+          edges={flowEdges}
+          onNodesChange={OnNodesChange}
+          onEdgesChange={OnEdgesChange}
+          onConnect={OnConnect}
+          onDrop={OnDrop}
+          onDragOver={OnDragOver}
+          onNodeDragStop={OnNodeDragStop}
+          onNodesDelete={null}
+          nodeTypes={useMemo(() => GetNodeTypes, [])}
+          edgeTypes={useMemo(() => GetEdgeTypes, [])}
+          defaultZoom={0.7}
+          minZoom={0.1}
+          defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
+          zoomOnDoubleClick={false}
+          multiSelectionKeyCode={"ControlLeft"}
+          connectionLineComponent={BlockConnectionLine}
+          deleteKeyCode={"Delete"}
+        >
+          <Background />
+        </ReactFlow>
+      </div>
+    );
+  }
+);
 
-  // Rerender edges
-  useEffect(() => {
-    if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, filter));
-  }, [mimirEdges, mimirNodes, filter]);
-
-  return (
-    <div className="reactflow-wrapper" ref={flowWrapper}>
-      <SpinnerWrapper fetching={isFetching}>
-        <Spinner />
-      </SpinnerWrapper>
-      <ReactFlow
-        onInit={OnInit}
-        nodes={flowNodes}
-        edges={flowEdges}
-        nodeTypes={useMemo(() => GetNodeTypes, [])}
-        edgeTypes={useMemo(() => GetEdgeTypes, [])}
-        onNodesChange={OnNodesChange}
-        onEdgesChange={OnEdgesChange}
-        onConnect={OnConnect}
-        onConnectStart={OnConnectStart}
-        onConnectStop={OnConnectStop}
-        onDrop={OnDrop}
-        onDragOver={OnDragOver}
-        onNodeDragStop={OnNodeDragStop}
-        connectionLineComponent={BlockConnectionLine}
-        deleteKeyCode={"Delete"}
-        zoomOnDoubleClick={false}
-        defaultZoom={Size.ZOOM_DEFAULT}
-        minZoom={0.2}
-        maxZoom={3}
-        onlyRenderVisibleElements
-        zoomOnScroll
-        panOnDrag
-      ></ReactFlow>
-    </div>
-  );
-};
+FlowBlock.displayName = "FlowTree";
+export default FlowBlock;

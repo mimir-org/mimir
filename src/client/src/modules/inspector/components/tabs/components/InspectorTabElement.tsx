@@ -1,15 +1,15 @@
 import { Action } from "redux";
 import { Size } from "../../../../../assets/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
-import { useAppDispatch } from "../../../../../redux/store";
-import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
-import { changeInspectorHeight } from "../../../redux/inspectorSlice";
+import { useAppDispatch } from "store";
+// import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
+// import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabElement.styled";
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject } from "lib";
 
 interface Props {
   element?: InspectorElement;
@@ -18,7 +18,7 @@ interface Props {
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  nodes: Node[];
+  nodes: AspectObject[];
 }
 
 /**
@@ -43,8 +43,8 @@ export const InspectorTabElement = ({
     dispatch(changeInspectorTabAction(index));
     if (isInspectorOpen) return;
 
-    dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
-    dispatch(changeInspectorHeight(Size.MODULE_OPEN));
+    // dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
+    // dispatch(changeInspectorHeight(Size.MODULE_OPEN));
     SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
   }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
 

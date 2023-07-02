@@ -1,19 +1,18 @@
-import { GetAspectColor } from "../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
-import { electroViewSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
-import { Connector, ConnectorDirection, Node } from "@mimirorg/modelbuilder-types";
+import { AspectObject, Connector, ConnectorDirection } from "lib";
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   isInput: boolean;
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
   isElectroView: boolean;
-  onClick: (conn: Connector, isInput: boolean, node: Node, isElectroView: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
   onBlur: () => void;
   onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
   onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
@@ -36,8 +35,7 @@ export const TerminalsMenu = ({
   onClickAddTerminal,
   onClickRemoveTerminal,
 }: Props) => {
-  const isElectroViewEnabled = useAppSelector(electroViewSelector);
-  const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
+  const menuOffset = SetTerminalsMenuOffset(false, hasActiveTerminals, isParent);
 
   return (
     <TerminalsBox

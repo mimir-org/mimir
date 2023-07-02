@@ -1,13 +1,12 @@
 import { Dispatch } from "redux";
-import { Edge } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
-import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { TerminalCategoryObject } from "../../../../../models/project";
+import { Connection } from "lib";
 
 interface Props {
   category: TerminalCategoryObject;
-  edges: Edge[];
+  edges: Connection[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -20,7 +19,7 @@ interface Props {
  * @returns a parent checkbox and a checkbox for each child.
  */
 export const TerminalCategoryFilter = ({ category, edges, dispatch, visible }: Props) => {
-  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.name);
+  const isCategoryChecked = true;
 
   return (
     visible && (
@@ -35,12 +34,12 @@ export const TerminalCategoryFilter = ({ category, edges, dispatch, visible }: P
         />
 
         {category.terminals.map((t) => {
-          const isChecked = IsTerminalTypeChecked(edges, t.terminalParentTypeName, t.terminalTypeId);
+          const isChecked = true;
           return (
             <FilterElement
               key={t.id}
               label={t.name}
-              onChange={() => OnTerminalTypeChange(edges, t.terminalParentTypeName, t.terminalTypeId, isChecked, dispatch)}
+              onChange={() => OnTerminalTypeChange(edges, t.referenceType, t.terminalType, isChecked, dispatch)}
               isChecked={isChecked}
               visible={visible}
               indent={3}

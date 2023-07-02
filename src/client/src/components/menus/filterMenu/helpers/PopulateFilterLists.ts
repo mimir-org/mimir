@@ -1,5 +1,5 @@
-import { Node, Edge, Relation, Terminal } from "@mimirorg/modelbuilder-types";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
+import { AspectObject, Connection, ConnectorPartOf, ConnectorRelation, ConnectorTerminal } from "lib";
+// import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
@@ -11,19 +11,19 @@ import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTran
  * @param partOfItems
  */
 const PopulateFilterLists = (
-  edges: Edge[],
-  nodes: Node[],
-  transportItems: Terminal[],
-  productAndLocationRelations: Relation[],
-  partOfItems: Relation[]
+  edges: Connection[],
+  nodes: AspectObject[],
+  transportItems: ConnectorTerminal[],
+  productAndLocationRelations: ConnectorRelation[],
+  partOfItems: ConnectorPartOf[]
 ) => {
   edges.forEach((edge) => {
     const sourceConn = edge.fromConnector;
 
-    if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    else if (IsLocationRelation(sourceConn)) VerifyLocationItem(productAndLocationRelations, sourceConn as Relation);
-    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(productAndLocationRelations, sourceConn as Relation);
-    else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn as Relation, nodes);
+    // if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
+    // else if (IsLocationRelation(sourceConn)) VerifyLocationItem(productAndLocationRelations, sourceConn as Relation);
+    // else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(productAndLocationRelations, sourceConn as Relation);
+    // else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn as Relation, nodes);
   });
 };
 

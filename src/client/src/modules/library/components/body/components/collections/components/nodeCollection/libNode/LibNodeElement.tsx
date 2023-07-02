@@ -1,26 +1,20 @@
-import { useState } from "react";
-import { Dispatch } from "redux";
 import { Color } from "../../../../../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../../models/project";
-import { GetAspectColor } from "../../../../../../../../../helpers";
+import { GetAspectColor } from "assets";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../../models";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
-import { Icon } from "../../../../../../../../../compLibrary/icon/Icon";
-import { OnFavoriteClick } from "../favorite/handlers/OnFavoriteClick";
-import { FavoriteComponent } from "../favorite/FavoriteComponent";
 import { OnCheckboxChange, OnDragStart } from "./handlers";
 import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
+import { Icon } from "@mimirorg/component-library";
 
 interface Props {
-  libNode: NodeLibCm;
-  customCategory: LibraryCategory;
-  selectedLibNode: NodeLibCm;
-  setSelectedLibNode: (value: NodeLibCm) => void;
-  dispatch: Dispatch;
-  selectedLibNodes: NodeLibCm[];
-  setSelectedLibNodes: (array: NodeLibCm[]) => void;
+  libNode: AspectObjectLibCm;
+  selectedLibNode: AspectObjectLibCm;
+  setSelectedLibNode: (value: AspectObjectLibCm) => void;
+  selectedLibNodes: AspectObjectLibCm[];
+  setSelectedLibNodes: (array: AspectObjectLibCm[]) => void;
   collectionState: CollectionsActions;
 }
 
@@ -31,24 +25,17 @@ interface Props {
  */
 export const LibNodeElement = ({
   libNode,
-  customCategory,
   selectedLibNode,
   setSelectedLibNode,
   selectedLibNodes,
   setSelectedLibNodes,
   collectionState,
-  dispatch,
 }: Props) => {
-  const [showFavoriteButton, setShowFavoriteButton] = useState(false);
   const isLibNodeSelected = selectedLibNodes.some((n) => n.id === libNode.id);
-  const isLibNodeFavorite = customCategory.nodes?.find((n) => n.id === libNode.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
-  const addNewFavorite = showFavoriteButton && !isLibNodeFavorite;
 
   return (
     <LibNodeBox
-      onMouseEnter={() => setShowFavoriteButton(true)}
-      onMouseLeave={() => setShowFavoriteButton(false)}
       active={selectedLibNode?.id === libNode.id}
       onClick={() => setSelectedLibNode(libNode)}
       onDragStart={(event) => OnDragStart(event, JSON.stringify(libNode))}
@@ -68,9 +55,6 @@ export const LibNodeElement = ({
           onChange={() => OnCheckboxChange(libNode, selectedLibNodes, setSelectedLibNodes, isLibNodeSelected)}
           color={Color.BLACK}
         />
-      )}
-      {showFavoriteButton && (
-        <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(libNode, addNewFavorite, dispatch)} />
       )}
     </LibNodeBox>
   );

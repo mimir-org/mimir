@@ -1,6 +1,6 @@
-import { QuantityDatumCm } from "@mimirorg/typelibrary-types";
+import { QuantityDatumLibCm } from "@mimirorg/typelibrary-types";
 import { FontSize } from "../../../../../../../../../../../assets/font";
-import { Dropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
+import { Dropdown } from "compLibrary/dropdown/Dropdown";
 import { AttributeDescriptorBody, AttributeDescriptorHeader, AttributeDescriptorValue } from "./AttributeDescriptor.styled";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   headerText: string;
   value: string;
   color: string;
-  values: QuantityDatumCm[];
+  values: QuantityDatumLibCm[];
   isLocked: boolean;
   onChange: (attributeId: string, property: string, value: string) => void;
 }
@@ -41,7 +41,7 @@ export const AttributeQuantityDatumElement = ({
         keyProp="name"
         defaultValue={value}
         disabled={isLocked}
-        onChange={(item: QuantityDatumCm) => onChange(attributeId, property, item.name !== "None" ? item.name : null)}
+        onChange={(item: QuantityDatumLibCm) => onChange(attributeId, property, item.name !== "None" ? item.name : null)}
       />
     </AttributeDescriptorValue>
   </AttributeDescriptorBody>

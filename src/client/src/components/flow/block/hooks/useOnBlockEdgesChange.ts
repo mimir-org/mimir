@@ -1,8 +1,8 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeSelectionChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
-import { removeSelectedEdge, removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
+// import { removeSelectedEdge, removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
 import { OnEdgeDelete } from "../../handlers";
+import { AspectObject, Connection, Project } from "lib";
 
 /**
  * Hook that runs whenever an Edge has a change in BlockView.
@@ -22,20 +22,21 @@ import { OnEdgeDelete } from "../../handlers";
 const useOnBlockEdgesChange = (
   project: Project,
   changes: EdgeChange[],
-  selectedBlockNode: Node,
-  selectedEdge: Edge,
+  selectedBlockNode: AspectObject,
+  selectedEdge: Connection,
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  const edges = project.edges;
+  const edges = project.connections;
   const verifiedFlowChanges = [] as EdgeChange[];
-  const edgesToDelete = [] as Edge[];
+  const edgesToDelete = [] as Connection[];
 
   // Verify changes
   changes.forEach((c) => {
     if (c.type === "select") return HandleSelect(c, selectedEdge, verifiedFlowChanges, dispatch);
-    if (c.type === "remove") return HandleRemove(c, edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, edgesToDelete);
+    if (c.type === "remove")
+      return HandleRemove(c, edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, edgesToDelete, project);
     verifiedFlowChanges.push(c);
   });
 
@@ -51,11 +52,16 @@ const useOnBlockEdgesChange = (
  * @param verifiedFlowChanges
  * @param dispatch
  */
-function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedFlowChanges: EdgeChange[], dispatch: Dispatch) {
+function HandleSelect(
+  change: EdgeSelectionChange,
+  selectedEdge: Connection,
+  verifiedFlowChanges: EdgeChange[],
+  dispatch: Dispatch
+) {
   if (change.id === selectedEdge?.id) return;
-  dispatch(removeSelectedEdge());
-  dispatch(removeSelectedNode());
-  dispatch(setSelectedEdge(change.id));
+  // dispatch(removeSelectedEdge());
+  // dispatch(removeSelectedNode());
+  // dispatch(setSelectedEdge(change.id));
   verifiedFlowChanges.push(change);
 }
 
@@ -71,18 +77,19 @@ function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedF
  */
 function HandleRemove(
   change: EdgeRemoveChange,
-  edges: Edge[],
-  selectedBlockNode: Node,
-  selectedEdge: Edge,
+  edges: Connection[],
+  selectedBlockNode: AspectObject,
+  selectedEdge: Connection,
   verifiedFlowChanges: EdgeChange[],
-  edgesToDelete: Edge[]
+  edgesToDelete: Connection[],
+  project: Project
 ) {
   const edgeToRemove = edges.find((e) => e.id === change.id);
-  if (!edgeToRemove || edgeToRemove.isLocked) return;
+  if (!edgeToRemove) return;
 
   const isSelectedEdge = change.id === selectedEdge?.id;
-  const isConnectedToSelectedBlockNode =
-    edgeToRemove.fromNodeId === selectedBlockNode?.id || edgeToRemove.toNodeId === selectedBlockNode?.id;
+  const [from, to] = project.getConnectionNodes(edgeToRemove);
+  const isConnectedToSelectedBlockNode = from.id === selectedBlockNode?.id || to.id === selectedBlockNode?.id;
 
   if (!isConnectedToSelectedBlockNode && !isSelectedEdge) return;
 

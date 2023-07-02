@@ -1,34 +1,22 @@
-import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { InspectorElement } from "../../../types";
-import { IsEdge, IsNode } from "../../../helpers/IsType";
-import { Symbol } from "../../../../../compLibrary/symbol";
+import { Symbol } from "compLibrary/symbol";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorTabsComponent.styled";
-
-export const EdgeHeaderText = (element: InspectorElement): string => {
-  if (IsEdge(element)) {
-    if (element == null) return "";
-
-    if (element.transport != null) return element.transport.name;
-
-    if (element.interface != null) return element.interface.name;
-  }
-  return "";
-};
+import { AspectObject, Connection } from "lib";
 
 export const GetInspectorHeaderText = (element: InspectorElement) => {
-  if (IsNode(element)) {
+  if (element instanceof AspectObject) {
     return (
       <InspectorHeaderNodeInfo>
-        {!IsAspectNode(element) && <Symbol source={element?.symbol} text={element?.label ?? element?.name} />}
+        {!element.isRoot() && <Symbol source={element?.symbol} text={element?.label ?? element?.name} />}
         <InspectorHeaderNodeInfoText>{element?.label ?? element?.name}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );
   }
 
-  if (IsEdge(element)) {
+  if (element instanceof Connection) {
     return (
       <InspectorHeaderNodeInfo>
-        <InspectorHeaderNodeInfoText>{EdgeHeaderText(element)}</InspectorHeaderNodeInfoText>
+        <InspectorHeaderNodeInfoText>{""}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );
   }

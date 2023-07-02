@@ -9,5 +9,5 @@ public record ProjectData
     public ICollection<ConnectionAm> Connections { get; init; } = default!;
 
     public ICollection<UnitLibCm> Units { get; init; } = default!;
-    public Dictionary<string, QuantityDatumCm> QuantityDatums { get; init; } = default!;
+    public Dictionary<string, QuantityDatumLibCm> QuantityDatums { get; init; } = default!;
 }

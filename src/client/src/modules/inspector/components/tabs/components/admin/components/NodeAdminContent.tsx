@@ -4,27 +4,28 @@ import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../assets/font";
-import { Node, Project } from "@mimirorg/modelbuilder-types";
-import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
-import { useAppDispatch } from "../../../../../../../redux/store";
-import { GetRdsId, GetReferenceDesignation } from "../../../../../../../helpers";
+// import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
+import { useAppDispatch } from "store";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
-import { IsAspectNode } from "../../../../../../../helpers/Aspects";
+import { AspectObject, Project } from "lib";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
 interface Props {
-  node: Node;
+  node: AspectObject;
   project: Project;
 }
 
 export const NodeAdminContent = ({ node, project }: Props) => {
   const dispatch = useAppDispatch();
   const [nodeLabel, setNodeLabel, debouncedNodeLabel] = useDebounceState("");
-  const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
+  // const onChange = <K extends keyof AspectObject>(key: K, value: AspectObject[K]) => dispatch(changeNodeValue(node.id, key, value));
+  const onChange = <K extends keyof AspectObject>(key: K, value: AspectObject[K]) => {
+    // TODO: Missing implementation
+  };
 
   useEffect(() => {
-    debouncedNodeLabel && dispatch(changeNodeValue(node.id, "label", debouncedNodeLabel));
+    // debouncedNodeLabel && dispatch(changeNodeValue(node.id, "label", debouncedNodeLabel));
     return () => setNodeLabel(""); // Reset debounced state on cleanup
   }, [debouncedNodeLabel, node.id, dispatch, setNodeLabel]);
 
@@ -37,7 +38,7 @@ export const NodeAdminContent = ({ node, project }: Props) => {
         </div>
         <div>
           <div>{TextResources.ADMIN_RDS}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.getRdsId() ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={250}>
@@ -85,7 +86,7 @@ export const NodeAdminContent = ({ node, project }: Props) => {
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
-            value={GetReferenceDesignation(node, project) ?? ""}
+            value={project.getReferenceDesignation(node.id) ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -97,7 +98,7 @@ export const NodeAdminContent = ({ node, project }: Props) => {
           <TextArea
             height={200}
             value={node.description ?? ""}
-            readOnly={IsAspectNode(node) || node.isLocked}
+            readOnly={node.isRoot() || node.isLocked}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></TextArea>
         </div>

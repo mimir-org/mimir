@@ -43,6 +43,8 @@ module.exports = {
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_",
         caughtErrorsIgnorePattern: "^_",
+        args: "all",
+        ignoreRestSiblings: false,
       },
     ],
   },
@@ -53,6 +55,7 @@ module.exports = {
     },
     "import/resolver": {
       node: {
+        paths: ["src"],
         extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
       },
     },

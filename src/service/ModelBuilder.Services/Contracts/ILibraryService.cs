@@ -11,7 +11,7 @@ public interface ILibraryService
     /// Get all aspectObject types
     /// </summary>
     /// <returns></returns>
-    Task<List<NodeLibCm>> GetAspectObjectTypes(string searchString);
+    Task<List<AspectObjectLibCm>> GetAspectObjectTypes(string searchString);
 
     /// <summary>
     /// Get all terminal types
@@ -23,7 +23,7 @@ public interface ILibraryService
     /// Get all quantity datums
     /// </summary>
     /// <returns>A collection of quantity datums</returns>
-    Task<List<QuantityDatumCm>> GetQuantityDatums();
+    Task<List<QuantityDatumLibCm>> GetQuantityDatums();
 
     /// <summary>
     /// Get all attribute types

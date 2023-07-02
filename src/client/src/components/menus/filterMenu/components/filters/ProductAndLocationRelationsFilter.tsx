@@ -1,14 +1,13 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
 import { OnAllRelationsChange, OnFilterChange } from "./handlers";
-import { AreAllProductAndLocationChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
+import { AspectObject, Connection, Connector } from "lib";
 
 interface Props {
-  edges: Edge[];
-  nodes: Node[];
-  connectors: Relation[];
+  edges: Connection[];
+  nodes: AspectObject[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -24,12 +23,12 @@ export const ProductAndLocationRelationsFilter = ({ edges, nodes, connectors, di
       <FilterElement
         label={TextResources.RELATIONS}
         onChange={() => OnAllRelationsChange(edges, dispatch)}
-        isChecked={AreAllProductAndLocationChecked(edges)}
+        isChecked={true}
         visible={visible}
         isHeader
       />
       {connectors.map((conn) => {
-        const edge = edges.find((x) => x.fromConnectorId === conn.id);
+        const edge = edges.find((x) => x.fromConnector === conn.id);
         return (
           <FilterElement
             key={conn.id}

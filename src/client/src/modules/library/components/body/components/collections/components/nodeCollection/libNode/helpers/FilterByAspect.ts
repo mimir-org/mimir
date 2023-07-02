@@ -1,4 +1,4 @@
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect } from "lib";
 import { LibraryCategory } from "../../../../../../../../../../models/project";
 
 const FilterByAspect = (libCategories: LibraryCategory[], aspectFilters: Aspect[]): LibraryCategory[] => {
