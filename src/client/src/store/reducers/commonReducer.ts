@@ -51,8 +51,8 @@ const initState: CommonState = {
   company: null,
   parsers: [],
   user: null,
-  view: ViewType.Home,
-  dialog: DialogType.None,
+  view: 0,
+  dialog: 0,
   modules: [],
 };
 
