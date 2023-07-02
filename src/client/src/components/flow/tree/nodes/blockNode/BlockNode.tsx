@@ -1,79 +1,74 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { FC, memo, useState } from "react";
+import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { libraryStateSelector, projectStateSelector, useAppDispatch, useAppSelector } from "store";
+import { libraryStateSelector, projectSelector, useAppDispatch, useAppSelector } from "store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "./HandleComponent";
 import { OnConnectorClick } from "../../../block/nodes/handlers/OnConnectorClick";
 import { GetAspectColor } from "assets";
 import { BoxWrapper } from "./BlockNode.styled";
 import { BlockChildComponent } from "./BlockChildComponent";
-import { useOnAddTerminal } from "../../../block/hooks";
-import { AspectObject, ConnectorDirection, Connector } from "lib";
-import { ProjectState } from "store/reducers/projectReducer";
+import { AspectObject, ConnectorDirection, ConnectorTerminal, Project } from "lib";
 import { LibraryState } from "store/reducers/libraryReducer";
-import { onTerminalRemove } from "components/handlers/ProjectHandlers";
+import { onTerminalAdd, onTerminalChecked, onTerminalRemove } from "components/handlers/ProjectHandlers";
 
 /**
  * Component for a child Node in BlockView.
  * This component lives in conjunction with the FlowNode from BuildFlowChildNode.
- * @param data the data for the node.
+ * @param props the data for the node.
  * @returns a Mimir Node.
  */
-const BlockNode: FC<NodeProps<AspectObject>> = ({ data }) => {
+const BlockNode: FC<NodeProps<AspectObject>> = (props: NodeProps<AspectObject>) => {
   const dispatch = useAppDispatch();
-  const [connectors, _] = useState<Connector[]>(data.connectors);
-  const projectState = useAppSelector<ProjectState>(projectStateSelector);
   const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
-  const project = projectState.project;
+  const project = useAppSelector<Project>(projectSelector);
   // const isElectroView = useAppSelector(selectors.electroSelector);
   const terminalTypes = libraryState.terminalTypes;
-  const libNodes = libraryState.aspectObjectTypes;
 
-  const OnClickAddTerminal = (typeId: string, nodeId: string, direction: ConnectorDirection) => {
-    //onTerminalAdd(nodeId, libraryState.terminalTypes)
-    return useOnAddTerminal(project, typeId, nodeId, terminalTypes, libNodes, direction, dispatch);
+  const onClickAddTerminal = (terminalId: string) => {
+    onTerminalAdd(props.data.id, terminalTypes, terminalId, project, dispatch);
   };
 
-  const OnClickRemoveTerminal = (nodeId: string, terminalId: string) => {
-    onTerminalRemove(nodeId, terminalId, dispatch);
+  const onClickRemoveTerminal = (terminalId: string) => {
+    onTerminalRemove(props.data.id, terminalId, dispatch);
   };
 
-  // Update node size based on active connectors
-  // useEffect(() => {
-  //   setSize(SetChildNodeSize(connectors, isElectroView));
-  // }, [isElectroView, connectors]);
+  const onClickTerminalChecked = (terminalId: string, checked: boolean) => {
+    onTerminalChecked(project, props.data.id, terminalId, checked, dispatch);
+  };
 
-  if (!data) return null;
+  if (!props.data) return null;
 
   return (
     <BoxWrapper isElectro={false}>
       <HandleComponent
-        node={data}
-        project={project}
-        connectors={connectors.filter((x) => x.direction === ConnectorDirection.Input)}
+        node={props.data}
+        connectors={props.data.connectors.filter(
+          (x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Input && x.selected
+        )}
         isElectroView={false}
-        dispatch={dispatch}
-        isInput
       />
       <BlockChildComponent
-        node={data}
+        node={props.data}
         isElectroView={false}
-        colorMain={GetAspectColor(data, AspectColorType.Main)}
-        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputConnectors={connectors.filter((x) => x.direction === ConnectorDirection.Input)}
-        outputConnectors={connectors.filter((x) => x.direction === ConnectorDirection.Output)}
-        onConnectorClick={(conn, isInput, data) => OnConnectorClick(conn, isInput, data, dispatch, project?.connections)}
-        onClickAddTerminal={OnClickAddTerminal}
-        onClickRemoveTerminal={OnClickRemoveTerminal}
+        colorMain={GetAspectColor(props.data, AspectColorType.Main)}
+        colorSelected={GetAspectColor(props.data, AspectColorType.Selected)}
+        inputConnectors={props.data.connectors.filter(
+          (x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Input
+        )}
+        outputConnectors={props.data.connectors.filter(
+          (x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Output
+        )}
+        onClickTerminalChecked={onClickTerminalChecked}
+        onClickAddTerminal={onClickAddTerminal}
+        onClickRemoveTerminal={onClickRemoveTerminal}
       />
       <HandleComponent
-        node={data}
-        project={project}
-        connectors={connectors.filter((x) => x.direction === ConnectorDirection.Output)}
+        node={props.data}
+        connectors={props.data.connectors.filter(
+          (x) => x instanceof ConnectorTerminal && x.direction === ConnectorDirection.Output && x.selected
+        )}
         isElectroView={false}
-        dispatch={dispatch}
-        isInput={false}
       />
     </BoxWrapper>
   );

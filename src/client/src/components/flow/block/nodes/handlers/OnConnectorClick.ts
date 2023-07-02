@@ -16,6 +16,7 @@ export const OnConnectorClick = (
   dispatch: Dispatch,
   edges?: Connection[]
 ) => {
+  console.log("OnConnectorClick");
   if (sourceConnector == null && sourceConnector.id == null) return;
 
   // const connectorVisibility = SetConnectorVisibility(sourceConnector, isInput);

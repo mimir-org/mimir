@@ -12,8 +12,8 @@ interface Props {
   node: AspectObject;
   isElectroView: boolean;
   onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
-  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
+  onClickAddTerminal: (terminalId: string) => void;
+  onClickRemoveTerminal: (terminalId: string) => void;
 }
 
 /**
@@ -37,7 +37,7 @@ export const TerminalsMenuElement = ({
       <TerminalBox key={connector.id} onClick={() => onClick(connector, isInput, node, isElectroView)}>
         <div>
           <Checkbox
-            isChecked={!connector.hidden}
+            isChecked={connector.selected}
             onChange={() => onClick(connector, isInput, node, isElectroView)}
             color={Color.LIGHT_SILVER}
             id={connector.id}
@@ -48,13 +48,18 @@ export const TerminalsMenuElement = ({
         </TerminalIconBox>
         <TerminalNameBox>{connector.name}</TerminalNameBox>
       </TerminalBox>
-      <RemoveTerminalComponent color={color} nodeId={node.id} terminalId={connector.id} onClick={onClickRemoveTerminal} />
+      <RemoveTerminalComponent
+        color={color}
+        nodeId={node.id}
+        terminalId={connector.id}
+        onClick={() => onClickRemoveTerminal(connector.id)}
+      />
       <AddTerminalComponent
         color={color}
         typeId={connector instanceof ConnectorTerminal && connector.terminalType}
         nodeId={node.id}
         direction={isInput ? ConnectorDirection.Input : ConnectorDirection.Output}
-        onClick={onClickAddTerminal}
+        onClick={() => onClickAddTerminal(connector.id)}
       />
     </TerminalElementBox>
   );

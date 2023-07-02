@@ -2,17 +2,17 @@ import { TerminalsMenuComponent } from "../../../block/terminals/TerminalsMenuCo
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockNode.styled";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../hooks/useIsOverflowing";
-import { AspectObject, Connector, ConnectorDirection } from "lib";
+import { AspectObject, Connector } from "lib";
 
 interface Props {
   node: AspectObject;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClickTerminalChecked: (terminalId: string, checked: boolean) => void;
   isElectroView: boolean;
   showMenuButton?: boolean;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
-  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
+  onClickAddTerminal: (terminalId: string) => void;
+  onClickRemoveTerminal: (terminalId: string) => void;
 }
 
 /**
@@ -23,7 +23,7 @@ export const BlockChildHeader = ({
   node,
   inputConnectors,
   outputConnectors,
-  onConnectorClick,
+  onClickTerminalChecked,
   isElectroView,
   showMenuButton,
   onClickAddTerminal,
@@ -37,7 +37,7 @@ export const BlockChildHeader = ({
       <TerminalsMenuComponent
         node={node}
         connectors={inputConnectors}
-        onClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
+        onClick={(c) => onClickTerminalChecked(c.id, !c.selected)}
         showMenuButton={showMenuButton}
         isElectroView={isElectroView}
         isInput
@@ -52,7 +52,7 @@ export const BlockChildHeader = ({
       <TerminalsMenuComponent
         node={node}
         connectors={outputConnectors}
-        onClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
+        onClick={(c) => onClickTerminalChecked(c.id, !c.selected)}
         showMenuButton={showMenuButton}
         isElectroView={isElectroView}
         isInput={false}

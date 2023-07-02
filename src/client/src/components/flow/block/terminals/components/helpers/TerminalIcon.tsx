@@ -1,10 +1,5 @@
 import { Connector, ConnectorDirection } from "lib";
-import {
-  ConnectorIcon,
-  ConnectorVerticalIcon,
-  BidirectionalIcon,
-  BidirectionalVerticalIcon,
-} from "../../../../../../assets/icons/connectors";
+import { ConnectorIcon, ConnectorVerticalIcon, BidirectionalIcon, BidirectionalVerticalIcon } from "assets/icons/connectors";
 
 interface Props {
   connector: Connector;

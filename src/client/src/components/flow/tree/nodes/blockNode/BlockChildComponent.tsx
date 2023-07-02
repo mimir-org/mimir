@@ -1,9 +1,9 @@
 import { NodeBox, SymbolBox, LogoBox } from "./BlockNode.styled";
-import { Symbol } from "../../../../../compLibrary/symbol";
+import { Symbol } from "compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
 import { useCompanySelector } from "../../../../../hooks/useCompanySelector";
-import { AspectObject, Connector, ConnectorDirection } from "lib";
+import { AspectObject, Connector } from "lib";
 
 interface Props {
   node: AspectObject;
@@ -12,9 +12,9 @@ interface Props {
   isElectroView: boolean;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
-  onConnectorClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
-  onClickAddTerminal: (typeId: string, nodeId: string, direction: ConnectorDirection) => void;
-  onClickRemoveTerminal: (nodeId: string, terminalId: string) => void;
+  onClickTerminalChecked: (terminalId: string, checked: boolean) => void;
+  onClickAddTerminal: (terminalId: string) => void;
+  onClickRemoveTerminal: (terminalId: string) => void;
 }
 
 /**
@@ -28,7 +28,7 @@ export const BlockChildComponent = ({
   isElectroView,
   inputConnectors,
   outputConnectors,
-  onConnectorClick,
+  onClickTerminalChecked,
   onClickAddTerminal,
   onClickRemoveTerminal,
 }: Props) => {
@@ -53,7 +53,7 @@ export const BlockChildComponent = ({
         isElectroView={isElectroView}
         inputConnectors={inputConnectors}
         outputConnectors={outputConnectors}
-        onConnectorClick={(c, isInput, node, isElectroView) => onConnectorClick(c, isInput, node, isElectroView)}
+        onClickTerminalChecked={onClickTerminalChecked}
         showMenuButton={showMenuButton}
         onClickAddTerminal={onClickAddTerminal}
         onClickRemoveTerminal={onClickRemoveTerminal}
