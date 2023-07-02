@@ -4,7 +4,6 @@ import { NodeProps } from "react-flow-renderer";
 import { libraryStateSelector, projectSelector, useAppDispatch, useAppSelector } from "store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "./HandleComponent";
-import { OnConnectorClick } from "../../../block/nodes/handlers/OnConnectorClick";
 import { GetAspectColor } from "assets";
 import { BoxWrapper } from "./BlockNode.styled";
 import { BlockChildComponent } from "./BlockChildComponent";
