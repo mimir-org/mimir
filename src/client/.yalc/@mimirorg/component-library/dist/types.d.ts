@@ -409,6 +409,26 @@ export const Divider: import("styled-components").StyledComponent<import("react"
  */
 export const ignoreCircularReferences: () => (key: string, value: object) => object | undefined;
 /**
+ * Create a unique GUID id
+ */
+export const createId: () => string;
+/**
+ * Create a unique GUID id
+ * @param domain The domain included in id ex. example.com_xxxxx-xxxxx-xxxxx
+ */
+export const createDomainId: (domain: string) => string;
+/**
+ * Get domain from id
+ * @param id The id formatted as example.com_xxxxx-xxxxx-xxxxx
+ */
+export const getDomainFromId: (id: string) => string;
+/**
+ *
+ * @param value The value that should replace trailing slashes
+ * @returns The replaced string without trailing slashes
+ */
+export const removeTrailingSlashes: (value: string) => string;
+/**
  * Create a unique number id based on unique string
  * @param negative
  */

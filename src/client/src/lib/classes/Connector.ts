@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Aspect, ConnectorDirection, ViewType } from "../enums";
 import { Attribute } from "./Attribute";
-import { CreateId } from "components/flow/helpers";
 import type { TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Color } from "assets/color/Color";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { HandleType, Position } from "react-flow-renderer";
 import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
+import CreateId from "lib/CreateId";
 
 /**
  * Abstract Connector class.

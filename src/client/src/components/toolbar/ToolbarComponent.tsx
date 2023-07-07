@@ -65,13 +65,13 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           <>
             <ToolbarElement
               label={TextResources.FITSCREEN}
-              icon={<FitViewIcon size={15} alt={TextResources.FITSCREEN} />}
+              icon={<FitViewIcon size={14} alt={TextResources.FITSCREEN} />}
               onClick={() => handlers.OnFitToScreenClick(false, viewportData)}
               borderRight
             />
             <ToolbarElement
               label={TextResources.ELECTRO_ON}
-              icon={<HorizontalIcon size={15} alt={TextResources.ELECTRO_ON} />}
+              icon={<HorizontalIcon width={"14px"} height={"10px"} alt={TextResources.ELECTRO_ON} />}
               onClick={() => null}
               // onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
@@ -85,8 +85,12 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             orientation={"Left"}
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
-            onAdd={(id) => onTerminalAdd(aspectObject.id, libraryState.terminalTypes, id, project, dispatch)}
-            onRemove={(id) => onTerminalRemove(aspectObject.id, id, dispatch)}
+            onAdd={(id) =>
+              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+            }
+            onRemove={(id) =>
+              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+            }
             items={leftMenuItems}
           ></OverflowComponent>
           <OverflowComponentTitle>{aspectObject?.name ?? "Missing"}</OverflowComponentTitle>
@@ -94,8 +98,12 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             orientation={"Right"}
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
-            onAdd={(id) => onTerminalAdd(aspectObject.id, libraryState.terminalTypes, id, project, dispatch)}
-            onRemove={(id) => onTerminalRemove(aspectObject.id, id, dispatch)}
+            onAdd={(id) =>
+              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+            }
+            onRemove={(id) =>
+              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+            }
             items={rightMenuItems}
           ></OverflowComponent>
         </ToolbarParentContainer>
@@ -106,9 +114,9 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           label={TextResources.TREEVIEW}
           icon={
             viewType === ViewType.Tree ? (
-              <TreeViewActiveIcon size={15} alt={TextResources.TREEVIEW} />
+              <TreeViewActiveIcon width={"19px"} height={"14px"} alt={TextResources.TREEVIEW} />
             ) : (
-              <TreeViewIcon size={15} alt={TextResources.TREEVIEW} />
+              <TreeViewIcon width={"19px"} height={"14px"} alt={TextResources.TREEVIEW} />
             )
           }
           // onClick={() => handlers.OnTreeViewClick(setSelectedNodes, viewType === ViewType.Tree, dispatch)}
@@ -121,9 +129,9 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           label={TextResources.BLOCKVIEW}
           icon={
             viewType === ViewType.Tree ? (
-              <BlockViewIcon size={15} alt={TextResources.BLOCKVIEW} />
+              <BlockViewIcon size={14} alt={TextResources.BLOCKVIEW} />
             ) : (
-              <BlockViewActiveIcon size={15} alt={TextResources.BLOCKVIEW} />
+              <BlockViewActiveIcon size={14} alt={TextResources.BLOCKVIEW} />
             )
           }
           onClick={() => onViewTypeChange(ViewType.Block, dispatch)}
@@ -133,7 +141,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
         <ToolbarElement
           active={isVisualFilterOpen}
           label={isVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
-          icon={isVisualFilterOpen ? <FilterActiveIcon size={15} /> : <FilterIcon size={15} />}
+          icon={isVisualFilterOpen ? <FilterActiveIcon size={14} /> : <FilterIcon size={14} />}
           // onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
           onClick={() => null}
           borderLeft

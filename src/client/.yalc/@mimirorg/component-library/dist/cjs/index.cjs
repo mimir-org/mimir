@@ -1365,6 +1365,20 @@ const $07293fb555030e6e$export$7149c6ffc9994c32 = ()=>{
         return (c === "x" ? r : r & 0x3 | 0x8).toString(16);
     });
 };
+const $07293fb555030e6e$export$bd1203ad2e3208f7 = (domain)=>{
+    const id = $07293fb555030e6e$export$7149c6ffc9994c32();
+    if (domain == null) return id;
+    return domain + "_" + id;
+};
+const $07293fb555030e6e$export$637515699a57839b = (id)=>{
+    if (id == null) throw Error("Can't find a domian from null or undefined string.");
+    const split = id.split("_");
+    if (split.length !== 2) throw Error("Can't find a domian. An id should be like example.com_xxxxx-xxxxx-xxxxx.");
+    return split[0].trim();
+};
+const $07293fb555030e6e$export$5a466c0ba959b06 = (value)=>{
+    return value.replace(/\/+$/, "");
+};
 const $07293fb555030e6e$export$de3609038e2dcd26 = (negative = true)=>{
     const input = $07293fb555030e6e$export$7149c6ffc9994c32();
     let hash = 0;
@@ -1760,10 +1774,14 @@ var $34e9179e15ed0401$exports = {};
 var $89c1e076c47ade71$exports = {};
 
 $parcel$export($89c1e076c47ade71$exports, "calculateDays", () => $07293fb555030e6e$export$260733d43c3dc50a);
+$parcel$export($89c1e076c47ade71$exports, "createDomainId", () => $07293fb555030e6e$export$bd1203ad2e3208f7);
+$parcel$export($89c1e076c47ade71$exports, "createId", () => $07293fb555030e6e$export$7149c6ffc9994c32);
 $parcel$export($89c1e076c47ade71$exports, "createNumberId", () => $07293fb555030e6e$export$de3609038e2dcd26);
 $parcel$export($89c1e076c47ade71$exports, "forceDate", () => $07293fb555030e6e$export$5e4cc6abec75530);
+$parcel$export($89c1e076c47ade71$exports, "getDomainFromId", () => $07293fb555030e6e$export$637515699a57839b);
 $parcel$export($89c1e076c47ade71$exports, "ignoreCircularReferences", () => $07293fb555030e6e$export$c4d25c0d0c3b7f);
 $parcel$export($89c1e076c47ade71$exports, "isdateBetween", () => $07293fb555030e6e$export$71b45186df786da8);
+$parcel$export($89c1e076c47ade71$exports, "removeTrailingSlashes", () => $07293fb555030e6e$export$5a466c0ba959b06);
 $parcel$export($89c1e076c47ade71$exports, "toBase64", () => $0dc99e6cb267af85$export$37cc283d8fbd3462);
 $parcel$export($89c1e076c47ade71$exports, "lsReadValue", () => $8756754745ab87a6$export$81e76f652c2aead0);
 $parcel$export($89c1e076c47ade71$exports, "lsSaveValue", () => $8756754745ab87a6$export$98bd917067ba65d5);
@@ -2180,7 +2198,8 @@ var $95c604309addc69a$export$2e2bcd8739ae039 = $95c604309addc69a$var$SvgFunction
 
 const $934bab4526d05366$var$SvgFunctionFilterIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
         width: 22,
-        height: 18,
+        height: 22,
+        viewBox: "0 0 22 18",
         fill: "none",
         xmlns: "http://www.w3.org/2000/svg",
         ...props,

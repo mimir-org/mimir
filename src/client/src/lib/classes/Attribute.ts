@@ -2,8 +2,8 @@
 import type { AttributeLibCm } from "@mimirorg/typelibrary-types";
 import { Qualifier } from "./Qualifier";
 import { Unit } from "./Unit";
-import CreateId from "../../components/flow/helpers/CreateId";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
+import CreateId from "lib/CreateId";
 
 @jsonObject
 export class Attribute {

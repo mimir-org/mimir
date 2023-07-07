@@ -10,12 +10,16 @@ import {
 import { Attribute } from "./Attribute";
 import { Aspect, AspectObjectType, ConnectorDirection, ViewType } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
-import { CreateId } from "components/flow/helpers";
-import type { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import type { AspectObjectLibCm, AspectObjectTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Position } from "./Position";
 import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
-import { AspectObjectData } from "lib/interfaces/AspectObjectData";
+import { AspectColor } from "./AspectColor";
+import { Theme } from "@mimirorg/component-library";
+import CreateId from "lib/CreateId";
+import { InfoException } from "lib/exceptions";
+import { ErrorException } from "lib";
+import { Connection } from "./Connection";
 
 @jsonObject({
   knownTypes: [ConnectorTerminal, ConnectorRelation, ConnectorPartOf, ConnectorFulfilledBy, ConnectorHasLocation],
@@ -98,10 +102,11 @@ export class AspectObject {
   public connectors: Connector[] | null = [];
 
   // Client members
-  selected: boolean;
-  blockSelected: boolean;
-  hidden: boolean;
-  domain: string;
+  public selected: boolean;
+  public blockSelected: boolean;
+  public hidden: boolean;
+  public domain: string;
+  public aspectColor: AspectColor;
 
   /**
    * Constructor.
@@ -153,7 +158,7 @@ export class AspectObject {
     this.selected = false;
     this.blockSelected = false;
     this.hidden = false;
-    this.domain = ""; // TODO: Resolve domain
+    this.domain = this.id.split("_")[0].trim();
     this.createDefaultConnectors();
   }
 
@@ -183,32 +188,63 @@ export class AspectObject {
   /**
    * Create a new terminal for this aspect object
    * If it is not allowed to create a new terminal, the function will return.
-   * @param terminalType
-   * @param direction
+   * @param aspectObjectType The aspect object type to create a terminal from.
+   * @param direction The terminal direction
    */
-  public createTerminal(terminalType: TerminalLibCm, direction: ConnectorDirection): void {
-    if (terminalType == null || direction == null)
-      throw new Error("Can't create terminal. terminalType or direction is null or undefined.");
+  public createTerminal(aspectObjectType: AspectObjectTerminalLibCm, direction: ConnectorDirection): void {
+    if (aspectObjectType == null || aspectObjectType.terminal == null || direction == null)
+      throw new Error("Can't create terminal. TerminalType or direction is null or undefined.");
 
-    // TODO: Check if it is allowed to add more terminals
+    const existingTerminals = this.connectors.filter(
+      (c) => c instanceof ConnectorTerminal && c.terminalType === aspectObjectType.terminal.iri && c.direction === direction
+    );
 
-    const terminal = new ConnectorTerminal(terminalType, direction, this.id);
+    if (existingTerminals.length >= aspectObjectType.maxQuantity)
+      throw new InfoException("The maximum number of terminals of this type has been reached.");
+
+    const terminal = new ConnectorTerminal(aspectObjectType.terminal, direction, this.id);
     this.connectors.push(terminal);
   }
 
-  /** Convert Aspect Object to a flow node based on different views
-   *  @params view There are two diffenrent views in Mimir "Block" | "Tree"
+  /**
+   * Delete a terminal for this aspect object
+   * If it is not allowed to delete the terminal, an InfoException will be thrown.
+   * @param aspectObjectType The aspect object type with rules for terminal.
+   * @param terminalId The terminal id to be deleted
+   * @param connections All connections for project
    */
-  public toFlowNode(viewType: ViewType): FlowNode {
+  public deleteTerminal(aspectObjectType: AspectObjectTerminalLibCm, terminalId: string, connections: Connection[]): void {
+    if (aspectObjectType == null || aspectObjectType.terminal == null || terminalId == null)
+      throw new Error("Can't delete terminal. TerminalType, direction or terminal id is null or undefined.");
+
+    const existingTerminal = this.getTerminal(terminalId);
+    if (existingTerminal == null) throw new ErrorException("Can't find terminal with id: " + terminalId);
+
+    const existingTerminals = this.getTerminals().filter(
+      (x) => x.terminalType === aspectObjectType.terminal.iri && x.direction === existingTerminal.direction
+    );
+
+    const hasConnection = connections.some((x) => x.fromConnector === terminalId || x.toConnector === terminalId);
+    if (hasConnection) throw new InfoException("You can't delete a connected terminal. Please delete the connection first.");
+
+    if (existingTerminals.length <= aspectObjectType.minQuantity)
+      throw new InfoException("The minimum number of terminals of this type has been reached.");
+
+    this.connectors = this.connectors.filter((x) => x.id !== terminalId);
+  }
+
+  /** Convert Aspect Object to a flow node based on different views
+   *  @params ViewType There are two diffenrent views in Mimir "Home" | "Tree" | "Block"
+   *  @params theme Current theme
+   */
+  public toFlowNode(viewType: ViewType, theme: Theme): FlowNode {
     const position: XYPosition = {
       x: viewType === ViewType.Block ? this.positionBlock.posX : this.positionTree.posX,
       y: viewType === ViewType.Block ? this.positionBlock.posY : this.positionTree.posY,
     };
 
-    // const data: AspectObjectData = {
-    //   aspectObject: this,
-    //   // onAddTerminal: onAddTerminal,
-    // };
+    this.aspectColor = new AspectColor();
+    this.aspectColor.resolveColors(theme, this.aspect);
 
     const node: FlowNode = {
       id: this.id,
@@ -224,6 +260,15 @@ export class AspectObject {
     return node;
   }
 
+  public terminalsToFlowNode(): FlowNode[] {
+    return [];
+  }
+
+  /**
+   * Convert aspect object connectors to menu-items
+   * @param orientation "Left" | "Right"
+   * @returns An array of menu-items
+   */
   public toMenuItems(orientation: "Left" | "Right"): MenuItem[] {
     if (this.connectors == null) return [];
     if (orientation === "Left") {
@@ -256,8 +301,48 @@ export class AspectObject {
     return typeName;
   }
 
-  public getConnector(connector: string): Connector | null {
-    return this.connectors.find((x) => x.id === connector);
+  /**
+   * Get connector by id. The first connector that matches id, inside or outside will be returned
+   * @param connectorId The connector id
+   * @returns Connector match or null if not exist
+   */
+  public getConnector(connectorId: string): Connector | null {
+    return this.connectors.find((x) => x.id === connectorId || x.inside === connectorId || x.outside === connectorId);
+  }
+
+  /**
+   * Get treeview connectors
+   * @returns All connectors that is not hidden
+   */
+  public getTreeviewConnectors(): Connector[] {
+    return this.connectors.map((x) => {
+      if (x instanceof ConnectorPartOf || x instanceof ConnectorHasLocation || x instanceof ConnectorFulfilledBy) {
+        x.hidden = false;
+        return x;
+      } else {
+        // TODO: Visual filter should overide this setting if transport should be visible in treeview
+        x.hidden = true;
+        return x;
+      }
+    });
+  }
+
+  /**
+   * Get blockview connectors.
+   * Only selected connectors is visible.
+   * @returns All connectors that is not hidden
+   */
+  public getBlockviewConnectors(): Connector[] {
+    return this.connectors.map((x) => {
+      if (x instanceof ConnectorTerminal && x.selected) {
+        x.hidden = false;
+        return x;
+      } else {
+        // TODO: Visual filter should overide this setting if realtions should be visiible in treeview
+        x.hidden = true;
+        return x;
+      }
+    });
   }
 
   public getTerminals(): ConnectorTerminal[] {
@@ -265,7 +350,7 @@ export class AspectObject {
   }
 
   public getTerminal(id: string): ConnectorTerminal {
-    const terminal = this.getTerminals().find((x) => x.id === id);
+    const terminal = this.getTerminals().find((x) => x.id === id || x.inside === id || x.outside === id);
     return terminal != null ? terminal : null;
   }
 
@@ -285,259 +370,3 @@ export class AspectObject {
     return this.aspectObjectType === AspectObjectType.Root;
   }
 }
-
-// export class MimirNode implements Node {
-//   id: string;
-//   iri: string;
-//   domain: string;
-//   kind: string;
-//   rds: string;
-//   description: string;
-//   typeReferences: TypeReference[];
-//   name: string;
-//   label: string;
-//   positionX: number;
-//   positionY: number;
-//   isLocked: boolean;
-//   isLockedStatusBy: string;
-//   isLockedStatusDate: Date;
-//   positionBlockX: number;
-//   positionBlockY: number;
-//   level: number;
-//   order: number;
-//   updatedBy: string;
-//   updated: Date;
-//   created: Date;
-//   createdBy: string;
-//   libraryTypeId: string;
-//   version: string;
-//   aspect: Aspect;
-//   nodeType: NodeType;
-//   masterProjectId: string;
-//   masterProjectIri: string;
-//   symbol: string;
-//   purposeString: string;
-//   connectors: Connector[];
-//   attributes: Attribute[];
-//   projectId: string;
-//   projectIri: string;
-//   width: number;
-//   height: number;
-//   hidden: boolean;
-//   blockHidden: boolean;
-//   selected: boolean;
-//   blockSelected: boolean;
-//   parentNodeId: string;
-//   isOffPageTarget: boolean; // TODO: Remove
-//   isOffPageRequired: boolean; // TODO: Remove
-
-//   constructor(node?: Partial<Node>) {
-//     if (node) {
-//       this.id = node.id;
-//       this.iri = node.iri ?? null;
-//       this.domain = node.domain ?? null;
-//       this.kind = node.kind;
-//       this.rds = node.rds;
-//       this.description = node.description ?? "";
-//       this.typeReferences = node.typeReferences;
-//       this.name = node.name;
-//       this.label = node.label;
-//       this.positionX = node.positionX;
-//       this.positionY = node.positionY;
-//       this.isLocked = node.isLocked ?? false;
-//       this.isLockedStatusBy = node.isLockedStatusBy ?? null;
-//       this.isLockedStatusDate = node.isLockedStatusDate ?? null;
-//       this.positionBlockX = node.positionBlockX;
-//       this.positionBlockY = node.positionBlockY;
-//       this.level = node.level ?? 0;
-//       this.order = node.order ?? 0;
-//       this.updatedBy = node.updatedBy;
-//       this.updated = node.updated ?? new Date();
-//       this.created = node.created;
-//       this.createdBy = node.createdBy;
-//       this.libraryTypeId = node.libraryTypeId;
-//       this.version = node.version;
-//       this.aspect = node.aspect;
-//       this.nodeType = node.nodeType;
-//       this.masterProjectId = node.masterProjectId;
-//       this.masterProjectIri = node.masterProjectIri ?? null;
-//       this.symbol = node.symbol;
-//       this.purposeString = node.purposeString;
-//       this.connectors = node.connectors;
-//       this.attributes = node.attributes;
-//       this.projectId = node.projectId;
-//       this.projectIri = node.projectIri ?? null;
-//       this.width = node.width;
-//       this.height = node.height;
-//       this.hidden = node.hidden ?? false;
-//       this.blockHidden = node.blockHidden ?? false;
-//       this.selected = node.selected ?? false;
-//       this.blockSelected = node.blockSelected ?? false;
-//       this.parentNodeId = node.parentNodeId;
-//       this.isOffPageTarget = node.isOffPageTarget ?? null; // TODO: Remove
-//       this.isOffPageRequired = node.isOffPageRequired ?? null; // TODO: Remove
-//     }
-//   }
-
-//   /**
-//    * Locks the current Aspect
-//    * @param state boolean, can be set to true or false.
-//    * @param user optional, if not set, user will be "system".
-//    */
-//   public setLocked(locked: boolean, user?: string): void {
-//     this.isLocked = locked;
-//     this.isLockedStatusBy = user ?? "system";
-//     this.isLockedStatusDate = new Date(); //getDateNowUtc();
-//   }
-
-//   // TODO: Move is part of relation to a more generic place
-//   public findChildrenEdge(edges: Edge[]): Edge {
-//     return edges.find((edge) => edge.fromNodeId === this.id && edge.fromConnector instanceof ConnectorPartOf);
-//   }
-
-//   public hasChildren(edges: Edge[]): boolean {
-//     return !!this.findChildrenEdge(edges);
-//   }
-
-//   // TODO: Refactor this code into MimirProject completely, this function is currently used in SetSiblingRDS.ts
-//   public findParentEdge(nodeId: string, edges: MimirEdge[]): MimirEdge {
-//     return edges.find((edge) => edge.toNodeId === nodeId && edge.fromConnector instanceof ConnectorPartOf);
-//   }
-
-//   public isAspectNode = (node?: MimirNode) => {
-//     if (node) {
-//       return node.nodeType === NodeType.Root;
-//     }
-//     return this.nodeType === NodeType.Root;
-//   };
-
-//   public isAncestorInSet(currentNode: MimirNode, set: Set<string>, edges: MimirEdge[]): boolean {
-//     const edge = this.findParentEdge(currentNode?.id ?? null, edges);
-//     if (!edge) return false;
-
-//     const parentNode = edge.fromNode as MimirNode;
-//     if (set.has(parentNode?.id)) return true;
-
-//     return this.isAncestorInSet(parentNode, set, edges);
-//   }
-
-//   public isLocation(): boolean {
-//     return this.aspect === Aspect.Location;
-//   }
-
-//   public isProduct(): boolean {
-//     return this.aspect === Aspect.Product;
-//   }
-
-//   public isFunction(): boolean {
-//     return this.aspect === Aspect.Function;
-//   }
-
-//   public getMainColor() {
-//     if (this.isFunction()) return Color.LEMON_YELLOW;
-//     if (this.isProduct()) return Color.ELECTRIC_BLUE;
-//     if (this.isLocation()) return Color.MAGENTA;
-//   }
-
-//   public getSelectedColor() {
-//     if (this.isFunction()) return Color.SUNGLOW;
-//     if (this.isProduct()) return Color.VIRIDIAN_GREEN;
-//     if (this.isLocation()) return Color.PURPLE_MUNSELL;
-//   }
-
-//   public getTransparentColor(): string {
-//     if (this.isFunction()) return "rgba(251, 201, 19, 0.1)";
-//     if (this.isProduct()) return "rgba(6, 144, 152, 0.1)";
-//     if (this.isLocation()) return "rgba(163, 0, 167, 0.1)";
-//   }
-
-//   public getTabColor() {
-//     if (this.isFunction()) return Color.JASMINE;
-//     if (this.isProduct()) return Color.DARK_TURQUOISE;
-//     if (this.isLocation()) return Color.PINK;
-//   }
-
-//   public getHeaderColor() {
-//     if (this.isFunction()) return Color.LEMON_YELLOW_CRAYOLA;
-//     if (this.isProduct()) return Color.CELESTE;
-//     if (this.isLocation()) return Color.PINK_LACE;
-//   }
-
-//   public getAspectIcon = (): string => {
-//     if (!this.isAspectNode()) console.error("Node is not an aspectNode, this.aspect:", this.aspect);
-//     if (this.aspect === Aspect.Function) return Icons.Function;
-//     if (this.aspect === Aspect.Product) return Icons.Product;
-//     if (this.aspect === Aspect.Location) return Icons.Location;
-//   };
-
-//   // Converters
-//   public convertToFlowNode(): FlowNode {
-//     const position = { x: this.positionX, y: this.positionY };
-
-//     return {
-//       id: this.id,
-//       type: this.getNodeType(),
-//       data: this,
-//       position: position,
-//       hidden: false, // Opacity is controlled by the styled component
-//       selected: this.selected,
-//       draggable: true,
-//       selectable: true,
-//       connectable: true,
-//     } as FlowNode;
-//   }
-
-//   public getNodeType(): string {
-//     let typeName = this.nodeType === NodeType.Root ? "Aspect" : this.nodeType === NodeType.Handler ? "Handle" : "";
-//     typeName += Aspect[this.aspect];
-//     return typeName;
-//   }
-
-//   public convertToNode(): Node {
-//     return {
-//       id: this.id,
-//       iri: this.iri,
-//       domain: this.domain,
-//       kind: this.kind,
-//       rds: this.rds,
-//       description: this.description,
-//       typeReferences: this.typeReferences,
-//       name: this.name,
-//       label: this.label,
-//       positionX: this.positionX,
-//       positionY: this.positionY,
-//       isLocked: this.isLocked,
-//       isLockedStatusBy: this.isLockedStatusBy,
-//       isLockedStatusDate: this.isLockedStatusDate,
-//       positionBlockX: this.positionBlockX,
-//       positionBlockY: this.positionBlockY,
-//       level: this.level,
-//       order: this.order,
-//       updatedBy: this.updatedBy,
-//       updated: this.updated,
-//       created: this.created,
-//       createdBy: this.createdBy,
-//       libraryTypeId: this.libraryTypeId,
-//       version: this.version,
-//       aspect: this.aspect,
-//       nodeType: this.nodeType,
-//       masterProjectId: this.masterProjectId,
-//       masterProjectIri: this.masterProjectIri,
-//       symbol: this.symbol,
-//       purposeString: this.purposeString,
-//       connectors: this.connectors,
-//       attributes: this.attributes,
-//       projectId: this.projectId,
-//       projectIri: this.projectIri,
-//       width: this.width,
-//       height: this.height,
-//       hidden: this.hidden,
-//       blockHidden: this.blockHidden,
-//       selected: this.selected,
-//       blockSelected: this.blockSelected,
-//       parentNodeId: this.parentNodeId,
-//       isOffPageTarget: this.isOffPageTarget,
-//       isOffPageRequired: this.isOffPageRequired,
-//     };
-//   }
-// }

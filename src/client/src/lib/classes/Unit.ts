@@ -1,5 +1,5 @@
 import type { UnitLibCm } from "@mimirorg/typelibrary-types";
-import CreateId from "../../components/flow/helpers/CreateId";
+import CreateId from "lib/CreateId";
 import { jsonMember, jsonObject } from "typedjson";
 
 @jsonObject

@@ -1,10 +1,16 @@
-import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 // import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Aspect } from "../../../../../lib";
-import { Icon } from "@mimirorg/component-library";
+import {
+  FunctionFilterIcon,
+  FunctionIcon,
+  LocationFilterIcon,
+  LocationIcon,
+  ProductFilterIcon,
+  ProductIcon,
+} from "@mimirorg/component-library";
 
 interface Props {
   // collectionState: CollectionsActions;
@@ -62,11 +68,17 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
               offset={[0, 10]}
             >
               <FilterBoxButton onClick={() => toggleAspectFilter(Number(aspect))}>
-                <Icon size={24} src={GetFilterIcon(Number(aspect), aspectSelected)} alt="" />
+                {GetFilterIcon(Number(aspect), aspectSelected)}
               </FilterBoxButton>
             </Tooltip>
           );
         })}
     </FilterBoxesWrapper>
   );
+};
+
+const GetFilterIcon = (aspect: Aspect, selected: boolean) => {
+  if (aspect === Aspect.Function) return selected ? <FunctionIcon size={25} /> : <FunctionFilterIcon size={25} />;
+  if (aspect === Aspect.Product) return selected ? <ProductIcon size={25} /> : <ProductFilterIcon size={25} />;
+  if (aspect === Aspect.Location) return selected ? <LocationIcon size={25} /> : <LocationFilterIcon size={25} />;
 };

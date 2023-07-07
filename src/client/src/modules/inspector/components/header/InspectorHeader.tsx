@@ -1,7 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { InspectorTabsComponent } from "../tabs/InspectorTabsComponent";
 import { MutableRefObject } from "react";
-import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { InspectorHeaderBox } from "./InspectorHeader.styled";
 import { InspectorButtonsComponent } from "./components/InspectorButtonsComponent";
 import { Dispatch } from "redux";
@@ -12,7 +11,8 @@ import {
   InspectorElement,
   OnToogleHandler,
 } from "../../types";
-import { Attribute, Project } from "lib";
+import { AspectColor, AspectObject, Attribute, Connection, Project } from "lib";
+import { Theme, useMimirorgTheme } from "@mimirorg/component-library";
 
 interface Props {
   project: Project;
@@ -53,10 +53,11 @@ export const InspectorHeader = ({
   attributes,
   selectedFlowNodes,
 }: Props) => {
+  const theme = useMimirorgTheme();
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
 
   return (
-    <InspectorHeaderBox id="InspectorHeader" color={GetInspectorColor(project?.aspectObjects, element, tabsVisible)}>
+    <InspectorHeaderBox id="InspectorHeader" color={element.aspectColor?.headerColor}>
       {tabsVisible && (
         <InspectorTabsComponent
           project={project}

@@ -1,4 +1,4 @@
-import { OverflowComponentContainer, OverflowItemContainer, OverflowItemsContainer } from "./OverflowComponent.styled";
+import { OverflowComponentContainer, OverflowItemsContainer } from "./OverflowComponent.styled";
 import * as Icons from "assets/icons/terminalsMenu";
 import { useState } from "react";
 import { IconButton } from "compLibrary/buttons/icon/IconButton";

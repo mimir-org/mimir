@@ -1,6 +1,6 @@
 {
   "name": "@mimirorg/component-library",
-  "version": "3.3.3+5c84a07d",
+  "version": "1.0.0+b4148799",
   "description": "React component library for Mimirorg",
   "type": "module",
   "source": "src/index.ts",
@@ -110,5 +110,5 @@
     "react-use-measure": ">=2.1.1",
     "styled-components": ">=5.3.10"
   },
-  "yalcSig": "5c84a07d3534e8d6f39ab57f5e9a9de7"
+  "yalcSig": "b41487991e91e5fec31bb8831e0af959"
 }

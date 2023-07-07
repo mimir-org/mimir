@@ -2,8 +2,9 @@
   "version": "v1",
   "packages": {
     "@mimirorg/component-library": {
-      "signature": "5c84a07d3534e8d6f39ab57f5e9a9de7",
-      "file": true
+      "signature": "b41487991e91e5fec31bb8831e0af959",
+      "file": true,
+      "replaced": "^1.0.0"
     }
   }
 }

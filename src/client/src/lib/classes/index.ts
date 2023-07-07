@@ -27,3 +27,5 @@ export { Lock } from "./Lock";
 export { Qualifier } from "./Qualifier";
 export { FileFormat, ProjectFileAm } from "./ProjectFileAm";
 export { Position } from "./Position";
+export { AspectColor } from "./AspectColor";
+export { Handle } from "./Handle";

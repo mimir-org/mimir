@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import CreateId from "../../components/flow/helpers/CreateId";
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Handle } from "./Handle";
-import { Color } from "assets/color/Color";
-import { ViewType } from "lib";
+import { AspectObject, CreateId, ViewType } from "lib";
+import { ConnectorDirection } from "@mimirorg/typelibrary-types";
+import { Theme } from "@mimirorg/component-library";
+import { AspectColor } from "./AspectColor";
 
 /**
  * Abstract Connection class.
@@ -34,6 +35,8 @@ export abstract class Connection {
   // Client members
   public selected: boolean;
   public hidden: boolean;
+  public bidirectional: boolean;
+  public aspectColor: AspectColor;
 
   /**
    * Constructor.
@@ -51,52 +54,110 @@ export abstract class Connection {
     this.handles = [];
     this.selected = false;
     this.hidden = false;
+    this.aspectColor = null;
+    this.bidirectional = false;
+  }
+
+  public getComponentType(viewType: ViewType, isHandle: boolean): string | null {
+    const name = viewType === ViewType.Block ? "Block" : "Tree";
+    if (isHandle) return name + this.constructor["name"] + "Handle";
+
+    return name + this.constructor["name"];
   }
 
   /**
-   * Convert connection to flow edge.
-   * @params type Usage type. Could be Block or Tree.
-   * @params source The source node id.
-   * @params target The target node id.
-   * @returns Converted flow edge
+   * Add a new handle to the connection
+   * @param handle The handle that should be added
    */
-  public toFlowEdge(viewType: ViewType, source: string, target: string): FlowEdge {
-    const edge: FlowEdge = {
-      id: this.id,
-      type: this.getComponentType(viewType),
-      source: source,
-      target: target,
-      sourceHandle: this.fromConnector,
-      targetHandle: this.toConnector,
-      animated: false,
-      label: "",
-      data: {
-        arrowHeadType: null,
-        source: null,
-        target: null,
-        connection: this,
-        selected: this.selected,
-        parentType: null,
-        targetType: null,
-        color: Color.LEMON_YELLOW,
-      },
-      hidden: this.hidden,
-      selected: this.selected,
-    };
-
-    return edge;
+  public addHandle(handle: Handle) {
+    if (handle == null) throw Error("Can't add a null or undefined handle object.");
+    this.handles.push(handle);
   }
 
-  public getComponentType(viewType: ViewType): string | null {
-    const name = viewType === ViewType.Block ? "Block" : "Tree";
-    return name + this.constructor["name"];
-  }
+  public abstract toFlowEdge(
+    viewType: ViewType,
+    source: AspectObject,
+    target: AspectObject,
+    theme: Theme
+  ): FlowEdge<Connection>[];
 }
 
 @jsonObject
 export class ConnectionTerminal extends Connection {
   public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
     super(fromConnector, toConnector, project, mainProject);
+  }
+
+  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+    const fromConnector = source.getTerminal(this.fromConnector);
+    this.aspectColor = new AspectColor();
+    this.aspectColor.resolveColors(theme, source.aspect);
+    this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
+    this.aspectColor.terminalColor = fromConnector.color;
+    this.bidirectional = fromConnector.direction === ConnectorDirection.Bidirectional;
+
+    // TODO: This need visual filter settings if default should be changed
+    this.hidden = viewType === ViewType.Tree ? true : false;
+
+    const flowEdges: FlowEdge[] = [];
+
+    if (this.handles != null && this.handles.length > 0) {
+      this.handles = this.handles.sort((a, b) => (a.positionBlock.posX > b.positionBlock.posX ? 1 : -1));
+      let fn = source.id;
+      let fc = this.fromConnector;
+
+      this.handles.forEach((x, index) => {
+        const edge: FlowEdge<Connection> = {
+          id: CreateId() + "#" + this.id,
+          type: this.getComponentType(viewType, true),
+          source: fn,
+          target: x.id,
+          sourceHandle: fc,
+          targetHandle: x.inptutConnector,
+          animated: false,
+          label: "",
+          data: this,
+          hidden: this.hidden,
+          selected: this.selected,
+        };
+        flowEdges.push(edge);
+        fn = x.id;
+        fc = x.outputConnector;
+        if (index === this.handles.length - 1) {
+          const lastEdge: FlowEdge<Connection> = {
+            id: CreateId() + "#" + this.id,
+            type: this.getComponentType(viewType, false),
+            source: fn,
+            target: target.id,
+            sourceHandle: fc,
+            targetHandle: this.toConnector,
+            animated: false,
+            label: "",
+            data: this,
+            hidden: this.hidden,
+            selected: this.selected,
+          };
+          flowEdges.push(lastEdge);
+        }
+      });
+    } else {
+      const edge: FlowEdge<Connection> = {
+        id: this.id,
+        type: this.getComponentType(viewType, false),
+        source: source.id,
+        target: target.id,
+        sourceHandle: this.fromConnector,
+        targetHandle: this.toConnector,
+        animated: false,
+        label: "",
+        data: this,
+        hidden: this.hidden,
+        selected: this.selected,
+      };
+      flowEdges.push(edge);
+    }
+
+    return flowEdges;
   }
 }
 
@@ -112,12 +173,71 @@ export class ConnectionFulfilledBy extends ConnectionRelation {
   public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
     super(fromConnector, toConnector, project, mainProject);
   }
+
+  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+    this.aspectColor = new AspectColor();
+    this.aspectColor.resolveColors(theme, source.aspect);
+    this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
+    this.aspectColor.terminalColor = null;
+    this.bidirectional = false;
+
+    // TODO: This need visual filter settings if default should be changed
+    this.hidden = viewType === ViewType.Tree ? false : true;
+    const flowEdges: FlowEdge[] = [];
+
+    const edge: FlowEdge<Connection> = {
+      id: this.id,
+      type: this.getComponentType(viewType, false),
+      source: source.id,
+      target: target.id,
+      sourceHandle: this.fromConnector,
+      targetHandle: this.toConnector,
+      animated: false,
+      label: "",
+      data: this,
+      hidden: this.hidden,
+      selected: this.selected,
+    };
+    flowEdges.push(edge);
+
+    return flowEdges;
+  }
 }
 
 @jsonObject
 export class ConnectionHasLocation extends ConnectionRelation {
   public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
     super(fromConnector, toConnector, project, mainProject);
+  }
+
+  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+    this.aspectColor = new AspectColor();
+    this.aspectColor.resolveColors(theme, source.aspect);
+    this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
+    this.aspectColor.terminalColor = null;
+    this.bidirectional = false;
+
+    // TODO: This need visual filter settings if default should be changed
+    this.hidden = viewType === ViewType.Tree ? false : true;
+
+    const flowEdges: FlowEdge[] = [];
+
+    const edge: FlowEdge<Connection> = {
+      id: this.id,
+      type: this.getComponentType(viewType, false),
+      source: source.id,
+      target: target.id,
+      sourceHandle: this.fromConnector,
+      targetHandle: this.toConnector,
+      animated: false,
+      label: "",
+      data: this,
+      hidden: this.hidden,
+      selected: this.selected,
+    };
+    flowEdges.push(edge);
+
+    return flowEdges;
   }
 }
 
@@ -126,96 +246,34 @@ export class ConnectionPartOf extends ConnectionRelation {
   public constructor(fromConnector: string, toConnector: string, project: string, mainProject: string = null) {
     super(fromConnector, toConnector, project, mainProject);
   }
+
+  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+    this.aspectColor = new AspectColor();
+    this.aspectColor.resolveColors(theme, source.aspect);
+    this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
+    this.aspectColor.terminalColor = null;
+    this.bidirectional = false;
+
+    // TODO: This need visual filter settings if default should be changed
+    this.hidden = viewType === ViewType.Tree ? false : true;
+
+    const flowEdges: FlowEdge[] = [];
+
+    const edge: FlowEdge<Connection> = {
+      id: this.id,
+      type: this.getComponentType(viewType, false),
+      source: source.id,
+      target: target.id,
+      sourceHandle: this.fromConnector,
+      targetHandle: this.toConnector,
+      animated: false,
+      label: "",
+      data: this,
+      hidden: this.hidden,
+      selected: this.selected,
+    };
+    flowEdges.push(edge);
+
+    return flowEdges;
+  }
 }
-
-// export class Connection implements ConnectionCm {
-//   blockHidden: boolean;
-//   domain: string;
-//   fromConnector: Connector;
-//   fromConnectorId: string;
-//   fromConnectorIri: string;
-//   hidden: boolean;
-//   id: string;
-//   iri: string;
-//   isLocked: boolean;
-//   isLockedStatusBy: string;
-//   isLockedStatusDate: Date;
-//   kind: string;
-//   selected: boolean;
-//   fromNodeId: string;
-//   toNodeId: string;
-//   fromNode: Node;
-//   fromNodeIri: string;
-//   masterProjectId: string;
-//   masterProjectIri: string;
-//   projectId: string;
-//   projectIri: string;
-//   toConnector: Connector;
-//   toConnectorId: string;
-//   toConnectorIri: string;
-//   toNode: Node;
-//   toNodeIri: string;
-//   transport: Transport;
-//   transportId: string;
-//   interface: Interface;
-//   interfaceId: string;
-
-//   constructor(connection?: Partial<Edge>) {
-//     if (connection) {
-//       this.blockHidden = connection.blockHidden ?? false;
-//       this.domain = connection.domain ?? null;
-//       this.fromConnector = connection.fromConnector ?? null;
-//       this.fromConnectorId = connection.fromConnectorId ?? null;
-//       this.fromConnectorIri = connection.fromConnectorIri ?? null;
-//       this.fromNodeId = connection.fromNodeId ?? null;
-//       this.toNodeId = connection.toNodeId ?? null;
-//       this.hidden = connection.hidden ?? null;
-//       this.id = connection.id ?? null;
-//       this.iri = connection.iri ?? null;
-//       this.isLocked = connection.isLocked ?? null;
-//       this.isLockedStatusBy = connection.isLockedStatusBy ?? null;
-//       this.isLockedStatusDate = connection.isLockedStatusDate ?? null;
-//       this.kind = connection.kind ?? null;
-//       this.selected = connection.selected ?? null;
-//       this.transportId = connection.transportId ?? null;
-//       this.transport = connection.transport ?? null;
-//       this.interfaceId = connection.interfaceId ?? null;
-//       this.interface = connection.interface ?? null;
-//     }
-//   }
-
-//   public convertToFlowEdge(
-//     edgeType: EDGE_TYPE,
-//     source: MimirNode,
-//     target: MimirNode,
-//     filter: VisualFilterData,
-//     onEdgeSplitClick: (id: string, x: number, y: number) => void
-//   ): FlowEdge {
-//     return {
-//       id: this.id,
-//       type: edgeType,
-//       source: this.fromNodeId,
-//       target: this.toNodeId,
-//       sourceHandle: this.fromConnectorId,
-//       targetHandle: this.toConnectorId,
-//       arrowHeadType: null,
-//       animated: false,
-//       label: "",
-//       data: { source, target, edge: this, selected: this.selected, onEdgeSplitClick },
-//       hidden: false,
-//       parentType: source?.aspect,
-//       targetType: target?.aspect,
-//       selected: this.selected,
-//     } as FlowEdge;
-//   }
-
-//   public toFlowEdge(
-//     nodes: MimirNode[],
-//     filter: VisualFilterData,
-//     onEdgeSplitClick: (id: string, x: number, y: number) => void
-//   ): FlowEdge {
-//     const sourceNode = nodes.find((node) => node.id === this.fromNodeId);
-//     const targetNode = nodes.find((node) => node.id === this.toNodeId);
-//     return this.convertToFlowEdge(EDGE_TYPE.BLOCK_PARTOF, sourceNode, targetNode, filter, onEdgeSplitClick);
-//   }
-// }

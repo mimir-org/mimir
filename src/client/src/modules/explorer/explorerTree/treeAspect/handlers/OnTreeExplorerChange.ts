@@ -41,7 +41,7 @@ const resolveChildren = (project: Project, current: AspectObject, children: stri
   if (connectedEdges == null || connectedEdges.length < 1) return;
 
   connectedEdges.forEach((edge) => {
-    const [, to] = project.getConnectionNodes(edge);
+    const [, to] = project.getConnectionAspectObjects(edge);
     if (to != null) {
       resolveChildren(project, to, children);
     }
@@ -59,7 +59,7 @@ const resolveEdges = (project: Project, nodes: string[], edges: string[], hidden
   const affected = [] as Connection[];
 
   project.connections.forEach((e) => {
-    const [from, to] = project.getConnectionNodes(e);
+    const [from, to] = project.getConnectionAspectObjects(e);
     const anyNodes = nodes.some((n) => n === from.id || n === to?.id);
     if (anyNodes) affected.push(e);
   });
@@ -69,7 +69,7 @@ const resolveEdges = (project: Project, nodes: string[], edges: string[], hidden
       edges.push(e.id);
     }
     if (!hidden) {
-      const [from, to] = project.getConnectionNodes(e);
+      const [from, to] = project.getConnectionAspectObjects(e);
       let otherNode = {} as AspectObject;
       const isEdgeFrom = nodes.some((n) => n === from?.id);
 

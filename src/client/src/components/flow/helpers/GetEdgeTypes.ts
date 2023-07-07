@@ -1,19 +1,18 @@
 import {
-  TreeRelationEdge,
-  TreeTransportEdge,
   TreeConnectionPartOf,
-  BlockTransportEdge,
-  BlockRelationEdge,
-  BlockPartOfEdge,
-} from "../tree/edges";
+  BlockConnectionTerminal,
+  TreeConnectionRelation,
+  TreeConnectionTerminal,
+  BlockConnectionTerminalHandle,
+} from "components/flow/edges";
 
 const GetEdgeTypes = {
   TreeConnectionPartOf: TreeConnectionPartOf,
-  TreeRelationEdgeType: TreeRelationEdge,
-  TreeTransportEdgeType: TreeTransportEdge,
-  BlockTransportEdgeType: BlockTransportEdge,
-  BlockRelationEdgeType: BlockRelationEdge,
-  BlockPartOfEdgeType: BlockPartOfEdge,
+  TreeConnectionFulfilledBy: TreeConnectionRelation,
+  TreeConnectionHasLocation: TreeConnectionRelation,
+  TreeConnectionTerminal: TreeConnectionTerminal,
+  BlockConnectionTerminal: BlockConnectionTerminal,
+  BlockConnectionTerminalHandle: BlockConnectionTerminalHandle,
 };
 
 export default GetEdgeTypes;

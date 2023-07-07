@@ -2,7 +2,9 @@
 import { jsonArrayMember, jsonObject } from "typedjson";
 import { Project } from "./Project";
 
-@jsonObject
+@jsonObject({
+  knownTypes: [Project],
+})
 export class ProjectSearchResult {
   // Domain members
 

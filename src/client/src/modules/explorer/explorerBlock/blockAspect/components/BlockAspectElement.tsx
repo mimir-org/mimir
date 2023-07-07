@@ -1,6 +1,5 @@
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
-import { AspectColorType } from "../../../../../models";
-import { GetAspectColor, GetAspectIcon } from "assets";
+import { GetAspectIcon } from "assets";
 import { CheckboxBlockExplorer } from "../../../../../compLibrary/input/checkbox/explorer/block/CheckboxBlockExplorer";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
@@ -29,7 +28,7 @@ interface Props {
 export const BlockAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, onChange }: Props) => (
   <AspectElementWrapper indent={GetIndentLevel(indent)}>
     <CheckboxBlockExplorer
-      color={GetAspectColor(node, AspectColorType.Selected)}
+      color={node.aspectColor.selectedColor}
       isChecked={node.blockSelected}
       isAspectNode={node.isRoot()}
       onChange={() => onChange(node)}

@@ -31,9 +31,9 @@ const store = configureStore({
 export type RootState = ReturnType<typeof rootReducers>;
 export type AppDispatch = typeof store.dispatch;
 
+sagaMiddleware.run(sagas);
+
 export { typedJsonSetting } from "./webclient/typedJsonSettings";
 export * from "./hooks";
 export * from "./selectors";
-export default { store };
-
-sagaMiddleware.run(sagas);
+export default store;

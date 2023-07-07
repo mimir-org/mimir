@@ -1,4 +1,4 @@
-import red from "store";
+import store from "store";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { App } from "./components/pages/App";
@@ -41,7 +41,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <Provider store={red.store}>
+  <Provider store={store}>
     <ReactFlowProvider>
       <App pca={isSilent ? null : msalInstance} />
     </ReactFlowProvider>

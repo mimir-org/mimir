@@ -1,4 +1,4 @@
-import red from "store";
+import store from "store";
 import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject } from "lib";
 
@@ -26,6 +26,6 @@ export const GetParentNode = (childNodeId: string) => {
 };
 
 export const GetSelectedNode = () => {
-  const nodes = red.store.getState().projectState.project.aspectObjects;
+  const nodes = store.getState().projectState.project.aspectObjects;
   return nodes.find((n) => n.selected);
 };

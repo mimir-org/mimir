@@ -1,4 +1,4 @@
-import { FlowTree } from "./tree/FlowTree";
+import { Flow } from "./Flow";
 import { FlowModuleContainer } from "./FlowModule.styled";
 import { Project, ViewType } from "lib";
 import { useEffect, useRef } from "react";
@@ -11,33 +11,35 @@ import {
   onNodeDrop,
   onNodePositionChange,
   onNodeSelect,
-  updateFlowEdgesFromState,
-  updateFlowNodesFromState,
+  updateFlowNodesAndEdgesFromState,
 } from "components/handlers/ProjectHandlers";
+import { useMimirorgTheme } from "@mimirorg/component-library";
 
 /**
  * Component to display a module in Flow.
  * @returns a JSX element containing Flow view.
  */
 export const FlowModule = () => {
+  const theme = useMimirorgTheme();
   const flowRef = useRef(null);
   const dispatch = useAppDispatch();
   const project = useAppSelector<Project>(projectSelector);
   const viewType = useAppSelector<ViewType>(viewTypeSelector);
+  const nodesEdges = project.toFlow(viewType, theme);
 
   useEffect(() => {
-    updateFlowNodesFromState(flowRef, project, viewType);
-    updateFlowEdgesFromState(flowRef, project, viewType);
+    updateFlowNodesAndEdgesFromState(flowRef, project, viewType, theme);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [project, viewType]);
 
   return (
     <>
       {project && (
         <FlowModuleContainer>
-          <FlowTree
+          <Flow
             ref={flowRef}
-            nodes={project.toFlowNodes(viewType)}
-            edges={project.toFlowEdges(viewType)}
+            nodes={nodesEdges[0]}
+            edges={nodesEdges[1]}
             onNodePositionChange={(id, x, y) => onNodePositionChange(id, x, y, viewType, project, dispatch)}
             onNodeDelete={(id) => onNodeDelete(id, project, dispatch)}
             onNodeDrop={(type, posX, posY) => onNodeDrop(type, posX, posY, project, dispatch)}

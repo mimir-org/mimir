@@ -114,15 +114,17 @@ export const Home = () => {
           {/* <ValidationModule  /> */}
         </>
       )}
-      <HomeDialogs
-        dispatch={dispatch}
-        commonState={commonState}
-        projects={projects}
-        libraryState={libraryState}
-        onCreateProject={(name, description) => {
-          createNewProject(name, "reidar.liabo@bouvet.no", description, dispatch);
-        }}
-      />
+      {commonState.company != null && (
+        <HomeDialogs
+          dispatch={dispatch}
+          commonState={commonState}
+          projects={projects}
+          libraryState={libraryState}
+          onCreateProject={(name, description) => {
+            createNewProject(commonState.company.domain, name, "reidar.liabo@bouvet.no", description, dispatch);
+          }}
+        />
+      )}
       <ErrorModule />
     </>
   );
