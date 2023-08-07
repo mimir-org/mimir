@@ -8,7 +8,7 @@
     "@headlessui/react": "^1.7.14",
     "@microsoft/applicationinsights-web": "^2.8.10",
     "@microsoft/signalr": "^7.0.3",
-    "@mimirorg/component-library": "^1.0.1",
+    "@mimirorg/component-library": "^1.0.2",
     "@mimirorg/typelibrary-types": "^1.0.0",
     "@redux-devtools/extension": "^3.2.5",
     "@reduxjs/toolkit": "^1.9.5",

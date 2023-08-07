@@ -4,11 +4,6 @@ import { HandleNodeBox } from "./HandleNode.styled";
 import { Handle } from "lib";
 
 const HandleNode: FC<NodeProps<Handle>> = ({ data }) => {
-  const SetTopPos = (position: Position) => {
-    if (position === Position.Top) return "-20px";
-    if (position === Position.Right || position === Position.Left) return "50%";
-  };
-
   return (
     <HandleNodeBox
       colorMain={data.aspectColor.mainColor}

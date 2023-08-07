@@ -237,7 +237,7 @@ export class AspectObject {
    *  @params ViewType There are two diffenrent views in Mimir "Home" | "Tree" | "Block"
    *  @params theme Current theme
    */
-  public toFlowNode(viewType: ViewType, theme: Theme): FlowNode {
+  public toFlowNode(viewType: ViewType, theme: Theme, parent: boolean): FlowNode {
     const position: XYPosition = {
       x: viewType === ViewType.Block ? this.positionBlock.posX : this.positionTree.posX,
       y: viewType === ViewType.Block ? this.positionBlock.posY : this.positionTree.posY,
@@ -248,10 +248,10 @@ export class AspectObject {
 
     const node: FlowNode = {
       id: this.id,
-      type: this.getComponentType(viewType),
+      type: parent ? "ParentNode" : this.getComponentType(viewType),
       data: this,
       position: position,
-      hidden: false, // Opacity is controlled by the styled component
+      hidden: this.hidden,
       selected: this.selected,
       draggable: true,
       selectable: true,
@@ -288,11 +288,13 @@ export class AspectObject {
    */
   public updateConnector(connector: Connector): void {
     if (this.connectors == null) return;
-    this.connectors = this.connectors.map((x) => (x.id === connector.id ? connector : x));
+    this.connectors = this.connectors.map((x) =>
+      x.id === connector.id || x.inside === connector.id || x.outside === connector.id ? connector : x
+    );
   }
 
   public hasConnector(connector: string): boolean {
-    return this.connectors?.some((x) => x.id === connector);
+    return this.connectors?.some((x) => x.id === connector || x.inside === connector || x.outside === connector);
   }
 
   public getComponentType(viewType: ViewType): string | null {
@@ -321,7 +323,7 @@ export class AspectObject {
         return x;
       } else {
         // TODO: Visual filter should overide this setting if transport should be visible in treeview
-        x.hidden = true;
+        x.hidden = false;
         return x;
       }
     });

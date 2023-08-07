@@ -4,9 +4,12 @@ import { Attribute } from "./Attribute";
 import type { TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Color } from "assets/color/Color";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
-import { HandleType, Position } from "react-flow-renderer";
+import { HandleType, Position, Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
-import CreateId from "lib/CreateId";
+import CreateId from "../CreateId";
+import { FlowHandle } from "../interfaces/FlowHandle";
+import { Theme } from "@mimirorg/component-library";
+import { AspectColor } from "./AspectColor";
 
 /**
  * Abstract Connector class.
@@ -55,8 +58,23 @@ export abstract class Connector {
   // Abstract function definition of connector class name
   public abstract getClassName(aspect: Aspect, viewtype: ViewType): string;
 
-  // Abstract function definition of connector class name
+  // Abstract function definition of connector handle type
   public abstract GetHandleType(): [HandleType, Position];
+
+  /**
+   * Get all flow handles from connector
+   * @param aspect Current aspect
+   * @param viewtype Current viewtype
+   * @returns A collection of flow handles
+   */
+  public abstract getFlowtHandles(aspect: Aspect, viewtype: ViewType): FlowHandle[];
+
+  /**
+   * Calculate hidden status of a flow handle
+   * @param side The side of the connector. Could be "inside" | "outside".
+   * @returns The hidden status
+   */
+  public abstract flowHandleHidden(side: "inside" | "outside"): boolean;
 }
 
 /**
@@ -100,7 +118,7 @@ export class ConnectorTerminal extends Connector {
   public getClassName(aspect: Aspect, viewtype: ViewType): string {
     const aspectName = Aspect[aspect].toLowerCase();
     const viewTypeName = ViewType[viewtype].toLowerCase() + "view";
-    return `${aspectName}-${viewTypeName}-handler partOf`;
+    return `${aspectName}-${viewTypeName}-handler terminal`;
   }
 
   // Implementation of extended abstrackt method
@@ -112,6 +130,44 @@ export class ConnectorTerminal extends Connector {
     return ["source", Position.Left];
   }
 
+  // Abstract function implementation of get all flow handles from connector
+  public getFlowtHandles(aspect: Aspect, viewtype: ViewType): FlowHandle[] {
+    const insideHandle: FlowHandle = {
+      id: this.inside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "target",
+      side: "inside",
+      hidden: this.flowHandleHidden("inside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const outsideHandle: FlowHandle = {
+      id: this.outside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "source",
+      side: "outside",
+      hidden: this.flowHandleHidden("outside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const flowHandles: FlowHandle[] = [insideHandle, outsideHandle];
+    return flowHandles;
+  }
+
+  // Abstract function implementation of calculate hidden status of a flow handle
+  public flowHandleHidden(side: "inside" | "outside"): boolean {
+    if (this.hidden) return true;
+    if (this.direction === ConnectorDirection.Input && side === "inside") return false;
+    if (this.direction === ConnectorDirection.Output && side === "outside") return false;
+    return true;
+  }
+
+  /**
+   * Represent a connector terminal as a menu item
+   * @returns A converted menu item
+   */
   public toMenuItem(): MenuItem {
     const item: MenuItem = {
       id: this.id,
@@ -120,6 +176,49 @@ export class ConnectorTerminal extends Connector {
       color: this.color,
     };
     return item;
+  }
+
+  /** Convert a handle to a flow node
+   *  @params ViewType There are two diffenrent views in Mimir "Home" | "Tree" | "Block"
+   *  @params theme Current theme
+   */
+  public toFlowNode(viewType: ViewType, theme: Theme, min: number, max: number, index: number): FlowNode<ConnectorTerminal> {
+    const y = index * 150;
+    const position: XYPosition = {
+      x: this.direction === ConnectorDirection.Input ? min - 400 : max + 500,
+      y: y,
+    };
+
+    const node: FlowNode = {
+      id: CreateId(),
+      type: this.getComponentType(viewType),
+      data: this,
+      position: position,
+      hidden: false,
+      selected: false,
+      draggable: false,
+      selectable: false,
+      connectable: true,
+    };
+    return node;
+  }
+
+  public toFlowNodeHandle(): FlowHandle {
+    const flowHandle: FlowHandle = {
+      id: this.direction === ConnectorDirection.Input ? this.outside : this.inside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Right : Position.Left,
+      handleType: this.direction === ConnectorDirection.Input ? "source" : "target",
+      side: this.direction === ConnectorDirection.Input ? "outside" : "inside",
+      hidden: this.hidden,
+      className: "parent-handler terminal",
+    };
+    return flowHandle;
+  }
+
+  private getComponentType(viewType: ViewType): string | null {
+    const viewTypeName = viewType === ViewType.Block ? "Block" : "Tree";
+    return viewTypeName + "Connector";
   }
 }
 
@@ -163,6 +262,40 @@ export class ConnectorPartOf extends ConnectorRelation {
     if (this.direction === ConnectorDirection.Input) return ["target", Position.Top];
     else return ["source", Position.Bottom];
   }
+
+  // Abstract function implementation of get all flow handles from connector
+  public getFlowtHandles(aspect: Aspect, viewtype: ViewType): FlowHandle[] {
+    const insideHandle: FlowHandle = {
+      id: this.inside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Top : Position.Bottom,
+      handleType: "target",
+      side: "inside",
+      hidden: this.flowHandleHidden("inside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const outsideHandle: FlowHandle = {
+      id: this.outside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Top : Position.Bottom,
+      handleType: "source",
+      side: "outside",
+      hidden: this.flowHandleHidden("outside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const flowHandles: FlowHandle[] = [insideHandle, outsideHandle];
+    return flowHandles;
+  }
+
+  // Abstract function implementation of calculate hidden status of a flow handle
+  public flowHandleHidden(side: "inside" | "outside"): boolean {
+    if (this.hidden) return true;
+    if (this.direction === ConnectorDirection.Input && side === "inside") return false;
+    if (this.direction === ConnectorDirection.Output && side === "outside") return false;
+    return true;
+  }
 }
 
 /**
@@ -193,6 +326,40 @@ export class ConnectorFulfilledBy extends ConnectorRelation {
     if (this.direction === ConnectorDirection.Input) return ["target", Position.Left];
     else return ["source", Position.Right];
   }
+
+  // Abstract function implementation of get all flow handles from connector
+  public getFlowtHandles(aspect: Aspect, viewtype: ViewType): FlowHandle[] {
+    const insideHandle: FlowHandle = {
+      id: this.inside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "target",
+      side: "inside",
+      hidden: this.flowHandleHidden("inside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const outsideHandle: FlowHandle = {
+      id: this.outside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "source",
+      side: "outside",
+      hidden: this.flowHandleHidden("outside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const flowHandles: FlowHandle[] = [insideHandle, outsideHandle];
+    return flowHandles;
+  }
+
+  // Abstract function implementation of calculate hidden status of a flow handle
+  public flowHandleHidden(side: "inside" | "outside"): boolean {
+    if (this.hidden) return true;
+    if (this.direction === ConnectorDirection.Input && side === "inside") return false;
+    if (this.direction === ConnectorDirection.Output && side === "outside") return false;
+    return true;
+  }
 }
 
 /**
@@ -222,5 +389,39 @@ export class ConnectorHasLocation extends ConnectorRelation {
   public GetHandleType(): [HandleType, Position] {
     if (this.direction === ConnectorDirection.Input) return ["target", Position.Left];
     else return ["source", Position.Right];
+  }
+
+  // Abstract function implementation of get all flow handles from connector
+  public getFlowtHandles(aspect: Aspect, viewtype: ViewType): FlowHandle[] {
+    const insideHandle: FlowHandle = {
+      id: this.inside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "target",
+      side: "inside",
+      hidden: this.flowHandleHidden("inside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const outsideHandle: FlowHandle = {
+      id: this.outside,
+      connectorId: this.id,
+      position: this.direction === ConnectorDirection.Input ? Position.Left : Position.Right,
+      handleType: "source",
+      side: "outside",
+      hidden: this.flowHandleHidden("outside"),
+      className: this.getClassName(aspect, viewtype),
+    };
+
+    const flowHandles: FlowHandle[] = [insideHandle, outsideHandle];
+    return flowHandles;
+  }
+
+  // Abstract function implementation of calculate hidden status of a flow handle
+  public flowHandleHidden(side: "inside" | "outside"): boolean {
+    if (this.hidden) return true;
+    if (this.direction === ConnectorDirection.Input && side === "inside") return false;
+    if (this.direction === ConnectorDirection.Output && side === "outside") return false;
+    return true;
   }
 }

@@ -7,6 +7,7 @@ import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElem
 // import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 import { Dispatch } from "redux";
 import { CommonState } from "store/reducers/commonReducer";
+import { ProjectState } from "store/reducers/projectReducer";
 
 interface Props {
   dispatch: Dispatch;
@@ -18,7 +19,7 @@ interface Props {
  */
 export const TreeProjectComponent = ({ dispatch }: Props) => {
   const commonState = useAppSelector<CommonState>(commonStateSelector);
-  const projectState = useAppSelector(projectStateSelector);
+  const projectState = useAppSelector<ProjectState>(projectStateSelector);
   const project = projectState?.project;
   const nodes = project?.aspectObjects;
 

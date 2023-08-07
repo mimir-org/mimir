@@ -42,7 +42,7 @@ export const FlowModule = () => {
             edges={nodesEdges[1]}
             onNodePositionChange={(id, x, y) => onNodePositionChange(id, x, y, viewType, project, dispatch)}
             onNodeDelete={(id) => onNodeDelete(id, project, dispatch)}
-            onNodeDrop={(type, posX, posY) => onNodeDrop(type, posX, posY, project, dispatch)}
+            onNodeDrop={(type, posX, posY) => onNodeDrop(type, posX, posY, project, viewType, dispatch)}
             onNodeSelect={(id, selected) => onNodeSelect(id, selected, project, viewType, dispatch)}
             onEdgeDelete={(id) => onEdgeDelete(id, project, dispatch)}
             onEdgeConnect={(edge) => onEdgeConnect(edge, project, dispatch)}

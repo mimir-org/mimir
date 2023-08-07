@@ -1,12 +1,13 @@
 import { Handle, Connection as FlowConnection } from "react-flow-renderer";
 import { HandleBox } from "./BlockNode.styled";
 import { TerminalIcon } from "components/flow/terminals/TerminalIcon";
-import { Connector, ConnectorDirection } from "lib";
+import { AspectObject, Connector, ConnectorDirection, ViewType } from "lib";
 import { ConnectorPartOf } from "lib/classes/Connector";
 
 interface Props {
   connector: Connector;
   isElectroView: boolean;
+  node: AspectObject;
 }
 
 /**
@@ -15,24 +16,36 @@ interface Props {
  * @param interface
  * @returns a JSX Element containing a Handle component from Flow.
  */
-export const BlockNodeConnector = ({ connector, isElectroView }: Props) => {
-  const [type, pos] = connector.GetHandleType();
-  const color = connector.getColor();
-  const className = "react-flow__handle-block";
+export const BlockNodeConnector = ({ connector, isElectroView, node }: Props) => {
+  const flowHandles = connector.getFlowtHandles(node.aspect, ViewType.Block);
 
   return (
-    <HandleBox
-      id={`handle-${connector.id}`}
-      hidden={connector.hidden}
-      top={GetHandleTopPosition(connector, isElectroView)}
-      left={GetHandleLeftPosition(connector, isElectroView)}
-      isPartOf={connector instanceof ConnectorPartOf}
-      onMouseEnter={null}
-      onMouseLeave={null}
-    >
-      <TerminalIcon connector={connector} color={color} className={className} isElectroView={isElectroView} />
-      <Handle type={type} position={pos} id={connector.id} className={className} isValidConnection={(connection) => true} />
-    </HandleBox>
+    <>
+      {connector &&
+        flowHandles &&
+        flowHandles.map((x) => {
+          return (
+            <HandleBox
+              key={x.id}
+              id={`handle-${x.id}`}
+              hidden={x.hidden}
+              top={GetHandleTopPosition(connector, isElectroView)}
+              left={GetHandleLeftPosition(connector, isElectroView)}
+              isPartOf={connector instanceof ConnectorPartOf}
+              onMouseEnter={null}
+              onMouseLeave={null}
+            >
+              <TerminalIcon
+                connector={connector}
+                color={connector.getColor()}
+                className={x.className}
+                isElectroView={isElectroView}
+              />
+              <Handle type={x.handleType} position={x.position} id={x.id} className={x.className} />
+            </HandleBox>
+          );
+        })}
+    </>
   );
 };
 

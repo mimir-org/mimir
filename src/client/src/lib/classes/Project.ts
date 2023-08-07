@@ -14,7 +14,7 @@ import {
   ConnectionRelation,
   Position,
 } from ".";
-import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
+import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { ConnectorDirection } from "../enums/Direction";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { ProjectListItem } from "../interfaces/ProjectListItem";
@@ -114,7 +114,19 @@ export class Project {
     const parent = viewType === ViewType.Block ? this.getBlockSelectedAspectObject() : null;
 
     // Find all nodes
-    const flowNodes = this.toFlowNodes(viewType, theme, parent);
+    let flowNodes = this.toFlowNodes(viewType, theme, parent);
+
+    // if (parent != null && viewType === ViewType.Block) flowNodes = flowNodes.concat(parent.toFlowNode(viewType, theme, true));
+
+    // If block view, find all selected parent terminal connectors represented as nodes
+    const terminalNodes = this.toFlowParentConnectorTerminalNodes(
+      viewType,
+      theme,
+      parent,
+      flowNodes.map((x) => x.data)
+    );
+
+    flowNodes = flowNodes.concat(terminalNodes);
 
     // Find all edges
     const flowEdges = this.toFlowEdges(
@@ -242,21 +254,26 @@ export class Project {
    * @param positionTree
    * @param positionBlock
    * @param createdBy
+   * @param viewType
    */
-  public addAspectObject(lib: AspectObjectLibCm, positionTree: Position, positionBlock: Position, createdBy: string) {
+  public addAspectObject(
+    lib: AspectObjectLibCm,
+    positionTree: Position,
+    positionBlock: Position,
+    createdBy: string,
+    viewType: ViewType
+  ) {
     const obj = new AspectObject(lib, this.id, positionTree, positionBlock, createdBy, this.id);
     this.aspectObjects.push(obj);
 
-    let parent = this.getBlockSelectedAspectObject();
-    if (parent == null) parent = this.getSelectedAspectObject();
-
+    const parent = viewType === ViewType.Block ? this.getBlockSelectedAspectObject() : this.getSelectedAspectObject();
     if (parent == null) return;
 
     const connectorFrom = parent.connectors.find(
       (x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Output
     );
     const connectorTo = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Input);
-    const connection = new ConnectionPartOf(connectorFrom.id, connectorTo.id, this.id, this.id);
+    const connection = new ConnectionPartOf(connectorFrom.outside, connectorTo.inside, this.id, this.id);
     this.connections.push(connection);
   }
 
@@ -325,7 +342,7 @@ export class Project {
     if (actualAspectObject.connectors == null)
       throw new Error("The aspect object with id" + aspectObjectId + " does not have any connectors");
 
-    const actualConnector = actualAspectObject.connectors.find((x) => x.id === id);
+    const actualConnector = actualAspectObject.connectors.find((x) => x.id === id || x.inside === id || x.outside === id);
     if (actualConnector == null) throw new Error("Can't find connector object with id " + id);
 
     actualConnector.selected = selected;
@@ -555,8 +572,66 @@ export class Project {
   private toFlowNodes(viewType: ViewType, theme: Theme, parent: AspectObject): FlowNode[] {
     if (this.aspectObjects == null) return [];
     return parent != null
-      ? this.getChildrenAspectObject(parent.id).map((x) => x.toFlowNode(viewType, theme))
-      : this.aspectObjects.map((x) => x.toFlowNode(viewType, theme));
+      ? this.getChildrenAspectObject(parent.id).map((x) => x.toFlowNode(viewType, theme, false))
+      : this.aspectObjects.map((x) => x.toFlowNode(viewType, theme, false));
+  }
+
+  /**
+   * Represent parent active connectors as flow nodes with connector.
+   * @params viewType Could be "Home" | "Tree" | "block.
+   * @params theme Current MimirorgTheme.
+   * @params parent Parent aspect object.
+   * @params siblings All other siblings sending to flow.
+   * @returns A collection of converted flow nodes.
+   */
+  private toFlowParentConnectorTerminalNodes(
+    viewType: ViewType,
+    theme: Theme,
+    parent: AspectObject,
+    siblings: AspectObject[]
+  ): FlowNode[] {
+    if (viewType !== ViewType.Block || parent == null || parent.connectors == null) return [];
+    const minMax = this.getMinMax(siblings);
+
+    const activeParentConnectors = parent.getTerminals().filter((x) => x.selected);
+    let inputIndex = 0;
+    let outputIndex = 0;
+
+    const flowNodes: FlowNode[] = [];
+
+    activeParentConnectors.forEach((x) => {
+      if (x.direction === ConnectorDirection.Input) {
+        flowNodes.push(x.toFlowNode(viewType, theme, minMax[0], minMax[1], inputIndex));
+        inputIndex++;
+      } else {
+        flowNodes.push(x.toFlowNode(viewType, theme, minMax[0], minMax[1], outputIndex));
+        outputIndex++;
+      }
+    });
+    return flowNodes;
+  }
+
+  /**
+   * Get minimum and maximum x position in aspect object array
+   * @param siblings The searchable collection of aspect objects
+   * @returns A tuple with minimum and maximum value of position x
+   */
+  private getMinMax(siblings: AspectObject[]): [min: number, max: number] {
+    const min =
+      (siblings.length &&
+        siblings.reduce(function (prev, curr) {
+          return prev.positionBlock.posX < curr.positionBlock.posX ? prev : curr;
+        })) ||
+      null;
+
+    const max =
+      (siblings.length &&
+        siblings.reduce(function (prev, curr) {
+          return prev.positionBlock.posX > curr.positionBlock.posX ? prev : curr;
+        })) ||
+      null;
+
+    return [min?.positionBlock?.posX ?? 10, max?.positionBlock?.posX ?? 10];
   }
 
   /**
@@ -628,7 +703,11 @@ export class Project {
     const inConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Input);
     if (inConnector == null) return null;
 
-    return this.connections.find((x) => x instanceof ConnectionPartOf && x.toConnector === inConnector.id);
+    return this.connections.find(
+      (x) =>
+        x instanceof ConnectionPartOf &&
+        (x.toConnector === inConnector.id || x.toConnector === inConnector.inside || x.toConnector === inConnector.outside)
+    );
   }
 
   /**

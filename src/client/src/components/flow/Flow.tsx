@@ -80,7 +80,6 @@ export const Flow = forwardRef(
      * When an item from another component is moving over a flow element, this function will trigger
      */
     const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-      // console.log("OnDragOver");
       event.preventDefault();
       event.dataTransfer.dropEffect = "move";
     };

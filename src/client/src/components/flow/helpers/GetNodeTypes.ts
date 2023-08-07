@@ -1,5 +1,5 @@
 import { BlockNode } from "components/flow/nodes/blockNode";
-import { AspectNode, TreeNode } from "../nodes";
+import { AspectNode, ParentNode, TreeNode } from "../nodes";
 import HandleNode from "../nodes/handleNode/HandleNode";
 
 const GetNodeTypes = {
@@ -13,7 +13,8 @@ const GetNodeTypes = {
   TreeProduct: TreeNode,
   TreeLocation: TreeNode,
   BlockHandle: HandleNode,
-  TreekHandle: HandleNode,
+  TreeHandle: HandleNode,
+  ParentNode: ParentNode,
 };
 
 export default GetNodeTypes;

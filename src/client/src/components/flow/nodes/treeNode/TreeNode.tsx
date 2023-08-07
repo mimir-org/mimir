@@ -3,7 +3,7 @@ import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./TreeLogoComponent";
-import { TreeNodeTerminal } from "./TreeNodeTerminal";
+import { TreeNodeHandle } from "./TreeNodeHandle";
 import { AspectObject } from "lib";
 
 /**
@@ -23,7 +23,7 @@ const TreeNode: FC<NodeProps<AspectObject>> = ({ data }) => {
       hidden={data.hidden}
     >
       {connectors.map((connector) => {
-        return <TreeNodeTerminal key={`handle-${connector.id}`} node={data} connector={connector} />;
+        return <TreeNodeHandle key={`handle-${connector.id}`} node={data} connector={connector} />;
       })}
       <TreeLogoComponent node={data} />
     </TreeNodeBox>

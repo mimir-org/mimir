@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Aspect } from "lib";
 import { jsonMember, jsonObject } from "typedjson";
 import { Theme } from "@mimirorg/component-library";

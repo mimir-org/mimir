@@ -5,6 +5,7 @@ import {Root as $26Zo0$Root} from "@radix-ui/react-visually-hidden";
 import {math as $26Zo0$math, transparentize as $26Zo0$transparentize, lighten as $26Zo0$lighten, meetsContrastGuidelines as $26Zo0$meetsContrastGuidelines} from "polished";
 import {motion as $26Zo0$motion, MotionConfig as $26Zo0$MotionConfig, AnimatePresence as $26Zo0$AnimatePresence} from "framer-motion";
 import {Root as $26Zo0$Root1} from "@radix-ui/react-separator";
+import {Handle as $26Zo0$Handle} from "react-flow-renderer";
 import $26Zo0$reactusemeasure from "react-use-measure";
 import {Link as $26Zo0$Link} from "react-router-dom";
 import {CircleLoader as $26Zo0$CircleLoader, ScaleLoader as $26Zo0$ScaleLoader} from "react-spinners";
@@ -39,8 +40,12 @@ var $def8772fc0858c89$exports = {};
 $parcel$export($def8772fc0858c89$exports, "Button", () => $696f693fac81a609$export$353f5b6fc5456de1);
 $parcel$export($def8772fc0858c89$exports, "ConditionalWrapper", () => $ab754ee3829129c7$export$39aecc95f0365819);
 $parcel$export($def8772fc0858c89$exports, "Divider", () => $0d6276d0028f6bba$export$2e0a83ec2e27ecbb);
+$parcel$export($def8772fc0858c89$exports, "FlowConnectorComponent", () => $143b5d0d90345639$export$179bb831147717ca);
 $parcel$export($def8772fc0858c89$exports, "VisuallyHidden", () => $066b48d8e5b33e52$export$439d29a4e110a164);
 $parcel$export($def8772fc0858c89$exports, "Icon", () => $54dcd6617557221f$export$f04a61298a47a40f);
+$parcel$export($def8772fc0858c89$exports, "Symbol", () => $a0616ba83d24d848$export$3e25e887b7a5b37b);
+$parcel$export($def8772fc0858c89$exports, "LogoBox", () => $d2e4eb53d530e7c5$export$4a2034c9f860b7cd);
+$parcel$export($def8772fc0858c89$exports, "SymbolBox", () => $d2e4eb53d530e7c5$export$236d96ef38f832f6);
 $parcel$export($def8772fc0858c89$exports, "MotionPanel", () => $131d9058faf478d3$export$b252e133e2c7204f);
 $parcel$export($def8772fc0858c89$exports, "ResizablePanel", () => $692dde140a8b09f1$export$2fb164ca5cfe7082);
 $parcel$export($def8772fc0858c89$exports, "PlainLink", () => $0a4fb0807d734a92$export$14892c202f726f14);
@@ -1312,783 +1317,12 @@ $0d6276d0028f6bba$export$2e0a83ec2e27ecbb.defaultProps = {
 
 
 
-
-
-
-
-
-
-/**
- * Function to ignore circular references
- */ const $26eef136237b9fb6$export$c4d25c0d0c3b7f = ()=>{
-    const seen = new WeakSet();
-    return (key, value)=>{
-        if (key.startsWith("_")) return;
-        if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) return;
-            seen.add(value);
-        }
-        return value;
-    };
-};
-const $26eef136237b9fb6$export$7149c6ffc9994c32 = ()=>{
-    let d = new Date().getTime();
-    let d2 = typeof performance !== "undefined" && performance.now && performance.now() * 1000 || 0;
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        let r = Math.random() * 16;
-        if (d > 0) {
-            r = (d + r) % 16 | 0;
-            d = Math.floor(d / 16);
-        } else {
-            r = (d2 + r) % 16 | 0;
-            d2 = Math.floor(d2 / 16);
-        }
-        return (c === "x" ? r : r & 0x3 | 0x8).toString(16);
-    });
-};
-const $26eef136237b9fb6$export$bd1203ad2e3208f7 = (domain)=>{
-    const id = $26eef136237b9fb6$export$7149c6ffc9994c32();
-    if (domain == null) return id;
-    return domain + "_" + id;
-};
-const $26eef136237b9fb6$export$637515699a57839b = (id)=>{
-    if (id == null) throw Error("Can't find a domian from null or undefined string.");
-    const split = id.split("_");
-    if (split.length !== 2) throw Error("Can't find a domian. An id should be like example.com_xxxxx-xxxxx-xxxxx.");
-    return split[0].trim();
-};
-const $26eef136237b9fb6$export$5a466c0ba959b06 = (value)=>{
-    return value.replace(/\/+$/, "");
-};
-const $26eef136237b9fb6$export$de3609038e2dcd26 = (negative = true)=>{
-    const input = $26eef136237b9fb6$export$7149c6ffc9994c32();
-    let hash = 0;
-    const len = input.length;
-    for(let i = 0; i < len; i++){
-        hash = (hash << 5) - hash + input.charCodeAt(i);
-        hash |= 0;
-    }
-    if (negative && hash > 0) return hash * -1;
-    else return hash;
-};
-const $26eef136237b9fb6$export$260733d43c3dc50a = (from, to)=>{
-    const f = $26eef136237b9fb6$export$5e4cc6abec75530(from);
-    const t = $26eef136237b9fb6$export$5e4cc6abec75530(to);
-    if (f == null || t == null) return 0;
-    const backInTime = f > t;
-    if (f.getDate() === t.getDate() && f.getMonth() === t.getMonth() && f.getFullYear() === t.getFullYear()) return 1;
-    const difference_In_Time = Math.round(t.getTime() - f.getTime());
-    return Number((difference_In_Time / 86400000).toFixed(0)) + (backInTime ? -1 : 1);
-};
-const $26eef136237b9fb6$export$5e4cc6abec75530 = (value)=>{
-    if (value == null) return undefined;
-    if (typeof value === "string") try {
-        return new Date(value);
-    } catch (error) {
-        console.warn("Can't parse date string: ", value);
-        return new Date();
-    }
-    return value;
-};
-const $26eef136237b9fb6$export$71b45186df786da8 = (current, from, to)=>{
-    const c = $26eef136237b9fb6$export$5e4cc6abec75530(current);
-    const f = $26eef136237b9fb6$export$5e4cc6abec75530(from);
-    const t = $26eef136237b9fb6$export$5e4cc6abec75530(to);
-    if (c == null || f == null || t == null) return false;
-    c.setHours(0, 0, 0, 0);
-    f.setHours(0, 0, 0, 0);
-    t.setHours(0, 0, 0, 0);
-    return c <= t && c >= f;
-};
-
-
-
-
-
-/**
- * Removes styles from react router links.
- * Useful when wrapping other elements with navigation semantics.
- */ const $8e605db25e465cc8$var$ResizablePanelContainer = (0, $26Zo0$styledcomponents).div`
-  position: relative;
-  overflow: ${(props)=>props.maxTrigger ? "auto" : "hidden"};
-  ${(0, $4742fce91a36bc96$export$661888f3c6187e4c)};
-`;
-$8e605db25e465cc8$var$ResizablePanelContainer.defaultProps = {
-    maxTrigger: false
-};
-const $8e605db25e465cc8$export$72e21f73896cddc4 = (0, $26Zo0$motion)($8e605db25e465cc8$var$ResizablePanelContainer);
-
-
-const $692dde140a8b09f1$export$2fb164ca5cfe7082 = ({ children: children , duration: duration , maxHeight: maxHeight  })=>{
-    const [ref, { height: height  }] = (0, $26Zo0$reactusemeasure)();
-    let h = height;
-    let maxTrigger = false;
-    if (maxHeight != null && h != null && height >= maxHeight) {
-        h = maxHeight;
-        maxTrigger = true;
-    }
-    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $8e605db25e465cc8$export$72e21f73896cddc4), {
-        animate: {
-            height: h || "auto"
-        },
-        maxTrigger: maxTrigger,
-        children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
-            initial: false,
-            children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$motion).div, {
-                initial: {
-                    opacity: 0
-                },
-                animate: {
-                    opacity: 1,
-                    transition: {
-                        duration: duration / 2,
-                        delay: duration / 2
-                    }
-                },
-                exit: {
-                    opacity: 0,
-                    transition: {
-                        duration: duration / 2
-                    }
-                },
-                children: /*#__PURE__*/ (0, $26Zo0$jsx)("div", {
-                    ref: ref,
-                    style: {
-                        position: "absolute"
-                    },
-                    children: children
-                })
-            }, JSON.stringify(children, (0, $26eef136237b9fb6$export$c4d25c0d0c3b7f)()))
-        })
-    });
-};
-
-
-const $131d9058faf478d3$export$b252e133e2c7204f = (props)=>{
-    const { header: header , open: open , duration: duration , children: children , ...delegated } = props;
-    const [expanded, setExpanded] = (0, $26Zo0$useState)(false);
-    (0, $26Zo0$useEffect)(()=>{
-        setExpanded(open);
-    }, [
-        open
-    ]);
-    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$MotionConfig), {
-        transition: {
-            duration: duration
-        },
-        children: /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$Fragment), {
-            children: [
-                header,
-                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $692dde140a8b09f1$export$2fb164ca5cfe7082), {
-                    duration: duration,
-                    ...delegated,
-                    children: expanded && children
-                })
-            ]
-        })
-    });
-};
-$131d9058faf478d3$export$b252e133e2c7204f.displayName = "MotionPanel";
-
-
-
-
-
-
-const $0a4fb0807d734a92$export$14892c202f726f14 = (0, $26Zo0$styledcomponents)((0, $26Zo0$Link))`
-  color: inherit;
-  text-decoration: inherit;
-
-  :link,
-  :hover {
-    color: inherit;
-    text-decoration: inherit;
-  }
-
-  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
-`;
-
-
-
-
-
-
-const $b0a2f5db4ae850d7$export$a5e06607a5ac6158 = (0, $26Zo0$styledcomponents).div`
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
-  width: 50px;
-  height: 50px;
-`;
-const $b0a2f5db4ae850d7$export$d499834a866f77c6 = (0, $26Zo0$styledcomponents).div`
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 901;
-`;
-
-
-const $8a61fa0583e81acb$export$7f7cbe89f1eacd2 = ({ variant: variant , disabled: disabled  })=>{
-    const theme = (0, $26Zo0$useTheme)();
-    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$Fragment), {
-        children: !disabled && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $b0a2f5db4ae850d7$export$d499834a866f77c6), {
-            children: /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $b0a2f5db4ae850d7$export$a5e06607a5ac6158), {
-                children: [
-                    variant && variant === "circle" && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$CircleLoader), {
-                        color: theme.mimir.color.primary.base
-                    }),
-                    variant && variant === "scale" && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$ScaleLoader), {
-                        color: theme.mimir.color.primary.base
-                    })
-                ]
-            })
-        })
-    });
-};
-$8a61fa0583e81acb$export$7f7cbe89f1eacd2.displayName = "Spinner";
-$8a61fa0583e81acb$export$7f7cbe89f1eacd2.defaultValues = {
-    variant: "circle",
-    disabled: true
-};
-
-
-
-
-const $21894e23ce5bb51f$export$a8a3e93435678ff9 = (0, $26Zo0$styledcomponents).h1`
-  ${({ variant: variant  })=>(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)(variant)};
-  ${(0, $4742fce91a36bc96$export$661888f3c6187e4c)};
-  ${(0, $62135822dca75810$export$80711e28e77935d5)};
-  ${(0, $dbede0d07a4a8764$export$f8eec27d1ad18090)};
-  ${(0, $67c30f5a5f973bd7$export$66376f8025bd3245)};
-  ${(0, $6c425cf1a0a27663$export$8f688f6a86c9adf3)};
-  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
-`;
-$21894e23ce5bb51f$export$a8a3e93435678ff9.displayName = "Heading";
-$21894e23ce5bb51f$export$a8a3e93435678ff9.defaultProps = {
-    useEllipsis: false,
-    ellipsisMaxLines: 1
-};
-
-
-
-
-
-
-
-
-
-
-
-
-const $93f040bab052c081$var$TooltipContent = (0, $26Zo0$styledcomponents).div`
-  padding: ${(props)=>props.theme.mimir.spacing.base} ${(props)=>props.theme.mimir.spacing.l};
-  border-radius: ${(props)=>props.theme.mimir.border.radius.large};
-  background-color: ${(props)=>props.theme.mimir.color.surface.inverse.base};
-  color: ${(props)=>props.theme.mimir.color.surface.inverse.on};
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
-`;
-const $93f040bab052c081$export$e70caaa407ca3f33 = (0, $26Zo0$motion)($93f040bab052c081$var$TooltipContent);
-
-
-const $6e97fa5953c89edb$export$28c660c63b792dea = /*#__PURE__*/ (0, $26Zo0$forwardRef)((props, ref)=>{
-    const { children: children , content: content , placement: placement , align: align , delay: delay , offset: offset , asChild: asChild , ...delegated } = props;
-    const theme = (0, $26Zo0$useTheme)();
-    const containsTextOnly = typeof content === "string";
-    return /*#__PURE__*/ (0, $26Zo0$jsx)("div", {
-        ref: ref,
-        children: /*#__PURE__*/ (0, $26Zo0$jsxs)($26Zo0$Root2, {
-            disableHoverableContent: true,
-            delayDuration: delay,
-            children: [
-                /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Trigger, {
-                    asChild: asChild,
-                    children: children
-                }),
-                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
-                    children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Portal, {
-                        children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Content, {
-                            asChild: asChild,
-                            avoidCollisions: true,
-                            sideOffset: offset,
-                            side: placement,
-                            align: align,
-                            children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $93f040bab052c081$export$e70caaa407ca3f33), {
-                                ...theme.mimir.animation.scale,
-                                ...delegated,
-                                children: containsTextOnly ? /*#__PURE__*/ (0, $26Zo0$jsx)((0, $de0207036bb3fe06$export$5f1af8db9871e1d6), {
-                                    variant: "body-medium",
-                                    children: content
-                                }) : content
-                            })
-                        })
-                    })
-                })
-            ]
-        })
-    });
-});
-$6e97fa5953c89edb$export$28c660c63b792dea.displayName = "Tooltip";
-$6e97fa5953c89edb$export$28c660c63b792dea.defaultProps = {
-    placement: "top",
-    align: "center",
-    delay: 0,
-    offset: 8,
-    asChild: true
-};
-
-
-
-
-var $c139bef812a7be7c$exports = {};
-
-$parcel$export($c139bef812a7be7c$exports, "SettingProvider", () => $55921be34448eae0$export$6f0dace02a814e88);
-$parcel$export($c139bef812a7be7c$exports, "useSetting", () => $a39d7373180be33b$export$12b0e20ae7d96a25);
-$parcel$export($c139bef812a7be7c$exports, "useLocalStorage", () => $94354bf9bddb77d8$export$86e2cef2561044ac);
-$parcel$export($c139bef812a7be7c$exports, "useMimirorgTheme", () => $df0176613785fe08$export$74446bd855170621);
-
-
-
-const $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e = /*#__PURE__*/ (0, $26Zo0$createContext)({});
-
-
-const $55921be34448eae0$var$defaultAppSetting = {
-    language: {
-        current: "en",
-        languages: [
-            {
-                code: "no",
-                name: "Norwegian"
-            },
-            {
-                code: "en",
-                name: "English"
-            }
-        ]
-    }
-};
-const $55921be34448eae0$export$6f0dace02a814e88 = ({ children: children  })=>{
-    const [setting, setSetting] = (0, $26Zo0$useState)(()=>{
-        if (typeof window === "undefined") return $55921be34448eae0$var$defaultAppSetting;
-        try {
-            const item = window.localStorage.getItem("appsetting");
-            return item ? JSON.parse(item) : $55921be34448eae0$var$defaultAppSetting;
-        } catch (error) {
-            console.warn(error);
-            return $55921be34448eae0$var$defaultAppSetting;
-        }
-    });
-    (0, $26Zo0$useEffect)(()=>{
-        window.localStorage.setItem("appsetting", JSON.stringify(setting));
-    }, [
-        setting
-    ]);
-    const settingProviderValue = (0, $26Zo0$useMemo)(()=>({
-            setting: setting,
-            setSetting: setSetting
-        }), [
-        setting,
-        setSetting
-    ]);
-    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e).Provider, {
-        value: settingProviderValue,
-        children: children
-    });
-};
-
-
-
-
-const $a39d7373180be33b$export$12b0e20ae7d96a25 = ()=>{
-    return (0, $26Zo0$useContext)((0, $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e));
-};
-
-
-
-function $94354bf9bddb77d8$export$86e2cef2561044ac(key, initialValue) {
-    const [storedValue, setStoredValue] = (0, $26Zo0$useState)(()=>{
-        if (typeof window === "undefined") return initialValue;
-        try {
-            const item = window.localStorage.getItem(key);
-            return item ? JSON.parse(item) : initialValue;
-        } catch (error) {
-            console.warn(error);
-            return initialValue;
-        }
-    });
-    const setValue = (value)=>{
-        try {
-            const valueToStore = value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            if (typeof window !== "undefined") window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        } catch (error) {
-            console.warn(error);
-        }
-    };
-    return [
-        storedValue,
-        setValue
-    ];
-}
-
-
-
-const $df0176613785fe08$export$74446bd855170621 = ()=>{
-    const theme = (0, $26Zo0$useTheme)();
-    return theme.mimir;
-};
-
-
-
-
-var $b5c4260ed4ee85a9$exports = {};
-
-
-var $a60eebdafdf9fd50$exports = {};
-
-$parcel$export($a60eebdafdf9fd50$exports, "calculateDays", () => $26eef136237b9fb6$export$260733d43c3dc50a);
-$parcel$export($a60eebdafdf9fd50$exports, "createDomainId", () => $26eef136237b9fb6$export$bd1203ad2e3208f7);
-$parcel$export($a60eebdafdf9fd50$exports, "createId", () => $26eef136237b9fb6$export$7149c6ffc9994c32);
-$parcel$export($a60eebdafdf9fd50$exports, "createNumberId", () => $26eef136237b9fb6$export$de3609038e2dcd26);
-$parcel$export($a60eebdafdf9fd50$exports, "forceDate", () => $26eef136237b9fb6$export$5e4cc6abec75530);
-$parcel$export($a60eebdafdf9fd50$exports, "getDomainFromId", () => $26eef136237b9fb6$export$637515699a57839b);
-$parcel$export($a60eebdafdf9fd50$exports, "ignoreCircularReferences", () => $26eef136237b9fb6$export$c4d25c0d0c3b7f);
-$parcel$export($a60eebdafdf9fd50$exports, "isdateBetween", () => $26eef136237b9fb6$export$71b45186df786da8);
-$parcel$export($a60eebdafdf9fd50$exports, "removeTrailingSlashes", () => $26eef136237b9fb6$export$5a466c0ba959b06);
-$parcel$export($a60eebdafdf9fd50$exports, "toBase64", () => $1c87128f875a591e$export$37cc283d8fbd3462);
-$parcel$export($a60eebdafdf9fd50$exports, "lsReadValue", () => $7bd8ff234e9a7c36$export$81e76f652c2aead0);
-$parcel$export($a60eebdafdf9fd50$exports, "lsSaveValue", () => $7bd8ff234e9a7c36$export$98bd917067ba65d5);
-
-
-const $1c87128f875a591e$export$37cc283d8fbd3462 = (file)=>new Promise((resolve, reject)=>{
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = ()=>resolve(reader.result);
-        reader.onerror = (error)=>reject(error);
-    });
-const $1c87128f875a591e$export$b20f4ee19ffa0668 = (base64)=>{
-    // Split into two parts
-    const parts = base64.split(";base64,");
-    // Hold the content type
-    const imageType = parts[0].split(":")[1];
-    // Decode Base64 string
-    const decodedData = (0, $26Zo0$decode)(parts[1]);
-    // Create UNIT8ARRAY of size same as row data length
-    const uInt8Array = new Uint8Array(decodedData.length);
-    // Insert all character code into uInt8Array
-    for(let i = 0; i < decodedData.length; ++i)uInt8Array[i] = decodedData.charCodeAt(i);
-    // Return BLOB image after conversion
-    return new Blob([
-        uInt8Array
-    ], {
-        type: imageType
-    });
-};
-
-
-/**
- * Read value from local storage
- * The data must be stored in json format.
- * If error it returns null and logs a warning to the console.
- *
- * @param key  the storage key
- */ function $7bd8ff234e9a7c36$export$81e76f652c2aead0(key) {
-    if (typeof window === "undefined") return null;
-    try {
-        const item = window.localStorage.getItem(key);
-        if (item == null) return null;
-        return JSON.parse(item);
-    } catch (error) {
-        console.warn(error);
-    }
-    return null;
-}
-function $7bd8ff234e9a7c36$export$98bd917067ba65d5(key, value) {
-    if (typeof window === "undefined") return;
-    try {
-        if (value == null) {
-            window.localStorage.removeItem(key);
-            return;
-        }
-        window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-        console.warn(error);
-    }
-}
-
-
-
-
-var $20ad44a5ad0a982d$exports = {};
-
-$parcel$export($20ad44a5ad0a982d$exports, "MimirorgThemeProvider", () => $b58947f94f33ca4a$export$613dacf2c09c65aa);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const $cdac57a3491c6a34$export$5d16871b54b7e5b4 = (theme)=>({
-        style: {
-            display: "flex",
-            padding: `${theme.spacing.base} ${theme.spacing.l}`,
-            boxShadow: theme.shadow.small,
-            borderRadius: theme.border.radius.medium,
-            font: theme.typography.roles.label.large.font,
-            letterSpacing: theme.typography.roles.label.large.letterSpacing,
-            lineHeight: theme.typography.roles.label.large.lineHeight,
-            background: theme.color.secondary.base,
-            color: theme.color.secondary.on
-        },
-        success: {
-            icon: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$CheckCircle), {
-                size: 24,
-                style: {
-                    flexShrink: 0
-                }
-            }),
-            style: {
-                background: theme.color.success.base,
-                color: theme.color.success.on
-            }
-        },
-        error: {
-            icon: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$XCircle), {
-                size: 24,
-                style: {
-                    flexShrink: 0
-                }
-            }),
-            style: {
-                background: theme.color.error.base,
-                color: theme.color.error.on
-            }
-        }
-    });
-const $cdac57a3491c6a34$export$c4a82530b31b3f8e = ()=>({
-        animation: "revert"
-    });
-
-
-
-const $4ffe7ebd19297b7f$export$cfd585d01b202eca = (0, $26Zo0$motion).div;
-
-
-const $45a7d0798d6b2474$export$fb98e3a2a4cd92d7 = ()=>{
-    const theme = (0, $26Zo0$useTheme)();
-    const customToasterStyles = (0, $cdac57a3491c6a34$export$5d16871b54b7e5b4)(theme.mimir);
-    const customToastBarStyles = (0, $cdac57a3491c6a34$export$c4a82530b31b3f8e)();
-    return /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Toaster, {
-        position: "bottom-right",
-        toastOptions: customToasterStyles,
-        children: (toast)=>/*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
-                children: toast.visible && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $4ffe7ebd19297b7f$export$cfd585d01b202eca), {
-                    ...theme.mimir.animation.from("right", 400),
-                    children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$ToastBar, {
-                        toast: toast,
-                        style: customToastBarStyles
-                    })
-                })
-            })
-    });
-};
-
-
-
-
-
-const $a0cf595f899d435b$export$ee6441f5fa13d80 = (0, $26Zo0$css)`
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  * {
-    margin: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
-
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    max-width: 100%;
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    overflow-wrap: break-word;
-  }
-
-  #root {
-    isolation: isolate;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-
-const $a0e22bec0d1eec3f$export$f05794e648629f6c = (0, $26Zo0$createGlobalStyle)`
-  ${(0, $a0cf595f899d435b$export$ee6441f5fa13d80)};
-
-  body {
-    background: ${({ theme: theme  })=>theme.mimir.color.background.base};
-  }
-
-  // Global typography styles
-  body {
-    font-family: ${({ theme: theme  })=>theme.mimir.typography.typeface.brand};
-    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.normal};
-    font-size: 100%;
-    color: ${({ theme: theme  })=>theme.mimir.color.text.base};
-  }
-
-  h1 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-large")};
-  }
-
-  h2 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-medium")};
-  }
-
-  h3 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-small")};
-  }
-
-  h4 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-large")};
-  }
-
-  h5 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-medium")};
-  }
-
-  h6 {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-small")};
-  }
-
-  p,
-  a {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-large")};
-  }
-
-  a:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  b,
-  strong {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-large")};
-    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.bold};
-  }
-
-  small {
-    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-small")};
-  }
-
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 18px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    border-radius: 7px;
-    background-color: #C4C4C4;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-`;
-
-
-
-function $81f5dbfa378fc5ca$export$b325a9f6dade91bd(initial) {
-    const [colorTheme, setColorTheme] = (0, $26Zo0$useState)(initial);
-    (0, $26Zo0$useEffect)(()=>{
-        function setPreferredTheme() {
-            const savedTheme = localStorage.getItem("theme");
-            if (savedTheme && [
-                "dark",
-                "light"
-            ].includes(savedTheme)) setColorTheme(savedTheme);
-        }
-        setPreferredTheme();
-        window.addEventListener("storage", setPreferredTheme);
-        return ()=>window.removeEventListener("storage", setPreferredTheme);
-    }, []);
-    return [
-        colorTheme
-    ];
-}
-
-
-
-const $b58947f94f33ca4a$export$613dacf2c09c65aa = ({ theme: theme = "light" , children: children  })=>{
-    const [colorTheme] = (0, $81f5dbfa378fc5ca$export$b325a9f6dade91bd)(theme);
-    const applicationTheme = {
-        mimir: (0, $529f04d5337d454b$export$8c5e244d866eaf89)(colorTheme)
-    };
-    return /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$ThemeProvider), {
-        theme: applicationTheme,
-        children: [
-            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $a0e22bec0d1eec3f$export$f05794e648629f6c), {}),
-            /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$MotionConfig), {
-                reducedMotion: "user",
-                children: [
-                    /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$TooltipProvider), {
-                        children: children
-                    }),
-                    /*#__PURE__*/ (0, $26Zo0$jsx)((0, $45a7d0798d6b2474$export$fb98e3a2a4cd92d7), {})
-                ]
-            })
-        ]
-    });
-};
+var $b2b3ee50df44f9d6$export$69674d1480aba23d;
+(function(ConnectorDirection) {
+    ConnectorDirection[ConnectorDirection["Input"] = 0] = "Input";
+    ConnectorDirection[ConnectorDirection["Output"] = 1] = "Output";
+    ConnectorDirection[ConnectorDirection["Bidirectional"] = 2] = "Bidirectional";
+})($b2b3ee50df44f9d6$export$69674d1480aba23d || ($b2b3ee50df44f9d6$export$69674d1480aba23d = {}));
 
 
 
@@ -2104,6 +1338,14 @@ $parcel$export($509bbe46974ebdc8$exports, "ProductIcon", () => $7c3fa5ba83403cda
 $parcel$export($509bbe46974ebdc8$exports, "CheckmarkCheckedIcon", () => $fa408cc5514c0ec6$export$237d50fb1de40e9e);
 $parcel$export($509bbe46974ebdc8$exports, "CheckmarkEmptyIcon", () => $fa408cc5514c0ec6$export$189fca6c0c47ab1a);
 $parcel$export($509bbe46974ebdc8$exports, "CheckmarkIcon", () => $fa408cc5514c0ec6$export$906a919e30cdbd5c);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorBidirectionalIcon", () => $c3a4bc69ae9a6bdc$export$c11effa3f20b3eeb);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorDownstreamIcon", () => $c3a4bc69ae9a6bdc$export$ad2923f1805795f);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorIcon", () => $c3a4bc69ae9a6bdc$export$b853f99e0a417737);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorLocationIcon", () => $c3a4bc69ae9a6bdc$export$a9a784880f3d4de2);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorProductIcon", () => $c3a4bc69ae9a6bdc$export$a3db873d595466b8);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorTreeviewIcon", () => $c3a4bc69ae9a6bdc$export$a167e600995bf5ba);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorUpstreamIcon", () => $c3a4bc69ae9a6bdc$export$e25dfd17f0cb1f77);
+$parcel$export($509bbe46974ebdc8$exports, "ConnectorVerticalIcon", () => $c3a4bc69ae9a6bdc$export$65f64ce45d6e0daa);
 $parcel$export($509bbe46974ebdc8$exports, "DeleteActiveIcon", () => $277f0bdbfcbac28f$export$eee90ad03a9b8ce5);
 $parcel$export($509bbe46974ebdc8$exports, "DeleteDisabledIcon", () => $277f0bdbfcbac28f$export$42ab64235f40ba6c);
 $parcel$export($509bbe46974ebdc8$exports, "DeleteIcon", () => $277f0bdbfcbac28f$export$1ae95d1a7411cb7b);
@@ -2398,6 +1640,249 @@ const $fa408cc5514c0ec6$export$237d50fb1de40e9e = (0, $26Zo0$styledcomponents)((
   ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
 `;
 const $fa408cc5514c0ec6$export$189fca6c0c47ab1a = (0, $26Zo0$styledcomponents)((0, $a1b736553cdfa852$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+
+
+
+
+
+
+const $721aed8e14bf2136$var$SvgConnectorBidirectionalIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                x: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(90 20 0)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M4.447 9.22H1.548a.436.436 0 0 0-.282.768l4.101 3.487L9.47 9.988a.436.436 0 0 0-.282-.769H6.669V5.555H4.447v3.664ZM13.33 10.925h-2.52a.437.437 0 0 1-.283-.77l4.103-3.487 4.103 3.487a.437.437 0 0 1-.283.77h-2.898v3.519h-2.223v-3.52Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $721aed8e14bf2136$export$2e2bcd8739ae039 = $721aed8e14bf2136$var$SvgConnectorBidirectionalIconjsx;
+
+
+
+
+const $18b6e5efc4e6122c$var$SvgConnectorDownstreamIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 30,
+        height: 30,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                width: 30,
+                height: 30,
+                rx: 3,
+                transform: "matrix(0 -1 -1 0 30 30)",
+                fill: "#C05046"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.5 15.001H4.336a1 1 0 0 0-1 1v.288a1 1 0 0 0 .353.762l10.666 9.066a1 1 0 0 0 1.296 0l10.666-9.066a1 1 0 0 0 .353-.762V16a1 1 0 0 0-1-1H17.5v-3.999a1 1 0 0 1 1-1H30v-5H17.19a4.69 4.69 0 0 0-4.69 4.69v5.31Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $18b6e5efc4e6122c$export$2e2bcd8739ae039 = $18b6e5efc4e6122c$var$SvgConnectorDownstreamIconjsx;
+
+
+
+
+const $1e20321c72fa3048$var$SvgConnectorIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 20 0)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M10 12.28v4.7a.798.798 0 0 0 1.405.517l5.822-6.849a1 1 0 0 0 0-1.295l-5.822-6.85A.798.798 0 0 0 10 3.02v4.815H2.415v4.444H10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $1e20321c72fa3048$export$2e2bcd8739ae039 = $1e20321c72fa3048$var$SvgConnectorIconjsx;
+
+
+
+
+const $e85467d6ade3b7d4$var$SvgConnectorLocationIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 17,
+        height: 16,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                width: 16,
+                height: 16,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 16.354 0)",
+                fill: "#FA00FF"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                d: "M8.343 9.772v3.634c0 .34.286.616.64.616a.65.65 0 0 0 .486-.217l4.556-5.168a.94.94 0 0 0 0-1.251L9.47 2.217A.65.65 0 0 0 8.982 2a.628.628 0 0 0-.64.617v3.72H2.265v3.435h6.079Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $e85467d6ade3b7d4$export$2e2bcd8739ae039 = $e85467d6ade3b7d4$var$SvgConnectorLocationIconjsx;
+
+
+
+
+const $5a50f306add43cb7$var$SvgConnectorProductIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 17,
+        height: 16,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                width: 16,
+                height: 16,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 16.354 0)",
+                fill: "#00F0FF"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                d: "M8.343 9.772v3.634c0 .34.286.616.64.616a.65.65 0 0 0 .486-.217l4.556-5.168a.94.94 0 0 0 0-1.251L9.47 2.217A.65.65 0 0 0 8.982 2a.628.628 0 0 0-.64.617v3.72H2.265v3.435h6.079Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $5a50f306add43cb7$export$2e2bcd8739ae039 = $5a50f306add43cb7$var$SvgConnectorProductIconjsx;
+
+
+
+
+const $17b7311e59c37b72$var$SvgConnectorTreeviewIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                y: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(-90 0 20)",
+                fill: "#A0A0A0"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.28 10h4.7a.798.798 0 0 1 .517 1.405l-6.849 5.822a1 1 0 0 1-1.295 0l-6.85-5.822A.798.798 0 0 1 3.02 10h4.815V2.415h4.444V10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $17b7311e59c37b72$export$2e2bcd8739ae039 = $17b7311e59c37b72$var$SvgConnectorTreeviewIconjsx;
+
+
+
+
+const $1de9964b0fcf22d3$var$SvgConnectorUpstreamIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 30,
+        height: 30,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                width: 30,
+                height: 30,
+                rx: 3,
+                transform: "matrix(0 1 1 0 0 0)",
+                fill: "#C05046"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M17.5 14.999h8.165a1 1 0 0 0 1-1v-.288a1 1 0 0 0-.352-.762L15.646 3.883a1 1 0 0 0-1.296 0L3.684 12.949a1 1 0 0 0-.353.762V14a1 1 0 0 0 1 1H12.5v3.999a1 1 0 0 1-1 1H0v5h12.81c2.59 0 4.69-2.1 4.69-4.69v-5.31Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $1de9964b0fcf22d3$export$2e2bcd8739ae039 = $1de9964b0fcf22d3$var$SvgConnectorUpstreamIconjsx;
+
+
+
+
+const $4703556025eaabe1$var$SvgConnectorVerticalIconjsx = (props)=>/*#__PURE__*/ (0, $26Zo0$jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)("rect", {
+                y: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(-90 0 20)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.28 10h4.7a.798.798 0 0 1 .517 1.405l-6.849 5.822a1 1 0 0 1-1.295 0l-6.85-5.822A.798.798 0 0 1 3.02 10h4.815V2.415h4.444V10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $4703556025eaabe1$export$2e2bcd8739ae039 = $4703556025eaabe1$var$SvgConnectorVerticalIconjsx;
+
+
+const $c3a4bc69ae9a6bdc$export$c11effa3f20b3eeb = (0, $26Zo0$styledcomponents)((0, $721aed8e14bf2136$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$ad2923f1805795f = (0, $26Zo0$styledcomponents)((0, $18b6e5efc4e6122c$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$b853f99e0a417737 = (0, $26Zo0$styledcomponents)((0, $1e20321c72fa3048$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$a9a784880f3d4de2 = (0, $26Zo0$styledcomponents)((0, $e85467d6ade3b7d4$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$a3db873d595466b8 = (0, $26Zo0$styledcomponents)((0, $5a50f306add43cb7$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$a167e600995bf5ba = (0, $26Zo0$styledcomponents)((0, $17b7311e59c37b72$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$e25dfd17f0cb1f77 = (0, $26Zo0$styledcomponents)((0, $1de9964b0fcf22d3$export$2e2bcd8739ae039))`
+  ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
+`;
+const $c3a4bc69ae9a6bdc$export$65f64ce45d6e0daa = (0, $26Zo0$styledcomponents)((0, $4703556025eaabe1$export$2e2bcd8739ae039))`
   ${(0, $71ea0fe27961e1ac$export$9d5e649303bff8ec)};
 `;
 
@@ -3311,6 +2796,965 @@ const $22dfeca7b2babd08$export$ebe6507427cf15eb = (0, $26Zo0$styledcomponents)((
 
 
 
+
+const $ea6dcb9a76269852$export$3adaaf573ab8d282 = (0, $26Zo0$styledcomponents).div`
+  display: flex;
+  flex: 0 0 ${(props)=>props.connectorWidth}px;
+  gap: 4px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 4px;
+`;
+const $ea6dcb9a76269852$export$ecb8ece3e7bd8271 = (0, $26Zo0$styledcomponents).div`
+  position: relative;
+  line-height: 0;
+  transition: top 0.2s ease-out, left 0.2s ease-out;
+  display: ${(props)=>props.visible && props.visible === true ? "block" : "none"};
+
+  top: ${(props)=>props.top};
+  left: ${(props)=>props.left};
+  transform: revert;
+
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+
+  border: ${(props)=>props.isInside ? "1px solid red" : ""};
+
+  .react-flow__handle-block {
+    visibility: ${(props)=>props.visible ? "visible" : "hidden"};
+    transition: top 0.2s ease-out, left 0.2s ease-out;
+  }
+`;
+
+
+const $143b5d0d90345639$export$179bb831147717ca = (props)=>{
+    const { connectors: connectors , direction: direction , ...delegated } = props;
+    const filteredConnectors = connectors?.filter((x)=>x.direction === direction && !x.hidden);
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $ea6dcb9a76269852$export$3adaaf573ab8d282), {
+        ...delegated,
+        children: filteredConnectors && filteredConnectors.map((x)=>{
+            if (x.hidden) return null;
+            return /*#__PURE__*/ (0, $26Zo0$jsx)($143b5d0d90345639$var$FlowHandleComponent, {
+                handles: x.handles.filter((x)=>!x.hidden),
+                connectors: connectors,
+                direction: direction,
+                ...delegated
+            }, `handle-${x.id}`);
+        })
+    });
+};
+$143b5d0d90345639$export$179bb831147717ca.displayName = "FlowConnectorComponent";
+$143b5d0d90345639$export$179bb831147717ca.defaultProps = {
+    connectors: [],
+    direction: (0, $b2b3ee50df44f9d6$export$69674d1480aba23d).Input,
+    storybook: false,
+    connectorWidth: 20,
+    connectorHeight: 20
+};
+/**
+ * Handle part of a connector.
+ * @param props Inherit props from parent component
+ * @returns
+ */ const $143b5d0d90345639$var$FlowHandleComponent = (props)=>{
+    const { handles: handles , connectorWidth: connectorWidth , connectorHeight: connectorHeight , storybook: storybook  } = props;
+    const calculateTopPosition = (handle, side)=>{
+        if (side === "inside" && handle.side === "outside") return "-24px";
+        if (side === "outside" && handle.side === "inside") return "24px";
+        return "0px";
+    };
+    // const calculateLeftPosition = (handle: FlowHandle, side: "inside" | "outside"): string => {
+    //   switch (handle.position) {
+    //     case Position.Left:
+    //       return (connectorWidth != null ? connectorWidth * -1 - 5 : 0) + "px";
+    //     case Position.Right:
+    //       return (connectorWidth != null ? connectorWidth + 5 : 0) + "px";
+    //     case Position.Bottom:
+    //     case Position.Top:
+    //       return "0px";
+    //     default:
+    //       return "0px";
+    //   }
+    // };
+    // Sort the handle, inside always before outside
+    // const sortHandles = (h: FlowHandle[] | undefined): FlowHandle[] => {
+    //   if (h == null || h.length <= 0) return [];
+    //   const inside = h.find((x) => x.side === "inside");
+    //   const outside = h.find((x) => x.side === "outside");
+    //   if (inside == null || outside == null)
+    //     throw Error("A connector should have one inside handle and one outside handle");
+    //   return [inside, outside];
+    // };
+    // const sorted = sortHandles(handles);
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$Fragment), {
+        children: handles?.map((x)=>{
+            return /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $ea6dcb9a76269852$export$ecb8ece3e7bd8271), {
+                id: `handle-${x.id}`,
+                top: calculateTopPosition(x, props.side),
+                left: "0px",
+                visible: x.side === props.side,
+                hidden: x.hidden,
+                children: [
+                    /*#__PURE__*/ (0, $26Zo0$jsx)((0, $c3a4bc69ae9a6bdc$export$b853f99e0a417737), {
+                        style: {
+                            fill: x.color
+                        },
+                        className: x.className,
+                        width: `${connectorWidth}px`,
+                        height: `${connectorHeight}px`
+                    }),
+                    !storybook && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$Handle), {
+                        hidden: x.hidden,
+                        type: x.handleType,
+                        position: x.position,
+                        id: x.id,
+                        className: x.className
+                    })
+                ]
+            }, x.id);
+        })
+    });
+};
+$143b5d0d90345639$var$FlowHandleComponent.displayName = "FlowHandleComponent";
+$143b5d0d90345639$var$FlowHandleComponent.defaultProps = {
+    handles: [],
+    storybook: false,
+    connectorWidth: 20,
+    connectorHeight: 20
+};
+
+
+
+
+
+
+const $d2e4eb53d530e7c5$export$ac657ebdd1d0f1b9 = (0, $26Zo0$styledcomponents).img`
+  max-height: 100%;
+  pointer-events: none;
+`;
+const $d2e4eb53d530e7c5$export$236d96ef38f832f6 = (0, $26Zo0$styledcomponents).div`
+  max-height: 30px;
+
+  ${$d2e4eb53d530e7c5$export$ac657ebdd1d0f1b9} {
+    min-height: 30px;
+  }
+`;
+const $d2e4eb53d530e7c5$export$4a2034c9f860b7cd = (0, $26Zo0$styledcomponents).div`
+  position: absolute;
+  bottom: 0;
+  height: 20px;
+  width: 50px;
+  align-self: flex-start;
+  pointer-events: none;
+  margin-left: 10px;
+
+  img {
+    min-height: 100%;
+    filter: brightness(0%);
+  }
+`;
+
+
+const $a0616ba83d24d848$export$3e25e887b7a5b37b = ({ source: source , text: text  })=>{
+    if (source == null) return null;
+    if (source.startsWith("http")) return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $d2e4eb53d530e7c5$export$ac657ebdd1d0f1b9), {
+        src: source,
+        alt: text,
+        draggable: "false"
+    });
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $d2e4eb53d530e7c5$export$ac657ebdd1d0f1b9), {
+        src: "data:image/svg+xml;base64," + source,
+        alt: text,
+        draggable: "false"
+    });
+};
+
+
+
+
+
+
+
+
+
+/**
+ * Function to ignore circular references
+ */ const $26eef136237b9fb6$export$c4d25c0d0c3b7f = ()=>{
+    const seen = new WeakSet();
+    return (key, value)=>{
+        if (key.startsWith("_")) return;
+        if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) return;
+            seen.add(value);
+        }
+        return value;
+    };
+};
+const $26eef136237b9fb6$export$7149c6ffc9994c32 = ()=>{
+    let d = new Date().getTime();
+    let d2 = typeof performance !== "undefined" && performance.now && performance.now() * 1000 || 0;
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16;
+        if (d > 0) {
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
+        }
+        return (c === "x" ? r : r & 0x3 | 0x8).toString(16);
+    });
+};
+const $26eef136237b9fb6$export$bd1203ad2e3208f7 = (domain)=>{
+    const id = $26eef136237b9fb6$export$7149c6ffc9994c32();
+    if (domain == null) return id;
+    return domain + "_" + id;
+};
+const $26eef136237b9fb6$export$637515699a57839b = (id)=>{
+    if (id == null) throw Error("Can't find a domian from null or undefined string.");
+    const split = id.split("_");
+    if (split.length !== 2) throw Error("Can't find a domian. An id should be like example.com_xxxxx-xxxxx-xxxxx.");
+    return split[0].trim();
+};
+const $26eef136237b9fb6$export$5a466c0ba959b06 = (value)=>{
+    return value.replace(/\/+$/, "");
+};
+const $26eef136237b9fb6$export$de3609038e2dcd26 = (negative = true)=>{
+    const input = $26eef136237b9fb6$export$7149c6ffc9994c32();
+    let hash = 0;
+    const len = input.length;
+    for(let i = 0; i < len; i++){
+        hash = (hash << 5) - hash + input.charCodeAt(i);
+        hash |= 0;
+    }
+    if (negative && hash > 0) return hash * -1;
+    else return hash;
+};
+const $26eef136237b9fb6$export$260733d43c3dc50a = (from, to)=>{
+    const f = $26eef136237b9fb6$export$5e4cc6abec75530(from);
+    const t = $26eef136237b9fb6$export$5e4cc6abec75530(to);
+    if (f == null || t == null) return 0;
+    const backInTime = f > t;
+    if (f.getDate() === t.getDate() && f.getMonth() === t.getMonth() && f.getFullYear() === t.getFullYear()) return 1;
+    const difference_In_Time = Math.round(t.getTime() - f.getTime());
+    return Number((difference_In_Time / 86400000).toFixed(0)) + (backInTime ? -1 : 1);
+};
+const $26eef136237b9fb6$export$5e4cc6abec75530 = (value)=>{
+    if (value == null) return undefined;
+    if (typeof value === "string") try {
+        return new Date(value);
+    } catch (error) {
+        console.warn("Can't parse date string: ", value);
+        return new Date();
+    }
+    return value;
+};
+const $26eef136237b9fb6$export$71b45186df786da8 = (current, from, to)=>{
+    const c = $26eef136237b9fb6$export$5e4cc6abec75530(current);
+    const f = $26eef136237b9fb6$export$5e4cc6abec75530(from);
+    const t = $26eef136237b9fb6$export$5e4cc6abec75530(to);
+    if (c == null || f == null || t == null) return false;
+    c.setHours(0, 0, 0, 0);
+    f.setHours(0, 0, 0, 0);
+    t.setHours(0, 0, 0, 0);
+    return c <= t && c >= f;
+};
+
+
+
+
+
+/**
+ * Removes styles from react router links.
+ * Useful when wrapping other elements with navigation semantics.
+ */ const $8e605db25e465cc8$var$ResizablePanelContainer = (0, $26Zo0$styledcomponents).div`
+  position: relative;
+  overflow: ${(props)=>props.maxTrigger ? "auto" : "hidden"};
+  ${(0, $4742fce91a36bc96$export$661888f3c6187e4c)};
+`;
+$8e605db25e465cc8$var$ResizablePanelContainer.defaultProps = {
+    maxTrigger: false
+};
+const $8e605db25e465cc8$export$72e21f73896cddc4 = (0, $26Zo0$motion)($8e605db25e465cc8$var$ResizablePanelContainer);
+
+
+const $692dde140a8b09f1$export$2fb164ca5cfe7082 = ({ children: children , duration: duration , maxHeight: maxHeight  })=>{
+    const [ref, { height: height  }] = (0, $26Zo0$reactusemeasure)();
+    let h = height;
+    let maxTrigger = false;
+    if (maxHeight != null && h != null && height >= maxHeight) {
+        h = maxHeight;
+        maxTrigger = true;
+    }
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $8e605db25e465cc8$export$72e21f73896cddc4), {
+        animate: {
+            height: h || "auto"
+        },
+        maxTrigger: maxTrigger,
+        children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
+            initial: false,
+            children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$motion).div, {
+                initial: {
+                    opacity: 0
+                },
+                animate: {
+                    opacity: 1,
+                    transition: {
+                        duration: duration / 2,
+                        delay: duration / 2
+                    }
+                },
+                exit: {
+                    opacity: 0,
+                    transition: {
+                        duration: duration / 2
+                    }
+                },
+                children: /*#__PURE__*/ (0, $26Zo0$jsx)("div", {
+                    ref: ref,
+                    style: {
+                        position: "absolute"
+                    },
+                    children: children
+                })
+            }, JSON.stringify(children, (0, $26eef136237b9fb6$export$c4d25c0d0c3b7f)()))
+        })
+    });
+};
+
+
+const $131d9058faf478d3$export$b252e133e2c7204f = (props)=>{
+    const { header: header , open: open , duration: duration , children: children , ...delegated } = props;
+    const [expanded, setExpanded] = (0, $26Zo0$useState)(false);
+    (0, $26Zo0$useEffect)(()=>{
+        setExpanded(open);
+    }, [
+        open
+    ]);
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$MotionConfig), {
+        transition: {
+            duration: duration
+        },
+        children: /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$Fragment), {
+            children: [
+                header,
+                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $692dde140a8b09f1$export$2fb164ca5cfe7082), {
+                    duration: duration,
+                    ...delegated,
+                    children: expanded && children
+                })
+            ]
+        })
+    });
+};
+$131d9058faf478d3$export$b252e133e2c7204f.displayName = "MotionPanel";
+
+
+
+
+
+
+const $0a4fb0807d734a92$export$14892c202f726f14 = (0, $26Zo0$styledcomponents)((0, $26Zo0$Link))`
+  color: inherit;
+  text-decoration: inherit;
+
+  :link,
+  :hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
+`;
+
+
+
+
+
+
+const $b0a2f5db4ae850d7$export$a5e06607a5ac6158 = (0, $26Zo0$styledcomponents).div`
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  width: 50px;
+  height: 50px;
+`;
+const $b0a2f5db4ae850d7$export$d499834a866f77c6 = (0, $26Zo0$styledcomponents).div`
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 901;
+`;
+
+
+const $8a61fa0583e81acb$export$7f7cbe89f1eacd2 = ({ variant: variant , disabled: disabled  })=>{
+    const theme = (0, $26Zo0$useTheme)();
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$Fragment), {
+        children: !disabled && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $b0a2f5db4ae850d7$export$d499834a866f77c6), {
+            children: /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $b0a2f5db4ae850d7$export$a5e06607a5ac6158), {
+                children: [
+                    variant && variant === "circle" && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$CircleLoader), {
+                        color: theme.mimir.color.primary.base
+                    }),
+                    variant && variant === "scale" && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$ScaleLoader), {
+                        color: theme.mimir.color.primary.base
+                    })
+                ]
+            })
+        })
+    });
+};
+$8a61fa0583e81acb$export$7f7cbe89f1eacd2.displayName = "Spinner";
+$8a61fa0583e81acb$export$7f7cbe89f1eacd2.defaultValues = {
+    variant: "circle",
+    disabled: true
+};
+
+
+
+
+const $21894e23ce5bb51f$export$a8a3e93435678ff9 = (0, $26Zo0$styledcomponents).h1`
+  ${({ variant: variant  })=>(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)(variant)};
+  ${(0, $4742fce91a36bc96$export$661888f3c6187e4c)};
+  ${(0, $62135822dca75810$export$80711e28e77935d5)};
+  ${(0, $dbede0d07a4a8764$export$f8eec27d1ad18090)};
+  ${(0, $67c30f5a5f973bd7$export$66376f8025bd3245)};
+  ${(0, $6c425cf1a0a27663$export$8f688f6a86c9adf3)};
+  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
+`;
+$21894e23ce5bb51f$export$a8a3e93435678ff9.displayName = "Heading";
+$21894e23ce5bb51f$export$a8a3e93435678ff9.defaultProps = {
+    useEllipsis: false,
+    ellipsisMaxLines: 1
+};
+
+
+
+
+
+
+
+
+
+
+
+
+const $93f040bab052c081$var$TooltipContent = (0, $26Zo0$styledcomponents).div`
+  padding: ${(props)=>props.theme.mimir.spacing.base} ${(props)=>props.theme.mimir.spacing.l};
+  border-radius: ${(props)=>props.theme.mimir.border.radius.large};
+  background-color: ${(props)=>props.theme.mimir.color.surface.inverse.base};
+  color: ${(props)=>props.theme.mimir.color.surface.inverse.on};
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  ${(0, $34603d4f3a3fbd9a$export$e7171cddf5044e64)};
+`;
+const $93f040bab052c081$export$e70caaa407ca3f33 = (0, $26Zo0$motion)($93f040bab052c081$var$TooltipContent);
+
+
+const $6e97fa5953c89edb$export$28c660c63b792dea = /*#__PURE__*/ (0, $26Zo0$forwardRef)((props, ref)=>{
+    const { children: children , content: content , placement: placement , align: align , delay: delay , offset: offset , asChild: asChild , ...delegated } = props;
+    const theme = (0, $26Zo0$useTheme)();
+    const containsTextOnly = typeof content === "string";
+    return /*#__PURE__*/ (0, $26Zo0$jsx)("div", {
+        ref: ref,
+        children: /*#__PURE__*/ (0, $26Zo0$jsxs)($26Zo0$Root2, {
+            disableHoverableContent: true,
+            delayDuration: delay,
+            children: [
+                /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Trigger, {
+                    asChild: asChild,
+                    children: children
+                }),
+                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
+                    children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Portal, {
+                        children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Content, {
+                            asChild: asChild,
+                            avoidCollisions: true,
+                            sideOffset: offset,
+                            side: placement,
+                            align: align,
+                            children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $93f040bab052c081$export$e70caaa407ca3f33), {
+                                ...theme.mimir.animation.scale,
+                                ...delegated,
+                                children: containsTextOnly ? /*#__PURE__*/ (0, $26Zo0$jsx)((0, $de0207036bb3fe06$export$5f1af8db9871e1d6), {
+                                    variant: "body-medium",
+                                    children: content
+                                }) : content
+                            })
+                        })
+                    })
+                })
+            ]
+        })
+    });
+});
+$6e97fa5953c89edb$export$28c660c63b792dea.displayName = "Tooltip";
+$6e97fa5953c89edb$export$28c660c63b792dea.defaultProps = {
+    placement: "top",
+    align: "center",
+    delay: 0,
+    offset: 8,
+    asChild: true
+};
+
+
+
+
+var $c139bef812a7be7c$exports = {};
+
+$parcel$export($c139bef812a7be7c$exports, "SettingProvider", () => $55921be34448eae0$export$6f0dace02a814e88);
+$parcel$export($c139bef812a7be7c$exports, "useSetting", () => $a39d7373180be33b$export$12b0e20ae7d96a25);
+$parcel$export($c139bef812a7be7c$exports, "useLocalStorage", () => $94354bf9bddb77d8$export$86e2cef2561044ac);
+$parcel$export($c139bef812a7be7c$exports, "useMimirorgTheme", () => $df0176613785fe08$export$74446bd855170621);
+
+
+
+const $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e = /*#__PURE__*/ (0, $26Zo0$createContext)({});
+
+
+const $55921be34448eae0$var$defaultAppSetting = {
+    language: {
+        current: "en",
+        languages: [
+            {
+                code: "no",
+                name: "Norwegian"
+            },
+            {
+                code: "en",
+                name: "English"
+            }
+        ]
+    }
+};
+const $55921be34448eae0$export$6f0dace02a814e88 = ({ children: children  })=>{
+    const [setting, setSetting] = (0, $26Zo0$useState)(()=>{
+        if (typeof window === "undefined") return $55921be34448eae0$var$defaultAppSetting;
+        try {
+            const item = window.localStorage.getItem("appsetting");
+            return item ? JSON.parse(item) : $55921be34448eae0$var$defaultAppSetting;
+        } catch (error) {
+            console.warn(error);
+            return $55921be34448eae0$var$defaultAppSetting;
+        }
+    });
+    (0, $26Zo0$useEffect)(()=>{
+        window.localStorage.setItem("appsetting", JSON.stringify(setting));
+    }, [
+        setting
+    ]);
+    const settingProviderValue = (0, $26Zo0$useMemo)(()=>({
+            setting: setting,
+            setSetting: setSetting
+        }), [
+        setting,
+        setSetting
+    ]);
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e).Provider, {
+        value: settingProviderValue,
+        children: children
+    });
+};
+
+
+
+
+const $a39d7373180be33b$export$12b0e20ae7d96a25 = ()=>{
+    return (0, $26Zo0$useContext)((0, $fda42a1c52d4fcbb$export$3054a16eb4fe8c9e));
+};
+
+
+
+function $94354bf9bddb77d8$export$86e2cef2561044ac(key, initialValue) {
+    const [storedValue, setStoredValue] = (0, $26Zo0$useState)(()=>{
+        if (typeof window === "undefined") return initialValue;
+        try {
+            const item = window.localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            console.warn(error);
+            return initialValue;
+        }
+    });
+    const setValue = (value)=>{
+        try {
+            const valueToStore = value instanceof Function ? value(storedValue) : value;
+            setStoredValue(valueToStore);
+            if (typeof window !== "undefined") window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        } catch (error) {
+            console.warn(error);
+        }
+    };
+    return [
+        storedValue,
+        setValue
+    ];
+}
+
+
+
+const $df0176613785fe08$export$74446bd855170621 = ()=>{
+    const theme = (0, $26Zo0$useTheme)();
+    return theme.mimir;
+};
+
+
+
+
+var $b5c4260ed4ee85a9$exports = {};
+
+
+var $a60eebdafdf9fd50$exports = {};
+
+$parcel$export($a60eebdafdf9fd50$exports, "calculateDays", () => $26eef136237b9fb6$export$260733d43c3dc50a);
+$parcel$export($a60eebdafdf9fd50$exports, "createDomainId", () => $26eef136237b9fb6$export$bd1203ad2e3208f7);
+$parcel$export($a60eebdafdf9fd50$exports, "createId", () => $26eef136237b9fb6$export$7149c6ffc9994c32);
+$parcel$export($a60eebdafdf9fd50$exports, "createNumberId", () => $26eef136237b9fb6$export$de3609038e2dcd26);
+$parcel$export($a60eebdafdf9fd50$exports, "forceDate", () => $26eef136237b9fb6$export$5e4cc6abec75530);
+$parcel$export($a60eebdafdf9fd50$exports, "getDomainFromId", () => $26eef136237b9fb6$export$637515699a57839b);
+$parcel$export($a60eebdafdf9fd50$exports, "ignoreCircularReferences", () => $26eef136237b9fb6$export$c4d25c0d0c3b7f);
+$parcel$export($a60eebdafdf9fd50$exports, "isdateBetween", () => $26eef136237b9fb6$export$71b45186df786da8);
+$parcel$export($a60eebdafdf9fd50$exports, "removeTrailingSlashes", () => $26eef136237b9fb6$export$5a466c0ba959b06);
+$parcel$export($a60eebdafdf9fd50$exports, "toBase64", () => $1c87128f875a591e$export$37cc283d8fbd3462);
+$parcel$export($a60eebdafdf9fd50$exports, "lsReadValue", () => $7bd8ff234e9a7c36$export$81e76f652c2aead0);
+$parcel$export($a60eebdafdf9fd50$exports, "lsSaveValue", () => $7bd8ff234e9a7c36$export$98bd917067ba65d5);
+
+
+const $1c87128f875a591e$export$37cc283d8fbd3462 = (file)=>new Promise((resolve, reject)=>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = ()=>resolve(reader.result);
+        reader.onerror = (error)=>reject(error);
+    });
+const $1c87128f875a591e$export$b20f4ee19ffa0668 = (base64)=>{
+    // Split into two parts
+    const parts = base64.split(";base64,");
+    // Hold the content type
+    const imageType = parts[0].split(":")[1];
+    // Decode Base64 string
+    const decodedData = (0, $26Zo0$decode)(parts[1]);
+    // Create UNIT8ARRAY of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length);
+    // Insert all character code into uInt8Array
+    for(let i = 0; i < decodedData.length; ++i)uInt8Array[i] = decodedData.charCodeAt(i);
+    // Return BLOB image after conversion
+    return new Blob([
+        uInt8Array
+    ], {
+        type: imageType
+    });
+};
+
+
+/**
+ * Read value from local storage
+ * The data must be stored in json format.
+ * If error it returns null and logs a warning to the console.
+ *
+ * @param key  the storage key
+ */ function $7bd8ff234e9a7c36$export$81e76f652c2aead0(key) {
+    if (typeof window === "undefined") return null;
+    try {
+        const item = window.localStorage.getItem(key);
+        if (item == null) return null;
+        return JSON.parse(item);
+    } catch (error) {
+        console.warn(error);
+    }
+    return null;
+}
+function $7bd8ff234e9a7c36$export$98bd917067ba65d5(key, value) {
+    if (typeof window === "undefined") return;
+    try {
+        if (value == null) {
+            window.localStorage.removeItem(key);
+            return;
+        }
+        window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+
+
+
+var $20ad44a5ad0a982d$exports = {};
+
+$parcel$export($20ad44a5ad0a982d$exports, "MimirorgThemeProvider", () => $b58947f94f33ca4a$export$613dacf2c09c65aa);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const $cdac57a3491c6a34$export$5d16871b54b7e5b4 = (theme)=>({
+        style: {
+            display: "flex",
+            padding: `${theme.spacing.base} ${theme.spacing.l}`,
+            boxShadow: theme.shadow.small,
+            borderRadius: theme.border.radius.medium,
+            font: theme.typography.roles.label.large.font,
+            letterSpacing: theme.typography.roles.label.large.letterSpacing,
+            lineHeight: theme.typography.roles.label.large.lineHeight,
+            background: theme.color.secondary.base,
+            color: theme.color.secondary.on
+        },
+        success: {
+            icon: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$CheckCircle), {
+                size: 24,
+                style: {
+                    flexShrink: 0
+                }
+            }),
+            style: {
+                background: theme.color.success.base,
+                color: theme.color.success.on
+            }
+        },
+        error: {
+            icon: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$XCircle), {
+                size: 24,
+                style: {
+                    flexShrink: 0
+                }
+            }),
+            style: {
+                background: theme.color.error.base,
+                color: theme.color.error.on
+            }
+        }
+    });
+const $cdac57a3491c6a34$export$c4a82530b31b3f8e = ()=>({
+        animation: "revert"
+    });
+
+
+
+const $4ffe7ebd19297b7f$export$cfd585d01b202eca = (0, $26Zo0$motion).div;
+
+
+const $45a7d0798d6b2474$export$fb98e3a2a4cd92d7 = ()=>{
+    const theme = (0, $26Zo0$useTheme)();
+    const customToasterStyles = (0, $cdac57a3491c6a34$export$5d16871b54b7e5b4)(theme.mimir);
+    const customToastBarStyles = (0, $cdac57a3491c6a34$export$c4a82530b31b3f8e)();
+    return /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$Toaster, {
+        position: "bottom-right",
+        toastOptions: customToasterStyles,
+        children: (toast)=>/*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$AnimatePresence), {
+                children: toast.visible && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $4ffe7ebd19297b7f$export$cfd585d01b202eca), {
+                    ...theme.mimir.animation.from("right", 400),
+                    children: /*#__PURE__*/ (0, $26Zo0$jsx)($26Zo0$ToastBar, {
+                        toast: toast,
+                        style: customToastBarStyles
+                    })
+                })
+            })
+    });
+};
+
+
+
+
+
+const $a0cf595f899d435b$export$ee6441f5fa13d80 = (0, $26Zo0$css)`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  #root {
+    isolation: isolate;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+
+const $a0e22bec0d1eec3f$export$f05794e648629f6c = (0, $26Zo0$createGlobalStyle)`
+  ${(0, $a0cf595f899d435b$export$ee6441f5fa13d80)};
+
+  body {
+    background: ${({ theme: theme  })=>theme.mimir.color.background.base};
+  }
+
+  // Global typography styles
+  body {
+    font-family: ${({ theme: theme  })=>theme.mimir.typography.typeface.brand};
+    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.normal};
+    font-size: 100%;
+    color: ${({ theme: theme  })=>theme.mimir.color.text.base};
+  }
+
+  h1 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-large")};
+  }
+
+  h2 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-medium")};
+  }
+
+  h3 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("display-small")};
+  }
+
+  h4 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-large")};
+  }
+
+  h5 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-medium")};
+  }
+
+  h6 {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("headline-small")};
+  }
+
+  p,
+  a {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-large")};
+  }
+
+  a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  b,
+  strong {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-large")};
+    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.bold};
+  }
+
+  small {
+    ${(0, $8f10d2c64a99fb76$export$4d9bf56aa526ad8a)("body-small")};
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 7px;
+    background-color: #C4C4C4;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+`;
+
+
+
+function $81f5dbfa378fc5ca$export$b325a9f6dade91bd(initial) {
+    const [colorTheme, setColorTheme] = (0, $26Zo0$useState)(initial);
+    (0, $26Zo0$useEffect)(()=>{
+        function setPreferredTheme() {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme && [
+                "dark",
+                "light"
+            ].includes(savedTheme)) setColorTheme(savedTheme);
+        }
+        setPreferredTheme();
+        window.addEventListener("storage", setPreferredTheme);
+        return ()=>window.removeEventListener("storage", setPreferredTheme);
+    }, []);
+    return [
+        colorTheme
+    ];
+}
+
+
+
+const $b58947f94f33ca4a$export$613dacf2c09c65aa = ({ theme: theme = "light" , children: children  })=>{
+    const [colorTheme] = (0, $81f5dbfa378fc5ca$export$b325a9f6dade91bd)(theme);
+    const applicationTheme = {
+        mimir: (0, $529f04d5337d454b$export$8c5e244d866eaf89)(colorTheme)
+    };
+    return /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$ThemeProvider), {
+        theme: applicationTheme,
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $a0e22bec0d1eec3f$export$f05794e648629f6c), {}),
+            /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $26Zo0$MotionConfig), {
+                reducedMotion: "user",
+                children: [
+                    /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$TooltipProvider), {
+                        children: children
+                    }),
+                    /*#__PURE__*/ (0, $26Zo0$jsx)((0, $45a7d0798d6b2474$export$fb98e3a2a4cd92d7), {})
+                ]
+            })
+        ]
+    });
+};
+
+
+
+
+
 var $e971fdaa7da65bdd$exports = {};
 
 $parcel$export($e971fdaa7da65bdd$exports, "Box", () => $da441300bfed1ab2$export$e71c4d32a2263218);
@@ -3379,11 +3823,12 @@ $parcel$export($5160ac8749fc8fc4$exports, "Input", () => $a759f6a6082fb50d$expor
 $parcel$export($5160ac8749fc8fc4$exports, "RadioButton", () => $065a64e6eba0c5b6$export$f4422ae58352e179);
 $parcel$export($5160ac8749fc8fc4$exports, "RichTextarea", () => $7e3cea35ade5a03c$export$988f442bad83a3dc);
 $parcel$export($5160ac8749fc8fc4$exports, "Select", () => $1f15799bbf16fbf3$export$ef9b1a59e592288f);
-$parcel$export($5160ac8749fc8fc4$exports, "SwitchComponent", () => $be5aab2b1cf71957$export$4f67f25efd2613a8);
 $parcel$export($5160ac8749fc8fc4$exports, "Textarea", () => $2223269a322e756a$export$379139ebc1c2b235);
 $parcel$export($5160ac8749fc8fc4$exports, "UserAutoComplete", () => $0e8b50cb9746e0c1$export$dd2805e091597ff2);
+$parcel$export($5160ac8749fc8fc4$exports, "SwitchComponent", () => $be5aab2b1cf71957$export$4f67f25efd2613a8);
 $parcel$export($5160ac8749fc8fc4$exports, "Popover", () => $a42bded32577d99a$export$5b6b19405a83ff9d);
 $parcel$export($5160ac8749fc8fc4$exports, "toast", () => $95064cb24a90d97c$export$b410431fab84fa58);
+$parcel$export($5160ac8749fc8fc4$exports, "FlowNodeComponent", () => $83f8c16986f12dec$export$ec1602e46eacee2c);
 
 
 
@@ -4905,85 +5350,6 @@ const $1f15799bbf16fbf3$export$ef9b1a59e592288f = (props)=>{
 
 
 
-
-
-const $145c13d5377407de$export$6f134394432193e7 = (0, $26Zo0$styledcomponents)($26Zo0$Root7)`
-  all: unset;
-  width: 42px;
-  height: 25px;
-  background-color: ${(props)=>props.theme.mimir.color.surface.variant.base};
-  border-radius: 9999px;
-  position: relative;
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  :hover {
-    cursor: pointer;
-    background-color: ${(props)=>props.theme.mimir.color.secondary.container?.base};
-  }
-
-  :focus {
-    box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  }
-`;
-const $145c13d5377407de$export$4d07bf653ea69106 = (0, $26Zo0$styledcomponents)($26Zo0$Thumb)`
-  display: block;
-  width: 21px;
-  height: 21px;
-  background-color: ${(props)=>props.theme.mimir.color.text.on};
-  border-radius: 9999px;
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  transition: transform 100ms;
-  transform: translateX(2px);
-  will-change: transform;
-
-  &[data-state="checked"] {
-    transform: translateX(19px);
-    background-color: ${(props)=>props.theme.mimir.color.primary.base};
-  }
-`;
-
-
-const $be5aab2b1cf71957$export$4f67f25efd2613a8 = (props)=>{
-    const theme = (0, $26Zo0$useTheme)();
-    const [status, setStatus] = (0, $26Zo0$useState)(props.checked);
-    const onCheckedChange = (status)=>{
-        setStatus(status);
-        if (props.onSwitchChange != null) props.onSwitchChange(status);
-    };
-    return /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $6e27437643813539$export$5fceefdeba78d15a), {
-        alignItems: "center",
-        children: [
-            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $de0207036bb3fe06$export$5f1af8db9871e1d6), {
-                htmlFor: "airplane-mode",
-                as: "label",
-                variant: "label-medium",
-                spacing: {
-                    mr: theme.mimir.spacing.l
-                },
-                children: props.text
-            }),
-            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $145c13d5377407de$export$6f134394432193e7), {
-                id: "airplane-mode",
-                checked: status,
-                onCheckedChange: onCheckedChange,
-                children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $145c13d5377407de$export$4d07bf653ea69106), {})
-            })
-        ]
-    });
-};
-$be5aab2b1cf71957$export$4f67f25efd2613a8.displayName = "SwitchComponent";
-$be5aab2b1cf71957$export$4f67f25efd2613a8.defaultProps = {
-    text: "",
-    checked: false
-};
-
-
-
-
-
-
-
 const $f5949790f382766a$export$72f57f62e07710be = (0, $26Zo0$styledcomponents).div``;
 const $f5949790f382766a$export$ba7509128d3a2a52 = (0, $26Zo0$styledcomponents).ul`
   border: 1px solid ${(props)=>props.theme.mimir.color.outline.base};
@@ -5129,7 +5495,210 @@ $0e8b50cb9746e0c1$export$dd2805e091597ff2.displayName = "UserAutoCompleteProps";
 
 
 
+
+
+
+
+
+const $145c13d5377407de$export$6f134394432193e7 = (0, $26Zo0$styledcomponents)($26Zo0$Root7)`
+  all: unset;
+  width: 42px;
+  height: 25px;
+  background-color: ${(props)=>props.theme.mimir.color.surface.variant.base};
+  border-radius: 9999px;
+  position: relative;
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  :hover {
+    cursor: pointer;
+    background-color: ${(props)=>props.theme.mimir.color.secondary.container?.base};
+  }
+
+  :focus {
+    box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  }
+`;
+const $145c13d5377407de$export$4d07bf653ea69106 = (0, $26Zo0$styledcomponents)($26Zo0$Thumb)`
+  display: block;
+  width: 21px;
+  height: 21px;
+  background-color: ${(props)=>props.theme.mimir.color.text.on};
+  border-radius: 9999px;
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  transition: transform 100ms;
+  transform: translateX(2px);
+  will-change: transform;
+
+  &[data-state="checked"] {
+    transform: translateX(19px);
+    background-color: ${(props)=>props.theme.mimir.color.primary.base};
+  }
+`;
+
+
+const $be5aab2b1cf71957$export$4f67f25efd2613a8 = (props)=>{
+    const theme = (0, $26Zo0$useTheme)();
+    const [status, setStatus] = (0, $26Zo0$useState)(props.checked);
+    const onCheckedChange = (status)=>{
+        setStatus(status);
+        if (props.onSwitchChange != null) props.onSwitchChange(status);
+    };
+    return /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $6e27437643813539$export$5fceefdeba78d15a), {
+        alignItems: "center",
+        children: [
+            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $de0207036bb3fe06$export$5f1af8db9871e1d6), {
+                htmlFor: "airplane-mode",
+                as: "label",
+                variant: "label-medium",
+                spacing: {
+                    mr: theme.mimir.spacing.l
+                },
+                children: props.text
+            }),
+            /*#__PURE__*/ (0, $26Zo0$jsx)((0, $145c13d5377407de$export$6f134394432193e7), {
+                id: "airplane-mode",
+                checked: status,
+                onCheckedChange: onCheckedChange,
+                children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $145c13d5377407de$export$4d07bf653ea69106), {})
+            })
+        ]
+    });
+};
+$be5aab2b1cf71957$export$4f67f25efd2613a8.displayName = "SwitchComponent";
+$be5aab2b1cf71957$export$4f67f25efd2613a8.defaultProps = {
+    text: "",
+    checked: false
+};
+
+
+
+
 const $95064cb24a90d97c$export$b410431fab84fa58 = (0, $26Zo0$toast);
+
+
+
+
+
+
+
+
+
+
+const $406f8669185e6302$export$bded10d9b0827aeb = (0, $26Zo0$styledcomponents).div`
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  flex-direction: row;
+`;
+const $406f8669185e6302$export$d8a48536dbcad893 = (0, $26Zo0$styledcomponents).div`
+  display: flex;
+  border-radius: 10px;
+  min-height: ${(props)=>props.nodeHeight}px;
+  width: ${(props)=>props.nodeWidth}px;
+  font-size: 11px;
+  text-align: center;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+  background-color: ${(props)=>props.colorMain};
+  opacity: ${(props)=>props.hidden ? 0 : 1};
+  transition: border 250ms, opacity 250ms;
+  padding: 0;
+  border: 3px solid;
+  border-color: ${(props)=>props.colorMain} !important;
+  margin: 0;
+  opacity: ${(props)=>props.visible ? 1 : 0};
+
+  &:hover {
+    border: 3px solid;
+    border-color: ${(props)=>props.colorSelected} !important;
+  }
+
+  &.selected {
+    border: 3px solid;
+    border-color: ${(props)=>props.colorSelected} !important;
+  }
+`;
+const $406f8669185e6302$export$49d341e6197bb092 = (0, $26Zo0$styledcomponents).div`
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+`;
+
+
+const $83f8c16986f12dec$export$ec1602e46eacee2c = (props)=>{
+    const theme = (0, $df0176613785fe08$export$74446bd855170621)();
+    const { connectors: connectors , title: title , symbol: symbol , logo: logo , ...delegated } = props;
+    return /*#__PURE__*/ (0, $26Zo0$jsx)((0, $26Zo0$Fragment), {
+        children: props.hidden == null || !props.hidden && /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $406f8669185e6302$export$bded10d9b0827aeb), {
+            children: [
+                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $143b5d0d90345639$export$179bb831147717ca), {
+                    side: "inside",
+                    direction: (0, $b2b3ee50df44f9d6$export$69674d1480aba23d).Input,
+                    connectors: connectors,
+                    ...delegated
+                }),
+                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $406f8669185e6302$export$d8a48536dbcad893), {
+                    ...delegated,
+                    className: props.selected ? "selected" : "",
+                    children: /*#__PURE__*/ (0, $26Zo0$jsxs)((0, $406f8669185e6302$export$49d341e6197bb092), {
+                        children: [
+                            title != null && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $de0207036bb3fe06$export$5f1af8db9871e1d6), {
+                                as: "p",
+                                variant: "title-medium",
+                                fontWeight: theme.typography.typeface.weights.bold,
+                                useEllipsis: true,
+                                ellipsisMaxLines: 2,
+                                children: title
+                            }),
+                            title != null && symbol != null && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $d2e4eb53d530e7c5$export$236d96ef38f832f6), {
+                                children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $a0616ba83d24d848$export$3e25e887b7a5b37b), {
+                                    source: symbol,
+                                    text: `${title} symbol`
+                                })
+                            }),
+                            logo != null && /*#__PURE__*/ (0, $26Zo0$jsx)((0, $d2e4eb53d530e7c5$export$4a2034c9f860b7cd), {
+                                className: "FlowNodeComponent-LogoBox",
+                                children: /*#__PURE__*/ (0, $26Zo0$jsx)((0, $a0616ba83d24d848$export$3e25e887b7a5b37b), {
+                                    source: logo,
+                                    text: "Logo"
+                                })
+                            })
+                        ]
+                    })
+                }),
+                /*#__PURE__*/ (0, $26Zo0$jsx)((0, $143b5d0d90345639$export$179bb831147717ca), {
+                    side: "outside",
+                    direction: (0, $b2b3ee50df44f9d6$export$69674d1480aba23d).Output,
+                    connectors: connectors,
+                    ...delegated
+                })
+            ]
+        })
+    });
+};
+$83f8c16986f12dec$export$ec1602e46eacee2c.displayName = "FlowNodeComponent";
+$83f8c16986f12dec$export$ec1602e46eacee2c.defaultProps = {
+    connectors: [],
+    storybook: false,
+    title: undefined,
+    symbol: undefined,
+    logo: undefined,
+    colorMain: "#FEF445",
+    colorSelected: "#FBC913",
+    selected: false,
+    hidden: false,
+    visible: true,
+    nodeWidth: 160,
+    nodeHeight: 95,
+    connectorWidth: 19,
+    connectorHeight: 19
+};
 
 
 
@@ -5442,5 +6011,5 @@ var $a354772b6b9870cb$exports = {};
 
 
 
-export {$696f693fac81a609$export$353f5b6fc5456de1 as Button, $ab754ee3829129c7$export$39aecc95f0365819 as ConditionalWrapper, $0d6276d0028f6bba$export$2e0a83ec2e27ecbb as Divider, $066b48d8e5b33e52$export$439d29a4e110a164 as VisuallyHidden, $54dcd6617557221f$export$f04a61298a47a40f as Icon, $131d9058faf478d3$export$b252e133e2c7204f as MotionPanel, $692dde140a8b09f1$export$2fb164ca5cfe7082 as ResizablePanel, $0a4fb0807d734a92$export$14892c202f726f14 as PlainLink, $8a61fa0583e81acb$export$7f7cbe89f1eacd2 as Spinner, $21894e23ce5bb51f$export$a8a3e93435678ff9 as Heading, $de0207036bb3fe06$export$5f1af8db9871e1d6 as Text, $6e97fa5953c89edb$export$28c660c63b792dea as Tooltip, $55921be34448eae0$export$6f0dace02a814e88 as SettingProvider, $a39d7373180be33b$export$12b0e20ae7d96a25 as useSetting, $94354bf9bddb77d8$export$86e2cef2561044ac as useLocalStorage, $df0176613785fe08$export$74446bd855170621 as useMimirorgTheme, $26eef136237b9fb6$export$260733d43c3dc50a as calculateDays, $26eef136237b9fb6$export$bd1203ad2e3208f7 as createDomainId, $26eef136237b9fb6$export$7149c6ffc9994c32 as createId, $26eef136237b9fb6$export$de3609038e2dcd26 as createNumberId, $26eef136237b9fb6$export$5e4cc6abec75530 as forceDate, $26eef136237b9fb6$export$637515699a57839b as getDomainFromId, $26eef136237b9fb6$export$c4d25c0d0c3b7f as ignoreCircularReferences, $26eef136237b9fb6$export$71b45186df786da8 as isdateBetween, $26eef136237b9fb6$export$5a466c0ba959b06 as removeTrailingSlashes, $1c87128f875a591e$export$37cc283d8fbd3462 as toBase64, $7bd8ff234e9a7c36$export$81e76f652c2aead0 as lsReadValue, $7bd8ff234e9a7c36$export$98bd917067ba65d5 as lsSaveValue, $b58947f94f33ca4a$export$613dacf2c09c65aa as MimirorgThemeProvider, $da441300bfed1ab2$export$e71c4d32a2263218 as Box, $da441300bfed1ab2$export$9dfcb7da7cf3aa86 as MotionBox, $6e27437643813539$export$5fceefdeba78d15a as Flexbox, $6e27437643813539$export$21b95509b28a7683 as MotionFlexbox, $717b690a15449498$export$926bf97b2b58e3ae as Gridbox, $717b690a15449498$export$a4d1ee21f95f7fcb as MotionGridbox, $e61374bbfe072911$export$3ddf2d174ce01153 as Dialog, $ca4291856ca5ea28$export$94e94c2ec2c954d5 as DialogDescription, $f0b76ef41432877d$export$57907242f1c228d4 as DialogExit, $48478f5908e23f0a$export$16f7638e4a34b909 as DialogTitle, $a9c06df81cd28ab5$export$69f33c96a751ad5e as FileComponent, $dbff3f1a6d6560d4$export$a7fed597f4b8afd8 as Form, $d259bdd2e0b678d6$export$48e635acc81ce1d as FormErrorBanner, $952d306367811240$export$56e87bf42978147a as FormField, $6ac48fb302788f2d$export$9dbe89f9a87918c as FormFieldset, $689b170d0b2af587$export$97ee2cbf37e5ebfe as FormHeader, $6a8a770e23835f0b$export$39c7ec7ed1888ce3 as FormLegend, $e03d31f9582382bc$export$b7ed69a880252dd as CalendarComponent, $5820a23f7bab0dfc$export$48513f6b9f8ce62d as Checkbox, $a759f6a6082fb50d$export$f5b8910cec6cf069 as Input, $065a64e6eba0c5b6$export$f4422ae58352e179 as RadioButton, $7e3cea35ade5a03c$export$988f442bad83a3dc as RichTextarea, $1f15799bbf16fbf3$export$ef9b1a59e592288f as Select, $be5aab2b1cf71957$export$4f67f25efd2613a8 as SwitchComponent, $2223269a322e756a$export$379139ebc1c2b235 as Textarea, $0e8b50cb9746e0c1$export$dd2805e091597ff2 as UserAutoComplete, $a42bded32577d99a$export$5b6b19405a83ff9d as Popover, $95064cb24a90d97c$export$b410431fab84fa58 as toast, $8a0f022c9089e3cd$export$915e9e7bd4f0f96d as ErrorMessage, $ebb656a48d91806c$export$6406ce20c6eab64d as InspectorPanel, $7c3fa5ba83403cda$export$b4f4531fd95c60ae as FunctionFilterIcon, $7c3fa5ba83403cda$export$b9b4845a188be90a as FunctionIcon, $7c3fa5ba83403cda$export$85bac42bead344b8 as LocationFilterIcon, $7c3fa5ba83403cda$export$ec1acb4261485f12 as LocationIcon, $7c3fa5ba83403cda$export$e6314745aeadbdb6 as ProductFilterIcon, $7c3fa5ba83403cda$export$1a199e029d5e93d6 as ProductIcon, $fa408cc5514c0ec6$export$237d50fb1de40e9e as CheckmarkCheckedIcon, $fa408cc5514c0ec6$export$189fca6c0c47ab1a as CheckmarkEmptyIcon, $fa408cc5514c0ec6$export$906a919e30cdbd5c as CheckmarkIcon, $277f0bdbfcbac28f$export$eee90ad03a9b8ce5 as DeleteActiveIcon, $277f0bdbfcbac28f$export$42ab64235f40ba6c as DeleteDisabledIcon, $277f0bdbfcbac28f$export$1ae95d1a7411cb7b as DeleteIcon, $40d46121288fff2e$export$53ff5d0aaf0f6609 as AvatarBackgroundIcon, $40d46121288fff2e$export$efd394b233411f7a as BlockViewActiveIcon, $40d46121288fff2e$export$a01f8070dec64cc0 as BlockViewIcon, $40d46121288fff2e$export$4e57461601b6b5b2 as DarkModeIcon, $40d46121288fff2e$export$dbaed707686283bf as FilterActiveIcon, $40d46121288fff2e$export$28f6150e232898de as FilterIcon, $40d46121288fff2e$export$9a28dba4abd131fb as FitViewIcon, $40d46121288fff2e$export$ffa4d1c5f56b2bbd as HorizontalIcon, $40d46121288fff2e$export$f92a6081e4e1514c as LightModeIcon, $40d46121288fff2e$export$2c9e30524eeaa42e as LogoutIcon, $40d46121288fff2e$export$9657eb82c102a97c as NotificationsIcon, $40d46121288fff2e$export$ac4e8b8ca2b79f39 as SettingsIcon, $40d46121288fff2e$export$8b47fbdcab40bc56 as TreeViewActiveIcon, $40d46121288fff2e$export$d8189acd3db154bf as TreeViewIcon, $40d46121288fff2e$export$ba9edb5a0ba713fb as VerticalIcon, $a375e0e7383bd457$export$3030cdd17ffad81 as LibraryIcon, $449944ba453b5c97$export$f53936b98653a113 as LockClosedIcon, $449944ba453b5c97$export$37ea31f99740f2be as LockIcon, $449944ba453b5c97$export$8e05a58e6971f13d as LockOpenIcon, $c1ed2d6fbd8cc8c0$export$eed26074b425133a as LogoIcon, $22dfeca7b2babd08$export$722f8bfc785472cf as CollapseAccordionIcon, $22dfeca7b2babd08$export$fdbed76f4783dfe7 as CollapseAccordionNestedIcon, $22dfeca7b2babd08$export$67cd4f075b72ffc9 as CollapseIcon, $22dfeca7b2babd08$export$7ac3ebb6edb0e044 as CollapseWhiteIcon, $22dfeca7b2babd08$export$31901d6f7b9068da as ExpandedAccordionIcon, $22dfeca7b2babd08$export$ebe6507427cf15eb as ExpandedAccordionNestedIcon, $22dfeca7b2babd08$export$f5cb197ef241297f as ExpandedIcon, $22dfeca7b2babd08$export$763b5fdab3e2c08b as ExpandedWhiteIcon, $22dfeca7b2babd08$export$b0c3ddeace589b20 as ToogleDownIcon, $22dfeca7b2babd08$export$2d689d9a9f573512 as ToogleUpIcon};
+export {$696f693fac81a609$export$353f5b6fc5456de1 as Button, $ab754ee3829129c7$export$39aecc95f0365819 as ConditionalWrapper, $0d6276d0028f6bba$export$2e0a83ec2e27ecbb as Divider, $143b5d0d90345639$export$179bb831147717ca as FlowConnectorComponent, $066b48d8e5b33e52$export$439d29a4e110a164 as VisuallyHidden, $54dcd6617557221f$export$f04a61298a47a40f as Icon, $a0616ba83d24d848$export$3e25e887b7a5b37b as Symbol, $d2e4eb53d530e7c5$export$4a2034c9f860b7cd as LogoBox, $d2e4eb53d530e7c5$export$236d96ef38f832f6 as SymbolBox, $131d9058faf478d3$export$b252e133e2c7204f as MotionPanel, $692dde140a8b09f1$export$2fb164ca5cfe7082 as ResizablePanel, $0a4fb0807d734a92$export$14892c202f726f14 as PlainLink, $8a61fa0583e81acb$export$7f7cbe89f1eacd2 as Spinner, $21894e23ce5bb51f$export$a8a3e93435678ff9 as Heading, $de0207036bb3fe06$export$5f1af8db9871e1d6 as Text, $6e97fa5953c89edb$export$28c660c63b792dea as Tooltip, $55921be34448eae0$export$6f0dace02a814e88 as SettingProvider, $a39d7373180be33b$export$12b0e20ae7d96a25 as useSetting, $94354bf9bddb77d8$export$86e2cef2561044ac as useLocalStorage, $df0176613785fe08$export$74446bd855170621 as useMimirorgTheme, $26eef136237b9fb6$export$260733d43c3dc50a as calculateDays, $26eef136237b9fb6$export$bd1203ad2e3208f7 as createDomainId, $26eef136237b9fb6$export$7149c6ffc9994c32 as createId, $26eef136237b9fb6$export$de3609038e2dcd26 as createNumberId, $26eef136237b9fb6$export$5e4cc6abec75530 as forceDate, $26eef136237b9fb6$export$637515699a57839b as getDomainFromId, $26eef136237b9fb6$export$c4d25c0d0c3b7f as ignoreCircularReferences, $26eef136237b9fb6$export$71b45186df786da8 as isdateBetween, $26eef136237b9fb6$export$5a466c0ba959b06 as removeTrailingSlashes, $1c87128f875a591e$export$37cc283d8fbd3462 as toBase64, $7bd8ff234e9a7c36$export$81e76f652c2aead0 as lsReadValue, $7bd8ff234e9a7c36$export$98bd917067ba65d5 as lsSaveValue, $b58947f94f33ca4a$export$613dacf2c09c65aa as MimirorgThemeProvider, $da441300bfed1ab2$export$e71c4d32a2263218 as Box, $da441300bfed1ab2$export$9dfcb7da7cf3aa86 as MotionBox, $6e27437643813539$export$5fceefdeba78d15a as Flexbox, $6e27437643813539$export$21b95509b28a7683 as MotionFlexbox, $717b690a15449498$export$926bf97b2b58e3ae as Gridbox, $717b690a15449498$export$a4d1ee21f95f7fcb as MotionGridbox, $e61374bbfe072911$export$3ddf2d174ce01153 as Dialog, $ca4291856ca5ea28$export$94e94c2ec2c954d5 as DialogDescription, $f0b76ef41432877d$export$57907242f1c228d4 as DialogExit, $48478f5908e23f0a$export$16f7638e4a34b909 as DialogTitle, $a9c06df81cd28ab5$export$69f33c96a751ad5e as FileComponent, $dbff3f1a6d6560d4$export$a7fed597f4b8afd8 as Form, $d259bdd2e0b678d6$export$48e635acc81ce1d as FormErrorBanner, $952d306367811240$export$56e87bf42978147a as FormField, $6ac48fb302788f2d$export$9dbe89f9a87918c as FormFieldset, $689b170d0b2af587$export$97ee2cbf37e5ebfe as FormHeader, $6a8a770e23835f0b$export$39c7ec7ed1888ce3 as FormLegend, $e03d31f9582382bc$export$b7ed69a880252dd as CalendarComponent, $5820a23f7bab0dfc$export$48513f6b9f8ce62d as Checkbox, $a759f6a6082fb50d$export$f5b8910cec6cf069 as Input, $065a64e6eba0c5b6$export$f4422ae58352e179 as RadioButton, $7e3cea35ade5a03c$export$988f442bad83a3dc as RichTextarea, $1f15799bbf16fbf3$export$ef9b1a59e592288f as Select, $2223269a322e756a$export$379139ebc1c2b235 as Textarea, $0e8b50cb9746e0c1$export$dd2805e091597ff2 as UserAutoComplete, $be5aab2b1cf71957$export$4f67f25efd2613a8 as SwitchComponent, $a42bded32577d99a$export$5b6b19405a83ff9d as Popover, $95064cb24a90d97c$export$b410431fab84fa58 as toast, $83f8c16986f12dec$export$ec1602e46eacee2c as FlowNodeComponent, $8a0f022c9089e3cd$export$915e9e7bd4f0f96d as ErrorMessage, $ebb656a48d91806c$export$6406ce20c6eab64d as InspectorPanel, $7c3fa5ba83403cda$export$b4f4531fd95c60ae as FunctionFilterIcon, $7c3fa5ba83403cda$export$b9b4845a188be90a as FunctionIcon, $7c3fa5ba83403cda$export$85bac42bead344b8 as LocationFilterIcon, $7c3fa5ba83403cda$export$ec1acb4261485f12 as LocationIcon, $7c3fa5ba83403cda$export$e6314745aeadbdb6 as ProductFilterIcon, $7c3fa5ba83403cda$export$1a199e029d5e93d6 as ProductIcon, $fa408cc5514c0ec6$export$237d50fb1de40e9e as CheckmarkCheckedIcon, $fa408cc5514c0ec6$export$189fca6c0c47ab1a as CheckmarkEmptyIcon, $fa408cc5514c0ec6$export$906a919e30cdbd5c as CheckmarkIcon, $c3a4bc69ae9a6bdc$export$c11effa3f20b3eeb as ConnectorBidirectionalIcon, $c3a4bc69ae9a6bdc$export$ad2923f1805795f as ConnectorDownstreamIcon, $c3a4bc69ae9a6bdc$export$b853f99e0a417737 as ConnectorIcon, $c3a4bc69ae9a6bdc$export$a9a784880f3d4de2 as ConnectorLocationIcon, $c3a4bc69ae9a6bdc$export$a3db873d595466b8 as ConnectorProductIcon, $c3a4bc69ae9a6bdc$export$a167e600995bf5ba as ConnectorTreeviewIcon, $c3a4bc69ae9a6bdc$export$e25dfd17f0cb1f77 as ConnectorUpstreamIcon, $c3a4bc69ae9a6bdc$export$65f64ce45d6e0daa as ConnectorVerticalIcon, $277f0bdbfcbac28f$export$eee90ad03a9b8ce5 as DeleteActiveIcon, $277f0bdbfcbac28f$export$42ab64235f40ba6c as DeleteDisabledIcon, $277f0bdbfcbac28f$export$1ae95d1a7411cb7b as DeleteIcon, $40d46121288fff2e$export$53ff5d0aaf0f6609 as AvatarBackgroundIcon, $40d46121288fff2e$export$efd394b233411f7a as BlockViewActiveIcon, $40d46121288fff2e$export$a01f8070dec64cc0 as BlockViewIcon, $40d46121288fff2e$export$4e57461601b6b5b2 as DarkModeIcon, $40d46121288fff2e$export$dbaed707686283bf as FilterActiveIcon, $40d46121288fff2e$export$28f6150e232898de as FilterIcon, $40d46121288fff2e$export$9a28dba4abd131fb as FitViewIcon, $40d46121288fff2e$export$ffa4d1c5f56b2bbd as HorizontalIcon, $40d46121288fff2e$export$f92a6081e4e1514c as LightModeIcon, $40d46121288fff2e$export$2c9e30524eeaa42e as LogoutIcon, $40d46121288fff2e$export$9657eb82c102a97c as NotificationsIcon, $40d46121288fff2e$export$ac4e8b8ca2b79f39 as SettingsIcon, $40d46121288fff2e$export$8b47fbdcab40bc56 as TreeViewActiveIcon, $40d46121288fff2e$export$d8189acd3db154bf as TreeViewIcon, $40d46121288fff2e$export$ba9edb5a0ba713fb as VerticalIcon, $a375e0e7383bd457$export$3030cdd17ffad81 as LibraryIcon, $449944ba453b5c97$export$f53936b98653a113 as LockClosedIcon, $449944ba453b5c97$export$37ea31f99740f2be as LockIcon, $449944ba453b5c97$export$8e05a58e6971f13d as LockOpenIcon, $c1ed2d6fbd8cc8c0$export$eed26074b425133a as LogoIcon, $22dfeca7b2babd08$export$722f8bfc785472cf as CollapseAccordionIcon, $22dfeca7b2babd08$export$fdbed76f4783dfe7 as CollapseAccordionNestedIcon, $22dfeca7b2babd08$export$67cd4f075b72ffc9 as CollapseIcon, $22dfeca7b2babd08$export$7ac3ebb6edb0e044 as CollapseWhiteIcon, $22dfeca7b2babd08$export$31901d6f7b9068da as ExpandedAccordionIcon, $22dfeca7b2babd08$export$ebe6507427cf15eb as ExpandedAccordionNestedIcon, $22dfeca7b2babd08$export$f5cb197ef241297f as ExpandedIcon, $22dfeca7b2babd08$export$763b5fdab3e2c08b as ExpandedWhiteIcon, $22dfeca7b2babd08$export$b0c3ddeace589b20 as ToogleDownIcon, $22dfeca7b2babd08$export$2d689d9a9f573512 as ToogleUpIcon};
 //# sourceMappingURL=index.mjs.map

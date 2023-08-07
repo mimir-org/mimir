@@ -5,6 +5,7 @@ var $dYZEH$radixuireactvisuallyhidden = require("@radix-ui/react-visually-hidden
 var $dYZEH$polished = require("polished");
 var $dYZEH$framermotion = require("framer-motion");
 var $dYZEH$radixuireactseparator = require("@radix-ui/react-separator");
+var $dYZEH$reactflowrenderer = require("react-flow-renderer");
 var $dYZEH$reactusemeasure = require("react-use-measure");
 var $dYZEH$reactrouterdom = require("react-router-dom");
 var $dYZEH$reactspinners = require("react-spinners");
@@ -58,8 +59,12 @@ var $b886fe675e02e3a4$exports = {};
 $parcel$export($b886fe675e02e3a4$exports, "Button", () => $9c04f7814f3f7661$export$353f5b6fc5456de1);
 $parcel$export($b886fe675e02e3a4$exports, "ConditionalWrapper", () => $3142a0a68ea3c218$export$39aecc95f0365819);
 $parcel$export($b886fe675e02e3a4$exports, "Divider", () => $5cc580e5609bf57e$export$2e0a83ec2e27ecbb);
+$parcel$export($b886fe675e02e3a4$exports, "FlowConnectorComponent", () => $326f1827a58fb59c$export$179bb831147717ca);
 $parcel$export($b886fe675e02e3a4$exports, "VisuallyHidden", () => $359cf3239ff1b443$export$439d29a4e110a164);
 $parcel$export($b886fe675e02e3a4$exports, "Icon", () => $cdaffbb487691ddb$export$f04a61298a47a40f);
+$parcel$export($b886fe675e02e3a4$exports, "Symbol", () => $532cbfd8145dc5ee$export$3e25e887b7a5b37b);
+$parcel$export($b886fe675e02e3a4$exports, "LogoBox", () => $61f4f908e4fdb007$export$4a2034c9f860b7cd);
+$parcel$export($b886fe675e02e3a4$exports, "SymbolBox", () => $61f4f908e4fdb007$export$236d96ef38f832f6);
 $parcel$export($b886fe675e02e3a4$exports, "MotionPanel", () => $b6fa080d93d4b4bd$export$b252e133e2c7204f);
 $parcel$export($b886fe675e02e3a4$exports, "ResizablePanel", () => $a2d9e58d65cf59f8$export$2fb164ca5cfe7082);
 $parcel$export($b886fe675e02e3a4$exports, "PlainLink", () => $7174bf31754d0ab3$export$14892c202f726f14);
@@ -1331,783 +1336,12 @@ $5cc580e5609bf57e$export$2e0a83ec2e27ecbb.defaultProps = {
 
 
 
-
-
-
-
-
-
-/**
- * Function to ignore circular references
- */ const $07293fb555030e6e$export$c4d25c0d0c3b7f = ()=>{
-    const seen = new WeakSet();
-    return (key, value)=>{
-        if (key.startsWith("_")) return;
-        if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) return;
-            seen.add(value);
-        }
-        return value;
-    };
-};
-const $07293fb555030e6e$export$7149c6ffc9994c32 = ()=>{
-    let d = new Date().getTime();
-    let d2 = typeof performance !== "undefined" && performance.now && performance.now() * 1000 || 0;
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        let r = Math.random() * 16;
-        if (d > 0) {
-            r = (d + r) % 16 | 0;
-            d = Math.floor(d / 16);
-        } else {
-            r = (d2 + r) % 16 | 0;
-            d2 = Math.floor(d2 / 16);
-        }
-        return (c === "x" ? r : r & 0x3 | 0x8).toString(16);
-    });
-};
-const $07293fb555030e6e$export$bd1203ad2e3208f7 = (domain)=>{
-    const id = $07293fb555030e6e$export$7149c6ffc9994c32();
-    if (domain == null) return id;
-    return domain + "_" + id;
-};
-const $07293fb555030e6e$export$637515699a57839b = (id)=>{
-    if (id == null) throw Error("Can't find a domian from null or undefined string.");
-    const split = id.split("_");
-    if (split.length !== 2) throw Error("Can't find a domian. An id should be like example.com_xxxxx-xxxxx-xxxxx.");
-    return split[0].trim();
-};
-const $07293fb555030e6e$export$5a466c0ba959b06 = (value)=>{
-    return value.replace(/\/+$/, "");
-};
-const $07293fb555030e6e$export$de3609038e2dcd26 = (negative = true)=>{
-    const input = $07293fb555030e6e$export$7149c6ffc9994c32();
-    let hash = 0;
-    const len = input.length;
-    for(let i = 0; i < len; i++){
-        hash = (hash << 5) - hash + input.charCodeAt(i);
-        hash |= 0;
-    }
-    if (negative && hash > 0) return hash * -1;
-    else return hash;
-};
-const $07293fb555030e6e$export$260733d43c3dc50a = (from, to)=>{
-    const f = $07293fb555030e6e$export$5e4cc6abec75530(from);
-    const t = $07293fb555030e6e$export$5e4cc6abec75530(to);
-    if (f == null || t == null) return 0;
-    const backInTime = f > t;
-    if (f.getDate() === t.getDate() && f.getMonth() === t.getMonth() && f.getFullYear() === t.getFullYear()) return 1;
-    const difference_In_Time = Math.round(t.getTime() - f.getTime());
-    return Number((difference_In_Time / 86400000).toFixed(0)) + (backInTime ? -1 : 1);
-};
-const $07293fb555030e6e$export$5e4cc6abec75530 = (value)=>{
-    if (value == null) return undefined;
-    if (typeof value === "string") try {
-        return new Date(value);
-    } catch (error) {
-        console.warn("Can't parse date string: ", value);
-        return new Date();
-    }
-    return value;
-};
-const $07293fb555030e6e$export$71b45186df786da8 = (current, from, to)=>{
-    const c = $07293fb555030e6e$export$5e4cc6abec75530(current);
-    const f = $07293fb555030e6e$export$5e4cc6abec75530(from);
-    const t = $07293fb555030e6e$export$5e4cc6abec75530(to);
-    if (c == null || f == null || t == null) return false;
-    c.setHours(0, 0, 0, 0);
-    f.setHours(0, 0, 0, 0);
-    t.setHours(0, 0, 0, 0);
-    return c <= t && c >= f;
-};
-
-
-
-
-
-/**
- * Removes styles from react router links.
- * Useful when wrapping other elements with navigation semantics.
- */ const $f3dbaaac5ce3e5ce$var$ResizablePanelContainer = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
-  position: relative;
-  overflow: ${(props)=>props.maxTrigger ? "auto" : "hidden"};
-  ${(0, $51d2fae5bd0dfc40$export$661888f3c6187e4c)};
-`;
-$f3dbaaac5ce3e5ce$var$ResizablePanelContainer.defaultProps = {
-    maxTrigger: false
-};
-const $f3dbaaac5ce3e5ce$export$72e21f73896cddc4 = (0, $dYZEH$framermotion.motion)($f3dbaaac5ce3e5ce$var$ResizablePanelContainer);
-
-
-const $a2d9e58d65cf59f8$export$2fb164ca5cfe7082 = ({ children: children , duration: duration , maxHeight: maxHeight  })=>{
-    const [ref, { height: height  }] = (0, ($parcel$interopDefault($dYZEH$reactusemeasure)))();
-    let h = height;
-    let maxTrigger = false;
-    if (maxHeight != null && h != null && height >= maxHeight) {
-        h = maxHeight;
-        maxTrigger = true;
-    }
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $f3dbaaac5ce3e5ce$export$72e21f73896cddc4), {
-        animate: {
-            height: h || "auto"
-        },
-        maxTrigger: maxTrigger,
-        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
-            initial: false,
-            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.motion).div, {
-                initial: {
-                    opacity: 0
-                },
-                animate: {
-                    opacity: 1,
-                    transition: {
-                        duration: duration / 2,
-                        delay: duration / 2
-                    }
-                },
-                exit: {
-                    opacity: 0,
-                    transition: {
-                        duration: duration / 2
-                    }
-                },
-                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("div", {
-                    ref: ref,
-                    style: {
-                        position: "absolute"
-                    },
-                    children: children
-                })
-            }, JSON.stringify(children, (0, $07293fb555030e6e$export$c4d25c0d0c3b7f)()))
-        })
-    });
-};
-
-
-const $b6fa080d93d4b4bd$export$b252e133e2c7204f = (props)=>{
-    const { header: header , open: open , duration: duration , children: children , ...delegated } = props;
-    const [expanded, setExpanded] = (0, $dYZEH$react.useState)(false);
-    (0, $dYZEH$react.useEffect)(()=>{
-        setExpanded(open);
-    }, [
-        open
-    ]);
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.MotionConfig), {
-        transition: {
-            duration: duration
-        },
-        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$reactjsxruntime.Fragment), {
-            children: [
-                header,
-                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $a2d9e58d65cf59f8$export$2fb164ca5cfe7082), {
-                    duration: duration,
-                    ...delegated,
-                    children: expanded && children
-                })
-            ]
-        })
-    });
-};
-$b6fa080d93d4b4bd$export$b252e133e2c7204f.displayName = "MotionPanel";
-
-
-
-
-
-
-const $7174bf31754d0ab3$export$14892c202f726f14 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $dYZEH$reactrouterdom.Link))`
-  color: inherit;
-  text-decoration: inherit;
-
-  :link,
-  :hover {
-    color: inherit;
-    text-decoration: inherit;
-  }
-
-  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
-`;
-
-
-
-
-
-
-const $1af3f981e55502fd$export$a5e06607a5ac6158 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
-  width: 50px;
-  height: 50px;
-`;
-const $1af3f981e55502fd$export$d499834a866f77c6 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 901;
-`;
-
-
-const $1f2e804650dab4e4$export$7f7cbe89f1eacd2 = ({ variant: variant , disabled: disabled  })=>{
-    const theme = (0, $dYZEH$styledcomponents.useTheme)();
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactjsxruntime.Fragment), {
-        children: !disabled && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $1af3f981e55502fd$export$d499834a866f77c6), {
-            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $1af3f981e55502fd$export$a5e06607a5ac6158), {
-                children: [
-                    variant && variant === "circle" && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactspinners.CircleLoader), {
-                        color: theme.mimir.color.primary.base
-                    }),
-                    variant && variant === "scale" && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactspinners.ScaleLoader), {
-                        color: theme.mimir.color.primary.base
-                    })
-                ]
-            })
-        })
-    });
-};
-$1f2e804650dab4e4$export$7f7cbe89f1eacd2.displayName = "Spinner";
-$1f2e804650dab4e4$export$7f7cbe89f1eacd2.defaultValues = {
-    variant: "circle",
-    disabled: true
-};
-
-
-
-
-const $aaa7733be2c90932$export$a8a3e93435678ff9 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).h1`
-  ${({ variant: variant  })=>(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)(variant)};
-  ${(0, $51d2fae5bd0dfc40$export$661888f3c6187e4c)};
-  ${(0, $323f97dea5794490$export$80711e28e77935d5)};
-  ${(0, $079e772746728e74$export$f8eec27d1ad18090)};
-  ${(0, $2fb59364c1e82342$export$66376f8025bd3245)};
-  ${(0, $457fc6f948146087$export$8f688f6a86c9adf3)};
-  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
-`;
-$aaa7733be2c90932$export$a8a3e93435678ff9.displayName = "Heading";
-$aaa7733be2c90932$export$a8a3e93435678ff9.defaultProps = {
-    useEllipsis: false,
-    ellipsisMaxLines: 1
-};
-
-
-
-
-
-
-
-
-
-
-
-
-const $e9b8682718ee6f4f$var$TooltipContent = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
-  padding: ${(props)=>props.theme.mimir.spacing.base} ${(props)=>props.theme.mimir.spacing.l};
-  border-radius: ${(props)=>props.theme.mimir.border.radius.large};
-  background-color: ${(props)=>props.theme.mimir.color.surface.inverse.base};
-  color: ${(props)=>props.theme.mimir.color.surface.inverse.on};
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
-`;
-const $e9b8682718ee6f4f$export$e70caaa407ca3f33 = (0, $dYZEH$framermotion.motion)($e9b8682718ee6f4f$var$TooltipContent);
-
-
-const $eb9ee8fded2d6df4$export$28c660c63b792dea = /*#__PURE__*/ (0, $dYZEH$react.forwardRef)((props, ref)=>{
-    const { children: children , content: content , placement: placement , align: align , delay: delay , offset: offset , asChild: asChild , ...delegated } = props;
-    const theme = (0, $dYZEH$styledcomponents.useTheme)();
-    const containsTextOnly = typeof content === "string";
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("div", {
-        ref: ref,
-        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)($dYZEH$radixuireacttooltip.Root, {
-            disableHoverableContent: true,
-            delayDuration: delay,
-            children: [
-                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Trigger, {
-                    asChild: asChild,
-                    children: children
-                }),
-                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
-                    children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Portal, {
-                        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Content, {
-                            asChild: asChild,
-                            avoidCollisions: true,
-                            sideOffset: offset,
-                            side: placement,
-                            align: align,
-                            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $e9b8682718ee6f4f$export$e70caaa407ca3f33), {
-                                ...theme.mimir.animation.scale,
-                                ...delegated,
-                                children: containsTextOnly ? /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $c98b48bb55930056$export$5f1af8db9871e1d6), {
-                                    variant: "body-medium",
-                                    children: content
-                                }) : content
-                            })
-                        })
-                    })
-                })
-            ]
-        })
-    });
-});
-$eb9ee8fded2d6df4$export$28c660c63b792dea.displayName = "Tooltip";
-$eb9ee8fded2d6df4$export$28c660c63b792dea.defaultProps = {
-    placement: "top",
-    align: "center",
-    delay: 0,
-    offset: 8,
-    asChild: true
-};
-
-
-
-
-var $bb35251af926b602$exports = {};
-
-$parcel$export($bb35251af926b602$exports, "SettingProvider", () => $96c23574d52ea0c3$export$6f0dace02a814e88);
-$parcel$export($bb35251af926b602$exports, "useSetting", () => $06372075813414be$export$12b0e20ae7d96a25);
-$parcel$export($bb35251af926b602$exports, "useLocalStorage", () => $2700b10b1c3eea5e$export$86e2cef2561044ac);
-$parcel$export($bb35251af926b602$exports, "useMimirorgTheme", () => $d970ba63fcb75a42$export$74446bd855170621);
-
-
-
-const $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e = /*#__PURE__*/ (0, $dYZEH$react.createContext)({});
-
-
-const $96c23574d52ea0c3$var$defaultAppSetting = {
-    language: {
-        current: "en",
-        languages: [
-            {
-                code: "no",
-                name: "Norwegian"
-            },
-            {
-                code: "en",
-                name: "English"
-            }
-        ]
-    }
-};
-const $96c23574d52ea0c3$export$6f0dace02a814e88 = ({ children: children  })=>{
-    const [setting, setSetting] = (0, $dYZEH$react.useState)(()=>{
-        if (typeof window === "undefined") return $96c23574d52ea0c3$var$defaultAppSetting;
-        try {
-            const item = window.localStorage.getItem("appsetting");
-            return item ? JSON.parse(item) : $96c23574d52ea0c3$var$defaultAppSetting;
-        } catch (error) {
-            console.warn(error);
-            return $96c23574d52ea0c3$var$defaultAppSetting;
-        }
-    });
-    (0, $dYZEH$react.useEffect)(()=>{
-        window.localStorage.setItem("appsetting", JSON.stringify(setting));
-    }, [
-        setting
-    ]);
-    const settingProviderValue = (0, $dYZEH$react.useMemo)(()=>({
-            setting: setting,
-            setSetting: setSetting
-        }), [
-        setting,
-        setSetting
-    ]);
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e).Provider, {
-        value: settingProviderValue,
-        children: children
-    });
-};
-
-
-
-
-const $06372075813414be$export$12b0e20ae7d96a25 = ()=>{
-    return (0, $dYZEH$react.useContext)((0, $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e));
-};
-
-
-
-function $2700b10b1c3eea5e$export$86e2cef2561044ac(key, initialValue) {
-    const [storedValue, setStoredValue] = (0, $dYZEH$react.useState)(()=>{
-        if (typeof window === "undefined") return initialValue;
-        try {
-            const item = window.localStorage.getItem(key);
-            return item ? JSON.parse(item) : initialValue;
-        } catch (error) {
-            console.warn(error);
-            return initialValue;
-        }
-    });
-    const setValue = (value)=>{
-        try {
-            const valueToStore = value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            if (typeof window !== "undefined") window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        } catch (error) {
-            console.warn(error);
-        }
-    };
-    return [
-        storedValue,
-        setValue
-    ];
-}
-
-
-
-const $d970ba63fcb75a42$export$74446bd855170621 = ()=>{
-    const theme = (0, $dYZEH$styledcomponents.useTheme)();
-    return theme.mimir;
-};
-
-
-
-
-var $34e9179e15ed0401$exports = {};
-
-
-var $89c1e076c47ade71$exports = {};
-
-$parcel$export($89c1e076c47ade71$exports, "calculateDays", () => $07293fb555030e6e$export$260733d43c3dc50a);
-$parcel$export($89c1e076c47ade71$exports, "createDomainId", () => $07293fb555030e6e$export$bd1203ad2e3208f7);
-$parcel$export($89c1e076c47ade71$exports, "createId", () => $07293fb555030e6e$export$7149c6ffc9994c32);
-$parcel$export($89c1e076c47ade71$exports, "createNumberId", () => $07293fb555030e6e$export$de3609038e2dcd26);
-$parcel$export($89c1e076c47ade71$exports, "forceDate", () => $07293fb555030e6e$export$5e4cc6abec75530);
-$parcel$export($89c1e076c47ade71$exports, "getDomainFromId", () => $07293fb555030e6e$export$637515699a57839b);
-$parcel$export($89c1e076c47ade71$exports, "ignoreCircularReferences", () => $07293fb555030e6e$export$c4d25c0d0c3b7f);
-$parcel$export($89c1e076c47ade71$exports, "isdateBetween", () => $07293fb555030e6e$export$71b45186df786da8);
-$parcel$export($89c1e076c47ade71$exports, "removeTrailingSlashes", () => $07293fb555030e6e$export$5a466c0ba959b06);
-$parcel$export($89c1e076c47ade71$exports, "toBase64", () => $0dc99e6cb267af85$export$37cc283d8fbd3462);
-$parcel$export($89c1e076c47ade71$exports, "lsReadValue", () => $8756754745ab87a6$export$81e76f652c2aead0);
-$parcel$export($89c1e076c47ade71$exports, "lsSaveValue", () => $8756754745ab87a6$export$98bd917067ba65d5);
-
-
-const $0dc99e6cb267af85$export$37cc283d8fbd3462 = (file)=>new Promise((resolve, reject)=>{
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = ()=>resolve(reader.result);
-        reader.onerror = (error)=>reject(error);
-    });
-const $0dc99e6cb267af85$export$b20f4ee19ffa0668 = (base64)=>{
-    // Split into two parts
-    const parts = base64.split(";base64,");
-    // Hold the content type
-    const imageType = parts[0].split(":")[1];
-    // Decode Base64 string
-    const decodedData = (0, $dYZEH$base64.decode)(parts[1]);
-    // Create UNIT8ARRAY of size same as row data length
-    const uInt8Array = new Uint8Array(decodedData.length);
-    // Insert all character code into uInt8Array
-    for(let i = 0; i < decodedData.length; ++i)uInt8Array[i] = decodedData.charCodeAt(i);
-    // Return BLOB image after conversion
-    return new Blob([
-        uInt8Array
-    ], {
-        type: imageType
-    });
-};
-
-
-/**
- * Read value from local storage
- * The data must be stored in json format.
- * If error it returns null and logs a warning to the console.
- *
- * @param key  the storage key
- */ function $8756754745ab87a6$export$81e76f652c2aead0(key) {
-    if (typeof window === "undefined") return null;
-    try {
-        const item = window.localStorage.getItem(key);
-        if (item == null) return null;
-        return JSON.parse(item);
-    } catch (error) {
-        console.warn(error);
-    }
-    return null;
-}
-function $8756754745ab87a6$export$98bd917067ba65d5(key, value) {
-    if (typeof window === "undefined") return;
-    try {
-        if (value == null) {
-            window.localStorage.removeItem(key);
-            return;
-        }
-        window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-        console.warn(error);
-    }
-}
-
-
-
-
-var $e5fc0ab88ec72021$exports = {};
-
-$parcel$export($e5fc0ab88ec72021$exports, "MimirorgThemeProvider", () => $52fb26a1dbaa0459$export$613dacf2c09c65aa);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const $5fee7716aee8d88b$export$5d16871b54b7e5b4 = (theme)=>({
-        style: {
-            display: "flex",
-            padding: `${theme.spacing.base} ${theme.spacing.l}`,
-            boxShadow: theme.shadow.small,
-            borderRadius: theme.border.radius.medium,
-            font: theme.typography.roles.label.large.font,
-            letterSpacing: theme.typography.roles.label.large.letterSpacing,
-            lineHeight: theme.typography.roles.label.large.lineHeight,
-            background: theme.color.secondary.base,
-            color: theme.color.secondary.on
-        },
-        success: {
-            icon: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$stylediconsheroiconsoutline.CheckCircle), {
-                size: 24,
-                style: {
-                    flexShrink: 0
-                }
-            }),
-            style: {
-                background: theme.color.success.base,
-                color: theme.color.success.on
-            }
-        },
-        error: {
-            icon: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$stylediconsheroiconsoutline.XCircle), {
-                size: 24,
-                style: {
-                    flexShrink: 0
-                }
-            }),
-            style: {
-                background: theme.color.error.base,
-                color: theme.color.error.on
-            }
-        }
-    });
-const $5fee7716aee8d88b$export$c4a82530b31b3f8e = ()=>({
-        animation: "revert"
-    });
-
-
-
-const $f1463cc0032851b5$export$cfd585d01b202eca = (0, $dYZEH$framermotion.motion).div;
-
-
-const $4e24186f11301264$export$fb98e3a2a4cd92d7 = ()=>{
-    const theme = (0, $dYZEH$styledcomponents.useTheme)();
-    const customToasterStyles = (0, $5fee7716aee8d88b$export$5d16871b54b7e5b4)(theme.mimir);
-    const customToastBarStyles = (0, $5fee7716aee8d88b$export$c4a82530b31b3f8e)();
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$reacthottoast.Toaster, {
-        position: "bottom-right",
-        toastOptions: customToasterStyles,
-        children: (toast)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
-                children: toast.visible && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $f1463cc0032851b5$export$cfd585d01b202eca), {
-                    ...theme.mimir.animation.from("right", 400),
-                    children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$reacthottoast.ToastBar, {
-                        toast: toast,
-                        style: customToastBarStyles
-                    })
-                })
-            })
-    });
-};
-
-
-
-
-
-const $4a1f609802484cbb$export$ee6441f5fa13d80 = (0, $dYZEH$styledcomponents.css)`
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  * {
-    margin: 0;
-  }
-
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
-
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    max-width: 100%;
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    overflow-wrap: break-word;
-  }
-
-  #root {
-    isolation: isolate;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-
-const $e652215bb94bddf1$export$f05794e648629f6c = (0, $dYZEH$styledcomponents.createGlobalStyle)`
-  ${(0, $4a1f609802484cbb$export$ee6441f5fa13d80)};
-
-  body {
-    background: ${({ theme: theme  })=>theme.mimir.color.background.base};
-  }
-
-  // Global typography styles
-  body {
-    font-family: ${({ theme: theme  })=>theme.mimir.typography.typeface.brand};
-    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.normal};
-    font-size: 100%;
-    color: ${({ theme: theme  })=>theme.mimir.color.text.base};
-  }
-
-  h1 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-large")};
-  }
-
-  h2 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-medium")};
-  }
-
-  h3 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-small")};
-  }
-
-  h4 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-large")};
-  }
-
-  h5 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-medium")};
-  }
-
-  h6 {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-small")};
-  }
-
-  p,
-  a {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-large")};
-  }
-
-  a:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  b,
-  strong {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-large")};
-    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.bold};
-  }
-
-  small {
-    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-small")};
-  }
-
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 18px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    border-radius: 7px;
-    background-color: #C4C4C4;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-`;
-
-
-
-function $108ac524a97dc644$export$b325a9f6dade91bd(initial) {
-    const [colorTheme, setColorTheme] = (0, $dYZEH$react.useState)(initial);
-    (0, $dYZEH$react.useEffect)(()=>{
-        function setPreferredTheme() {
-            const savedTheme = localStorage.getItem("theme");
-            if (savedTheme && [
-                "dark",
-                "light"
-            ].includes(savedTheme)) setColorTheme(savedTheme);
-        }
-        setPreferredTheme();
-        window.addEventListener("storage", setPreferredTheme);
-        return ()=>window.removeEventListener("storage", setPreferredTheme);
-    }, []);
-    return [
-        colorTheme
-    ];
-}
-
-
-
-const $52fb26a1dbaa0459$export$613dacf2c09c65aa = ({ theme: theme = "light" , children: children  })=>{
-    const [colorTheme] = (0, $108ac524a97dc644$export$b325a9f6dade91bd)(theme);
-    const applicationTheme = {
-        mimir: (0, $2eb14da954e84e79$export$8c5e244d866eaf89)(colorTheme)
-    };
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$styledcomponents.ThemeProvider), {
-        theme: applicationTheme,
-        children: [
-            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $e652215bb94bddf1$export$f05794e648629f6c), {}),
-            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$framermotion.MotionConfig), {
-                reducedMotion: "user",
-                children: [
-                    /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$radixuireacttooltip.TooltipProvider), {
-                        children: children
-                    }),
-                    /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $4e24186f11301264$export$fb98e3a2a4cd92d7), {})
-                ]
-            })
-        ]
-    });
-};
+var $ec9566825b478c35$export$69674d1480aba23d;
+(function(ConnectorDirection) {
+    ConnectorDirection[ConnectorDirection["Input"] = 0] = "Input";
+    ConnectorDirection[ConnectorDirection["Output"] = 1] = "Output";
+    ConnectorDirection[ConnectorDirection["Bidirectional"] = 2] = "Bidirectional";
+})($ec9566825b478c35$export$69674d1480aba23d || ($ec9566825b478c35$export$69674d1480aba23d = {}));
 
 
 
@@ -2123,6 +1357,14 @@ $parcel$export($529ee3773c65dafc$exports, "ProductIcon", () => $5e03a7f16b3996fe
 $parcel$export($529ee3773c65dafc$exports, "CheckmarkCheckedIcon", () => $348a26c0ef0167bf$export$237d50fb1de40e9e);
 $parcel$export($529ee3773c65dafc$exports, "CheckmarkEmptyIcon", () => $348a26c0ef0167bf$export$189fca6c0c47ab1a);
 $parcel$export($529ee3773c65dafc$exports, "CheckmarkIcon", () => $348a26c0ef0167bf$export$906a919e30cdbd5c);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorBidirectionalIcon", () => $3cf9ad8b647a4f15$export$c11effa3f20b3eeb);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorDownstreamIcon", () => $3cf9ad8b647a4f15$export$ad2923f1805795f);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorIcon", () => $3cf9ad8b647a4f15$export$b853f99e0a417737);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorLocationIcon", () => $3cf9ad8b647a4f15$export$a9a784880f3d4de2);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorProductIcon", () => $3cf9ad8b647a4f15$export$a3db873d595466b8);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorTreeviewIcon", () => $3cf9ad8b647a4f15$export$a167e600995bf5ba);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorUpstreamIcon", () => $3cf9ad8b647a4f15$export$e25dfd17f0cb1f77);
+$parcel$export($529ee3773c65dafc$exports, "ConnectorVerticalIcon", () => $3cf9ad8b647a4f15$export$65f64ce45d6e0daa);
 $parcel$export($529ee3773c65dafc$exports, "DeleteActiveIcon", () => $a3a5e37fef81cfa5$export$eee90ad03a9b8ce5);
 $parcel$export($529ee3773c65dafc$exports, "DeleteDisabledIcon", () => $a3a5e37fef81cfa5$export$42ab64235f40ba6c);
 $parcel$export($529ee3773c65dafc$exports, "DeleteIcon", () => $a3a5e37fef81cfa5$export$1ae95d1a7411cb7b);
@@ -2417,6 +1659,249 @@ const $348a26c0ef0167bf$export$237d50fb1de40e9e = (0, ($parcel$interopDefault($d
   ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
 `;
 const $348a26c0ef0167bf$export$189fca6c0c47ab1a = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $03740ed58fd2eb5e$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+
+
+
+
+
+
+const $bbf349c812808b7b$var$SvgConnectorBidirectionalIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                x: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(90 20 0)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M4.447 9.22H1.548a.436.436 0 0 0-.282.768l4.101 3.487L9.47 9.988a.436.436 0 0 0-.282-.769H6.669V5.555H4.447v3.664ZM13.33 10.925h-2.52a.437.437 0 0 1-.283-.77l4.103-3.487 4.103 3.487a.437.437 0 0 1-.283.77h-2.898v3.519h-2.223v-3.52Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $bbf349c812808b7b$export$2e2bcd8739ae039 = $bbf349c812808b7b$var$SvgConnectorBidirectionalIconjsx;
+
+
+
+
+const $33ce7cceaed71b05$var$SvgConnectorDownstreamIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 30,
+        height: 30,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                width: 30,
+                height: 30,
+                rx: 3,
+                transform: "matrix(0 -1 -1 0 30 30)",
+                fill: "#C05046"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.5 15.001H4.336a1 1 0 0 0-1 1v.288a1 1 0 0 0 .353.762l10.666 9.066a1 1 0 0 0 1.296 0l10.666-9.066a1 1 0 0 0 .353-.762V16a1 1 0 0 0-1-1H17.5v-3.999a1 1 0 0 1 1-1H30v-5H17.19a4.69 4.69 0 0 0-4.69 4.69v5.31Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $33ce7cceaed71b05$export$2e2bcd8739ae039 = $33ce7cceaed71b05$var$SvgConnectorDownstreamIconjsx;
+
+
+
+
+const $d193497548df38c6$var$SvgConnectorIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 20 0)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M10 12.28v4.7a.798.798 0 0 0 1.405.517l5.822-6.849a1 1 0 0 0 0-1.295l-5.822-6.85A.798.798 0 0 0 10 3.02v4.815H2.415v4.444H10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $d193497548df38c6$export$2e2bcd8739ae039 = $d193497548df38c6$var$SvgConnectorIconjsx;
+
+
+
+
+const $7cbb1d3923ed939c$var$SvgConnectorLocationIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 17,
+        height: 16,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                width: 16,
+                height: 16,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 16.354 0)",
+                fill: "#FA00FF"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                d: "M8.343 9.772v3.634c0 .34.286.616.64.616a.65.65 0 0 0 .486-.217l4.556-5.168a.94.94 0 0 0 0-1.251L9.47 2.217A.65.65 0 0 0 8.982 2a.628.628 0 0 0-.64.617v3.72H2.265v3.435h6.079Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $7cbb1d3923ed939c$export$2e2bcd8739ae039 = $7cbb1d3923ed939c$var$SvgConnectorLocationIconjsx;
+
+
+
+
+const $f4d5d5b472722dac$var$SvgConnectorProductIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 17,
+        height: 16,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                width: 16,
+                height: 16,
+                rx: 2,
+                transform: "matrix(-1 0 0 1 16.354 0)",
+                fill: "#00F0FF"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                d: "M8.343 9.772v3.634c0 .34.286.616.64.616a.65.65 0 0 0 .486-.217l4.556-5.168a.94.94 0 0 0 0-1.251L9.47 2.217A.65.65 0 0 0 8.982 2a.628.628 0 0 0-.64.617v3.72H2.265v3.435h6.079Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $f4d5d5b472722dac$export$2e2bcd8739ae039 = $f4d5d5b472722dac$var$SvgConnectorProductIconjsx;
+
+
+
+
+const $e40c6c3e71716328$var$SvgConnectorTreeviewIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                y: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(-90 0 20)",
+                fill: "#A0A0A0"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.28 10h4.7a.798.798 0 0 1 .517 1.405l-6.849 5.822a1 1 0 0 1-1.295 0l-6.85-5.822A.798.798 0 0 1 3.02 10h4.815V2.415h4.444V10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $e40c6c3e71716328$export$2e2bcd8739ae039 = $e40c6c3e71716328$var$SvgConnectorTreeviewIconjsx;
+
+
+
+
+const $ef6e6fc6cd7f33ec$var$SvgConnectorUpstreamIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 30,
+        height: 30,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                width: 30,
+                height: 30,
+                rx: 3,
+                transform: "matrix(0 1 1 0 0 0)",
+                fill: "#C05046"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M17.5 14.999h8.165a1 1 0 0 0 1-1v-.288a1 1 0 0 0-.352-.762L15.646 3.883a1 1 0 0 0-1.296 0L3.684 12.949a1 1 0 0 0-.353.762V14a1 1 0 0 0 1 1H12.5v3.999a1 1 0 0 1-1 1H0v5h12.81c2.59 0 4.69-2.1 4.69-4.69v-5.31Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $ef6e6fc6cd7f33ec$export$2e2bcd8739ae039 = $ef6e6fc6cd7f33ec$var$SvgConnectorUpstreamIconjsx;
+
+
+
+
+const $b8d42e3f9804548e$var$SvgConnectorVerticalIconjsx = (props)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)("svg", {
+        width: 20,
+        height: 20,
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg",
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("rect", {
+                y: 20,
+                width: 20,
+                height: 20,
+                rx: 2,
+                transform: "rotate(-90 0 20)",
+                fill: "current"
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("path", {
+                fillRule: "evenodd",
+                clipRule: "evenodd",
+                d: "M12.28 10h4.7a.798.798 0 0 1 .517 1.405l-6.849 5.822a1 1 0 0 1-1.295 0l-6.85-5.822A.798.798 0 0 1 3.02 10h4.815V2.415h4.444V10Z",
+                fill: "#fff"
+            })
+        ]
+    });
+var $b8d42e3f9804548e$export$2e2bcd8739ae039 = $b8d42e3f9804548e$var$SvgConnectorVerticalIconjsx;
+
+
+const $3cf9ad8b647a4f15$export$c11effa3f20b3eeb = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $bbf349c812808b7b$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$ad2923f1805795f = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $33ce7cceaed71b05$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$b853f99e0a417737 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $d193497548df38c6$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$a9a784880f3d4de2 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $7cbb1d3923ed939c$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$a3db873d595466b8 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $f4d5d5b472722dac$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$a167e600995bf5ba = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $e40c6c3e71716328$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$e25dfd17f0cb1f77 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $ef6e6fc6cd7f33ec$export$2e2bcd8739ae039))`
+  ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
+`;
+const $3cf9ad8b647a4f15$export$65f64ce45d6e0daa = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $b8d42e3f9804548e$export$2e2bcd8739ae039))`
   ${(0, $cabff7e18dd86ac0$export$9d5e649303bff8ec)};
 `;
 
@@ -3330,6 +2815,965 @@ const $cb3c3d6301b159eb$export$ebe6507427cf15eb = (0, ($parcel$interopDefault($d
 
 
 
+
+const $5d8e08522e6e8d9b$export$3adaaf573ab8d282 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  display: flex;
+  flex: 0 0 ${(props)=>props.connectorWidth}px;
+  gap: 4px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 4px;
+`;
+const $5d8e08522e6e8d9b$export$ecb8ece3e7bd8271 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  position: relative;
+  line-height: 0;
+  transition: top 0.2s ease-out, left 0.2s ease-out;
+  display: ${(props)=>props.visible && props.visible === true ? "block" : "none"};
+
+  top: ${(props)=>props.top};
+  left: ${(props)=>props.left};
+  transform: revert;
+
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0;
+
+  border: ${(props)=>props.isInside ? "1px solid red" : ""};
+
+  .react-flow__handle-block {
+    visibility: ${(props)=>props.visible ? "visible" : "hidden"};
+    transition: top 0.2s ease-out, left 0.2s ease-out;
+  }
+`;
+
+
+const $326f1827a58fb59c$export$179bb831147717ca = (props)=>{
+    const { connectors: connectors , direction: direction , ...delegated } = props;
+    const filteredConnectors = connectors?.filter((x)=>x.direction === direction && !x.hidden);
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $5d8e08522e6e8d9b$export$3adaaf573ab8d282), {
+        ...delegated,
+        children: filteredConnectors && filteredConnectors.map((x)=>{
+            if (x.hidden) return null;
+            return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($326f1827a58fb59c$var$FlowHandleComponent, {
+                handles: x.handles.filter((x)=>!x.hidden),
+                connectors: connectors,
+                direction: direction,
+                ...delegated
+            }, `handle-${x.id}`);
+        })
+    });
+};
+$326f1827a58fb59c$export$179bb831147717ca.displayName = "FlowConnectorComponent";
+$326f1827a58fb59c$export$179bb831147717ca.defaultProps = {
+    connectors: [],
+    direction: (0, $ec9566825b478c35$export$69674d1480aba23d).Input,
+    storybook: false,
+    connectorWidth: 20,
+    connectorHeight: 20
+};
+/**
+ * Handle part of a connector.
+ * @param props Inherit props from parent component
+ * @returns
+ */ const $326f1827a58fb59c$var$FlowHandleComponent = (props)=>{
+    const { handles: handles , connectorWidth: connectorWidth , connectorHeight: connectorHeight , storybook: storybook  } = props;
+    const calculateTopPosition = (handle, side)=>{
+        if (side === "inside" && handle.side === "outside") return "-24px";
+        if (side === "outside" && handle.side === "inside") return "24px";
+        return "0px";
+    };
+    // const calculateLeftPosition = (handle: FlowHandle, side: "inside" | "outside"): string => {
+    //   switch (handle.position) {
+    //     case Position.Left:
+    //       return (connectorWidth != null ? connectorWidth * -1 - 5 : 0) + "px";
+    //     case Position.Right:
+    //       return (connectorWidth != null ? connectorWidth + 5 : 0) + "px";
+    //     case Position.Bottom:
+    //     case Position.Top:
+    //       return "0px";
+    //     default:
+    //       return "0px";
+    //   }
+    // };
+    // Sort the handle, inside always before outside
+    // const sortHandles = (h: FlowHandle[] | undefined): FlowHandle[] => {
+    //   if (h == null || h.length <= 0) return [];
+    //   const inside = h.find((x) => x.side === "inside");
+    //   const outside = h.find((x) => x.side === "outside");
+    //   if (inside == null || outside == null)
+    //     throw Error("A connector should have one inside handle and one outside handle");
+    //   return [inside, outside];
+    // };
+    // const sorted = sortHandles(handles);
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactjsxruntime.Fragment), {
+        children: handles?.map((x)=>{
+            return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $5d8e08522e6e8d9b$export$ecb8ece3e7bd8271), {
+                id: `handle-${x.id}`,
+                top: calculateTopPosition(x, props.side),
+                left: "0px",
+                visible: x.side === props.side,
+                hidden: x.hidden,
+                children: [
+                    /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $3cf9ad8b647a4f15$export$b853f99e0a417737), {
+                        style: {
+                            fill: x.color
+                        },
+                        className: x.className,
+                        width: `${connectorWidth}px`,
+                        height: `${connectorHeight}px`
+                    }),
+                    !storybook && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactflowrenderer.Handle), {
+                        hidden: x.hidden,
+                        type: x.handleType,
+                        position: x.position,
+                        id: x.id,
+                        className: x.className
+                    })
+                ]
+            }, x.id);
+        })
+    });
+};
+$326f1827a58fb59c$var$FlowHandleComponent.displayName = "FlowHandleComponent";
+$326f1827a58fb59c$var$FlowHandleComponent.defaultProps = {
+    handles: [],
+    storybook: false,
+    connectorWidth: 20,
+    connectorHeight: 20
+};
+
+
+
+
+
+
+const $61f4f908e4fdb007$export$ac657ebdd1d0f1b9 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).img`
+  max-height: 100%;
+  pointer-events: none;
+`;
+const $61f4f908e4fdb007$export$236d96ef38f832f6 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  max-height: 30px;
+
+  ${$61f4f908e4fdb007$export$ac657ebdd1d0f1b9} {
+    min-height: 30px;
+  }
+`;
+const $61f4f908e4fdb007$export$4a2034c9f860b7cd = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  position: absolute;
+  bottom: 0;
+  height: 20px;
+  width: 50px;
+  align-self: flex-start;
+  pointer-events: none;
+  margin-left: 10px;
+
+  img {
+    min-height: 100%;
+    filter: brightness(0%);
+  }
+`;
+
+
+const $532cbfd8145dc5ee$export$3e25e887b7a5b37b = ({ source: source , text: text  })=>{
+    if (source == null) return null;
+    if (source.startsWith("http")) return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $61f4f908e4fdb007$export$ac657ebdd1d0f1b9), {
+        src: source,
+        alt: text,
+        draggable: "false"
+    });
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $61f4f908e4fdb007$export$ac657ebdd1d0f1b9), {
+        src: "data:image/svg+xml;base64," + source,
+        alt: text,
+        draggable: "false"
+    });
+};
+
+
+
+
+
+
+
+
+
+/**
+ * Function to ignore circular references
+ */ const $07293fb555030e6e$export$c4d25c0d0c3b7f = ()=>{
+    const seen = new WeakSet();
+    return (key, value)=>{
+        if (key.startsWith("_")) return;
+        if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) return;
+            seen.add(value);
+        }
+        return value;
+    };
+};
+const $07293fb555030e6e$export$7149c6ffc9994c32 = ()=>{
+    let d = new Date().getTime();
+    let d2 = typeof performance !== "undefined" && performance.now && performance.now() * 1000 || 0;
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16;
+        if (d > 0) {
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
+        }
+        return (c === "x" ? r : r & 0x3 | 0x8).toString(16);
+    });
+};
+const $07293fb555030e6e$export$bd1203ad2e3208f7 = (domain)=>{
+    const id = $07293fb555030e6e$export$7149c6ffc9994c32();
+    if (domain == null) return id;
+    return domain + "_" + id;
+};
+const $07293fb555030e6e$export$637515699a57839b = (id)=>{
+    if (id == null) throw Error("Can't find a domian from null or undefined string.");
+    const split = id.split("_");
+    if (split.length !== 2) throw Error("Can't find a domian. An id should be like example.com_xxxxx-xxxxx-xxxxx.");
+    return split[0].trim();
+};
+const $07293fb555030e6e$export$5a466c0ba959b06 = (value)=>{
+    return value.replace(/\/+$/, "");
+};
+const $07293fb555030e6e$export$de3609038e2dcd26 = (negative = true)=>{
+    const input = $07293fb555030e6e$export$7149c6ffc9994c32();
+    let hash = 0;
+    const len = input.length;
+    for(let i = 0; i < len; i++){
+        hash = (hash << 5) - hash + input.charCodeAt(i);
+        hash |= 0;
+    }
+    if (negative && hash > 0) return hash * -1;
+    else return hash;
+};
+const $07293fb555030e6e$export$260733d43c3dc50a = (from, to)=>{
+    const f = $07293fb555030e6e$export$5e4cc6abec75530(from);
+    const t = $07293fb555030e6e$export$5e4cc6abec75530(to);
+    if (f == null || t == null) return 0;
+    const backInTime = f > t;
+    if (f.getDate() === t.getDate() && f.getMonth() === t.getMonth() && f.getFullYear() === t.getFullYear()) return 1;
+    const difference_In_Time = Math.round(t.getTime() - f.getTime());
+    return Number((difference_In_Time / 86400000).toFixed(0)) + (backInTime ? -1 : 1);
+};
+const $07293fb555030e6e$export$5e4cc6abec75530 = (value)=>{
+    if (value == null) return undefined;
+    if (typeof value === "string") try {
+        return new Date(value);
+    } catch (error) {
+        console.warn("Can't parse date string: ", value);
+        return new Date();
+    }
+    return value;
+};
+const $07293fb555030e6e$export$71b45186df786da8 = (current, from, to)=>{
+    const c = $07293fb555030e6e$export$5e4cc6abec75530(current);
+    const f = $07293fb555030e6e$export$5e4cc6abec75530(from);
+    const t = $07293fb555030e6e$export$5e4cc6abec75530(to);
+    if (c == null || f == null || t == null) return false;
+    c.setHours(0, 0, 0, 0);
+    f.setHours(0, 0, 0, 0);
+    t.setHours(0, 0, 0, 0);
+    return c <= t && c >= f;
+};
+
+
+
+
+
+/**
+ * Removes styles from react router links.
+ * Useful when wrapping other elements with navigation semantics.
+ */ const $f3dbaaac5ce3e5ce$var$ResizablePanelContainer = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  position: relative;
+  overflow: ${(props)=>props.maxTrigger ? "auto" : "hidden"};
+  ${(0, $51d2fae5bd0dfc40$export$661888f3c6187e4c)};
+`;
+$f3dbaaac5ce3e5ce$var$ResizablePanelContainer.defaultProps = {
+    maxTrigger: false
+};
+const $f3dbaaac5ce3e5ce$export$72e21f73896cddc4 = (0, $dYZEH$framermotion.motion)($f3dbaaac5ce3e5ce$var$ResizablePanelContainer);
+
+
+const $a2d9e58d65cf59f8$export$2fb164ca5cfe7082 = ({ children: children , duration: duration , maxHeight: maxHeight  })=>{
+    const [ref, { height: height  }] = (0, ($parcel$interopDefault($dYZEH$reactusemeasure)))();
+    let h = height;
+    let maxTrigger = false;
+    if (maxHeight != null && h != null && height >= maxHeight) {
+        h = maxHeight;
+        maxTrigger = true;
+    }
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $f3dbaaac5ce3e5ce$export$72e21f73896cddc4), {
+        animate: {
+            height: h || "auto"
+        },
+        maxTrigger: maxTrigger,
+        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
+            initial: false,
+            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.motion).div, {
+                initial: {
+                    opacity: 0
+                },
+                animate: {
+                    opacity: 1,
+                    transition: {
+                        duration: duration / 2,
+                        delay: duration / 2
+                    }
+                },
+                exit: {
+                    opacity: 0,
+                    transition: {
+                        duration: duration / 2
+                    }
+                },
+                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("div", {
+                    ref: ref,
+                    style: {
+                        position: "absolute"
+                    },
+                    children: children
+                })
+            }, JSON.stringify(children, (0, $07293fb555030e6e$export$c4d25c0d0c3b7f)()))
+        })
+    });
+};
+
+
+const $b6fa080d93d4b4bd$export$b252e133e2c7204f = (props)=>{
+    const { header: header , open: open , duration: duration , children: children , ...delegated } = props;
+    const [expanded, setExpanded] = (0, $dYZEH$react.useState)(false);
+    (0, $dYZEH$react.useEffect)(()=>{
+        setExpanded(open);
+    }, [
+        open
+    ]);
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.MotionConfig), {
+        transition: {
+            duration: duration
+        },
+        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$reactjsxruntime.Fragment), {
+            children: [
+                header,
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $a2d9e58d65cf59f8$export$2fb164ca5cfe7082), {
+                    duration: duration,
+                    ...delegated,
+                    children: expanded && children
+                })
+            ]
+        })
+    });
+};
+$b6fa080d93d4b4bd$export$b252e133e2c7204f.displayName = "MotionPanel";
+
+
+
+
+
+
+const $7174bf31754d0ab3$export$14892c202f726f14 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))((0, $dYZEH$reactrouterdom.Link))`
+  color: inherit;
+  text-decoration: inherit;
+
+  :link,
+  :hover {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
+`;
+
+
+
+
+
+
+const $1af3f981e55502fd$export$a5e06607a5ac6158 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  width: 50px;
+  height: 50px;
+`;
+const $1af3f981e55502fd$export$d499834a866f77c6 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 901;
+`;
+
+
+const $1f2e804650dab4e4$export$7f7cbe89f1eacd2 = ({ variant: variant , disabled: disabled  })=>{
+    const theme = (0, $dYZEH$styledcomponents.useTheme)();
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactjsxruntime.Fragment), {
+        children: !disabled && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $1af3f981e55502fd$export$d499834a866f77c6), {
+            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $1af3f981e55502fd$export$a5e06607a5ac6158), {
+                children: [
+                    variant && variant === "circle" && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactspinners.CircleLoader), {
+                        color: theme.mimir.color.primary.base
+                    }),
+                    variant && variant === "scale" && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactspinners.ScaleLoader), {
+                        color: theme.mimir.color.primary.base
+                    })
+                ]
+            })
+        })
+    });
+};
+$1f2e804650dab4e4$export$7f7cbe89f1eacd2.displayName = "Spinner";
+$1f2e804650dab4e4$export$7f7cbe89f1eacd2.defaultValues = {
+    variant: "circle",
+    disabled: true
+};
+
+
+
+
+const $aaa7733be2c90932$export$a8a3e93435678ff9 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).h1`
+  ${({ variant: variant  })=>(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)(variant)};
+  ${(0, $51d2fae5bd0dfc40$export$661888f3c6187e4c)};
+  ${(0, $323f97dea5794490$export$80711e28e77935d5)};
+  ${(0, $079e772746728e74$export$f8eec27d1ad18090)};
+  ${(0, $2fb59364c1e82342$export$66376f8025bd3245)};
+  ${(0, $457fc6f948146087$export$8f688f6a86c9adf3)};
+  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
+`;
+$aaa7733be2c90932$export$a8a3e93435678ff9.displayName = "Heading";
+$aaa7733be2c90932$export$a8a3e93435678ff9.defaultProps = {
+    useEllipsis: false,
+    ellipsisMaxLines: 1
+};
+
+
+
+
+
+
+
+
+
+
+
+
+const $e9b8682718ee6f4f$var$TooltipContent = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  padding: ${(props)=>props.theme.mimir.spacing.base} ${(props)=>props.theme.mimir.spacing.l};
+  border-radius: ${(props)=>props.theme.mimir.border.radius.large};
+  background-color: ${(props)=>props.theme.mimir.color.surface.inverse.base};
+  color: ${(props)=>props.theme.mimir.color.surface.inverse.on};
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  ${(0, $c15328b21edc0e9a$export$e7171cddf5044e64)};
+`;
+const $e9b8682718ee6f4f$export$e70caaa407ca3f33 = (0, $dYZEH$framermotion.motion)($e9b8682718ee6f4f$var$TooltipContent);
+
+
+const $eb9ee8fded2d6df4$export$28c660c63b792dea = /*#__PURE__*/ (0, $dYZEH$react.forwardRef)((props, ref)=>{
+    const { children: children , content: content , placement: placement , align: align , delay: delay , offset: offset , asChild: asChild , ...delegated } = props;
+    const theme = (0, $dYZEH$styledcomponents.useTheme)();
+    const containsTextOnly = typeof content === "string";
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)("div", {
+        ref: ref,
+        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)($dYZEH$radixuireacttooltip.Root, {
+            disableHoverableContent: true,
+            delayDuration: delay,
+            children: [
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Trigger, {
+                    asChild: asChild,
+                    children: children
+                }),
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
+                    children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Portal, {
+                        children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$radixuireacttooltip.Content, {
+                            asChild: asChild,
+                            avoidCollisions: true,
+                            sideOffset: offset,
+                            side: placement,
+                            align: align,
+                            children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $e9b8682718ee6f4f$export$e70caaa407ca3f33), {
+                                ...theme.mimir.animation.scale,
+                                ...delegated,
+                                children: containsTextOnly ? /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $c98b48bb55930056$export$5f1af8db9871e1d6), {
+                                    variant: "body-medium",
+                                    children: content
+                                }) : content
+                            })
+                        })
+                    })
+                })
+            ]
+        })
+    });
+});
+$eb9ee8fded2d6df4$export$28c660c63b792dea.displayName = "Tooltip";
+$eb9ee8fded2d6df4$export$28c660c63b792dea.defaultProps = {
+    placement: "top",
+    align: "center",
+    delay: 0,
+    offset: 8,
+    asChild: true
+};
+
+
+
+
+var $bb35251af926b602$exports = {};
+
+$parcel$export($bb35251af926b602$exports, "SettingProvider", () => $96c23574d52ea0c3$export$6f0dace02a814e88);
+$parcel$export($bb35251af926b602$exports, "useSetting", () => $06372075813414be$export$12b0e20ae7d96a25);
+$parcel$export($bb35251af926b602$exports, "useLocalStorage", () => $2700b10b1c3eea5e$export$86e2cef2561044ac);
+$parcel$export($bb35251af926b602$exports, "useMimirorgTheme", () => $d970ba63fcb75a42$export$74446bd855170621);
+
+
+
+const $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e = /*#__PURE__*/ (0, $dYZEH$react.createContext)({});
+
+
+const $96c23574d52ea0c3$var$defaultAppSetting = {
+    language: {
+        current: "en",
+        languages: [
+            {
+                code: "no",
+                name: "Norwegian"
+            },
+            {
+                code: "en",
+                name: "English"
+            }
+        ]
+    }
+};
+const $96c23574d52ea0c3$export$6f0dace02a814e88 = ({ children: children  })=>{
+    const [setting, setSetting] = (0, $dYZEH$react.useState)(()=>{
+        if (typeof window === "undefined") return $96c23574d52ea0c3$var$defaultAppSetting;
+        try {
+            const item = window.localStorage.getItem("appsetting");
+            return item ? JSON.parse(item) : $96c23574d52ea0c3$var$defaultAppSetting;
+        } catch (error) {
+            console.warn(error);
+            return $96c23574d52ea0c3$var$defaultAppSetting;
+        }
+    });
+    (0, $dYZEH$react.useEffect)(()=>{
+        window.localStorage.setItem("appsetting", JSON.stringify(setting));
+    }, [
+        setting
+    ]);
+    const settingProviderValue = (0, $dYZEH$react.useMemo)(()=>({
+            setting: setting,
+            setSetting: setSetting
+        }), [
+        setting,
+        setSetting
+    ]);
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e).Provider, {
+        value: settingProviderValue,
+        children: children
+    });
+};
+
+
+
+
+const $06372075813414be$export$12b0e20ae7d96a25 = ()=>{
+    return (0, $dYZEH$react.useContext)((0, $3d2b0c9a3f6c4bde$export$3054a16eb4fe8c9e));
+};
+
+
+
+function $2700b10b1c3eea5e$export$86e2cef2561044ac(key, initialValue) {
+    const [storedValue, setStoredValue] = (0, $dYZEH$react.useState)(()=>{
+        if (typeof window === "undefined") return initialValue;
+        try {
+            const item = window.localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            console.warn(error);
+            return initialValue;
+        }
+    });
+    const setValue = (value)=>{
+        try {
+            const valueToStore = value instanceof Function ? value(storedValue) : value;
+            setStoredValue(valueToStore);
+            if (typeof window !== "undefined") window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        } catch (error) {
+            console.warn(error);
+        }
+    };
+    return [
+        storedValue,
+        setValue
+    ];
+}
+
+
+
+const $d970ba63fcb75a42$export$74446bd855170621 = ()=>{
+    const theme = (0, $dYZEH$styledcomponents.useTheme)();
+    return theme.mimir;
+};
+
+
+
+
+var $34e9179e15ed0401$exports = {};
+
+
+var $89c1e076c47ade71$exports = {};
+
+$parcel$export($89c1e076c47ade71$exports, "calculateDays", () => $07293fb555030e6e$export$260733d43c3dc50a);
+$parcel$export($89c1e076c47ade71$exports, "createDomainId", () => $07293fb555030e6e$export$bd1203ad2e3208f7);
+$parcel$export($89c1e076c47ade71$exports, "createId", () => $07293fb555030e6e$export$7149c6ffc9994c32);
+$parcel$export($89c1e076c47ade71$exports, "createNumberId", () => $07293fb555030e6e$export$de3609038e2dcd26);
+$parcel$export($89c1e076c47ade71$exports, "forceDate", () => $07293fb555030e6e$export$5e4cc6abec75530);
+$parcel$export($89c1e076c47ade71$exports, "getDomainFromId", () => $07293fb555030e6e$export$637515699a57839b);
+$parcel$export($89c1e076c47ade71$exports, "ignoreCircularReferences", () => $07293fb555030e6e$export$c4d25c0d0c3b7f);
+$parcel$export($89c1e076c47ade71$exports, "isdateBetween", () => $07293fb555030e6e$export$71b45186df786da8);
+$parcel$export($89c1e076c47ade71$exports, "removeTrailingSlashes", () => $07293fb555030e6e$export$5a466c0ba959b06);
+$parcel$export($89c1e076c47ade71$exports, "toBase64", () => $0dc99e6cb267af85$export$37cc283d8fbd3462);
+$parcel$export($89c1e076c47ade71$exports, "lsReadValue", () => $8756754745ab87a6$export$81e76f652c2aead0);
+$parcel$export($89c1e076c47ade71$exports, "lsSaveValue", () => $8756754745ab87a6$export$98bd917067ba65d5);
+
+
+const $0dc99e6cb267af85$export$37cc283d8fbd3462 = (file)=>new Promise((resolve, reject)=>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = ()=>resolve(reader.result);
+        reader.onerror = (error)=>reject(error);
+    });
+const $0dc99e6cb267af85$export$b20f4ee19ffa0668 = (base64)=>{
+    // Split into two parts
+    const parts = base64.split(";base64,");
+    // Hold the content type
+    const imageType = parts[0].split(":")[1];
+    // Decode Base64 string
+    const decodedData = (0, $dYZEH$base64.decode)(parts[1]);
+    // Create UNIT8ARRAY of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length);
+    // Insert all character code into uInt8Array
+    for(let i = 0; i < decodedData.length; ++i)uInt8Array[i] = decodedData.charCodeAt(i);
+    // Return BLOB image after conversion
+    return new Blob([
+        uInt8Array
+    ], {
+        type: imageType
+    });
+};
+
+
+/**
+ * Read value from local storage
+ * The data must be stored in json format.
+ * If error it returns null and logs a warning to the console.
+ *
+ * @param key  the storage key
+ */ function $8756754745ab87a6$export$81e76f652c2aead0(key) {
+    if (typeof window === "undefined") return null;
+    try {
+        const item = window.localStorage.getItem(key);
+        if (item == null) return null;
+        return JSON.parse(item);
+    } catch (error) {
+        console.warn(error);
+    }
+    return null;
+}
+function $8756754745ab87a6$export$98bd917067ba65d5(key, value) {
+    if (typeof window === "undefined") return;
+    try {
+        if (value == null) {
+            window.localStorage.removeItem(key);
+            return;
+        }
+        window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+
+
+
+var $e5fc0ab88ec72021$exports = {};
+
+$parcel$export($e5fc0ab88ec72021$exports, "MimirorgThemeProvider", () => $52fb26a1dbaa0459$export$613dacf2c09c65aa);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const $5fee7716aee8d88b$export$5d16871b54b7e5b4 = (theme)=>({
+        style: {
+            display: "flex",
+            padding: `${theme.spacing.base} ${theme.spacing.l}`,
+            boxShadow: theme.shadow.small,
+            borderRadius: theme.border.radius.medium,
+            font: theme.typography.roles.label.large.font,
+            letterSpacing: theme.typography.roles.label.large.letterSpacing,
+            lineHeight: theme.typography.roles.label.large.lineHeight,
+            background: theme.color.secondary.base,
+            color: theme.color.secondary.on
+        },
+        success: {
+            icon: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$stylediconsheroiconsoutline.CheckCircle), {
+                size: 24,
+                style: {
+                    flexShrink: 0
+                }
+            }),
+            style: {
+                background: theme.color.success.base,
+                color: theme.color.success.on
+            }
+        },
+        error: {
+            icon: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$stylediconsheroiconsoutline.XCircle), {
+                size: 24,
+                style: {
+                    flexShrink: 0
+                }
+            }),
+            style: {
+                background: theme.color.error.base,
+                color: theme.color.error.on
+            }
+        }
+    });
+const $5fee7716aee8d88b$export$c4a82530b31b3f8e = ()=>({
+        animation: "revert"
+    });
+
+
+
+const $f1463cc0032851b5$export$cfd585d01b202eca = (0, $dYZEH$framermotion.motion).div;
+
+
+const $4e24186f11301264$export$fb98e3a2a4cd92d7 = ()=>{
+    const theme = (0, $dYZEH$styledcomponents.useTheme)();
+    const customToasterStyles = (0, $5fee7716aee8d88b$export$5d16871b54b7e5b4)(theme.mimir);
+    const customToastBarStyles = (0, $5fee7716aee8d88b$export$c4a82530b31b3f8e)();
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$reacthottoast.Toaster, {
+        position: "bottom-right",
+        toastOptions: customToasterStyles,
+        children: (toast)=>/*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$framermotion.AnimatePresence), {
+                children: toast.visible && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $f1463cc0032851b5$export$cfd585d01b202eca), {
+                    ...theme.mimir.animation.from("right", 400),
+                    children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)($dYZEH$reacthottoast.ToastBar, {
+                        toast: toast,
+                        style: customToastBarStyles
+                    })
+                })
+            })
+    });
+};
+
+
+
+
+
+const $4a1f609802484cbb$export$ee6441f5fa13d80 = (0, $dYZEH$styledcomponents.css)`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  #root {
+    isolation: isolate;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+
+const $e652215bb94bddf1$export$f05794e648629f6c = (0, $dYZEH$styledcomponents.createGlobalStyle)`
+  ${(0, $4a1f609802484cbb$export$ee6441f5fa13d80)};
+
+  body {
+    background: ${({ theme: theme  })=>theme.mimir.color.background.base};
+  }
+
+  // Global typography styles
+  body {
+    font-family: ${({ theme: theme  })=>theme.mimir.typography.typeface.brand};
+    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.normal};
+    font-size: 100%;
+    color: ${({ theme: theme  })=>theme.mimir.color.text.base};
+  }
+
+  h1 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-large")};
+  }
+
+  h2 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-medium")};
+  }
+
+  h3 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("display-small")};
+  }
+
+  h4 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-large")};
+  }
+
+  h5 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-medium")};
+  }
+
+  h6 {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("headline-small")};
+  }
+
+  p,
+  a {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-large")};
+  }
+
+  a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  b,
+  strong {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-large")};
+    font-weight: ${({ theme: theme  })=>theme.mimir.typography.typeface.weights.bold};
+  }
+
+  small {
+    ${(0, $d52b171d993bc98f$export$4d9bf56aa526ad8a)("body-small")};
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 7px;
+    background-color: #C4C4C4;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+`;
+
+
+
+function $108ac524a97dc644$export$b325a9f6dade91bd(initial) {
+    const [colorTheme, setColorTheme] = (0, $dYZEH$react.useState)(initial);
+    (0, $dYZEH$react.useEffect)(()=>{
+        function setPreferredTheme() {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme && [
+                "dark",
+                "light"
+            ].includes(savedTheme)) setColorTheme(savedTheme);
+        }
+        setPreferredTheme();
+        window.addEventListener("storage", setPreferredTheme);
+        return ()=>window.removeEventListener("storage", setPreferredTheme);
+    }, []);
+    return [
+        colorTheme
+    ];
+}
+
+
+
+const $52fb26a1dbaa0459$export$613dacf2c09c65aa = ({ theme: theme = "light" , children: children  })=>{
+    const [colorTheme] = (0, $108ac524a97dc644$export$b325a9f6dade91bd)(theme);
+    const applicationTheme = {
+        mimir: (0, $2eb14da954e84e79$export$8c5e244d866eaf89)(colorTheme)
+    };
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$styledcomponents.ThemeProvider), {
+        theme: applicationTheme,
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $e652215bb94bddf1$export$f05794e648629f6c), {}),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $dYZEH$framermotion.MotionConfig), {
+                reducedMotion: "user",
+                children: [
+                    /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$radixuireacttooltip.TooltipProvider), {
+                        children: children
+                    }),
+                    /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $4e24186f11301264$export$fb98e3a2a4cd92d7), {})
+                ]
+            })
+        ]
+    });
+};
+
+
+
+
+
 var $446265882e3ab983$exports = {};
 
 $parcel$export($446265882e3ab983$exports, "Box", () => $54b37c187193fdf9$export$e71c4d32a2263218);
@@ -3398,11 +3842,12 @@ $parcel$export($c84f5e0a2982749d$exports, "Input", () => $353e457b19a38b03$expor
 $parcel$export($c84f5e0a2982749d$exports, "RadioButton", () => $77dd771f39e4284c$export$f4422ae58352e179);
 $parcel$export($c84f5e0a2982749d$exports, "RichTextarea", () => $a868f3d127d3c1a4$export$988f442bad83a3dc);
 $parcel$export($c84f5e0a2982749d$exports, "Select", () => $095bff93395c2754$export$ef9b1a59e592288f);
-$parcel$export($c84f5e0a2982749d$exports, "SwitchComponent", () => $4200dcf4e02bace5$export$4f67f25efd2613a8);
 $parcel$export($c84f5e0a2982749d$exports, "Textarea", () => $892cc72635783224$export$379139ebc1c2b235);
 $parcel$export($c84f5e0a2982749d$exports, "UserAutoComplete", () => $7d382e752c640f9e$export$dd2805e091597ff2);
+$parcel$export($c84f5e0a2982749d$exports, "SwitchComponent", () => $4200dcf4e02bace5$export$4f67f25efd2613a8);
 $parcel$export($c84f5e0a2982749d$exports, "Popover", () => $6c166f0e8e94411d$export$5b6b19405a83ff9d);
 $parcel$export($c84f5e0a2982749d$exports, "toast", () => $a1035bceda19f768$export$b410431fab84fa58);
+$parcel$export($c84f5e0a2982749d$exports, "FlowNodeComponent", () => $8476aea3263382c3$export$ec1602e46eacee2c);
 
 
 
@@ -4924,85 +5369,6 @@ const $095bff93395c2754$export$ef9b1a59e592288f = (props)=>{
 
 
 
-
-
-const $bc5dc933f08637ef$export$6f134394432193e7 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))($dYZEH$radixuireactswitch.Root)`
-  all: unset;
-  width: 42px;
-  height: 25px;
-  background-color: ${(props)=>props.theme.mimir.color.surface.variant.base};
-  border-radius: 9999px;
-  position: relative;
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  :hover {
-    cursor: pointer;
-    background-color: ${(props)=>props.theme.mimir.color.secondary.container?.base};
-  }
-
-  :focus {
-    box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  }
-`;
-const $bc5dc933f08637ef$export$4d07bf653ea69106 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))($dYZEH$radixuireactswitch.Thumb)`
-  display: block;
-  width: 21px;
-  height: 21px;
-  background-color: ${(props)=>props.theme.mimir.color.text.on};
-  border-radius: 9999px;
-  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
-  transition: transform 100ms;
-  transform: translateX(2px);
-  will-change: transform;
-
-  &[data-state="checked"] {
-    transform: translateX(19px);
-    background-color: ${(props)=>props.theme.mimir.color.primary.base};
-  }
-`;
-
-
-const $4200dcf4e02bace5$export$4f67f25efd2613a8 = (props)=>{
-    const theme = (0, $dYZEH$styledcomponents.useTheme)();
-    const [status, setStatus] = (0, $dYZEH$react.useState)(props.checked);
-    const onCheckedChange = (status)=>{
-        setStatus(status);
-        if (props.onSwitchChange != null) props.onSwitchChange(status);
-    };
-    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $3395036f3ebec999$export$5fceefdeba78d15a), {
-        alignItems: "center",
-        children: [
-            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $c98b48bb55930056$export$5f1af8db9871e1d6), {
-                htmlFor: "airplane-mode",
-                as: "label",
-                variant: "label-medium",
-                spacing: {
-                    mr: theme.mimir.spacing.l
-                },
-                children: props.text
-            }),
-            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $bc5dc933f08637ef$export$6f134394432193e7), {
-                id: "airplane-mode",
-                checked: status,
-                onCheckedChange: onCheckedChange,
-                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $bc5dc933f08637ef$export$4d07bf653ea69106), {})
-            })
-        ]
-    });
-};
-$4200dcf4e02bace5$export$4f67f25efd2613a8.displayName = "SwitchComponent";
-$4200dcf4e02bace5$export$4f67f25efd2613a8.defaultProps = {
-    text: "",
-    checked: false
-};
-
-
-
-
-
-
-
 const $50230de933118dfc$export$72f57f62e07710be = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div``;
 const $50230de933118dfc$export$ba7509128d3a2a52 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).ul`
   border: 1px solid ${(props)=>props.theme.mimir.color.outline.base};
@@ -5148,7 +5514,210 @@ $7d382e752c640f9e$export$dd2805e091597ff2.displayName = "UserAutoCompleteProps";
 
 
 
+
+
+
+
+
+const $bc5dc933f08637ef$export$6f134394432193e7 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))($dYZEH$radixuireactswitch.Root)`
+  all: unset;
+  width: 42px;
+  height: 25px;
+  background-color: ${(props)=>props.theme.mimir.color.surface.variant.base};
+  border-radius: 9999px;
+  position: relative;
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  :hover {
+    cursor: pointer;
+    background-color: ${(props)=>props.theme.mimir.color.secondary.container?.base};
+  }
+
+  :focus {
+    box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  }
+`;
+const $bc5dc933f08637ef$export$4d07bf653ea69106 = (0, ($parcel$interopDefault($dYZEH$styledcomponents)))($dYZEH$radixuireactswitch.Thumb)`
+  display: block;
+  width: 21px;
+  height: 21px;
+  background-color: ${(props)=>props.theme.mimir.color.text.on};
+  border-radius: 9999px;
+  box-shadow: ${(props)=>props.theme.mimir.shadow.small};
+  transition: transform 100ms;
+  transform: translateX(2px);
+  will-change: transform;
+
+  &[data-state="checked"] {
+    transform: translateX(19px);
+    background-color: ${(props)=>props.theme.mimir.color.primary.base};
+  }
+`;
+
+
+const $4200dcf4e02bace5$export$4f67f25efd2613a8 = (props)=>{
+    const theme = (0, $dYZEH$styledcomponents.useTheme)();
+    const [status, setStatus] = (0, $dYZEH$react.useState)(props.checked);
+    const onCheckedChange = (status)=>{
+        setStatus(status);
+        if (props.onSwitchChange != null) props.onSwitchChange(status);
+    };
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $3395036f3ebec999$export$5fceefdeba78d15a), {
+        alignItems: "center",
+        children: [
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $c98b48bb55930056$export$5f1af8db9871e1d6), {
+                htmlFor: "airplane-mode",
+                as: "label",
+                variant: "label-medium",
+                spacing: {
+                    mr: theme.mimir.spacing.l
+                },
+                children: props.text
+            }),
+            /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $bc5dc933f08637ef$export$6f134394432193e7), {
+                id: "airplane-mode",
+                checked: status,
+                onCheckedChange: onCheckedChange,
+                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $bc5dc933f08637ef$export$4d07bf653ea69106), {})
+            })
+        ]
+    });
+};
+$4200dcf4e02bace5$export$4f67f25efd2613a8.displayName = "SwitchComponent";
+$4200dcf4e02bace5$export$4f67f25efd2613a8.defaultProps = {
+    text: "",
+    checked: false
+};
+
+
+
+
 const $a1035bceda19f768$export$b410431fab84fa58 = (0, $dYZEH$reacthottoast.toast);
+
+
+
+
+
+
+
+
+
+
+const $da980c9a56eee0fc$export$bded10d9b0827aeb = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  flex-direction: row;
+`;
+const $da980c9a56eee0fc$export$d8a48536dbcad893 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  display: flex;
+  border-radius: 10px;
+  min-height: ${(props)=>props.nodeHeight}px;
+  width: ${(props)=>props.nodeWidth}px;
+  font-size: 11px;
+  text-align: center;
+  box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
+  background-color: ${(props)=>props.colorMain};
+  opacity: ${(props)=>props.hidden ? 0 : 1};
+  transition: border 250ms, opacity 250ms;
+  padding: 0;
+  border: 3px solid;
+  border-color: ${(props)=>props.colorMain} !important;
+  margin: 0;
+  opacity: ${(props)=>props.visible ? 1 : 0};
+
+  &:hover {
+    border: 3px solid;
+    border-color: ${(props)=>props.colorSelected} !important;
+  }
+
+  &.selected {
+    border: 3px solid;
+    border-color: ${(props)=>props.colorSelected} !important;
+  }
+`;
+const $da980c9a56eee0fc$export$49d341e6197bb092 = (0, ($parcel$interopDefault($dYZEH$styledcomponents))).div`
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+`;
+
+
+const $8476aea3263382c3$export$ec1602e46eacee2c = (props)=>{
+    const theme = (0, $d970ba63fcb75a42$export$74446bd855170621)();
+    const { connectors: connectors , title: title , symbol: symbol , logo: logo , ...delegated } = props;
+    return /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $dYZEH$reactjsxruntime.Fragment), {
+        children: props.hidden == null || !props.hidden && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $da980c9a56eee0fc$export$bded10d9b0827aeb), {
+            children: [
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $326f1827a58fb59c$export$179bb831147717ca), {
+                    side: "inside",
+                    direction: (0, $ec9566825b478c35$export$69674d1480aba23d).Input,
+                    connectors: connectors,
+                    ...delegated
+                }),
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $da980c9a56eee0fc$export$d8a48536dbcad893), {
+                    ...delegated,
+                    className: props.selected ? "selected" : "",
+                    children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsxs)((0, $da980c9a56eee0fc$export$49d341e6197bb092), {
+                        children: [
+                            title != null && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $c98b48bb55930056$export$5f1af8db9871e1d6), {
+                                as: "p",
+                                variant: "title-medium",
+                                fontWeight: theme.typography.typeface.weights.bold,
+                                useEllipsis: true,
+                                ellipsisMaxLines: 2,
+                                children: title
+                            }),
+                            title != null && symbol != null && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $61f4f908e4fdb007$export$236d96ef38f832f6), {
+                                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $532cbfd8145dc5ee$export$3e25e887b7a5b37b), {
+                                    source: symbol,
+                                    text: `${title} symbol`
+                                })
+                            }),
+                            logo != null && /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $61f4f908e4fdb007$export$4a2034c9f860b7cd), {
+                                className: "FlowNodeComponent-LogoBox",
+                                children: /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $532cbfd8145dc5ee$export$3e25e887b7a5b37b), {
+                                    source: logo,
+                                    text: "Logo"
+                                })
+                            })
+                        ]
+                    })
+                }),
+                /*#__PURE__*/ (0, $dYZEH$reactjsxruntime.jsx)((0, $326f1827a58fb59c$export$179bb831147717ca), {
+                    side: "outside",
+                    direction: (0, $ec9566825b478c35$export$69674d1480aba23d).Output,
+                    connectors: connectors,
+                    ...delegated
+                })
+            ]
+        })
+    });
+};
+$8476aea3263382c3$export$ec1602e46eacee2c.displayName = "FlowNodeComponent";
+$8476aea3263382c3$export$ec1602e46eacee2c.defaultProps = {
+    connectors: [],
+    storybook: false,
+    title: undefined,
+    symbol: undefined,
+    logo: undefined,
+    colorMain: "#FEF445",
+    colorSelected: "#FBC913",
+    selected: false,
+    hidden: false,
+    visible: true,
+    nodeWidth: 160,
+    nodeHeight: 95,
+    connectorWidth: 19,
+    connectorHeight: 19
+};
 
 
 

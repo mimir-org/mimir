@@ -29,7 +29,7 @@ export const HandleComponent = ({ node, connectors, isElectroView }: Props) => {
     <HandleContainer isElectro={isElectroView}>
       {connectors.map((conn) => {
         if (conn.hidden) return null;
-        return <BlockNodeConnector key={`handle-${conn.id}`} connector={conn} isElectroView={isElectroView} />;
+        return <BlockNodeConnector key={`handle-${conn.id}`} connector={conn} isElectroView={isElectroView} node={node} />;
       })}
     </HandleContainer>
   );

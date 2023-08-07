@@ -1,6 +1,7 @@
 import { PropsWithChildren, ElementType, ImgHTMLAttributes, ReactElement, ReactNode, Dispatch, SetStateAction, InputHTMLAttributes, HTMLAttributes, Ref, TextareaHTMLAttributes, FormHTMLAttributes } from "react";
 import * as Separator from "@radix-ui/react-separator";
-import { GroupBase, Props as _Props5 } from "react-select";
+import { HandleType, Position } from "react-flow-renderer";
+import { GroupBase, Props as _Props6 } from "react-select";
 import ReactSelectType from "react-select/base";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { CheckboxProps } from "@radix-ui/react-checkbox";
@@ -404,138 +405,31 @@ interface DividerProps {
  * @see https://www.radix-ui.com/docs/primitives/components/separator
  */
 export const Divider: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<Separator.SeparatorProps & import("react").RefAttributes<HTMLDivElement>>, import("styled-components").DefaultTheme, DividerProps, never>;
-/**
- * Function to ignore circular references
- */
-export const ignoreCircularReferences: () => (key: string, value: object) => object | undefined;
-/**
- * Create a unique GUID id
- */
-export const createId: () => string;
-/**
- * Create a unique GUID id
- * @param domain The domain included in id ex. example.com_xxxxx-xxxxx-xxxxx
- */
-export const createDomainId: (domain: string) => string;
-/**
- * Get domain from id
- * @param id The id formatted as example.com_xxxxx-xxxxx-xxxxx
- */
-export const getDomainFromId: (id: string) => string;
-/**
- *
- * @param value The value that should replace trailing slashes
- * @returns The replaced string without trailing slashes
- */
-export const removeTrailingSlashes: (value: string) => string;
-/**
- * Create a unique number id based on unique string
- * @param negative
- */
-export const createNumberId: (negative?: boolean) => number;
-/**
- * Calculate working days between two dates
- *
- * @param from The from date
- * @param to The to date
- * @returns Calculated number
- */
-export const calculateDays: (from: Date | null, to: Date | null) => number;
-/**
- * Force a date to correct type
- *
- * @param value The date like value to force
- */
-export const forceDate: (value: Date | string | null | undefined) => Date | undefined;
-/**
- * Check if date is between to dates
- * @param current The date to check for is between
- * @param from The from date to check for
- * @param to The to date to check for
- */
-export const isdateBetween: (current: Date, from: Date | undefined, to: Date | undefined) => boolean;
-type ResizablePanelContainerProps = Spacings & {
-    maxTrigger?: boolean;
-};
-type ResizablePanelProps = ResizablePanelContainerProps & {
-    children: ReactNode;
-    duration: number;
-    maxHeight?: number;
-};
-export const ResizablePanel: ({ children, duration, maxHeight }: ResizablePanelProps) => import("react/jsx-runtime").JSX.Element;
-type MotionPanelProps = ResizablePanelProps & {
-    header: ReactNode;
-    open: boolean;
-};
-export const MotionPanel: {
-    (props: MotionPanelProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
-/**
- * Removes styles from react router links.
- * Useful when wrapping other elements with navigation semantics.
- */
-export const PlainLink: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<import("react-router-dom").LinkProps & import("react").RefAttributes<HTMLAnchorElement>>, import("styled-components").DefaultTheme, Sizing, never>;
-interface SpinnerProps {
-    variant?: "scale" | "circle";
-    disabled: boolean;
-}
-/**
- * Component the draws a spinner on screen
- *
- * @param variant spinner variants
- * @param disabled
- * @constructor
- */
-export const Spinner: {
-    ({ variant, disabled }: SpinnerProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultValues: {
-        variant: string;
-        disabled: boolean;
-    };
-};
-/**
- * A polymorphic component for heading elements
- *
- * @param as element to display component as (defaults to <h1>)
- * @param font overrides font of text element
- * @param fontSize overrides default size of the text element
- * @param fontWeight overrides default font-weight of the text element
- * @param color overrides default color of the text element
- * @param useEllipsis enable truncation of text
- * @param ellipsisMaxLines set how many lines to display before truncation
- * @constructor
- */
-export const Heading: import("styled-components").StyledComponent<"h1", import("styled-components").DefaultTheme, Spacings & Sizing & Pick<Palette, "color"> & Pick<Display, "display" | "whiteSpace"> & Pick<Typography, "font" | "fontSize" | "fontWeight" | "textAlign" | "textTransform" | "wordBreak"> & Polymorphic<ElementType> & TextVariant & Ellipsis, never>;
-/**
- * A generic tooltip for describing focusable elements.
- * Handles focus management, collision detection, a11y tags and more.
- *
- * See documentation link below for details.
- * @see https://www.radix-ui.com/docs/primitives/components/tooltip
- *
- * @param children element which receive focus to trigger tooltip
- * @param content of the tooltip itself
- * @param placement target placement of the tooltip
- * @param align target alignment of the tooltip
- * @param delay in ms before showing the tooltip
- * @param offset in px away from the element which triggers the tooltip
- * @param delegated receives sizing props for overriding default styles
- * @constructor
- */
-export const Tooltip: import("react").ForwardRefExoticComponent<import("index").Sizing & {
-    content: ReactNode;
-    placement?: "top" | "right" | "bottom" | "left" | undefined;
-    align?: "center" | "end" | "start" | undefined;
-    delay?: number | undefined;
-    offset?: number | undefined;
-    asChild?: boolean | undefined;
-} & {
-    children?: ReactNode;
-} & import("react").RefAttributes<HTMLDivElement>>;
 interface ApplicationSetting {
     language: LanguageSetting;
+}
+interface FlowHandle {
+    id: string;
+    connectorId: string;
+    position: Position;
+    handleType: HandleType;
+    side: "inside" | "outside";
+    hidden: boolean;
+    visible: boolean;
+    className: string;
+    color: string;
+}
+interface FlowConnector {
+    id: string;
+    handles: FlowHandle[];
+    hidden: boolean;
+    visible: boolean;
+    direction: ConnectorDirection;
+}
+enum ConnectorDirection {
+    Input = 0,
+    Output = 1,
+    Bidirectional = 2
 }
 interface Language {
     code: string;
@@ -545,62 +439,6 @@ interface LanguageSetting {
     current: string;
     languages: Language[];
 }
-interface IApplicationContext {
-    setting: ApplicationSetting;
-    setSetting: Dispatch<SetStateAction<ApplicationSetting>>;
-}
-interface SettingProviderProps {
-    children?: ReactNode;
-}
-export const SettingProvider: ({ children }: SettingProviderProps) => import("react/jsx-runtime").JSX.Element;
-export const useSetting: () => IApplicationContext;
-/**
- * Local storage hook to read data from local storage and write data to local storage.
- * The data is stored in json format.
- * <p>
- * If error it returns the initial value and logs a warning to the console.
- *
- * @param key  the storage key
- * @param initialValue the initial value to be stored
- */
-export function useLocalStorage<T>(key: string, initialValue: T): readonly [T, (value: T | ((val: T) => T)) => void];
-export const useMimirorgTheme: () => Theme;
-/**
- * Read data from file and create a base64 string
- *
- * @param file the file that should be converted
- */
-export const toBase64: (file: File) => Promise<string | ArrayBuffer | null>;
-/**
- * Read value from local storage
- * The data must be stored in json format.
- * If error it returns null and logs a warning to the console.
- *
- * @param key  the storage key
- */
-export function lsReadValue<T>(key: string): T;
-/**
- * Save value to local storage
- * The data will be stored in json format.
- * If error it returns null and logs a warning to the console.
- * If the value is null, the key will be removed from local storage
- *
- * @param key   the storage key
- * @param value the value that will be saved
- */
-export function lsSaveValue<T>(key: string, value: T): void;
-interface MimirorgThemeProviderProps {
-    theme?: "light" | "dark";
-}
-/**
- * Custom theme provider which exposes a namespaced theme.
- * Also wraps its children with other global dependencies that the components are dependent upon.
- *
- * @param theme
- * @param children
- * @constructor
- */
-export const MimirorgThemeProvider: ({ theme, children }: PropsWithChildren<MimirorgThemeProviderProps>) => import("react/jsx-runtime").JSX.Element;
 export const FunctionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
     title?: string | undefined;
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
@@ -642,6 +480,46 @@ export const CheckmarkCheckedIcon: import("styled-components").StyledComponent<i
     size?: number | undefined;
 }, never>;
 export const CheckmarkEmptyIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorBidirectionalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorDownstreamIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorLocationIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorProductIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorTreeviewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorUpstreamIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
+    title?: string | undefined;
+}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
+    size?: number | undefined;
+}, never>;
+export const ConnectorVerticalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
     title?: string | undefined;
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
     size?: number | undefined;
@@ -811,6 +689,232 @@ export const ExpandedAccordionNestedIcon: import("styled-components").StyledComp
 }>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
     size?: number | undefined;
 }, never>;
+type FlowHandleProps = {
+    hidden?: boolean;
+    visible?: boolean;
+    connectorWidth?: number;
+    connectorHeight?: number;
+};
+type FlowConnectorComponentProps = FlowHandleProps & {
+    connectors: FlowConnector[];
+    direction: ConnectorDirection;
+    side: "inside" | "outside";
+    storybook?: boolean;
+};
+/**
+ * A flow connector collection component.
+ * The component is used to draw all connectors from a given list.
+ * If the connector has property hidden, the connector will be removed from the list. The visible property is only visually
+ * hiding the connector with css.
+ *
+ * @param connectors a collection of connectors, default is empty collection
+ * @param direction a collection direction filter, default is left connectors
+ * @constructor
+ */
+export const FlowConnectorComponent: {
+    (props: FlowConnectorComponentProps): import("react/jsx-runtime").JSX.Element;
+    displayName: string;
+    defaultProps: {
+        connectors: FlowConnector[];
+        direction: ConnectorDirection;
+        storybook: boolean;
+        connectorWidth: number;
+        connectorHeight: number;
+    };
+};
+export const SymbolBox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
+export const LogoBox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
+interface _Props1 {
+    source: string;
+    text: string;
+}
+export const Symbol: ({ source, text }: _Props1) => import("react/jsx-runtime").JSX.Element | null;
+/**
+ * Function to ignore circular references
+ */
+export const ignoreCircularReferences: () => (key: string, value: object) => object | undefined;
+/**
+ * Create a unique GUID id
+ */
+export const createId: () => string;
+/**
+ * Create a unique GUID id
+ * @param domain The domain included in id ex. example.com_xxxxx-xxxxx-xxxxx
+ */
+export const createDomainId: (domain: string) => string;
+/**
+ * Get domain from id
+ * @param id The id formatted as example.com_xxxxx-xxxxx-xxxxx
+ */
+export const getDomainFromId: (id: string) => string;
+/**
+ *
+ * @param value The value that should replace trailing slashes
+ * @returns The replaced string without trailing slashes
+ */
+export const removeTrailingSlashes: (value: string) => string;
+/**
+ * Create a unique number id based on unique string
+ * @param negative
+ */
+export const createNumberId: (negative?: boolean) => number;
+/**
+ * Calculate working days between two dates
+ *
+ * @param from The from date
+ * @param to The to date
+ * @returns Calculated number
+ */
+export const calculateDays: (from: Date | null, to: Date | null) => number;
+/**
+ * Force a date to correct type
+ *
+ * @param value The date like value to force
+ */
+export const forceDate: (value: Date | string | null | undefined) => Date | undefined;
+/**
+ * Check if date is between to dates
+ * @param current The date to check for is between
+ * @param from The from date to check for
+ * @param to The to date to check for
+ */
+export const isdateBetween: (current: Date, from: Date | undefined, to: Date | undefined) => boolean;
+type ResizablePanelContainerProps = Spacings & {
+    maxTrigger?: boolean;
+};
+type ResizablePanelProps = ResizablePanelContainerProps & {
+    children: ReactNode;
+    duration: number;
+    maxHeight?: number;
+};
+export const ResizablePanel: ({ children, duration, maxHeight }: ResizablePanelProps) => import("react/jsx-runtime").JSX.Element;
+type MotionPanelProps = ResizablePanelProps & {
+    header: ReactNode;
+    open: boolean;
+};
+export const MotionPanel: {
+    (props: MotionPanelProps): import("react/jsx-runtime").JSX.Element;
+    displayName: string;
+};
+/**
+ * Removes styles from react router links.
+ * Useful when wrapping other elements with navigation semantics.
+ */
+export const PlainLink: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<import("react-router-dom").LinkProps & import("react").RefAttributes<HTMLAnchorElement>>, import("styled-components").DefaultTheme, Sizing, never>;
+interface SpinnerProps {
+    variant?: "scale" | "circle";
+    disabled: boolean;
+}
+/**
+ * Component the draws a spinner on screen
+ *
+ * @param variant spinner variants
+ * @param disabled
+ * @constructor
+ */
+export const Spinner: {
+    ({ variant, disabled }: SpinnerProps): import("react/jsx-runtime").JSX.Element;
+    displayName: string;
+    defaultValues: {
+        variant: string;
+        disabled: boolean;
+    };
+};
+/**
+ * A polymorphic component for heading elements
+ *
+ * @param as element to display component as (defaults to <h1>)
+ * @param font overrides font of text element
+ * @param fontSize overrides default size of the text element
+ * @param fontWeight overrides default font-weight of the text element
+ * @param color overrides default color of the text element
+ * @param useEllipsis enable truncation of text
+ * @param ellipsisMaxLines set how many lines to display before truncation
+ * @constructor
+ */
+export const Heading: import("styled-components").StyledComponent<"h1", import("styled-components").DefaultTheme, Spacings & Sizing & Pick<Palette, "color"> & Pick<Display, "display" | "whiteSpace"> & Pick<Typography, "font" | "fontSize" | "fontWeight" | "textAlign" | "textTransform" | "wordBreak"> & Polymorphic<ElementType> & TextVariant & Ellipsis, never>;
+/**
+ * A generic tooltip for describing focusable elements.
+ * Handles focus management, collision detection, a11y tags and more.
+ *
+ * See documentation link below for details.
+ * @see https://www.radix-ui.com/docs/primitives/components/tooltip
+ *
+ * @param children element which receive focus to trigger tooltip
+ * @param content of the tooltip itself
+ * @param placement target placement of the tooltip
+ * @param align target alignment of the tooltip
+ * @param delay in ms before showing the tooltip
+ * @param offset in px away from the element which triggers the tooltip
+ * @param delegated receives sizing props for overriding default styles
+ * @constructor
+ */
+export const Tooltip: import("react").ForwardRefExoticComponent<import("index").Sizing & {
+    content: ReactNode;
+    placement?: "top" | "right" | "bottom" | "left" | undefined;
+    align?: "center" | "end" | "start" | undefined;
+    delay?: number | undefined;
+    offset?: number | undefined;
+    asChild?: boolean | undefined;
+} & {
+    children?: ReactNode;
+} & import("react").RefAttributes<HTMLDivElement>>;
+interface IApplicationContext {
+    setting: ApplicationSetting;
+    setSetting: Dispatch<SetStateAction<ApplicationSetting>>;
+}
+interface SettingProviderProps {
+    children?: ReactNode;
+}
+export const SettingProvider: ({ children }: SettingProviderProps) => import("react/jsx-runtime").JSX.Element;
+export const useSetting: () => IApplicationContext;
+/**
+ * Local storage hook to read data from local storage and write data to local storage.
+ * The data is stored in json format.
+ * <p>
+ * If error it returns the initial value and logs a warning to the console.
+ *
+ * @param key  the storage key
+ * @param initialValue the initial value to be stored
+ */
+export function useLocalStorage<T>(key: string, initialValue: T): readonly [T, (value: T | ((val: T) => T)) => void];
+export const useMimirorgTheme: () => Theme;
+/**
+ * Read data from file and create a base64 string
+ *
+ * @param file the file that should be converted
+ */
+export const toBase64: (file: File) => Promise<string | ArrayBuffer | null>;
+/**
+ * Read value from local storage
+ * The data must be stored in json format.
+ * If error it returns null and logs a warning to the console.
+ *
+ * @param key  the storage key
+ */
+export function lsReadValue<T>(key: string): T;
+/**
+ * Save value to local storage
+ * The data will be stored in json format.
+ * If error it returns null and logs a warning to the console.
+ * If the value is null, the key will be removed from local storage
+ *
+ * @param key   the storage key
+ * @param value the value that will be saved
+ */
+export function lsSaveValue<T>(key: string, value: T): void;
+interface MimirorgThemeProviderProps {
+    theme?: "light" | "dark";
+}
+/**
+ * Custom theme provider which exposes a namespaced theme.
+ * Also wraps its children with other global dependencies that the components are dependent upon.
+ *
+ * @param theme
+ * @param children
+ * @constructor
+ */
+export const MimirorgThemeProvider: ({ theme, children }: PropsWithChildren<MimirorgThemeProviderProps>) => import("react/jsx-runtime").JSX.Element;
 /**
  * A polymorphic layout component for a box element.
  *
@@ -883,6 +987,14 @@ export const MotionGridbox: import("framer-motion").CustomDomComponent<{
     as?: string | import("react").ComponentType<any> | undefined;
     forwardedAs?: string | import("react").ComponentType<any> | undefined;
 }>;
+export interface FileInfo {
+    id: number;
+    fileName: string;
+    fileSize: number;
+    file: string | null;
+    contentType: string;
+    description: string;
+}
 /**
  * A simple wrapper over the input-tag, with styling that follows library conventions.
  */
@@ -895,7 +1007,7 @@ type CalendarComponentContainerProps = Flex & Sizing & Spacings & Omit<HTMLAttri
     variant?: CalendarVariant;
 };
 export type SelectVariant = "standard" | "compact";
-interface SelectProps<Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>> extends _Props5<Option, IsMulti, Group> {
+interface SelectProps<Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>> extends _Props6<Option, IsMulti, Group> {
     variant?: SelectVariant;
     selectRef?: Ref<ReactSelectType<Option, IsMulti, Group>>;
 }
@@ -910,14 +1022,6 @@ interface SelectProps<Option, IsMulti extends boolean = false, Group extends Gro
  * @param props takes all react-select props in addition to variant (styling) and selectRef (reference by prop)
  */
 export const Select: <Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>(props: SelectProps<Option, IsMulti, Group>) => import("react/jsx-runtime").JSX.Element;
-export interface FileInfo {
-    id: number;
-    fileName: string;
-    fileSize: number;
-    file: string | null;
-    contentType: string;
-    description: string;
-}
 interface DialogDescriptionProps {
     children: ReactNode;
     hide?: boolean;
@@ -970,7 +1074,7 @@ export const Dialog: import("react").ForwardRefExoticComponent<Pick<DialogPrimit
     closeText?: string | undefined;
 } & import("react").RefAttributes<HTMLButtonElement>>;
 export const Textarea: import("styled-components").StyledComponent<"textarea", import("styled-components").DefaultTheme, TextareaHTMLAttributes<HTMLTextAreaElement> & Sizing, never>;
-interface _Props1 {
+interface _Props2 {
     value: FileInfo[];
     onChange?: (files: FileInfo[]) => void;
     placeholder?: string;
@@ -978,7 +1082,7 @@ interface _Props1 {
     buttonText?: string;
     disabled?: boolean;
 }
-export const FileComponent: import("react").ForwardRefExoticComponent<_Props1 & import("react").RefAttributes<HTMLDivElement>>;
+export const FileComponent: import("react").ForwardRefExoticComponent<_Props2 & import("react").RefAttributes<HTMLDivElement>>;
 /**
  * A simple wrapper around form to control general form layout
  */
@@ -1011,7 +1115,7 @@ export const FormField: ({ label, error, indent, children }: PropsWithChildren<F
  * A simple wrapper around fieldset to control padding/margins/spacing around form inputs
  */
 export const FormFieldset: import("styled-components").StyledComponent<"fieldset", import("styled-components").DefaultTheme, Flex, never>;
-interface _Props2 {
+interface _Props3 {
     title?: string;
     subtitle?: string;
 }
@@ -1021,7 +1125,7 @@ interface _Props2 {
  * @param subTitle
  * @constructor
  */
-export const FormHeader: ({ title, subtitle }: _Props2) => import("react/jsx-runtime").JSX.Element;
+export const FormHeader: ({ title, subtitle }: _Props3) => import("react/jsx-runtime").JSX.Element;
 type FormLegendProps = {
     backgroundColor?: string;
     color?: string;
@@ -1031,7 +1135,7 @@ type FormLegendProps = {
  */
 export const FormLegend: import("styled-components").StyledComponent<"legend", import("styled-components").DefaultTheme, FormLegendProps, never>;
 type PopoverContentProps = Sizing & Palette;
-type _Props3 = PopoverContentProps & {
+type _Props4 = PopoverContentProps & {
     content: ReactNode;
     onOpenChange?: () => void;
     placement?: "top" | "right" | "bottom" | "left";
@@ -1054,7 +1158,7 @@ type _Props3 = PopoverContentProps & {
  * @param delegated receives sizing props for overriding default styles
  * @constructor
  */
-export const Popover: ({ children, content, onOpenChange, placement, align, offset, ...delegated }: PropsWithChildren<_Props3>) => import("react/jsx-runtime").JSX.Element;
+export const Popover: ({ children, content, onOpenChange, placement, align, offset, ...delegated }: PropsWithChildren<_Props4>) => import("react/jsx-runtime").JSX.Element;
 interface CalendarComponentProps extends CalendarComponentContainerProps {
     icon?: ReactElement;
     onChange?: (item: Date | undefined) => void;
@@ -1119,6 +1223,15 @@ export const RichTextarea: import("react").ForwardRefExoticComponent<Omit<InputH
     placeholder?: string | undefined;
     onChange?: ((value: string) => void) | undefined;
 } & import("react").RefAttributes<HTMLDivElement>>;
+interface UserInput {
+    id: string;
+    value: string;
+}
+export const UserAutoComplete: import("react").ForwardRefExoticComponent<InputHTMLAttributes<HTMLInputElement> & Omit<Sizing, "boxSizing"> & {
+    users: UserInput[];
+    value?: string | undefined;
+    onItemChange?: ((id: string) => void) | undefined;
+} & import("react").RefAttributes<HTMLInputElement>>;
 type SwitchComponentProps = Spacings & SwitchProps & {
     text?: string;
     onSwitchChange?: (status: boolean) => void;
@@ -1140,15 +1253,6 @@ export const SwitchComponent: {
         checked: boolean;
     };
 };
-interface UserInput {
-    id: string;
-    value: string;
-}
-export const UserAutoComplete: import("react").ForwardRefExoticComponent<InputHTMLAttributes<HTMLInputElement> & Omit<Sizing, "boxSizing"> & {
-    users: UserInput[];
-    value?: string | undefined;
-    onItemChange?: ((id: string) => void) | undefined;
-} & import("react").RefAttributes<HTMLInputElement>>;
 /**
  * Call it to create a toast from anywhere, even outside React.
  * Make sure to wrap the application with the component library's theme provider first.
@@ -1165,11 +1269,11 @@ export const UserAutoComplete: import("react").ForwardRefExoticComponent<InputHT
  * @see https://react-hot-toast.com/docs/toast
  */
 export const toast: {
-    (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, opts?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "duration" | "position" | "ariaProps" | "iconTheme">> | undefined): string;
-    error: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "duration" | "position" | "ariaProps" | "iconTheme">> | undefined) => string;
-    success: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "duration" | "position" | "ariaProps" | "iconTheme">> | undefined) => string;
-    loading: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "duration" | "position" | "ariaProps" | "iconTheme">> | undefined) => string;
-    custom: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "duration" | "position" | "ariaProps" | "iconTheme">> | undefined) => string;
+    (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, opts?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined): string;
+    error: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
+    success: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
+    loading: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
+    custom: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
     dismiss(toastId?: string | undefined): void;
     remove(toastId?: string | undefined): void;
     promise<T>(promise: Promise<T>, msgs: {
@@ -1177,6 +1281,52 @@ export const toast: {
         success: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, T>;
         error: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, any>;
     }, opts?: import("react-hot-toast").DefaultToastOptions | undefined): Promise<T>;
+};
+type FlowNodeBoxProps = {
+    colorMain?: string;
+    colorSelected?: string;
+    selected?: boolean;
+    hidden?: boolean;
+    visible?: boolean;
+    nodeWidth?: number;
+    nodeHeight?: number;
+    connectorWidth?: number;
+    connectorHeight?: number;
+};
+type FlowNodeComponentProps = FlowNodeBoxProps & {
+    connectors: FlowConnector[];
+    storybook?: boolean;
+    title?: string;
+    symbol?: string;
+    logo?: string;
+};
+/**
+ * A button with different variants.
+ * A typical use case is in forms or navigation purposes.
+ * original component props with the props of the supplied element/component and change the underlying DOM node.
+ *
+ * @param props Typical button properties as sizing, spacing, icons and variants.
+ * @constructor
+ */
+export const FlowNodeComponent: {
+    (props: FlowNodeComponentProps): import("react/jsx-runtime").JSX.Element;
+    displayName: string;
+    defaultProps: {
+        connectors: never[];
+        storybook: boolean;
+        title: undefined;
+        symbol: undefined;
+        logo: undefined;
+        colorMain: string;
+        colorSelected: string;
+        selected: boolean;
+        hidden: boolean;
+        visible: boolean;
+        nodeWidth: number;
+        nodeHeight: number;
+        connectorWidth: number;
+        connectorHeight: number;
+    };
 };
 interface NotFoundProps {
     title: string;
@@ -1199,7 +1349,7 @@ export const ErrorMessage: ({ title, subtitle, status, linkText, linkPath }: Not
 type InspectorHeaderProps = {
     bgColor?: string;
 };
-type _Props4 = Spacings & InspectorHeaderProps & {
+type _Props5 = Spacings & InspectorHeaderProps & {
     duration: number;
     children: ReactNode;
     isOpen: boolean;
@@ -1223,7 +1373,7 @@ type _Props4 = Spacings & InspectorHeaderProps & {
  * @constructor
  */
 export const InspectorPanel: {
-    (props: _Props4): import("react/jsx-runtime").JSX.Element;
+    (props: _Props5): import("react/jsx-runtime").JSX.Element;
     defaultProps: {
         duration: number;
         isOpen: boolean;

@@ -6,8 +6,9 @@ import { Aspect, AspectObject, Connector, ViewType } from "lib";
 import { FunctionIcon, LocationIcon, ProductIcon } from "@mimirorg/component-library";
 
 const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
-  const SetTopPos = (position: Position) => {
+  const SetPos = (position: Position) => {
     if (position === Position.Top) return "-20px";
+    if (position === Position.Bottom) return "54px";
     if (position === Position.Right || position === Position.Left) return "50%";
   };
 
@@ -17,13 +18,7 @@ const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
         const [type, pos] = conn.GetHandleType();
 
         return (
-          <TreeHandleBox
-            key={conn.id}
-            hidden={data.hidden}
-            position={pos}
-            topPos={SetTopPos(pos)}
-            isFunctionAspect={data.aspect === Aspect.Function}
-          >
+          <TreeHandleBox key={conn.id} hidden={data.hidden} position={pos}>
             <Handle
               type={type}
               position={pos}

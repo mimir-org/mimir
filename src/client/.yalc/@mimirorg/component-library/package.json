@@ -1,6 +1,6 @@
 {
   "name": "@mimirorg/component-library",
-  "version": "1.0.0+b4148799",
+  "version": "1.0.1+5e0c5072",
   "description": "React component library for Mimirorg",
   "type": "module",
   "source": "src/index.ts",
@@ -76,8 +76,9 @@
     "react-router-dom": ">=6.11.1",
     "react-select": ">=5.7.3",
     "react-spinners": ">=0.13.8",
+    "react-use-measure": ">=2.1.1",
     "styled-components": ">=5.3.10",
-    "react-use-measure": ">=2.1.1"
+    "react-flow-renderer": "^10.3.17"
   },
   "dependencies": {
     "@fontsource/nunito-sans": "^4.5.10",
@@ -102,6 +103,7 @@
     "react": ">=18.2.0",
     "react-calendar": "^4.0.0",
     "react-dom": ">=18.2.0",
+    "react-flow-renderer": "^10.3.17",
     "react-hot-toast": "^2.4.1",
     "react-quilljs": ">=1.3.3",
     "react-router-dom": ">=6.11.1",
@@ -110,5 +112,5 @@
     "react-use-measure": ">=2.1.1",
     "styled-components": ">=5.3.10"
   },
-  "yalcSig": "b41487991e91e5fec31bb8831e0af959"
+  "yalcSig": "5e0c5072aa2bba408ee7f2fe362ad490"
 }

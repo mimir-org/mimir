@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Theme, toast } from "@mimirorg/component-library";
-import { AspectObjectLibCm, AspectObjectTerminalLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { DialogType, Position, Project, ViewType, Handle, InfoException, ErrorException } from "lib";
 import { MutableRefObject } from "react";
 import { Connection as FlowConnection, Edge } from "react-flow-renderer";
@@ -50,9 +50,16 @@ export const onNodePositionChange = (
   dispatch(updateProject({ project }));
 };
 
-export const onNodeDrop = (type: AspectObjectLibCm, posX: number, posY: number, project: Project, dispatch: Dispatch) => {
+export const onNodeDrop = (
+  type: AspectObjectLibCm,
+  posX: number,
+  posY: number,
+  project: Project,
+  viewType: ViewType,
+  dispatch: Dispatch
+) => {
   if (type == null || project == null) throw new Error("Can't handle aspect object drop. Type or project is null or undefined.");
-  project.addAspectObject(type, new Position(posX, posY), new Position(10, 10), "reidar.liabo@bouvet.no");
+  project.addAspectObject(type, new Position(posX, posY), new Position(10, 10), "reidar.liabo@bouvet.no", viewType);
   dispatch(updateProject({ project }));
 };
 

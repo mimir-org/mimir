@@ -5,8 +5,6 @@ import { TreeViewConnectorIcon, TreeViewLocationConnectorIcon, TreeViewProductCo
 interface Props {
   hidden: boolean;
   position: Position;
-  topPos: string;
-  isFunctionAspect: boolean;
 }
 
 export const TreeHandleBox = styled.div<Props>`
@@ -14,7 +12,6 @@ export const TreeHandleBox = styled.div<Props>`
   .product-treeview-handler,
   .location-treeview-handler {
     border-radius: 0;
-    bottom: -19px;
     z-index: 1;
     transition: opacity 0.5s ease-in-out;
 
@@ -26,28 +23,26 @@ export const TreeHandleBox = styled.div<Props>`
       background: url(${TreeViewConnectorIcon});
       right: ${(props) => props.position === Position.Right && 50}px;
       left: ${(props) => props.position === Position.Left && 50}px;
-      top: ${(props) => props.topPos};
+      top: ${(props) => props.position === Position.Top && -20}px;
+      bottom: ${(props) => props.position === Position.Bottom && -22}px;
     }
 
     &.locatedAt {
       width: 16px !important;
       height: 16px !important;
       background: url(${TreeViewLocationConnectorIcon});
-      right: ${(props) => props.position === Position.Right && 4}px;
-      left: ${(props) => props.position === Position.Left && 4}px;
-      top: ${(props) => (props.isFunctionAspect ? "60%" : "50%")};
+      right: ${(props) => props.position === Position.Right && 2}px;
+      left: ${(props) => props.position === Position.Left && 2}px;
+      top: "50%";
     }
 
     &.fulfilledBy {
       width: 16px !important;
       height: 16px !important;
       background: url(${TreeViewProductConnectorIcon});
-      right: ${(props) => props.position === Position.Right && 4}px;
-      left: ${(props) => props.position === Position.Left && 4}px;
-      top: ${(props) => (props.isFunctionAspect ? "40%" : "50%")};
-      &:hover {
-        background-color: black;
-      }
+      right: ${(props) => props.position === Position.Right && 2}px;
+      left: ${(props) => props.position === Position.Left && 2}px;
+      top: "50%";
     }
   }
 `;
