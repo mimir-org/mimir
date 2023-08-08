@@ -398,6 +398,73 @@ d914b6d4d538   mcr.microsoft.com/mssql/server:2017-CU8-ubuntu   "/opt/mssql/bin/
 | :gear: Installation   | `cd src/client` <br /> `npm install` | `cd src/server` <br /> `dotnet build`                |
 | :running: Run Locally | `cd src/client` <br /> `npm start`   | `cd src/server/ModelBuilder.Api` <br /> `dotnet run` |
 
+You can use [Yalc](https://github.com/whitecolor/yalc) to manage local package development. It allows you to work on your local package and test it as if it were installed from NPM, without publishing it. 
+
+## :computer: Using Yalc for Local Development
+
+Yalc allows you to work on the "component-library" locally and test it within the "mimir" project without publishing it to NPM. Here's how you can set it up:
+
+### 1. Install Yalc
+
+First, you need to install Yalc globally on your machine:
+
+```bash
+npm install -g yalc
+```
+
+### 2. Publish the Component Library to Yalc
+
+Navigate to the "component-library" directory and publish the package to Yalc's local store:
+
+```bash
+cd path/to/component-library
+yalc publish
+```
+
+### 3. Add the Component Library to the Mimir Project
+
+Now, navigate to the "mimir" project directory and add the "component-library" package using Yalc:
+
+```bash
+cd path/to/mimir
+yalc add component-library
+```
+
+### 4. Link the Component Library (Optional)
+
+If you want to reflect the changes in the "component-library" instantly in the "mimir" project, you can use the `yalc link` command:
+
+```bash
+cd path/to/component-library
+yalc link mimir
+```
+
+### 5. Push Updates (Optional)
+
+Whenever you make changes to the "component-library," you can push the updates to the "mimir" project using:
+
+```bash
+yalc push
+```
+
+### 6. Remove the Component Library (Optional)
+
+If you want to remove the "component-library" from the "mimir" project and revert to the NPM version, you can use:
+
+```bash
+cd path/to/mimir
+yalc remove component-library
+```
+
+### 7. Update the Component Library (Optional)
+
+To update the "component-library" in the "mimir" project with the latest version from Yalc's local store, you can use:
+
+```bash
+cd path/to/mimir
+yalc update component-library
+```
+
 <!-- Contributing -->
 
 ## :wave: Contributing
