@@ -1,5 +1,5 @@
 // import { activeMenuSelector } from "redux/store";
-import { useEffect, useRef } from "react";
+// import { useRef } from "react";
 import { StartPage } from "../Start/StartPage";
 // import { InspectorModule } from "../../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../../modules/library/LibraryModule";
@@ -8,7 +8,7 @@ import { FlowModule } from "../../flow/FlowModule";
 import { ErrorModule } from "../../../modules/error";
 // import { ValidationModule } from "../../../modules/validation";
 import { ExplorerTreeModule, ExplorerBlockModule } from "../../../modules/explorer";
-import { ToggleColorProfile } from "../../../helpers/ToggleColorProfile";
+// import { ToggleColorProfile } from "../../../helpers/ToggleColorProfile";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../../toolbar/ToolbarComponent";
 // import { fetchCompanies, fetchCompany, fetchParsers } from "../../redux/store/common/commonSlice";
@@ -33,12 +33,11 @@ import { InspectorModule } from "components/modules/inspector/InspectorModule";
 
 /**
  * The main component for Mimir.
- * @param interface
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = () => {
   const [filter, setFilter] = useLocalStorage("visual_filter", defaultFilter);
-  const inspectorRef = useRef(null);
+  // const inspectorRef = useRef(null);
 
   const dispatch = useAppDispatch();
   const project = useAppSelector<Project>(projectSelector);
@@ -51,7 +50,7 @@ export const Home = () => {
   websocket.setProject(project);
   websocket.start();
 
-  const isDarkMode = false;
+  // const isDarkMode = false;
   // const isTreeView = commonState.view === ViewType.Tree;
   const isFilterOpen = false;
 
@@ -89,7 +88,7 @@ export const Home = () => {
         onLogOut={onLogOut}
         onOpenClick={onOpenClick}
         isSubProject={project?.subProject ?? false}
-        hasActiveProject={project != null ? true : false}
+        hasActiveProject={project != null}
         hasSelectedNodes={project?.hasSelectedAspectObjects() ?? false}
       />
       {commonState.view === ViewType.Home ? (
@@ -100,7 +99,7 @@ export const Home = () => {
           {commonState.view === ViewType.Tree && <ExplorerTreeModule dispatch={dispatch} />}
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
           <FlowModule />
-          <InspectorModule />
+          <InspectorModule selectedAspectObject={project?.getSelectedAspectObject()} />
           {/* <AnimatedModule
             content="<div><p>Her er tekst</p><p>Her er mer tekst</p></div>"
             trigger={<InspectorModuleTrigger name="Inspector" />}

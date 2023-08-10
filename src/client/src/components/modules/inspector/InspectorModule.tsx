@@ -1,5 +1,7 @@
 import { InspectorPanel, useMimirorgTheme } from "@mimirorg/component-library";
 import { useState } from "react";
+import { AspectObject } from "../../../lib";
+import { AdminTab } from "./tabs/AdminTab";
 
 // InspectorHeaderProps & {
 //   duration: number;
@@ -21,9 +23,14 @@ import { useState } from "react";
  * @param component props
  * and relations between the objects.
  */
-export const InspectorModule = () => {
-  const theme = useMimirorgTheme();
-  const [expanded, setExpanded] = useState<boolean>(false);
+
+interface InspectorModuleProps {
+  selectedAspectObject: AspectObject | null;
+}
+
+export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) => {
+  // const theme = useMimirorgTheme();
+  // const [expanded, setExpanded] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal" | "relation">("relation");
 
   const onTabChange = (value: "admin" | "attribute" | "terminal" | "relation") => {
@@ -40,23 +47,11 @@ export const InspectorModule = () => {
         onTabChange={onTabChange}
         spacing={{ pl: "45px", pr: "45px" }}
         tabColor="#FFDE7A"
-        name="Pump"
+        name={selectedAspectObject?.name ?? "Please select an aspect object"}
         icon="http://localhost:5001/symbol/1cd2b7cc-0b27-415a-ad7b-3f16ab7c741d.svg"
         selectedTab={selectedTab}
       >
-        {selectedTab === "admin" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the admin tab component</p>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the admin tab component</p>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the admin tab component</p>
-          </div>
-        )}
+        {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
         {selectedTab === "attribute" && (
           <div style={{ padding: "10px" }}>
             <p>Here is some demo content</p>
