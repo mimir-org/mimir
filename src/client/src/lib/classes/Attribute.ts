@@ -43,7 +43,7 @@ export class Attribute {
     this.name = lib?.name;
     this.value = null;
     this.attributeType = lib?.iri;
-    this.unitSelected = lib?.attributeUnits?.find((x) => x.isDefault)?.unit?.iri;
+    this.unitSelected = lib?.attributeUnits?.find((x) => x.isDefault)?.unit?.id ?? null;
     this.units = lib?.attributeUnits?.map((x) => new Unit(x.unit)) ?? [];
     this.connectorTerminal = connectorTerminal == null ? null : connectorTerminal;
     this.aspectObject = aspectObject == null ? null : aspectObject;
@@ -53,4 +53,14 @@ export class Attribute {
     // TODO: We need to construct qualifiers
     this.qualifiers = [];
   }
+
+  public getUnitsAsLabelValue = () => {
+    return this.units.map((unit) => {
+      return {
+        label: unit.name,
+        value: unit.id,
+        id: unit.id,
+      };
+    });
+  };
 }
