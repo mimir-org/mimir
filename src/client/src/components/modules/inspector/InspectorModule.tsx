@@ -1,7 +1,8 @@
-import { InspectorPanel, useMimirorgTheme } from "@mimirorg/component-library";
+import { InspectorPanel } from "@mimirorg/component-library";
 import { useState } from "react";
 import { AspectObject } from "../../../lib";
 import { AdminTab } from "./tabs/AdminTab";
+import { AttributeTab } from "./tabs/AttributeTab";
 
 // InspectorHeaderProps & {
 //   duration: number;
@@ -52,13 +53,7 @@ export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) 
         selectedTab={selectedTab}
       >
         {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
-        {selectedTab === "attribute" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the attribute tab component</p>
-          </div>
-        )}
+        {selectedTab === "attribute" && <AttributeTab attributes={selectedAspectObject?.attributes ?? []} />}
         {selectedTab === "terminal" && (
           <div style={{ padding: "10px" }}>
             <p>Here is some demo content</p>
