@@ -1,14 +1,16 @@
 import { AspectObject } from "../../../../lib";
 import { Flexbox, Form, Input, Text, useMimirorgTheme } from "@mimirorg/component-library";
 import { TextArea } from "../../../../compLibrary/input/text";
+import { TabContainerWrapper } from "./TabContainerWrapper.styled";
 
 interface AdminTabProps {
   aspectObject: AspectObject;
 }
 export const AdminTab = ({ aspectObject }: AdminTabProps) => {
   const theme = useMimirorgTheme();
+
   return (
-    <div style={{ padding: "10px" }}>
+    <TabContainerWrapper>
       <Form>
         <Flexbox flexDirection={"row"} gap={theme.spacing.xl}>
           <div>
@@ -31,6 +33,6 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
           </div>
         </Flexbox>
       </Form>
-    </div>
+    </TabContainerWrapper>
   );
 };
