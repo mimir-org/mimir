@@ -2,6 +2,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Project } from "lib";
 
 // State definition
+/**
+ * Project state
+ * @property {string[]} fetching - List of fetching actions
+ * @property {boolean} creating - Is creating project
+ * @property {boolean} isLocking - Is locking project
+ * @property {Project} project - Project
+ * @property {Project[]} projectList - List of projects
+ */
 export interface ProjectState {
   fetching: string[];
   creating: boolean;
