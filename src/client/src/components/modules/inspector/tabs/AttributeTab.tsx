@@ -1,4 +1,4 @@
-import { Attribute } from "../../../../lib";
+import { Attribute, Qualifier } from "../../../../lib";
 import { TabContainerWrapper } from "./TabContainerWrapper.styled";
 import { Flexbox, Form } from "@mimirorg/component-library";
 import { projectStateSelector, useAppSelector } from "../../../../store";
@@ -41,17 +41,26 @@ export const AttributeTab = ({ attributes }: AttributeTabProps) => {
     }
   };
 
+  const handleQualifierChange = (id: string, qualifiers: Qualifier[]) => {
+    const attributeToUpdate = attributes.find((attr) => attr.id === id);
+    if (attributeToUpdate) {
+      attributeToUpdate.qualifiers = qualifiers;
+      dispatch(updateProject({ ...projectState }));
+    }
+  };
+
   return (
     attributes.length > 0 && (
       <TabContainerWrapper>
         <Form>
-          <Flexbox flexDirection={"row"} style={{ marginBottom: "200px" }}>
+          <Flexbox flexDirection={"row"} style={{ marginBottom: "300px" }}>
             {attributes.map((attribute) => (
               <AttributeItem
                 key={attribute.id}
                 attribute={attribute}
                 onInputChange={handleInputChange}
                 onUnitChange={handleUnitChange}
+                onQualifierChange={handleQualifierChange}
               />
             ))}
           </Flexbox>

@@ -1,6 +1,6 @@
 import { StyledAttribute, StyledAttributeContent, StyledAttributeHeader } from "./AttributeItem.styled";
 import { Button, Flexbox, Input, Select } from "@mimirorg/component-library";
-import { Attribute } from "../../../../lib";
+import { Attribute, Qualifier } from "../../../../lib";
 import { useEffect, useState } from "react";
 import { QuantityDatum, QuantityOption } from "../../../../lib/classes/QuantityDatum";
 
@@ -8,6 +8,7 @@ interface AttributeItemProps {
   attribute: Attribute;
   onInputChange: (id: string, value: string) => void;
   onUnitChange: (id: string, unit: string) => void;
+  onQualifierChange: (id: string, qualifier: Qualifier[]) => void;
 }
 
 /**
@@ -15,12 +16,12 @@ interface AttributeItemProps {
  * @param attribute - attribute to display
  * @param onInputChange - callback for when input changes
  * @param onUnitChange  - callback for when unit changes
+ * @param onQualifierChange - callback for when qualifier changes
  * @constructor
  */
 
-export const AttributeItem = ({ attribute, onInputChange, onUnitChange }: AttributeItemProps) => {
+export const AttributeItem = ({ attribute, onInputChange, onUnitChange, onQualifierChange }: AttributeItemProps) => {
   const [inputValue, setInputValue] = useState<string>(attribute.value);
-  const [selectedOptions, setSelectedOptions] = useState<QuantityOption[]>([]);
   const quantityDatum = new QuantityDatum();
   const [options, setOptions] = useState(quantityDatum.getCategoryOptions());
 
@@ -28,39 +29,51 @@ export const AttributeItem = ({ attribute, onInputChange, onUnitChange }: Attrib
     setOptions(quantityDatum.getCategoryOptions());
   }, []);
 
+  /**
+   * if an option is selected in a category, disable the other options in the category
+   */
   const handleChange = (selectedOptions: QuantityOption[]) => {
     const newOptions = JSON.parse(JSON.stringify(options));
 
     // Initialize a set to keep track of selected categories
     const selectedCategories = new Set<string>();
 
-    // If selectedOptions is empty or null, reset all isDisabled flags
-    if (!selectedOptions || selectedOptions.length === 0) {
-      newOptions.forEach((group) => {
-        group.options.forEach((option) => {
-          option.isDisabled = false;
-        });
-      });
-    } else {
-      // Populate the set with the categories of the selected options
-      newOptions.forEach((group) => {
-        if (selectedOptions.some((selected) => group.options.some((option) => option.value === selected.value))) {
-          selectedCategories.add(group.category as string);
-        }
+    // Create a map to store the latest selected option for each category
+    const latestSelectedForCategory = new Map<string, QuantityOption>();
+
+    selectedOptions.forEach((selected) => {
+      const category = newOptions.find((group) => group.options.some((option) => option.value === selected.value))?.category;
+      if (category) {
+        latestSelectedForCategory.set(category, selected);
+      }
+    });
+
+    // Reset all isDisabled flags and update based on latest selected option for each category
+    newOptions.forEach((group) => {
+      group.options.forEach((option) => {
+        option.isDisabled = false;
       });
 
-      // Update 'isDisabled' for options in selected categories
-      newOptions.forEach((group) => {
-        if (selectedCategories.has(group.category as string)) {
-          group.options.forEach((option) => {
-            option.isDisabled = !selectedOptions.some((selected) => selected.value === option.value);
-          });
-        }
-      });
-    }
+      const latestSelected = latestSelectedForCategory.get(group.category as string);
+      if (latestSelected) {
+        selectedCategories.add(group.category as string);
+        group.options.forEach((option) => {
+          option.isDisabled = option.value !== latestSelected.value;
+        });
+      }
+    });
 
     setOptions(newOptions);
-    setSelectedOptions(selectedOptions); // Update the selected options
+
+    // Update the selected options to only include the latest selected option for each category
+    const updatedSelectedOptions = Array.from(latestSelectedForCategory.values());
+
+    onQualifierChange(
+      attribute.id,
+      updatedSelectedOptions.map((option) => {
+        return new Qualifier(option.label, option.value);
+      })
+    );
   };
 
   return (
@@ -69,16 +82,22 @@ export const AttributeItem = ({ attribute, onInputChange, onUnitChange }: Attrib
         <p>{attribute.name}</p>
       </StyledAttributeHeader>
       <StyledAttributeContent>
-        <Input type={"text"} defaultValue={inputValue} onChange={(e) => setInputValue(e.target.value)} />
         <Select
-          value={selectedOptions}
-          isMulti
+          value={attribute.qualifiers.map((qualifier) => {
+            return { value: qualifier.value, label: qualifier.name };
+          })}
+          isMulti={true}
+          isSearchable={false}
+          hideSelectedOptions={false}
           options={options}
-          onChange={
-            // if an option is selected in category, disable the other options in the category
-            handleChange
-          }
+          minMenuHeight={100}
+          menuPlacement={"auto"}
+          onChange={handleChange}
+          variant={"standard"}
         />
+      </StyledAttributeContent>
+      <StyledAttributeContent>
+        <Input type={"text"} defaultValue={inputValue} onChange={(e) => setInputValue(e.target.value)} />
 
         <Select
           defaultValue={attribute.getUnitsAsLabelValue().find((unit) => unit.value === attribute.unitSelected)}

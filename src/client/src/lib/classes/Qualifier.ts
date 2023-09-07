@@ -1,4 +1,5 @@
 import { jsonMember, jsonObject } from "typedjson";
+import CreateId from "../CreateId";
 
 @jsonObject
 export class Qualifier {
@@ -10,4 +11,10 @@ export class Qualifier {
 
   @jsonMember(String)
   value = "";
+
+  constructor(name: string, value: string) {
+    this.id = CreateId();
+    this.name = name;
+    this.value = value;
+  }
 }
