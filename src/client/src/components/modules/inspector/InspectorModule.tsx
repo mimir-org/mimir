@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AspectObject } from "../../../lib";
 import { AdminTab } from "./tabs/AdminTab";
 import { AttributeTab } from "./tabs/AttributeTab";
+import { TerminalTab } from "./tabs/TerminalTab";
 
 // InspectorHeaderProps & {
 //   duration: number;
@@ -32,9 +33,9 @@ interface InspectorModuleProps {
 export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) => {
   // const theme = useMimirorgTheme();
   // const [expanded, setExpanded] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal" | "relation">("relation");
+  const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal">("admin");
 
-  const onTabChange = (value: "admin" | "attribute" | "terminal" | "relation") => {
+  const onTabChange = (value: "admin" | "attribute" | "terminal") => {
     setSelectedTab(value);
   };
 
@@ -54,22 +55,7 @@ export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) 
       >
         {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
         {selectedTab === "attribute" && <AttributeTab attributes={selectedAspectObject?.attributes ?? []} />}
-        {selectedTab === "terminal" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the terminal tab component</p>
-            <p>This is the terminal tab component</p>
-          </div>
-        )}
-        {selectedTab === "relation" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the relation tab component</p>
-            <p>This is the relation tab component</p>
-          </div>
-        )}
+        {selectedTab === "terminal" && <TerminalTab name={"Test name"} id={"12345"} description={"This is a description"} />}
       </InspectorPanel>
     </div>
   );

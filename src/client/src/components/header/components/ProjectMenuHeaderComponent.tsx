@@ -34,7 +34,7 @@ export const ProjectMenuHeaderComponent = ({
         <Tooltip content={TextResources.PROJECT_DESCRIPTION} placement={"bottom"} offset={[0, 8]}>
           <ProjectHeaderButton isOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <span>{projectName ?? TextResources.PROJECT}</span>
-            {isMenuOpen ? <CollapseWhiteIcon size={10} alt={"icon"} /> : <ExpandedWhiteIcon size={10} alt={"icon"} />}
+            {isMenuOpen ? <CollapseWhiteIcon size={10} /> : <ExpandedWhiteIcon size={10} />}
           </ProjectHeaderButton>
         </Tooltip>
         {isMenuOpen && (

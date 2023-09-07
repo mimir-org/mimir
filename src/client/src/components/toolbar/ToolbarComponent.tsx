@@ -65,13 +65,13 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           <>
             <ToolbarElement
               label={TextResources.FITSCREEN}
-              icon={<FitViewIcon size={14} alt={TextResources.FITSCREEN} />}
+              icon={<FitViewIcon size={14} />}
               onClick={() => handlers.OnFitToScreenClick(false, viewportData)}
               borderRight
             />
             <ToolbarElement
               label={TextResources.ELECTRO_ON}
-              icon={<HorizontalIcon width={"14px"} height={"10px"} alt={TextResources.ELECTRO_ON} />}
+              icon={<HorizontalIcon width={"14px"} height={"10px"} />}
               onClick={() => null}
               // onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
@@ -92,7 +92,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
               onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
             }
             items={leftMenuItems}
-          ></OverflowComponent>
+          />
           <OverflowComponentTitle>{aspectObject?.name ?? "Missing"}</OverflowComponentTitle>
           <OverflowComponent
             orientation={"Right"}
@@ -114,9 +114,9 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
           label={TextResources.TREEVIEW}
           icon={
             viewType === ViewType.Tree ? (
-              <TreeViewActiveIcon width={"19px"} height={"14px"} alt={TextResources.TREEVIEW} />
+              <TreeViewActiveIcon width={"19px"} height={"14px"} />
             ) : (
-              <TreeViewIcon width={"19px"} height={"14px"} alt={TextResources.TREEVIEW} />
+              <TreeViewIcon width={"19px"} height={"14px"} />
             )
           }
           // onClick={() => handlers.OnTreeViewClick(setSelectedNodes, viewType === ViewType.Tree, dispatch)}
@@ -127,13 +127,7 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
         <ToolbarElement
           active={viewType === ViewType.Block}
           label={TextResources.BLOCKVIEW}
-          icon={
-            viewType === ViewType.Tree ? (
-              <BlockViewIcon size={14} alt={TextResources.BLOCKVIEW} />
-            ) : (
-              <BlockViewActiveIcon size={14} alt={TextResources.BLOCKVIEW} />
-            )
-          }
+          icon={viewType === ViewType.Tree ? <BlockViewIcon size={14} /> : <BlockViewActiveIcon size={14} />}
           onClick={() => onViewTypeChange(ViewType.Block, dispatch)}
           borderLeft
           clickable={viewType !== ViewType.Block && aspectObject != null}

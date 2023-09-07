@@ -55,7 +55,7 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
               </span>
             )}
           </Flexbox>
-          <div>
+          <span>
             <Text variant={"body-small"}>Label</Text>
             <Input defaultValue={aspectObject?.label} onChange={(e) => setInputValue(e.target.value)} />
             <Text variant={"body-small"}>Description</Text>
@@ -64,10 +64,10 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
               defaultValue={aspectObject?.description}
               onChange={(e) => setDescriptionValue(e.target.value)}
             />
-          </div>
+          </span>
           {aspectObject?.label !== inputValue || aspectObject?.description !== descriptionValue ? (
             <Flexbox flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>
-              <Button variant={"outline"} onClick={onSubmit}>
+              <Button variant={"outlined"} onClick={onSubmit}>
                 Save
               </Button>
             </Flexbox>

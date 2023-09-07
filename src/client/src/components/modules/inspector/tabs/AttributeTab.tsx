@@ -6,9 +6,20 @@ import { ProjectState, updateProject } from "../../../../store/reducers/projectR
 import { useDispatch } from "react-redux";
 import { AttributeItem } from "../tabComponents/AttributeItem";
 
+/**
+ * This is the AttributeTabProps interface. It defines the props for the AttributeTab component.
+ * @param {Attribute[]} attributes
+ * @interface AttributeTabProps
+ */
 interface AttributeTabProps {
   attributes: Attribute[];
 }
+
+/**
+ * This is the AttributeTab component. It is a child component of the Inspector component.
+ * @param AttributeTabProps (attributes) - Array of Attribute objects.
+ * @constructor
+ */
 
 export const AttributeTab = ({ attributes }: AttributeTabProps) => {
   const dispatch = useDispatch();
