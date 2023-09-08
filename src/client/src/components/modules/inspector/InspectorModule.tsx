@@ -5,20 +5,6 @@ import { AdminTab } from "./tabs/AdminTab";
 import { AttributeTab } from "./tabs/AttributeTab";
 import { TerminalTab } from "./tabs/TerminalTab";
 
-// InspectorHeaderProps & {
-//   duration: number;
-//   children: ReactNode;
-//   isOpen: boolean;
-//   isLocked: boolean;
-//   onLock?: () => void;
-//   onDelete?: () => void;
-//   onTabChange?: (value: "admin" | "attribute" | "terminal" | "relation") => void;
-//   icon?: string;
-//   name?: string;
-//   tabColor?: string;
-//   selectedTab?: "admin" | "attribute" | "terminal" | "relation";
-// };
-
 /**
  * The mimir inspector module.
  * @returns a inspector component used to change and view aspect object data,
@@ -31,8 +17,6 @@ interface InspectorModuleProps {
 }
 
 export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) => {
-  // const theme = useMimirorgTheme();
-  // const [expanded, setExpanded] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal">("admin");
 
   const onTabChange = (value: "admin" | "attribute" | "terminal") => {
@@ -52,6 +36,8 @@ export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) 
         name={selectedAspectObject?.name ?? "Please select an aspect object"}
         icon="http://localhost:5001/symbol/1cd2b7cc-0b27-415a-ad7b-3f16ab7c741d.svg"
         selectedTab={selectedTab}
+        isOpen={true}
+        isLocked={false}
       >
         {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
         {selectedTab === "attribute" && <AttributeTab attributes={selectedAspectObject?.attributes ?? []} />}

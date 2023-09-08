@@ -49,52 +49,6 @@ export class QuantityDatum {
     { label: "Operating", value: "operating", isDisabled: false },
   ];
 
-  public getCategoryOptions(): GroupedOption[] {
-    const options = this.toJSONValueLabel();
-    return options.categories.map((category) => {
-      return {
-        label: category.label,
-        options: options[category.value],
-        isSelected: false,
-        category: category.value as "provenance" | "range" | "regularity" | "scope",
-      };
-    });
-  }
-
-  public disableOptions(category: "provenance" | "range" | "regularity" | "scope", options: string[]): void {
-    const optionsToDisable = this.getQualifiersByCategory(category).filter((option) => options.includes(option.value));
-    optionsToDisable.forEach((option) => (option.isDisabled = true));
-  }
-
-  public getCategories(): string[] {
-    return this.categories.map((item) => item.value);
-  }
-
-  public getQualifiersByCategory(category: "provenance" | "range" | "regularity" | "scope"): QuantityOption[] {
-    switch (category) {
-      case "provenance":
-        return this.provenanceQualifier;
-      case "range":
-        return this.rangeQualifier;
-      case "regularity":
-        return this.regularityQualifier;
-      case "scope":
-        return this.scopeQualifier;
-      default:
-        return [];
-    }
-  }
-
-  public toJSON() {
-    return {
-      categories: this.categories,
-      provenance: this.provenanceQualifier,
-      range: this.rangeQualifier,
-      regularity: this.regularityQualifier,
-      scope: this.scopeQualifier,
-    };
-  }
-
   public toJSONValueLabel() {
     return {
       categories: this.categories,
@@ -105,13 +59,15 @@ export class QuantityDatum {
     };
   }
 
-  public toValueLabel() {
-    return {
-      categories: this.categories.map((item) => ({ value: item.value, label: item.label })),
-      provenance: this.provenanceQualifier.map((item) => ({ value: item.value, label: item.label })),
-      range: this.rangeQualifier.map((item) => ({ value: item.value, label: item.label })),
-      regularity: this.regularityQualifier.map((item) => ({ value: item.value, label: item.label })),
-      scope: this.scopeQualifier.map((item) => ({ value: item.value, label: item.label })),
-    };
+  public getCategoryOptions(): GroupedOption[] {
+    const options = this.toJSONValueLabel();
+    return options.categories.map((category) => {
+      return {
+        label: category.label,
+        options: options[category.value],
+        isSelected: false,
+        category: category.value as "provenance" | "range" | "regularity" | "scope",
+      };
+    });
   }
 }

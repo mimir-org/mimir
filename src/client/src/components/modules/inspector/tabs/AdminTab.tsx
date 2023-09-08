@@ -6,19 +6,20 @@ import { useState } from "react";
 import { projectStateSelector, useAppSelector } from "../../../../store";
 import { ProjectState, updateProject } from "../../../../store/reducers/projectReducer";
 import { useDispatch } from "react-redux";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface AdminTabProps {
   aspectObject: AspectObject;
 }
 export const AdminTab = ({ aspectObject }: AdminTabProps) => {
-  const [inputValue, setInputValue] = useState<string>(aspectObject?.label);
+  const [labelValue, setLabelValue] = useState<string>(aspectObject?.label);
   const [descriptionValue, setDescriptionValue] = useState<string>(aspectObject?.description);
   const theme = useMimirorgTheme();
   const dispatch = useDispatch();
   const projectState = useAppSelector<ProjectState>(projectStateSelector);
 
   const onSubmit = () => {
-    aspectObject.label = inputValue;
+    aspectObject.label = labelValue;
     aspectObject.description = descriptionValue;
     dispatch(updateProject({ ...projectState }));
   };
@@ -57,7 +58,7 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
           </Flexbox>
           <span>
             <Text variant={"body-small"}>Label</Text>
-            <Input defaultValue={aspectObject?.label} onChange={(e) => setInputValue(e.target.value)} />
+            <Input defaultValue={aspectObject?.label} onChange={(e) => setLabelValue(e.target.value)} />
             <Text variant={"body-small"}>Description</Text>
             <TextArea
               height={120}
@@ -65,10 +66,10 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
               onChange={(e) => setDescriptionValue(e.target.value)}
             />
           </span>
-          {aspectObject?.label !== inputValue || aspectObject?.description !== descriptionValue ? (
+          {aspectObject?.label !== labelValue || aspectObject?.description !== descriptionValue ? (
             <Flexbox flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>
               <Button variant={"outlined"} onClick={onSubmit}>
-                Save
+                {TextResources.SAVE}
               </Button>
             </Flexbox>
           ) : null}

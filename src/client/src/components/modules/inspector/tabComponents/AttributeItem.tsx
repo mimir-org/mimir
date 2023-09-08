@@ -1,8 +1,9 @@
 import { StyledAttribute, StyledAttributeContent, StyledAttributeHeader } from "./AttributeItem.styled";
 import { Button, Flexbox, Input, Select } from "@mimirorg/component-library";
 import { Attribute, Qualifier } from "../../../../lib";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { QuantityDatum, QuantityOption } from "../../../../lib/classes/QuantityDatum";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface AttributeItemProps {
   attribute: Attribute;
@@ -23,49 +24,22 @@ interface AttributeItemProps {
 export const AttributeItem = ({ attribute, onInputChange, onUnitChange, onQualifierChange }: AttributeItemProps) => {
   const [inputValue, setInputValue] = useState<string>(attribute.value);
   const quantityDatum = new QuantityDatum();
-  const [options, setOptions] = useState(quantityDatum.getCategoryOptions());
-
-  useEffect(() => {
-    setOptions(quantityDatum.getCategoryOptions());
-  }, []);
+  const options = quantityDatum.getCategoryOptions();
 
   /**
-   * if an option is selected in a category, disable the other options in the category
+   * Update input value when attribute value changes
+   * @param selectedOptions - selected options
    */
   const handleChange = (selectedOptions: QuantityOption[]) => {
-    const newOptions = JSON.parse(JSON.stringify(options));
-
-    // Initialize a set to keep track of selected categories
-    const selectedCategories = new Set<string>();
-
-    // Create a map to store the latest selected option for each category
     const latestSelectedForCategory = new Map<string, QuantityOption>();
 
     selectedOptions.forEach((selected) => {
-      const category = newOptions.find((group) => group.options.some((option) => option.value === selected.value))?.category;
+      const category = options.find((group) => group.options.some((option) => option.value === selected.value))?.category;
       if (category) {
         latestSelectedForCategory.set(category, selected);
       }
     });
 
-    // Reset all isDisabled flags and update based on latest selected option for each category
-    newOptions.forEach((group) => {
-      group.options.forEach((option) => {
-        option.isDisabled = false;
-      });
-
-      const latestSelected = latestSelectedForCategory.get(group.category as string);
-      if (latestSelected) {
-        selectedCategories.add(group.category as string);
-        group.options.forEach((option) => {
-          option.isDisabled = option.value !== latestSelected.value;
-        });
-      }
-    });
-
-    setOptions(newOptions);
-
-    // Update the selected options to only include the latest selected option for each category
     const updatedSelectedOptions = Array.from(latestSelectedForCategory.values());
 
     onQualifierChange(
@@ -98,7 +72,6 @@ export const AttributeItem = ({ attribute, onInputChange, onUnitChange, onQualif
       </StyledAttributeContent>
       <StyledAttributeContent>
         <Input type={"text"} defaultValue={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-
         <Select
           defaultValue={attribute.getUnitsAsLabelValue().find((unit) => unit.value === attribute.unitSelected)}
           options={attribute.getUnitsAsLabelValue()}
@@ -107,7 +80,7 @@ export const AttributeItem = ({ attribute, onInputChange, onUnitChange, onQualif
         {attribute.value !== inputValue && (
           <Flexbox flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>
             <Button variant={"outlined"} onClick={() => onInputChange(attribute.id, inputValue)}>
-              Save
+              {TextResources.SAVE}
             </Button>
           </Flexbox>
         )}
