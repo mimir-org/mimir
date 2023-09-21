@@ -1,6 +1,6 @@
 import { Tooltip } from "compLibrary/tooltip/Tooltip";
 import { TextResources } from "assets/text/TextResources";
-import { Icon, CollapseWhiteIcon, ExpandedWhiteIcon, AvatarBackgroundIcon } from "@mimirorg/component-library";
+import { CollapseWhiteIcon, ExpandedWhiteIcon, AvatarBackgroundIcon } from "@mimirorg/component-library";
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
 import { useState } from "react";
 import { UserMenuComponent } from "./UserMenuComponent";
@@ -49,10 +49,10 @@ export const AvatarComponent = ({ userName, userRole, isDarkMode, onDarkMode, on
       <Tooltip content={TextResources.USERMENU} placement={"bottom"} offset={[0, 8]}>
         <AvatarButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
           <AvatarCircle>
-            <AvatarBackgroundIcon size={36} alt="avatar" />
+            <AvatarBackgroundIcon size={36} />
             <AvatarInitials>{GetAvatarInitials(userName)}</AvatarInitials>
           </AvatarCircle>
-          {isUserMenuOpen ? <CollapseWhiteIcon size={10} alt={"icon"} /> : <ExpandedWhiteIcon size={10} alt={"icon"} />}
+          {isUserMenuOpen ? <CollapseWhiteIcon size={10} /> : <ExpandedWhiteIcon size={10} />}
         </AvatarButton>
       </Tooltip>
       {isUserMenuOpen && (

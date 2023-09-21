@@ -1,4 +1,4 @@
-import { Attribute } from "../../../../lib";
+import { Attribute, Qualifier } from "../../../../lib";
 import { TabContainerWrapper } from "./TabContainerWrapper.styled";
 import { Flexbox, Form } from "@mimirorg/component-library";
 import { projectStateSelector, useAppSelector } from "../../../../store";
@@ -6,9 +6,20 @@ import { ProjectState, updateProject } from "../../../../store/reducers/projectR
 import { useDispatch } from "react-redux";
 import { AttributeItem } from "../tabComponents/AttributeItem";
 
+/**
+ * This is the AttributeTabProps interface. It defines the props for the AttributeTab component.
+ * @param {Attribute[]} attributes
+ * @interface AttributeTabProps
+ */
 interface AttributeTabProps {
   attributes: Attribute[];
 }
+
+/**
+ * This is the AttributeTab component. It is a child component of the Inspector component.
+ * @param AttributeTabProps (attributes) - Array of Attribute objects.
+ * @constructor
+ */
 
 export const AttributeTab = ({ attributes }: AttributeTabProps) => {
   const dispatch = useDispatch();
@@ -30,17 +41,26 @@ export const AttributeTab = ({ attributes }: AttributeTabProps) => {
     }
   };
 
+  const handleQualifierChange = (id: string, qualifiers: Qualifier[]) => {
+    const attributeToUpdate = attributes.find((attr) => attr.id === id);
+    if (attributeToUpdate) {
+      attributeToUpdate.qualifiers = qualifiers;
+      dispatch(updateProject({ ...projectState }));
+    }
+  };
+
   return (
     attributes.length > 0 && (
       <TabContainerWrapper>
         <Form>
-          <Flexbox flexDirection={"row"} style={{ marginBottom: "200px" }}>
+          <Flexbox flexDirection={"row"} style={{ marginBottom: "300px" }}>
             {attributes.map((attribute) => (
               <AttributeItem
                 key={attribute.id}
                 attribute={attribute}
                 onInputChange={handleInputChange}
                 onUnitChange={handleUnitChange}
+                onQualifierChange={handleQualifierChange}
               />
             ))}
           </Flexbox>

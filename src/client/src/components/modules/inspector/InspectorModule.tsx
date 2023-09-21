@@ -3,20 +3,7 @@ import { useState } from "react";
 import { AspectObject } from "../../../lib";
 import { AdminTab } from "./tabs/AdminTab";
 import { AttributeTab } from "./tabs/AttributeTab";
-
-// InspectorHeaderProps & {
-//   duration: number;
-//   children: ReactNode;
-//   isOpen: boolean;
-//   isLocked: boolean;
-//   onLock?: () => void;
-//   onDelete?: () => void;
-//   onTabChange?: (value: "admin" | "attribute" | "terminal" | "relation") => void;
-//   icon?: string;
-//   name?: string;
-//   tabColor?: string;
-//   selectedTab?: "admin" | "attribute" | "terminal" | "relation";
-// };
+import { TerminalTab } from "./tabs/TerminalTab";
 
 /**
  * The mimir inspector module.
@@ -30,11 +17,9 @@ interface InspectorModuleProps {
 }
 
 export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) => {
-  // const theme = useMimirorgTheme();
-  // const [expanded, setExpanded] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal" | "relation">("relation");
+  const [selectedTab, setSelectedTab] = useState<"admin" | "attribute" | "terminal">("admin");
 
-  const onTabChange = (value: "admin" | "attribute" | "terminal" | "relation") => {
+  const onTabChange = (value: "admin" | "attribute" | "terminal") => {
     setSelectedTab(value);
   };
 
@@ -51,25 +36,12 @@ export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) 
         name={selectedAspectObject?.name ?? "Please select an aspect object"}
         icon="http://localhost:5001/symbol/1cd2b7cc-0b27-415a-ad7b-3f16ab7c741d.svg"
         selectedTab={selectedTab}
+        isOpen={true}
+        isLocked={false}
       >
         {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
         {selectedTab === "attribute" && <AttributeTab attributes={selectedAspectObject?.attributes ?? []} />}
-        {selectedTab === "terminal" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the terminal tab component</p>
-            <p>This is the terminal tab component</p>
-          </div>
-        )}
-        {selectedTab === "relation" && (
-          <div style={{ padding: "10px" }}>
-            <p>Here is some demo content</p>
-            <p>Here is some demo content</p>
-            <p>This is the relation tab component</p>
-            <p>This is the relation tab component</p>
-          </div>
-        )}
+        {selectedTab === "terminal" && <TerminalTab name={"Test name"} id={"12345"} description={"This is a description"} />}
       </InspectorPanel>
     </div>
   );

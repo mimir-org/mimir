@@ -3,8 +3,6 @@ import { MenuElement } from "../../../compLibrary/menu/MenuElement";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
-import { useRef } from "react";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { DialogType } from "lib";
 
 interface Props {
@@ -20,18 +18,15 @@ interface Props {
  * @returns a menu for the Project in the header of Mimir.
  */
 const ProjectMenuComponent = ({ isSubProject, hasActiveProject, hasSelectedNodes, setIsMenuOpen, onOpenClick }: Props) => {
-  const menuRef = useRef(null);
-
   const projectMenuAction = (callback: () => void) => {
     setIsMenuOpen(false);
     callback();
   };
 
-  useOutsideClick(menuRef, () => setIsMenuOpen(false));
   const convertProjectText = isSubProject ? TextResources.MAKE_DISABLE_SUBPROJECT : TextResources.MAKE_AVAILABLE_SUBPROJECT;
 
   return (
-    <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={true}>
+    <ProjectMenuBox id={MENU_TYPE.PROJECT_MENU} hidden={true}>
       <MenuElement
         text={TextResources.PROJECT_OPEN}
         icon={Icons.OpenProjectIcon}
