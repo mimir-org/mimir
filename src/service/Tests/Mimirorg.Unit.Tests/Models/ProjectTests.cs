@@ -23,13 +23,13 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
             SubProject = false,
             Name = "Dummy Project",
             Description = "Dummy Project",
-            AspectObjects = new List<AspectObjectAm>
+            blocks = new List<BlockAm>
             {
-                new AspectObjectAm
+                new BlockAm
                 {
                     Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
-                    Name = "Dummy AspectObject A",
-                    Description = "Dummy AspectObject A",
+                    Name = "Dummy block A",
+                    Description = "Dummy block A",
                     Project = $"https://rdf.runir.net/ID{ProjectGuid}",
                     Version = "1.0",
                     MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
@@ -42,7 +42,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //        Id = "https://rdf.runir.net/IDFF21C487-F075-4073-AF50-B6B5E7620CDF",
                     //        ConnectorVisibility = ConnectorVisibility.None,
                     //        IsRequired = false,
-                    //        AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                    //        block = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                     //        Name = "Connector A",
                     //        Direction = ConnectorDirection.Input,
                     //        RelationType = RelationType.PartOf
@@ -52,14 +52,14 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //        Id = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                     //        ConnectorVisibility = ConnectorVisibility.None,
                     //        IsRequired = false,
-                    //        AspectObject = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                    //        block = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                     //        Name = "Connector B",
                     //        Direction = ConnectorDirection.Output,
                     //        RelationType = RelationType.PartOf
                     //    }
                     //},
-                    AspectObjectType = AspectObjectType.Aspect,
-                    Label = "Dummy AspectObject A",
+                    BLockType = BLockType.Aspect,
+                    Label = "Dummy block A",
                     LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                     PositionTree = new PositionAm
                     {
@@ -76,11 +76,11 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     ReferenceType = null,
                     Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                 },
-                new AspectObjectAm
+                new BlockAm
                 {
                     Id = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
-                    Name = "Dummy AspectObject B",
-                    Description = "Dummy AspectObject B",
+                    Name = "Dummy block B",
+                    Description = "Dummy block B",
                     Project = $"https://rdf.runir.net/ID{ProjectGuid}",
                     Version = "1.0",
                     MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
@@ -93,7 +93,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //        Id = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
                     //        ConnectorVisibility = ConnectorVisibility.None,
                     //        IsRequired = false,
-                    //        AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                    //        block = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                     //        Name = "Connector A",
                     //        Direction = ConnectorDirection.Input,
                     //        RelationType = RelationType.PartOf
@@ -103,14 +103,14 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //        Id = "https://rdf.runir.net/IDB9972C41-C136-4B61-AE3F-7B5181E49B70",
                     //        ConnectorVisibility = ConnectorVisibility.None,
                     //        IsRequired = false,
-                    //        AspectObject = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                    //        block = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                     //        Name = "Connector B",
                     //        Direction = ConnectorDirection.Output,
                     //        RelationType = RelationType.PartOf
                     //    }
                     //},
-                    AspectObjectType = AspectObjectType.Aspect,
-                    Label = "Dummy AspectObject A",
+                    BLockType = BLockType.Aspect,
+                    Label = "Dummy block A",
                     LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
                     PositionTree = new PositionAm
                     {
@@ -143,10 +143,10 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     }
 
     [Fact]
-    public void Project_With_Duplicate_AspectObjects_Validate_Error()
+    public void Project_With_Duplicate_blocks_Validate_Error()
     {
         var clone = ValidProject().DeepCopy();
-        clone.AspectObjects.Add(new AspectObjectAm
+        clone.blocks.Add(new BlockAm
         {
             Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
         });
@@ -171,7 +171,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     //        Name = name,
     //        Version = version,
     //        CreatedBy = projectOwner,
-    //        AspectObjects = null,
+    //        blocks = null,
     //        Connections = null
     //    };
 
@@ -191,38 +191,38 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     {
         var clone = ValidProject().DeepCopy();
         //TODO Rewrite
-        //clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
+        //clone.Connections.ElementAt(0).FromblockId = $"Id_Bare_Tull_{1}";
         var connections = clone.GetParentlessConnectors().ToList();
         Assert.Single(connections);
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void GetNotConnectedConnections_With_One_Connection_Missing_ToAspectObject_Returns_Ok()
+    public void GetNotConnectedConnections_With_One_Connection_Missing_Toblock_Returns_Ok()
     {
         var clone = ValidProject().DeepCopy();
         //TODO Rewrite
-        //clone.Connections.ElementAt(0).ToAspectObjectId = $"Id_Bare_Tull_{1}";
+        //clone.Connections.ElementAt(0).ToblockId = $"Id_Bare_Tull_{1}";
         var connections = clone.GetNotConnectedConnectors().ToList();
         Assert.Single(connections);
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void GetNotConnectedConnections_With_One_Connection_Missing_FromAspectObject_Returns_Ok()
+    public void GetNotConnectedConnections_With_One_Connection_Missing_Fromblock_Returns_Ok()
     {
         var clone = ValidProject().DeepCopy();
         //TODO Rewrite
-        //clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
+        //clone.Connections.ElementAt(0).FromblockId = $"Id_Bare_Tull_{1}";
         var connections = clone.GetNotConnectedConnectors().ToList();
         Assert.Single(connections);
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void GetNotConnectedConnections_With_One_Connection_Missing_FromAspectObject_And_ToAspectObject_Returns_Ok()
+    public void GetNotConnectedConnections_With_One_Connection_Missing_Fromblock_And_Toblock_Returns_Ok()
     {
         var clone = ValidProject().DeepCopy();
         //TODO Rewrite
-        //clone.Connections.ElementAt(0).FromAspectObjectId = $"Id_Bare_Tull_{1}";
-        //clone.Connections.ElementAt(0).ToAspectObjectId = $"Id_Bare_Tull_{2}";
+        //clone.Connections.ElementAt(0).FromblockId = $"Id_Bare_Tull_{1}";
+        //clone.Connections.ElementAt(0).ToblockId = $"Id_Bare_Tull_{2}";
         var connections = clone.GetNotConnectedConnectors().ToList();
         Assert.Single(connections);
     }

@@ -18,18 +18,18 @@ public class OntologyService : IOntologyService
 {
     private readonly IOntologyRepository _ontologyRepository;
     private readonly ILibraryRepository _libRepository;
-    private readonly IAspectObjectRepository _aspectObjectRepository;
+    private readonly IBlockRepository _blockRepository;
     private readonly IConnectionRepository _connectionRepository;
     private readonly IMapper _mapper;
 
     #region Constructors
 
     public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
-        IAspectObjectRepository aspectObjectRepository, IMapper mapper, IConnectionRepository connectionRepository)
+        IBlockRepository blockRepository, IMapper mapper, IConnectionRepository connectionRepository)
     {
         _ontologyRepository = ontologyRepository;
         _libRepository = libRepository;
-        _aspectObjectRepository = aspectObjectRepository;
+        _blockRepository = blockRepository;
         _mapper = mapper;
         _connectionRepository = connectionRepository;
     }
@@ -52,7 +52,7 @@ public class OntologyService : IOntologyService
 
         _ontologyRepository.LoadData(new Graph());
         project.AssertGraph(this);
-        BuildAspectObjects(project, applicationData);
+        BuildAspectBlocks(project, applicationData);
         BuildConnections(project, applicationData);
     }
 
@@ -73,7 +73,7 @@ public class OntologyService : IOntologyService
 
         var applicationData = GetApplicationData(project.Id);
 
-        project.ResolveAspectObjects(this, applicationData);
+        project.Resolveblocks(this, applicationData);
         project.ResolveRelationConnections(this, applicationData);
 
         return project;
@@ -105,76 +105,76 @@ public class OntologyService : IOntologyService
     }
 
     /// <summary>
-    /// Assert a aspectObject to the graph
+    /// Assert a block to the graph
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="predicate"></param>
     /// <param name="obj"></param>
     /// <param name="isLiteral"></param>
     /// <exception cref="ModelBuilderModuleException"></exception>
-    public void AssertAspectObject(string subject, string predicate, string obj, bool isLiteral = false)
+    public void AssertBlock(string subject, string predicate, string obj, bool isLiteral = false)
     {
         if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(predicate) || string.IsNullOrEmpty(obj))
             return;
 
-        var s = CreateAspectObject(subject);
-        var p = CreateAspectObject(predicate);
-        var o = CreateAspectObject(obj, isLiteral);
+        var s = CreateBlock(subject);
+        var p = CreateBlock(predicate);
+        var o = CreateBlock(obj, isLiteral);
 
         if (s == null || p == null || o == null)
-            throw new ModelBuilderModuleException($"Can't create aspectObjects from data: {subject} - {predicate} - {obj}");
+            throw new ModelBuilderModuleException($"Can't create blocks from data: {subject} - {predicate} - {obj}");
         _ontologyRepository.Graph.Assert(s, p, o);
     }
 
     /// <summary>
-    /// Assert a aspectObject to the graph
+    /// Assert a block to the graph
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="predicate"></param>
     /// <param name="obj"></param>
     /// <exception cref="ModelBuilderModuleException"></exception>
-    public void AssertAspectObject(string subject, string predicate, INode obj)
+    public void AssertBlock(string subject, string predicate, INode obj)
     {
         if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(predicate))
             return;
 
-        var s = CreateAspectObject(subject);
-        var p = CreateAspectObject(predicate);
+        var s = CreateBlock(subject);
+        var p = CreateBlock(predicate);
 
         if (s == null || p == null || obj == null)
-            throw new ModelBuilderModuleException($"Can't create aspectObjects from data: {subject} - {predicate} - {obj}");
+            throw new ModelBuilderModuleException($"Can't create blocks from data: {subject} - {predicate} - {obj}");
 
         _ontologyRepository.Graph.Assert(s, p, obj);
     }
 
     /// <summary>
-    /// Create a literal aspectObject
+    /// Create a literal block
     /// </summary>
     /// <param name="literal"></param>
     /// <param name="dataType"></param>
     /// <returns></returns>
-    public INode CreateLiteralAspectObject(string literal, Uri dataType)
+    public INode CreateLiteralBlock(string literal, Uri dataType)
     {
         return _ontologyRepository.Graph.CreateLiteralNode(literal, dataType);
     }
 
     /// <summary>
-    /// Create a literal aspectObject
+    /// Create a literal block
     /// </summary>
     /// <param name="literal"></param>
     /// <returns></returns>
-    public INode CreateLiteralAspectObject(string literal)
+    public INode CreateLiteralBlock(string literal)
     {
         return _ontologyRepository.Graph.CreateLiteralNode(literal);
     }
 
     /// <summary>
-    /// Create a literal aspectObject
+    /// Create a literal block
     /// </summary>
     /// <param name="literal"></param>
     /// <param name="dataType"></param>
     /// <returns></returns>
-    public INode CreateLiteralAspectObject(string literal, string dataType)
+    public INode CreateLiteralBlock(string literal, string dataType)
     {
         var uri = _ontologyRepository.BuildUri(dataType);
         return _ontologyRepository.Graph.CreateLiteralNode(literal, uri);
@@ -191,9 +191,9 @@ public class OntologyService : IOntologyService
     }
 
 
-    public INode GetOrCreateUriAspectObject(string type)
+    public INode GetOrCreateUriBlock(string type)
     {
-        return _ontologyRepository.Graph.GetOrCreateUriAspectObject(type);
+        return _ontologyRepository.Graph.GetOrCreateUriBlock(type);
     }
 
     public IEnumerable<Triple> GetTriplesWithPredicateObject(string predicate, string obj)
@@ -201,8 +201,8 @@ public class OntologyService : IOntologyService
         if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(obj))
             throw new NullReferenceException("Can't get triples from null reference objects");
 
-        var p = GetOrCreateUriAspectObject(predicate);
-        var o = GetOrCreateUriAspectObject(obj);
+        var p = GetOrCreateUriBlock(predicate);
+        var o = GetOrCreateUriBlock(obj);
 
         return _ontologyRepository.Store.GetTriplesWithPredicateObject(p, o);
     }
@@ -212,8 +212,8 @@ public class OntologyService : IOntologyService
         if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(subject))
             throw new NullReferenceException("Can't get triples from null reference objects");
 
-        var s = GetOrCreateUriAspectObject(subject);
-        var p = GetOrCreateUriAspectObject(predicate);
+        var s = GetOrCreateUriBlock(subject);
+        var p = GetOrCreateUriBlock(predicate);
 
         return _ontologyRepository.Store.GetTriplesWithSubjectPredicate(s, p);
     }
@@ -223,7 +223,7 @@ public class OntologyService : IOntologyService
         if (string.IsNullOrWhiteSpace(predicate))
             throw new NullReferenceException("Can't get triples from null reference objects");
 
-        var p = GetOrCreateUriAspectObject(predicate);
+        var p = GetOrCreateUriBlock(predicate);
         return _ontologyRepository.Store.GetTriplesWithPredicate(p);
     }
 
@@ -339,69 +339,69 @@ public class OntologyService : IOntologyService
     private ProjectData GetApplicationData(string project)
     {
         var connections = _connectionRepository.GetAll().Where(x => x.Project == project).ToList();
-        var aspectObjects = _aspectObjectRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.Project == project).ToList();
+        var blocks = _blockRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.Project == project).ToList();
         var quantityDatums = _libRepository.GetQuantityDatums().Result;
         var units = _libRepository.GetUnits().Result;
 
         var projectData = new ProjectData
         {
             Connections = _mapper.Map<List<ConnectionAm>>(connections),
-            AspectObjects = _mapper.Map<List<AspectObjectAm>>(aspectObjects),
+            Blocks = _mapper.Map<List<BlockAm>>(blocks),
             Units = units,
             QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
         };
 
         _connectionRepository.Context.ChangeTracker.Clear();
-        _aspectObjectRepository.Context.ChangeTracker.Clear();
+        _blockRepository.Context.ChangeTracker.Clear();
 
         return projectData;
     }
 
     /// <summary>
-    /// Create a aspectObject
+    /// Create a block
     /// </summary>
     /// <param name="value"></param>
     /// <param name="isLiteral"></param>
     /// <returns></returns>
     /// <exception cref="ModelBuilderModuleException"></exception>
-    private INode CreateAspectObject(string value, bool isLiteral = false)
+    private INode CreateBlock(string value, bool isLiteral = false)
     {
         if (string.IsNullOrWhiteSpace(value))
             return null;
 
         return isLiteral
             ? _ontologyRepository.Graph.CreateLiteralNode(value)
-            : _ontologyRepository.Graph.GetOrCreateUriAspectObject(value);
+            : _ontologyRepository.Graph.GetOrCreateUriBlock(value);
     }
 
     /// <summary>
-    /// Build project aspectObjects
+    /// Build project blocks
     /// </summary>
     /// <param name="project"></param>
     /// <param name="projectData">Record of ICollections</param>
-    private void BuildAspectObjects(ProjectDm project, ProjectData projectData)
+    private void BuildAspectBlocks(ProjectDm project, ProjectData projectData)
     {
-        if (project.AspectObjects == null || !project.AspectObjects.Any())
+        if (project.Blocks == null || !project.Blocks.Any())
             return;
 
-        foreach (var aspectObject in project.AspectObjects)
+        foreach (var block in project.Blocks)
         {
-            aspectObject.AssertAspectObject(project, this, projectData);
+            block.AssertBlock(project, this, projectData);
 
-            if (aspectObject.Attributes != null && aspectObject.Attributes.Any())
+            if (block.Attributes != null && block.Attributes.Any())
             {
-                foreach (var attribute in aspectObject.Attributes)
+                foreach (var attribute in block.Attributes)
                 {
-                    attribute.AssertAttribute(aspectObject.Id, this);
+                    attribute.AssertAttribute(block.Id, this);
                     attribute.AssertAttributeValue(this, projectData);
                 }
             }
 
-            if (aspectObject.Connectors != null && aspectObject.Connectors.Any())
+            if (block.Connectors != null && block.Connectors.Any())
             {
-                foreach (var connector in aspectObject.Connectors)
+                foreach (var connector in block.Connectors)
                 {
-                    connector.AssertConnector(this, aspectObject.Id, projectData, null, DefaultFlowDirection.NotSet);
+                    connector.AssertConnector(this, block.Id, projectData, null, DefaultFlowDirection.NotSet);
                 }
             }
         }

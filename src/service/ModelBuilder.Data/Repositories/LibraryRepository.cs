@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,15 +50,24 @@ public class LibraryRepository : ILibraryRepository
 
         return data;
     }
-
-    public async Task<List<AspectObjectLibCm>> GetAspectObjectTypes()
+    //TODO: Done
+    public async Task<List<BlockLibCm>> GetBlockTypes()
     {
-        // ReSharper disable once StringLiteralTypo
-        var url = _applicationSetting.ApiUrl("libraryaspectobject");
-        var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectObject.ToString(),
-            async () => await _httpRepository.GetData<List<AspectObjectLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
-        return data;
+        try
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryBlock");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Block.ToString(),
+                async () => await _httpRepository.GetData<List<BlockLibCm>>(url),
+                string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            return data;
+        }
+        catch (Exception e)
+        {
+            throw new Exception();
+        }
     }
 
     public async Task<List<TerminalLibCm>> GetTerminalTypes()

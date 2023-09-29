@@ -10,36 +10,36 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Contracts;
 
-public interface IAspectObjectRepository : IGenericRepository<ModelBuilderDbContext, AspectObjectDm>
+public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, BlockDm>
 {
-    IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObjectDm> original, ProjectDm project,
+    IEnumerable<(BlockDm block, WorkerStatus status)> UpdateInsert(ICollection<BlockDm> original, ProjectDm project,
         string invokedByDomain);
 
-    IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObjectDm> delete, string projectId,
+    IEnumerable<(BlockDm block, WorkerStatus status)> DeleteBlocks(ICollection<BlockDm> delete, string projectId,
         string invokedByDomain);
 
     /// <summary>
-    /// Get complete aspect object
+    /// Get complete block
     /// </summary>
-    /// <param name="id">Aspect object id</param>
-    /// <returns>Complete aspect object</returns>
-    Task<AspectObjectDm> GetAsyncComplete(string id);
+    /// <param name="id">Block id</param>
+    /// <returns>Complete block</returns>
+    Task<BlockDm> GetAsyncComplete(string id);
 
     /// <summary>
-    /// Bulk aspectObject update
+    /// Bulk block update
     /// </summary>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn"></param>
-    /// <param name="aspectObjects">The aspectObjects to be upserted</param>
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects);
+    /// <param name="blocks">The blocks to be upserted</param>
+    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks);
 
     /// <summary>
-    /// Bulk delete aspectObjects
+    /// Bulk delete blocks
     /// </summary>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
-    /// <param name="aspectObjects">The aspectObjects to be deleted</param>
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects);
+    /// <param name="blocks">The blocks to be deleted</param>
+    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks);
 
     /// <summary>
     /// Bulk connection update lock status

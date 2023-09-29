@@ -29,7 +29,7 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     public string Domain => Id.ResolveDomain();
 
     [NotMapped]
-    public List<AspectObjectDm> AspectObjects { get; set; } = new();
+    public List<BlockDm> Blocks { get; set; } = new();
 
     [NotMapped]
     public List<ConnectionDm> Connections { get; set; } = new();

@@ -20,13 +20,13 @@ public static class ConnectionExtensions
         //if (connection.FromConnectorObject is ConnectorRelation and not ConnectorPartOf)
         //{
         //    var relationString = connection.FromConnectorObject is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
-        //    ontologyService.AssertAspectObject(connection.FromAspectObject, $"imf:{relationString}", connection.ToAspectObject);
+        //    ontologyService.Assertblock(connection.Fromblock, $"imf:{relationString}", connection.Toblock);
         //}
 
         //if (connection.ToConnectorObject is ConnectorRelation and not ConnectorPartOf)
         //{
         //    var relationString = connection.ToConnectorObject is ConnectorFulfilledBy ? "fulfilledBy" : "hasLocation";
-        //    ontologyService.AssertAspectObject(connection.ToAspectObject, $"imf:{relationString}", connection.ToAspectObject);
+        //    ontologyService.Assertblock(connection.Toblock, $"imf:{relationString}", connection.Toblock);
         //}
     }
 
@@ -38,17 +38,17 @@ public static class ConnectionExtensions
     /// <param name="project">Current project</param>
     /// <param name="relation">Relation connection data</param>
     /// <param name="projectData">Record of ICollections</param>
-    /// <exception cref="InvalidDataException">Throws if aspectObjects and connectors is not defined in RDF file</exception>
+    /// <exception cref="InvalidDataException">Throws if blocks and connectors is not defined in RDF file</exception>
     public static void ResolveConnection(this ConnectionAm connection, IOntologyService ontologyService, ProjectAm project, RelationConnector relation, ProjectData projectData)
     {
-        //var fromAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Id == relation.ParentIri);
-        //var toAspectObject = project.AspectObjects?.FirstOrDefault(x => x.Id == relation.ChildIri);
+        //var fromblock = project.blocks?.FirstOrDefault(x => x.Id == relation.ParentIri);
+        //var toblock = project.blocks?.FirstOrDefault(x => x.Id == relation.ChildIri);
 
-        //if (fromAspectObject == null || toAspectObject == null)
-        //    throw new InvalidDataException($"Can't create an connection. Can't find connected aspectObjects from IRI. From: {fromAspectObject?.Id} to {toAspectObject?.Id}");
+        //if (fromblock == null || toblock == null)
+        //    throw new InvalidDataException($"Can't create an connection. Can't find connected blocks from IRI. From: {fromblock?.Id} to {toblock?.Id}");
 
-        //var fromConnector = fromAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Output && x.RelationType == relation.RelationType);
-        //var toConnector = toAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input && x.RelationType == relation.RelationType);
+        //var fromConnector = fromblock.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Output && x.RelationType == relation.RelationType);
+        //var toConnector = toblock.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input && x.RelationType == relation.RelationType);
 
         //if (fromConnector == null || toConnector == null)
         //    throw new InvalidDataException($"Can't create an connection. Can't find connectors from IRI. From: {fromConnector?.Id} to {toConnector?.Id}");
@@ -58,9 +58,9 @@ public static class ConnectionExtensions
         //    x.ToConnector == toConnector.Id
         //);
 
-        //connection.Id = existingConnection != null ? existingConnection.Id : toAspectObject.Id.StripAndCreateIdIri();
-        //connection.MainProject = toAspectObject.MainProject;
-        //connection.Project = toAspectObject.Project;
+        //connection.Id = existingConnection != null ? existingConnection.Id : toblock.Id.StripAndCreateIdIri();
+        //connection.MainProject = toblock.MainProject;
+        //connection.Project = toblock.Project;
         //connection.FromConnector = fromConnector.Id;
         //connection.ToConnector = toConnector.Id;
     }

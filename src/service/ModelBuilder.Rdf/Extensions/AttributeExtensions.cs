@@ -24,30 +24,30 @@ public static class AttributeExtensions
     {
         #region None Mimir specific data
 
-        ontologyService.AssertAspectObject(attribute.Id, Resources.Type, Resources.PhysicalQuantity);
-        ontologyService.AssertAspectObject(parentIri, Resources.HasPhysicalQuantity, attribute.Id);
-        ontologyService.AssertAspectObject(attribute.Id, Resources.Label, attribute.Name, true);
+        ontologyService.AssertBlock(attribute.Id, Resources.Type, Resources.PhysicalQuantity);
+        ontologyService.AssertBlock(parentIri, Resources.HasPhysicalQuantity, attribute.Id);
+        ontologyService.AssertBlock(attribute.Id, Resources.Label, attribute.Name, true);
 
         var ado = attribute.AttributeDatumObject();
         var adp = attribute.Id.AttributeDatumPredicate();
-        ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
-        ontologyService.AssertAspectObject(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
-        ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
-        ontologyService.AssertAspectObject(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
+        ontologyService.AssertBlock(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
+        ontologyService.AssertBlock(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
+        ontologyService.AssertBlock(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
+        ontologyService.AssertBlock(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
 
-        ontologyService.AssertAspectObject(attribute.Id, Resources.QualityQuantifiedAs, attribute.IriDatum());
+        ontologyService.AssertBlock(attribute.Id, Resources.QualityQuantifiedAs, attribute.IriDatum());
 
         #endregion None Mimir specific data
 
         #region Mimir specific data
 
         if (!string.IsNullOrEmpty(attribute.AttributeType))
-            ontologyService.AssertAspectObject(attribute.Id, Resources.LibraryType, attribute.AttributeType);
+            ontologyService.AssertBlock(attribute.Id, Resources.LibraryType, attribute.AttributeType);
 
         var allowedUnits = attribute.GetAllowedUnits();
         if (allowedUnits != null && allowedUnits.Any())
             foreach (var value in allowedUnits)
-                ontologyService.AssertAspectObject(attribute.Id, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+                ontologyService.AssertBlock(attribute.Id, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
 
         #endregion Mimir specific data
     }
@@ -65,15 +65,15 @@ public static class AttributeExtensions
 
         var selectedUnit = attribute.GetSelectedUnit(projectData);
 
-        ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
-        ontologyService.AssertAspectObject(attribute.Id, Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
+        ontologyService.AssertBlock(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
+        ontologyService.AssertBlock(attribute.Id, Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
 
         if (string.IsNullOrWhiteSpace(attribute.UnitSelected) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
             return;
 
-        ontologyService.AssertAspectObject($"mimir:{attribute.UnitSelected}", Resources.Type, Resources.Scale);
-        ontologyService.AssertAspectObject($"mimir:{attribute.UnitSelected}", Resources.Label, selectedUnit.Name, true);
-        ontologyService.AssertAspectObject(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.UnitSelected}");
+        ontologyService.AssertBlock($"mimir:{attribute.UnitSelected}", Resources.Type, Resources.Scale);
+        ontologyService.AssertBlock($"mimir:{attribute.UnitSelected}", Resources.Label, selectedUnit.Name, true);
+        ontologyService.AssertBlock(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.UnitSelected}");
     }
 
     /// <summary>
@@ -135,13 +135,13 @@ public static class AttributeExtensions
     /// <param name="ontologyService"></param>
     /// <param name="projectData"></param>
     /// <param name="iri"></param>
-    /// <param name="aspectObject"></param>
+    /// <param name="block"></param>
     /// <param name="connectorTerminal"></param>
-    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string aspectObject, string connectorTerminal)
+    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string block, string connectorTerminal)
     {
         #region None Mimir specific data
 
-        attribute.AspectObject = aspectObject;
+        attribute.block = block;
         attribute.ConnectorTerminal = connectorTerminal;
 
         attribute.Name = ontologyService.GetValue(iri, Resources.Label);
@@ -190,8 +190,8 @@ public static class AttributeExtensions
 
         attribute.AttributeType = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
-        var allowedUnitAspectObjects = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
-        attribute.Units = allowedUnitAspectObjects.Select(x =>
+        var allowedUnitblocks = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
+        attribute.Units = allowedUnitblocks.Select(x =>
         {
             var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
             return new UnitAm

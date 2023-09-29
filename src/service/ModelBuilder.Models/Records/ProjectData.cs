@@ -7,7 +7,7 @@ namespace Mb.Models.Records;
 
 public record ProjectData
 {
-    public List<AspectObjectDm> AspectObjects { get; init; } = new();
+    public List<BlockDm> Blocks { get; init; } = new();
     public List<ConnectionDm> Connections { get; init; } = new();
     public List<AttributeDm> Attributes { get; init; } = new();
     public List<ConnectorTerminalDm> Terminals { get; init; } = new();
@@ -19,10 +19,10 @@ public record ProjectData
     /// <param name="project">Project to be deconstructed</param>
     public Task DeconstructAttributes(ProjectDm project)
     {
-        var aspectObjectAttributes = project.AspectObjects.Select(x => x.Attributes).SelectMany(y => y).ToList();
-        var connectorAttributes = project.AspectObjects.SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().SelectMany(y => y.Attributes).ToList();
+        var blockAttributes = project.Blocks.Select(x => x.Attributes).SelectMany(y => y).ToList();
+        var connectorAttributes = project.Blocks.SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().SelectMany(y => y.Attributes).ToList();
 
-        var allAttributes = aspectObjectAttributes
+        var allAttributes = blockAttributes
             .Union(connectorAttributes)
             .ToList();
 
@@ -31,15 +31,15 @@ public record ProjectData
     }
 
     /// <summary>
-    /// Deconstruct and flatten aspectObjects
+    /// Deconstruct and flatten blocks
     /// </summary>
     /// <param name="project">Project to be deconstructed</param>
-    public Task DeconstructAspectObjects(ProjectDm project)
+    public Task Deconstructblocks(ProjectDm project)
     {
-        if (project?.AspectObjects == null || !project.AspectObjects.Any())
+        if (project?.Blocks == null || !project.Blocks.Any())
             return Task.CompletedTask;
 
-        AspectObjects.AddRange(project.AspectObjects);
+        Blocks.AddRange(project.Blocks);
         return Task.CompletedTask;
     }
 
@@ -52,9 +52,9 @@ public record ProjectData
         if (project == null)
             return Task.CompletedTask;
 
-        var aspectObjectTerminals = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
+        var blockTerminals = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
 
-        var terminals = aspectObjectTerminals
+        var terminals = blockTerminals
             .ToList();
 
         Terminals.AddRange(terminals);
@@ -70,9 +70,9 @@ public record ProjectData
         if (project == null)
             return Task.CompletedTask;
 
-        var aspectObjectRelations = project.AspectObjects.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
+        var blockRelations = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
 
-        Relations.AddRange(aspectObjectRelations);
+        Relations.AddRange(blockRelations);
         return Task.CompletedTask;
     }
 

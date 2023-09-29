@@ -7,37 +7,37 @@ namespace Mb.Models.Extensions;
 // ReSharper disable once IdentifierTypo
 public static class VersionableExtensions
 {
-    public static bool HasMajorChanges(this AspectObjectDm aspectObject, ProjectEditData editData)
+    public static bool HasMajorChanges(this BlockDm block, ProjectEditData editData)
     {
         if (editData == null)
             return false;
 
-        if (editData.TerminalDelete.Any(x => x.AspectObject == aspectObject.Id))
+        if (editData.TerminalDelete.Any(x => x.Block == block.Id))
             return true;
 
-        if (editData.RelationDelete.Any(x => x.AspectObject == aspectObject.Id))
+        if (editData.RelationDelete.Any(x => x.Block == block.Id))
             return true;
 
         return false;
     }
 
-    public static bool HasMinorChanges(this AspectObjectDm aspectObject, ProjectEditData editData, AspectObjectDm other)
+    public static bool HasMinorChanges(this BlockDm block, ProjectEditData editData, BlockDm other)
     {
         if (editData == null)
             return false;
-        if (editData.TerminalUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.TerminalCreate.Any(x => x.AspectObject == aspectObject.Id))
+        if (editData.TerminalUpdate.Any(x => x.Block == block.Id) || editData.TerminalCreate.Any(x => x.Block == block.Id))
             return true;
-        if (editData.RelationUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.RelationCreate.Any(x => x.AspectObject == aspectObject.Id))
+        if (editData.RelationUpdate.Any(x => x.Block == block.Id) || editData.RelationCreate.Any(x => x.Block == block.Id))
             return true;
-        if (editData.AttributeDelete.Any(x => x.AspectObject == aspectObject.Id) || editData.AttributeUpdate.Any(x => x.AspectObject == aspectObject.Id) || editData.AttributeCreate.Any(x => x.AspectObject == aspectObject.Id))
+        if (editData.AttributeDelete.Any(x => x.Block == block.Id) || editData.AttributeUpdate.Any(x => x.Block == block.Id) || editData.AttributeCreate.Any(x => x.Block == block.Id))
             return true;
-        if (aspectObject.Description != other.Description)
+        if (block.Description != other.Description)
             return true;
-        if (aspectObject.Name != other.Name)
+        if (block.Name != other.Name)
             return true;
-        if (aspectObject.Label != other.Label)
+        if (block.Label != other.Label)
             return true;
-        if (aspectObject.UpdatedBy != other.UpdatedBy)
+        if (block.UpdatedBy != other.UpdatedBy)
             return true;
 
         return false;
@@ -51,7 +51,7 @@ public static class VersionableExtensions
         if (editData.ConnectionDelete.Any())
             return true;
 
-        if (editData.AspectObjectDelete.Any())
+        if (editData.BlockDelete.Any())
             return true;
 
         if (editData.TerminalDelete.Any())
@@ -71,7 +71,7 @@ public static class VersionableExtensions
         if (editData.ConnectionUpdate.Any() || editData.ConnectionCreate.Any())
             return true;
 
-        if (editData.AspectObjectUpdate.Any() || editData.AspectObjectCreate.Any())
+        if (editData.BlockUpdate.Any() || editData.BlockCreate.Any())
             return true;
 
         if (editData.TerminalUpdate.Any() || editData.TerminalCreate.Any())

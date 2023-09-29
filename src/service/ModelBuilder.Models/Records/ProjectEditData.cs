@@ -9,9 +9,9 @@ namespace Mb.Models.Records;
 
 public record ProjectEditData
 {
-    public List<AspectObjectDm> AspectObjectCreate { get; init; } = new();
-    public List<AspectObjectDm> AspectObjectUpdate { get; init; } = new();
-    public List<AspectObjectDm> AspectObjectDelete { get; init; } = new();
+    public List<BlockDm> BlockCreate { get; init; } = new();
+    public List<BlockDm> BlockUpdate { get; init; } = new();
+    public List<BlockDm> BlockDelete { get; init; } = new();
 
     public List<ConnectionDm> ConnectionCreate { get; init; } = new();
     public List<ConnectionDm> ConnectionUpdate { get; init; } = new();
@@ -30,12 +30,12 @@ public record ProjectEditData
     public List<ConnectorTerminalDm> TerminalDelete { get; init; } = new();
 
     public List<ConnectionDm> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
-    public List<AspectObjectDm> AspectObjectCreateAndDelete => AspectObjectCreate.Union(AspectObjectDelete).ToList();
+    public List<BlockDm> BlockCreateAndDelete => BlockCreate.Union(BlockDelete).ToList();
     public List<AttributeDm> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
     public List<ConnectorRelationDm> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
     public List<ConnectorTerminalDm> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
-    public List<AspectObjectDm> AspectObjectUpdateInsert => AspectObjectUpdate.Union(AspectObjectCreate).ToList();
+    public List<BlockDm> BlockUpdateInsert => BlockUpdate.Union(BlockCreate).ToList();
     public List<ConnectorTerminalDm> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
     public List<ConnectorRelationDm> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
     public List<AttributeDm> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
@@ -46,7 +46,7 @@ public record ProjectEditData
         var tasks = new List<Task>
         {
             Task.Run(() => ResolveConnections(original, updated)),
-            Task.Run(() => ResolveAspectObjects(original, updated)),
+            Task.Run(() => Resolveblocks(original, updated)),
             Task.Run(() => ResolveAttributes(original, updated)),
             Task.Run(() => ResolveRelations(original, updated)),
             Task.Run(() => ResolveTerminals(original, updated))
@@ -84,29 +84,29 @@ public record ProjectEditData
 
     #endregion
 
-    #region AspectObjects
+    #region blocks
 
-    private async Task ResolveAspectObjects(ProjectData original, ProjectData updated)
+    private async Task Resolveblocks(ProjectData original, ProjectData updated)
     {
         var tasks = new List<Task>
         {
-            Task.Run(() => FindDeletedAspectObjects(original, updated)),
-            Task.Run(() => FindCreatedAspectObjects(original, updated))
+            Task.Run(() => FindDeletedblocks(original, updated)),
+            Task.Run(() => FindCreatedblocks(original, updated))
         };
         await Task.WhenAll(tasks);
-        var dict = updated.AspectObjects.ToDictionary(x => x.Id, x => x);
-        AspectObjectUpdate.AddRange(original.AspectObjects.Exclude(AspectObjectCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
+        var dict = updated.Blocks.ToDictionary(x => x.Id, x => x);
+        BlockUpdate.AddRange(original.Blocks.Exclude(BlockCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
     }
 
-    private Task FindDeletedAspectObjects(ProjectData original, ProjectData updated)
+    private Task FindDeletedblocks(ProjectData original, ProjectData updated)
     {
-        AspectObjectDelete.AddRange(original.AspectObjects.Exclude(updated.AspectObjects, x => x.Id));
+        BlockDelete.AddRange(original.Blocks.Exclude(updated.Blocks, x => x.Id));
         return Task.CompletedTask;
     }
 
-    private Task FindCreatedAspectObjects(ProjectData original, ProjectData updated)
+    private Task FindCreatedblocks(ProjectData original, ProjectData updated)
     {
-        AspectObjectCreate.AddRange(updated.AspectObjects.Exclude(original.AspectObjects, x => x.Id));
+        BlockCreate.AddRange(updated.Blocks.Exclude(original.Blocks, x => x.Id));
         return Task.CompletedTask;
     }
 

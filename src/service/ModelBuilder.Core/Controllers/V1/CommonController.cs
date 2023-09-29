@@ -144,7 +144,7 @@ public class CommonController : ControllerBase
 
             await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
 
-            if (cacheInvalidation.Key is CacheKey.AspectObject)
+            if (cacheInvalidation.Key is CacheKey.Block)
                 await _libraryService.SendRefreshLibData();
 
             return NoContent();

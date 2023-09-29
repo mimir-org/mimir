@@ -30,7 +30,7 @@ public class ProjectService : IProjectService
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly IProjectRepository _projectRepository;
     private readonly IAttributeRepository _attributeRepository;
-    private readonly IAspectObjectRepository _aspectObjectRepository;
+    private readonly IBlockRepository _blockRepository;
     private readonly IConnectionRepository _connectionRepository;
     private readonly IConnectorRepository _connectorRepository;
     private readonly ICommonRepository _commonRepository;
@@ -42,7 +42,7 @@ public class ProjectService : IProjectService
 
 
     public ProjectService(IProjectRepository projectRepository, IMapper mapper,
-        IHttpContextAccessor contextAccessor, IAspectObjectRepository aspectObjectRepository, IConnectionRepository connectionRepository,
+        IHttpContextAccessor contextAccessor, IBlockRepository blockRepository, IConnectionRepository connectionRepository,
         ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
         IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
         ICooperateService cooperateService, IVersionService versionService)
@@ -50,7 +50,7 @@ public class ProjectService : IProjectService
         _projectRepository = projectRepository;
         _mapper = mapper;
         _contextAccessor = contextAccessor;
-        _aspectObjectRepository = aspectObjectRepository;
+        _blockRepository = blockRepository;
         _connectionRepository = connectionRepository;
         _commonRepository = commonRepository;
         _connectorRepository = connectorRepository;
@@ -63,7 +63,7 @@ public class ProjectService : IProjectService
     }
 
     /// <summary>
-    /// Get a project by Id or Iri. The project will include all connections, aspectObjects,
+    /// Get a project by Id or Iri. The project will include all connections, blocks,
     /// attributes and connectors.
     /// </summary>
     /// <param name="id"></param>
@@ -83,7 +83,7 @@ public class ProjectService : IProjectService
     }
 
     /// <summary>
-    /// Get a project by Id or Iri. The project will include all connections, aspectObjects,
+    /// Get a project by Id or Iri. The project will include all connections, blocks,
     /// attributes and connectors.
     /// </summary>
     /// <param name="id"></param>
@@ -185,7 +185,7 @@ public class ProjectService : IProjectService
             projectAm.Name = subProjectAm.Name;
             projectAm.Description = subProjectAm.Description;
             projectAm.SubProject = true;
-            projectAm.AspectObjects = projectAm.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root || subProjectAm.AspectObjects.Any(y => x.Id == y)).ToList();
+            projectAm.blocks = projectAm.blocks.Where(x => x.BLockType == BLockType.Root || subProjectAm.blocks.Any(y => x.Id == y)).ToList();
             projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
 
             _ = _remapService.Clone(projectAm);
@@ -320,14 +320,14 @@ public class ProjectService : IProjectService
         // Get the created project
         var updatedProject = await _projectRepository.GetAsyncComplete(newSubProject.Id);
 
-        // Identify root aspectObjects
-        var rootAspectObjects = updatedProject.AspectObjects.Where(x => x.AspectObjectType == AspectObjectType.Root).Select(x => x.Id).ToList();
+        // Identify root blocks
+        var rootblocks = updatedProject.Blocks.Where(x => x.BLockType == BLockType.Root).Select(x => x.Id).ToList();
 
-        // Position aspectObject
-        var rootOrigin = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
+        // Position block
+        var rootOrigin = updatedProject.Blocks.Where(x => rootblocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
 
-        // Set aspectObject and connections project id to merge project, and calculate position
-        updatedProject.AspectObjects = updatedProject.AspectObjects.Where(x => rootAspectObjects.All(y => y != x.Id)).Select(x =>
+        // Set block and connections project id to merge project, and calculate position
+        updatedProject.Blocks = updatedProject.Blocks.Where(x => rootblocks.All(y => y != x.Id)).Select(x =>
         {
             x.Project = prepare.Project;
             x.Project = null;
@@ -342,7 +342,7 @@ public class ProjectService : IProjectService
         }
 
         // TODO: Resolve this
-        //updatedProject.Connections = updatedProject.Connections.Where(x => !rootAspectObjects.Any(y => (y == x.FromAspectObject || y == x.ToAspectObject))).Select(x =>
+        //updatedProject.Connections = updatedProject.Connections.Where(x => !rootblocks.Any(y => (y == x.Fromblock || y == x.Toblock))).Select(x =>
         //{
         //    x.Project = prepare.ProjectId;
         //    return x;
@@ -351,7 +351,7 @@ public class ProjectService : IProjectService
         var prepareCm = new PrepareCm
         {
             SubProjectId = prepare.SubProject,
-            AspectObjects = _mapper.Map<List<AspectObjectCm>>(updatedProject.AspectObjects),
+            blocks = _mapper.Map<List<BlockCm>>(updatedProject.Blocks),
             Connections = _mapper.Map<List<ConnectionCm>>(updatedProject.Connections)
         };
 
@@ -361,7 +361,7 @@ public class ProjectService : IProjectService
     #region Private
 
     /// <summary>
-    /// Create a new empty project. The project wil include the aspect root aspectObjects.
+    /// Create a new empty project. The project wil include the aspect root blocks.
     /// </summary>
     /// <param name="projectAm"></param>
     /// <returns></returns>
@@ -382,21 +382,21 @@ public class ProjectService : IProjectService
         projectDm.CreatedBy = _contextAccessor.GetName();
         projectDm.Created = DateTime.Now.ToUniversalTime();
 
-        projectDm.AspectObjects = new List<AspectObjectDm>
+        projectDm.Blocks = new List<BlockDm>
         {
-            CreateInitAspectObject(Aspect.Function, projectDm.Id),
-            CreateInitAspectObject(Aspect.Product, projectDm.Id),
-            CreateInitAspectObject(Aspect.Location, projectDm.Id)
+            CreateInitblock(Aspect.Function, projectDm.Id),
+            CreateInitblock(Aspect.Product, projectDm.Id),
+            CreateInitblock(Aspect.Location, projectDm.Id)
         };
 
         await _projectRepository.CreateAsync(projectDm);
         await _projectRepository.SaveAsync();
 
-        await _aspectObjectRepository.CreateAsync(projectDm.AspectObjects);
-        await _aspectObjectRepository.SaveAsync();
+        await _blockRepository.CreateAsync(projectDm.Blocks);
+        await _blockRepository.SaveAsync();
 
-        await _connectorRepository.CreateAsync(projectDm.AspectObjects.SelectMany(x => x.Connectors));
-        await _aspectObjectRepository.SaveAsync();
+        await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
+        await _blockRepository.SaveAsync();
 
         return _mapper.Map<ProjectCm>(projectDm);
     }
@@ -423,21 +423,21 @@ public class ProjectService : IProjectService
         var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
         updatedProject.UpdateVersion(projectVersionStatus);
 
-        // Resolve aspectObject versions
-        foreach (var updatedAspectObject in updatedProject.AspectObjects)
+        // Resolve block versions
+        foreach (var updatedblock in updatedProject.Blocks)
         {
-            var originalAspectObject = originalDm.AspectObjects.FirstOrDefault(x => x.Id == updatedAspectObject.Id);
+            var originalblock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedblock.Id);
 
-            if (originalAspectObject == null) //TODO: New aspectObject
+            if (originalblock == null) //TODO: New block
                 continue;
 
-            var aspectObjectVersionStatus = originalAspectObject.CalculateVersionStatus(updatedAspectObject, projectEditData);
+            var blockVersionStatus = originalblock.CalculateVersionStatus(updatedblock, projectEditData);
 
-            if (aspectObjectVersionStatus != VersionStatus.NoChange)
+            if (blockVersionStatus != VersionStatus.NoChange)
             {
-                updatedAspectObject.Updated = DateTime.Now.ToUniversalTime();
-                updatedAspectObject.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-                updatedAspectObject.UpdateVersion(aspectObjectVersionStatus);
+                updatedblock.Updated = DateTime.Now.ToUniversalTime();
+                updatedblock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
+                updatedblock.UpdateVersion(blockVersionStatus);
             }
         }
 
@@ -458,39 +458,39 @@ public class ProjectService : IProjectService
     }
 
     /// <summary>
-    /// Create init aspect aspectObjects
+    /// Create init aspect blocks
     /// </summary>
     /// <param name="aspect"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private AspectObjectDm CreateInitAspectObject(Aspect aspect, string projectId)
+    private BlockDm CreateInitblock(Aspect aspect, string projectId)
     {
         if (string.IsNullOrWhiteSpace(projectId))
             throw new MimirorgNullReferenceException("projectId is null or empty");
 
         projectId = HttpUtility.UrlDecode(projectId);
 
-        var aspectObjectId = _commonRepository.CreateIdAsIri(ServerEndpoint.AspectObject, Guid.NewGuid().ToString());
+        var blockId = _commonRepository.CreateIdAsIri(ServerEndpoint.Block, Guid.NewGuid().ToString());
         var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
-        var aspectObject = new AspectObjectDm
+        var block = new BlockDm
         {
-            Id = aspectObjectId,
+            Id = blockId,
             Version = "1.0",
             Name = aspectName,
             Label = aspectName,
-            Description = $"The root {aspectName.ToLower()} aspect object",
+            Description = $"The root {aspectName.ToLower()} block",
             Aspect = aspect,
-            AspectObjectType = AspectObjectType.Root,
+            BLockType = BLockType.Root,
             Project = projectId,
             MainProject = projectId,
-            LibraryType = aspectObjectId,
+            LibraryType = blockId,
             PositionTree = JsonConvert.SerializeObject(new PositionDm
             {
                 PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
                 PosY = 5
             }),
-            ReferenceType = aspectObjectId,
+            ReferenceType = blockId,
             CreatedBy = _contextAccessor.GetName(),
             Created = DateTime.Now.ToUniversalTime(),
             UpdatedBy = null,
@@ -511,12 +511,12 @@ public class ProjectService : IProjectService
                         Inside = Guid.NewGuid().ToString(),
                         Outside = Guid.NewGuid().ToString(),
                         Direction = ConnectorDirection.Output,
-                        AspectObject = aspectObjectId
+                        Block = blockId
                     }
             }
         };
 
-        return aspectObject;
+        return block;
     }
 
     /// <summary>
@@ -525,7 +525,7 @@ public class ProjectService : IProjectService
     private void ClearAllChangeTracker()
     {
         _projectRepository?.Context?.ChangeTracker.Clear();
-        _aspectObjectRepository?.Context?.ChangeTracker.Clear();
+        _blockRepository?.Context?.ChangeTracker.Clear();
         _connectionRepository?.Context?.ChangeTracker.Clear();
         _connectorRepository?.Context?.ChangeTracker.Clear();
         _attributeRepository?.Context?.ChangeTracker.Clear();

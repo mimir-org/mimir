@@ -20,7 +20,7 @@ public class ConnectorAm : IValidatableObject
     [Required]
     public string Outside { get; set; }
     [Required]
-    public string AspectObject { get; set; }
+    public string Block { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

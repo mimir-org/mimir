@@ -21,18 +21,18 @@ public class LibraryService : ILibraryService
         _libraryRepository = libraryRepository;
         _cooperateService = cooperateService;
     }
-
+    
     /// <summary>
-    /// Get all aspectObject types
+    /// Get all block types
     /// </summary>
     /// <returns></returns>
-    public async Task<List<AspectObjectLibCm>> GetAspectObjectTypes(string searchString)
+    public async Task<List<BlockLibCm>> GetBlockTypes(string searchString)
     {
-        var aspectObjects = await _libraryRepository.GetAspectObjectTypes();
+        var blockObjects = await _libraryRepository.GetBlockTypes();
         if (!string.IsNullOrWhiteSpace(searchString))
-            aspectObjects = aspectObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+            blockObjects = blockObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-        return aspectObjects;
+        return blockObjects;
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <summary>
-    /// Get all aspectObject types and send types to connected clients
+    /// Get all block types and send types to connected clients
     /// </summary>
     /// <returns></returns>
     public async Task SendRefreshLibData()

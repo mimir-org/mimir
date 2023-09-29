@@ -37,7 +37,7 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
             .AddColumn(x => x.Units)
             .AddColumn(x => x.Qualifiers)
             .AddColumn(x => x.ConnectorTerminal)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
             .Commit(conn);
@@ -86,7 +86,7 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
             .AddColumn(x => x.Units)
             .AddColumn(x => x.Qualifiers)
             .AddColumn(x => x.ConnectorTerminal)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             .BulkInsert()
             .Commit(conn);
     }

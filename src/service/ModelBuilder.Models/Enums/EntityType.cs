@@ -4,8 +4,8 @@ namespace Mb.Models.Enums;
 
 public enum EntityType
 {
-    [Display(Name = "AspectObject")]
-    AspectObject = 0,
+    [Display(Name = "block")]
+    block = 0,
 
     [Display(Name = "Connection")]
     Connection = 1,

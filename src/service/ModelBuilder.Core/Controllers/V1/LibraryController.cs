@@ -31,22 +31,21 @@ public class LibraryController : ControllerBase
         _logger = logger;
         _libraryService = libraryService;
     }
-
     /// <summary>
-    /// Get all aspectObject types
+    /// Get all block types
     /// </summary>
     /// <returns></returns>
-    [HttpGet("aspectObject")]
-    [ProducesResponseType(typeof(ICollection<AspectObjectLibCm>), StatusCodes.Status200OK)]
+    [HttpGet("blockObject")]
+    [ProducesResponseType(typeof(ICollection<BlockLibCm>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetAspectObjects()
+    public async Task<IActionResult> GetBlockObjects()
     {
         try
         {
-            var data = await _libraryService.GetAspectObjectTypes(null);
+            var data = await _libraryService.GetBlockTypes(null);
             return Ok(data);
         }
         catch (Exception e)

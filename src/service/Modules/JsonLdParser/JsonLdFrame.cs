@@ -20,7 +20,7 @@ public static class JsonLdFrame
                 ["hasAspectModel"] = new JObject() { ["@reverse"] = Resources.IsAspectOf },
                 ["@version"] = "1.1"
             },
-            ["@type"] = new JArray() { Resources.FSB, Resources.IntegratedObject, Resources.Project, "ConnectorTerminal", Resources.InputTerminal, Resources.OutputTerminal, "AspectObject" },
+            ["@type"] = new JArray() { Resources.FSB, Resources.IntegratedObject, Resources.Project, "ConnectorTerminal", Resources.InputTerminal, Resources.OutputTerminal, "block" },
             [Resources.HasChild] = new JObject()
             {
                 ["@embed"] = "@never"

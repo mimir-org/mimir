@@ -17,12 +17,56 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mb.Models.Data.AspectObjectDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.AttributeDm", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("AttributeType")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AttributeType");
+
+                    b.Property<string>("Block")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("block");
+
+                    b.Property<string>("ConnectorTerminal")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ConnectorTerminal");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("Qualifiers")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Qualifiers");
+
+                    b.Property<string>("UnitSelected")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UnitSelected");
+
+                    b.Property<string>("Units")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Units");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attribute", (string)null);
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.BlockDm", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -33,9 +77,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<int>("AspectObjectType")
+                    b.Property<int>("BLockType")
                         .HasColumnType("int")
-                        .HasColumnName("AspectObjectType");
+                        .HasColumnName("BlockType");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
@@ -130,51 +174,7 @@ namespace Mb.Core.Migrations
 
                     b.HasIndex("Project");
 
-                    b.ToTable("AspectObject", (string)null);
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.AttributeDm", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("AspectObject")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AspectObject");
-
-                    b.Property<string>("AttributeType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AttributeType");
-
-                    b.Property<string>("ConnectorTerminal")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ConnectorTerminal");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("Qualifiers")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Qualifiers");
-
-                    b.Property<string>("UnitSelected")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UnitSelected");
-
-                    b.Property<string>("Units")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Units");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Value");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Attribute", (string)null);
+                    b.ToTable("Block", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.ConnectionDm", b =>
@@ -226,10 +226,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("AspectObject")
+                    b.Property<string>("Block")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("AspectObject");
+                        .HasColumnName("block");
 
                     b.Property<int>("Direction")
                         .HasColumnType("int")

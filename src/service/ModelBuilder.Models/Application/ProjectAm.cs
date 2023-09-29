@@ -26,7 +26,7 @@ public class ProjectAm : IValidatableObject
     public string UpdatedBy { get; set; }
     public DateTime? Updated { get; set; }
 
-    public ICollection<AspectObjectAm> AspectObjects { get; set; }
+    public ICollection<BlockAm> blocks { get; set; }
     public ICollection<ConnectionAm> Connections { get; set; }
 
     #region Validate
@@ -34,7 +34,7 @@ public class ProjectAm : IValidatableObject
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var validations = new List<ValidationResult>();
-        validations.AddRange(AspectObjects.Validate(validationContext));
+        validations.AddRange(blocks.Validate(validationContext));
         validations.AddRange(Connections.Validate(validationContext));
         return validations;
     }
@@ -45,12 +45,12 @@ public class ProjectAm : IValidatableObject
 
     public IEnumerable<ConnectionAm> GetParentlessConnectors()
     {
-        return Connections.GetParentlessConnectors(AspectObjects);
+        return Connections.GetParentlessConnectors(blocks);
     }
 
     public IEnumerable<ConnectionAm> GetNotConnectedConnectors()
     {
-        return Connections.GetNotConnectedConnectors(AspectObjects);
+        return Connections.GetNotConnectedConnectors(blocks);
     }
 
     #endregion

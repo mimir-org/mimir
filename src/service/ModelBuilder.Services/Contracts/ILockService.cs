@@ -6,6 +6,6 @@ namespace Mb.Services.Contracts;
 
 public interface ILockService
 {
-    IEnumerable<string> GetLockedAspectObjects();
+    IEnumerable<string> GetLockedBlocks();
     Task Lock(LockAm lockAm);
 }

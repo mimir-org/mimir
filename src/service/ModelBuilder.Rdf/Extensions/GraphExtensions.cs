@@ -13,12 +13,12 @@ public static class GraphExtensions
     public static Regex IsHttpRegex = new(@"http(s)*");
 
     /// <summary>
-    /// Helper function to get if aspectObject exist, otherwise create a new rdf node
+    /// Helper function to get if block exist, otherwise create a new rdf node
     /// </summary>
     /// <param name="graph"></param>
     /// <param name="iri"></param>
     /// <returns></returns>
-    public static INode GetOrCreateUriAspectObject(this IGraph graph, string iri)
+    public static INode GetOrCreateUriBlock(this IGraph graph, string iri)
     {
         if (!IsHttpRegex.IsMatch(iri))
             return graph.GetUriNode(iri) ?? graph.CreateUriNode(iri);

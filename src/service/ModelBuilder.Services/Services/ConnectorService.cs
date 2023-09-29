@@ -24,11 +24,11 @@ public class ConnectorService : IConnectorService
     }
 
     /// <summary>
-    /// Get an aspect object by Id. The aspect object will include all connectors and attributes.
+    /// Get an block by Id. The block will include all connectors and attributes.
     /// </summary>
     /// <param name="id"></param>
-    /// <returns>The aspect object</returns>
-    /// <exception cref="MimirorgNotFoundException">Throws if the aspect object does not exist</exception>
+    /// <returns>The block</returns>
+    /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
     public Task<ConnectorCm> Get(string id)
     {
         if (string.IsNullOrWhiteSpace(id))

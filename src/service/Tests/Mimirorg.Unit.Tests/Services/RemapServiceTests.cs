@@ -41,7 +41,7 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void RemapAspectObjects_AspectObject_Project_Mapping_Ok()
+    public void Remapblocks_block_Project_Mapping_Ok()
     {
         // Project replacement
         var projectReplacement = new ReplacementId
@@ -52,8 +52,8 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
             ToIri = "https://rdf.runir.net/ID5678"
         };
 
-        // AspectObject data
-        var aspectObjects = new List<AspectObjectAm>
+        // block data
+        var blocks = new List<BlockAm>
         {
             new()
             {
@@ -74,16 +74,16 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
         };
 
         var remap = new Dictionary<string, string>();
-        var mappedAspectObjects = _remapService.RemapAspectObjects(projectReplacement, aspectObjects, null, remap, false).ToList();
+        var mappedblocks = _remapService.RemapBlocks(projectReplacement, blocks, null, remap, false).ToList();
 
-        foreach (var testAspectObject in mappedAspectObjects)
+        foreach (var testblock in mappedblocks)
         {
 
-            Assert.NotNull(testAspectObject);
-            Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.Project);
-            Assert.Equal("https://rdf.runir.net/ID5678", testAspectObject.MainProject);
+            Assert.NotNull(testblock);
+            Assert.Equal("https://rdf.runir.net/ID5678", testblock.Project);
+            Assert.Equal("https://rdf.runir.net/ID5678", testblock.MainProject);
 
-            var nodeIdSplit = testAspectObject.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            var nodeIdSplit = testblock.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
             Assert.Equal(2, nodeIdSplit.Length);
         }
     }

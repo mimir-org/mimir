@@ -15,7 +15,7 @@ public class AttributeDm : IEquatable<AttributeDm>
     public string Units { get; set; }
     public string Qualifiers { get; set; }
     public string ConnectorTerminal { get; set; }
-    public string AspectObject { get; set; }
+    public string Block { get; set; }
 
     #region IEquatable
 
@@ -31,7 +31,7 @@ public class AttributeDm : IEquatable<AttributeDm>
                Units == other.Units &&
                Qualifiers == other.Qualifiers &&
                ConnectorTerminal == other.ConnectorTerminal &&
-               AspectObject == other.AspectObject;
+               Block == other.Block;
     }
 
     public override bool Equals(object obj)
@@ -52,7 +52,7 @@ public class AttributeDm : IEquatable<AttributeDm>
         hashCode.Add(Units);
         hashCode.Add(Qualifiers);
         hashCode.Add(ConnectorTerminal);
-        hashCode.Add(AspectObject);
+        hashCode.Add(Block);
         return hashCode.ToHashCode();
     }
 

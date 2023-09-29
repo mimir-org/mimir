@@ -37,27 +37,27 @@ public class LockController : ControllerBase
         _lockService = lockService;
         _logger = logger;
     }
-
+    
     /// <summary>
-    /// Returns a list of all locked aspectObjects id's
-    /// If param 'projectId' is null all locked aspectObjects in the database will be returned
+    /// Returns a list of all locked blocks id's
+    /// If param 'projectId' is null all locked blocks in the database will be returned
     /// </summary>
-    /// <returns>List of locked aspectObject id></returns>
-    [HttpGet("aspectObject")]
+    /// <returns>List of locked block id></returns>
+    [HttpGet("block")]
     [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Policy = "Read")]
-    public IActionResult GetLockedAspectObjects()
+    public IActionResult GetLockedBlocks()
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            var result = _lockService.GetLockedAspectObjects().ToList();
+            var result = _lockService.GetLockedBlocks().ToList();
             return Ok(result);
         }
         catch (Exception e)
@@ -68,7 +68,7 @@ public class LockController : ControllerBase
     }
 
     /// <summary>
-    /// Locks or unlock an attribute, connection or aspectObject
+    /// Locks or unlock an attribute, connection or block
     /// </summary>
     /// <param name="lockAm"></param>
     /// <returns>Status204NoContent</returns>

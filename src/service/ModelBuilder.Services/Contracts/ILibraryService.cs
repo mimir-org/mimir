@@ -7,11 +7,12 @@ namespace Mb.Services.Contracts;
 
 public interface ILibraryService
 {
+    //TODO: Done
     /// <summary>
-    /// Get all aspectObject types
+    /// Get all block types
     /// </summary>
     /// <returns></returns>
-    Task<List<AspectObjectLibCm>> GetAspectObjectTypes(string searchString);
+    Task<List<BlockLibCm>> GetBlockTypes(string searchString);
 
     /// <summary>
     /// Get all terminal types

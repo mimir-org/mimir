@@ -8,7 +8,8 @@ public interface ILibraryRepository
 {
     Task<List<QuantityDatumLibCm>> GetQuantityDatums();
     Task<List<UnitLibCm>> GetUnits();
-    Task<List<AspectObjectLibCm>> GetAspectObjectTypes();
+    //TODO: Done
+    Task<List<BlockLibCm>> GetBlockTypes();
     Task<List<TerminalLibCm>> GetTerminalTypes();
     Task<List<AttributeLibCm>> GetAttributeTypes();
 

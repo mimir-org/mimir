@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions;
 
 public static class ConnectionExtensions
 {
-    public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> aspectObjects)
+    public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<BlockAm> blocks)
     {
         var parentlessConnections = new List<ConnectionAm>();
 
@@ -17,12 +17,12 @@ public static class ConnectionExtensions
         foreach (var connection in connections)
         {
             //TODO Rewrite
-            //var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
-            //if (fromAspectObject != null)
+            //var fromblock = blocks.FirstOrDefault(x => x.Id == connection.FromblockId);
+            //if (fromblock != null)
             //    continue;
 
-            //var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-            //var toConnector = toAspectObject?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnector);
+            //var toblock = blocks.FirstOrDefault(x => x.Id == connection.ToblockId);
+            //var toConnector = toblock?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnector);
             //if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
             //    continue;
 
@@ -32,7 +32,7 @@ public static class ConnectionExtensions
         return parentlessConnections;
     }
 
-    public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<AspectObjectAm> aspectObjects)
+    public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<BlockAm> blocks)
     {
         var notConnectedConnections = new List<ConnectionAm>();
 
@@ -42,12 +42,12 @@ public static class ConnectionExtensions
         foreach (var connection in connections)
         {
             //TODO Rewrite
-            //var fromAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.FromAspectObjectId);
-            //if (fromAspectObject == null)
+            //var fromblock = blocks.FirstOrDefault(x => x.Id == connection.FromblockId);
+            //if (fromblock == null)
             //    notConnectedConnections.Add(connection);
 
-            //var toAspectObject = aspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-            //if (toAspectObject == null)
+            //var toblock = blocks.FirstOrDefault(x => x.Id == connection.ToblockId);
+            //if (toblock == null)
             //    notConnectedConnections.Add(connection);
         }
 

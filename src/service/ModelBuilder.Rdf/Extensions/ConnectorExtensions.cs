@@ -22,51 +22,51 @@ public static class ConnectorExtensions
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static void AssertConnector(this ConnectorDm connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, ConnectionDm connection, DefaultFlowDirection flowDirection)
     {
-        ontologyService.AssertAspectObject(connector.Id, Resources.Domain, connector.Id.ResolveDomain(), true);
+        ontologyService.AssertBlock(connector.Id, Resources.Domain, connector.Id.ResolveDomain(), true);
         switch (connector)
         {
             case ConnectorTerminalDm connectorTerminal:
-                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.Type, connection != null ? Resources.StreamTerminal : Resources.FSBTerminal);
-                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.Label, connectorTerminal.Name, true);
-                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.TerminalDirectionType, connectorTerminal.Direction.ToString(), true);
-                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.LibraryType, connectorTerminal.TerminalType);
-                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasColor, connectorTerminal.Color, true);
+                ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, connection != null ? Resources.StreamTerminal : Resources.FSBTerminal);
+                ontologyService.AssertBlock(connectorTerminal.Id, Resources.Label, connectorTerminal.Name, true);
+                ontologyService.AssertBlock(connectorTerminal.Id, Resources.TerminalDirectionType, connectorTerminal.Direction.ToString(), true);
+                ontologyService.AssertBlock(connectorTerminal.Id, Resources.LibraryType, connectorTerminal.TerminalType);
+                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasColor, connectorTerminal.Color, true);
 
                 switch (connectorTerminal.Direction)
                 {
                     case ConnectorDirection.Input:
-                        ontologyService.AssertAspectObject(ownerIri, Resources.HasInputTerminal, connectorTerminal.Id);
-                        ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.Type, Resources.InputTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasInputTerminal, connectorTerminal.Id);
+                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.InputTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasAspectObjectFromConnection, connection.FromConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockFromConnection, connection.FromConnector);
                         break;
                     case ConnectorDirection.Output:
-                        ontologyService.AssertAspectObject(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id);
-                        ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.Type, Resources.OutputTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id);
+                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.OutputTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasAspectObjectToConnection, connection.ToConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockToConnection, connection.ToConnector);
                         break;
                     case ConnectorDirection.Bidirectional:
-                        ontologyService.AssertAspectObject(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id);
-                        ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.Type, Resources.BidirectionalTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id);
+                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.BidirectionalTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
                         {
                             if (flowDirection == DefaultFlowDirection.InputFlow)
-                                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasAspectObjectFromConnection, connection.FromConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockFromConnection, connection.FromConnector);
                             else
-                                ontologyService.AssertAspectObject(connectorTerminal.Id, Resources.HasAspectObjectToConnection, connection.ToConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockToConnection, connection.ToConnector);
                         }
 
                         break;
@@ -114,12 +114,12 @@ public static class ConnectorExtensions
     /// <param name="connectorTerminal">The connectorTerminal to resolve</param>
     /// <param name="ontologyService">Ontology Service</param>
     /// <param name="projectData">Project data</param>
-    /// <param name="aspectObjectIri">AspectObject IRI</param>
+    /// <param name="blockIri">block IRI</param>
     /// <param name="iri">The connectorTerminal IRI</param>
-    public static void ResolveTerminal(this ConnectorTerminalAm connectorTerminal, IOntologyService ontologyService, ProjectData projectData, string aspectObjectIri, string iri)
+    public static void ResolveTerminal(this ConnectorTerminalAm connectorTerminal, IOntologyService ontologyService, ProjectData projectData, string blockIri, string iri)
     {
         //connectorTerminal.Id = iri;
-        //connectorTerminal.AspectObject = aspectObjectIri;
+        //connectorTerminal.block = blockIri;
         //connectorTerminal.Name = ontologyService.GetValue(iri, Resources.Label, false);
         //connectorTerminal.Direction = ontologyService.GetEnumValue<ConnectorDirection>(iri, Resources.TerminalDirectionType, false);
         //connectorTerminal.ConnectorVisibility = ontologyService.GetEnumValue<ConnectorVisibility>(iri, Resources.Visibility, false);

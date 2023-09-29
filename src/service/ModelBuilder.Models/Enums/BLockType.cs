@@ -1,6 +1,6 @@
 namespace Mb.Models.Enums;
 
-public enum AspectObjectType
+public enum BLockType
 {
     Root = 0,
     Aspect = 1

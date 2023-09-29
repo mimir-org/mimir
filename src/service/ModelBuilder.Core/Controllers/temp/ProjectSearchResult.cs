@@ -21,31 +21,31 @@ namespace Mb.Core.Controllers.temp
                 UpdatedBy = "reidar-liabo@gmail.com",
                 Version = "1.0",
                 Connections = new List<ConnectionCm>(),
-                AspectObjects = CreateDummyAspectObjects(),
+                blocks = CreateDummyblocks(),
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Liabø",
                 SubProject = false
             });
         }
 
-        private ICollection<AspectObjectCm> CreateDummyAspectObjects()
+        private ICollection<BlockCm> CreateDummyblocks()
         {
-            var obj = new List<AspectObjectCm>();
+            var obj = new List<BlockCm>();
 
-            obj.Add(new AspectObjectCm
+            obj.Add(new BlockCm
             {
                 Id = "example.com_3456",
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Laibø",
                 Aspect = Aspect.Function,
-                AspectObjectType = AspectObjectType.Aspect,
+                BLockType = BLockType.Aspect,
                 Attributes = new List<AttributeCm>
                 {
                     new AttributeCm
                     {
                         Id = "example.com_hoig64tfd",
                         Name = "Test Attribute",
-                        AspectObject = "example.com_3456"
+                        block = "example.com_3456"
                     }
                 },
                 Connectors = new List<ConnectorCm>
@@ -53,7 +53,7 @@ namespace Mb.Core.Controllers.temp
                     new ConnectorPartOfCm
                     {
                         Id = "example.com_cp123",
-                        AspectObject = "example.com_3456",
+                        block = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fgerde-in",
@@ -62,7 +62,7 @@ namespace Mb.Core.Controllers.temp
                     new ConnectorTerminalCm()
                     {
                         Id = "example.com_cp234",
-                        AspectObject = "example.com_3456",
+                        block = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fge2rde-in",

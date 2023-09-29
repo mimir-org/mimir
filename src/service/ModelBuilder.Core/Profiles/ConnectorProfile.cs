@@ -17,7 +17,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<ConnectorDm, ConnectorCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -25,7 +25,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<ConnectorDm, ConnectorAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -33,7 +33,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         #endregion Connector
 
