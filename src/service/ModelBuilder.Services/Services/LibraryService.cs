@@ -28,11 +28,11 @@ public class LibraryService : ILibraryService
     /// <returns></returns>
     public async Task<List<BlockLibCm>> GetBlockTypes(string searchString)
     {
-        var blockObjects = await _libraryRepository.GetBlockTypes();
+        var blocks = await _libraryRepository.GetBlockTypes();
         if (!string.IsNullOrWhiteSpace(searchString))
-            blockObjects = blockObjects.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
+            blocks = blocks.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-        return blockObjects;
+        return blocks;
     }
 
     /// <summary>

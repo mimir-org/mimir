@@ -35,13 +35,13 @@ public class LibraryController : ControllerBase
     /// Get all block types
     /// </summary>
     /// <returns></returns>
-    [HttpGet("blockObject")]
+    [HttpGet("block")]
     [ProducesResponseType(typeof(ICollection<BlockLibCm>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetBlockObjects()
+    public async Task<IActionResult> GetBlocks()
     {
         try
         {
