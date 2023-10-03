@@ -7,7 +7,6 @@ namespace Mb.Services.Contracts;
 
 public interface ILibraryService
 {
-    //TODO: Done
     /// <summary>
     /// Get all block types
     /// </summary>

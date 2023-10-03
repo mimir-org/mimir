@@ -11,7 +11,6 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1;
 
-//TODO: block -> Block
 /// <summary>
 /// Block services
 /// </summary>
