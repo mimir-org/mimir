@@ -16,7 +16,7 @@ public abstract class ConnectorCm
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
     public string Outside { get; set; }
-    public string block { get; set; }
+    public string Block { get; set; }
 }
 
 #endregion ConnectorCm

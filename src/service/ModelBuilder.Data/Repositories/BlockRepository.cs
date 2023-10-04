@@ -147,7 +147,7 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
             .AddColumn(x => x.LibraryType)
             .AddColumn(x => x.Version)
             .AddColumn(x => x.Aspect)
-            .AddColumn(x => x.BLockType)
+            .AddColumn(x => x.BlockType)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Symbol)
             .AddColumn(x => x.Purpose)

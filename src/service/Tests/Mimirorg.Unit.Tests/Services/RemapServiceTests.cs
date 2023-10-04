@@ -41,7 +41,7 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void Remapblocks_block_Project_Mapping_Ok()
+    public void RemapBlocks_block_Project_Mapping_Ok()
     {
         // Project replacement
         var projectReplacement = new ReplacementId
@@ -74,16 +74,16 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
         };
 
         var remap = new Dictionary<string, string>();
-        var mappedblocks = _remapService.RemapBlocks(projectReplacement, blocks, null, remap, false).ToList();
+        var mappedBlocks = _remapService.RemapBlocks(projectReplacement, blocks, null, remap, false).ToList();
 
-        foreach (var testblock in mappedblocks)
+        foreach (var testBlock in mappedBlocks)
         {
 
-            Assert.NotNull(testblock);
-            Assert.Equal("https://rdf.runir.net/ID5678", testblock.Project);
-            Assert.Equal("https://rdf.runir.net/ID5678", testblock.MainProject);
+            Assert.NotNull(testBlock);
+            Assert.Equal("https://rdf.runir.net/ID5678", testBlock.Project);
+            Assert.Equal("https://rdf.runir.net/ID5678", testBlock.MainProject);
 
-            var nodeIdSplit = testblock.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            var nodeIdSplit = testBlock.Id.Split('_', StringSplitOptions.RemoveEmptyEntries);
             Assert.Equal(2, nodeIdSplit.Length);
         }
     }

@@ -185,7 +185,7 @@ public class ProjectService : IProjectService
             projectAm.Name = subProjectAm.Name;
             projectAm.Description = subProjectAm.Description;
             projectAm.SubProject = true;
-            projectAm.blocks = projectAm.blocks.Where(x => x.BLockType == BLockType.Root || subProjectAm.blocks.Any(y => x.Id == y)).ToList();
+            projectAm.Blocks = projectAm.Blocks.Where(x => x.BlockType == BlockType.Root || subProjectAm.Blocks.Any(y => x.Id == y)).ToList();
             projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
 
             _ = _remapService.Clone(projectAm);
@@ -321,13 +321,13 @@ public class ProjectService : IProjectService
         var updatedProject = await _projectRepository.GetAsyncComplete(newSubProject.Id);
 
         // Identify root blocks
-        var rootblocks = updatedProject.Blocks.Where(x => x.BLockType == BLockType.Root).Select(x => x.Id).ToList();
+        var rootBlocks = updatedProject.Blocks.Where(x => x.BlockType == BlockType.Root).Select(x => x.Id).ToList();
 
         // Position block
-        var rootOrigin = updatedProject.Blocks.Where(x => rootblocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
+        var rootOrigin = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
 
         // Set block and connections project id to merge project, and calculate position
-        updatedProject.Blocks = updatedProject.Blocks.Where(x => rootblocks.All(y => y != x.Id)).Select(x =>
+        updatedProject.Blocks = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).Select(x =>
         {
             x.Project = prepare.Project;
             x.Project = null;
@@ -342,7 +342,7 @@ public class ProjectService : IProjectService
         }
 
         // TODO: Resolve this
-        //updatedProject.Connections = updatedProject.Connections.Where(x => !rootblocks.Any(y => (y == x.Fromblock || y == x.Toblock))).Select(x =>
+        //updatedProject.Connections = updatedProject.Connections.Where(x => !rootBlocks.Any(y => (y == x.FromBlock || y == x.ToBlock))).Select(x =>
         //{
         //    x.Project = prepare.ProjectId;
         //    return x;
@@ -351,7 +351,7 @@ public class ProjectService : IProjectService
         var prepareCm = new PrepareCm
         {
             SubProjectId = prepare.SubProject,
-            blocks = _mapper.Map<List<BlockCm>>(updatedProject.Blocks),
+            Blocks = _mapper.Map<List<BlockCm>>(updatedProject.Blocks),
             Connections = _mapper.Map<List<ConnectionCm>>(updatedProject.Connections)
         };
 
@@ -384,9 +384,9 @@ public class ProjectService : IProjectService
 
         projectDm.Blocks = new List<BlockDm>
         {
-            CreateInitblock(Aspect.Function, projectDm.Id),
-            CreateInitblock(Aspect.Product, projectDm.Id),
-            CreateInitblock(Aspect.Location, projectDm.Id)
+            CreateInitBlock(Aspect.Function, projectDm.Id),
+            CreateInitBlock(Aspect.Product, projectDm.Id),
+            CreateInitBlock(Aspect.Location, projectDm.Id)
         };
 
         await _projectRepository.CreateAsync(projectDm);
@@ -424,20 +424,20 @@ public class ProjectService : IProjectService
         updatedProject.UpdateVersion(projectVersionStatus);
 
         // Resolve block versions
-        foreach (var updatedblock in updatedProject.Blocks)
+        foreach (var updatedBlock in updatedProject.Blocks)
         {
-            var originalblock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedblock.Id);
+            var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
 
-            if (originalblock == null) //TODO: New block
+            if (originalBlock == null) //TODO: New block
                 continue;
 
-            var blockVersionStatus = originalblock.CalculateVersionStatus(updatedblock, projectEditData);
+            var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
 
             if (blockVersionStatus != VersionStatus.NoChange)
             {
-                updatedblock.Updated = DateTime.Now.ToUniversalTime();
-                updatedblock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-                updatedblock.UpdateVersion(blockVersionStatus);
+                updatedBlock.Updated = DateTime.Now.ToUniversalTime();
+                updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
+                updatedBlock.UpdateVersion(blockVersionStatus);
             }
         }
 
@@ -463,7 +463,7 @@ public class ProjectService : IProjectService
     /// <param name="aspect"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private BlockDm CreateInitblock(Aspect aspect, string projectId)
+    private BlockDm CreateInitBlock(Aspect aspect, string projectId)
     {
         if (string.IsNullOrWhiteSpace(projectId))
             throw new MimirorgNullReferenceException("projectId is null or empty");
@@ -481,7 +481,7 @@ public class ProjectService : IProjectService
             Label = aspectName,
             Description = $"The root {aspectName.ToLower()} block",
             Aspect = aspect,
-            BLockType = BLockType.Root,
+            BlockType = BlockType.Root,
             Project = projectId,
             MainProject = projectId,
             LibraryType = blockId,

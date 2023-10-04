@@ -61,7 +61,7 @@ public static class BlockExtensions
             ontologyService.AssertBlock(block.Id, Resources.Type, @$"og{strippedRds.Length}:{block.Aspect}{strippedRds}");
         }
 
-        if (block.BLockType == BLockType.Root)
+        if (block.BlockType == BlockType.Root)
         {
             ontologyService.AssertBlock(block.Id, Resources.IsAspectOf, project.Id);
             ontologyService.AssertBlock(block.Id, Resources.HasMasterProject, project.Id);
@@ -105,7 +105,7 @@ public static class BlockExtensions
     /// TODO: This is not correct. We have more values ex. ++ etc.
     public static string RdsString(this BlockDm block, ProjectDm project)
     {
-        if (block.BLockType == BLockType.Root)
+        if (block.BlockType == BlockType.Root)
         {
             return $"<{project.Name.ToUpper()}>";
         }
@@ -140,10 +140,10 @@ public static class BlockExtensions
     /// <param name="ontologyService">Ontology Service</param>
     /// <param name="iri">The IRI of the block</param>
     /// <param name="project">The IRI of the project</param>
-    /// <param name="bLockType">The type of the block</param>
+    /// <param name="blockType">The type of the block</param>
     /// <param name="projectData">Record of ICollections</param>
     /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
-    public static void ResolveBlock(this BlockAm block, IOntologyService ontologyService, string iri, string project, BLockType bLockType, ProjectData projectData)
+    public static void ResolveBlock(this BlockAm block, IOntologyService ontologyService, string iri, string project, BlockType blockType, ProjectData projectData)
     {
         if (block == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(project))
             throw new InvalidDataException($"Can't resolve a block without required parameters.");
@@ -177,7 +177,7 @@ public static class BlockExtensions
         block.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
         block.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
-        block.BLockType = bLockType;
+        block.BlockType = blockType;
 
         // Resolve Attributes
         block.Attributes = new List<AttributeAm>();

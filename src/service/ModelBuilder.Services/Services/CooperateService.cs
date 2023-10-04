@@ -40,9 +40,9 @@ public class CooperateService : ICooperateService
         };
         await Task.WhenAll(
             Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
-            Task.Run(() => SendblockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId)),
-            Task.Run(() => SendblockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId)),
-            Task.Run(() => SendblockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
@@ -54,11 +54,11 @@ public class CooperateService : ICooperateService
         await _webSocketRepository.SendProjectVersionData(version, workerStatus);
     }
 
-    public Task SendblockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, string projectId)
+    public Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, string projectId)
     {
         foreach (var tuple in blockMap)
         {
-            _webSocketRepository.SendblockData(tuple.block, projectId, tuple.workerStatus);
+            _webSocketRepository.SendBlockData(tuple.block, projectId, tuple.workerStatus);
         }
 
         return Task.CompletedTask;
@@ -97,14 +97,14 @@ public class CooperateService : ICooperateService
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendblockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, string projectId)
+    private Task SendBlockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, string projectId)
     {
         if (blocks == null || string.IsNullOrWhiteSpace(projectId))
             return Task.CompletedTask;
 
         foreach (var block in blocks)
         {
-            _webSocketRepository.SendblockData(block, projectId, workerStatus);
+            _webSocketRepository.SendBlockData(block, projectId, workerStatus);
         }
 
         return Task.CompletedTask;

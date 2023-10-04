@@ -24,7 +24,7 @@ public class BlockService : IBlockService
     }
 
     /// <summary>
-    /// Get an block by Id. The block will include all connectors and attributes.
+    /// Get a block by Id. The block will include all connectors and attributes.
     /// </summary>
     /// <param name="id"></param>
     /// <returns>The block</returns>

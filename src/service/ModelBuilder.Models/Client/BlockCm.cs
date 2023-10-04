@@ -14,7 +14,7 @@ public class BlockCm
     public string Label { get; set; }
     public string Description { get; set; }
     public Aspect Aspect { get; set; }
-    public BLockType BLockType { get; set; }
+    public BlockType BlockType { get; set; }
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }

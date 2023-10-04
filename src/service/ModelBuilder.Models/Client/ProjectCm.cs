@@ -15,6 +15,6 @@ public class ProjectCm
     public string UpdatedBy { get; set; }
     public DateTime Created { get; set; }
     public string CreatedBy { get; set; }
-    public ICollection<BlockCm> blocks { get; set; } = new List<BlockCm>();
+    public ICollection<BlockCm> Blocks { get; set; } = new List<BlockCm>();
     public ICollection<ConnectionCm> Connections { get; set; } = new List<ConnectionCm>();
 }

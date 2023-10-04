@@ -17,7 +17,7 @@ public class ConnectorConfiguration : IEntityTypeConfiguration<ConnectorDm>
         builder.Property(p => p.Direction).HasColumnName("Direction").IsRequired();
         builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
         builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
-        builder.Property(p => p.Block).HasColumnName("block").IsRequired();
+        builder.Property(p => p.Block).HasColumnName("Block").IsRequired();
     }
 }
 #endregion ConnectorConfiguration

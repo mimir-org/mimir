@@ -73,7 +73,7 @@ public class OntologyService : IOntologyService
 
         var applicationData = GetApplicationData(project.Id);
 
-        project.Resolveblocks(this, applicationData);
+        project.ResolveBlocks(this, applicationData);
         project.ResolveRelationConnections(this, applicationData);
 
         return project;

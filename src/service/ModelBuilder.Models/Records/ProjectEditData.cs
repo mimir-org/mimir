@@ -46,7 +46,7 @@ public record ProjectEditData
         var tasks = new List<Task>
         {
             Task.Run(() => ResolveConnections(original, updated)),
-            Task.Run(() => Resolveblocks(original, updated)),
+            Task.Run(() => ResolveBlocks(original, updated)),
             Task.Run(() => ResolveAttributes(original, updated)),
             Task.Run(() => ResolveRelations(original, updated)),
             Task.Run(() => ResolveTerminals(original, updated))
@@ -86,25 +86,25 @@ public record ProjectEditData
 
     #region blocks
 
-    private async Task Resolveblocks(ProjectData original, ProjectData updated)
+    private async Task ResolveBlocks(ProjectData original, ProjectData updated)
     {
         var tasks = new List<Task>
         {
-            Task.Run(() => FindDeletedblocks(original, updated)),
-            Task.Run(() => FindCreatedblocks(original, updated))
+            Task.Run(() => FindDeletedBlocks(original, updated)),
+            Task.Run(() => FindCreatedBlocks(original, updated))
         };
         await Task.WhenAll(tasks);
         var dict = updated.Blocks.ToDictionary(x => x.Id, x => x);
         BlockUpdate.AddRange(original.Blocks.Exclude(BlockCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
     }
 
-    private Task FindDeletedblocks(ProjectData original, ProjectData updated)
+    private Task FindDeletedBlocks(ProjectData original, ProjectData updated)
     {
         BlockDelete.AddRange(original.Blocks.Exclude(updated.Blocks, x => x.Id));
         return Task.CompletedTask;
     }
 
-    private Task FindCreatedblocks(ProjectData original, ProjectData updated)
+    private Task FindCreatedBlocks(ProjectData original, ProjectData updated)
     {
         BlockCreate.AddRange(updated.Blocks.Exclude(original.Blocks, x => x.Id));
         return Task.CompletedTask;

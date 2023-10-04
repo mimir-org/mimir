@@ -20,7 +20,7 @@ export interface SubProjectAm
 	fromProjectId: string;
 	name: string;
 	description: string;
-	Blocks: string[];
+	blocks: string[];
 	edges: string[];
 }
 export interface RelationAm extends ConnectorAm
@@ -52,7 +52,7 @@ export interface ProjectAm
 	projectOwner: string;
 	updatedBy: string;
 	updated: Date;
-	Blocks: NodeAm[];
+	blocks: NodeAm[];
 	edges: EdgeAm[];
 }
 export interface PrepareAm
@@ -140,8 +140,8 @@ export interface ConnectorAm
 	name: string;
 	type: ConnectorDirection;
 	connectorVisibility: ConnectorVisibility;
-	BlockId: string;
-	BlockIri: string;
+	blockId: string;
+	blockIri: string;
 	isRequired: boolean;
 }
 export interface CommitPackageAm
@@ -174,8 +174,8 @@ export interface AttributeAm
 	regularitySpecified: string;
 	terminalId: string;
 	terminalIri: string;
-	BlockId: string;
-	BlockIri: string;
+	blockId: string;
+	blockIri: string;
 	isLocked: boolean;
 	isLockedStatusBy: string;
 	isLockedStatusDate: Date;
@@ -216,7 +216,7 @@ export interface ProjectItemCm
 export interface PrepareCm
 {
 	subProjectId: string;
-	Blocks: Block[];
+	blocks: Block[];
 	edges: Edge[];
 }
 export interface LockCm
@@ -378,7 +378,7 @@ export interface Project
 	projectOwner: string;
 	updatedBy: string;
 	updated: Date;
-	Blocks: Block[];
+	blocks: Block[];
 	edges: Edge[];
 }
 export interface ObjectIdentity
@@ -475,8 +475,8 @@ export interface Connector
 	name: string;
 	type: ConnectorDirection;
 	connectorVisibility: ConnectorVisibility;
-	BlockId: string;
-	BlockIri: string;
+	blockId: string;
+	blockIri: string;
 	isRequired: boolean;
 }
 export interface Attribute
@@ -496,8 +496,8 @@ export interface Attribute
 	regularitySpecified: string;
 	terminalId: string;
 	terminalIri: string;
-	BlockId: string;
-	BlockIri: string;
+	blockId: string;
+	blockIri: string;
 	isLocked: boolean;
 	isLockedStatusBy: string;
 	isLockedStatusDate: Date;

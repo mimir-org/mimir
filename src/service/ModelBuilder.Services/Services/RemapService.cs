@@ -70,7 +70,7 @@ public class RemapService : IRemapService
         {
             Task.Run(() => data.DeconstructAttributes(project)),
             Task.Run(() => data.DeconstructConnections(project)),
-            Task.Run(() => data.Deconstructblocks(project)),
+            Task.Run(() => data.DeconstructBlocks(project)),
             Task.Run(() => data.DeconstructRelations(project)),
             Task.Run(() => data.DeconstructTerminals(project))
         };
@@ -91,7 +91,7 @@ public class RemapService : IRemapService
         var r = new ReplacementId { FromId = project.Id, FromIri = project.Id };
         var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-        project.blocks = RemapBlocks(replacement, project.blocks, project.Connections, remap, false).ToList();
+        project.Blocks = RemapBlocks(replacement, project.Blocks, project.Connections, remap, false).ToList();
         project.Connections = RemapConnections(replacement, project.Connections, remap, false).ToList();
 
         project.Id = replacement.ToIri;
@@ -124,7 +124,7 @@ public class RemapService : IRemapService
         project.Connections = project.Connections.Where(x => connectionsToDelete.All(y => x.Id != y.Id)).ToList();
 
         // Create deep clone of whole project
-        project.blocks = RemapBlocks(replacement, project.blocks, project.Connections, remap, true).ToList();
+        project.Blocks = RemapBlocks(replacement, project.Blocks, project.Connections, remap, true).ToList();
         project.Connections = RemapConnections(replacement, project.Connections, remap, true).ToList();
 
         project.Id = replacement.ToIri;
@@ -161,7 +161,7 @@ public class RemapService : IRemapService
                 remap.Add(blockReplacement.ToId, blockReplacement.FromId);
 
             block.Connectors = RemapConnectors(blockReplacement, block.Connectors, connections, createCopy).ToList();
-            var attr = RemapAttributes(blockReplacement, block.Attributes, createCopy, AttributeParent.block).ToList();
+            var attr = RemapAttributes(blockReplacement, block.Attributes, createCopy, AttributeParent.Block).ToList();
             block.Attributes = attr.Any() ? attr : null;
 
             block.Id = blockReplacement.ToId;
@@ -402,9 +402,9 @@ public class RemapService : IRemapService
                 attribute.ConnectorTerminal = replacement.ToId;
             }
 
-            if (ShouldReplace(attribute.block, replacement.FromId, attribute.block, replacement.FromIri) && parent == AttributeParent.block)
+            if (ShouldReplace(attribute.Block, replacement.FromId, attribute.Block, replacement.FromIri) && parent == AttributeParent.Block)
             {
-                attribute.block = replacement.ToId;
+                attribute.Block = replacement.ToId;
             }
 
             attribute.Id = attributeReplacement.ToId;

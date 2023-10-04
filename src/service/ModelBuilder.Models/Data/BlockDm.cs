@@ -21,7 +21,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
     public string Label { get; set; }
     public string Description { get; set; }
     public Aspect Aspect { get; set; }
-    public BLockType BLockType { get; set; }
+    public BlockType BlockType { get; set; }
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }
@@ -65,7 +65,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
                LibraryType == other.LibraryType &&
                Version == other.Version &&
                Aspect == other.Aspect &&
-               BLockType == other.BLockType &&
+               BlockType == other.BlockType &&
                MainProject == other.MainProject &&
                Symbol == other.Symbol &&
                Purpose == other.Purpose &&
@@ -97,7 +97,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
         hashCode.Add(LibraryType);
         hashCode.Add(Version);
         hashCode.Add((int) Aspect);
-        hashCode.Add(BLockType);
+        hashCode.Add(BlockType);
         hashCode.Add(MainProject);
         hashCode.Add(Symbol);
         hashCode.Add(Purpose);

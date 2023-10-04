@@ -76,24 +76,24 @@ public static class ProjectExtensions
     /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if missing root blocks in rdf file, or bad rdf declaration</exception>
-    public static void Resolveblocks(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+    public static void ResolveBlocks(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-        project.blocks = new List<BlockAm>();
+        project.Blocks = new List<BlockAm>();
 
         // Resolve root blocks
-        var rootblocks = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
+        var rootBlocks = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
 
-        if (rootblocks == null || !rootblocks.Any())
+        if (rootBlocks == null || !rootBlocks.Any())
             throw new MimirorgBadRequestException("Cannot find the root blocks in rdf file.");
 
-        foreach (var n in rootblocks)
+        foreach (var n in rootBlocks)
         {
             var block = new BlockAm();
-            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BLockType.Root, projectData);
-            project.blocks.Add(block);
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Root, projectData);
+            project.Blocks.Add(block);
         }
 
         // Resolve functional system blocks
@@ -104,8 +104,8 @@ public static class ProjectExtensions
         foreach (var n in blocks)
         {
             var block = new BlockAm();
-            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BLockType.Aspect, projectData);
-            project.blocks.Add(block);
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Aspect, projectData);
+            project.Blocks.Add(block);
         }
     }
 

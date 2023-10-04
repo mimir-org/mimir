@@ -34,7 +34,7 @@ public record ProjectData
     /// Deconstruct and flatten blocks
     /// </summary>
     /// <param name="project">Project to be deconstructed</param>
-    public Task Deconstructblocks(ProjectDm project)
+    public Task DeconstructBlocks(ProjectDm project)
     {
         if (project?.Blocks == null || !project.Blocks.Any())
             return Task.CompletedTask;

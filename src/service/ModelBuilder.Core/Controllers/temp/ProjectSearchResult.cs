@@ -21,14 +21,14 @@ namespace Mb.Core.Controllers.temp
                 UpdatedBy = "reidar-liabo@gmail.com",
                 Version = "1.0",
                 Connections = new List<ConnectionCm>(),
-                blocks = CreateDummyblocks(),
+                Blocks = CreateDummyBlocks(),
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Liabø",
                 SubProject = false
             });
         }
 
-        private ICollection<BlockCm> CreateDummyblocks()
+        private ICollection<BlockCm> CreateDummyBlocks()
         {
             var obj = new List<BlockCm>();
 
@@ -38,14 +38,14 @@ namespace Mb.Core.Controllers.temp
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Laibø",
                 Aspect = Aspect.Function,
-                BLockType = BLockType.Aspect,
+                BlockType = BlockType.Aspect,
                 Attributes = new List<AttributeCm>
                 {
                     new AttributeCm
                     {
                         Id = "example.com_hoig64tfd",
                         Name = "Test Attribute",
-                        block = "example.com_3456"
+                        Block = "example.com_3456"
                     }
                 },
                 Connectors = new List<ConnectorCm>
@@ -53,7 +53,7 @@ namespace Mb.Core.Controllers.temp
                     new ConnectorPartOfCm
                     {
                         Id = "example.com_cp123",
-                        block = "example.com_3456",
+                        Block = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fgerde-in",
@@ -62,7 +62,7 @@ namespace Mb.Core.Controllers.temp
                     new ConnectorTerminalCm()
                     {
                         Id = "example.com_cp234",
-                        block = "example.com_3456",
+                        Block = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fge2rde-in",

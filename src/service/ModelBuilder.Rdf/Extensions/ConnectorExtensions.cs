@@ -42,7 +42,7 @@ public static class ConnectorExtensions
                             ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockFromConnection, connection.FromConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockFromConnection, connection.FromConnector);
                         break;
                     case ConnectorDirection.Output:
                         ontologyService.AssertBlock(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id);
@@ -52,7 +52,7 @@ public static class ConnectorExtensions
                             ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockToConnection, connection.ToConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockToConnection, connection.ToConnector);
                         break;
                     case ConnectorDirection.Bidirectional:
                         ontologyService.AssertBlock(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id);
@@ -64,9 +64,9 @@ public static class ConnectorExtensions
                         if (connection != null)
                         {
                             if (flowDirection == DefaultFlowDirection.InputFlow)
-                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockFromConnection, connection.FromConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockFromConnection, connection.FromConnector);
                             else
-                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasblockToConnection, connection.ToConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockToConnection, connection.ToConnector);
                         }
 
                         break;
@@ -114,7 +114,7 @@ public static class ConnectorExtensions
     /// <param name="connectorTerminal">The connectorTerminal to resolve</param>
     /// <param name="ontologyService">Ontology Service</param>
     /// <param name="projectData">Project data</param>
-    /// <param name="blockIri">block IRI</param>
+    /// <param name="blockIri">Block IRI</param>
     /// <param name="iri">The connectorTerminal IRI</param>
     public static void ResolveTerminal(this ConnectorTerminalAm connectorTerminal, IOntologyService ontologyService, ProjectData projectData, string blockIri, string iri)
     {

@@ -25,7 +25,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.block, opt => opt.MapFrom(src => src.Block));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<ConnectorDm, ConnectorAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

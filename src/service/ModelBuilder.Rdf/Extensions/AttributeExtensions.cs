@@ -141,7 +141,7 @@ public static class AttributeExtensions
     {
         #region None Mimir specific data
 
-        attribute.block = block;
+        attribute.Block = block;
         attribute.ConnectorTerminal = connectorTerminal;
 
         attribute.Name = ontologyService.GetValue(iri, Resources.Label);
@@ -190,8 +190,8 @@ public static class AttributeExtensions
 
         attribute.AttributeType = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
-        var allowedUnitblocks = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
-        attribute.Units = allowedUnitblocks.Select(x =>
+        var allowedUnitBlocks = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
+        attribute.Units = allowedUnitBlocks.Select(x =>
         {
             var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
             return new UnitAm

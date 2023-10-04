@@ -20,7 +20,7 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
-            .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.blocks))
+            .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
         CreateMap<ProjectDm, ProjectCm>()
@@ -33,7 +33,7 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
-            .ForMember(dest => dest.blocks, opt => opt.MapFrom(src => src.Blocks))
+            .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
         CreateMap<ProjectDm, ProjectAm>()
@@ -46,7 +46,7 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
             .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
             .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
-            .ForMember(dest => dest.blocks, opt => opt.MapFrom(src => src.Blocks))
+            .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
         CreateMap<ProjectDm, LibrarySubProjectVersion>()

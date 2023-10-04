@@ -17,12 +17,12 @@ public static class ConnectionExtensions
         foreach (var connection in connections)
         {
             //TODO Rewrite
-            //var fromblock = blocks.FirstOrDefault(x => x.Id == connection.FromblockId);
-            //if (fromblock != null)
+            //var fromBlock = blocks.FirstOrDefault(x => x.Id == connection.FromBlockId);
+            //if (fromBlock != null)
             //    continue;
 
-            //var toblock = blocks.FirstOrDefault(x => x.Id == connection.ToblockId);
-            //var toConnector = toblock?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnector);
+            //var toBlock = blocks.FirstOrDefault(x => x.Id == connection.ToBlockId);
+            //var toConnector = toBlock?.Connectors?.FirstOrDefault(x => x.Id == connection.ToConnector);
             //if (toConnector is not RelationAm { RelationType: RelationType.PartOf })
             //    continue;
 
@@ -42,12 +42,12 @@ public static class ConnectionExtensions
         foreach (var connection in connections)
         {
             //TODO Rewrite
-            //var fromblock = blocks.FirstOrDefault(x => x.Id == connection.FromblockId);
-            //if (fromblock == null)
+            //var fromBlock = blocks.FirstOrDefault(x => x.Id == connection.FromBlockId);
+            //if (fromBlock == null)
             //    notConnectedConnections.Add(connection);
 
-            //var toblock = blocks.FirstOrDefault(x => x.Id == connection.ToblockId);
-            //if (toblock == null)
+            //var toBlock = blocks.FirstOrDefault(x => x.Id == connection.ToBlockId);
+            //if (toBlock == null)
             //    notConnectedConnections.Add(connection);
         }
 

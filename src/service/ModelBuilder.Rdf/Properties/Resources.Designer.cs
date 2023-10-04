@@ -213,11 +213,11 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:hasblockFromConnection.
+        ///   Looks up a localized string similar to mimir:hasBlockFromConnection.
         /// </summary>
-        public static string HasblockFromConnection {
+        public static string HasBlockFromConnection {
             get {
-                return ResourceManager.GetString("HasblockFromConnection", resourceCulture);
+                return ResourceManager.GetString("HasBlockFromConnection", resourceCulture);
             }
         }
         
@@ -240,11 +240,11 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:hasblockToConnection.
+        ///   Looks up a localized string similar to mimir:hasBlockToConnection.
         /// </summary>
-        public static string HasblockToConnection {
+        public static string HasBlockToConnection {
             get {
-                return ResourceManager.GetString("HasblockToConnection", resourceCulture);
+                return ResourceManager.GetString("HasBlockToConnection", resourceCulture);
             }
         }
         

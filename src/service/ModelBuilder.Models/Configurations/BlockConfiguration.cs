@@ -18,7 +18,7 @@ public class BlockConfiguration : IEntityTypeConfiguration<BlockDm>
         builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
         builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
         builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>().IsRequired();
-        builder.Property(p => p.BLockType).HasColumnName("BlockType").IsRequired();
+        builder.Property(p => p.BlockType).HasColumnName("BlockType").IsRequired();
         builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
         builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
         builder.Property(p => p.LibraryType).HasColumnName("LibraryType").IsRequired();
