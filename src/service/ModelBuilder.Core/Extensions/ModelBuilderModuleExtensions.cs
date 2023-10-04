@@ -77,7 +77,7 @@ public static class ModelBuilderModuleExtensions
 
         services.AddScoped<ICommonRepository, CommonRepository>();
         services.AddScoped<IProjectRepository, ProjectRepository>();
-        services.AddScoped<IAspectObjectRepository, AspectObjectRepository>();
+        services.AddScoped<IBlockRepository, BlockRepository>();
         services.AddScoped<IConnectionRepository, ConnectionRepository>();
         services.AddScoped<IConnectorRepository, ConnectorRepository>();
         services.AddScoped<IAttributeRepository, AttributeRepository>();
@@ -88,7 +88,7 @@ public static class ModelBuilderModuleExtensions
         services.AddScoped<IModelBuilderProcRepository, ModelBuilderProcRepository>();
 
         services.AddScoped<IProjectService, ProjectService>();
-        services.AddScoped<IAspectObjectService, AspectObjectService>();
+        services.AddScoped<IBlockService, BlockService>();
         services.AddScoped<IConnectorService, ConnectorService>();
         services.AddScoped<ILibraryService, LibraryService>();
         services.AddScoped<ICommonService, CommonService>();
@@ -118,7 +118,7 @@ public static class ModelBuilderModuleExtensions
 
         // Auto-mapper
         var cfg = new MapperConfigurationExpression();
-        cfg.AddProfile(new AspectObjectProfile());
+        cfg.AddProfile(new BlockProfile());
         cfg.AddProfile(new AttributeProfile());
         cfg.AddProfile(new ConnectionProfile());
         cfg.AddProfile(new HandleProfile());

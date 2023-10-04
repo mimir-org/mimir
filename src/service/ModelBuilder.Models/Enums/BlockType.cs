@@ -1,6 +1,6 @@
 namespace Mb.Models.Enums;
 
-public enum AspectObjectType
+public enum BlockType
 {
     Root = 0,
     Aspect = 1

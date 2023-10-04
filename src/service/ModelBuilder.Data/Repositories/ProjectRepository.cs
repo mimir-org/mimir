@@ -25,7 +25,7 @@ namespace Mb.Data.Repositories;
 public class ProjectRepository : GenericRepository<ModelBuilderDbContext, ProjectDm>, IProjectRepository
 {
     private readonly IMapper _mapper;
-    private readonly IAspectObjectRepository _aspectObjectRepository;
+    private readonly IBlockRepository _blockRepository;
     private readonly IConnectorRepository _connectorRepository;
     private readonly IConnectionRepository _connectionRepository;
     private readonly IAttributeRepository _attributeRepository;
@@ -33,12 +33,12 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     private readonly ICacheRepository _cacheRepository;
     private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-    public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IAspectObjectRepository aspectObjectRepository,
+    public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, IBlockRepository blockRepository,
         IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, IConnectorRepository connectorRepository,
         ICacheRepository cacheRepository, IModelBuilderProcRepository modelBuilderProcRepository, IConnectionRepository connectionRepository) : base(dbContext)
     {
         _mapper = mapper;
-        _aspectObjectRepository = aspectObjectRepository;
+        _blockRepository = blockRepository;
         _connectorRepository = connectorRepository;
         _attributeRepository = attributeRepository;
         _databaseConfiguration = databaseConfiguration?.Value;
@@ -75,12 +75,12 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             return null;
 
         project.Connections = _connectionRepository.GetAll().Where(x => x.Project == id).ToList();
-        project.AspectObjects = _aspectObjectRepository.GetAll().Where(x => x.Project == id).ToList();
+        project.Blocks = _blockRepository.GetAll().Where(x => x.Project == id).ToList();
 
-        foreach (var aspectObject in project.AspectObjects)
+        foreach (var block in project.Blocks)
         {
-            aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
-            aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
+            block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Block == block.Id).ToList());
+            block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.Block == block.Id).ToList());
         }
 
         return Task.FromResult(project);
@@ -164,7 +164,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                     .MatchTargetOn(x => x.Id)
                     .Commit(conn);
 
-                _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjectUpdateInsert);
+                _blockRepository.BulkUpsert(bulk, conn, data.BlockUpdateInsert);
                 _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
                 _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
 
@@ -174,8 +174,8 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 // Delete terminals
                 _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
 
-                // Delete aspect objects
-                _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjectDelete);
+                // Delete blocks
+                _blockRepository.BulkDelete(bulk, conn, data.BlockDelete);
 
                 //Delete connectors
                 var connectorsToDelete = new List<ConnectorDm>();
@@ -184,7 +184,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 var connectorFulfilledByDms = new List<ConnectorFulfilledByDm>();
                 var connectorHasLocationDms = new List<ConnectorHasLocationDm>();
 
-                foreach (var item in data.AspectObjectDelete)
+                foreach (var item in data.BlockDelete)
                     connectorsToDelete.AddRange(item.Connectors);
 
                 foreach (var connectorDm in connectorsToDelete)
@@ -254,7 +254,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                     .MatchTargetOn(x => x.Id)
                     .Commit(conn);
 
-                _aspectObjectRepository.BulkUpsert(bulk, conn, data.AspectObjects);
+                _blockRepository.BulkUpsert(bulk, conn, data.Blocks);
                 _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
                 _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
             }
@@ -282,7 +282,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             {
                 _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
                 _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
-                _aspectObjectRepository.BulkDelete(bulk, conn, data.AspectObjects);
+                _blockRepository.BulkDelete(bulk, conn, data.Blocks);
 
                 bulk.Setup<ProjectDm>()
                     .ForCollection(new List<ProjectDm> { project })

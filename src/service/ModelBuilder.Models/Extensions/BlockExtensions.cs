@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Extensions;
 
-public static class AspectObjectExtensions
+public static class BlockExtensions
 {
-    public static AspectObjectDm CalculatePosition(this AspectObjectDm current, AspectObjectDm rootOrigin, PrepareAm prepare)
+    public static BlockDm CalculatePosition(this BlockDm current, BlockDm rootOrigin, PrepareAm prepare)
     {
         if (current == null)
             return null;

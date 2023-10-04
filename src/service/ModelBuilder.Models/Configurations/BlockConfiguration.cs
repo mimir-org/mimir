@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations;
 
-public class AspectObjectConfiguration : IEntityTypeConfiguration<AspectObjectDm>
+public class BlockConfiguration : IEntityTypeConfiguration<BlockDm>
 {
-    public void Configure(EntityTypeBuilder<AspectObjectDm> builder)
+    public void Configure(EntityTypeBuilder<BlockDm> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.ToTable("AspectObject");
+        builder.ToTable("Block");
         builder.HasIndex(x => x.Project).IsUnique(false);
 
         builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
@@ -18,7 +18,7 @@ public class AspectObjectConfiguration : IEntityTypeConfiguration<AspectObjectDm
         builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
         builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
         builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>().IsRequired();
-        builder.Property(p => p.AspectObjectType).HasColumnName("AspectObjectType").IsRequired();
+        builder.Property(p => p.BlockType).HasColumnName("BlockType").IsRequired();
         builder.Property(p => p.Project).HasColumnName("Project").IsRequired();
         builder.Property(p => p.MainProject).HasColumnName("MainProject").IsRequired();
         builder.Property(p => p.LibraryType).HasColumnName("LibraryType").IsRequired();

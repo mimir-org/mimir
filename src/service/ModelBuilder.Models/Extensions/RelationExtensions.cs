@@ -33,8 +33,8 @@
 //                Id = Guid.NewGuid().ToString().ToLower(),
 //                Name = name,
 //                Direction = connectorType,
-//                AspectObjectId = null,
-//                AspectObject = null
+//                BlockId = null,
+//                Block = null
 //            };
 
 //            return await Task.Run(() => relation);

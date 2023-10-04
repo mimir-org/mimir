@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application;
 
-public class AspectObjectAm : IValidatableObject
+public class BlockAm : IValidatableObject
 {
     [Required]
     public string Id { get; set; }
@@ -19,7 +19,7 @@ public class AspectObjectAm : IValidatableObject
     [Required]
     public Aspect Aspect { get; set; }
     [Required]
-    public AspectObjectType AspectObjectType { get; set; }
+    public BlockType BlockType { get; set; }
     [Required]
     public string Project { get; set; }
     [Required]
@@ -50,8 +50,8 @@ public class AspectObjectAm : IValidatableObject
     {
         var validations = new List<ValidationResult>();
 
-        if (string.IsNullOrWhiteSpace(Rds) && AspectObjectType == AspectObjectType.Aspect)
-            validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(AspectObjectType) }));
+        if (string.IsNullOrWhiteSpace(Rds) && BlockType == BlockType.Aspect)
+            validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(BlockType) }));
 
         if (Aspect == Aspect.None)
             validations.Add(new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) }));

@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Repositories;
 
-public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, AspectObjectDm>, IAspectObjectRepository
+public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>, IBlockRepository
 {
     private readonly IConnectorRepository _connectorRepository;
     private readonly IAttributeRepository _attributeRepository;
     private readonly ICommonRepository _commonRepository;
     private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-    public AspectObjectRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
+    public BlockRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(dbContext)
     {
         _connectorRepository = connectorRepository;
         _attributeRepository = attributeRepository;
@@ -29,106 +29,106 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
         _modelBuilderProcRepository = modelBuilderProcRepository;
     }
 
-    public IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> UpdateInsert(ICollection<AspectObjectDm> original, ProjectDm project,
+    public IEnumerable<(BlockDm block, WorkerStatus status)> UpdateInsert(ICollection<BlockDm> original, ProjectDm project,
         string invokedByDomain)
     {
-        if (project?.AspectObjects == null || !project.AspectObjects.Any())
+        if (project?.Blocks == null || !project.Blocks.Any())
             yield break;
 
-        var newAspectObjects = original != null
-            ? project.AspectObjects.Where(x => original.All(y => y.Id != x.Id)).ToList()
-            : new List<AspectObjectDm>();
+        var newBlocks = original != null
+            ? project.Blocks.Where(x => original.All(y => y.Id != x.Id)).ToList()
+            : new List<BlockDm>();
 
-        foreach (var aspectObject in project.AspectObjects)
+        foreach (var block in project.Blocks)
         {
-            if (newAspectObjects.Any(x => x.Id == aspectObject.Id))
+            if (newBlocks.Any(x => x.Id == block.Id))
             {
-                if (aspectObject.Attributes != null)
+                if (block.Attributes != null)
                 {
-                    foreach (var attribute in aspectObject.Attributes)
+                    foreach (var attribute in block.Attributes)
                     {
                         attribute.Units = attribute.Units;
                         _attributeRepository.Attach(attribute, EntityState.Added);
                     }
                 }
 
-                _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Added);
+                _connectorRepository.AttachWithAttributes(block.Connectors, EntityState.Added);
 
-                yield return (aspectObject, WorkerStatus.Create);
-                Attach(aspectObject, EntityState.Added);
+                yield return (block, WorkerStatus.Create);
+                Attach(block, EntityState.Added);
             }
             else
             {
-                if (aspectObject.Attributes != null)
+                if (block.Attributes != null)
                 {
-                    foreach (var attribute in aspectObject.Attributes)
+                    foreach (var attribute in block.Attributes)
                     {
                         _attributeRepository.Attach(attribute, EntityState.Modified);
                     }
                 }
 
-                _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Modified);
-                yield return (aspectObject, WorkerStatus.Update);
-                Attach(aspectObject, EntityState.Modified);
+                _connectorRepository.AttachWithAttributes(block.Connectors, EntityState.Modified);
+                yield return (block, WorkerStatus.Update);
+                Attach(block, EntityState.Modified);
             }
         }
     }
 
-    public IEnumerable<(AspectObjectDm aspectObject, WorkerStatus status)> DeleteAspectObjects(ICollection<AspectObjectDm> delete, string projectId,
+    public IEnumerable<(BlockDm block, WorkerStatus status)> DeleteBlocks(ICollection<BlockDm> delete, string projectId,
         string invokedByDomain)
     {
-        var returnValues = new List<(AspectObjectDm connection, WorkerStatus status)>();
+        var returnValues = new List<(BlockDm connection, WorkerStatus status)>();
 
         if (delete == null || projectId == null || !delete.Any())
             return returnValues;
 
-        foreach (var aspectObject in delete)
+        foreach (var block in delete)
         {
-            _attributeRepository.Attach(aspectObject.Attributes, EntityState.Deleted);
-            _connectorRepository.AttachWithAttributes(aspectObject.Connectors, EntityState.Deleted);
-            Attach(aspectObject, EntityState.Deleted);
+            _attributeRepository.Attach(block.Attributes, EntityState.Deleted);
+            _connectorRepository.AttachWithAttributes(block.Connectors, EntityState.Deleted);
+            Attach(block, EntityState.Deleted);
 
-            returnValues.Add((aspectObject, WorkerStatus.Delete));
+            returnValues.Add((block, WorkerStatus.Delete));
         }
 
         return returnValues;
     }
 
     /// <summary>
-    /// Get complete aspect object
+    /// Get complete block
     /// </summary>
-    /// <param name="id">Aspect object id</param>
-    /// <returns>Complete aspect object</returns>
-    public Task<AspectObjectDm> GetAsyncComplete(string id)
+    /// <param name="id">Block id</param>
+    /// <returns>Complete block</returns>
+    public Task<BlockDm> GetAsyncComplete(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
             throw new MimirorgNullReferenceException("The Id can't be null.");
 
-        var aspectObject = FindBy(x => x.Id == id).FirstOrDefault();
+        var block = FindBy(x => x.Id == id).FirstOrDefault();
 
-        if (aspectObject == null)
-            throw new MimirorgNotFoundException($"The aspect object with id {id} can't be found.");
+        if (block == null)
+            throw new MimirorgNotFoundException($"The block with id {id} can't be found.");
 
-        aspectObject.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.AspectObject == id).ToList());
-        aspectObject.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.AspectObject == aspectObject.Id).ToList());
+        block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Block == id).ToList());
+        block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.Block == block.Id).ToList());
 
-        return Task.FromResult(aspectObject);
+        return Task.FromResult(block);
     }
 
     /// <summary>
-    /// Bulk aspectObject update
+    /// Bulk block update
     /// </summary>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn"></param>
-    /// <param name="aspectObjects">The aspectObjects to be upserted</param>
-    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects)
+    /// <param name="blocks">The blocks to be upserted</param>
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks)
     {
-        if (aspectObjects == null || !aspectObjects.Any())
+        if (blocks == null || !blocks.Any())
             return;
 
-        bulk.Setup<AspectObjectDm>()
-            .ForCollection(aspectObjects)
-            .WithTable("AspectObject")
+        bulk.Setup<BlockDm>()
+            .ForCollection(blocks)
+            .WithTable("Block")
             .AddColumn(x => x.Id)
             .AddColumn(x => x.Rds)
             .AddColumn(x => x.Description)
@@ -147,7 +147,7 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
             .AddColumn(x => x.LibraryType)
             .AddColumn(x => x.Version)
             .AddColumn(x => x.Aspect)
-            .AddColumn(x => x.AspectObjectType)
+            .AddColumn(x => x.BlockType)
             .AddColumn(x => x.MainProject)
             .AddColumn(x => x.Symbol)
             .AddColumn(x => x.Purpose)
@@ -158,19 +158,19 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
     }
 
     /// <summary>
-    /// Bulk delete aspectObjects
+    /// Bulk delete blocks
     /// </summary>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
-    /// <param name="aspectObjects">The aspectObjects to be deleted</param>
-    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AspectObjectDm> aspectObjects)
+    /// <param name="blocks">The blocks to be deleted</param>
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks)
     {
-        if (aspectObjects == null || !aspectObjects.Any())
+        if (blocks == null || !blocks.Any())
             return;
 
-        bulk.Setup<AspectObjectDm>()
-            .ForCollection(aspectObjects)
-            .WithTable("AspectObject")
+        bulk.Setup<BlockDm>()
+            .ForCollection(blocks)
+            .WithTable("Block")
             .AddColumn(x => x.Id)
             .BulkDelete()
             .MatchTargetOn(x => x.Id)
@@ -190,7 +190,7 @@ public class AspectObjectRepository : GenericRepository<ModelBuilderDbContext, A
 
         bulk.Setup<LockDm>()
             .ForCollection(lockDms)
-            .WithTable("AspectObject")
+            .WithTable("Block")
             .AddColumn(x => x.Id)
             .AddColumn(x => x.IsLocked)
             .AddColumn(x => x.IsLockedStatusBy)

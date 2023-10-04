@@ -12,7 +12,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Mb.Core.Controllers.V1;
 
 /// <summary>
-/// Aspect object services
+/// Block services
 /// </summary>
 [Produces("application/json")]
 [Authorize]

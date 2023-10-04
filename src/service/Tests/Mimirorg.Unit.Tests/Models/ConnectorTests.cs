@@ -17,7 +17,7 @@ public class ConnectorTests
             Attributes = null,
             Color = "#ffffff",
             Direction = ConnectorDirection.Input,
-            AspectObject = null,
+            Block = null,
             TerminalType = "https://rdf.runir.com/1234"
         };
     }

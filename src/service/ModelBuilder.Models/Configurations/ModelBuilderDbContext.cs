@@ -8,7 +8,7 @@ namespace Mb.Models.Configurations;
 public class ModelBuilderDbContext : DbContext
 {
     public virtual DbSet<ProjectDm> Projects { get; set; }
-    public virtual DbSet<AspectObjectDm> AspectObjects { get; set; }
+    public virtual DbSet<BlockDm> Blocks { get; set; }
     public virtual DbSet<ConnectionDm> Connections { get; set; }
     public virtual DbSet<AttributeDm> Attributes { get; set; }
     public virtual DbSet<ConnectorDm> Connectors { get; set; }
@@ -38,7 +38,7 @@ public class ModelBuilderDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectConfiguration());
-        modelBuilder.ApplyConfiguration(new AspectObjectConfiguration());
+        modelBuilder.ApplyConfiguration(new BlockConfiguration());
         modelBuilder.ApplyConfiguration(new AttributeConfiguration());
         modelBuilder.ApplyConfiguration(new VersionConfiguration());
     }

@@ -23,21 +23,21 @@ public static class ProjectExtensions
 
         ontologyService.SetBaseUri(new Uri(project.Id));
 
-        ontologyService.AssertAspectObject(project.Id, Resources.Label, project.Name, true);
-        ontologyService.AssertAspectObject(project.Id, Resources.Version, project.Version, true);
-        ontologyService.AssertAspectObject(project.Id, Resources.Type, Resources.Project);
-        ontologyService.AssertAspectObject(project.Id, Resources.Type, Resources.IntegratedObject);
-        ontologyService.AssertAspectObject(project.Id, Resources.Domain, project.Domain, true);
-        ontologyService.AssertAspectObject(project.Id, Resources.HasOwner, project.CreatedBy, true);
+        ontologyService.AssertBlock(project.Id, Resources.Label, project.Name, true);
+        ontologyService.AssertBlock(project.Id, Resources.Version, project.Version, true);
+        ontologyService.AssertBlock(project.Id, Resources.Type, Resources.Project);
+        ontologyService.AssertBlock(project.Id, Resources.Type, Resources.IntegratedObject);
+        ontologyService.AssertBlock(project.Id, Resources.Domain, project.Domain, true);
+        ontologyService.AssertBlock(project.Id, Resources.HasOwner, project.CreatedBy, true);
 
         if (!string.IsNullOrWhiteSpace(project.UpdatedBy))
-            ontologyService.AssertAspectObject(project.Id, Resources.UpdatedBy, project.UpdatedBy, true);
+            ontologyService.AssertBlock(project.Id, Resources.UpdatedBy, project.UpdatedBy, true);
 
         if (project.Updated != null)
-            ontologyService.AssertAspectObject(project.Id, Resources.LastUpdated, ontologyService.CreateLiteralAspectObject($"{project.Updated?.ToString("u")}", Resources.DateTime));
+            ontologyService.AssertBlock(project.Id, Resources.LastUpdated, ontologyService.CreateLiteralBlock($"{project.Updated?.ToString("u")}", Resources.DateTime));
 
         if (!string.IsNullOrEmpty(project.Description))
-            ontologyService.AssertAspectObject(project.Id, Resources.Desc, project.Description, true);
+            ontologyService.AssertBlock(project.Id, Resources.Desc, project.Description, true);
     }
 
     /// <summary>
@@ -69,43 +69,43 @@ public static class ProjectExtensions
     }
 
     /// <summary>
-    /// Resolve project aspect aspectObjects
+    /// Resolve project aspect blocks
     /// </summary>
     /// <param name="project">Extended project</param>
     /// <param name="ontologyService">Ontology service</param>
     /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-    /// <exception cref="MimirorgBadRequestException">Throws if missing root aspectObjects in rdf file, or bad rdf declaration</exception>
-    public static void ResolveAspectObjects(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+    /// <exception cref="MimirorgBadRequestException">Throws if missing root blocks in rdf file, or bad rdf declaration</exception>
+    public static void ResolveBlocks(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-        project.AspectObjects = new List<AspectObjectAm>();
+        project.Blocks = new List<BlockAm>();
 
-        // Resolve root aspectObjects
-        var rootAspectObjects = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
+        // Resolve root blocks
+        var rootBlocks = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
 
-        if (rootAspectObjects == null || !rootAspectObjects.Any())
-            throw new MimirorgBadRequestException("Cannot find the root aspectObjects in rdf file.");
+        if (rootBlocks == null || !rootBlocks.Any())
+            throw new MimirorgBadRequestException("Cannot find the root blocks in rdf file.");
 
-        foreach (var n in rootAspectObjects)
+        foreach (var n in rootBlocks)
         {
-            var aspectObject = new AspectObjectAm();
-            aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Id, AspectObjectType.Root, projectData);
-            project.AspectObjects.Add(aspectObject);
+            var block = new BlockAm();
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Root, projectData);
+            project.Blocks.Add(block);
         }
 
         // Resolve functional system blocks
-        var aspectObjects = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.FSB).Select(t => t.Subject).ToList();
-        if (!aspectObjects.Any())
+        var blocks = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.FSB).Select(t => t.Subject).ToList();
+        if (!blocks.Any())
             return;
 
-        foreach (var n in aspectObjects)
+        foreach (var n in blocks)
         {
-            var aspectObject = new AspectObjectAm();
-            aspectObject.ResolveAspectObject(ontologyService, n.ToString(), project.Id, AspectObjectType.Aspect, projectData);
-            project.AspectObjects.Add(aspectObject);
+            var block = new BlockAm();
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Aspect, projectData);
+            project.Blocks.Add(block);
         }
     }
 

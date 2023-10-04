@@ -32,7 +32,7 @@ public class CooperateService : ICooperateService
         if (editData == null || string.IsNullOrWhiteSpace(projectId))
             return;
 
-        // TODO: Find changed aspectObject and connection based on changed connectorTerminal, attribute etc.
+        // TODO: Find changed block and connection based on changed connectorTerminal, attribute etc.
         var versionObj = new ProjectVersionCm
         {
             ProjectId = projectId,
@@ -40,9 +40,9 @@ public class CooperateService : ICooperateService
         };
         await Task.WhenAll(
             Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
-            Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectUpdate, WorkerStatus.Update, projectId)),
-            Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectDelete, WorkerStatus.Delete, projectId)),
-            Task.Run(() => SendAspectObjectUpdates(editData.AspectObjectCreate, WorkerStatus.Create, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
@@ -54,11 +54,11 @@ public class CooperateService : ICooperateService
         await _webSocketRepository.SendProjectVersionData(version, workerStatus);
     }
 
-    public Task SendAspectObjectUpdates(IReadOnlyCollection<(AspectObjectDm aspectObject, WorkerStatus workerStatus)> aspectObjectMap, string projectId)
+    public Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, string projectId)
     {
-        foreach (var tuple in aspectObjectMap)
+        foreach (var tuple in blockMap)
         {
-            _webSocketRepository.SendAspectObjectData(tuple.aspectObject, projectId, tuple.workerStatus);
+            _webSocketRepository.SendBlockData(tuple.block, projectId, tuple.workerStatus);
         }
 
         return Task.CompletedTask;
@@ -91,20 +91,20 @@ public class CooperateService : ICooperateService
     #region Private methods
 
     /// <summary>
-    /// Send websocket events for changed aspectObjects
+    /// Send websocket events for changed blocks
     /// </summary>
-    /// <param name="aspectObjects"></param>
+    /// <param name="blocks"></param>
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendAspectObjectUpdates(List<AspectObjectDm> aspectObjects, WorkerStatus workerStatus, string projectId)
+    private Task SendBlockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, string projectId)
     {
-        if (aspectObjects == null || string.IsNullOrWhiteSpace(projectId))
+        if (blocks == null || string.IsNullOrWhiteSpace(projectId))
             return Task.CompletedTask;
 
-        foreach (var aspectObject in aspectObjects)
+        foreach (var block in blocks)
         {
-            _webSocketRepository.SendAspectObjectData(aspectObject, projectId, workerStatus);
+            _webSocketRepository.SendBlockData(block, projectId, workerStatus);
         }
 
         return Task.CompletedTask;

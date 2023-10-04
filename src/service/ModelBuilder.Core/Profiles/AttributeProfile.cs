@@ -19,7 +19,7 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Units)))
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<AttributeDm, AttributeCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -30,7 +30,7 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<UnitCm>(src.Units)))
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<QualifierCm>(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<AttributeDm, AttributeAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -41,6 +41,6 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.Units, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<UnitAm>(src.Units)))
             .ForMember(dest => dest.Qualifiers, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<QualifierAm>(src.Qualifiers)))
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
-            .ForMember(dest => dest.AspectObject, opt => opt.MapFrom(src => src.AspectObject));
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
     }
 }

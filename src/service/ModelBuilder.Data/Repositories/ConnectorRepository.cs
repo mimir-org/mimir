@@ -62,7 +62,7 @@ public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Conn
             .AddColumn(x => x.Direction)
             .AddColumn(x => x.Inside)
             .AddColumn(x => x.Outside)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             //Child
             .AddColumn(x => x.Color)
             .AddColumn(x => x.TerminalType)
@@ -89,7 +89,7 @@ public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Conn
             .AddColumn(x => x.Direction)
             .AddColumn(x => x.Inside)
             .AddColumn(x => x.Outside)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -110,7 +110,7 @@ public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Conn
             .AddColumn(x => x.Direction)
             .AddColumn(x => x.Inside)
             .AddColumn(x => x.Outside)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -131,7 +131,7 @@ public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Conn
             .AddColumn(x => x.Direction)
             .AddColumn(x => x.Inside)
             .AddColumn(x => x.Outside)
-            .AddColumn(x => x.AspectObject)
+            .AddColumn(x => x.Block)
             //Operations
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)

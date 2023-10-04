@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Mb.Models.Data;
 
 [Serializable]
-public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObjectDm>
+public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
 {
     public string Id { get; set; }
     public string Version { get; set; }
@@ -21,7 +21,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     public string Label { get; set; }
     public string Description { get; set; }
     public Aspect Aspect { get; set; }
-    public AspectObjectType AspectObjectType { get; set; }
+    public BlockType BlockType { get; set; }
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }
@@ -46,7 +46,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
 
     #region IEquatable
 
-    public bool Equals(AspectObjectDm other)
+    public bool Equals(BlockDm other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -65,7 +65,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
                LibraryType == other.LibraryType &&
                Version == other.Version &&
                Aspect == other.Aspect &&
-               AspectObjectType == other.AspectObjectType &&
+               BlockType == other.BlockType &&
                MainProject == other.MainProject &&
                Symbol == other.Symbol &&
                Purpose == other.Purpose &&
@@ -76,7 +76,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((AspectObjectDm) obj);
+        return obj.GetType() == GetType() && Equals((BlockDm) obj);
     }
 
     public override int GetHashCode()
@@ -97,7 +97,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
         hashCode.Add(LibraryType);
         hashCode.Add(Version);
         hashCode.Add((int) Aspect);
-        hashCode.Add(AspectObjectType);
+        hashCode.Add(BlockType);
         hashCode.Add(MainProject);
         hashCode.Add(Symbol);
         hashCode.Add(Purpose);
@@ -109,7 +109,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
 
     #region IVersionable
 
-    public Validation HasIllegalChanges(AspectObjectDm other)
+    public Validation HasIllegalChanges(BlockDm other)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));
@@ -118,7 +118,7 @@ public class AspectObjectDm : IEquatable<AspectObjectDm>, IVersionable<AspectObj
         return validation;
     }
 
-    public VersionStatus CalculateVersionStatus(AspectObjectDm other, ProjectEditData editData)
+    public VersionStatus CalculateVersionStatus(BlockDm other, ProjectEditData editData)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));

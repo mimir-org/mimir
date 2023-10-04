@@ -6,7 +6,7 @@ const _basePath = `${config.API_BASE_URL}library`;
 
 export const libraryApi = {
   async getAspectObjects(): Promise<AspectObjectLibCm[]> {
-    const r = await client.get<AspectObjectLibCm[]>(_basePath + "/aspectObject");
+    const r = await client.get<AspectObjectLibCm[]>(_basePath + "/block");
     return r.data;
   },
   async getTerminals(): Promise<TerminalLibCm[]> {

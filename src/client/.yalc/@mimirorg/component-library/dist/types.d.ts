@@ -1,4 +1,17 @@
-import { PropsWithChildren, ElementType, ImgHTMLAttributes, ReactElement, ReactNode, Dispatch, SetStateAction, InputHTMLAttributes, HTMLAttributes, Ref, TextareaHTMLAttributes, FormHTMLAttributes } from "react";
+import {
+  PropsWithChildren,
+  ElementType,
+  ImgHTMLAttributes,
+  ReactElement,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+  InputHTMLAttributes,
+  HTMLAttributes,
+  Ref,
+  TextareaHTMLAttributes,
+  FormHTMLAttributes,
+} from "react";
 import * as Separator from "@radix-ui/react-separator";
 import { HandleType, Position } from "react-flow-renderer";
 import { GroupBase, Props as _Props6 } from "react-select";
@@ -8,175 +21,175 @@ import { CheckboxProps } from "@radix-ui/react-checkbox";
 import { RadioGroupItemProps } from "@radix-ui/react-radio-group";
 import { SwitchProps } from "@radix-ui/react-switch";
 interface Accent {
-    base: string;
-    on: string;
-    container?: Accent;
+  base: string;
+  on: string;
+  container?: Accent;
 }
 interface AnimationSystem {
-    fade: Record<string, unknown>;
-    scale: Record<string, unknown>;
-    selectHover: Record<string, unknown>;
-    buttonTap: Record<string, unknown>;
-    checkboxTap: Record<string, unknown>;
-    radioButtonTap: Record<string, unknown>;
-    from: (direction: "top" | "right" | "bottom" | "left", distance?: number) => Record<string, unknown>;
+  fade: Record<string, unknown>;
+  scale: Record<string, unknown>;
+  selectHover: Record<string, unknown>;
+  buttonTap: Record<string, unknown>;
+  checkboxTap: Record<string, unknown>;
+  radioButtonTap: Record<string, unknown>;
+  from: (direction: "top" | "right" | "bottom" | "left", distance?: number) => Record<string, unknown>;
 }
 interface BorderSystem {
-    radius: {
-        small: string;
-        medium: string;
-        large: string;
-        round: string;
-    };
-}
-interface _Palette1 {
-    0: string;
-    10: string;
-    20: string;
-    30: string;
-    40: string;
-    50: string;
-    60: string;
-    70: string;
-    80: string;
-    90: string;
-    95: string;
-    99: string;
-    100: string;
-}
-interface ColorReference {
-    primary: _Palette1;
-    secondary: _Palette1;
-    tertiary: _Palette1;
-    success: _Palette1;
-    error: _Palette1;
-    warning: _Palette1;
-    neutral: _Palette1;
-    neutralVariant: _Palette1;
-    functionAspect: _Palette1;
-    productAspect: _Palette1;
-    locationAspect: _Palette1;
-}
-interface ColorSystem {
-    reference: ColorReference;
-    text: Accent;
-    primary: Accent;
-    secondary: Accent;
-    tertiary: Accent;
-    success: Accent;
-    error: Accent;
-    warning: Accent;
-    outline: Pick<Accent, "base">;
-    background: Pick<Accent, "base" | "on"> & {
-        inverse: Pick<Accent, "base" | "on">;
-    };
-    surface: Pick<Accent, "base" | "on"> & {
-        variant: Pick<Accent, "base" | "on">;
-        inverse: Pick<Accent, "base" | "on">;
-    };
-    shadow: Pick<Accent, "base">;
-    pure: Accent;
-    functionAspect: Accent;
-    productAspect: Accent;
-    locationAspect: Accent;
-}
-interface ScaleSpecification {
-    font: string;
-    size: string | number;
-    weight: string | number;
-    family: string;
-    tracking: number;
-    letterSpacing: string;
-    lineHeight: string | number;
-}
-interface NominalScale {
-    large: ScaleSpecification;
-    medium: ScaleSpecification;
-    small: ScaleSpecification;
-}
-interface QuerySystem {
-    breakpoints: {
-        phoneMax: number;
-        tabletMax: number;
-        laptopMax: number;
-    };
-    phoneAndBelow: () => string;
-    tabletAndBelow: () => string;
-    laptopAndBelow: () => string;
-}
-interface ShadowSystem {
+  radius: {
     small: string;
     medium: string;
     large: string;
-    xl: string;
+    round: string;
+  };
+}
+interface _Palette1 {
+  0: string;
+  10: string;
+  20: string;
+  30: string;
+  40: string;
+  50: string;
+  60: string;
+  70: string;
+  80: string;
+  90: string;
+  95: string;
+  99: string;
+  100: string;
+}
+interface ColorReference {
+  primary: _Palette1;
+  secondary: _Palette1;
+  tertiary: _Palette1;
+  success: _Palette1;
+  error: _Palette1;
+  warning: _Palette1;
+  neutral: _Palette1;
+  neutralVariant: _Palette1;
+  functionAspect: _Palette1;
+  productAspect: _Palette1;
+  locationAspect: _Palette1;
+}
+interface ColorSystem {
+  reference: ColorReference;
+  text: Accent;
+  primary: Accent;
+  secondary: Accent;
+  tertiary: Accent;
+  success: Accent;
+  error: Accent;
+  warning: Accent;
+  outline: Pick<Accent, "base">;
+  background: Pick<Accent, "base" | "on"> & {
+    inverse: Pick<Accent, "base" | "on">;
+  };
+  surface: Pick<Accent, "base" | "on"> & {
+    variant: Pick<Accent, "base" | "on">;
+    inverse: Pick<Accent, "base" | "on">;
+  };
+  shadow: Pick<Accent, "base">;
+  pure: Accent;
+  functionAspect: Accent;
+  productAspect: Accent;
+  locationAspect: Accent;
+}
+interface ScaleSpecification {
+  font: string;
+  size: string | number;
+  weight: string | number;
+  family: string;
+  tracking: number;
+  letterSpacing: string;
+  lineHeight: string | number;
+}
+interface NominalScale {
+  large: ScaleSpecification;
+  medium: ScaleSpecification;
+  small: ScaleSpecification;
+}
+interface QuerySystem {
+  breakpoints: {
+    phoneMax: number;
+    tabletMax: number;
+    laptopMax: number;
+  };
+  phoneAndBelow: () => string;
+  tabletAndBelow: () => string;
+  laptopAndBelow: () => string;
+}
+interface ShadowSystem {
+  small: string;
+  medium: string;
+  large: string;
+  xl: string;
 }
 interface SpacingSystem {
-    unit: number;
-    xs: string;
-    s: string;
-    base: string;
-    l: string;
-    xl: string;
-    xxl: string;
-    xxxl: string;
-    multiple: (scalar: number) => string;
+  unit: number;
+  xs: string;
+  s: string;
+  base: string;
+  l: string;
+  xl: string;
+  xxl: string;
+  xxxl: string;
+  multiple: (scalar: number) => string;
 }
 interface StateSystem {
-    hover: number;
-    focus: number;
-    pressed: number;
-    dragged: number;
-    enabled: number;
-    disabled: number;
+  hover: number;
+  focus: number;
+  pressed: number;
+  dragged: number;
+  enabled: number;
+  disabled: number;
 }
 interface TypefaceReference {
-    brand: string;
-    weights: {
-        bold: number;
-        medium: number;
-        normal: number;
-        light: number;
-    };
+  brand: string;
+  weights: {
+    bold: number;
+    medium: number;
+    normal: number;
+    light: number;
+  };
 }
 interface TypeScaleDimension<T> {
-    base: T;
-    n3: T;
-    n2: T;
-    n1: T;
-    p1: T;
-    p2: T;
-    p3: T;
-    p4: T;
-    p5: T;
-    p6: T;
-    p7: T;
+  base: T;
+  n3: T;
+  n2: T;
+  n1: T;
+  p1: T;
+  p2: T;
+  p3: T;
+  p4: T;
+  p5: T;
+  p6: T;
+  p7: T;
 }
 interface TypeScaleSpecification<T> {
-    size: TypeScaleDimension<T>;
-    lineHeight: TypeScaleDimension<T>;
+  size: TypeScaleDimension<T>;
+  lineHeight: TypeScaleDimension<T>;
 }
 interface TypographyRoles {
-    display: NominalScale;
-    headline: NominalScale;
-    title: NominalScale;
-    body: NominalScale;
-    label: NominalScale;
+  display: NominalScale;
+  headline: NominalScale;
+  title: NominalScale;
+  body: NominalScale;
+  label: NominalScale;
 }
 interface TypographySystem {
-    typeface: TypefaceReference;
-    typeScale: TypeScaleSpecification<number>;
-    typeScaleSystem: TypeScaleSpecification<string>;
-    roles: TypographyRoles;
+  typeface: TypefaceReference;
+  typeScale: TypeScaleSpecification<number>;
+  typeScaleSystem: TypeScaleSpecification<string>;
+  roles: TypographyRoles;
 }
 interface Theme {
-    border: BorderSystem;
-    color: ColorSystem;
-    typography: TypographySystem;
-    shadow: ShadowSystem;
-    spacing: SpacingSystem;
-    state: StateSystem;
-    animation: AnimationSystem;
-    queries: QuerySystem;
+  border: BorderSystem;
+  color: ColorSystem;
+  typography: TypographySystem;
+  shadow: ShadowSystem;
+  spacing: SpacingSystem;
+  state: StateSystem;
+  animation: AnimationSystem;
+  queries: QuerySystem;
 }
 type DisplayType = "display-large" | "display-medium" | "display-small";
 type HeadlineType = "headline-large" | "headline-medium" | "headline-small";
@@ -185,10 +198,10 @@ type BodyType = "body-large" | "body-medium" | "body-small";
 type LabelType = "label-large" | "label-medium" | "label-small";
 export type TextTypes = DisplayType | HeadlineType | TitleType | BodyType | LabelType;
 export interface TextVariant {
-    variant?: TextTypes;
+  variant?: TextTypes;
 }
 interface Props {
-    asChild?: boolean;
+  asChild?: boolean;
 }
 /**
  * A component for including data without displaying it.
@@ -201,92 +214,92 @@ interface Props {
  */
 export const VisuallyHidden: ({ children, asChild }: PropsWithChildren<Props>) => import("react/jsx-runtime").JSX.Element;
 export interface Borders {
-    border?: string | number;
-    borderTop?: string | number;
-    borderLeft?: string | number;
-    borderRight?: string | number;
-    borderBottom?: string | number;
-    borderColor?: string;
-    borderTopColor?: string;
-    borderRightColor?: string;
-    borderBottomColor?: string;
-    borderLeftColor?: string;
-    borderRadius?: string;
+  border?: string | number;
+  borderTop?: string | number;
+  borderLeft?: string | number;
+  borderRight?: string | number;
+  borderBottom?: string | number;
+  borderColor?: string;
+  borderTopColor?: string;
+  borderRightColor?: string;
+  borderBottomColor?: string;
+  borderLeftColor?: string;
+  borderRadius?: string;
 }
 export interface Display {
-    display?: string;
-    overflow?: string;
-    textOverflow?: string;
-    visibility?: string;
-    whiteSpace?: string;
+  display?: string;
+  overflow?: string;
+  textOverflow?: string;
+  visibility?: string;
+  whiteSpace?: string;
 }
 export interface Ellipsis {
-    useEllipsis?: boolean;
-    ellipsisMaxLines?: number;
+  useEllipsis?: boolean;
+  ellipsisMaxLines?: number;
 }
 export interface Flex {
-    flexDirection?: string;
-    flexWrap?: string;
-    justifyContent?: string;
-    alignItems?: string;
-    alignContent?: string;
-    order?: string;
-    flex?: string | number;
-    flexGrow?: string;
-    flexShrink?: string;
-    flexFlow?: string;
-    alignSelf?: string;
-    gap?: string;
+  flexDirection?: string;
+  flexWrap?: string;
+  justifyContent?: string;
+  alignItems?: string;
+  alignContent?: string;
+  order?: string;
+  flex?: string | number;
+  flexGrow?: string;
+  flexShrink?: string;
+  flexFlow?: string;
+  alignSelf?: string;
+  gap?: string;
 }
 export interface Grid {
-    gap?: string;
-    columnGap?: string;
-    rowGap?: string;
-    gridColumn?: string;
-    gridRow?: string;
-    gridAutoFlow?: string;
-    gridAutoColumns?: string;
-    gridAutoRows?: string;
-    gridTemplateColumns?: string;
-    gridTemplateRows?: string;
-    gridTemplateAreas?: string;
-    gridArea?: string;
-    justifyItems?: string;
-    alignItems?: string;
-    placeItems?: string;
-    justifyContent?: string;
-    alignContent?: string;
-    placeContent?: string;
-    justifySelf?: string;
-    alignSelf?: string;
-    placeSelf?: string;
+  gap?: string;
+  columnGap?: string;
+  rowGap?: string;
+  gridColumn?: string;
+  gridRow?: string;
+  gridAutoFlow?: string;
+  gridAutoColumns?: string;
+  gridAutoRows?: string;
+  gridTemplateColumns?: string;
+  gridTemplateRows?: string;
+  gridTemplateAreas?: string;
+  gridArea?: string;
+  justifyItems?: string;
+  alignItems?: string;
+  placeItems?: string;
+  justifyContent?: string;
+  alignContent?: string;
+  placeContent?: string;
+  justifySelf?: string;
+  alignSelf?: string;
+  placeSelf?: string;
 }
 export interface Palette {
-    color?: string;
-    bgColor?: string;
+  color?: string;
+  bgColor?: string;
 }
 export interface Polymorphic<T extends ElementType> {
-    as?: T;
+  as?: T;
 }
 export interface Positions {
-    position?: string;
-    zIndex?: string | number;
-    top?: string | number;
-    right?: string | number;
-    bottom?: string | number;
-    left?: string | number;
+  position?: string;
+  zIndex?: string | number;
+  top?: string | number;
+  right?: string | number;
+  bottom?: string | number;
+  left?: string | number;
 }
 export interface Shadows {
-    boxShadow?: string;
+  boxShadow?: string;
 }
 export interface Sizing {
-    width?: string;
-    maxWidth?: string;
-    minWidth?: string;
-    height?: string;
-    maxHeight?: string;
-    minHeight?: string;
-    boxSizing?: string;
+  width?: string;
+  maxWidth?: string;
+  minWidth?: string;
+  height?: string;
+  maxHeight?: string;
+  minHeight?: string;
+  boxSizing?: string;
 }
 /**
  * m - margin
@@ -301,44 +314,50 @@ export interface Sizing {
  * y - top and bottom
  */
 export interface Spacing {
-    m?: string;
-    mt?: string;
-    mr?: string;
-    mb?: string;
-    ml?: string;
-    mx?: string;
-    my?: string;
-    p?: string;
-    pt?: string;
-    pr?: string;
-    pb?: string;
-    pl?: string;
-    px?: string;
-    py?: string;
+  m?: string;
+  mt?: string;
+  mr?: string;
+  mb?: string;
+  ml?: string;
+  mx?: string;
+  my?: string;
+  p?: string;
+  pt?: string;
+  pr?: string;
+  pb?: string;
+  pl?: string;
+  px?: string;
+  py?: string;
 }
 export interface Spacings {
-    spacing?: Spacing;
+  spacing?: Spacing;
 }
 export interface Typography {
-    font?: string;
-    fontFamily?: string;
-    fontSize?: string;
-    fontStyle?: string;
-    fontWeight?: string | number;
-    letterSpacing?: string;
-    lineHeight?: string;
-    textAlign?: string;
-    textTransform?: string;
-    wordBreak?: string;
+  font?: string;
+  fontFamily?: string;
+  fontSize?: string;
+  fontStyle?: string;
+  fontWeight?: string | number;
+  letterSpacing?: string;
+  lineHeight?: string;
+  textAlign?: string;
+  textTransform?: string;
+  wordBreak?: string;
 }
 /**
  * A simple wrapper over the img-tag
  * Has a default width and height of 1em
  * @param size sets height and width of icon
  */
-export const Icon: import("styled-components").StyledComponent<"img", import("styled-components").DefaultTheme, ImgHTMLAttributes<HTMLImageElement> & Sizing & {
-    size?: number | undefined;
-}, never>;
+export const Icon: import("styled-components").StyledComponent<
+  "img",
+  import("styled-components").DefaultTheme,
+  ImgHTMLAttributes<HTMLImageElement> &
+    Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
 /**
  * A polymorphic text component for non-heading text
  *
@@ -349,9 +368,33 @@ export const Icon: import("styled-components").StyledComponent<"img", import("st
  * @param color overrides default color of the text element
  * @constructor
  */
-export const Text: import("styled-components").StyledComponent<"p", import("styled-components").DefaultTheme, Spacings & Sizing & Pick<Palette, "color" | "bgColor"> & Pick<Display, "display" | "whiteSpace" | "overflow" | "textOverflow" | "visibility"> & Pick<Typography, "font" | "fontSize" | "fontWeight" | "textAlign" | "textTransform" | "wordBreak" | "fontFamily" | "fontStyle" | "letterSpacing" | "lineHeight"> & Polymorphic<ElementType> & TextVariant & Ellipsis & {
-    htmlFor?: string | undefined;
-}, never>;
+export const Text: import("styled-components").StyledComponent<
+  "p",
+  import("styled-components").DefaultTheme,
+  Spacings &
+    Sizing &
+    Pick<Palette, "color" | "bgColor"> &
+    Pick<Display, "display" | "whiteSpace" | "overflow" | "textOverflow" | "visibility"> &
+    Pick<
+      Typography,
+      | "font"
+      | "fontSize"
+      | "fontWeight"
+      | "textAlign"
+      | "textTransform"
+      | "wordBreak"
+      | "fontFamily"
+      | "fontStyle"
+      | "letterSpacing"
+      | "lineHeight"
+    > &
+    Polymorphic<ElementType> &
+    TextVariant &
+    Ellipsis & {
+      htmlFor?: string | undefined;
+    },
+  never
+>;
 /**
  * A button with different variants.
  * A typical use case is in forms or navigation purposes.
@@ -360,23 +403,29 @@ export const Text: import("styled-components").StyledComponent<"p", import("styl
  * @param props Typical button properties as sizing, spacing, icons and variants.
  * @constructor
  */
-export const Button: import("react").ForwardRefExoticComponent<import("index").Flex & import("index").Sizing & import("index").Spacings & import("index").Polymorphic<import("react").ElementType> & import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: "text" | "filled" | "outlined" | "round" | undefined;
-    iconPlacement?: "right" | "left" | undefined;
-    iconOnly?: boolean | undefined;
-    buttonColor?: import("components/atoms/buttons/Button.styled").ButtonColor | undefined;
-} & {
-    children: ReactNode;
-    icon?: string | ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
-    iconPlacement?: "right" | "left" | undefined;
-    iconOnly?: boolean | undefined;
-    textVariant?: TextTypes | undefined;
-    buttonColor?: "primary" | "success" | "warning" | "error" | undefined;
-} & import("react").RefAttributes<HTMLButtonElement>>;
+export const Button: import("react").ForwardRefExoticComponent<
+  import("index").Flex &
+    import("index").Sizing &
+    import("index").Spacings &
+    import("index").Polymorphic<import("react").ElementType> &
+    import("react").ButtonHTMLAttributes<HTMLButtonElement> & {
+      variant?: "text" | "filled" | "outlined" | "round" | undefined;
+      iconPlacement?: "right" | "left" | undefined;
+      iconOnly?: boolean | undefined;
+      buttonColor?: import("components/atoms/buttons/Button.styled").ButtonColor | undefined;
+    } & {
+      children: ReactNode;
+      icon?: string | ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
+      iconPlacement?: "right" | "left" | undefined;
+      iconOnly?: boolean | undefined;
+      textVariant?: TextTypes | undefined;
+      buttonColor?: "primary" | "success" | "warning" | "error" | undefined;
+    } & import("react").RefAttributes<HTMLButtonElement>
+>;
 interface ConditionalWrapperProps {
-    condition?: boolean;
-    wrapper: (children: ReactElement) => ReactElement;
-    children: ReactElement;
+  condition?: boolean;
+  wrapper: (children: ReactElement) => ReactElement;
+  children: ReactElement;
 }
 /**
  * Component which facilities conditional wrapping of its children
@@ -392,11 +441,15 @@ interface ConditionalWrapperProps {
  * @param children component that will be wrapped if condition equals true
  * @constructor
  */
-export const ConditionalWrapper: ({ condition, wrapper, children }: ConditionalWrapperProps) => ReactElement<any, string | import("react").JSXElementConstructor<any>>;
+export const ConditionalWrapper: ({
+  condition,
+  wrapper,
+  children,
+}: ConditionalWrapperProps) => ReactElement<any, string | import("react").JSXElementConstructor<any>>;
 interface DividerProps {
-    orientation?: "horizontal" | "vertical";
-    decorative?: boolean;
-    color?: string;
+  orientation?: "horizontal" | "vertical";
+  decorative?: boolean;
+  color?: string;
 }
 /**
  * A simple divider for creating a clear separation between content
@@ -404,302 +457,707 @@ interface DividerProps {
  * See documentation link below for details.
  * @see https://www.radix-ui.com/docs/primitives/components/separator
  */
-export const Divider: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<Separator.SeparatorProps & import("react").RefAttributes<HTMLDivElement>>, import("styled-components").DefaultTheme, DividerProps, never>;
+export const Divider: import("styled-components").StyledComponent<
+  import("react").ForwardRefExoticComponent<Separator.SeparatorProps & import("react").RefAttributes<HTMLDivElement>>,
+  import("styled-components").DefaultTheme,
+  DividerProps,
+  never
+>;
 interface ApplicationSetting {
-    language: LanguageSetting;
+  language: LanguageSetting;
 }
 interface FlowHandle {
-    id: string;
-    connectorId: string;
-    position: Position;
-    handleType: HandleType;
-    side: "inside" | "outside";
-    hidden: boolean;
-    visible: boolean;
-    className: string;
-    color: string;
+  id: string;
+  connectorId: string;
+  position: Position;
+  handleType: HandleType;
+  side: "inside" | "outside";
+  hidden: boolean;
+  visible: boolean;
+  className: string;
+  color: string;
 }
 interface FlowConnector {
-    id: string;
-    handles: FlowHandle[];
-    hidden: boolean;
-    visible: boolean;
-    direction: ConnectorDirection;
+  id: string;
+  handles: FlowHandle[];
+  hidden: boolean;
+  visible: boolean;
+  direction: ConnectorDirection;
 }
 enum ConnectorDirection {
-    Input = 0,
-    Output = 1,
-    Bidirectional = 2
+  Input = 0,
+  Output = 1,
+  Bidirectional = 2,
 }
 interface Language {
-    code: string;
-    name: string;
+  code: string;
+  name: string;
 }
 interface LanguageSetting {
-    current: string;
-    languages: Language[];
+  current: string;
+  languages: Language[];
 }
-export const FunctionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const FunctionFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LocationIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LocationFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ProductIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ProductFilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CheckmarkIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CheckmarkCheckedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CheckmarkEmptyIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorBidirectionalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorDownstreamIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorLocationIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorProductIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorTreeviewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorUpstreamIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ConnectorVerticalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const DeleteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const DeleteActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const DeleteDisabledIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const AvatarBackgroundIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const BlockViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const BlockViewActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const DarkModeIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const FilterIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const FilterActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const FitViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const HorizontalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LightModeIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LogoutIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const NotificationsIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const SettingsIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const TreeViewIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const TreeViewActiveIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const VerticalIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LibraryIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LockIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LockClosedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LockOpenIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const LogoIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ToogleDownIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ToogleUpIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ExpandedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ExpandedWhiteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CollapseIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CollapseAccordionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CollapseAccordionNestedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const CollapseWhiteIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ExpandedAccordionIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
-export const ExpandedAccordionNestedIcon: import("styled-components").StyledComponent<import("react").FunctionComponent<import("react").SVGProps<SVGSVGElement> & {
-    title?: string | undefined;
-}>, import("styled-components").DefaultTheme, import("react").SVGProps<SVGSVGElement> & import("index").Sizing & {
-    size?: number | undefined;
-}, never>;
+export const FunctionIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const FunctionFilterIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LocationIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LocationFilterIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ProductIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ProductFilterIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CheckmarkIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CheckmarkCheckedIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CheckmarkEmptyIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorBidirectionalIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorDownstreamIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorLocationIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorProductIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorTreeviewIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorUpstreamIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ConnectorVerticalIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const DeleteIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const DeleteActiveIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const DeleteDisabledIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const AvatarBackgroundIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const BlockViewIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const BlockViewActiveIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const DarkModeIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const FilterIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const FilterActiveIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const FitViewIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const HorizontalIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LightModeIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LogoutIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const NotificationsIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const SettingsIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const TreeViewIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const TreeViewActiveIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const VerticalIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LibraryIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LockIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LockClosedIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LockOpenIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const LogoIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ToogleDownIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ToogleUpIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ExpandedIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ExpandedWhiteIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CollapseIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CollapseAccordionIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CollapseAccordionNestedIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const CollapseWhiteIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ExpandedAccordionIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
+export const ExpandedAccordionNestedIcon: import("styled-components").StyledComponent<
+  import("react").FunctionComponent<
+    import("react").SVGProps<SVGSVGElement> & {
+      title?: string | undefined;
+    }
+  >,
+  import("styled-components").DefaultTheme,
+  import("react").SVGProps<SVGSVGElement> &
+    import("index").Sizing & {
+      size?: number | undefined;
+    },
+  never
+>;
 type FlowHandleProps = {
-    hidden?: boolean;
-    visible?: boolean;
-    connectorWidth?: number;
-    connectorHeight?: number;
+  hidden?: boolean;
+  visible?: boolean;
+  connectorWidth?: number;
+  connectorHeight?: number;
 };
 type FlowConnectorComponentProps = FlowHandleProps & {
-    connectors: FlowConnector[];
-    direction: ConnectorDirection;
-    side: "inside" | "outside";
-    storybook?: boolean;
+  connectors: FlowConnector[];
+  direction: ConnectorDirection;
+  side: "inside" | "outside";
+  storybook?: boolean;
 };
 /**
  * A flow connector collection component.
@@ -712,21 +1170,21 @@ type FlowConnectorComponentProps = FlowHandleProps & {
  * @constructor
  */
 export const FlowConnectorComponent: {
-    (props: FlowConnectorComponentProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultProps: {
-        connectors: FlowConnector[];
-        direction: ConnectorDirection;
-        storybook: boolean;
-        connectorWidth: number;
-        connectorHeight: number;
-    };
+  (props: FlowConnectorComponentProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
+  defaultProps: {
+    connectors: FlowConnector[];
+    direction: ConnectorDirection;
+    storybook: boolean;
+    connectorWidth: number;
+    connectorHeight: number;
+  };
 };
 export const SymbolBox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 export const LogoBox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
 interface _Props1 {
-    source: string;
-    text: string;
+  source: string;
+  text: string;
 }
 export const Symbol: ({ source, text }: _Props1) => import("react/jsx-runtime").JSX.Element | null;
 /**
@@ -780,30 +1238,37 @@ export const forceDate: (value: Date | string | null | undefined) => Date | unde
  */
 export const isdateBetween: (current: Date, from: Date | undefined, to: Date | undefined) => boolean;
 type ResizablePanelContainerProps = Spacings & {
-    maxTrigger?: boolean;
+  maxTrigger?: boolean;
 };
 type ResizablePanelProps = ResizablePanelContainerProps & {
-    children: ReactNode;
-    duration: number;
-    maxHeight?: number;
+  children: ReactNode;
+  duration: number;
+  maxHeight?: number;
 };
 export const ResizablePanel: ({ children, duration, maxHeight }: ResizablePanelProps) => import("react/jsx-runtime").JSX.Element;
 type MotionPanelProps = ResizablePanelProps & {
-    header: ReactNode;
-    open: boolean;
+  header: ReactNode;
+  open: boolean;
 };
 export const MotionPanel: {
-    (props: MotionPanelProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
+  (props: MotionPanelProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
 };
 /**
  * Removes styles from react router links.
  * Useful when wrapping other elements with navigation semantics.
  */
-export const PlainLink: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<import("react-router-dom").LinkProps & import("react").RefAttributes<HTMLAnchorElement>>, import("styled-components").DefaultTheme, Sizing, never>;
+export const PlainLink: import("styled-components").StyledComponent<
+  import("react").ForwardRefExoticComponent<
+    import("react-router-dom").LinkProps & import("react").RefAttributes<HTMLAnchorElement>
+  >,
+  import("styled-components").DefaultTheme,
+  Sizing,
+  never
+>;
 interface SpinnerProps {
-    variant?: "scale" | "circle";
-    disabled: boolean;
+  variant?: "scale" | "circle";
+  disabled: boolean;
 }
 /**
  * Component the draws a spinner on screen
@@ -813,12 +1278,12 @@ interface SpinnerProps {
  * @constructor
  */
 export const Spinner: {
-    ({ variant, disabled }: SpinnerProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultValues: {
-        variant: string;
-        disabled: boolean;
-    };
+  ({ variant, disabled }: SpinnerProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
+  defaultValues: {
+    variant: string;
+    disabled: boolean;
+  };
 };
 /**
  * A polymorphic component for heading elements
@@ -832,7 +1297,19 @@ export const Spinner: {
  * @param ellipsisMaxLines set how many lines to display before truncation
  * @constructor
  */
-export const Heading: import("styled-components").StyledComponent<"h1", import("styled-components").DefaultTheme, Spacings & Sizing & Pick<Palette, "color"> & Pick<Display, "display" | "whiteSpace"> & Pick<Typography, "font" | "fontSize" | "fontWeight" | "textAlign" | "textTransform" | "wordBreak"> & Polymorphic<ElementType> & TextVariant & Ellipsis, never>;
+export const Heading: import("styled-components").StyledComponent<
+  "h1",
+  import("styled-components").DefaultTheme,
+  Spacings &
+    Sizing &
+    Pick<Palette, "color"> &
+    Pick<Display, "display" | "whiteSpace"> &
+    Pick<Typography, "font" | "fontSize" | "fontWeight" | "textAlign" | "textTransform" | "wordBreak"> &
+    Polymorphic<ElementType> &
+    TextVariant &
+    Ellipsis,
+  never
+>;
 /**
  * A generic tooltip for describing focusable elements.
  * Handles focus management, collision detection, a11y tags and more.
@@ -849,22 +1326,24 @@ export const Heading: import("styled-components").StyledComponent<"h1", import("
  * @param delegated receives sizing props for overriding default styles
  * @constructor
  */
-export const Tooltip: import("react").ForwardRefExoticComponent<import("index").Sizing & {
+export const Tooltip: import("react").ForwardRefExoticComponent<
+  import("index").Sizing & {
     content: ReactNode;
     placement?: "top" | "right" | "bottom" | "left" | undefined;
     align?: "center" | "end" | "start" | undefined;
     delay?: number | undefined;
     offset?: number | undefined;
     asChild?: boolean | undefined;
-} & {
+  } & {
     children?: ReactNode;
-} & import("react").RefAttributes<HTMLDivElement>>;
+  } & import("react").RefAttributes<HTMLDivElement>
+>;
 interface IApplicationContext {
-    setting: ApplicationSetting;
-    setSetting: Dispatch<SetStateAction<ApplicationSetting>>;
+  setting: ApplicationSetting;
+  setSetting: Dispatch<SetStateAction<ApplicationSetting>>;
 }
 interface SettingProviderProps {
-    children?: ReactNode;
+  children?: ReactNode;
 }
 export const SettingProvider: ({ children }: SettingProviderProps) => import("react/jsx-runtime").JSX.Element;
 export const useSetting: () => IApplicationContext;
@@ -904,7 +1383,7 @@ export function lsReadValue<T>(key: string): T;
  */
 export function lsSaveValue<T>(key: string, value: T): void;
 interface MimirorgThemeProviderProps {
-    theme?: "light" | "dark";
+  theme?: "light" | "dark";
 }
 /**
  * Custom theme provider which exposes a namespaced theme.
@@ -914,7 +1393,10 @@ interface MimirorgThemeProviderProps {
  * @param children
  * @constructor
  */
-export const MimirorgThemeProvider: ({ theme, children }: PropsWithChildren<MimirorgThemeProviderProps>) => import("react/jsx-runtime").JSX.Element;
+export const MimirorgThemeProvider: ({
+  theme,
+  children,
+}: PropsWithChildren<MimirorgThemeProviderProps>) => import("react/jsx-runtime").JSX.Element;
 /**
  * A polymorphic layout component for a box element.
  *
@@ -925,22 +1407,29 @@ export const MimirorgThemeProvider: ({ theme, children }: PropsWithChildren<Mimi
  * @param props can receive all the css properties related to the aforementioned interfaces: palette, sizing etc...
  * @constructor
  */
-export const Box: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, Display & Positions & Flex & Grid & Palette & Sizing & Spacings & Borders & Shadows & Polymorphic<ElementType>, never>;
+export const Box: import("styled-components").StyledComponent<
+  "div",
+  import("styled-components").DefaultTheme,
+  Display & Positions & Flex & Grid & Palette & Sizing & Spacings & Borders & Shadows & Polymorphic<ElementType>,
+  never
+>;
 /**
  * An animation wrapper for the Box component
  *
  * @see https://github.com/framer/motion
  */
-export const MotionBox: import("framer-motion").CustomDomComponent<{
+export const MotionBox: import("framer-motion").CustomDomComponent<
+  {
     [x: string]: any;
     [x: number]: any;
     [x: symbol]: any;
-} & {
+  } & {
     theme?: import("styled-components").DefaultTheme | undefined;
-} & {
+  } & {
     as?: string | import("react").ComponentType<any> | undefined;
     forwardedAs?: string | import("react").ComponentType<any> | undefined;
-}>;
+  }
+>;
 /**
  * A polymorphic layout component for flexbox behaviour.
  *
@@ -948,22 +1437,29 @@ export const MotionBox: import("framer-motion").CustomDomComponent<{
  * @param props can receive all standard css flexbox properties
  * @constructor
  */
-export const Flexbox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, Flex & Polymorphic<ElementType>, never>;
+export const Flexbox: import("styled-components").StyledComponent<
+  "div",
+  import("styled-components").DefaultTheme,
+  Flex & Polymorphic<ElementType>,
+  never
+>;
 /**
  * An animation wrapper for the Flexbox component
  *
  * @see https://github.com/framer/motion
  */
-export const MotionFlexbox: import("framer-motion").CustomDomComponent<{
+export const MotionFlexbox: import("framer-motion").CustomDomComponent<
+  {
     [x: string]: any;
     [x: number]: any;
     [x: symbol]: any;
-} & {
+  } & {
     theme?: import("styled-components").DefaultTheme | undefined;
-} & {
+  } & {
     as?: string | import("react").ComponentType<any> | undefined;
     forwardedAs?: string | import("react").ComponentType<any> | undefined;
-}>;
+  }
+>;
 /**
  * A polymorphic layout component for grid behaviour.
  *
@@ -971,45 +1467,59 @@ export const MotionFlexbox: import("framer-motion").CustomDomComponent<{
  * @param props can receive all standard css grid properties
  * @constructor
  */
-export const Gridbox: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, Grid & Polymorphic<ElementType>, never>;
+export const Gridbox: import("styled-components").StyledComponent<
+  "div",
+  import("styled-components").DefaultTheme,
+  Grid & Polymorphic<ElementType>,
+  never
+>;
 /**
  * An animation wrapper for the Grid component
  *
  * @see https://github.com/framer/motion
  */
-export const MotionGridbox: import("framer-motion").CustomDomComponent<{
+export const MotionGridbox: import("framer-motion").CustomDomComponent<
+  {
     [x: string]: any;
     [x: number]: any;
     [x: symbol]: any;
-} & {
+  } & {
     theme?: import("styled-components").DefaultTheme | undefined;
-} & {
+  } & {
     as?: string | import("react").ComponentType<any> | undefined;
     forwardedAs?: string | import("react").ComponentType<any> | undefined;
-}>;
+  }
+>;
 export interface FileInfo {
-    id: number;
-    fileName: string;
-    fileSize: number;
-    file: string | null;
-    contentType: string;
-    description: string;
+  id: number;
+  fileName: string;
+  fileSize: number;
+  file: string | null;
+  contentType: string;
+  description: string;
 }
 /**
  * A simple wrapper over the input-tag, with styling that follows library conventions.
  */
-export const Input: import("react").ForwardRefExoticComponent<InputHTMLAttributes<HTMLInputElement> & Omit<Sizing, "boxSizing"> & {
-    icon?: string | ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
-    iconPlacement?: "right" | "left" | undefined;
-} & import("react").RefAttributes<HTMLInputElement>>;
+export const Input: import("react").ForwardRefExoticComponent<
+  InputHTMLAttributes<HTMLInputElement> &
+    Omit<Sizing, "boxSizing"> & {
+      icon?: string | ReactElement<any, string | import("react").JSXElementConstructor<any>> | undefined;
+      iconPlacement?: "right" | "left" | undefined;
+    } & import("react").RefAttributes<HTMLInputElement>
+>;
 export type CalendarVariant = "standard" | "compact";
-type CalendarComponentContainerProps = Flex & Sizing & Spacings & Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
+type CalendarComponentContainerProps = Flex &
+  Sizing &
+  Spacings &
+  Omit<HTMLAttributes<HTMLDivElement>, "onChange"> & {
     variant?: CalendarVariant;
-};
+  };
 export type SelectVariant = "standard" | "compact";
-interface SelectProps<Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>> extends _Props6<Option, IsMulti, Group> {
-    variant?: SelectVariant;
-    selectRef?: Ref<ReactSelectType<Option, IsMulti, Group>>;
+interface SelectProps<Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>
+  extends _Props6<Option, IsMulti, Group> {
+  variant?: SelectVariant;
+  selectRef?: Ref<ReactSelectType<Option, IsMulti, Group>>;
 }
 /**
  * Select component built on top of react-select. Offers a generic api to allow for using almost any data-structure as options.
@@ -1021,22 +1531,23 @@ interface SelectProps<Option, IsMulti extends boolean = false, Group extends Gro
  * @constructor
  * @param props takes all react-select props in addition to variant (styling) and selectRef (reference by prop)
  */
-export const Select: <Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>(props: SelectProps<Option, IsMulti, Group>) => import("react/jsx-runtime").JSX.Element;
+export const Select: <Option, IsMulti extends boolean = false, Group extends GroupBase<Option> = GroupBase<Option>>(
+  props: SelectProps<Option, IsMulti, Group>
+) => import("react/jsx-runtime").JSX.Element;
 interface DialogDescriptionProps {
-    children: ReactNode;
-    hide?: boolean;
+  children: ReactNode;
+  hide?: boolean;
 }
 export const DialogDescription: ({ children, hide }: DialogDescriptionProps) => import("react/jsx-runtime").JSX.Element;
-export const DialogExit: ({ closeText }: {
-    closeText?: string | undefined;
-}) => import("react/jsx-runtime").JSX.Element;
+export const DialogExit: ({ closeText }: { closeText?: string | undefined }) => import("react/jsx-runtime").JSX.Element;
 interface DialogTitleProps {
-    children: ReactNode;
-    hide?: boolean;
+  children: ReactNode;
+  hide?: boolean;
 }
 export const DialogTitle: ({ children, hide }: DialogTitleProps) => import("react/jsx-runtime").JSX.Element;
 type DialogContentProps = Sizing & Flex;
-type DialogProps = Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> & DialogContentProps & {
+type DialogProps = Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> &
+  DialogContentProps & {
     children?: ReactNode;
     content: ReactNode;
     title: string;
@@ -1044,7 +1555,7 @@ type DialogProps = Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> & 
     hideTitle?: boolean;
     hideDescription?: boolean;
     closeText?: string;
-};
+  };
 /**
  * Component which is overlaid the primary window, rendering the content underneath inert.
  * Can operate in both a controlled and uncontrolled mode by utilizing open and onOpenChange properties.
@@ -1064,42 +1575,56 @@ type DialogProps = Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> & 
  * @param delegated receives sizing and flexbox props for overriding default styles
  * @constructor
  */
-export const Dialog: import("react").ForwardRefExoticComponent<Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> & import("index").Sizing & import("index").Flex & {
-    children?: ReactNode;
-    content: ReactNode;
-    title: string;
-    description?: string | undefined;
-    hideTitle?: boolean | undefined;
-    hideDescription?: boolean | undefined;
-    closeText?: string | undefined;
-} & import("react").RefAttributes<HTMLButtonElement>>;
-export const Textarea: import("styled-components").StyledComponent<"textarea", import("styled-components").DefaultTheme, TextareaHTMLAttributes<HTMLTextAreaElement> & Sizing, never>;
+export const Dialog: import("react").ForwardRefExoticComponent<
+  Pick<DialogPrimitive.DialogProps, "open" | "onOpenChange"> &
+    import("index").Sizing &
+    import("index").Flex & {
+      children?: ReactNode;
+      content: ReactNode;
+      title: string;
+      description?: string | undefined;
+      hideTitle?: boolean | undefined;
+      hideDescription?: boolean | undefined;
+      closeText?: string | undefined;
+    } & import("react").RefAttributes<HTMLButtonElement>
+>;
+export const Textarea: import("styled-components").StyledComponent<
+  "textarea",
+  import("styled-components").DefaultTheme,
+  TextareaHTMLAttributes<HTMLTextAreaElement> & Sizing,
+  never
+>;
 interface _Props2 {
-    value: FileInfo[];
-    onChange?: (files: FileInfo[]) => void;
-    placeholder?: string;
-    tooltip?: string;
-    buttonText?: string;
-    disabled?: boolean;
+  value: FileInfo[];
+  onChange?: (files: FileInfo[]) => void;
+  placeholder?: string;
+  tooltip?: string;
+  buttonText?: string;
+  disabled?: boolean;
 }
 export const FileComponent: import("react").ForwardRefExoticComponent<_Props2 & import("react").RefAttributes<HTMLDivElement>>;
 /**
  * A simple wrapper around form to control general form layout
  */
-export const Form: import("styled-components").StyledComponent<"form", import("styled-components").DefaultTheme, FormHTMLAttributes<HTMLFormElement> & Flex, never>;
+export const Form: import("styled-components").StyledComponent<
+  "form",
+  import("styled-components").DefaultTheme,
+  FormHTMLAttributes<HTMLFormElement> & Flex,
+  never
+>;
 interface FormErrorBannerProps {
-    children?: ReactNode;
+  children?: ReactNode;
 }
 /**
  * Banner for displaying global error information in forms
  */
 export const FormErrorBanner: ({ children }: FormErrorBannerProps) => import("react/jsx-runtime").JSX.Element;
 interface FormFieldProps {
-    label?: string;
-    error?: {
-        message?: string;
-    };
-    indent?: boolean;
+  label?: string;
+  error?: {
+    message?: string;
+  };
+  indent?: boolean;
 }
 /**
  * A component for wrapping form inputs with an error message and/or a label
@@ -1110,14 +1635,24 @@ interface FormFieldProps {
  * @param children
  * @constructor
  */
-export const FormField: ({ label, error, indent, children }: PropsWithChildren<FormFieldProps>) => import("react/jsx-runtime").JSX.Element;
+export const FormField: ({
+  label,
+  error,
+  indent,
+  children,
+}: PropsWithChildren<FormFieldProps>) => import("react/jsx-runtime").JSX.Element;
 /**
  * A simple wrapper around fieldset to control padding/margins/spacing around form inputs
  */
-export const FormFieldset: import("styled-components").StyledComponent<"fieldset", import("styled-components").DefaultTheme, Flex, never>;
+export const FormFieldset: import("styled-components").StyledComponent<
+  "fieldset",
+  import("styled-components").DefaultTheme,
+  Flex,
+  never
+>;
 interface _Props3 {
-    title?: string;
-    subtitle?: string;
+  title?: string;
+  subtitle?: string;
 }
 /**
  * A component for describing a given form
@@ -1127,20 +1662,25 @@ interface _Props3 {
  */
 export const FormHeader: ({ title, subtitle }: _Props3) => import("react/jsx-runtime").JSX.Element;
 type FormLegendProps = {
-    backgroundColor?: string;
-    color?: string;
+  backgroundColor?: string;
+  color?: string;
 };
 /**
  * A simple wrapper around legend
  */
-export const FormLegend: import("styled-components").StyledComponent<"legend", import("styled-components").DefaultTheme, FormLegendProps, never>;
+export const FormLegend: import("styled-components").StyledComponent<
+  "legend",
+  import("styled-components").DefaultTheme,
+  FormLegendProps,
+  never
+>;
 type PopoverContentProps = Sizing & Palette;
 type _Props4 = PopoverContentProps & {
-    content: ReactNode;
-    onOpenChange?: () => void;
-    placement?: "top" | "right" | "bottom" | "left";
-    align?: "start" | "center" | "end";
-    offset?: number;
+  content: ReactNode;
+  onOpenChange?: () => void;
+  placement?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
+  offset?: number;
 };
 /**
  * A generic popover for providing focusable elements with extra information.
@@ -1158,17 +1698,25 @@ type _Props4 = PopoverContentProps & {
  * @param delegated receives sizing props for overriding default styles
  * @constructor
  */
-export const Popover: ({ children, content, onOpenChange, placement, align, offset, ...delegated }: PropsWithChildren<_Props4>) => import("react/jsx-runtime").JSX.Element;
+export const Popover: ({
+  children,
+  content,
+  onOpenChange,
+  placement,
+  align,
+  offset,
+  ...delegated
+}: PropsWithChildren<_Props4>) => import("react/jsx-runtime").JSX.Element;
 interface CalendarComponentProps extends CalendarComponentContainerProps {
-    icon?: ReactElement;
-    onChange?: (item: Date | undefined) => void;
-    value?: Date | string | null;
-    placeholder?: string;
-    disabled?: boolean;
-    reset?: boolean;
-    inputHidden?: boolean;
-    iconSize?: number;
-    buttonHeight?: string;
+  icon?: ReactElement;
+  onChange?: (item: Date | undefined) => void;
+  value?: Date | string | null;
+  placeholder?: string;
+  disabled?: boolean;
+  reset?: boolean;
+  inputHidden?: boolean;
+  iconSize?: number;
+  buttonHeight?: string;
 }
 /**
  * Component that displays a calendar button, field and calendar popover.
@@ -1179,7 +1727,9 @@ interface CalendarComponentProps extends CalendarComponentContainerProps {
  * @param checked check status
  * @constructor
  */
-export const CalendarComponent: import("react").ForwardRefExoticComponent<CalendarComponentProps & import("react").RefAttributes<HTMLInputElement>>;
+export const CalendarComponent: import("react").ForwardRefExoticComponent<
+  CalendarComponentProps & import("react").RefAttributes<HTMLInputElement>
+>;
 /**
  * A simple checkbox wrapper, with styling that follows library conventions.
  *
@@ -1187,16 +1737,18 @@ export const CalendarComponent: import("react").ForwardRefExoticComponent<Calend
  *
  * @constructor
  */
-export const Checkbox: import("react").ForwardRefExoticComponent<CheckboxProps & import("react").RefAttributes<HTMLButtonElement>>;
+export const Checkbox: import("react").ForwardRefExoticComponent<
+  CheckboxProps & import("react").RefAttributes<HTMLButtonElement>
+>;
 export interface OptionItem {
-    label: string;
-    value: string;
-    checked: boolean;
+  label: string;
+  value: string;
+  checked: boolean;
 }
 type RadioGroupProps = RadioGroupItemProps & {
-    options?: OptionItem[];
-    direction?: "row" | "column";
-    onRadioChange?: (item: OptionItem) => void;
+  options?: OptionItem[];
+  direction?: "row" | "column";
+  onRadioChange?: (item: OptionItem) => void;
 };
 /**
  * A simple Radio button wrapper, with styling that follows library conventions.
@@ -1206,36 +1758,42 @@ type RadioGroupProps = RadioGroupItemProps & {
  * @constructor
  */
 export const RadioButton: {
-    ({ options, direction, onRadioChange, ...rest }: RadioGroupProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultProps: {
-        options: OptionItem[];
-        direction: string;
-    };
+  ({ options, direction, onRadioChange, ...rest }: RadioGroupProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
+  defaultProps: {
+    options: OptionItem[];
+    direction: string;
+  };
 };
 /**
  * A simple wrapper over the input-tag, with styling that follows library conventions.
  */
-export const RichTextarea: import("react").ForwardRefExoticComponent<Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
+export const RichTextarea: import("react").ForwardRefExoticComponent<
+  Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
     value: string;
     width?: string | undefined;
     height?: string | undefined;
     placeholder?: string | undefined;
     onChange?: ((value: string) => void) | undefined;
-} & import("react").RefAttributes<HTMLDivElement>>;
+  } & import("react").RefAttributes<HTMLDivElement>
+>;
 interface UserInput {
-    id: string;
-    value: string;
+  id: string;
+  value: string;
 }
-export const UserAutoComplete: import("react").ForwardRefExoticComponent<InputHTMLAttributes<HTMLInputElement> & Omit<Sizing, "boxSizing"> & {
-    users: UserInput[];
-    value?: string | undefined;
-    onItemChange?: ((id: string) => void) | undefined;
-} & import("react").RefAttributes<HTMLInputElement>>;
-type SwitchComponentProps = Spacings & SwitchProps & {
+export const UserAutoComplete: import("react").ForwardRefExoticComponent<
+  InputHTMLAttributes<HTMLInputElement> &
+    Omit<Sizing, "boxSizing"> & {
+      users: UserInput[];
+      value?: string | undefined;
+      onItemChange?: ((id: string) => void) | undefined;
+    } & import("react").RefAttributes<HTMLInputElement>
+>;
+type SwitchComponentProps = Spacings &
+  SwitchProps & {
     text?: string;
     onSwitchChange?: (status: boolean) => void;
-};
+  };
 /**
  * Component that displays a switch with label.
  *
@@ -1246,12 +1804,12 @@ type SwitchComponentProps = Spacings & SwitchProps & {
  * @constructor
  */
 export const SwitchComponent: {
-    (props: SwitchComponentProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultProps: {
-        text: string;
-        checked: boolean;
-    };
+  (props: SwitchComponentProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
+  defaultProps: {
+    text: string;
+    checked: boolean;
+  };
 };
 /**
  * Call it to create a toast from anywhere, even outside React.
@@ -1269,36 +1827,100 @@ export const SwitchComponent: {
  * @see https://react-hot-toast.com/docs/toast
  */
 export const toast: {
-    (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, opts?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined): string;
-    error: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
-    success: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
-    loading: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
-    custom: (message: import("react-hot-toast").Renderable | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>, options?: Partial<Pick<import("react-hot-toast").Toast, "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme">> | undefined) => string;
-    dismiss(toastId?: string | undefined): void;
-    remove(toastId?: string | undefined): void;
-    promise<T>(promise: Promise<T>, msgs: {
-        loading: import("react-hot-toast").Renderable;
-        success: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, T>;
-        error: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, any>;
-    }, opts?: import("react-hot-toast").DefaultToastOptions | undefined): Promise<T>;
+  (
+    message:
+      | import("react-hot-toast").Renderable
+      | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>,
+    opts?:
+      | Partial<
+          Pick<
+            import("react-hot-toast").Toast,
+            "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme"
+          >
+        >
+      | undefined
+  ): string;
+  error: (
+    message:
+      | import("react-hot-toast").Renderable
+      | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>,
+    options?:
+      | Partial<
+          Pick<
+            import("react-hot-toast").Toast,
+            "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme"
+          >
+        >
+      | undefined
+  ) => string;
+  success: (
+    message:
+      | import("react-hot-toast").Renderable
+      | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>,
+    options?:
+      | Partial<
+          Pick<
+            import("react-hot-toast").Toast,
+            "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme"
+          >
+        >
+      | undefined
+  ) => string;
+  loading: (
+    message:
+      | import("react-hot-toast").Renderable
+      | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>,
+    options?:
+      | Partial<
+          Pick<
+            import("react-hot-toast").Toast,
+            "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme"
+          >
+        >
+      | undefined
+  ) => string;
+  custom: (
+    message:
+      | import("react-hot-toast").Renderable
+      | import("react-hot-toast").ValueFunction<import("react-hot-toast").Renderable, import("react-hot-toast").Toast>,
+    options?:
+      | Partial<
+          Pick<
+            import("react-hot-toast").Toast,
+            "style" | "className" | "id" | "icon" | "position" | "duration" | "ariaProps" | "iconTheme"
+          >
+        >
+      | undefined
+  ) => string;
+  dismiss(toastId?: string | undefined): void;
+  remove(toastId?: string | undefined): void;
+  promise<T>(
+    promise: Promise<T>,
+    msgs: {
+      loading: import("react-hot-toast").Renderable;
+      success: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, T>;
+      error: import("react-hot-toast").ValueOrFunction<import("react-hot-toast").Renderable, any>;
+    },
+    opts?: import("react-hot-toast").DefaultToastOptions | undefined
+  ): Promise<T>;
 };
 type FlowNodeBoxProps = {
-    colorMain?: string;
-    colorSelected?: string;
-    selected?: boolean;
-    hidden?: boolean;
-    visible?: boolean;
-    nodeWidth?: number;
-    nodeHeight?: number;
-    connectorWidth?: number;
-    connectorHeight?: number;
+  colorMain?: string;
+  colorSelected?: string;
+  selected?: boolean;
+  hidden?: boolean;
+  visible?: boolean;
+  nodeWidth?: number;
+  nodeHeight?: number;
+  connectorWidth?: number;
+  connectorHeight?: number;
 };
 type FlowNodeComponentProps = FlowNodeBoxProps & {
-    connectors: FlowConnector[];
-    storybook?: boolean;
-    title?: string;
-    symbol?: string;
-    logo?: string;
+  connectors: FlowConnector[];
+  storybook?: boolean;
+  title?: string;
+  symbol?: string;
+  logo?: string;
 };
 /**
  * A button with different variants.
@@ -1309,31 +1931,31 @@ type FlowNodeComponentProps = FlowNodeBoxProps & {
  * @constructor
  */
 export const FlowNodeComponent: {
-    (props: FlowNodeComponentProps): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-    defaultProps: {
-        connectors: never[];
-        storybook: boolean;
-        title: undefined;
-        symbol: undefined;
-        logo: undefined;
-        colorMain: string;
-        colorSelected: string;
-        selected: boolean;
-        hidden: boolean;
-        visible: boolean;
-        nodeWidth: number;
-        nodeHeight: number;
-        connectorWidth: number;
-        connectorHeight: number;
-    };
+  (props: FlowNodeComponentProps): import("react/jsx-runtime").JSX.Element;
+  displayName: string;
+  defaultProps: {
+    connectors: never[];
+    storybook: boolean;
+    title: undefined;
+    symbol: undefined;
+    logo: undefined;
+    colorMain: string;
+    colorSelected: string;
+    selected: boolean;
+    hidden: boolean;
+    visible: boolean;
+    nodeWidth: number;
+    nodeHeight: number;
+    connectorWidth: number;
+    connectorHeight: number;
+  };
 };
 interface NotFoundProps {
-    title: string;
-    subtitle: string;
-    status: string;
-    linkText: string;
-    linkPath: string;
+  title: string;
+  subtitle: string;
+  status: string;
+  linkText: string;
+  linkPath: string;
 }
 /**
  * Simple error message component offering navigation via link/button
@@ -1345,11 +1967,18 @@ interface NotFoundProps {
  * @param linkPath
  * @constructor
  */
-export const ErrorMessage: ({ title, subtitle, status, linkText, linkPath }: NotFoundProps) => import("react/jsx-runtime").JSX.Element;
+export const ErrorMessage: ({
+  title,
+  subtitle,
+  status,
+  linkText,
+  linkPath,
+}: NotFoundProps) => import("react/jsx-runtime").JSX.Element;
 type InspectorHeaderProps = {
-    bgColor?: string;
+  bgColor?: string;
 };
-type _Props5 = Spacings & InspectorHeaderProps & {
+type _Props5 = Spacings &
+  InspectorHeaderProps & {
     duration: number;
     children: ReactNode;
     isOpen: boolean;
@@ -1361,7 +1990,7 @@ type _Props5 = Spacings & InspectorHeaderProps & {
     name?: string;
     tabColor?: string;
     selectedTab?: "admin" | "attribute" | "terminal" | "relation";
-};
+  };
 /**
  * Simple error message component offering navigation via link/button
  *
@@ -1373,12 +2002,12 @@ type _Props5 = Spacings & InspectorHeaderProps & {
  * @constructor
  */
 export const InspectorPanel: {
-    (props: _Props5): import("react/jsx-runtime").JSX.Element;
-    defaultProps: {
-        duration: number;
-        isOpen: boolean;
-        isLocked: boolean;
-    };
+  (props: _Props5): import("react/jsx-runtime").JSX.Element;
+  defaultProps: {
+    duration: number;
+    isOpen: boolean;
+    isLocked: boolean;
+  };
 };
 
 //# sourceMappingURL=types.d.ts.map

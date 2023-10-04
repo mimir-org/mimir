@@ -9,7 +9,7 @@ namespace Mb.Data.Contracts;
 public interface IWebSocketRepository
 {
     Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus);
-    Task SendAspectObjectData(AspectObjectDm aspectObject, string projectId, WorkerStatus workerStatus);
+    Task SendBlockData(BlockDm block, string projectId, WorkerStatus workerStatus);
     Task SendConnectionData(ConnectionDm connection, string projectId, WorkerStatus workerStatus);
     Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus);
     Task SendRefreshLibData();

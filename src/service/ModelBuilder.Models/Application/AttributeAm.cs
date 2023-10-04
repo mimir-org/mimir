@@ -17,18 +17,18 @@ public class AttributeAm
     public ICollection<UnitAm> Units { get; set; }
     public ICollection<QualifierAm> Qualifiers { get; set; }
     public string ConnectorTerminal { get; set; }
-    public string AspectObject { get; set; }
+    public string Block { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var validations = new List<ValidationResult>();
 
-        if (string.IsNullOrEmpty(ConnectorTerminal) && string.IsNullOrEmpty(AspectObject))
+        if (string.IsNullOrEmpty(ConnectorTerminal) && string.IsNullOrEmpty(Block))
         {
             validations.Add(new ValidationResult("One of this fields is required", new[]
             {
                 nameof(ConnectorTerminal),
-                nameof(AspectObject)
+                nameof(Block)
             }));
         }
 

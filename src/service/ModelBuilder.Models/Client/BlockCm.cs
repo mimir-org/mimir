@@ -6,7 +6,7 @@ using Mimirorg.Common.Extensions;
 
 namespace Mb.Models.Client;
 
-public class AspectObjectCm
+public class BlockCm
 {
     public string Id { get; set; }
     public string Version { get; set; }
@@ -14,7 +14,7 @@ public class AspectObjectCm
     public string Label { get; set; }
     public string Description { get; set; }
     public Aspect Aspect { get; set; }
-    public AspectObjectType AspectObjectType { get; set; }
+    public BlockType BlockType { get; set; }
     public string Project { get; set; }
     public string MainProject { get; set; }
     public string LibraryType { get; set; }

@@ -18,6 +18,6 @@ public class AttributeConfiguration : IEntityTypeConfiguration<AttributeDm>
         builder.Property(p => p.Units).HasColumnName("Units");
         builder.Property(p => p.Qualifiers).HasColumnName("Qualifiers").IsRequired(false);
         builder.Property(p => p.ConnectorTerminal).HasColumnName("ConnectorTerminal").IsRequired(false);
-        builder.Property(p => p.AspectObject).HasColumnName("AspectObject").IsRequired(false);
+        builder.Property(p => p.Block).HasColumnName("Block").IsRequired(false);
     }
 }

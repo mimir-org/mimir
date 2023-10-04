@@ -21,15 +21,15 @@ namespace Mb.Services.Services;
 
 public class LockService : ILockService
 {
-    private readonly IAspectObjectRepository _aspectObjectRepository;
+    private readonly IBlockRepository _blockRepository;
     private readonly ICooperateService _cooperateService;
     private readonly ICacheRepository _cacheRepository;
     private readonly IMapper _mapper;
     private readonly DatabaseConfiguration _databaseConfiguration;
 
-    public LockService(IAspectObjectRepository aspectObjectRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
+    public LockService(IBlockRepository blockRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
     {
-        _aspectObjectRepository = aspectObjectRepository;
+        _blockRepository = blockRepository;
         _cooperateService = cooperateService;
         _cacheRepository = cacheRepository;
         _mapper = mapper;
@@ -37,16 +37,16 @@ public class LockService : ILockService
     }
 
     /// <summary>
-    /// Returns a list of all locked aspectObjects id's
+    /// Returns a list of all locked blocks id's
     /// </summary>
-    /// <returns>List of locked aspectObject id></returns>
-    public IEnumerable<string> GetLockedAspectObjects()
+    /// <returns>List of locked block id></returns>
+    public IEnumerable<string> GetLockedBlocks()
     {
-        return _aspectObjectRepository.FindBy(x => x.IsLocked).Select(x => x.Id);
+        return _blockRepository.FindBy(x => x.IsLocked).Select(x => x.Id);
     }
 
     /// <summary>
-    /// Lock/Unlock Attribute/Connection/AspectObject
+    /// Lock/Unlock Attribute/Connection/Block
     /// </summary>
     /// <param name="lockAm"></param>
     /// <returns></returns>
@@ -66,7 +66,7 @@ public class LockService : ILockService
         {
             await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
-                _aspectObjectRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.ToList());
+                _blockRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.ToList());
             }
             trans.Complete();
         }

@@ -63,14 +63,14 @@ public class RemapService : IRemapService
     /// <returns>A task that updates project data</returns>
     public async Task DeConstruct(ProjectDm project, ProjectData data)
     {
-        if (project == null || (project.Connections == null && project.AspectObjects == null))
+        if (project == null || (project.Connections == null && project.Blocks == null))
             return;
 
         var tasks = new List<Task>
         {
             Task.Run(() => data.DeconstructAttributes(project)),
             Task.Run(() => data.DeconstructConnections(project)),
-            Task.Run(() => data.DeconstructAspectObjects(project)),
+            Task.Run(() => data.DeconstructBlocks(project)),
             Task.Run(() => data.DeconstructRelations(project)),
             Task.Run(() => data.DeconstructTerminals(project))
         };
@@ -91,7 +91,7 @@ public class RemapService : IRemapService
         var r = new ReplacementId { FromId = project.Id, FromIri = project.Id };
         var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-        project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, false).ToList();
+        project.Blocks = RemapBlocks(replacement, project.Blocks, project.Connections, remap, false).ToList();
         project.Connections = RemapConnections(replacement, project.Connections, remap, false).ToList();
 
         project.Id = replacement.ToIri;
@@ -116,15 +116,15 @@ public class RemapService : IRemapService
         replacement.FromId = project.Id;
         replacement.FromIri = project.Id;
 
-        // We need to connect parentless connections to root aspectObjects of same aspect
+        // We need to connect parentless connections to root blocks of same aspect
         RemapParentlessConnections(project);
 
-        // We need to remove connections that misses connected aspectObject
+        // We need to remove connections that misses connected block
         var connectionsToDelete = project.GetNotConnectedConnectors().ToList();
         project.Connections = project.Connections.Where(x => connectionsToDelete.All(y => x.Id != y.Id)).ToList();
 
         // Create deep clone of whole project
-        project.AspectObjects = RemapAspectObjects(replacement, project.AspectObjects, project.Connections, remap, true).ToList();
+        project.Blocks = RemapBlocks(replacement, project.Blocks, project.Connections, remap, true).ToList();
         project.Connections = RemapConnections(replacement, project.Connections, remap, true).ToList();
 
         project.Id = replacement.ToIri;
@@ -133,47 +133,47 @@ public class RemapService : IRemapService
     }
 
     /// <summary>
-    /// Remap a collection of aspectObjects and all sub objects.
+    /// Remap a collection of blocks and all sub objects.
     /// </summary>
     /// <param name="project">ReplacementId</param>
-    /// <param name="aspectObjects">ICollection&lt;AspectObjectAm&gt; aspectObjects</param>
+    /// <param name="blocks">ICollection&lt;blockAm&gt; blocks</param>
     /// <param name="connections">ICollection&lt;ConnectionAm&gt; connections</param>
     /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
     /// <param name="createCopy">bool</param>
-    /// <returns>IEnumerable&lt;AspectObjectAm&gt;</returns>
-    /// <remarks>If id is not correct, it will create new unique id's for all aspectObjects and children objects.
+    /// <returns>IEnumerable&lt;blockAm&gt;</returns>
+    /// <remarks>If id is not correct, it will create new unique id's for all blocks and children objects.
     /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
-    public IEnumerable<AspectObjectAm> RemapAspectObjects(ReplacementId project, ICollection<AspectObjectAm> aspectObjects, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
+    public IEnumerable<BlockAm> RemapBlocks(ReplacementId project, ICollection<BlockAm> blocks, ICollection<ConnectionAm> connections, Dictionary<string, string> remap, bool createCopy)
     {
-        if (aspectObjects == null || !aspectObjects.Any())
+        if (blocks == null || !blocks.Any())
             yield break;
 
-        foreach (var aspectObject in aspectObjects)
+        foreach (var block in blocks)
         {
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = aspectObject.Id, FromIri = aspectObject.Id };
-            var aspectObjectReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = block.Id, FromIri = block.Id };
+            var blockReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
-            aspectObjectReplacement.FromId = aspectObject.Id;
-            aspectObjectReplacement.FromIri = aspectObject.Id;
+            blockReplacement.FromId = block.Id;
+            blockReplacement.FromIri = block.Id;
 
-            if (aspectObjectReplacement.FromId != aspectObjectReplacement.ToId)
-                remap.Add(aspectObjectReplacement.ToId, aspectObjectReplacement.FromId);
+            if (blockReplacement.FromId != blockReplacement.ToId)
+                remap.Add(blockReplacement.ToId, blockReplacement.FromId);
 
-            aspectObject.Connectors = RemapConnectors(aspectObjectReplacement, aspectObject.Connectors, connections, createCopy).ToList();
-            var attr = RemapAttributes(aspectObjectReplacement, aspectObject.Attributes, createCopy, AttributeParent.AspectObject).ToList();
-            aspectObject.Attributes = attr.Any() ? attr : null;
+            block.Connectors = RemapConnectors(blockReplacement, block.Connectors, connections, createCopy).ToList();
+            var attr = RemapAttributes(blockReplacement, block.Attributes, createCopy, AttributeParent.Block).ToList();
+            block.Attributes = attr.Any() ? attr : null;
 
-            aspectObject.Id = aspectObjectReplacement.ToId;
-            aspectObject.Id = aspectObjectReplacement.ToIri;
-            aspectObject.Project = project.ToId;
-            aspectObject.Project = project.ToIri;
+            block.Id = blockReplacement.ToId;
+            block.Id = blockReplacement.ToIri;
+            block.Project = project.ToId;
+            block.Project = project.ToIri;
 
-            var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, aspectObject.MainProject, aspectObject.MainProject);
-            aspectObject.MainProject = masterProject.Id;
-            aspectObject.MainProject = masterProject.Iri;
+            var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, block.MainProject, block.MainProject);
+            block.MainProject = masterProject.Id;
+            block.MainProject = masterProject.Iri;
 
-            yield return aspectObject;
+            yield return block;
         }
     }
 
@@ -225,27 +225,27 @@ public class RemapService : IRemapService
     }
 
     /// <summary>
-    /// Remap all parentless connections to root aspectObjects
+    /// Remap all parentless connections to root blocks
     /// </summary>
     /// <param name="project">ProjectAm</param>
     /// <remarks>If there is some connections that is not connected to a parent, we need to find
-    /// a root aspectObject in same aspect, and connect the part of relation to that aspectObject.</remarks>
+    /// a root block in same aspect, and connect the part of relation to that block.</remarks>
     public void RemapParentlessConnections(ProjectAm project)
     {
         var parentLessConnections = project.GetParentlessConnectors().ToList();
         foreach (var connection in parentLessConnections)
         {
             //TODO Rewrite
-            //var actualAspectObject = project.AspectObjects.FirstOrDefault(x => x.Id == connection.ToAspectObjectId);
-            //if (actualAspectObject == null)
+            //var actualBlock = project.blocks.FirstOrDefault(x => x.Id == connection.ToBlockId);
+            //if (actualBlock == null)
             //    continue;
 
-            //var rootAspectObject = project.AspectObjects.FirstOrDefault(x => x.AspectObjectType == AspectObjectType.Root && x.Aspect == actualAspectObject.Aspect);
-            //if (rootAspectObject == null)
+            //var rootBlock = project.blocks.FirstOrDefault(x => x.blockType == blockType.Root && x.Aspect == actualBlock.Aspect);
+            //if (rootBlock == null)
             //    continue;
 
-            //connection.FromAspectObjectId = rootAspectObject.Id;
-            //connection.FromConnector = rootAspectObject.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+            //connection.FromBlockId = rootBlock.Id;
+            //connection.FromConnector = rootBlock.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
         }
     }
 
@@ -352,10 +352,10 @@ public class RemapService : IRemapService
             connector.Id = connectorReplacement.ToId;
             connector.Id = connectorReplacement.ToIri;
 
-            if (connector.AspectObject == replacement.FromId)
+            if (connector.Block == replacement.FromId)
             {
-                connector.AspectObject = replacement.ToId;
-                connector.AspectObject = replacement.ToIri;
+                connector.Block = replacement.ToId;
+                connector.Block = replacement.ToIri;
             }
 
             if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalType))
@@ -402,9 +402,9 @@ public class RemapService : IRemapService
                 attribute.ConnectorTerminal = replacement.ToId;
             }
 
-            if (ShouldReplace(attribute.AspectObject, replacement.FromId, attribute.AspectObject, replacement.FromIri) && parent == AttributeParent.AspectObject)
+            if (ShouldReplace(attribute.Block, replacement.FromId, attribute.Block, replacement.FromIri) && parent == AttributeParent.Block)
             {
-                attribute.AspectObject = replacement.ToId;
+                attribute.Block = replacement.ToId;
             }
 
             attribute.Id = attributeReplacement.ToId;

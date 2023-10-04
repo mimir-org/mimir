@@ -15,30 +15,30 @@ public class SubProjectAm : IValidatableObject
     [Required]
     public string Description { get; set; }
 
-    public ICollection<string> AspectObjects { get; set; }
+    public ICollection<string> Blocks { get; set; }
     public ICollection<string> Connections { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        var validateionResults = new List<ValidationResult>();
+        var validationResults = new List<ValidationResult>();
 
-        if (AspectObjects is not { Count: > 0 })
+        if (Blocks is not { Count: > 0 })
         {
-            validateionResults.Add(new ValidationResult("Number of aspectObjects must be greater than 0", new List<string> { "AspectObjects" }));
+            validationResults.Add(new ValidationResult("Number of blocks must be greater than 0", new List<string> { "Blocks" }));
         }
 
-        if (AspectObjects.HasDuplicateValues())
-            validateionResults.Add(new ValidationResult("Duplicate aspectObject id's detected", new List<string> { "AspectObjects" }));
+        if (Blocks.HasDuplicateValues())
+            validationResults.Add(new ValidationResult("Duplicate block id's detected", new List<string> { "Blocks" }));
 
-        if (AspectObjects.HasEmptyValues())
-            validateionResults.Add(new ValidationResult("Empty aspectObject id's detected", new List<string> { "AspectObjects" }));
+        if (Blocks.HasEmptyValues())
+            validationResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "Blocks" }));
 
         if (Connections.HasDuplicateValues())
-            validateionResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
+            validationResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
 
         if (Connections.HasEmptyValues())
-            validateionResults.Add(new ValidationResult("Empty aspectObject id's detected", new List<string> { "Connections" }));
+            validationResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "Connections" }));
 
-        return validateionResults;
+        return validationResults;
     }
 }

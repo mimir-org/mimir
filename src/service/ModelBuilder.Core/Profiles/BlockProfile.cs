@@ -6,18 +6,18 @@ using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles;
 
-public class AspectObjectProfile : Profile
+public class BlockProfile : Profile
 {
-    public AspectObjectProfile()
+    public BlockProfile()
     {
-        CreateMap<AspectObjectAm, AspectObjectDm>()
+        CreateMap<BlockAm, BlockDm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-            .ForMember(dest => dest.AspectObjectType, opt => opt.MapFrom(src => src.AspectObjectType))
+            .ForMember(dest => dest.BlockType, opt => opt.MapFrom(src => src.BlockType))
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.LibraryType, opt => opt.MapFrom(src => src.LibraryType))
@@ -37,14 +37,14 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
-        CreateMap<AspectObjectDm, AspectObjectCm>()
+        CreateMap<BlockDm, BlockCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-            .ForMember(dest => dest.AspectObjectType, opt => opt.MapFrom(src => src.AspectObjectType))
+            .ForMember(dest => dest.BlockType, opt => opt.MapFrom(src => src.BlockType))
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.LibraryType, opt => opt.MapFrom(src => src.LibraryType))
@@ -64,14 +64,14 @@ public class AspectObjectProfile : Profile
             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
-        CreateMap<AspectObjectDm, AspectObjectAm>()
+        CreateMap<BlockDm, BlockAm>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
            .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
            .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-           .ForMember(dest => dest.AspectObjectType, opt => opt.MapFrom(src => src.AspectObjectType))
+           .ForMember(dest => dest.BlockType, opt => opt.MapFrom(src => src.BlockType))
            .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
            .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
            .ForMember(dest => dest.LibraryType, opt => opt.MapFrom(src => src.LibraryType))

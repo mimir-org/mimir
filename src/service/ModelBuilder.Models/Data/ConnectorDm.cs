@@ -16,7 +16,7 @@ public class ConnectorDm : IEquatable<ConnectorDm>
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
     public string Outside { get; set; }
-    public string AspectObject { get; set; }
+    public string Block { get; set; }
 
     public bool Equals(ConnectorDm other)
     {
@@ -29,7 +29,7 @@ public class ConnectorDm : IEquatable<ConnectorDm>
         return Id == other.Id &&
                Name == other.Name &&
                Direction == other.Direction &&
-               AspectObject == other.AspectObject;
+               Block == other.Block;
     }
 
     public override bool Equals(object obj)
@@ -45,7 +45,7 @@ public class ConnectorDm : IEquatable<ConnectorDm>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Id, Name, (int) Direction, AspectObject);
+        return HashCode.Combine(Id, Name, (int) Direction, Block);
     }
 }
 

@@ -4,13 +4,13 @@ using Mimirorg.Common.Exceptions;
 
 namespace Mb.Services.Contracts;
 
-public interface IConnectorService
+public interface IBlockService
 {
     /// <summary>
-    /// Get a connector by Id
+    /// Get an block by Id. The block will include all connectors and attributes.
     /// </summary>
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    Task<ConnectorCm> Get(string id);
+    Task<BlockCm> Get(string id);
 }
