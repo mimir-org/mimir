@@ -41,7 +41,7 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
     }
 
     [Fact(Skip = "Must be rewritten after big refactoring of backend")]
-    public void RemapBlocks_block_Project_Mapping_Ok()
+    public void RemapBlocks_Block_Project_Mapping_Ok()
     {
         // Project replacement
         var projectReplacement = new ReplacementId

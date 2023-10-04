@@ -20,25 +20,25 @@ public class SubProjectAm : IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        var validateionResults = new List<ValidationResult>();
+        var validationResults = new List<ValidationResult>();
 
         if (Blocks is not { Count: > 0 })
         {
-            validateionResults.Add(new ValidationResult("Number of blocks must be greater than 0", new List<string> { "blocks" }));
+            validationResults.Add(new ValidationResult("Number of blocks must be greater than 0", new List<string> { "Blocks" }));
         }
 
         if (Blocks.HasDuplicateValues())
-            validateionResults.Add(new ValidationResult("Duplicate block id's detected", new List<string> { "blocks" }));
+            validationResults.Add(new ValidationResult("Duplicate block id's detected", new List<string> { "Blocks" }));
 
         if (Blocks.HasEmptyValues())
-            validateionResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "blocks" }));
+            validationResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "Blocks" }));
 
         if (Connections.HasDuplicateValues())
-            validateionResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
+            validationResults.Add(new ValidationResult("Duplicate connection id's detected", new List<string> { "Connections" }));
 
         if (Connections.HasEmptyValues())
-            validateionResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "Connections" }));
+            validationResults.Add(new ValidationResult("Empty block id's detected", new List<string> { "Connections" }));
 
-        return validateionResults;
+        return validationResults;
     }
 }

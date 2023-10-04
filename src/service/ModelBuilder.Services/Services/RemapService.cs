@@ -236,16 +236,16 @@ public class RemapService : IRemapService
         foreach (var connection in parentLessConnections)
         {
             //TODO Rewrite
-            //var actualblock = project.blocks.FirstOrDefault(x => x.Id == connection.ToblockId);
-            //if (actualblock == null)
+            //var actualBlock = project.blocks.FirstOrDefault(x => x.Id == connection.ToBlockId);
+            //if (actualBlock == null)
             //    continue;
 
-            //var rootblock = project.blocks.FirstOrDefault(x => x.blockType == blockType.Root && x.Aspect == actualblock.Aspect);
-            //if (rootblock == null)
+            //var rootBlock = project.blocks.FirstOrDefault(x => x.blockType == blockType.Root && x.Aspect == actualBlock.Aspect);
+            //if (rootBlock == null)
             //    continue;
 
-            //connection.FromblockId = rootblock.Id;
-            //connection.FromConnector = rootblock.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+            //connection.FromBlockId = rootBlock.Id;
+            //connection.FromConnector = rootBlock.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
         }
     }
 
