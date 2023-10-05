@@ -148,8 +148,7 @@ export class AspectObject {
     this.project = project;
     this.attributes = lib?.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
-    this.connectors =
-      lib?.blockTerminals?.map((x) => new ConnectorTerminal(x.terminal, x.connectorDirection, this.id)) ?? [];
+    this.connectors = lib?.blockTerminals?.map((x) => new ConnectorTerminal(x.terminal, x.connectorDirection, this.id)) ?? [];
 
     this.isLocked = false;
     this.isLockedStatusBy = null;
