@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { LibrarySubProject } from "lib";
-import { AspectObjectLibCm, TerminalLibCm, QuantityDatumLibCm, AttributeLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm, TerminalLibCm, QuantityDatumLibCm, AttributeLibCm } from "@mimirorg/typelibrary-types";
 
 // State definition
 export interface LibraryState {
   fetching: string[];
-  aspectObjectTypes: AspectObjectLibCm[] | null;
+  aspectObjectTypes: BlockLibCm[] | null;
   terminalTypes: TerminalLibCm[] | null;
   quantityDatumTypes: QuantityDatumLibCm[];
   attributeTypes: AttributeLibCm[];
@@ -14,7 +14,7 @@ export interface LibraryState {
 
 // Payload action
 export interface ActionFetchAspectObjectsFinished {
-  data: AspectObjectLibCm[];
+  data: BlockLibCm[];
 }
 
 export interface ActionFetchTerminalsFinished {

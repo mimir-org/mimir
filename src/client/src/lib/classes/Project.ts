@@ -18,7 +18,7 @@ import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode, XYPos
 import { ConnectorDirection } from "../enums/Direction";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { ProjectListItem } from "../interfaces/ProjectListItem";
-import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Aspect } from "lib/enums";
 import { ViewType } from "../enums/ViewType";
 import { Theme } from "@mimirorg/component-library";
@@ -257,7 +257,7 @@ export class Project {
    * @param viewType
    */
   public addAspectObject(
-    lib: AspectObjectLibCm,
+    lib: BlockLibCm,
     positionTree: Position,
     positionBlock: Position,
     createdBy: string,
@@ -360,7 +360,7 @@ export class Project {
   public createTerminal(
     aspectObjectId: string,
     terminalTypes: TerminalLibCm[],
-    aspectObjectTypes: AspectObjectLibCm[],
+    aspectObjectTypes: BlockLibCm[],
     terminalId: string
   ): void {
     if (aspectObjectId == null || terminalTypes == null || aspectObjectTypes == null || terminalId == null)
@@ -381,7 +381,7 @@ export class Project {
     const terminalType = terminalTypes.find((x) => x.iri === existingTerminal.terminalType);
     if (terminalType == null) throw new ErrorException("Can't create terminal. The terminal type could not be found.");
 
-    const aspectObjectTerminalType = aspectObjectType.aspectObjectTerminals.find(
+    const aspectObjectTerminalType = aspectObjectType.blockTerminals.find(
       (x) => x.terminal.id === terminalType.id && x.connectorDirection === existingTerminal.direction
     );
     if (aspectObjectTerminalType == null)
@@ -401,7 +401,7 @@ export class Project {
   public deleteTerminal(
     aspectObjectId: string,
     terminalTypes: TerminalLibCm[],
-    aspectObjectTypes: AspectObjectLibCm[],
+    aspectObjectTypes: BlockLibCm[],
     terminalId: string
   ): void {
     if (aspectObjectId == null || terminalTypes == null || aspectObjectTypes == null || terminalId == null)
@@ -422,7 +422,7 @@ export class Project {
     const terminalType = terminalTypes.find((x) => x.iri === existingTerminal.terminalType);
     if (terminalType == null) throw new ErrorException("Can't delete terminal. The terminal type could not be found.");
 
-    const aspectObjectTerminalType = aspectObjectType.aspectObjectTerminals.find(
+    const aspectObjectTerminalType = aspectObjectType.blockTerminals.find(
       (x) => x.terminal.id === terminalType.id && x.connectorDirection === existingTerminal.direction
     );
     if (aspectObjectTerminalType == null)

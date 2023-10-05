@@ -8,11 +8,11 @@ import {
   fetchSubProjectsFinished,
 } from "store/reducers/libraryReducer";
 import { call, put } from "redux-saga/effects";
-import { AspectObjectLibCm, TerminalLibCm, AttributeLibCm, QuantityDatumLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm, TerminalLibCm, AttributeLibCm, QuantityDatumLibCm } from "@mimirorg/typelibrary-types";
 
 export function* getAspectObjects() {
   try {
-    const response: AspectObjectLibCm[] = yield call(libraryApi.getAspectObjects);
+    const response: BlockLibCm[] = yield call(libraryApi.getAspectObjects);
     yield put(fetchAspectObjectsFinished({ data: response }));
   } catch (error) {
     yield put(fetchAspectObjectsFinished({ data: null }));

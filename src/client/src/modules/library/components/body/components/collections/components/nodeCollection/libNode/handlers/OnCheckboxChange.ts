@@ -1,12 +1,12 @@
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 
 const OnCheckboxChange = (
-  item: AspectObjectLibCm,
-  selectedTypes: AspectObjectLibCm[],
-  setSelectedTypes: (array: AspectObjectLibCm[]) => void,
+  item: BlockLibCm,
+  selectedTypes: BlockLibCm[],
+  setSelectedTypes: (array: BlockLibCm[]) => void,
   selected: boolean
 ) => {
-  let temp: AspectObjectLibCm[] = [...selectedTypes];
+  let temp: BlockLibCm[] = [...selectedTypes];
   if (selected) temp = temp.filter((a) => a !== item);
   else if (!selected && temp) temp.push(item);
   setSelectedTypes(temp);

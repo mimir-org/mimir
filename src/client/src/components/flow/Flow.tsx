@@ -13,7 +13,7 @@ import ReactFlow, {
   applyEdgeChanges,
 } from "react-flow-renderer";
 import { GetEdgeTypes, GetNodeTypes } from "./helpers";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 
 /**
  * Coponent props
@@ -23,7 +23,7 @@ interface Props {
   edges: Edge[];
   onNodePositionChange: (id: string, x: number, y: number) => void;
   onNodeDelete: (id: string) => void;
-  onNodeDrop: (type: AspectObjectLibCm, posX: number, posY: number) => void;
+  onNodeDrop: (type: BlockLibCm, posX: number, posY: number) => void;
   onNodeSelect: (id: string, selected: boolean) => void;
   onEdgeDelete: (id: string) => void;
   onEdgeConnect: (edge: Connection | Edge) => void;
@@ -121,7 +121,7 @@ export const Flow = forwardRef(
       event.preventDefault();
       if (!event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE)) return;
 
-      const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as AspectObjectLibCm;
+      const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as BlockLibCm;
       const reactFlowBounds = flowWrapper.current.getBoundingClientRect();
 
       const position = flowInstance.project({

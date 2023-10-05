@@ -5,7 +5,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { LibraryTab, CollectionsActions } from "../../models";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 import { libraryStateSelector, modulesSelector, useAppDispatch, useAppSelector } from "store";
 import { Aspect, ModuleType } from "../../lib";
 import { LibraryState } from "store/reducers/libraryReducer";
@@ -23,8 +23,8 @@ export const LibraryModule = () => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
-  const [selectedLibNodes, setSelectedLibNodes] = useState([] as AspectObjectLibCm[]);
-  const [selectedLibNode, setSelectedLibNode] = useState<AspectObjectLibCm>(null);
+  const [selectedLibNodes, setSelectedLibNodes] = useState([] as BlockLibCm[]);
+  const [selectedLibNode, setSelectedLibNode] = useState<BlockLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
   const modules = useAppSelector<ModuleType[]>(modulesSelector);
 
