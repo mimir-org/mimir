@@ -9,7 +9,7 @@
     "@microsoft/applicationinsights-web": "^2.8.10",
     "@microsoft/signalr": "^7.0.3",
     "@mimirorg/component-library": "^1.0.2",
-    "@mimirorg/typelibrary-types": "^1.0.0",
+    "@mimirorg/typelibrary-types": "1.0.0-preview.283",
     "@redux-devtools/extension": "^3.2.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@styled-icons/heroicons-outline": "^10.46.0",

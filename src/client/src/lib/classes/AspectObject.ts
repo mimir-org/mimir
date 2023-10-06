@@ -10,7 +10,7 @@ import {
 import { Attribute } from "./Attribute";
 import { Aspect, AspectObjectType, ConnectorDirection, ViewType } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
-import type { AspectObjectLibCm, AspectObjectTerminalLibCm } from "@mimirorg/typelibrary-types";
+import type { BlockLibCm, BlockTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Position } from "./Position";
 import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
@@ -118,7 +118,7 @@ export class AspectObject {
    * @params mainProject The originally project owner id.
    */
   public constructor(
-    lib: AspectObjectLibCm,
+    lib: BlockLibCm,
     project: string,
     positionTree: Position,
     positionBlock: Position,
@@ -148,8 +148,7 @@ export class AspectObject {
     this.project = project;
     this.attributes = lib?.attributes?.map((x) => new Attribute(x, this.id)) ?? [];
 
-    this.connectors =
-      lib?.aspectObjectTerminals?.map((x) => new ConnectorTerminal(x.terminal, x.connectorDirection, this.id)) ?? [];
+    this.connectors = lib?.blockTerminals?.map((x) => new ConnectorTerminal(x.terminal, x.connectorDirection, this.id)) ?? [];
 
     this.isLocked = false;
     this.isLockedStatusBy = null;
@@ -191,7 +190,7 @@ export class AspectObject {
    * @param aspectObjectType The aspect object type to create a terminal from.
    * @param direction The terminal direction
    */
-  public createTerminal(aspectObjectType: AspectObjectTerminalLibCm, direction: ConnectorDirection): void {
+  public createTerminal(aspectObjectType: BlockTerminalLibCm, direction: ConnectorDirection): void {
     if (aspectObjectType == null || aspectObjectType.terminal == null || direction == null)
       throw new Error("Can't create terminal. TerminalType or direction is null or undefined.");
 
@@ -213,7 +212,7 @@ export class AspectObject {
    * @param terminalId The terminal id to be deleted
    * @param connections All connections for project
    */
-  public deleteTerminal(aspectObjectType: AspectObjectTerminalLibCm, terminalId: string, connections: Connection[]): void {
+  public deleteTerminal(aspectObjectType: BlockTerminalLibCm, terminalId: string, connections: Connection[]): void {
     if (aspectObjectType == null || aspectObjectType.terminal == null || terminalId == null)
       throw new Error("Can't delete terminal. TerminalType, direction or terminal id is null or undefined.");
 

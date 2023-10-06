@@ -1,12 +1,12 @@
 import { client } from "store/webclient";
 import { config, LibrarySubProject } from "lib";
-import { AspectObjectLibCm, TerminalLibCm, AttributeLibCm, QuantityDatumLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm, TerminalLibCm, AttributeLibCm, QuantityDatumLibCm } from "@mimirorg/typelibrary-types";
 
 const _basePath = `${config.API_BASE_URL}library`;
 
 export const libraryApi = {
-  async getAspectObjects(): Promise<AspectObjectLibCm[]> {
-    const r = await client.get<AspectObjectLibCm[]>(_basePath + "/block");
+  async getAspectObjects(): Promise<BlockLibCm[]> {
+    const r = await client.get<BlockLibCm[]>(_basePath + "/block");
     return r.data;
   },
   async getTerminals(): Promise<TerminalLibCm[]> {

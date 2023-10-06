@@ -3,20 +3,20 @@ import { ModuleContent } from "./ModuleBody.styled";
 import { LibNodeElement } from "./components/collections/components/nodeCollection/libNode/LibNodeElement";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 import { Aspect, AspectObject, LibrarySubProject } from "lib";
 
 interface Props {
-  aspectObjects: AspectObjectLibCm[];
+  aspectObjects: BlockLibCm[];
   libOpen: boolean;
   activeTab: LibraryTab;
-  selectedLibNodes: AspectObjectLibCm[];
-  setSelectedLibNodes: (array: AspectObjectLibCm[]) => void;
+  selectedLibNodes: BlockLibCm[];
+  setSelectedLibNodes: (array: BlockLibCm[]) => void;
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedLibNode: AspectObjectLibCm | null;
-  setSelectedLibNode: (value: AspectObjectLibCm) => void;
+  selectedLibNode: BlockLibCm | null;
+  setSelectedLibNode: (value: BlockLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: AspectObject;
   subProjects: LibrarySubProject[];

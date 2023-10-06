@@ -1,9 +1,9 @@
 import moment from "moment";
 import { LibraryCategory } from "../../../../../../../../../../models/project";
 import { TextResources } from "../../../../../../../../../../assets/text/TextResources";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 
-const GetRecentlyCreatedCategory = (items: AspectObjectLibCm[]): LibraryCategory => {
+const GetRecentlyCreatedCategory = (items: BlockLibCm[]): LibraryCategory => {
   const lastDay = moment.utc().subtract(1, "d");
 
   const recentlyCreatedLibItems = items

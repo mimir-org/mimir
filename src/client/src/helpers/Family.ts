@@ -1,8 +1,8 @@
 import store from "store";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 import { AspectObject } from "lib";
 
-type Item = AspectObject | AspectObjectLibCm;
+type Item = AspectObject | BlockLibCm;
 
 export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;

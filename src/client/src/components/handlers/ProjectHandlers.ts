@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Theme, toast } from "@mimirorg/component-library";
-import { AspectObjectLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { DialogType, Position, Project, ViewType, Handle, InfoException, ErrorException } from "lib";
 import { MutableRefObject } from "react";
 import { Connection as FlowConnection, Edge } from "react-flow-renderer";
@@ -51,7 +51,7 @@ export const onNodePositionChange = (
 };
 
 export const onNodeDrop = (
-  type: AspectObjectLibCm,
+  type: BlockLibCm,
   posX: number,
   posY: number,
   project: Project,
@@ -138,7 +138,7 @@ export const onTerminalChecked = (
 export const onTerminalAdd = (
   aspectObjectId: string,
   terminalTypes: TerminalLibCm[],
-  aspectObjectTypes: AspectObjectLibCm[],
+  aspectObjectTypes: BlockLibCm[],
   terminalId: string,
   project: Project,
   dispatch: Dispatch
@@ -163,7 +163,7 @@ export const onTerminalAdd = (
 export const onTerminalRemove = (
   aspectObjectId: string,
   terminalTypes: TerminalLibCm[],
-  aspectObjectTypes: AspectObjectLibCm[],
+  aspectObjectTypes: BlockLibCm[],
   terminalId: string,
   project: Project,
   dispatch: Dispatch
