@@ -1,8 +1,8 @@
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 
 export interface Collection {
   id: string;
   name: string;
-  libNodes: AspectObjectLibCm[];
+  libNodes: BlockLibCm[];
   created: Date;
 }

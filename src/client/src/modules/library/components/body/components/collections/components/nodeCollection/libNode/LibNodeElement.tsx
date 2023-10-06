@@ -2,7 +2,7 @@ import { Color } from "../../../../../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../../models/project";
 import { CollectionsActions } from "../../../../../../../../../models";
-import { AspectObjectLibCm } from "@mimirorg/typelibrary-types";
+import { BlockLibCm } from "@mimirorg/typelibrary-types";
 import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
 import { OnCheckboxChange, OnDragStart } from "./handlers";
 import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
@@ -10,11 +10,11 @@ import { Icon, useMimirorgTheme } from "@mimirorg/component-library";
 import { AspectColor } from "lib";
 
 interface Props {
-  libNode: AspectObjectLibCm;
-  selectedLibNode: AspectObjectLibCm;
-  setSelectedLibNode: (value: AspectObjectLibCm) => void;
-  selectedLibNodes: AspectObjectLibCm[];
-  setSelectedLibNodes: (array: AspectObjectLibCm[]) => void;
+  libNode: BlockLibCm;
+  selectedLibNode: BlockLibCm;
+  setSelectedLibNode: (value: BlockLibCm) => void;
+  selectedLibNodes: BlockLibCm[];
+  setSelectedLibNodes: (array: BlockLibCm[]) => void;
   collectionState: CollectionsActions;
 }
 
