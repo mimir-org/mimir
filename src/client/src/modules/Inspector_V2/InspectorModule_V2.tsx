@@ -13,6 +13,8 @@ export const InspectorModule_V2 = () => {
     const dispatch = useAppDispatch();
     const modules = useAppSelector<ModuleType[]>(modulesSelector);
     const isModuleOpen = modules.some((x) => x === ModuleType.Inspector);
+    const isLibraryModuleOpen = modules.some((x) => x === ModuleType.Library);
+    const isExplorerModuleOpen = modules.some((x) => x === ModuleType.Explorer);
     const moduleType = MODULE_TYPE.INSPECTOR;
 
     const [activeTab, setActiveTab] = useState(InspectorTab.Admin)
@@ -22,8 +24,11 @@ export const InspectorModule_V2 = () => {
         <AnimatedModule
             start={isModuleOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN}
             stop={isModuleOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED}
+            libOpen={isLibraryModuleOpen}
+            explorerOpen={isExplorerModuleOpen}
             type={moduleType}
             id="InspectorModule"
+            isHorizontal={true}
         >
             <InspectorModuleHeader_V2
                 isModuleOpen={isModuleOpen}
