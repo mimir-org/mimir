@@ -5,7 +5,7 @@ import {modulesSelector, useAppDispatch, useAppSelector} from "../../store";
 import {ModuleType} from "../../lib";
 import {Size} from "../../assets/size/Size";
 import {MODULE_TYPE} from "../../models/project";
-import {InspectorTab} from "../../models/enums/InspectorTab";
+import {InspectorTab} from "../../models";
 import {InspectorModuleHeader_V2} from "./header/InspectorModuleHeader_V2";
 import {setModule} from "../../store/reducers/commonReducer";
 
@@ -22,15 +22,16 @@ export const InspectorModule_V2 = () => {
 
     return (
         <AnimatedModule
+            id="InspectorModule"
             start={isModuleOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN}
             stop={isModuleOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED}
             libOpen={isLibraryModuleOpen}
             explorerOpen={isExplorerModuleOpen}
             type={moduleType}
-            id="InspectorModule"
             isHorizontal={true}
         >
             <InspectorModuleHeader_V2
+                id="InspectorModule"
                 isModuleOpen={isModuleOpen}
                 activeTab={activeTab}
                 setActiveTab={(tab: InspectorTab) => setActiveTab(tab)}

@@ -8,6 +8,7 @@ import { ExpandButton } from "./components/ExpandButton";
 import { Aspect } from "../../../../lib";
 
 interface Props {
+  id: string;
   libOpen: boolean;
   activeTab: LibraryTab;
   setActiveTab: (tab: LibraryTab) => void;
@@ -22,13 +23,13 @@ interface Props {
  * @param interface
  * @returns Library Module tabs, search input and filters.
  */
-export const ModuleHeader = ({ libOpen, activeTab, setActiveTab, search, aspectFilters, setAspectFilters, onOpen }: Props) => (
+export const ModuleHeader = ({ id, libOpen, activeTab, setActiveTab, search, aspectFilters, setAspectFilters, onOpen }: Props) => (
   <LibHeader>
     {!libOpen ? (
       <ExpandButton text={TextResources.EXPAND_LIB_PANEL} offset={[0, 5]} onOpen={onOpen} />
     ) : (
       <>
-        <ModuleTabs activeTab={activeTab} setActiveTab={setActiveTab} onOpen={onOpen} />
+        <ModuleTabs id={id} activeTab={activeTab} setActiveTab={setActiveTab} onOpen={onOpen} />
         <SearchArea activeTab={activeTab} search={search} />
         <FilterBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
       </>

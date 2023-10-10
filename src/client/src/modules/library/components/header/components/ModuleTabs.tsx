@@ -1,12 +1,13 @@
-import { LibraryTab } from "../../../../../models";
-import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
-import { LibraryTabsWrapper, LibraryTabHeader, LibraryTabHeaderText } from "./ModuleTabs.styled";
+import { LibraryTab, InspectorTab } from "../../../../../models";
+import { enumToTabTextResourceName, activeTabEnum } from "./helpers/EnumToTabTextResourceName";
+import { TabsWrapper, TabHeader, TabHeaderText } from "./ModuleTabs.styled";
 import { ExpandButton } from "./ExpandButton";
 import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
-  activeTab: LibraryTab;
-  setActiveTab: (tab: LibraryTab) => void;
+  id: string;
+  activeTab: LibraryTab | InspectorTab;
+  setActiveTab: (tab: LibraryTab | InspectorTab) => void;
   onOpen: (state: boolean) => void;
 }
 
@@ -16,24 +17,23 @@ interface Props {
  * @returns every tab in library module
  */
 
-export const ModuleTabs = ({ activeTab, setActiveTab, onOpen }: Props) => {
+export const ModuleTabs = ({ id, activeTab, setActiveTab, onOpen }: Props) => {
   const stringIsNumber = (v: string) => isNaN(Number(v)) === false;
-
   return (
-    <LibraryTabsWrapper>
+    <TabsWrapper>
       <ExpandButton text={TextResources.CLOSE_LIB_PANEL} offset={[0, 10]} onOpen={onOpen} />
 
-      {Object.keys(LibraryTab)
+      {Object.keys(activeTabEnum(id))
         .filter(stringIsNumber)
         .map((key) => {
           return (
-            <div key={key} onClick={() => setActiveTab(Number(key) as LibraryTab)}>
-              <LibraryTabHeader key={key} isActive={activeTab === Number(key)}>
-                <LibraryTabHeaderText>{ConvertToLibTabName(Number(key) as LibraryTab)}</LibraryTabHeaderText>
-              </LibraryTabHeader>
+            <div key={key} onClick={() => setActiveTab(Number(key) as LibraryTab | InspectorTab)}>
+              <TabHeader key={key} isActive={activeTab === Number(key)}>
+                <TabHeaderText>{enumToTabTextResourceName(Number(key) as LibraryTab | InspectorTab, id)}</TabHeaderText>
+              </TabHeader>
             </div>
           );
         })}
-    </LibraryTabsWrapper>
+    </TabsWrapper>
   );
 };
