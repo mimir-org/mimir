@@ -1,13 +1,13 @@
 import {useState} from "react";
 
-import {AnimatedModule} from "../../compLibrary/animated/AnimatedModule";
-import {modulesSelector, useAppDispatch, useAppSelector} from "../../store";
-import {ModuleType} from "../../lib";
-import {Size} from "../../assets/size/Size";
-import {MODULE_TYPE} from "../../models/project";
-import {InspectorTab} from "../../models";
+import {AnimatedModule} from "compLibrary/animated/AnimatedModule";
+import {modulesSelector, useAppDispatch, useAppSelector} from "store";
+import {ModuleType} from "lib";
+import {Size} from "assets/size/Size";
+import {MODULE_TYPE} from "models/project";
+import {InspectorTab} from "models";
 import {InspectorModuleHeader_V2} from "./header/InspectorModuleHeader_V2";
-import {setModule} from "../../store/reducers/commonReducer";
+import {setModule} from "store/reducers/commonReducer";
 
 export const InspectorModule_V2 = () => {
     const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ export const InspectorModule_V2 = () => {
     const isExplorerModuleOpen = modules.some((x) => x === ModuleType.Explorer);
     const moduleType = MODULE_TYPE.INSPECTOR;
 
-    const [activeTab, setActiveTab] = useState(InspectorTab.Admin)
+    const [activeTab, setActiveTab] = useState(InspectorTab.Admin);
 
 
     return (

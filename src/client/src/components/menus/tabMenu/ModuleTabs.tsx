@@ -1,8 +1,8 @@
-import { LibraryTab, InspectorTab } from "../../../../../models";
-import { enumToTabTextResourceName, activeTabEnum } from "./helpers/EnumToTabTextResourceName";
+import { LibraryTab, InspectorTab } from "../../../models";
+import { enumToTabTextResourceName, activeTabEnum } from "../../../helpers/TabHelpers";
 import { TabsWrapper, TabHeader, TabHeaderText } from "./ModuleTabs.styled";
-import { ExpandButton } from "./ExpandButton";
-import { TextResources } from "../../../../../assets/text/TextResources";
+import { ExpandButton } from "../../Buttons/ExpandButton";
+import { TextResources } from "../../../assets/text/TextResources";
 
 interface Props {
   id: string;

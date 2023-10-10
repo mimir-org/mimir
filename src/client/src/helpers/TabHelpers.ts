@@ -1,5 +1,5 @@
-import {TextResources} from "../../../../../../assets/text/TextResources";
-import {LibraryTab, InspectorTab} from "../../../../../../models";
+import {TextResources} from "../assets/text/TextResources";
+import {LibraryTab, InspectorTab} from "../models";
 
 export const enumToTabTextResourceName = (tab: LibraryTab | InspectorTab, id: string): string => {
     switch (id) {

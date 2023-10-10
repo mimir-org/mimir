@@ -1,6 +1,6 @@
 import { InspectorPanel } from "@mimirorg/component-library";
 import { useState } from "react";
-import { AspectObject } from "../../../lib";
+import { AspectObject } from "lib";
 import { AdminTab } from "./tabs/AdminTab";
 import { AttributeTab } from "./tabs/AttributeTab";
 import { TerminalTab } from "./tabs/TerminalTab";

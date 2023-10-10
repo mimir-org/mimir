@@ -1,16 +1,16 @@
 import {useState} from "react";
 
-import {Size} from "../../assets/size/Size";
-import {MODULE_TYPE} from "../../models/project";
+import {Size} from "assets/size/Size";
+import {MODULE_TYPE} from "models/project";
 import {ModuleHeader} from "./components/header/ModuleHeader";
 import {ModuleBody} from "./components/body/ModuleBody";
-import {LibraryTab, CollectionsActions} from "../../models";
+import {LibraryTab, CollectionsActions} from "models";
 import {BlockLibCm} from "@mimirorg/typelibrary-types";
 import {libraryStateSelector, modulesSelector, useAppDispatch, useAppSelector} from "store";
-import {Aspect, ModuleType} from "../../lib";
+import {Aspect, ModuleType} from "lib";
 import {LibraryState} from "store/reducers/libraryReducer";
 import {setModule} from "store/reducers/commonReducer";
-import {AnimatedModule} from "../../compLibrary/animated/AnimatedModule";
+import {AnimatedModule} from "compLibrary/animated/AnimatedModule";
 
 /**
  * Component for Mimir's type library, templates and subprojects.

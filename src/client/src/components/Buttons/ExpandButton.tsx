@@ -1,6 +1,6 @@
 import { Icon } from "@mimirorg/component-library";
-import { LibraryIcon } from "../../../../../assets/icons/modules";
-import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { LibraryIcon } from "assets/icons/modules";
+import { Tooltip } from "compLibrary/tooltip/Tooltip";
 import { ExpandButtonContainer } from "./ExpandButton.styled";
 import { useState } from "react";
 

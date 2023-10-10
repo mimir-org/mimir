@@ -1,11 +1,11 @@
-import { LibraryTab } from "../../../../models";
-import { TextResources } from "../../../../assets/text/TextResources";
+import { LibraryTab } from "models";
+import { TextResources } from "assets/text/TextResources";
 import { LibHeader } from "./ModuleHeader.styled";
-import { ModuleTabs } from "./components/ModuleTabs";
+import { ModuleTabs } from "components/menus/tabMenu/ModuleTabs";
 import { SearchArea } from "./components/SearchArea";
 import { FilterBoxes } from "./components/FilterBoxes";
-import { ExpandButton } from "./components/ExpandButton";
-import { Aspect } from "../../../../lib";
+import { ExpandButton } from "components/Buttons/ExpandButton";
+import { Aspect } from "lib";
 
 interface Props {
   id: string;
