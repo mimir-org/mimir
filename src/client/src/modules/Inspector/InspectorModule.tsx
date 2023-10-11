@@ -8,6 +8,7 @@ import {MODULE_TYPE} from "models/project";
 import {InspectorTab} from "models";
 import {InspectorModuleHeader} from "./header/InspectorModuleHeader";
 import {setModule} from "store/reducers/commonReducer";
+import {InspectorModuleBody} from "./body/InspectorModuleBody";
 
 export const InspectorModule = () => {
     const dispatch = useAppDispatch();
@@ -37,6 +38,8 @@ export const InspectorModule = () => {
                 setActiveTab={(tab: InspectorTab) => setActiveTab(tab)}
                 setModuleOpenStatus={() => dispatch(setModule({module: ModuleType.Inspector, open: !isModuleOpen}))}
             />
+
+            <InspectorModuleBody isModuleOpen={isModuleOpen} activeTab={activeTab} />
 
         </AnimatedModule>
     );

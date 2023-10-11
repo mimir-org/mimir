@@ -1,16 +1,16 @@
 import { Icon } from "@mimirorg/component-library";
-import { LibraryIcon } from "assets/icons/modules";
 import { Tooltip } from "compLibrary/tooltip/Tooltip";
 import { ExpandButtonContainer } from "./ExpandButton.styled";
 import { useState } from "react";
 
 interface Props {
-  text: string;
-  offset: [number, number];
-  onOpen: (open: boolean) => void;
+    text: string;
+    icon: string;
+    offset: [number, number];
+    onOpen: (open: boolean) => void;
 }
 
-export const ExpandButton = ({ text, offset, onOpen }: Props) => {
+export const ExpandButton = ({ text, icon, offset, onOpen }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -22,7 +22,7 @@ export const ExpandButton = ({ text, offset, onOpen }: Props) => {
           onOpen(!isOpen);
         }}
       >
-        <Icon size={24} src={LibraryIcon} alt="" />
+        <Icon size={24} src={icon} alt="Icon not found" />
       </ExpandButtonContainer>
     </Tooltip>
   );

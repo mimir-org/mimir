@@ -6,6 +6,7 @@ import { SearchArea } from "./components/SearchArea";
 import { FilterBoxes } from "./components/FilterBoxes";
 import { ExpandButton } from "components/Buttons/ExpandButton";
 import { Aspect } from "lib";
+import {LibraryIcon} from "assets/icons/modules";
 
 interface Props {
   id: string;
@@ -26,10 +27,16 @@ interface Props {
 export const ModuleHeader = ({ id, libOpen, activeTab, setActiveTab, search, aspectFilters, setAspectFilters, onOpen }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.EXPAND_LIB_PANEL} offset={[0, 5]} onOpen={onOpen} />
+      <ExpandButton text={TextResources.EXPAND_LIB_PANEL} icon={LibraryIcon} offset={[0, 5]} onOpen={onOpen} />
     ) : (
       <>
-        <ModuleTabs id={id} activeTab={activeTab} setActiveTab={setActiveTab} onOpen={onOpen} />
+        <ModuleTabs id={id}
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    onOpen={onOpen}
+                    expandButtonText={TextResources.CLOSE_LIB_PANEL}
+                    expandButtonIcon={LibraryIcon}
+        />
         <SearchArea activeTab={activeTab} search={search} />
         <FilterBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
       </>

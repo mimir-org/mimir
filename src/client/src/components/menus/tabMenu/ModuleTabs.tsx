@@ -2,13 +2,13 @@ import { LibraryTab, InspectorTab } from "../../../models";
 import { enumToTabTextResourceName, activeTabEnum } from "../../../helpers/TabHelpers";
 import { TabsWrapper, TabHeader, TabHeaderText } from "./ModuleTabs.styled";
 import { ExpandButton } from "../../Buttons/ExpandButton";
-import { TextResources } from "../../../assets/text/TextResources";
-
 interface Props {
   id: string;
   activeTab: LibraryTab | InspectorTab;
   setActiveTab: (tab: LibraryTab | InspectorTab) => void;
   onOpen: (state: boolean) => void;
+  expandButtonText: string;
+  expandButtonIcon: string;
 }
 
 /**
@@ -17,11 +17,11 @@ interface Props {
  * @returns every tab in library module
  */
 
-export const ModuleTabs = ({ id, activeTab, setActiveTab, onOpen }: Props) => {
+export const ModuleTabs = ({ id, activeTab, setActiveTab, onOpen, expandButtonText, expandButtonIcon }: Props) => {
   const stringIsNumber = (v: string) => isNaN(Number(v)) === false;
   return (
     <TabsWrapper>
-      <ExpandButton text={TextResources.CLOSE_LIB_PANEL} offset={[0, 10]} onOpen={onOpen} />
+      <ExpandButton text={expandButtonText} icon={expandButtonIcon} offset={[0, 10]} onOpen={onOpen} />
 
       {Object.keys(activeTabEnum(id))
         .filter(stringIsNumber)
