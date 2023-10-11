@@ -100,7 +100,6 @@ export const Home = () => {
           {commonState.view === ViewType.Tree && <ExplorerTreeModule dispatch={dispatch} />}
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
           <FlowModule />
-          {/*<InspectorModule selectedAspectObject={project?.getSelectedAspectObject()} />*/}
           <InspectorModule />
           {/* <AnimatedModule
             content="<div><p>Her er tekst</p><p>Her er mer tekst</p></div>"
