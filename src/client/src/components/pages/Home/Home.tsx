@@ -30,7 +30,7 @@ import {
 import { WebSocket } from "models";
 import { createNewProject } from "components/handlers/ProjectHandlers";
 // import { InspectorModule } from "components/modules/inspector/InspectorModule";
-import {InspectorModule} from "../../../modules/Inspector/InspectorModule";
+import { InspectorModule } from "../../../modules/Inspector/InspectorModule";
 
 /**
  * The main component for Mimir.

@@ -1,4 +1,3 @@
-
 export const InspectorModuleAttributes = () => {
-    return (<h1>Attributes</h1>)
-}
+  return <h1>Attributes</h1>;
+};

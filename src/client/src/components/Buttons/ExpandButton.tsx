@@ -4,10 +4,10 @@ import { ExpandButtonContainer } from "./ExpandButton.styled";
 import { useState } from "react";
 
 interface Props {
-    text: string;
-    icon: string;
-    offset: [number, number];
-    onOpen: (open: boolean) => void;
+  text: string;
+  icon: string;
+  offset: [number, number];
+  onOpen: (open: boolean) => void;
 }
 
 export const ExpandButton = ({ text, icon, offset, onOpen }: Props) => {

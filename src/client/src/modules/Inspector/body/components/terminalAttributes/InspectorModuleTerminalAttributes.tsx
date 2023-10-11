@@ -1,3 +1,3 @@
 export const InspectorModuleTerminalAttributes = () => {
-    return (<h1>Terminal attributes</h1>)
-}
+  return <h1>Terminal attributes</h1>;
+};

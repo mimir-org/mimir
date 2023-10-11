@@ -1,3 +1,3 @@
 export const InspectorModuleRelations = () => {
-    return (<h1>Relations</h1>)
-}
+  return <h1>Relations</h1>;
+};

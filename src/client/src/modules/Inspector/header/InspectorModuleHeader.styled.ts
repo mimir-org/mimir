@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import {Color} from "assets/color/Color";
-
+import { Color } from "assets/color/Color";
 
 export const InspectorModuleHeaderStyled = styled.div`
   display: flex;
