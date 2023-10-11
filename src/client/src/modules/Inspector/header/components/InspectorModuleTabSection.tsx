@@ -1,4 +1,4 @@
-import {Inspector_V2TabsWrapper} from "./InspectorModuleTabSection_V2.styled";
+import {Inspector_V2TabsWrapper} from "./InspectorModuleTabSection.styled";
 import {InspectorTab} from "models/enums/InspectorTab";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
     onOpen: () => void;
 }
 
-export const InspectorModuleTabSection_V2 = ({activeTab, setActiveTab, onOpen}: Props) => (
+export const InspectorModuleTabSection = ({activeTab, setActiveTab, onOpen}: Props) => (
     <Inspector_V2TabsWrapper>
 
     </Inspector_V2TabsWrapper>

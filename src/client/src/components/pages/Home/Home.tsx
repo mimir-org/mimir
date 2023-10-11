@@ -30,7 +30,7 @@ import {
 import { WebSocket } from "models";
 import { createNewProject } from "components/handlers/ProjectHandlers";
 // import { InspectorModule } from "components/modules/inspector/InspectorModule";
-import {InspectorModule_V2} from "../../../modules/Inspector_V2/InspectorModule_V2";
+import {InspectorModule} from "../../../modules/Inspector/InspectorModule";
 
 /**
  * The main component for Mimir.
@@ -101,7 +101,7 @@ export const Home = () => {
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
           <FlowModule />
           {/*<InspectorModule selectedAspectObject={project?.getSelectedAspectObject()} />*/}
-          <InspectorModule_V2 />
+          <InspectorModule />
           {/* <AnimatedModule
             content="<div><p>Her er tekst</p><p>Her er mer tekst</p></div>"
             trigger={<InspectorModuleTrigger name="Inspector" />}

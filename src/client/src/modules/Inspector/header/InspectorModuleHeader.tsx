@@ -1,5 +1,5 @@
 import {InspectorTab} from "models";
-import {InspectorModuleHeader_V2Styled} from "./InspectorModuleHeader_V2.styled";
+import {InspectorModuleHeaderStyled} from "./InspectorModuleHeader.styled";
 import {ModuleTabs} from "components/menus/tabMenu/ModuleTabs";
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
     setModuleOpenStatus: (isModuleOpen: boolean) => void;
 }
 
-export const InspectorModuleHeader_V2 = ({id, isModuleOpen, activeTab, setActiveTab, setModuleOpenStatus}: Props) => (
-    <InspectorModuleHeader_V2Styled>
+export const InspectorModuleHeader = ({id, isModuleOpen, activeTab, setActiveTab, setModuleOpenStatus}: Props) => (
+    <InspectorModuleHeaderStyled>
         <ModuleTabs id={id} activeTab={activeTab} setActiveTab={setActiveTab} onOpen={setModuleOpenStatus}/>
-    </InspectorModuleHeader_V2Styled>
+    </InspectorModuleHeaderStyled>
 );

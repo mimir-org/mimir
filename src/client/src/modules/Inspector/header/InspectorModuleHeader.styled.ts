@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {Color} from "assets/color/Color";
 
 
-export const InspectorModuleHeader_V2Styled = styled.div`
+export const InspectorModuleHeaderStyled = styled.div`
   display: flex;
   flex-direction: row;
   height: 40px;

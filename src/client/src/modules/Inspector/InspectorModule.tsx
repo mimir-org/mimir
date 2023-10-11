@@ -6,10 +6,10 @@ import {ModuleType} from "lib";
 import {Size} from "assets/size/Size";
 import {MODULE_TYPE} from "models/project";
 import {InspectorTab} from "models";
-import {InspectorModuleHeader_V2} from "./header/InspectorModuleHeader_V2";
+import {InspectorModuleHeader} from "./header/InspectorModuleHeader";
 import {setModule} from "store/reducers/commonReducer";
 
-export const InspectorModule_V2 = () => {
+export const InspectorModule = () => {
     const dispatch = useAppDispatch();
     const modules = useAppSelector<ModuleType[]>(modulesSelector);
     const isModuleOpen = modules.some((x) => x === ModuleType.Inspector);
@@ -30,7 +30,7 @@ export const InspectorModule_V2 = () => {
             type={moduleType}
             isHorizontal={true}
         >
-            <InspectorModuleHeader_V2
+            <InspectorModuleHeader
                 id="InspectorModule"
                 isModuleOpen={isModuleOpen}
                 activeTab={activeTab}
