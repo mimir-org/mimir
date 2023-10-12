@@ -22,7 +22,7 @@ export const ExpandButton = ({ text, icon, offset, onOpen }: Props) => {
           onOpen(!isOpen);
         }}
       >
-        <Icon size={24} src={icon} alt="Icon not found" />
+        <Icon size={24} src={icon} alt="Expand or collapse modules" />
       </ExpandButtonContainer>
     </Tooltip>
   );
