@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../../../assets/color/Color";
-import { FontSize, FontType } from "../../../../../assets/font";
+import { Color } from "assets/color/Color";
+import { FontSize, FontType } from "assets/font";
 
-export const LibraryTabsWrapper = styled.div`
+export const TabsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 40px;
@@ -15,7 +15,7 @@ interface LibraryTabHeaderProps {
   isActive: boolean;
 }
 
-export const LibraryTabHeader = styled.div<LibraryTabHeaderProps>`
+export const TabHeader = styled.div<LibraryTabHeaderProps>`
   display: flex;
   min-width: 73px;
   background-color: ${(props) => !props.isActive && Color.LIGHT_GREY};
@@ -36,7 +36,7 @@ export const LibraryTabHeader = styled.div<LibraryTabHeaderProps>`
   }
 `;
 
-export const LibraryTabHeaderText = styled.p`
+export const TabHeaderText = styled.p`
   color: ${Color.BLACK};
   font-size: ${FontSize.SUBHEADER};
   font-family: ${FontType.STANDARD};

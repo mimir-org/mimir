@@ -6,6 +6,8 @@ import { Color } from "../../assets/color/Color";
 interface ModuleBoxProps {
   type: string;
   stop: number;
+  libOpen: boolean;
+  explorerOpen: boolean;
 }
 
 export const ModuleBox = styled.div<ModuleBoxProps>`
@@ -14,12 +16,22 @@ export const ModuleBox = styled.div<ModuleBoxProps>`
   border-right: 1px solid ${Color.GAINSBORO};
   border-left: ${(props) => props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.GAINSBORO};
   background-color: ${Color.GHOST_WHITE};
-  width: ${(props) => props.type !== MODULE_TYPE.LEGEND && props.stop}px;
-  height: ${(props) => (props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%")};
-  bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
-  right: ${(props) => props.type === MODULE_TYPE.LIBRARY && "0"};
-  top: ${(props) => props.type !== MODULE_TYPE.LEGEND && Size.TOPMENU_HEIGHT}px;
   z-index: 5;
   overflow: hidden;
   position: fixed;
+`;
+
+export const VerticalModuleBox = styled(ModuleBox)`
+  width: ${(props) => props.stop}px;
+  height: 100%;
+  top: ${Size.TOPMENU_HEIGHT}px;
+  right: ${(props) => props.type === MODULE_TYPE.LIBRARY && "0"};
+`;
+
+export const HorizontalModuleBox = styled(ModuleBox)`
+  width: auto;
+  height: ${(props) => props.stop}px;
+  bottom: 0;
+  right: ${(props) => (props.libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
+  left: ${(props) => (props.explorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
 `;

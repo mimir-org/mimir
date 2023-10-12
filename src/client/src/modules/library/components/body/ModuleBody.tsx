@@ -1,4 +1,4 @@
-import { CollectionsActions, LibraryTab } from "../../../../models";
+import { CollectionsActions, LibraryTab } from "models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { LibNodeElement } from "./components/collections/components/nodeCollection/libNode/LibNodeElement";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";

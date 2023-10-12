@@ -1,7 +1,6 @@
 // import { activeMenuSelector } from "redux/store";
 // import { useRef } from "react";
 import { StartPage } from "../Start/StartPage";
-// import { InspectorModule } from "../../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../../modules/library/LibraryModule";
 // import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../../flow/FlowModule";
@@ -29,7 +28,7 @@ import {
 } from "store";
 import { WebSocket } from "models";
 import { createNewProject } from "components/handlers/ProjectHandlers";
-import { InspectorModule } from "components/modules/inspector/InspectorModule";
+import { InspectorModule } from "../../../modules/Inspector/InspectorModule";
 
 /**
  * The main component for Mimir.
@@ -99,7 +98,7 @@ export const Home = () => {
           {commonState.view === ViewType.Tree && <ExplorerTreeModule dispatch={dispatch} />}
           {commonState.view === ViewType.Block && <ExplorerBlockModule dispatch={dispatch} />}
           <FlowModule />
-          <InspectorModule selectedAspectObject={project?.getSelectedAspectObject()} />
+          <InspectorModule />
           {/* <AnimatedModule
             content="<div><p>Her er tekst</p><p>Her er mer tekst</p></div>"
             trigger={<InspectorModuleTrigger name="Inspector" />}
