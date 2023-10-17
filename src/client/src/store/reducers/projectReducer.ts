@@ -39,6 +39,14 @@ export interface CreateProjectAction {
   project: Project;
 }
 
+export interface UpdateProjectAction {
+  project: Project;
+}
+
+export interface UpdateProjectActionFinished {
+  statusCode: string;
+}
+
 // Initial state
 const initState: ProjectState = {
   fetching: [],
@@ -79,12 +87,15 @@ export const projectSlice = createSlice({
     createProject: (state, action: PayloadAction<CreateProjectAction>) => {
       state.project = clone(action.payload.project);
     },
-    updateProject: (state, action: PayloadAction<CreateProjectAction>) => {
+    updateProject: (state, action: PayloadAction<UpdateProjectAction>) => {
       state.project = clone(action.payload.project);
+    },
+    updateProjectFinished: (state, action: PayloadAction<UpdateProjectActionFinished>) => {
+      console.log("statuscode: " + action.payload.statusCode + state.project.id + " is saved!");
     },
   },
 });
 
-export const { fetchProject, fetchProjectFinished, fetchProjects, fetchProjectsFinished, createProject, updateProject } =
+export const { fetchProject, fetchProjectFinished, fetchProjects, fetchProjectsFinished, createProject, updateProject, updateProjectFinished } =
   projectSlice.actions;
 export default projectSlice.reducer;
