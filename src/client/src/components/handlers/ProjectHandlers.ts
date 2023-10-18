@@ -36,6 +36,13 @@ export const createNewProject = (domain: string, name: string, userName: string,
   dispatch(setDialogType({ dialog: DialogType.None }));
 };
 
+export const saveProject = (project: Project, dispatch: Dispatch) => {
+  if(project === null) {
+    throw new Error("Can`t save project. Project is not created");
+  }
+  dispatch(updateProject({project}));
+};
+
 export const onNodePositionChange = (
   id: string,
   x: number,

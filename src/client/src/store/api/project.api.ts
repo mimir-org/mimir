@@ -17,6 +17,6 @@ export const projectApi = {
     return serializer.parse(r.data);
   },
   async saveProject(project: Project): Promise<Project> {
-    return await client.post(_basePath + "/project", project)
+    return await client.post(_basePath, project)
   },
 };
