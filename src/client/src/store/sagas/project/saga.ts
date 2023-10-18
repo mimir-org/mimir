@@ -5,8 +5,8 @@ import {
   fetchProjectFinished,
   FetchProjectsAction,
   fetchProjectsFinished,
-  UpdateProjectAction,
-  updateProjectFinished
+  SaveProjectAction,
+  saveProjectFinished,
 } from "store/reducers/projectReducer";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
@@ -29,11 +29,11 @@ export function* getProjects(action: PayloadAction<FetchProjectsAction>) {
   }
 }
 
-export function* saveProject(action: PayloadAction<UpdateProjectAction>) {
+export function* postProject(action: PayloadAction<SaveProjectAction>) {
   try {
     const response: string = yield call(projectApi.saveProject, action.payload.project);
-    yield put(updateProjectFinished({statusCode: response}));
+    yield put(saveProjectFinished({serverResponse: response}));
   }catch (error) {
-    yield put(updateProjectFinished({statusCode: "500 internal server Error"}));
+    yield put(saveProjectFinished({serverResponse: ""}));
   }
 }

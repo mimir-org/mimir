@@ -6,7 +6,7 @@ import { MutableRefObject } from "react";
 import { Connection as FlowConnection, Edge } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { setDialogType, setViewType } from "store/reducers/commonReducer";
-import { updateProject } from "store/reducers/projectReducer";
+import { updateProject, saveProject } from "store/reducers/projectReducer";
 
 export const updateFlowNodesAndEdgesFromState = (
   flowRef: MutableRefObject<any>,
@@ -36,11 +36,11 @@ export const createNewProject = (domain: string, name: string, userName: string,
   dispatch(setDialogType({ dialog: DialogType.None }));
 };
 
-export const saveProject = (project: Project, dispatch: Dispatch) => {
+export const saveProjectToDb = (project: Project, dispatch: Dispatch) => {
   if(project === null) {
     throw new Error("Can`t save project. Project is not created");
   }
-  dispatch(updateProject({project}));
+  dispatch(saveProject({project}));
 };
 
 export const onNodePositionChange = (

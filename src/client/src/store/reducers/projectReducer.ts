@@ -16,6 +16,7 @@ export interface ProjectState {
   isLocking: boolean;
   project: Project | null;
   projectList: Project[];
+  saving: string[];
 }
 
 // Payload action
@@ -43,8 +44,12 @@ export interface UpdateProjectAction {
   project: Project;
 }
 
-export interface UpdateProjectActionFinished {
-  statusCode: string;
+export interface SaveProjectAction {
+  project: Project;
+}
+
+export interface SaveProjectFinishedAction {
+ serverResponse: string;
 }
 
 // Initial state
@@ -54,6 +59,7 @@ const initState: ProjectState = {
   isLocking: false,
   project: null,
   projectList: [],
+  saving: [],
 };
 
 function clone<T>(instance: T): T {
@@ -90,12 +96,16 @@ export const projectSlice = createSlice({
     updateProject: (state, action: PayloadAction<UpdateProjectAction>) => {
       state.project = clone(action.payload.project);
     },
-    updateProjectFinished: (state, action: PayloadAction<UpdateProjectActionFinished>) => {
-      console.log("statuscode: " + action.payload.statusCode + state.project.id + " is saved!");
+    saveProject: (state, action: PayloadAction<SaveProjectAction>) => {
+      state.saving.push(saveProject.type);
     },
+    saveProjectFinished: (state, action: PayloadAction<SaveProjectFinishedAction>) => {
+      console.log(action.payload.serverResponse);
+      state.saving = state.saving.filter((elem) => elem !== saveProject.type);
+    }
   },
 });
 
-export const { fetchProject, fetchProjectFinished, fetchProjects, fetchProjectsFinished, createProject, updateProject, updateProjectFinished } =
+export const { fetchProject, fetchProjectFinished, fetchProjects, fetchProjectsFinished, createProject, updateProject, saveProject, saveProjectFinished } =
   projectSlice.actions;
 export default projectSlice.reducer;

@@ -21,12 +21,14 @@ import { DialogType, Project } from "lib";
 // import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
 import { Dispatch } from "redux";
 import { LibraryState } from "store/reducers/libraryReducer";
+import {saveProjectToDb} from "../../handlers/ProjectHandlers";
 
 interface Props {
   dispatch: Dispatch;
   projects: Project[];
   commonState: CommonState;
   libraryState: LibraryState;
+  project: Project;
   onCreateProject: (name: string, description: string) => void;
 }
 
@@ -36,7 +38,7 @@ interface Props {
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, onCreateProject }: Props) => {
+export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, project, onCreateProject }: Props) => {
   // const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   // const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
   // const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
@@ -83,7 +85,7 @@ export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, onC
   };
 
   const onSaveProject = () => {
-    console.log("onSaveProject");
+    saveProjectToDb(project, dispatch);
   }
 
   const onConvertProject = () => {

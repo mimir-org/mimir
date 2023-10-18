@@ -116,8 +116,9 @@ export const Home = () => {
         <HomeDialogs
           dispatch={dispatch}
           commonState={commonState}
-          projects={projects}
           libraryState={libraryState}
+          project={project}
+          projects={projects}
           onCreateProject={(name, description) => {
             createNewProject(commonState.company.domain, name, "reidar.liabo@bouvet.no", description, dispatch);
           }}
