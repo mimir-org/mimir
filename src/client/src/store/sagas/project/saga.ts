@@ -31,9 +31,9 @@ export function* getProjects(action: PayloadAction<FetchProjectsAction>) {
 
 export function* postProject(action: PayloadAction<SaveProjectAction>) {
   try {
-    const response: string = yield call(projectApi.saveProject, action.payload.project);
-    yield put(saveProjectFinished({serverResponse: response}));
+    const response: Project = yield call(projectApi.saveProject, action.payload.project);
+    yield put(saveProjectFinished({guid: response.id}));
   }catch (error) {
-    yield put(saveProjectFinished({serverResponse: ""}));
+    yield put(saveProjectFinished({guid: ""}));
   }
 }

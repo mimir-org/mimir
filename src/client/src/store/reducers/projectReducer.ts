@@ -49,7 +49,7 @@ export interface SaveProjectAction {
 }
 
 export interface SaveProjectFinishedAction {
- serverResponse: string;
+ guid: string;
 }
 
 // Initial state
@@ -96,12 +96,13 @@ export const projectSlice = createSlice({
     updateProject: (state, action: PayloadAction<UpdateProjectAction>) => {
       state.project = clone(action.payload.project);
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     saveProject: (state, action: PayloadAction<SaveProjectAction>) => {
       state.saving.push(saveProject.type);
     },
     saveProjectFinished: (state, action: PayloadAction<SaveProjectFinishedAction>) => {
-      console.log(action.payload.serverResponse);
       state.saving = state.saving.filter((elem) => elem !== saveProject.type);
+      state.project.id = action.payload.guid;
     }
   },
 });

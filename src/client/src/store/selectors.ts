@@ -21,6 +21,11 @@ export const projectStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
+export const projectStateSavingSelector = createAppSelector(
+    (state) => state.projectState.saving?.length,
+    (saving) => saving
+);
+
 // Library state selectors
 export const libraryStateSelector = createAppSelector(
   (state) => state.library,

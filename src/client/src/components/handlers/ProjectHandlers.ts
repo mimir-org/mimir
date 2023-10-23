@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Theme, toast } from "@mimirorg/component-library";
-import { BlockLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
-import { DialogType, Position, Project, ViewType, Handle, InfoException, ErrorException } from "lib";
-import { MutableRefObject } from "react";
-import { Connection as FlowConnection, Edge } from "react-flow-renderer";
-import { Dispatch } from "redux";
-import { setDialogType, setViewType } from "store/reducers/commonReducer";
-import { updateProject, saveProject } from "store/reducers/projectReducer";
+import {Theme, toast} from "@mimirorg/component-library";
+import {BlockLibCm, TerminalLibCm} from "@mimirorg/typelibrary-types";
+import {DialogType, ErrorException, Handle, InfoException, Position, Project, ViewType} from "lib";
+import {MutableRefObject} from "react";
+import {Connection as FlowConnection, Edge} from "react-flow-renderer";
+import {Dispatch} from "redux";
+import {setDialogType, setViewType} from "store/reducers/commonReducer";
+import {saveProject, updateProject} from "store/reducers/projectReducer";
 
 export const updateFlowNodesAndEdgesFromState = (
   flowRef: MutableRefObject<any>,
@@ -36,11 +36,14 @@ export const createNewProject = (domain: string, name: string, userName: string,
   dispatch(setDialogType({ dialog: DialogType.None }));
 };
 
-export const saveProjectToDb = (project: Project, dispatch: Dispatch) => {
+export const saveProjectToDb = (project: Project, dispatch: Dispatch, saved: number) => {
   if(project === null) {
     throw new Error("Can`t save project. Project is not created");
   }
   dispatch(saveProject({project}));
+  if(saved === 0) {
+    dispatch(setDialogType({dialog: DialogType.None}));
+  }
 };
 
 export const onNodePositionChange = (

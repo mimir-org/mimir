@@ -24,7 +24,7 @@ import {
   projectSelector,
   projectListSelector,
   useAppDispatch,
-  useAppSelector,
+  useAppSelector, projectStateSavingSelector,
 } from "store";
 import { WebSocket } from "models";
 import { createNewProject } from "components/handlers/ProjectHandlers";
@@ -43,6 +43,7 @@ export const Home = () => {
   const projects = useAppSelector<Project[]>(projectListSelector);
   const commonState = useAppSelector<CommonState>(commonStateSelector);
   const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
+  const saved = useAppSelector(projectStateSavingSelector);
 
   const websocket = new WebSocket();
   websocket.setDispatcher(dispatch);
@@ -122,6 +123,7 @@ export const Home = () => {
           onCreateProject={(name, description) => {
             createNewProject(commonState.company.domain, name, "reidar.liabo@bouvet.no", description, dispatch);
           }}
+          saved={saved}
         />
       )}
       <ErrorModule />

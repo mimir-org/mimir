@@ -30,6 +30,7 @@ interface Props {
   libraryState: LibraryState;
   project: Project;
   onCreateProject: (name: string, description: string) => void;
+  saved: number
 }
 
 /**
@@ -38,7 +39,7 @@ interface Props {
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, project, onCreateProject }: Props) => {
+export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, project, onCreateProject, saved }: Props) => {
   // const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   // const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
   // const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
@@ -85,7 +86,7 @@ export const HomeDialogs = ({ dispatch, commonState ,projects, libraryState, pro
   };
 
   const onSaveProject = () => {
-    saveProjectToDb(project, dispatch);
+    saveProjectToDb(project, dispatch, saved);
   }
 
   const onConvertProject = () => {
