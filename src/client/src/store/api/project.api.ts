@@ -17,7 +17,6 @@ export const projectApi = {
     return serializer.parse(r.data);
   },
   async saveProject(project: Project): Promise<Project> {
-    // return await client.post(_basePath, project);
     const r = await client.post<Project>(_basePath, project);
     const serializer = new TypedJSON(Project, typedJsonSetting());
     return serializer.parse(r.data);
