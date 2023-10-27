@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./BlockNode.styled";
 import { BlockNodeConnector } from "./BlockNodeConnector";
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   connectors: Connector[];
   isElectroView: boolean;
 }

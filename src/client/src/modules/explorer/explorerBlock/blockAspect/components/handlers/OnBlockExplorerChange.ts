@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -9,7 +9,7 @@ import { AspectObject } from "lib";
  * @param nodes
  * @param dispatch
  */
-export const OnBlockExplorerChange = (node: AspectObject, nodes: AspectObject[], dispatch: Dispatch) => {
+export const OnBlockExplorerChange = (node: Block, nodes: Block[], dispatch: Dispatch) => {
   if (!node) return;
   // dispatch(removeSelectedBlockNode());
   // dispatch(setSelectedBlockNode(node.id));
@@ -17,7 +17,7 @@ export const OnBlockExplorerChange = (node: AspectObject, nodes: AspectObject[],
   ShowChildren(nodes, node, dispatch);
 };
 
-function ShowChildren(nodes: AspectObject[], node: AspectObject, dispatch: Dispatch) {
+function ShowChildren(nodes: Block[], node: Block, dispatch: Dispatch) {
   // nodes.forEach((n) => {
   //   if (n.parentNodeId === node.id) dispatch(setBlockNodeVisibility(n, false));
   // });

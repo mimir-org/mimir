@@ -8,7 +8,7 @@ import {
   ConnectorTerminal,
 } from "./Connector";
 import { Attribute } from "./Attribute";
-import { Aspect, AspectObjectType, ConnectorDirection, ViewType } from "../enums";
+import { Aspect, BlockType, ConnectorDirection, ViewType } from "../enums";
 import { Node as FlowNode, XYPosition } from "react-flow-renderer";
 import type { BlockLibCm, BlockTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
@@ -24,7 +24,7 @@ import { Connection } from "./Connection";
 @jsonObject({
   knownTypes: [ConnectorTerminal, ConnectorRelation, ConnectorPartOf, ConnectorFulfilledBy, ConnectorHasLocation],
 })
-export class AspectObject {
+export class Block {
   // Domain members
   @jsonMember(String)
   public id: string;
@@ -45,7 +45,7 @@ export class AspectObject {
   public aspect: Aspect;
 
   @jsonMember(Number)
-  public aspectObjectType: AspectObjectType;
+  public blockType: BlockType;
 
   @jsonMember(String)
   public project: string;
@@ -127,7 +127,7 @@ export class AspectObject {
   ) {
     this.id = CreateId();
     this.rds = lib?.rdsCode;
-    this.aspectObjectType = lib != null ? AspectObjectType.Aspect : AspectObjectType.Root;
+    this.blockType = lib != null ? BlockType.Aspect : BlockType.Root;
     this.description = lib?.description;
     this.referenceType = lib?.typeReference;
     this.name = lib?.name;
@@ -166,7 +166,7 @@ export class AspectObject {
    */
   public createDefaultConnectors() {
     this.connectors.push(new ConnectorPartOf("partof", ConnectorDirection.Output, this.id));
-    if (this.aspectObjectType == AspectObjectType.Root) return;
+    if (this.blockType == BlockType.Root) return;
 
     this.connectors.push(new ConnectorPartOf("partof", ConnectorDirection.Input, this.id));
 
@@ -368,6 +368,6 @@ export class AspectObject {
   }
 
   public isRoot(): boolean {
-    return this.aspectObjectType === AspectObjectType.Root;
+    return this.blockType === BlockType.Root;
   }
 }

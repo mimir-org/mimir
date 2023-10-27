@@ -1,4 +1,4 @@
-import { AspectObject } from "../../../../lib";
+import { Block } from "../../../../lib";
 import { Button, Divider, Flexbox, Form, Input, Text, useMimirorgTheme } from "@mimirorg/component-library";
 import { TextArea } from "../../../../compLibrary/input/text";
 import { TabContainerWrapper } from "./TabContainerWrapper.styled";
@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 
 interface AdminTabProps {
-  aspectObject: AspectObject;
+  aspectObject: Block;
 }
 export const AdminTab = ({ aspectObject }: AdminTabProps) => {
   const [labelValue, setLabelValue] = useState<string>(aspectObject?.label);

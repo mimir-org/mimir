@@ -6,11 +6,11 @@ import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrappe
 import { GetAspectIcon } from "assets";
 import { GetIndentLevel } from "../../../shared/helpers/";
 import { Dispatch } from "redux";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 import { Icon } from "@mimirorg/component-library";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;

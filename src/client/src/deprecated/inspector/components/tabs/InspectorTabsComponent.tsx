@@ -10,7 +10,7 @@ import {
   RelationsComponent,
   TerminalAttributesComponent,
 } from "./components";
-import { AspectObject, Attribute, ConnectorTerminal, Project } from "lib";
+import { Block, Attribute, ConnectorTerminal, Project } from "lib";
 
 interface Props {
   project: Project;
@@ -42,7 +42,7 @@ export const InspectorTabsComponent = ({
   const headerText = GetInspectorHeaderText(element);
 
   useEffect(() => {
-    if (element instanceof AspectObject) {
+    if (element instanceof Block) {
       setTerminals(element.getTerminals());
     }
   }, [element]);
@@ -66,7 +66,7 @@ export const InspectorTabsComponent = ({
             changeInspectorTabAction={changeInspectorTabAction}
             inspectorRef={inspectorRef}
             isInspectorOpen={isInspectorOpen}
-            nodes={project?.aspectObjects}
+            nodes={project?.blocks}
           >
             {tab}
           </InspectorTabElement>

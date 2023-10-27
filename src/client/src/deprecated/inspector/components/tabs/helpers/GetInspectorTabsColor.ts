@@ -1,5 +1,5 @@
 import { InspectorElement } from "../../../types";
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 import { Color } from "assets/color/Color";
 
 /**
@@ -8,7 +8,7 @@ import { Color } from "assets/color/Color";
  * @param element
  * @returns a color.
  */
-export const GetInspectorTabsColor = (nodes: AspectObject[], element: InspectorElement) => {
+export const GetInspectorTabsColor = (nodes: Block[], element: InspectorElement) => {
   return Color.LEMON_YELLOW;
   // if (element instanceof AspectObject) return GetAspectColor(element, AspectColorType.Tab);
   // if (element instanceof Connection) return GetAspectColor(element.fromNode, AspectColorType.Tab);

@@ -1,13 +1,13 @@
 import { Handle, Connection as FlowConnection } from "react-flow-renderer";
 import { HandleBox } from "./BlockNode.styled";
 import { TerminalIcon } from "components/flow/terminals/TerminalIcon";
-import { AspectObject, Connector, ConnectorDirection, ViewType } from "lib";
+import { Block, Connector, ConnectorDirection, ViewType } from "lib";
 import { ConnectorPartOf } from "lib/classes/Connector";
 
 interface Props {
   connector: Connector;
   isElectroView: boolean;
-  node: AspectObject;
+  node: Block;
 }
 
 /**

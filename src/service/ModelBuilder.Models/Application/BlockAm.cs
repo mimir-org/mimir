@@ -24,7 +24,6 @@ public class BlockAm : IValidatableObject
     public string Project { get; set; }
     [Required]
     public string MainProject { get; set; }
-    [Required]
     public string LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }

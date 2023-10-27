@@ -20,7 +20,7 @@ import { LockCm } from "../../lib/interfaces/LockCm";
 // } from "../../redux/store/project/actions";
 import { fetchAspectObjects, fetchSubProjects } from "store/reducers/libraryReducer";
 import { ProjectState } from "store/reducers/projectReducer";
-import { AspectObject, Connection, EntityType, Project } from "lib";
+import { Block, Connection, EntityType, Project } from "lib";
 
 let instance = null;
 
@@ -100,15 +100,15 @@ export class WebSocket {
   }
 
   private handleReceivedNodeData = (eventType: WorkerStatus, data: string) => {
-    const node = JSON.parse(data) as AspectObject;
+    const node = JSON.parse(data) as Block;
 
     if (eventType === WorkerStatus.Create) {
-      if (this._project.aspectObjects.some((x) => x.id === node.id)) return;
+      if (this._project.blocks.some((x) => x.id === node.id)) return;
 
       // this._dispatch(addNode(node));
     }
 
-    if (!this._project.aspectObjects.some((x) => x.id === node.id)) return;
+    if (!this._project.blocks.some((x) => x.id === node.id)) return;
     if (eventType === WorkerStatus.Delete) {
       // this._dispatch(deleteNode(node.id));
     }

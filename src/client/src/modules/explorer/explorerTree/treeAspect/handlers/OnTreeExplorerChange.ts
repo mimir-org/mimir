@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 // import { setNodeVisibility } from "../../../../../redux/store/project/actions";
-import { AspectObject, Connection, ConnectorDirection, Project } from "lib";
+import { Block, Connection, ConnectorDirection, Project } from "lib";
 import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
 
 /**
@@ -9,12 +9,12 @@ import { ConnectorPartOf } from "../../../../../lib/classes/Connector";
  * @param node
  * @param dispatch
  */
-export const OnTreeExplorerChange = (project: Project, node: AspectObject, dispatch: Dispatch) => {
+export const OnTreeExplorerChange = (project: Project, node: Block, dispatch: Dispatch) => {
   const { nodes, edges } = findChildren(project, node);
   // dispatch(setNodeVisibility(nodes, edges, !node.hidden));
 };
 
-const findChildren = (project: Project, current: AspectObject): { nodes: string[]; edges: string[] } => {
+const findChildren = (project: Project, current: Block): { nodes: string[]; edges: string[] } => {
   const childrenNodes = [] as string[];
   const childrenEdges = [] as string[];
   resolveChildren(project, current, childrenNodes);
@@ -28,7 +28,7 @@ const findChildren = (project: Project, current: AspectObject): { nodes: string[
  * @param current The current node
  * @param children The current node and the affected children
  */
-const resolveChildren = (project: Project, current: AspectObject, children: string[]): void => {
+const resolveChildren = (project: Project, current: Block, children: string[]): void => {
   children.push(current.id);
 
   // There should only be one output PartOf connector
@@ -70,13 +70,13 @@ const resolveEdges = (project: Project, nodes: string[], edges: string[], hidden
     }
     if (!hidden) {
       const [from, to] = project.getConnectionAspectObjects(e);
-      let otherNode = {} as AspectObject;
+      let otherNode = {} as Block;
       const isEdgeFrom = nodes.some((n) => n === from?.id);
 
       if (isEdgeFrom) {
-        otherNode = project.aspectObjects.find((n) => n.id == to?.id);
+        otherNode = project.blocks.find((n) => n.id == to?.id);
       } else {
-        otherNode = project.aspectObjects.find((n) => n.id == from?.id);
+        otherNode = project.blocks.find((n) => n.id == from?.id);
       }
 
       if (nodes.some((x) => x === otherNode.id) || !otherNode.hidden) {

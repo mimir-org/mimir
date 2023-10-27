@@ -382,12 +382,18 @@ public class ProjectService : IProjectService
         projectDm.CreatedBy = _contextAccessor.GetName();
         projectDm.Created = DateTime.Now.ToUniversalTime();
 
-        projectDm.Blocks = new List<BlockDm>
+        foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root))
         {
-            CreateInitBlock(Aspect.Function, projectDm.Id),
-            CreateInitBlock(Aspect.Product, projectDm.Id),
-            CreateInitBlock(Aspect.Location, projectDm.Id)
-        };
+            var blockId = _commonRepository.CreateIdAsIri(ServerEndpoint.Block, Guid.NewGuid().ToString());
+            block.LibraryType = blockId;
+        }
+
+        // projectDm.Blocks = new List<BlockDm>
+        // {
+        //     CreateInitBlock(Aspect.Function, projectDm.Id),
+        //     CreateInitBlock(Aspect.Product, projectDm.Id),
+        //     CreateInitBlock(Aspect.Location, projectDm.Id)
+        // };
 
         await _projectRepository.CreateAsync(projectDm);
         await _projectRepository.SaveAsync();
@@ -398,7 +404,15 @@ public class ProjectService : IProjectService
         await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
         await _blockRepository.SaveAsync();
 
-        return _mapper.Map<ProjectCm>(projectDm);
+        try
+        {
+            return _mapper.Map<ProjectCm>(projectDm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     /// <summary>

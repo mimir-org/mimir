@@ -4,7 +4,7 @@ import { ViewportData } from "../../models/project";
 import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useReactFlow } from "react-flow-renderer";
-import { AspectObject, ViewType, Project, ModuleType } from "lib";
+import { Block, ViewType, Project, ModuleType } from "lib";
 import { OverflowComponent } from "compLibrary/menu/overflow/OverflowComponent";
 import { ToolbarParentContainer } from "./components/ToolbarParentElement.styled";
 import { OverflowComponentTitle } from "compLibrary/menu/overflow/OverflowComponent.styled";
@@ -36,7 +36,7 @@ interface Props {
  */
 export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
   const dispatch = useDispatch();
-  const [aspectObject, setAspectObject] = useState<AspectObject>(null);
+  const [aspectObject, setAspectObject] = useState<Block>(null);
   const [leftMenuItems, setLeftMenuItems] = useState<MenuItem[]>(null);
   const [rightMenuItems, setRightMenuItems] = useState<MenuItem[]>(null);
 

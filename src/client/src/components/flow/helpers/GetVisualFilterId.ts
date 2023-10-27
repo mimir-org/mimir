@@ -1,13 +1,13 @@
 import { EdgeType } from "../../../models/project";
 import { EDGE_TYPE } from "../../../models/project/project";
 import { VisualFilterId } from "../../../models/application/VisualFilter";
-import { Aspect, AspectObject } from "lib";
+import { Aspect, Block } from "lib";
 
 export type FilterType = "Category" | "Item";
 
 export const GetVisualFilterId = (
-  source: AspectObject,
-  target: AspectObject,
+  source: Block,
+  target: Block,
   edgeType: EdgeType
 ): Record<FilterType, string | null> => {
   const record: Record<FilterType, string> = {

@@ -98,11 +98,13 @@ export const projectSlice = createSlice({
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     saveProject: (state, action: PayloadAction<SaveProjectAction>) => {
+      console.log(action.payload.project);
+      //TODO: Rewrite saving state to use version number to indicate if project is saving. clientVer < backendVer === saved.
       state.saving.push(saveProject.type);
     },
-    saveProjectFinished: (state, action: PayloadAction<SaveProjectFinishedAction>) => {
+    saveProjectFinished: (state, action: PayloadAction<SaveProjectAction>) => {
       state.saving = state.saving.filter((elem) => elem !== saveProject.type);
-      state.project.id = action.payload.guid;
+      state.project = action.payload.project;
     }
   },
 });

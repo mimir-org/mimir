@@ -4,14 +4,14 @@ import { NodeProps } from "react-flow-renderer";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./TreeLogoComponent";
 import { TreeNodeHandle } from "./TreeNodeHandle";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
 /**
  * Component to display a node in TreeView.
  * @param data the data for the node.
  * @returns a Mimir Node in the FlowTree context.
  */
-const TreeNode: FC<NodeProps<AspectObject>> = ({ data }) => {
+const TreeNode: FC<NodeProps<Block>> = ({ data }) => {
   if (data == null) return null;
   const connectors = data.getTreeviewConnectors() ?? [];
 

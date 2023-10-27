@@ -1,9 +1,9 @@
 import { TreeHandleBox } from "../aspectNode/TreeHandleBox";
 import { Handle } from "react-flow-renderer";
-import { AspectObject, Connector, ViewType } from "lib";
+import { Block, Connector, ViewType } from "lib";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   connector: Connector;
 }
 

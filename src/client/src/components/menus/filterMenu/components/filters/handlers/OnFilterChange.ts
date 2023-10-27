@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { GetConnectorNode } from "../helpers";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 
 /**
  * Component to toggle a specific element on/off in Visual Filter.
@@ -10,7 +10,7 @@ import { AspectObject, Connection } from "lib";
  * @param nodes
  * @param dispatch
  */
-export const OnFilterChange = (actualEdge: Connection, edges: Connection[], nodes: AspectObject[], dispatch: Dispatch) => {
+export const OnFilterChange = (actualEdge: Connection, edges: Connection[], nodes: Block[], dispatch: Dispatch) => {
   // const partOf = IsPartOfRelation(actualEdge.fromConnector);
   // const location = IsLocationRelation(actualEdge.fromConnector);
   // const fulfilledBy = IsProductRelation(actualEdge.fromConnector);

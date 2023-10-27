@@ -1,9 +1,9 @@
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
 import { InspectorElement, InspectorAttributesElement } from "../../../../../types";
 
 export const GetAttributesElement = (element: InspectorElement): InspectorAttributesElement => {
-  if (element instanceof AspectObject) return element;
+  if (element instanceof Block) return element;
 
   return null;
 };

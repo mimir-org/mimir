@@ -4,7 +4,7 @@ import { LibNodeElement } from "./components/collections/components/nodeCollecti
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
 import { BlockLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect, AspectObject, LibrarySubProject } from "lib";
+import { Aspect, Block, LibrarySubProject } from "lib";
 
 interface Props {
   aspectObjects: BlockLibCm[];
@@ -18,7 +18,7 @@ interface Props {
   selectedLibNode: BlockLibCm | null;
   setSelectedLibNode: (value: BlockLibCm) => void;
   aspectFilters: Aspect[];
-  selectedNode: AspectObject;
+  selectedNode: Block;
   subProjects: LibrarySubProject[];
 }
 

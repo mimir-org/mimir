@@ -1,10 +1,10 @@
-import { AspectObject } from "lib";
+import { Block } from "lib";
 import styled from "styled-components";
 import { Color } from "../../../../assets/color/Color";
 import { FontSize } from "../../../../assets/font";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
 }
 
 export const AspectContainer = styled.div<Props>`

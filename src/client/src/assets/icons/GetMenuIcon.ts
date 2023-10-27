@@ -1,5 +1,5 @@
 import * as Icons from "./terminalsMenu";
-import { Aspect, AspectObject } from "lib";
+import { Aspect, Block } from "lib";
 
 /**
  * Function to get an icon for the terminals menu in BlockView.
@@ -8,7 +8,7 @@ import { Aspect, AspectObject } from "lib";
  * @param isInput
  * @returns an icon
  */
-export const GetMenuIcon = (node: AspectObject, isParent: boolean, isInput: boolean) => {
+export const GetMenuIcon = (node: Block, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
 
   if (node.aspect === Aspect.Location) {

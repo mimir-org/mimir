@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  AspectObject,
+  Block,
   Connection,
   ConnectorPartOf,
   ConnectorTerminal,
@@ -57,8 +57,8 @@ export class Project {
   @jsonMember(String)
   public createdBy: string;
 
-  @jsonArrayMember(AspectObject)
-  public aspectObjects: Array<AspectObject> | null;
+  @jsonArrayMember(Block)
+  public blocks: Array<Block> | null;
 
   @jsonArrayMember(Connection)
   public connections: Array<Connection> | null;
@@ -79,27 +79,27 @@ export class Project {
     this.updatedBy = null;
     this.created = new Date(new Date().toUTCString());
     this.createdBy = createdBy;
-    this.aspectObjects = [];
-    this.aspectObjects.push();
+    this.blocks = [];
+    this.blocks.push();
     this.connections = [];
 
-    const rootFunction = new AspectObject(null, this.id, new Position(150, 5), new Position(0, 0), createdBy, this.id);
+    const rootFunction = new Block(null, this.id, new Position(150, 5), new Position(0, 0), createdBy, this.id);
     rootFunction.aspect = Aspect.Function;
     rootFunction.name = "Function";
     rootFunction.label = "Function";
-    this.aspectObjects.push(rootFunction);
+    this.blocks.push(rootFunction);
 
-    const rootProduct = new AspectObject(null, this.id, new Position(600, 5), new Position(0, 0), createdBy, this.id);
+    const rootProduct = new Block(null, this.id, new Position(600, 5), new Position(0, 0), createdBy, this.id);
     rootProduct.aspect = Aspect.Product;
     rootProduct.name = "Product";
     rootProduct.label = "Product";
-    this.aspectObjects.push(rootProduct);
+    this.blocks.push(rootProduct);
 
-    const rootLocation = new AspectObject(null, this.id, new Position(1050, 5), new Position(0, 0), createdBy, this.id);
+    const rootLocation = new Block(null, this.id, new Position(1050, 5), new Position(0, 0), createdBy, this.id);
     rootLocation.aspect = Aspect.Location;
     rootLocation.name = "Location";
     rootLocation.label = "Location";
-    this.aspectObjects.push(rootLocation);
+    this.blocks.push(rootLocation);
   }
 
   /**92
@@ -150,16 +150,16 @@ export class Project {
    * Get the selected aspect object if there is any.
    * @returns The selected aspect object, otherwise it returns null.
    */
-  public getSelectedAspectObject(): AspectObject | null {
-    return this.aspectObjects?.find((x) => x.selected);
+  public getSelectedAspectObject(): Block | null {
+    return this.blocks?.find((x) => x.selected);
   }
 
   /**
    * Get the block or parent selected aspect object if there is any.
    * @returns The selected aspect object, otherwise it returns null.
    */
-  public getBlockSelectedAspectObject(): AspectObject | null {
-    return this.aspectObjects?.find((x) => x.blockSelected);
+  public getBlockSelectedAspectObject(): Block | null {
+    return this.blocks?.find((x) => x.blockSelected);
   }
 
   /**
@@ -175,8 +175,8 @@ export class Project {
    * @param id The id of the aspect object to delete
    */
   public deleteAspectObject(id: string): void {
-    if (this.aspectObjects == null) return;
-    this.aspectObjects = this.aspectObjects.filter((x) => x.id !== id);
+    if (this.blocks == null) return;
+    this.blocks = this.blocks.filter((x) => x.id !== id);
   }
 
   /**
@@ -187,11 +187,11 @@ export class Project {
    * @param type The type position to be updated
    */
   public updateAspectObjectPosition(id: string, position: Position, viewType: ViewType) {
-    if (this.aspectObjects == null || position == null)
+    if (this.blocks == null || position == null)
       throw new Error("Can't update aspect object position. AspectObjects is null or position is null.");
 
     // Update aspect object position
-    this.aspectObjects = this.aspectObjects.map((x) => {
+    this.blocks = this.blocks.map((x) => {
       if (x.id === id) {
         if (viewType === ViewType.Tree) x.positionTree = position;
         if (viewType === ViewType.Block) x.positionBlock = position;
@@ -220,8 +220,8 @@ export class Project {
    */
   public updateAspectObjectSelected(id: string, selected: boolean, viewType: ViewType): void {
     // Update Aspect object selected
-    if (this.aspectObjects != null) {
-      this.aspectObjects = this.aspectObjects.map((x) => {
+    if (this.blocks != null) {
+      this.blocks = this.blocks.map((x) => {
         if (x.id === id) {
           x.selected = selected;
           if (viewType === ViewType.Tree) x.blockSelected = selected;
@@ -262,8 +262,8 @@ export class Project {
     createdBy: string,
     viewType: ViewType
   ) {
-    const obj = new AspectObject(lib, this.id, positionTree, positionBlock, createdBy, this.id);
-    this.aspectObjects.push(obj);
+    const obj = new Block(lib, this.id, positionTree, positionBlock, createdBy, this.id);
+    this.blocks.push(obj);
 
     const parent = viewType === ViewType.Block ? this.getBlockSelectedAspectObject() : this.getSelectedAspectObject();
     if (parent == null) return;
@@ -334,8 +334,8 @@ export class Project {
    * @param selected The new select value
    */
   public updateConnectorSelected(aspectObjectId: string, id: string, selected: boolean): void {
-    if (this.aspectObjects == null) throw new Error("The project does not have any aspect objects");
-    const actualAspectObject = this.aspectObjects.find((x) => x.id === aspectObjectId);
+    if (this.blocks == null) throw new Error("The project does not have any aspect objects");
+    const actualAspectObject = this.blocks.find((x) => x.id === aspectObjectId);
     if (actualAspectObject == null) throw new Error("Can't find aspect object with id " + aspectObjectId);
 
     if (actualAspectObject.connectors == null)
@@ -365,10 +365,10 @@ export class Project {
     if (aspectObjectId == null || terminalTypes == null || aspectObjectTypes == null || terminalId == null)
       throw new ErrorException("Can't create terminal from null or undefined objects");
 
-    if (this.aspectObjects == null)
+    if (this.blocks == null)
       throw new ErrorException("Can't create terminal when no aspect objects is found. The collection is null or undefined.");
 
-    const aspectObject = this.aspectObjects.find((x) => x.id === aspectObjectId);
+    const aspectObject = this.blocks.find((x) => x.id === aspectObjectId);
     if (aspectObject == null) throw new ErrorException("Can't create terminal when aspect object is missing.");
 
     const existingTerminal = aspectObject.getTerminal(terminalId);
@@ -406,10 +406,10 @@ export class Project {
     if (aspectObjectId == null || terminalTypes == null || aspectObjectTypes == null || terminalId == null)
       throw new ErrorException("Can't delete terminal from null or undefined objects");
 
-    if (this.aspectObjects == null)
+    if (this.blocks == null)
       throw new ErrorException("Can't delete terminal when no aspect objects is found. The collection is null or undefined.");
 
-    const aspectObject = this.aspectObjects.find((x) => x.id === aspectObjectId);
+    const aspectObject = this.blocks.find((x) => x.id === aspectObjectId);
     if (aspectObject == null) throw new ErrorException("Can't delete terminal when aspect object is missing.");
 
     const existingTerminal = aspectObject.getTerminal(terminalId);
@@ -477,7 +477,7 @@ export class Project {
    * @param aspectObject
    * @returns A collection of sibling aspect objects
    */
-  public getSiblingAspectNodes(aspectObject: string): AspectObject[] {
+  public getSiblingAspectNodes(aspectObject: string): Block[] {
     // TODO: Implement this if it should be used
     return [];
   }
@@ -490,7 +490,7 @@ export class Project {
   public getReferenceDesignation(aspectObject: string): string {
     if (aspectObject == null) throw new Error("Can't find an aspect object when param is null.");
 
-    const obj = this.aspectObjects.find((x) => x.id === aspectObject);
+    const obj = this.blocks.find((x) => x.id === aspectObject);
     if (obj == null) throw new Error("Can't find aspect object with id " + aspectObject);
 
     const refs: string[] = [];
@@ -513,7 +513,7 @@ export class Project {
   public hasChildren(aspectObject: string): boolean {
     if (aspectObject == null) throw new Error("Can't check if an aspect object has children when param is null.");
 
-    const obj = this.aspectObjects.find((x) => x.id === aspectObject);
+    const obj = this.blocks.find((x) => x.id === aspectObject);
     if (obj == null) throw new Error("Can't find aspect object with id " + aspectObject);
 
     const outConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Output);
@@ -527,10 +527,10 @@ export class Project {
    * @param connection The connection to find aspect objects from
    * @returns A tupple with from object and to object. Obejects is null if not found.
    */
-  public getConnectionAspectObjects(connection: Connection): [from: AspectObject | null, to: AspectObject | null] {
+  public getConnectionAspectObjects(connection: Connection): [from: Block | null, to: Block | null] {
     if (connection == null) throw new Error("Can't find aspect objects for connection. The connection is null or undefined.");
-    const fromObject = this.aspectObjects?.find((x) => x.hasConnector(connection.fromConnector)) ?? null;
-    const toObject = this.aspectObjects?.find((x) => x.hasConnector(connection.toConnector)) ?? null;
+    const fromObject = this.blocks?.find((x) => x.hasConnector(connection.fromConnector)) ?? null;
+    const toObject = this.blocks?.find((x) => x.hasConnector(connection.toConnector)) ?? null;
     return [fromObject, toObject];
   }
 
@@ -540,10 +540,10 @@ export class Project {
    * @returns Connector if found, otherwise it returns null
    */
   public getConnector(connector: string): Connector | null {
-    if (this.aspectObjects == null) return null;
+    if (this.blocks == null) return null;
 
-    for (let i = 0; i < this.aspectObjects.length; i++) {
-      const actualConnector = this.aspectObjects[i].getConnector(connector);
+    for (let i = 0; i < this.blocks.length; i++) {
+      const actualConnector = this.blocks[i].getConnector(connector);
       if (actualConnector != null) return actualConnector;
     }
     return null;
@@ -554,8 +554,8 @@ export class Project {
    * @returns true if any selected
    */
   public hasSelectedAspectObjects(): boolean {
-    if (this.aspectObjects == null) return false;
-    return this.aspectObjects.some((x) => x.selected);
+    if (this.blocks == null) return false;
+    return this.blocks.some((x) => x.selected);
   }
 
   //#region Private functions
@@ -568,11 +568,11 @@ export class Project {
    * @params parent Parent aspect object.
    * @returns A collection of converted flow nodes.
    */
-  private toFlowNodes(viewType: ViewType, theme: Theme, parent: AspectObject): FlowNode[] {
-    if (this.aspectObjects == null) return [];
+  private toFlowNodes(viewType: ViewType, theme: Theme, parent: Block): FlowNode[] {
+    if (this.blocks == null) return [];
     return parent != null
       ? this.getChildrenAspectObject(parent.id).map((x) => x.toFlowNode(viewType, theme, false))
-      : this.aspectObjects.map((x) => x.toFlowNode(viewType, theme, false));
+      : this.blocks.map((x) => x.toFlowNode(viewType, theme, false));
   }
 
   /**
@@ -586,8 +586,8 @@ export class Project {
   private toFlowParentConnectorTerminalNodes(
     viewType: ViewType,
     theme: Theme,
-    parent: AspectObject,
-    siblings: AspectObject[]
+    parent: Block,
+    siblings: Block[]
   ): FlowNode[] {
     if (viewType !== ViewType.Block || parent == null || parent.connectors == null) return [];
     const minMax = this.getMinMax(siblings);
@@ -615,7 +615,7 @@ export class Project {
    * @param siblings The searchable collection of aspect objects
    * @returns A tuple with minimum and maximum value of position x
    */
-  private getMinMax(siblings: AspectObject[]): [min: number, max: number] {
+  private getMinMax(siblings: Block[]): [min: number, max: number] {
     const min =
       (siblings.length &&
         siblings.reduce(function (prev, curr) {
@@ -662,7 +662,7 @@ export class Project {
    * @params children Children aspect object of parent.
    * @returns A collection of converted flow edges.
    */
-  private toFlowEdges(viewType: ViewType, theme: Theme, children: AspectObject[]): FlowEdge[] {
+  private toFlowEdges(viewType: ViewType, theme: Theme, children: Block[]): FlowEdge[] {
     if (this.connections == null) return [];
     let edges: FlowEdge<Connection>[] = [];
 
@@ -696,7 +696,7 @@ export class Project {
   private getParentConnection(aspectObject: string): Connection | null {
     if (aspectObject == null) return null;
 
-    const obj = this.aspectObjects.find((x) => x.id === aspectObject);
+    const obj = this.blocks.find((x) => x.id === aspectObject);
     if (obj == null) return null;
 
     const inConnector = obj.connectors.find((x) => x instanceof ConnectorPartOf && x.direction === ConnectorDirection.Input);
@@ -714,7 +714,7 @@ export class Project {
    * @params aspectObject The aspect object identificator.
    * @returns aspect Parent object if exist, otherwise it returns null.
    */
-  private getParentAspectObject(aspectObject: string): AspectObject | null {
+  private getParentAspectObject(aspectObject: string): Block | null {
     if (aspectObject == null) throw new Error("Can't find an aspect object when param is null.");
 
     const parentConnection = this.getParentConnection(aspectObject);
@@ -729,10 +729,10 @@ export class Project {
    * @params aspectObject The aspect object identificator.
    * @returns A collection of aspect objects that is child of given parent.
    */
-  private getChildrenAspectObject(aspectObject: string): AspectObject[] {
+  private getChildrenAspectObject(aspectObject: string): Block[] {
     if (aspectObject == null) throw new Error("Can't find an aspect object when param is null.");
 
-    const children = this.aspectObjects.filter((x) => {
+    const children = this.blocks.filter((x) => {
       const parent = this.getParentAspectObject(x.id);
       return parent != null && parent.id === aspectObject;
     });

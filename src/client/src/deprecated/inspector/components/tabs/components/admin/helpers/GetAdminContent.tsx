@@ -1,4 +1,4 @@
-import { AspectObject, Project } from "lib";
+import { Block, Project } from "lib";
 import { InspectorElement } from "../../../../../types";
 import { NodeAdminContent } from "../components/NodeAdminContent";
 
@@ -9,7 +9,7 @@ import { NodeAdminContent } from "../components/NodeAdminContent";
  * @returns the admin content for a given type.
  */
 export const GetAdminContent = (element: InspectorElement, project: Project) => {
-  if (element instanceof AspectObject) return <NodeAdminContent node={element} project={project} />;
+  if (element instanceof Block) return <NodeAdminContent node={element} project={project} />;
 
   return null;
 };

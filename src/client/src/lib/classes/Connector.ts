@@ -34,7 +34,7 @@ export abstract class Connector {
   public outside: string;
 
   @jsonMember(String)
-  public aspectObject: string;
+  public block: string;
 
   // Client members
   public hidden: boolean;
@@ -47,7 +47,7 @@ export abstract class Connector {
     this.direction = direction;
     this.inside = CreateId();
     this.outside = CreateId();
-    this.aspectObject = aspectObject == null ? null : aspectObject;
+    this.block = aspectObject == null ? null : aspectObject;
     this.hidden = false;
     this.selected = false;
   }

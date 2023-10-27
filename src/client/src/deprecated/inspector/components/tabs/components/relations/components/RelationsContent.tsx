@@ -1,4 +1,4 @@
-import { AspectObject, Connection, ConnectionRelation, Connector } from "lib";
+import { Block, Connection, ConnectionRelation, Connector } from "lib";
 import {
   RelationsContainer,
   RelationsHeader,
@@ -6,7 +6,7 @@ import {
   RelationsTerminalListElement,
 } from "./RelationsContent.styled";
 
-type RelationItem = AspectObject | ConnectionRelation | Connector | Connection;
+type RelationItem = Block | ConnectionRelation | Connector | Connection;
 
 interface Props<T> {
   items: T[];

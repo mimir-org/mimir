@@ -1,10 +1,10 @@
 import { InspectorElement } from "../../../types";
 import { Symbol } from "compLibrary/symbol";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorTabsComponent.styled";
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 
 export const GetInspectorHeaderText = (element: InspectorElement) => {
-  if (element instanceof AspectObject) {
+  if (element instanceof Block) {
     return (
       <InspectorHeaderNodeInfo>
         {!element.isRoot() && <Symbol source={element?.symbol} text={element?.label ?? element?.name} />}
