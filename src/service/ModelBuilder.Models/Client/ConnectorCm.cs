@@ -1,7 +1,6 @@
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 

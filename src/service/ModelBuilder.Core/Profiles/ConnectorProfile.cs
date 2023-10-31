@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Client;
@@ -21,14 +20,12 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<ConnectorDm, ConnectorCm>()
-            .ConstructUsing(connectorDm => ChooseConstructorFromDm(connectorDm))
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block))
-            .ForMember(dest => dest.Domain, opt => opt.Ignore());
+            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
         CreateMap<ConnectorDm, ConnectorAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -121,15 +118,5 @@ public class ConnectorProfile : Profile
             .IncludeBase<ConnectorRelationDm, ConnectorRelationAm>();
 
         #endregion ConnectorPartOf
-    }
-
-    private ConnectorCm ChooseConstructorFromDm(ConnectorDm connectorDm)
-    {
-        if (connectorDm is ConnectorTerminalDm) return new ConnectorTerminalCm();
-        if (connectorDm is ConnectorFulfilledByDm) return new ConnectorFulfilledByCm();
-        if (connectorDm is ConnectorHasLocationDm) return new ConnectorHasLocationCm();
-        if (connectorDm is ConnectorPartOfDm) return new ConnectorPartOfCm();
-                
-        throw new ArgumentException("Invalid connector type");
     }
 }
