@@ -42,7 +42,7 @@ public class ParserModule : IModelBuilderParser
     {
         return new ModuleDescriptionDm
         {
-            Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6").ToString(),
+            Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6"),
             Name = "Mimir RDF Turtle"
         };
     }

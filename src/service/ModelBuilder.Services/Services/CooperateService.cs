@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -27,9 +28,9 @@ public class CooperateService : ICooperateService
     /// <param name="projectId"></param>
     /// <param name="projectVersion"></param>
     /// <returns></returns>
-    public async Task SendDataUpdates(ProjectEditData editData, string projectId, string projectVersion)
+    public async Task SendDataUpdates(ProjectEditData editData, Guid projectId, string projectVersion)
     {
-        if (editData == null || string.IsNullOrWhiteSpace(projectId))
+        if (editData == null || projectId == Guid.Empty)
             return;
 
         // TODO: Find changed block and connection based on changed connectorTerminal, attribute etc.
@@ -40,13 +41,13 @@ public class CooperateService : ICooperateService
         };
         await Task.WhenAll(
             Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
-            Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId)),
-            Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId)),
+            Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId),
+            Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId),
             Task.Run(() => SendBlockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
-            Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId)),
+            Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId))),
             Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
-        );
+        ));
     }
 
     public async Task SendProjectVersionUpdate(ProjectVersionCm version, WorkerStatus workerStatus)
@@ -54,7 +55,7 @@ public class CooperateService : ICooperateService
         await _webSocketRepository.SendProjectVersionData(version, workerStatus);
     }
 
-    public Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, string projectId)
+    public Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, Guid projectId)
     {
         foreach (var tuple in blockMap)
         {
@@ -64,7 +65,7 @@ public class CooperateService : ICooperateService
         return Task.CompletedTask;
     }
 
-    public Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, string projectId)
+    public Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, Guid projectId)
     {
         foreach (var tuple in connectionMap)
         {
@@ -74,7 +75,7 @@ public class CooperateService : ICooperateService
         return Task.CompletedTask;
     }
 
-    public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId)
+    public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, Guid projectId)
     {
         _webSocketRepository.SendLockData(lockCms, projectId, workerStatus);
 
@@ -97,9 +98,9 @@ public class CooperateService : ICooperateService
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendBlockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, string projectId)
+    private Task SendBlockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, Guid projectId)
     {
-        if (blocks == null || string.IsNullOrWhiteSpace(projectId))
+        if (blocks == null || projectId == Guid.Empty)
             return Task.CompletedTask;
 
         foreach (var block in blocks)
@@ -117,9 +118,9 @@ public class CooperateService : ICooperateService
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendConnectionUpdates(List<ConnectionDm> connections, WorkerStatus workerStatus, string projectId)
+    private Task SendConnectionUpdates(List<ConnectionDm> connections, WorkerStatus workerStatus, Guid projectId)
     {
-        if (connections == null || string.IsNullOrWhiteSpace(projectId))
+        if (connections == null || projectId == Guid.Empty)
             return Task.CompletedTask;
 
         foreach (var connection in connections)

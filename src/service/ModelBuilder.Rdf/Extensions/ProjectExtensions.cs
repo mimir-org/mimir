@@ -21,23 +21,23 @@ public static class ProjectExtensions
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-        ontologyService.SetBaseUri(new Uri(project.Id));
+        ontologyService.SetBaseUri(new Uri(project.Id.ToString()));
 
-        ontologyService.AssertBlock(project.Id, Resources.Label, project.Name, true);
-        ontologyService.AssertBlock(project.Id, Resources.Version, project.Version, true);
-        ontologyService.AssertBlock(project.Id, Resources.Type, Resources.Project);
-        ontologyService.AssertBlock(project.Id, Resources.Type, Resources.IntegratedObject);
-        ontologyService.AssertBlock(project.Id, Resources.Domain, project.Domain, true);
-        ontologyService.AssertBlock(project.Id, Resources.HasOwner, project.CreatedBy, true);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.Label, project.Name, true);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.Version, project.Version, true);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.Type, Resources.Project);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.Type, Resources.IntegratedObject);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.Domain, project.Domain.ToString(), true);
+        ontologyService.AssertBlock(project.Id.ToString(), Resources.HasOwner, project.CreatedBy, true);
 
         if (!string.IsNullOrWhiteSpace(project.UpdatedBy))
-            ontologyService.AssertBlock(project.Id, Resources.UpdatedBy, project.UpdatedBy, true);
+            ontologyService.AssertBlock(project.Id.ToString(), Resources.UpdatedBy, project.UpdatedBy, true);
 
         if (project.Updated != null)
-            ontologyService.AssertBlock(project.Id, Resources.LastUpdated, ontologyService.CreateLiteralBlock($"{project.Updated?.ToString("u")}", Resources.DateTime));
+            ontologyService.AssertBlock(project.Id.ToString(), Resources.LastUpdated, ontologyService.CreateLiteralBlock($"{project.Updated?.ToString("u")}", Resources.DateTime));
 
         if (!string.IsNullOrEmpty(project.Description))
-            ontologyService.AssertBlock(project.Id, Resources.Desc, project.Description, true);
+            ontologyService.AssertBlock(project.Id.ToString(), Resources.Desc, project.Description, true);
     }
 
     /// <summary>
@@ -57,12 +57,12 @@ public static class ProjectExtensions
 
         if (subject == null)
             throw new MimirorgBadRequestException("Cannot find the project from rdf file.");
-
-        project.Id = subject.ToString();
-        project.Name = ontologyService.GetValue(project.Id, Resources.Label);
+        Guid.TryParse(subject.ToString(), out Guid id);
+        project.Id = id;
+        project.Name = ontologyService.GetValue(project.Id.ToString(), Resources.Label);
         //project.Version = ontologyService.GetValue(project.Id, Resources.Version, false);
         project.SubProject = false; // TODO: Resolve sub project settings
-        project.Description = ontologyService.GetValue(project.Id, Resources.Desc, false);
+        project.Description = ontologyService.GetValue(project.Id.ToString(), Resources.Desc, false);
         //project.CreatedBy = ontologyService.GetValue(project.Id, Resources.HasOwner, false);
         //project.UpdatedBy = ontologyService.GetValue(project.Id, Resources.UpdatedBy, false);
         //project.Updated = ontologyService.GetDateTimeValue(project.Id, Resources.LastUpdated, false);
@@ -92,7 +92,7 @@ public static class ProjectExtensions
         foreach (var n in rootBlocks)
         {
             var block = new BlockAm();
-            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Root, projectData);
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id.ToString(), BlockType.Root, projectData);
             project.Blocks.Add(block);
         }
 
@@ -104,7 +104,7 @@ public static class ProjectExtensions
         foreach (var n in blocks)
         {
             var block = new BlockAm();
-            block.ResolveBlock(ontologyService, n.ToString(), project.Id, BlockType.Aspect, projectData);
+            block.ResolveBlock(ontologyService, n.ToString(), project.Id.ToString(), BlockType.Aspect, projectData);
             project.Blocks.Add(block);
         }
     }

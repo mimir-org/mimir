@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using SqlBulkTools;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// </summary>
     /// <param name="id">Block id</param>
     /// <returns>Complete block</returns>
-    Task<BlockDm> GetAsyncComplete(string id);
+    Task<BlockDm> GetAsyncComplete(Guid id);
 
     /// <summary>
     /// Bulk block update

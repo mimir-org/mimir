@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -23,25 +24,25 @@ public class WebSocketRepository : IWebSocketRepository
     public async Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(version, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-        await _hubContext.Clients.Group(version.ProjectId).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
+        await _hubContext.Clients.Group(version.ProjectId.ToString()).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
     }
 
-    public async Task SendBlockData(BlockDm block, string projectId, WorkerStatus workerStatus)
+    public async Task SendBlockData(BlockDm block, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(block, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveBlockData, workerStatus, data);
+        await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveBlockData, workerStatus, data);
     }
 
-    public async Task SendConnectionData(ConnectionDm connection, string projectId, WorkerStatus workerStatus)
+    public async Task SendConnectionData(ConnectionDm connection, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
+        await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
     }
 
-    public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)
+    public async Task SendLockData(List<LockCm> lockCms, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettingsNoTypeNameHandling);
-        await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
+        await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
     }
 
     public async Task SendRefreshLibData()

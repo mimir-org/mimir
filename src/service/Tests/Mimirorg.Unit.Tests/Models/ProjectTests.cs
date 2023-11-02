@@ -9,7 +9,7 @@ namespace ModelBuilder.Unit.Tests.Models;
 
 public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
 {
-    public const string ProjectGuid = "5533c7a4-17c2-4860-baa2-cc7b34e2ff67";
+    public readonly Guid ProjectGuid = new Guid("5533c7a4-17c2-4860-baa2-cc7b34e2ff67");
 
     public ProjectTests(ModelBuilderCommonFixtures fixture) : base(fixture)
     {
@@ -19,7 +19,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     {
         return new ProjectAm
         {
-            Id = $"https://rdf.runir.net/ID{ProjectGuid}",
+            Id = ProjectGuid,
             SubProject = false,
             Name = "Dummy Project",
             Description = "Dummy Project",

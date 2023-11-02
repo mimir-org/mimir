@@ -48,7 +48,7 @@ public class OntologyService : IOntologyService
         if (project == null)
             throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
 
-        var applicationData = GetApplicationData(project.Id);
+        var applicationData = GetApplicationData(project.Id.ToString());
 
         _ontologyRepository.LoadData(new Graph());
         project.AssertGraph(this);
@@ -68,10 +68,10 @@ public class OntologyService : IOntologyService
         var project = new ProjectAm();
         project.ResolveProjectInformation(this);
 
-        if (string.IsNullOrWhiteSpace(project.Id))
+        if (string.IsNullOrWhiteSpace(project.Id.ToString()))
             throw new InvalidDataException("Can't parse a project with missing project IRI");
 
-        var applicationData = GetApplicationData(project.Id);
+        var applicationData = GetApplicationData(project.Id.ToString());
 
         project.ResolveBlocks(this, applicationData);
         project.ResolveRelationConnections(this, applicationData);
@@ -338,8 +338,8 @@ public class OntologyService : IOntologyService
     /// <returns></returns>
     private ProjectData GetApplicationData(string project)
     {
-        var connections = _connectionRepository.GetAll().Where(x => x.Project == project).ToList();
-        var blocks = _blockRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.Project == project).ToList();
+        var connections = _connectionRepository.GetAll().Where(x => x.Project.ToString() == project).ToList();
+        var blocks = _blockRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.Project.ToString() == project).ToList();
         var quantityDatums = _libRepository.GetQuantityDatums().Result;
         var units = _libRepository.GetUnits().Result;
 
@@ -392,7 +392,7 @@ public class OntologyService : IOntologyService
             {
                 foreach (var attribute in block.Attributes)
                 {
-                    attribute.AssertAttribute(block.Id, this);
+                    attribute.AssertAttribute(block.Id.ToString(), this);
                     attribute.AssertAttributeValue(this, projectData);
                 }
             }
@@ -401,7 +401,7 @@ public class OntologyService : IOntologyService
             {
                 foreach (var connector in block.Connectors)
                 {
-                    connector.AssertConnector(this, block.Id, projectData, null, DefaultFlowDirection.NotSet);
+                    connector.AssertConnector(this, block.Id.ToString(), projectData, null, DefaultFlowDirection.NotSet);
                 }
             }
         }

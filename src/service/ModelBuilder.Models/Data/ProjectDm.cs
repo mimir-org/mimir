@@ -26,7 +26,7 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }
     public DateTime? Updated { get; set; }
-    //public string Domain => Id.ResolveDomain();
+    public string Domain => Id.ToString().ResolveDomain();
 
     [NotMapped]
     public List<BlockDm> Blocks { get; set; } = new();

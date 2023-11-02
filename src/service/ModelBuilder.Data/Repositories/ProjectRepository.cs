@@ -59,7 +59,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         var project = GetProjectAsync(id);
 
-        return project == null ? null : await _cacheRepository.GetOrCreateAsync(id, () => project);
+        return project == null ? null : await _cacheRepository.GetOrCreateAsync(id.ToString(), () => project);
     }
 
     /// <summary>
