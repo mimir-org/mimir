@@ -68,7 +68,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
     public Task<ProjectDm> GetProjectAsync(Guid? id)
-    {        
+    {
         var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 
         if (project == null)
@@ -295,7 +295,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
             trans.Complete();
         }
-                
+
         await _cacheRepository.DeleteCacheAsync(project.Id.ToString());
     }
 }

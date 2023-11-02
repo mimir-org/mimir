@@ -23,7 +23,7 @@ public class CommonRepositoryTests : UnitTest<ModelBuilderCommonFixtures>
     [InlineData("_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", false)]
     [InlineData("xxx_yyy", true)]
     [InlineData("xxx_yyy_zzz", false)]
-    public void HasValidId_Evaluate_Correct(Guid id, bool expected)
+    public void HasValidId_Evaluate_Correct(Guid? id, bool expected)
     {
         var isValid = _commonRepository.HasValidId(id);
         Assert.Equal(expected, isValid);
@@ -56,7 +56,7 @@ public class CommonRepositoryTests : UnitTest<ModelBuilderCommonFixtures>
     [InlineData(null, "https://rdf.hansa.no/IDasdefrg")]
     [InlineData("", "https://rdf.hansa.no/IDasdefrg")]
     [InlineData("xxx", "https://rdf.hansa.no/IDasdefrg")]
-    public void CreateOrUseIdAndIri_Creates_Ok_From_External_Data(Guid fromId, string fromIri)
+    public void CreateOrUseIdAndIri_Creates_Ok_From_External_Data(Guid? fromId, string fromIri)
     {
         var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };
         var replacement2 = _commonRepository.CreateOrUseIdAndIri(replacement);

@@ -26,7 +26,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
             Blocks = new List<BlockAm>
             {
                 new BlockAm
-                {                    
+                {
                     Name = "Dummy block A",
                     Description = "Dummy block A",
                     Project = ProjectGuid,
@@ -77,7 +77,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                 },
                 new BlockAm
                 {
-         
+
                     Name = "Dummy block B",
                     Description = "Dummy block B",
                     Project = ProjectGuid,

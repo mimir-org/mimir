@@ -308,80 +308,80 @@ public class RemapService : IRemapService
     {
         throw new NotImplementedException();
     }
-        //if (connectors == null || !connectors.Any())
-        //    yield break;
+    //if (connectors == null || !connectors.Any())
+    //    yield break;
 
-        //foreach (var connector in connectors)
-        //{
-        //    var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Id };
-        //    var connectorReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+    //foreach (var connector in connectors)
+    //{
+    //    var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Id };
+    //    var connectorReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-        //    // Need to set this if there is a clone after new Id and Iri is created
-        //    connectorReplacement.FromId = connector.Id;
-        //    connectorReplacement.FromIri = connector.Id;
+    //    // Need to set this if there is a clone after new Id and Iri is created
+    //    connectorReplacement.FromId = connector.Id;
+    //    connectorReplacement.FromIri = connector.Id;
 
-        //    if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
-        //    {
-        //        _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromIri).Select(y =>
-        //        {
-        //            y.FromConnector = connectorReplacement.ToId;
-        //            return y;
-        //        }).ToList();
-        //    }
-        //    else
-        //    {
-        //        _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromId).Select(y =>
-        //        {
-        //            y.FromConnector = connectorReplacement.ToId;
-        //            return y;
-        //        }).ToList();
-        //    }
+    //    if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
+    //    {
+    //        _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromIri).Select(y =>
+    //        {
+    //            y.FromConnector = connectorReplacement.ToId;
+    //            return y;
+    //        }).ToList();
+    //    }
+    //    else
+    //    {
+    //        _ = connections?.Where(x => x.FromConnector == connectorReplacement.FromId).Select(y =>
+    //        {
+    //            y.FromConnector = connectorReplacement.ToId;
+    //            return y;
+    //        }).ToList();
+    //    }
 
-        //    if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
-        //    {
-        //        _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromIri).Select(y =>
-        //        {
-        //            y.ToConnector = connectorReplacement.ToId;
-        //            return y;
-        //        }).ToList();
-        //    }
-        //    else
-        //    {
-        //        _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromId).Select(y =>
-        //        {
-        //            y.ToConnector = connectorReplacement.ToId;
-        //            return y;
-        //        }).ToList();
-        //    }
+    //    if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
+    //    {
+    //        _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromIri).Select(y =>
+    //        {
+    //            y.ToConnector = connectorReplacement.ToId;
+    //            return y;
+    //        }).ToList();
+    //    }
+    //    else
+    //    {
+    //        _ = connections?.Where(x => x.ToConnector == connectorReplacement.FromId).Select(y =>
+    //        {
+    //            y.ToConnector = connectorReplacement.ToId;
+    //            return y;
+    //        }).ToList();
+    //    }
 
-        //    if (connector is ConnectorTerminalAm t)
-        //    {
-        //        var attr = RemapAttributes(connectorReplacement, t.Attributes, createCopy, AttributeParent.Connector).ToList();
-        //        t.Attributes = attr.Any() ? attr : null;
-        //    }
+    //    if (connector is ConnectorTerminalAm t)
+    //    {
+    //        var attr = RemapAttributes(connectorReplacement, t.Attributes, createCopy, AttributeParent.Connector).ToList();
+    //        t.Attributes = attr.Any() ? attr : null;
+    //    }
 
-        //    connector.Id = connectorReplacement.ToId;
-        //    connector.Id = connectorReplacement.ToIri;
+    //    connector.Id = connectorReplacement.ToId;
+    //    connector.Id = connectorReplacement.ToIri;
 
-        //    if (connector.Block == replacement.FromId)
-        //    {
-        //        connector.Block = replacement.ToId;
-        //        connector.Block = replacement.ToIri;
-        //    }
+    //    if (connector.Block == replacement.FromId)
+    //    {
+    //        connector.Block = replacement.ToId;
+    //        connector.Block = replacement.ToIri;
+    //    }
 
-        //    if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalType))
-        //    {
-        //        am.TerminalType = GlobalSettings.IriTerminalTypePrefix + am.TerminalType;
-        //    }
+    //    if (connector is ConnectorTerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalType) && string.IsNullOrWhiteSpace(am.TerminalType))
+    //    {
+    //        am.TerminalType = GlobalSettings.IriTerminalTypePrefix + am.TerminalType;
+    //    }
 
-        //    yield return connector;
-        //}
-    
+    //    yield return connector;
+    //}
+
 
     // Should there be a id remap
     private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
     {
-    throw new NotImplementedException();
+        throw new NotImplementedException();
 
         //if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
         //    return true;

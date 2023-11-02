@@ -23,7 +23,7 @@ public static class BlockExtensions
     public static void AssertBlock(this BlockDm block, ProjectDm project, IOntologyService ontologyService, ProjectData projectData)
     {
         var parentBlock = block.GetParent(project);
-                
+
         if (parentBlock != null && !string.IsNullOrWhiteSpace(parentBlock.Id.ToString()))
             ontologyService.AssertBlock(block.Id.ToString(), Resources.HasParent, parentBlock.Id.ToString());
 

@@ -82,7 +82,7 @@ public class CommonRepository : ICommonRepository
         return _contextAccessor.GetBaseUrl() + $"{endpoint}";
     }
 
-        /// <summary>
+    /// <summary>
     /// Get current domain
     /// </summary>
     /// <returns>Registered domain</returns>

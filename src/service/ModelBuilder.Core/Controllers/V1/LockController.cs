@@ -37,7 +37,7 @@ public class LockController : ControllerBase
         _lockService = lockService;
         _logger = logger;
     }
-    
+
     /// <summary>
     /// Returns a list of all locked blocks id's
     /// If param 'projectId' is null all locked blocks in the database will be returned

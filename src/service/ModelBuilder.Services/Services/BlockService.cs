@@ -34,7 +34,7 @@ public class BlockService : IBlockService
     {
         if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be empty.");
-                 
+
 
         var block = await _blockRepository.GetAsyncComplete(id);
 
