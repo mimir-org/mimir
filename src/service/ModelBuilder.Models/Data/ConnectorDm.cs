@@ -11,7 +11,7 @@ namespace Mb.Models.Data;
 [Serializable]
 public class ConnectorDm : IEquatable<ConnectorDm>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }

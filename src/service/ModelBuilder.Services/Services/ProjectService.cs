@@ -75,7 +75,9 @@ public class ProjectService : IProjectService
             throw new MimirorgNotFoundException("Id can't be null og empty.");
 
         id = HttpUtility.UrlDecode(id);
-
+        //projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
+        //    ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
+        //    : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectId.ToString());
         var projectId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{id}" : id;
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
@@ -122,7 +124,33 @@ public class ProjectService : IProjectService
     /// <returns>A create project task</returns>
     /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    public async Task<ProjectCm> CreateOrUpdate(ProjectAm projectAm)
+    public async Task<ProjectCm> Create(ProjectAm projectAm)
+    {
+        if (projectAm == null)
+            throw new MimirorgNullReferenceException("The project that should be created is null.");
+
+        //projectAm.Id = HttpUtility.UrlDecode(projectAm.Id);
+
+        var validation = projectAm.ValidateObject();
+
+        if (!validation.IsValid)
+            throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
+
+        //Check if project already exist. if so return error
+        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+
+       return await CreateProject(projectAm);
+        
+    }
+
+    /// <summary>
+    /// Create or update a new project
+    /// </summary>
+    /// <param name="projectAm">The project that should be created or updated</param>
+    /// <returns>A create project task</returns>
+    /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
+    public async Task<ProjectCm> Update(ProjectAm projectAm)
     {
         if (projectAm == null)
             throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -134,9 +162,7 @@ public class ProjectService : IProjectService
         if (!validation.IsValid)
             throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-        var originalProject = _commonRepository.IsValidGuid(projectAm.Id)
-            ? await _projectRepository.GetAsyncComplete(_commonRepository.GetEndpoint(ServerEndpoint.Project) + $"/{projectAm.Id}")
-            : await _projectRepository.GetAsyncComplete(projectAm.Id);
+        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
 
         return originalProject == null
             ? await CreateProject(projectAm)
@@ -153,7 +179,7 @@ public class ProjectService : IProjectService
         projectId = HttpUtility.UrlDecode(projectId);
         var am = await GetAmById(projectId);
         am.SubProject = !am.SubProject;
-        await CreateOrUpdate(am);
+        await Create(am); //Create or update here? check on incoming value
     }
 
     /// <summary>
@@ -365,29 +391,44 @@ public class ProjectService : IProjectService
     /// </summary>
     /// <param name="projectAm"></param>
     /// <returns></returns>
-    private async Task<ProjectCm> CreateProject(ProjectAm projectAm)
+    private async Task<string> CreateProject(ProjectAm projectAm)
     {
-        if (projectAm == null)
+        try
+        {
+            if (projectAm == null)
             throw new MimirorgNullReferenceException("ProjectAm is null");
-
-        projectAm.Id = HttpUtility.UrlDecode(projectAm.Id);
+            var projectId = Guid.NewGuid();
+            projectAm.Id = projectId.ToString();
 
         var projectDm = _mapper.Map<ProjectDm>(projectAm);
 
-        projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
-            ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
-            : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, Guid.NewGuid().ToString());
+            foreach(var item in projectDm.Blocks)
+            {
+                item.MainProject = projectId.ToString();
+            }
+
+        //projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
+        //    ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
+        //    : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectId.ToString());
 
         projectDm.Version = "1.0";
         projectDm.CreatedBy = _contextAccessor.GetName();
         projectDm.Created = DateTime.Now.ToUniversalTime();
 
-        projectDm.Blocks = new List<BlockDm>
+        foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root))
         {
-            CreateInitBlock(Aspect.Function, projectDm.Id),
-            CreateInitBlock(Aspect.Product, projectDm.Id),
-            CreateInitBlock(Aspect.Location, projectDm.Id)
-        };
+            var blockId = Guid.NewGuid();
+            block.LibraryType = blockId.ToString();
+        }
+
+        //projectDm.Blocks = new List<BlockDm>
+        //{
+
+
+        //    //CreateInitBlock(Aspect.Function, projectDm.Id),
+        //    //CreateInitBlock(Aspect.Product, projectDm.Id),
+        //    //CreateInitBlock(Aspect.Location, projectDm.Id)
+        //};
 
         await _projectRepository.CreateAsync(projectDm);
         await _projectRepository.SaveAsync();
@@ -398,7 +439,19 @@ public class ProjectService : IProjectService
         await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
         await _blockRepository.SaveAsync();
 
-        return _mapper.Map<ProjectCm>(projectDm);
+
+            var response = new ProjectCm() { Id = _commonRepository.IsValidGuid(projectAm.Id)
+          ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
+           : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectId.ToString())};
+
+            return response.Id;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>

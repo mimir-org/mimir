@@ -7,7 +7,7 @@ namespace Mb.Models.Application;
 
 public class ProjectAm : IValidatableObject
 {
-    [Required]
+    
     public string Id { get; set; }
 
     [Required]

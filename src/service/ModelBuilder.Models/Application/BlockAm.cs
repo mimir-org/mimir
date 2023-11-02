@@ -23,8 +23,7 @@ public class BlockAm : IValidatableObject
     [Required]
     public string Project { get; set; }
     [Required]
-    public string MainProject { get; set; }
-    [Required]
+    public string MainProject { get; set; }    
     public string LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }

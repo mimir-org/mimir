@@ -7,7 +7,7 @@ namespace Mb.Models.Data;
 [Serializable]
 public class AttributeDm : IEquatable<AttributeDm>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string Value { get; set; }
     public string AttributeType { get; set; }

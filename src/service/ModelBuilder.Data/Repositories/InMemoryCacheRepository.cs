@@ -35,7 +35,7 @@ public class InMemoryCacheRepository : ICacheRepository
     /// </summary>
     /// <param name="key">The cache key to delete</param>
     /// <returns>Completed Task</returns>
-    public Task DeleteCacheAsync(string key)
+    public Task DeleteCacheAsync(Guid key)
     {
         _memoryCache.Remove(key);
         return Task.CompletedTask;

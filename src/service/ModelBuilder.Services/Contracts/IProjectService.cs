@@ -13,7 +13,8 @@ public interface IProjectService
     Task<ProjectAm> GetAmById(string id);
     IEnumerable<ProjectCm> GetBySearch(string name, int from, int number);
     Task<(byte[] file, FileFormat format)> Download(string projectId, Guid id);
-    Task<ProjectCm> CreateOrUpdate(ProjectAm project);
+    Task<ProjectCm> Update(ProjectAm project);
+    Task<ProjectCm> Create(ProjectAm project);
     Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm);
     Task ConvertSubProject(string projectId);
     Task<PrepareCm> PrepareForMerge(PrepareAm prepare);

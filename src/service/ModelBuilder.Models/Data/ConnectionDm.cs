@@ -10,7 +10,7 @@ namespace Mb.Models.Data;
 [Serializable]
 public class ConnectionDm : IEquatable<ConnectionDm>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string FromConnector { get; set; }
     public string ToConnector { get; set; }
     public string MainProject { get; set; }

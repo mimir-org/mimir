@@ -29,7 +29,7 @@ public class ConnectionTerminalCm : ConnectionCm
 
 #region ConnectionRelationCm
 
-public abstract class ConnectionRelationCm : ConnectionCm
+public class ConnectionRelationCm : ConnectionCm
 {
 }
 

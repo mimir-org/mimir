@@ -68,7 +68,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
     public Task<ProjectDm> GetProjectAsync(string id)
-    {
+    {        
         var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 
         if (project == null)

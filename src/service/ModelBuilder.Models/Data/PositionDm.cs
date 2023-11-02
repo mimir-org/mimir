@@ -2,7 +2,7 @@ namespace Mb.Models.Data
 {
     public class PositionDm
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public double PosX { get; set; }
+        public double PosY { get; set; }
     }
 }

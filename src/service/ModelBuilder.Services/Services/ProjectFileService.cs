@@ -105,7 +105,7 @@ public class ProjectFileService : IProjectFileService
         if (par == null)
             throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-        await _projectService.CreateOrUpdate(projectConverter.Project);
+        await _projectService.Create(projectConverter.Project); // create or update here?
 
         var project = await _projectRepository.GetAsyncComplete(projectConverter.Project.Id);
 
@@ -153,11 +153,11 @@ public class ProjectFileService : IProjectFileService
 
         if (exist)
         {
-            await _projectService.CreateOrUpdate(project);
+            await _projectService.Create(project);
             return;
         }
 
-        _ = await _projectService.CreateOrUpdate(project);
+        await _projectService.Update(project);
     }
 
     #endregion Private

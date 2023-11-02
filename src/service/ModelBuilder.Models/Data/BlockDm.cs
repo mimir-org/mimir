@@ -15,7 +15,7 @@ namespace Mb.Models.Data;
 [Serializable]
 public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Version { get; set; }
     public string Name { get; set; }
     public string Label { get; set; }

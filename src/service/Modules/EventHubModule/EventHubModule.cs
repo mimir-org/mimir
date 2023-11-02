@@ -158,7 +158,7 @@ public class EventHubModule : IModelBuilderSyncService
                 return;
             }
 
-            projectService.CreateOrUpdate(project);
+            projectService.Create(project); //TODO Check incoming value
         }
         catch (Exception ex)
         {
