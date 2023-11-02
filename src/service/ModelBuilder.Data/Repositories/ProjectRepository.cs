@@ -219,7 +219,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
         }
 
         var key = updated.Id;
-        await _cacheRepository.DeleteCacheAsync(key);
+        await _cacheRepository.DeleteCacheAsync(key.ToString());
         _cacheRepository.RefreshList.Enqueue((updated.Id.ToString(), updated.Id.ToString()));
     }
 
@@ -296,6 +296,6 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             trans.Complete();
         }
                 
-        await _cacheRepository.DeleteCacheAsync(project.Id);
+        await _cacheRepository.DeleteCacheAsync(project.Id.ToString());
     }
 }

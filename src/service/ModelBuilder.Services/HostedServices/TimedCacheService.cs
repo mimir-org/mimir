@@ -66,7 +66,7 @@ public class TimedCacheService : IHostedService, IDisposable
         var repo = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
         try
         {
-            _ = repo.GetAsyncComplete(nextItem.Item1).Result;
+            //_ = repo.GetAsyncComplete(nextItem.Item1.ToString()).Result;
             _logger.LogInformation($"Timed cache service running: {nextItem.Item1}");
         }
         catch (Exception e)

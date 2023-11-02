@@ -12,12 +12,12 @@ public class ConnectorTests
     {
         _terminal = new ConnectorTerminalAm
         {
-            Id = "https://dummy.com/ID12345",
+            Id = Guid.NewGuid(),
             Name = "ConnectorTerminal",
             Attributes = null,
             Color = "#ffffff",
             Direction = ConnectorDirection.Input,
-            Block = null,
+            Block = Guid.Empty,
             TerminalType = "https://rdf.runir.com/1234"
         };
     }
@@ -33,7 +33,7 @@ public class ConnectorTests
     public void Missing_Id_And_Iri_Is_Not_Valid()
     {
         var obj = _terminal.DeepCopy();
-        obj.Id = "";
+        obj.Id = Guid.Empty;
 
         var validation = obj.ValidateObject();
         Assert.False(validation.IsValid);

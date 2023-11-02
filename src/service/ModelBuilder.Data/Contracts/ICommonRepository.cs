@@ -1,3 +1,4 @@
+using System;
 using Mb.Models.Common;
 
 namespace Mb.Data.Contracts;
@@ -8,7 +9,7 @@ public interface ICommonRepository
     /// Get current domain
     /// </summary>
     /// <returns>A new created id</returns>
-    string CreateId();
+    Guid CreateId();
 
     /// <summary>
     /// Create an Id as an Iri
@@ -16,14 +17,8 @@ public interface ICommonRepository
     /// <param name="endpoint"></param>
     /// <param name="guid"></param>
     /// <returns></returns>
-    string CreateIdAsIri(string endpoint, string guid);
+    string CreateIdAsIri(string endpoint, Guid id);
 
-    /// <summary>
-    /// Check if a string is a valid guid
-    /// </summary>
-    /// <param name="guidAsString"></param>
-    /// <returns>True or false</returns>
-    bool IsValidGuid(string guidAsString);
 
     /// <summary>
     /// Get the URL for the server
@@ -45,7 +40,7 @@ public interface ICommonRepository
     /// <remarks>
     /// For an id to be valid, it should be of this format: {domain unique}_{item unique}
     /// </remarks>
-    bool HasValidId(string id);
+    bool HasValidId(Guid id);
 
     /// <summary>
     /// Check if Iri is valid
@@ -63,7 +58,7 @@ public interface ICommonRepository
     /// <param name="id"></param>
     /// <param name="iri"></param>
     /// <returns>A valid id</returns>
-    (string id, string iri) CreateOrUseIdAndIri(string id, string iri);
+    (Guid id, string iri) CreateOrUseIdAndIri(Guid id, string iri);
 
     /// <summary>
     /// Create an id if the id is not valid

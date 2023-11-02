@@ -30,24 +30,25 @@ public class CooperateService : ICooperateService
     /// <returns></returns>
     public async Task SendDataUpdates(ProjectEditData editData, Guid projectId, string projectVersion)
     {
-        if (editData == null || projectId == Guid.Empty)
-            return;
+        throw new NotImplementedException();
+        //if (editData == null || projectId == Guid.Empty)
+        //    return;
 
-        // TODO: Find changed block and connection based on changed connectorTerminal, attribute etc.
-        var versionObj = new ProjectVersionCm
-        {
-            ProjectId = projectId,
-            Version = projectVersion
-        };
-        await Task.WhenAll(
-            Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
-            Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId),
-            Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId),
-            Task.Run(() => SendBlockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
-            Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
-            Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId))),
-            Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
-        ));
+        //// TODO: Find changed block and connection based on changed connectorTerminal, attribute etc.
+        //var versionObj = new ProjectVersionCm
+        //{
+        //    ProjectId = projectId,
+        //    Version = projectVersion
+        //};
+        //await Task.WhenAll(
+        //    Task.Run(() => SendProjectVersionUpdate(versionObj, WorkerStatus.Update)),
+        //    Task.Run(() => SendBlockUpdates(editData.BlockUpdate, WorkerStatus.Update, projectId),
+        //    Task.Run(() => SendBlockUpdates(editData.BlockDelete, WorkerStatus.Delete, projectId),
+        //    Task.Run(() => SendBlockUpdates(editData.BlockCreate, WorkerStatus.Create, projectId)),
+        //    Task.Run(() => SendConnectionUpdates(editData.ConnectionUpdate, WorkerStatus.Update, projectId)),
+        //    Task.Run(() => SendConnectionUpdates(editData.ConnectionDelete, WorkerStatus.Delete, projectId))),
+        //    Task.Run(() => SendConnectionUpdates(editData.ConnectionCreate, WorkerStatus.Create, projectId))
+        //));
     }
 
     public async Task SendProjectVersionUpdate(ProjectVersionCm version, WorkerStatus workerStatus)

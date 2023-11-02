@@ -4,6 +4,7 @@ using Mb.Models.Client;
 using Mb.Models.Const;
 using Mb.Services.Contracts;
 using Mimirorg.Common.Exceptions;
+using System;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -29,16 +30,13 @@ public class BlockService : IBlockService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    public async Task<BlockCm> Get(string id)
+    public async Task<BlockCm> Get(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(id))
-            throw new MimirorgNotFoundException("Id can't be null og empty.");
+        if (id == Guid.Empty)
+            throw new MimirorgNotFoundException("Id can't be empty.");
+                 
 
-        var urlDecodedId = HttpUtility.UrlDecode(id);
-
-        var blockId = urlDecodedId.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Block) + $"/{urlDecodedId}" : urlDecodedId;
-
-        var block = await _blockRepository.GetAsyncComplete(blockId);
+        var block = await _blockRepository.GetAsyncComplete(id);
 
         if (block == null)
             throw new MimirorgNotFoundException($"Could not find block with id: {id}");

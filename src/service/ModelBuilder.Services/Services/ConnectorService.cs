@@ -6,6 +6,7 @@ using Mb.Models.Client;
 using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Mb.Models.Const;
+using System;
 
 namespace Mb.Services.Services;
 
@@ -29,14 +30,12 @@ public class ConnectorService : IConnectorService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    public Task<ConnectorCm> Get(string id)
+    public Task<ConnectorCm> Get(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be null og empty.");
-
-        var connectorId = id.Length == GlobalSettings.GuidLength ? _commonRepository.GetEndpoint(ServerEndpoint.Connector) + $"/{id}" : id;
-
-        var connector = _connectorRepository.FindBy(x => x.Id == connectorId).FirstOrDefault();
+        
+        var connector = _connectorRepository.FindBy(x => x.Id == id).FirstOrDefault();
 
         if (connector == null)
             throw new MimirorgNotFoundException($"Could not find connector with id: {id}");

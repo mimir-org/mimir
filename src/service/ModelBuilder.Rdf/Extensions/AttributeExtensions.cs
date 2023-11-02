@@ -137,7 +137,7 @@ public static class AttributeExtensions
     /// <param name="iri"></param>
     /// <param name="block"></param>
     /// <param name="connectorTerminal"></param>
-    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string block, string connectorTerminal)
+    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, Guid block, string connectorTerminal)
     {
         #region None Mimir specific data
 
@@ -154,31 +154,31 @@ public static class AttributeExtensions
         {
             new()
             {
-                Id = null,
+                Id = Guid.Empty,
                 Name = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),
                 Value = null
             },
             new()
             {
-                Id = null,
+              Id = Guid.Empty,
                 Name = "scope",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false)
             },
             new()
             {
-                Id = null,
+               Id = Guid.Empty,
                 Name = "provenance",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false)
             },
             new()
             {
-                Id = null,
+             Id = Guid.Empty,
                 Name = "range",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false)
             },
             new()
             {
-                Id = null,
+           Id = Guid.Empty,
                 Name = "regularity",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false)
             }

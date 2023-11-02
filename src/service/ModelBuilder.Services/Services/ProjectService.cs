@@ -206,8 +206,8 @@ public class ProjectService : IProjectService
             projectAm.Name = subProjectAm.Name;
             projectAm.Description = subProjectAm.Description;
             projectAm.SubProject = true;
-            projectAm.Blocks = projectAm.Blocks.Where(x => x.BlockType == BlockType.Root || subProjectAm.Blocks.Any(y => x.Id == y)).ToList();
-            projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
+            //projectAm.Blocks = projectAm.Blocks.Where(x => x.BlockType == BlockType.Root || subProjectAm.Blocks.Any(y => x.Id == y)).ToList();
+            //projectAm.Connections = projectAm.Connections.Where(x => subProjectAm.Connections.Any(y => x.Id == y)).ToList();
 
             _ = _remapService.Clone(projectAm);
 

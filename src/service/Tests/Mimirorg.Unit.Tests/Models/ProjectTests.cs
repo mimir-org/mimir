@@ -27,12 +27,12 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
             {
                 new BlockAm
                 {
-                    Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
+                    Id = new Guid("ID17de767c-3040-44a6-a8ad-f5bb300fc52e"),
                     Name = "Dummy block A",
                     Description = "Dummy block A",
-                    Project = $"https://rdf.runir.net/ID{ProjectGuid}",
+                    Project = ProjectGuid,
                     Version = "1.0",
-                    MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
+                    MainProject = ProjectGuid,
                     Aspect = Aspect.Function,
                     Attributes = null,
                     //Connectors = new List<ConnectorAm>
@@ -78,12 +78,12 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                 },
                 new BlockAm
                 {
-                    Id = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
+                    Id = new Guid("ID183EA07F-9696-467F-8F12-ACE65BA89670"),
                     Name = "Dummy block B",
                     Description = "Dummy block B",
-                    Project = $"https://rdf.runir.net/ID{ProjectGuid}",
+                    Project = ProjectGuid,
                     Version = "1.0",
-                    MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
+                    MainProject = ProjectGuid,
                     Aspect = Aspect.Function,
                     Attributes = null,
                     //Connectors = new List<ConnectorAm>
@@ -132,9 +132,9 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
             {
                 new ConnectionAm
                 {
-                    Id = "https://rdf.runir.net/108097DF-0319-46F8-AAE0-46F894AF0252",
-                    Project = $"https://rdf.runir.net/ID{ProjectGuid}",
-                    MainProject = $"https://rdf.runir.net/ID{ProjectGuid}",
+                    Id = new Guid("108097DF-0319-46F8-AAE0-46F894AF0252"),
+                    Project = ProjectGuid,
+                    MainProject = ProjectGuid,
                     FromConnector = "https://rdf.runir.net/ID6560A3CC-0499-4A55-8590-1453060A1498",
                     ToConnector = "https://rdf.runir.net/ID95479872-2249-4E46-8E9F-305589F946CC",
                 }
@@ -148,7 +148,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
         var clone = ValidProject().DeepCopy();
         clone.Blocks.Add(new BlockAm
         {
-            Id = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e"
+            Id = new Guid("ID17de767c-3040-44a6-a8ad-f5bb300fc52e")
         });
 
         var validation = clone.ValidateObject();

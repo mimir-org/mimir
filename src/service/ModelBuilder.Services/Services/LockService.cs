@@ -40,7 +40,7 @@ public class LockService : ILockService
     /// Returns a list of all locked blocks id's
     /// </summary>
     /// <returns>List of locked block id></returns>
-    public IEnumerable<string> GetLockedBlocks()
+    public IEnumerable<Guid> GetLockedBlocks()
     {
         return _blockRepository.FindBy(x => x.IsLocked).Select(x => x.Id);
     }
@@ -52,7 +52,7 @@ public class LockService : ILockService
     /// <returns></returns>
     public async Task Lock(LockAm lockAm)
     {
-        if (string.IsNullOrWhiteSpace(lockAm?.Id))
+        if (lockAm?.Id == Guid.Empty)
             throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
         var lockDm = _mapper.Map<LockDm>(lockAm);
@@ -72,12 +72,12 @@ public class LockService : ILockService
         }
 
         //Refresh cache
-        var key = lockAm.ProjectId.ResolveKey();
-        await _cacheRepository.DeleteCacheAsync(key);
-        _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId, null));
+        var key = lockAm.ProjectId;
+        await _cacheRepository.DeleteCacheAsync(key.ToString());
+        _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId.ToString(), null));
 
         //Send websocket updates to clients
         var lockCms = _mapper.Map<List<LockCm>>(lockDms);
-        await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockCms[0]?.ProjectId);
+        await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockCms[0].ProjectId);
     }
 }

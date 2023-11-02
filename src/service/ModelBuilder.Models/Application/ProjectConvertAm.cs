@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application;
@@ -5,7 +6,7 @@ namespace Mb.Models.Application;
 public class ProjectConvertAm
 {
     [Required]
-    public string ParserId { get; set; }
+    public Guid ParserId { get; set; }
 
     [Required]
     public ProjectAm Project { get; set; }

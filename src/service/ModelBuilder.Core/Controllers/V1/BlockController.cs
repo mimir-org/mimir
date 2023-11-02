@@ -49,9 +49,9 @@ public class BlockController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> Get(string id)
+    public async Task<IActionResult> Get(Guid id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (id == Guid.Empty)
             return BadRequest("The id can not be null or empty");
 
         try

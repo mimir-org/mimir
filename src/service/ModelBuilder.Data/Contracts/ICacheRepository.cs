@@ -17,7 +17,7 @@ public interface ICacheRepository
     /// </summary>
     /// <param name="key">The cache key to delete</param>
     /// <returns>Completed Task</returns>
-    Task DeleteCacheAsync(Guid key);
+    Task DeleteCacheAsync(string key);
 
     /// <summary>
     /// Get or create cache
