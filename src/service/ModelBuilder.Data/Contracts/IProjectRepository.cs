@@ -16,14 +16,14 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetAsyncComplete(Guid id);
+    Task<ProjectDm> GetAsyncComplete(Guid? id);
 
     /// <summary>
     /// Get complete project async not read from cache
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetProjectAsync(Guid id);
+    Task<ProjectDm> GetProjectAsync(Guid? id);
 
     /// <summary>
     /// Get project list

@@ -126,15 +126,10 @@ public class ProjectService : IProjectService
         if (projectAm == null)
             throw new MimirorgNullReferenceException("The project that should be created is null.");
 
-        //projectAm.Id = HttpUtility.UrlDecode(projectAm.Id);
-
         var validation = projectAm.ValidateObject();
 
         if (!validation.IsValid)
             throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
-
-        //Check if project already exist. if so return error
-        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
 
         return await CreateProject(projectAm);
 
@@ -157,11 +152,12 @@ public class ProjectService : IProjectService
         if (!validation.IsValid)
             throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
-
-        if (originalProject == null)
-            return await UpdateProject(projectAm, originalProject);
-
+        if (projectAm.Id != null)
+        {
+            var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+            if (originalProject == null)
+                return await UpdateProject(projectAm, originalProject);
+        }
         return Guid.Empty;
     }
 
@@ -241,7 +237,7 @@ public class ProjectService : IProjectService
     /// </summary>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    public async Task Delete(Guid projectId)
+    public async Task Delete(Guid? projectId)
     {
         if (projectId == Guid.Empty)
             throw new MimirorgNullReferenceException("Id is null or empty");
@@ -285,7 +281,7 @@ public class ProjectService : IProjectService
     /// </summary>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    public bool Exist(Guid projectId)
+    public bool Exist(Guid? projectId)
     {
         if (projectId == Guid.Empty)
             throw new MimirorgNullReferenceException("Id is null or empty");
@@ -383,40 +379,42 @@ public class ProjectService : IProjectService
     {
         try
         {
-            //Check if guid format is correct on all guids
+            //Guard check if guid format is correct on all guids
 
-        if (projectAm == null)
-            throw new MimirorgNullReferenceException("ProjectAm is null");
-        var projectId = Guid.NewGuid();         
-            
-        var projectDm = _mapper.Map<ProjectDm>(projectAm);
+            var projectId = Guid.NewGuid();
 
-        foreach (var item in projectDm.Blocks)
-        {
-            item.MainProject = projectId;
-        }
+            projectAm.Id = projectId;
 
-        projectDm.Version = "1.0";
-        projectDm.CreatedBy = _contextAccessor.GetName();
-        projectDm.Created = DateTime.Now.ToUniversalTime();
+            foreach (var item in projectAm.Blocks)
+            {
+                item.MainProject = projectId;
+                item.Project = projectId;
+            }
 
-        foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root))
-        {
-            var blockId = Guid.NewGuid();
-            block.LibraryType = blockId;
-        }
+            var projectDm = _mapper.Map<ProjectDm>(projectAm);
 
-        await _projectRepository.CreateAsync(projectDm);
-        await _projectRepository.SaveAsync();
+            projectDm.Version = "1.0";
+            projectDm.CreatedBy = _contextAccessor.GetName();
+            projectDm.Created = DateTime.Now.ToUniversalTime();
 
-        await _blockRepository.CreateAsync(projectDm.Blocks);
-        await _blockRepository.SaveAsync();
+            foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root || block.Id == Guid.Empty))
+            {
+                var blockId = Guid.NewGuid(); //This should come from frontend
+                block.LibraryType = blockId;
+                block.Id = blockId;
+            }
 
-        await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
-        await _blockRepository.SaveAsync();
+            await _projectRepository.CreateAsync(projectDm);
+            await _projectRepository.SaveAsync();
+
+            await _blockRepository.CreateAsync(projectDm.Blocks);
+            await _blockRepository.SaveAsync();
+
+            await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
+            await _blockRepository.SaveAsync();
 
 
-        return projectId;
+            return projectId;
 
         }
         catch (Exception ex)

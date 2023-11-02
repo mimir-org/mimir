@@ -18,6 +18,6 @@ public interface IProjectService
     Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm);
     Task ConvertSubProject(Guid projectId);
     Task<PrepareCm> PrepareForMerge(PrepareAm prepare);
-    bool Exist(Guid projectId);
-    Task Delete(Guid projectId);
+    bool Exist(Guid? projectId);
+    Task Delete(Guid? projectId);
 }

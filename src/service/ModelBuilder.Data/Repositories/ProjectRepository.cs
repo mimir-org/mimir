@@ -52,7 +52,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    public async Task<ProjectDm> GetAsyncComplete(Guid id)
+    public async Task<ProjectDm> GetAsyncComplete(Guid? id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNullReferenceException("The Id can't be null.");
@@ -67,7 +67,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    public Task<ProjectDm> GetProjectAsync(Guid id)
+    public Task<ProjectDm> GetProjectAsync(Guid? id)
     {        
         var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 

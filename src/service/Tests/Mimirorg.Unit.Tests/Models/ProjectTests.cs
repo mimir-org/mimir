@@ -26,8 +26,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
             Blocks = new List<BlockAm>
             {
                 new BlockAm
-                {
-                    Id = new Guid("ID17de767c-3040-44a6-a8ad-f5bb300fc52e"),
+                {                    
                     Name = "Dummy block A",
                     Description = "Dummy block A",
                     Project = ProjectGuid,
@@ -78,7 +77,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                 },
                 new BlockAm
                 {
-                    Id = new Guid("ID183EA07F-9696-467F-8F12-ACE65BA89670"),
+         
                     Name = "Dummy block B",
                     Description = "Dummy block B",
                     Project = ProjectGuid,

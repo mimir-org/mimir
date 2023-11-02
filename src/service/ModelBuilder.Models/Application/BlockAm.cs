@@ -8,8 +8,8 @@ namespace Mb.Models.Application;
 
 public class BlockAm : IValidatableObject
 {
-    [Required]
-    public Guid Id { get; set; }
+    
+    public Guid? Id { get; set; }
     [Required]
     public string Version { get; set; }
     [Required]
@@ -20,10 +20,10 @@ public class BlockAm : IValidatableObject
     public Aspect Aspect { get; set; }
     [Required]
     public BlockType BlockType { get; set; }
-    [Required]
-    public Guid Project { get; set; }
-    [Required]
-    public Guid MainProject { get; set; }    
+ 
+    public Guid? Project { get; set; }
+
+    public Guid? MainProject { get; set; }    
     public Guid LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }
