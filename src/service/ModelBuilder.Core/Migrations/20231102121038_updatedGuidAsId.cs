@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,28 +6,47 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class updatedGuidAsId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspectObject",
+                name: "Attribute",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttributeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitSelected = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Units = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Qualifiers = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConnectorTerminal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Block = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attribute", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Block",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Label = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Aspect = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AspectObjectType = table.Column<int>(type: "int", nullable: false),
-                    Project = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LibraryType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlockType = table.Column<int>(type: "int", nullable: false),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MainProject = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LibraryType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PositionTree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PositionBlock = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReferenceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReferenceType = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -41,37 +60,18 @@ namespace Mb.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspectObject", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Attribute",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AttributeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitSelected = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Units = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Qualifiers = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConnectorTerminal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AspectObject = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attribute", x => x.Id);
+                    table.PrimaryKey("PK_Block", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Connection",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FromConnector = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ToConnector = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MainProject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Project = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Handles = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -86,12 +86,12 @@ namespace Mb.Core.Migrations
                 name: "Connector",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direction = table.Column<int>(type: "int", nullable: false),
                     Inside = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Outside = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AspectObject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Block = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TerminalType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TerminalParentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -107,7 +107,7 @@ namespace Mb.Core.Migrations
                 name: "Project",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(63)", maxLength: 63, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(511)", maxLength: 511, nullable: true),
@@ -126,11 +126,10 @@ namespace Mb.Core.Migrations
                 name: "Version",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ver = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -142,8 +141,8 @@ namespace Mb.Core.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspectObject_Project",
-                table: "AspectObject",
+                name: "IX_Block_Project",
+                table: "Block",
                 column: "Project");
         }
 
@@ -151,10 +150,10 @@ namespace Mb.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspectObject");
+                name: "Attribute");
 
             migrationBuilder.DropTable(
-                name: "Attribute");
+                name: "Block");
 
             migrationBuilder.DropTable(
                 name: "Connection");

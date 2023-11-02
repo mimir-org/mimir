@@ -27,7 +27,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
     public Guid LibraryType { get; set; }
     public string PositionTree { get; set; }
     public string PositionBlock { get; set; }
-    public Guid ReferenceType { get; set; }
+    public string ReferenceType { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }

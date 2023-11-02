@@ -60,7 +60,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //},
                     BlockType = BlockType.Aspect,
                     Label = "Dummy block A",
-                    LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
+                    LibraryType = new Guid ("71D39BB0C6EA6E996AEA7139BB1B3D91"),
                     PositionTree = new PositionAm
                     {
                         PosX = -99,
@@ -111,7 +111,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     //},
                     BlockType = BlockType.Aspect,
                     Label = "Dummy block A",
-                    LibraryType = "71D39BB0C6EA6E996AEA7139BB1B3D91",
+                    LibraryType = new Guid("71D39BB0C6EA6E996AEA7139BB1B3D91"),
                     PositionTree = new PositionAm
                     {
                         PosX = -99,

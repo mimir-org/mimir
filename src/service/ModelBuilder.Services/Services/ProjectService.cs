@@ -381,10 +381,14 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> CreateProject(ProjectAm projectAm)
     {
+        try
+        {
+            //Check if guid format is correct on all guids
+
         if (projectAm == null)
             throw new MimirorgNullReferenceException("ProjectAm is null");
-        var projectId = Guid.NewGuid();
-
+        var projectId = Guid.NewGuid();         
+            
         var projectDm = _mapper.Map<ProjectDm>(projectAm);
 
         foreach (var item in projectDm.Blocks)
@@ -414,6 +418,12 @@ public class ProjectService : IProjectService
 
         return projectId;
 
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>
@@ -503,7 +513,7 @@ public class ProjectService : IProjectService
                 PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
                 PosY = 5
             }),
-            ReferenceType = blockId,
+            ReferenceType = blockId.ToString(),
             CreatedBy = _contextAccessor.GetName(),
             Created = DateTime.Now.ToUniversalTime(),
             UpdatedBy = null,

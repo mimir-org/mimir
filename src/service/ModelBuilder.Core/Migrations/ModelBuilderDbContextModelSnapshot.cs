@@ -24,17 +24,18 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.AttributeDm", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
                     b.Property<string>("AttributeType")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeType");
 
-                    b.Property<string>("Block")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("block");
+                    b.Property<Guid?>("Block")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Block");
 
                     b.Property<string>("ConnectorTerminal")
                         .HasColumnType("nvarchar(max)")
@@ -68,8 +69,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.BlockDm", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
                     b.Property<string>("Aspect")
@@ -77,7 +79,7 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<int>("BLockType")
+                    b.Property<int>("BlockType")
                         .HasColumnType("int")
                         .HasColumnName("BlockType");
 
@@ -112,14 +114,12 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Label");
 
-                    b.Property<string>("LibraryType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("LibraryType")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("LibraryType");
 
-                    b.Property<string>("MainProject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("MainProject")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("MainProject");
 
                     b.Property<string>("Name")
@@ -136,9 +136,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PositionTree");
 
-                    b.Property<string>("Project")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Project")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Project");
 
                     b.Property<string>("Purpose")
@@ -179,8 +178,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.ConnectionDm", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
                     b.Property<string>("Discriminator")
@@ -201,9 +201,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MainProject");
 
-                    b.Property<string>("Project")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("Project")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Project");
 
                     b.Property<string>("ToConnector")
@@ -222,14 +221,14 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.ConnectorDm", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
-                    b.Property<string>("Block")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("block");
+                    b.Property<Guid>("Block")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Block");
 
                     b.Property<int>("Direction")
                         .HasColumnType("int")
@@ -265,8 +264,9 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.ProjectDm", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
                     b.Property<DateTime>("Created")
@@ -316,12 +316,10 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.VersionDm", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
@@ -347,9 +345,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
 
-                    b.Property<string>("TypeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<Guid>("TypeId")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("TypeId");
 
                     b.Property<string>("Ver")

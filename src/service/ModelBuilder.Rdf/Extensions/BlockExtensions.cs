@@ -172,7 +172,7 @@ public static class BlockExtensions
         //block.MainProject = masterProjectIriBlock.;
 
         block.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
-        block.LibraryType = ontologyService.GetValue(iri, Resources.LibraryType, false);
+        //block.LibraryType = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
         block.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
