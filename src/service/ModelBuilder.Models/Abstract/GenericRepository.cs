@@ -63,7 +63,7 @@ public abstract class GenericRepository<TContext, TEntity> : IGenericRepository<
         Context.Entry(entity).State = EntityState.Modified;
     }
 
-    public virtual async Task Delete(int id)
+    public virtual async Task Delete(Guid id)
     {
         var entityToDelete = await DbSet.FindAsync(id);
         if (Context.Entry(entityToDelete).State == EntityState.Detached)
@@ -74,16 +74,6 @@ public abstract class GenericRepository<TContext, TEntity> : IGenericRepository<
         DbSet.Remove(entityToDelete);
     }
 
-    public virtual async Task Delete(string id)
-    {
-        var entityToDelete = await DbSet.FindAsync(id);
-        if (Context.Entry(entityToDelete).State == EntityState.Detached)
-        {
-            DbSet.Attach(entityToDelete);
-        }
-
-        DbSet.Remove(entityToDelete);
-    }
 
     public virtual void Detach(TEntity entity)
     {

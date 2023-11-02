@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Client;
@@ -8,9 +9,9 @@ namespace Mb.Services.Contracts;
 public interface IVersionService
 {
     Task<IEnumerable<VersionCm>> GetAllVersions();
-    Task<IEnumerable<VersionCm>> GetAllVersions(string typeId);
-    Task<ProjectDm> GetGetByVersion(string typeId, string version);
-    Task<ProjectDm> GetProject(int id);
+    Task<IEnumerable<VersionCm>> GetAllVersions(Guid typeId);
+    Task<ProjectDm> GetGetByVersion(Guid typeId, string version);
+    Task<ProjectDm> GetProject(Guid id);
     Task<VersionCm> CreateVersion(ProjectDm project);
-    Task DeleteVersion(int id);
+    Task DeleteVersion(Guid id);
 }

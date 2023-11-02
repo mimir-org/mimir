@@ -22,12 +22,12 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
     public string Description { get; set; }
     public Aspect Aspect { get; set; }
     public BlockType BlockType { get; set; }
-    public string Project { get; set; }
-    public string MainProject { get; set; }
-    public string LibraryType { get; set; }
+    public Guid Project { get; set; }
+    public Guid MainProject { get; set; }
+    public Guid LibraryType { get; set; }
     public string PositionTree { get; set; }
     public string PositionBlock { get; set; }
-    public string ReferenceType { get; set; }
+    public Guid ReferenceType { get; set; }
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }

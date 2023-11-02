@@ -9,15 +9,15 @@ namespace Mb.Services.Contracts;
 
 public interface IProjectService
 {
-    Task<ProjectCm> GetById(string id);
-    Task<ProjectAm> GetAmById(string id);
+    Task<ProjectCm> GetById(Guid id);
+    Task<ProjectAm> GetAmById(Guid id);
     IEnumerable<ProjectCm> GetBySearch(string name, int from, int number);
-    Task<(byte[] file, FileFormat format)> Download(string projectId, Guid id);
-    Task<ProjectCm> Update(ProjectAm project);
-    Task<ProjectCm> Create(ProjectAm project);
+    Task<(byte[] file, FileFormat format)> Download(Guid projectId, Guid id);
+    Task<Guid> Update(ProjectAm project);
+    Task<Guid> Create(ProjectAm project);
     Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm);
-    Task ConvertSubProject(string projectId);
+    Task ConvertSubProject(Guid projectId);
     Task<PrepareCm> PrepareForMerge(PrepareAm prepare);
-    bool Exist(string projectId);
-    Task Delete(string projectId);
+    bool Exist(Guid projectId);
+    Task Delete(Guid projectId);
 }

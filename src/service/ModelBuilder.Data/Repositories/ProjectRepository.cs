@@ -52,9 +52,9 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    public async Task<ProjectDm> GetAsyncComplete(string id)
+    public async Task<ProjectDm> GetAsyncComplete(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == Guid.Empty)
             throw new MimirorgNullReferenceException("The Id can't be null.");
 
         var project = GetProjectAsync(id);
@@ -67,7 +67,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    public Task<ProjectDm> GetProjectAsync(string id)
+    public Task<ProjectDm> GetProjectAsync(Guid id)
     {        
         var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 
@@ -220,7 +220,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         var key = updated.Id;
         await _cacheRepository.DeleteCacheAsync(key);
-        _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Id));
+        _cacheRepository.RefreshList.Enqueue((updated.Id.ToString(), updated.Id.ToString()));
     }
 
     /// <summary>
@@ -262,7 +262,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             trans.Complete();
         }
 
-        _cacheRepository.RefreshList.Enqueue((project.Id, project.Id));
+        _cacheRepository.RefreshList.Enqueue((project.Id.ToString(), project.Id.ToString()));
         return Task.CompletedTask;
     }
 
@@ -295,8 +295,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
             trans.Complete();
         }
-
-        var key = project.Id.ResolveKey();
-        await _cacheRepository.DeleteCacheAsync(key);
+                
+        await _cacheRepository.DeleteCacheAsync(project.Id);
     }
 }

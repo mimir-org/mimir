@@ -16,7 +16,7 @@ public class ConnectorDm : IEquatable<ConnectorDm>
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
     public string Outside { get; set; }
-    public string Block { get; set; }
+    public Guid Block { get; set; }
 
     public bool Equals(ConnectorDm other)
     {

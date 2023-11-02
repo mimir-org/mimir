@@ -15,7 +15,7 @@ public class VersionDm
     public string Type { get; set; }
 
     [Required]
-    public string TypeId { get; set; }
+    public Guid TypeId { get; set; }
 
     [Required]
     public string Name { get; set; }

@@ -1,4 +1,5 @@
 using Mimirorg.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +8,7 @@ namespace Mb.Models.Application;
 public class SubProjectAm : IValidatableObject
 {
     [Required]
-    public string FromProjectId { get; set; }
+    public Guid FromProjectId { get; set; }
 
     [Required]
     public string Name { get; set; }

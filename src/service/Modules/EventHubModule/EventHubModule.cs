@@ -30,7 +30,7 @@ public class EventHubModule : IModelBuilderSyncService
     {
         return new ModuleDescriptionDm
         {
-            Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285").ToString(),
+            Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285"), //Why is this hardcoded? Test?
             Name = "Event Hub Module"
         };
     }

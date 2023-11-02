@@ -49,7 +49,7 @@ public class InMemoryCacheRepository : ICacheRepository
     /// <param name="item">Function param that create the cache</param>
     /// <param name="seconds">Override lifetime cache</param>
     /// <returns>T value</returns>
-    public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> item, int? seconds)
+    public async Task<T> GetOrCreateAsync<T>(Guid key, Func<Task<T>> item, int? seconds)
     {
         if (_memoryCache.TryGetValue(key, out T cacheEntry))
             return cacheEntry;
@@ -69,7 +69,7 @@ public class InMemoryCacheRepository : ICacheRepository
                 break;
         }
 
-        var cacheLock = _locks.GetOrAdd(key, _ => new SemaphoreSlim(1, 1));
+        var cacheLock = _locks.GetOrAdd(key.ToString(), _ => new SemaphoreSlim(1, 1));
         await cacheLock.WaitAsync();
 
         try

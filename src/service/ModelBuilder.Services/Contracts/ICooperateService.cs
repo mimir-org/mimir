@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Client;
@@ -9,9 +10,9 @@ namespace Mb.Services.Contracts;
 
 public interface ICooperateService
 {
-    Task SendDataUpdates(ProjectEditData editData, string projectId, string projectVersion);
-    Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> nodeMap, string projectId);
-    Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, string projectId);
-    Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId);
+    Task SendDataUpdates(ProjectEditData editData, Guid projectId, string projectVersion);
+    Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> nodeMap, Guid projectId);
+    Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, Guid projectId);
+    Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, Guid projectId);
     Task SendRefreshLibData();
 }

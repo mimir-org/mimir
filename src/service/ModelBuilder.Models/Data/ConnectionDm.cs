@@ -14,7 +14,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
     public string FromConnector { get; set; }
     public string ToConnector { get; set; }
     public string MainProject { get; set; }
-    public string Project { get; set; }
+    public Guid Project { get; set; }
 
     [NotMapped]
     public string Handles { get; set; }

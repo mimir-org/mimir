@@ -58,7 +58,7 @@ public class ProjectFileService : IProjectFileService
         }
 
         if (_moduleService.Modules.All(x =>
-                x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
+                x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
                     x.ModuleDescription.Id.ToString(), projectFile.ParserId,
                     StringComparison.CurrentCultureIgnoreCase)))
             throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
@@ -145,7 +145,7 @@ public class ProjectFileService : IProjectFileService
 
         var project = await ResolveProject(projectFile);
 
-        if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Id)))
+        if (project == null || ((project.Id != Guid.Empty)))
             throw new MimirorgInvalidOperationException(
                 "You can't import an project that is null or missing id");
 

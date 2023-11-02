@@ -62,9 +62,9 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(Guid id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (id == Guid.Empty)
             return BadRequest("The id can not be null or empty");
 
         try
@@ -96,10 +96,10 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetAmById(string id)
+    public async Task<IActionResult> GetAmById(Guid id)
     {
-        if (string.IsNullOrEmpty(id))
-            return BadRequest("The id can not be null or empty");
+        if (id == Guid.Empty)
+            return BadRequest("The id can not be empty");
 
         try
         {
@@ -215,7 +215,7 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Admin")]
-    public async Task<IActionResult> DeleteProject(string id)
+    public async Task<IActionResult> DeleteProject(Guid id)
     {
         try
         {
@@ -291,7 +291,7 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> DownloadProject(string id, string parser)
+    public async Task<IActionResult> DownloadProject(Guid id, string parser)
     {
         try
         {
