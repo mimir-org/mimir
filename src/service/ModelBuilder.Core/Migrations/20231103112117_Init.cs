@@ -6,13 +6,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:src/service/ModelBuilder.Core/Migrations/20231102121038_updatedGuidAsId.cs
-    public partial class updatedGuidAsId : Migration
-    {
-========
     public partial class Init : Migration
     {   
->>>>>>>> dev:src/service/ModelBuilder.Core/Migrations/20231103112117_Init.cs
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,7 +61,7 @@ namespace Mb.Core.Migrations
                     LibraryType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PositionTree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PositionBlock = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReferenceType = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReferenceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -169,15 +164,10 @@ namespace Mb.Core.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-<<<<<<<< HEAD:src/service/ModelBuilder.Core/Migrations/20231102121038_updatedGuidAsId.cs
-            migrationBuilder.DropTable(
-                name: "Attribute");
-========
             migrationBuilder.Sql("DROP PROCEDURE IF EXISTS dbo.GetProjectVersion");
->>>>>>>> dev:src/service/ModelBuilder.Core/Migrations/20231103112117_Init.cs
 
             migrationBuilder.DropTable(
-                name: "Block");
+                name: "Attribute");
 
             migrationBuilder.DropTable(
                 name: "Block");

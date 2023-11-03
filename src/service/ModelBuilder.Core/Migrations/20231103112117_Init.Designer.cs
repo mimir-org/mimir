@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-<<<<<<<< HEAD:src/service/ModelBuilder.Core/Migrations/20231102125804_updatedReferenceTypeToString.Designer.cs
-    [Migration("20231102125804_updatedReferenceTypeToString")]
-    partial class updatedReferenceTypeToString
-========
     [Migration("20231103112117_Init")]
     partial class Init
->>>>>>>> dev:src/service/ModelBuilder.Core/Migrations/20231103112117_Init.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
