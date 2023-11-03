@@ -159,31 +159,31 @@ public class ProjectService : IProjectService
 
     }
 
-    /// <summary>
-    /// Create or update a new project
-    /// </summary>
-    /// <param name="projectAm">The project that should be created or updated</param>
-    /// <returns>A create project task</returns>
-    /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
-    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    public async Task<Guid> Update(ProjectAm projectAm)
-    {
-        if (projectAm == null)
-            throw new MimirorgNullReferenceException("The project that should be created is null.");
+    ///// <summary>
+    ///// Create or update a new project
+    ///// </summary>
+    ///// <param name="projectAm">The project that should be created or updated</param>
+    ///// <returns>A create project task</returns>
+    ///// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+    ///// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
+    //public async Task<Guid> Update(ProjectAm projectAm)
+    //{
+    //    if (projectAm == null)
+    //        throw new MimirorgNullReferenceException("The project that should be created is null.");
 
-        var validation = projectAm.ValidateObject();
+    //    var validation = projectAm.ValidateObject();
 
-        if (!validation.IsValid)
-            throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
+    //    if (!validation.IsValid)
+    //        throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-        if (projectAm.Id != null)
-        {
-            var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
-            if (originalProject != null)
-                return await UpdateProject(projectAm, originalProject);
-        }
-        return Guid.Empty;
-    }
+    //    if (projectAm.Id != null)
+    //    {
+    //        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+    //        if (originalProject != null)
+    //            return await UpdateProject(projectAm, originalProject);
+    //    }
+    //    return Guid.Empty;
+    //}
 
     /// <summary>
     /// Convert or inverse sub project
