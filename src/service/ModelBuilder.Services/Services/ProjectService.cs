@@ -155,7 +155,7 @@ public class ProjectService : IProjectService
         if (projectAm.Id != null)
         {
             var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
-            if (originalProject == null)
+            if (originalProject != null)
                 return await UpdateProject(projectAm, originalProject);
         }
         return Guid.Empty;
