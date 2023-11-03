@@ -42,7 +42,7 @@ public class ParserModule : IModelBuilderParser
     {
         return new ModuleDescriptionDm
         {
-            Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581").ToString(),
+            Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581"),
             Name = "Mimir RDF N-Triples"
         };
     }

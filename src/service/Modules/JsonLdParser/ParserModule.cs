@@ -43,7 +43,7 @@ public class ParserModule : IModelBuilderParser
     {
         return new ModuleDescriptionDm
         {
-            Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943").ToString(),
+            Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943"),
             Name = "Mimir IMF JSON-LD"
         };
     }

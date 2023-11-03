@@ -21,7 +21,6 @@ public class LibraryService : ILibraryService
         _libraryRepository = libraryRepository;
         _cooperateService = cooperateService;
     }
-    
     /// <summary>
     /// Get all block types
     /// </summary>

@@ -4,7 +4,7 @@ namespace Mb.Models.Client;
 
 #region ConnectionCm class
 
-public class ConnectionCm
+public abstract class ConnectionCm
 {
     public string Id { get; set; }
     public string FromConnector { get; set; }
@@ -29,7 +29,7 @@ public class ConnectionTerminalCm : ConnectionCm
 
 #region ConnectionRelationCm
 
-public abstract class ConnectionRelationCm : ConnectionCm
+public class ConnectionRelationCm : ConnectionCm
 {
 }
 

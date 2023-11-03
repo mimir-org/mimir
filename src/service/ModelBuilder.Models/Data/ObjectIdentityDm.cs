@@ -1,9 +1,10 @@
+using System;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Data;
 
 public class ObjectIdentityDm
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public EntityType Type { get; set; }
 }

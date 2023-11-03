@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Mb.Models.Application;
 public class ConnectorAm : IValidatableObject
 {
     [Required]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     [Required]
     public string Name { get; set; }
     [Required]
@@ -20,7 +21,7 @@ public class ConnectorAm : IValidatableObject
     [Required]
     public string Outside { get; set; }
     [Required]
-    public string Block { get; set; }
+    public Guid Block { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

@@ -92,7 +92,7 @@ public class SubProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [Authorize(Policy = "Edit")]
-    public async Task<IActionResult> ConvertProject([FromBody] string projectId)
+    public async Task<IActionResult> ConvertProject([FromBody] Guid projectId)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -122,9 +122,9 @@ public class SubProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetSubProject(string id)
+    public async Task<IActionResult> GetSubProject(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == Guid.Empty)
             return BadRequest("The id can not be null or empty");
 
         try

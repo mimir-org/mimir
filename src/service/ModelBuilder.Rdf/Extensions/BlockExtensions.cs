@@ -24,59 +24,59 @@ public static class BlockExtensions
     {
         var parentBlock = block.GetParent(project);
 
-        if (parentBlock != null && !string.IsNullOrWhiteSpace(parentBlock.Id))
-            ontologyService.AssertBlock(block.Id, Resources.HasParent, parentBlock.Id);
+        if (parentBlock != null && !string.IsNullOrWhiteSpace(parentBlock.Id.ToString()))
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.HasParent, parentBlock.Id.ToString());
 
         if (!string.IsNullOrWhiteSpace(block.Description))
-            ontologyService.AssertBlock(block.Id, Resources.Desc, block.Description, true);
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.Desc, block.Description, true);
 
-        ontologyService.AssertBlock(block.Id, Resources.RDS, block.RdsString(project), true);
-        ontologyService.AssertBlock(block.Id, Resources.MimirRds, block.Rds, true);
-        ontologyService.AssertBlock(block.Id, Resources.HasPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosX}", Resources.Float));
-        ontologyService.AssertBlock(block.Id, Resources.HasPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosY}", Resources.Float));
-        ontologyService.AssertBlock(block.Id, Resources.HasBlockPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosX}", Resources.Float));
-        ontologyService.AssertBlock(block.Id, Resources.HasBlockPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosY}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.RDS, block.RdsString(project), true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.MimirRds, block.Rds, true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosX}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString().ToString(), Resources.HasPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosY}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosX}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosY}", Resources.Float));
 
-        ontologyService.AssertBlock(block.Id, Resources.HasAspect, $"imf:{block.Aspect}");
-        ontologyService.AssertBlock(block.Id, Resources.Version, block.Version, true);
-        ontologyService.AssertBlock(block.Id, Resources.Name, block.Name, true);
-        ontologyService.AssertBlock(block.Id, Resources.Label, block.Label ?? block.Name, true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasAspect, $"imf:{block.Aspect}");
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.Version, block.Version, true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.Name, block.Name, true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.Label, block.Label ?? block.Name, true);
 
-        ontologyService.AssertBlock(block.Id, Resources.UpdatedBy, block.UpdatedBy, true);
-        ontologyService.AssertBlock(block.Id, Resources.LastUpdated, ontologyService.CreateLiteralBlock($"{block.Updated?.ToString("u")}", Resources.DateTime));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.UpdatedBy, block.UpdatedBy, true);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.LastUpdated, ontologyService.CreateLiteralBlock($"{block.Updated?.ToString("u")}", Resources.DateTime));
 
         if (!string.IsNullOrWhiteSpace(block.CreatedBy))
         {
-            ontologyService.AssertBlock(block.Id, Resources.CreatedBy, block.CreatedBy, true);
-            ontologyService.AssertBlock(block.Id, Resources.Created, ontologyService.CreateLiteralBlock($"{block.Created:u}", Resources.DateTime));
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.CreatedBy, block.CreatedBy, true);
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.Created, ontologyService.CreateLiteralBlock($"{block.Created:u}", Resources.DateTime));
         }
 
         // TODO: This should be an iri
-        if (!string.IsNullOrWhiteSpace(block.LibraryType))
-            ontologyService.AssertBlock(block.Id, Resources.LibraryType, block.LibraryType, true);
+        if (!string.IsNullOrWhiteSpace(block.LibraryType.ToString()))
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.LibraryType, block.LibraryType.ToString(), true);
 
         if (!string.IsNullOrWhiteSpace(block.Rds))
         {
             var strippedRds = block.StrippedRds();
-            ontologyService.AssertBlock(block.Id, Resources.Type, @$"og{strippedRds.Length}:{block.Aspect}{strippedRds}");
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.Type, @$"og{strippedRds.Length}:{block.Aspect}{strippedRds}");
         }
 
         if (block.BlockType == BlockType.Root)
         {
-            ontologyService.AssertBlock(block.Id, Resources.IsAspectOf, project.Id);
-            ontologyService.AssertBlock(block.Id, Resources.HasMasterProject, project.Id);
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.IsAspectOf, project.Id.ToString());
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.HasMasterProject, project.Id.ToString());
             return;
         }
 
-        ontologyService.AssertBlock(block.Id, Resources.Type, Resources.FSB);
-        ontologyService.AssertBlock(block.Id, Resources.HasMasterProject, block.MainProject);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.Type, Resources.FSB);
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasMasterProject, block.MainProject.ToString());
 
 
         if (!string.IsNullOrEmpty(block.Purpose))
-            ontologyService.AssertBlock(block.Id, Resources.HasPurpose, $"mimir:{block.Purpose}");
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.HasPurpose, $"mimir:{block.Purpose}");
 
         if (block.Symbol != null)
-            ontologyService.AssertBlock(block.Id, Resources.HasSymbol, block.Symbol, true);
+            ontologyService.AssertBlock(block.Id.ToString(), Resources.HasSymbol, block.Symbol, true);
     }
 
     /// <summary>
@@ -91,8 +91,8 @@ public static class BlockExtensions
         if (connector == null)
             return null;
 
-        var connection = project.Connections.FirstOrDefault(x => x.ToConnector == connector.Id);
-        return connection == null ? null : project.Blocks.FirstOrDefault(x => x.Connectors.Any(y => y.Id == connection.FromConnector));
+        var connection = project.Connections.FirstOrDefault(x => x.ToConnector == connector.Id.ToString());
+        return connection == null ? null : project.Blocks.FirstOrDefault(x => x.Connectors.Any(y => y.Id.ToString() == connection.FromConnector.ToString()));
     }
 
     /// <summary>
@@ -148,8 +148,8 @@ public static class BlockExtensions
         if (block == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(project))
             throw new InvalidDataException($"Can't resolve a block without required parameters.");
 
-        block.Id = iri;
-        block.Project = project;
+        //block.Id = iri;
+        //block.Project = project;
         block.Name = ontologyService.GetValue(iri, Resources.Name, false);
         block.Version = ontologyService.GetValue(iri, Resources.Version, false);
         block.Label = ontologyService.GetValue(iri, Resources.Label, false);
@@ -168,11 +168,11 @@ public static class BlockExtensions
             PosY = (int) ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionY, false),
         };
 
-        var masterProjectIriBlock = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
-        block.MainProject = masterProjectIriBlock?.ToString();
+        //var masterProjectIriBlock = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
+        //block.MainProject = masterProjectIriBlock.;
 
         block.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
-        block.LibraryType = ontologyService.GetValue(iri, Resources.LibraryType, false);
+        //block.LibraryType = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
         block.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
@@ -181,28 +181,28 @@ public static class BlockExtensions
 
         // Resolve Attributes
         block.Attributes = new List<AttributeAm>();
-        var attributes = ontologyService.GetTriplesWithSubjectPredicate(block.Id, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
+        //var attributes = ontologyService.GetTriplesWithSubjectPredicate(block.Id, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
 
-        foreach (var a in attributes)
-        {
-            var attribute = new AttributeAm();
-            attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null);
-            block.Attributes.Add(attribute);
-        }
+        //foreach (var a in attributes)
+        //{
+        //    var attribute = new AttributeAm();
+        //    attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null);
+        //    block.Attributes.Add(attribute);
+        //}
 
         // Create all relation blocks
-        var existingBlock = projectData?.Blocks?.FirstOrDefault(x => x.Id == iri);
-        var existingRelations = existingBlock?.Connectors.OfType<ConnectorRelationAm>().ToList();
-        if (existingRelations != null && existingRelations.Any())
-        {
-            block.Connectors = new List<ConnectorAm>();
-            foreach (var relation in existingRelations)
-                block.Connectors.Add(relation);
-        }
-        else
-        {
-            //block.Connectors = CreateDefaultConnectors(iri, blockType == blockType.Root);
-        }
+        //var existingBlock = projectData?.Blocks?.FirstOrDefault(x => x.Id == iri);
+        //var existingRelations = existingBlock?.Connectors.OfType<ConnectorRelationAm>().ToList();
+        //if (existingRelations != null && existingRelations.Any())
+        //{
+        //    block.Connectors = new List<ConnectorAm>();
+        //    foreach (var relation in existingRelations)
+        //        block.Connectors.Add(relation);
+        //}
+        //else
+        //{
+        //    //block.Connectors = CreateDefaultConnectors(iri, blockType == blockType.Root);
+        //}
 
         // Create all input terminals
         var inputTerminalBlocks = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).ToList();

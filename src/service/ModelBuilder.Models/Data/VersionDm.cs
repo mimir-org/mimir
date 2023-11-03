@@ -6,7 +6,7 @@ namespace Mb.Models.Data;
 public class VersionDm
 {
     [Required]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     public string Ver { get; set; }
@@ -15,7 +15,7 @@ public class VersionDm
     public string Type { get; set; }
 
     [Required]
-    public string TypeId { get; set; }
+    public Guid TypeId { get; set; }
 
     [Required]
     public string Name { get; set; }

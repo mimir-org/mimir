@@ -69,7 +69,7 @@ namespace Mb.Core.Controllers.temp
                         Outside = "example.com_fge2rde-out",
                         Attributes = new List<AttributeCm>(),
                         Color = "#CCCCCC",
-                        
+
                     }
                 }
             });
@@ -77,6 +77,4 @@ namespace Mb.Core.Controllers.temp
             return obj;
         }
     }
-
-    
 }

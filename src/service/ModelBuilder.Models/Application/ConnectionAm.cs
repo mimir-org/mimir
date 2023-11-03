@@ -1,4 +1,5 @@
 using Mb.Models.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,18 +7,18 @@ namespace Mb.Models.Application;
 
 #region ConnectionAm
 
-public class ConnectionAm : IValidatableObject
+public  ConnectionAm : IValidatableObject
 {
     [Required]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     [Required]
     public string FromConnector { get; set; }
     [Required]
     public string ToConnector { get; set; }
     [Required]
-    public string MainProject { get; set; }
+    public Guid MainProject { get; set; }
     [Required]
-    public string Project { get; set; }
+    public Guid Project { get; set; }
 
     public ICollection<HandleAm> Handles { get; set; }
 

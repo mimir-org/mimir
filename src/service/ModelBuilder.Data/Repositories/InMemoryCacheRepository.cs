@@ -69,7 +69,7 @@ public class InMemoryCacheRepository : ICacheRepository
                 break;
         }
 
-        var cacheLock = _locks.GetOrAdd(key, _ => new SemaphoreSlim(1, 1));
+        var cacheLock = _locks.GetOrAdd(key.ToString(), _ => new SemaphoreSlim(1, 1));
         await cacheLock.WaitAsync();
 
         try

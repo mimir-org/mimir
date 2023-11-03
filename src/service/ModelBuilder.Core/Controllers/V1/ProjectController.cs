@@ -62,9 +62,9 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById(Guid id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (id == Guid.Empty)
             return BadRequest("The id can not be null or empty");
 
         try
@@ -96,10 +96,10 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> GetAmById(string id)
+    public async Task<IActionResult> GetAmById(Guid id)
     {
-        if (string.IsNullOrEmpty(id))
-            return BadRequest("The id can not be null or empty");
+        if (id == Guid.Empty)
+            return BadRequest("The id can not be empty");
 
         try
         {
@@ -157,15 +157,44 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [Authorize(Policy = "Edit")]
-    public async Task<IActionResult> CreateOrUpdateProject([FromBody] ProjectAm project)
+    //[Authorize(Policy = "Edit")]
+    public async Task<IActionResult> Create([FromBody] ProjectAm project)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            var projectCm = await _projectService.CreateOrUpdate(project);
+            var projectCm = await _projectService.Create(project);
+            return StatusCode(201, projectCm);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
+
+    /// <summary>
+    /// Update a new empty project
+    /// </summary>
+    /// <param name="project"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status201Created)] //TODO Change this to updated 200 perhaps?
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    //[Authorize(Policy = "Edit")]
+    public async Task<IActionResult> Update([FromBody] ProjectAm project)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var projectCm = await _projectService.Update(project);
             return StatusCode(201, projectCm);
         }
         catch (Exception e)
@@ -186,7 +215,7 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Admin")]
-    public async Task<IActionResult> DeleteProject(string id)
+    public async Task<IActionResult> DeleteProject(Guid id)
     {
         try
         {
@@ -262,7 +291,7 @@ public class ProjectController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Authorize(Policy = "Read")]
-    public async Task<IActionResult> DownloadProject(string id, string parser)
+    public async Task<IActionResult> DownloadProject(Guid id, string parser)
     {
         try
         {

@@ -52,20 +52,18 @@ public class ProjectFileService : IProjectFileService
         if (!validation.IsValid)
             throw new MimirorgBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
 
-        if (!Guid.TryParse(projectFile.ParserId, out var parserId))
+        if (projectFile.ParserId == Guid.Empty)
         {
             throw new MimirorgBadRequestException("The Id must be in Guid format.");
         }
 
-        if (_moduleService.Modules.All(x =>
-                x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
-                    x.ModuleDescription.Id.ToString(), projectFile.ParserId,
-                    StringComparison.CurrentCultureIgnoreCase)))
-            throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
+        //if (_moduleService.Modules.All(x =>
+        //        x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !(x.ModuleDescription.Id == projectFile.ParserId),StringComparison.CurrentCultureIgnoreCase))
+        //    throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
 
 
 
-        var par = _moduleService.Resolve<IModelBuilderParser>(parserId);
+        var par = _moduleService.Resolve<IModelBuilderParser>(projectFile.ParserId);
         var project = await par.DeserializeProjectAm(Encoding.UTF8.GetBytes(projectFile.FileContent));
         return project;
     }
@@ -84,7 +82,7 @@ public class ProjectFileService : IProjectFileService
         await using var stream = new MemoryStream();
         await file.CopyToAsync(stream, cancellationToken);
         var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-        await ImportProject(new ProjectConvertCm { ParserId = id.ToString(), FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
+        await ImportProject(new ProjectConvertCm { ParserId = id, FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
     }
 
     /// <summary>
@@ -96,16 +94,16 @@ public class ProjectFileService : IProjectFileService
     /// <exception cref="MimirorgNullReferenceException"></exception>
     public async Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter)
     {
-        if (!Guid.TryParse(projectConverter.ParserId, out var parserId))
+        if (projectConverter.ParserId == Guid.Empty)
         {
-            throw new MimirorgInvalidOperationException("The Id must be in Guid format.");
+            throw new MimirorgInvalidOperationException("The Id must be in Non empty Guid format.");
         }
 
-        var par = _moduleService.Resolve<IModelBuilderParser>(parserId);
+        var par = _moduleService.Resolve<IModelBuilderParser>(projectConverter.ParserId);
         if (par == null)
             throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-        await _projectService.CreateOrUpdate(projectConverter.Project);
+        await _projectService.Create(projectConverter.Project); // create or update here?
 
         var project = await _projectRepository.GetAsyncComplete(projectConverter.Project.Id);
 
@@ -145,19 +143,19 @@ public class ProjectFileService : IProjectFileService
 
         var project = await ResolveProject(projectFile);
 
-        if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Id)))
+        if (project == null || ((project.Id != Guid.Empty)))
             throw new MimirorgInvalidOperationException(
                 "You can't import an project that is null or missing id");
 
         var exist = _projectService.Exist(project.Id);
 
-        if (exist)
+        if (!exist)
         {
-            await _projectService.CreateOrUpdate(project);
+            await _projectService.Create(project);
             return;
         }
 
-        _ = await _projectService.CreateOrUpdate(project);
+        await _projectService.Update(project);
     }
 
     #endregion Private

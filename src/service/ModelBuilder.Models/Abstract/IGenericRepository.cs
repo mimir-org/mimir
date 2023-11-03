@@ -19,8 +19,7 @@ public interface IGenericRepository<TContext, TEntity> where TContext : DbContex
     Task<EntityEntry<TEntity>> CreateAsync(TEntity entity);
     Task CreateAsync(IEnumerable<TEntity> entities);
     void Update(TEntity entity);
-    Task Delete(int id);
-    Task Delete(string id);
+    Task Delete(Guid id);
     void Detach(TEntity entity);
     void Attach(TEntity entity, EntityState state);
     void Attach(ICollection<TEntity> entities, EntityState state);

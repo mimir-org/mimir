@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Mb.Models.Client;
 using Mimirorg.Common.Exceptions;
@@ -12,5 +13,5 @@ public interface IConnectorService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    Task<ConnectorCm> Get(string id);
+    Task<ConnectorCm> Get(Guid id);
 }

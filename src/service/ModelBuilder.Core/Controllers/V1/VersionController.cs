@@ -79,7 +79,7 @@ public class VersionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllVersions(string typeId)
+    public async Task<IActionResult> GetAllVersions(Guid typeId)
     {
         try
         {
@@ -109,11 +109,11 @@ public class VersionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetProject(string id)
+    public async Task<IActionResult> GetProject(Guid id)
     {
         try
         {
-            var project = await _versionService.GetProject(int.Parse(id));
+            var project = await _versionService.GetProject(id);
             return Ok(project);
         }
         catch (MimirorgNotFoundException)
@@ -139,11 +139,11 @@ public class VersionController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteVersion(string id)
+    public async Task<IActionResult> DeleteVersion(Guid id)
     {
         try
         {
-            await _versionService.DeleteVersion(int.Parse(id));
+            await _versionService.DeleteVersion(id);
             return Ok();
         }
         catch (MimirorgNotFoundException)

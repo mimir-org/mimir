@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
@@ -15,14 +16,14 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetAsyncComplete(string id);
+    Task<ProjectDm> GetAsyncComplete(Guid? id);
 
     /// <summary>
     /// Get complete project async not read from cache
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetProjectAsync(string id);
+    Task<ProjectDm> GetProjectAsync(Guid? id);
 
     /// <summary>
     /// Get project list

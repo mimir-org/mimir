@@ -11,7 +11,7 @@ public class BlockProfile : Profile
     public BlockProfile()
     {
         CreateMap<BlockAm, BlockDm>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))

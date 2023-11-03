@@ -7,7 +7,7 @@ namespace Mb.Models.Data;
 [Serializable]
 public class AttributeDm : IEquatable<AttributeDm>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public string Value { get; set; }
     public string AttributeType { get; set; }
@@ -15,7 +15,7 @@ public class AttributeDm : IEquatable<AttributeDm>
     public string Units { get; set; }
     public string Qualifiers { get; set; }
     public string ConnectorTerminal { get; set; }
-    public string Block { get; set; }
+    public Guid? Block { get; set; }
 
     #region IEquatable
 

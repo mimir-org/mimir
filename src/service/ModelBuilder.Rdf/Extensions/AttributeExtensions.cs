@@ -24,30 +24,30 @@ public static class AttributeExtensions
     {
         #region None Mimir specific data
 
-        ontologyService.AssertBlock(attribute.Id, Resources.Type, Resources.PhysicalQuantity);
-        ontologyService.AssertBlock(parentIri, Resources.HasPhysicalQuantity, attribute.Id);
-        ontologyService.AssertBlock(attribute.Id, Resources.Label, attribute.Name, true);
+        ontologyService.AssertBlock(attribute.Id.ToString(), Resources.Type, Resources.PhysicalQuantity);
+        ontologyService.AssertBlock(parentIri, Resources.HasPhysicalQuantity, attribute.Id.ToString());
+        ontologyService.AssertBlock(attribute.Id.ToString(), Resources.Label, attribute.Name, true);
 
         var ado = attribute.AttributeDatumObject();
-        var adp = attribute.Id.AttributeDatumPredicate();
+        var adp = attribute.Id.ToString().AttributeDatumPredicate();
         ontologyService.AssertBlock(attribute.IriDatum(), adp.SpecifiedScopePredicate, ado.SpecifiedScope);
         ontologyService.AssertBlock(attribute.IriDatum(), adp.SpecifiedProvenancePredicate, ado.SpecifiedProvenance);
         ontologyService.AssertBlock(attribute.IriDatum(), adp.RangeSpecifyingPredicate, ado.RangeSpecifying);
         ontologyService.AssertBlock(attribute.IriDatum(), adp.RegularitySpecifiedPredicate, ado.RegularitySpecified);
 
-        ontologyService.AssertBlock(attribute.Id, Resources.QualityQuantifiedAs, attribute.IriDatum());
+        ontologyService.AssertBlock(attribute.Id.ToString(), Resources.QualityQuantifiedAs, attribute.IriDatum());
 
         #endregion None Mimir specific data
 
         #region Mimir specific data
 
         if (!string.IsNullOrEmpty(attribute.AttributeType))
-            ontologyService.AssertBlock(attribute.Id, Resources.LibraryType, attribute.AttributeType);
+            ontologyService.AssertBlock(attribute.Id.ToString(), Resources.LibraryType, attribute.AttributeType);
 
         var allowedUnits = attribute.GetAllowedUnits();
         if (allowedUnits != null && allowedUnits.Any())
             foreach (var value in allowedUnits)
-                ontologyService.AssertBlock(attribute.Id, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+                ontologyService.AssertBlock(attribute.Id.ToString(), Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
 
         #endregion Mimir specific data
     }
@@ -66,7 +66,7 @@ public static class AttributeExtensions
         var selectedUnit = attribute.GetSelectedUnit(projectData);
 
         ontologyService.AssertBlock(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
-        ontologyService.AssertBlock(attribute.Id, Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
+        ontologyService.AssertBlock(attribute.Id.ToString(), Resources.QualityQuantifiedAs, $"{attribute.Id}-datum");
 
         if (string.IsNullOrWhiteSpace(attribute.UnitSelected) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
             return;
@@ -107,7 +107,7 @@ public static class AttributeExtensions
     /// <returns>A datum iri</returns>
     public static string IriDatum(this AttributeDm attribute)
     {
-        return attribute.Id.IriDatum();
+        return attribute.Id.ToString().IriDatum();
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public static class AttributeExtensions
     /// <returns>A AttributeDatumObject record</returns>
     public static AttributeDatumObject AttributeDatumObject(this AttributeDm attribute)
     {
-        var rootIri = attribute.Id.RootIri();
+        var rootIri = attribute.Id.ToString().RootIri();
         var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<QualifierDm>>(attribute.Qualifiers);
         return new AttributeDatumObject
         {
@@ -137,7 +137,7 @@ public static class AttributeExtensions
     /// <param name="iri"></param>
     /// <param name="block"></param>
     /// <param name="connectorTerminal"></param>
-    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string block, string connectorTerminal)
+    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, Guid block, string connectorTerminal)
     {
         #region None Mimir specific data
 
@@ -154,31 +154,31 @@ public static class AttributeExtensions
         {
             new()
             {
-                Id = null,
+                Id = Guid.Empty,
                 Name = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false),
                 Value = null
             },
             new()
             {
-                Id = null,
+              Id = Guid.Empty,
                 Name = "scope",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedScopePredicate, false)
             },
             new()
             {
-                Id = null,
+               Id = Guid.Empty,
                 Name = "provenance",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.SpecifiedProvenancePredicate, false)
             },
             new()
             {
-                Id = null,
+             Id = Guid.Empty,
                 Name = "range",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.RangeSpecifyingPredicate, false)
             },
             new()
             {
-                Id = null,
+           Id = Guid.Empty,
                 Name = "regularity",
                 Value = ontologyService.GetValue(iri.IriDatum(), adp.RegularitySpecifiedPredicate, false)
             }

@@ -22,51 +22,51 @@ public static class ConnectorExtensions
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static void AssertConnector(this ConnectorDm connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, ConnectionDm connection, DefaultFlowDirection flowDirection)
     {
-        ontologyService.AssertBlock(connector.Id, Resources.Domain, connector.Id.ResolveDomain(), true);
+        ontologyService.AssertBlock(connector.Id.ToString(), Resources.Domain, connector.Id.ToString().ResolveDomain(), true);
         switch (connector)
         {
             case ConnectorTerminalDm connectorTerminal:
-                ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, connection != null ? Resources.StreamTerminal : Resources.FSBTerminal);
-                ontologyService.AssertBlock(connectorTerminal.Id, Resources.Label, connectorTerminal.Name, true);
-                ontologyService.AssertBlock(connectorTerminal.Id, Resources.TerminalDirectionType, connectorTerminal.Direction.ToString(), true);
-                ontologyService.AssertBlock(connectorTerminal.Id, Resources.LibraryType, connectorTerminal.TerminalType);
-                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasColor, connectorTerminal.Color, true);
+                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.Type, connection != null ? Resources.StreamTerminal : Resources.FSBTerminal);
+                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.Label, connectorTerminal.Name, true);
+                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.TerminalDirectionType, connectorTerminal.Direction.ToString(), true);
+                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.LibraryType, connectorTerminal.TerminalType);
+                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasColor, connectorTerminal.Color, true);
 
                 switch (connectorTerminal.Direction)
                 {
                     case ConnectorDirection.Input:
-                        ontologyService.AssertBlock(ownerIri, Resources.HasInputTerminal, connectorTerminal.Id);
-                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.InputTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasInputTerminal, connectorTerminal.Id.ToString());
+                        ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.Type, Resources.InputTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockFromConnection, connection.FromConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasBlockFromConnection, connection.FromConnector);
                         break;
                     case ConnectorDirection.Output:
-                        ontologyService.AssertBlock(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id);
-                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.OutputTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasOutputTerminal, connectorTerminal.Id.ToString());
+                        ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.Type, Resources.OutputTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockToConnection, connection.ToConnector);
+                            ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasBlockToConnection, connection.ToConnector);
                         break;
                     case ConnectorDirection.Bidirectional:
-                        ontologyService.AssertBlock(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id);
-                        ontologyService.AssertBlock(connectorTerminal.Id, Resources.Type, Resources.BidirectionalTerminal);
+                        ontologyService.AssertBlock(ownerIri, Resources.HasBidirectionalTerminal, connectorTerminal.Id.ToString());
+                        ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.Type, Resources.BidirectionalTerminal);
 
                         if (flowDirection != DefaultFlowDirection.NotSet)
-                            ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
+                            ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                         if (connection != null)
                         {
                             if (flowDirection == DefaultFlowDirection.InputFlow)
-                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockFromConnection, connection.FromConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasBlockFromConnection, connection.FromConnector);
                             else
-                                ontologyService.AssertBlock(connectorTerminal.Id, Resources.HasBlockToConnection, connection.ToConnector);
+                                ontologyService.AssertBlock(connectorTerminal.Id.ToString(), Resources.HasBlockToConnection, connection.ToConnector);
                         }
 
                         break;
@@ -78,7 +78,7 @@ public static class ConnectorExtensions
                 {
                     foreach (var attribute in connectorTerminal.Attributes)
                     {
-                        attribute.AssertAttribute(connectorTerminal.Id, ontologyService);
+                        attribute.AssertAttribute(connectorTerminal.Id.ToString(), ontologyService);
                         attribute.AssertAttributeValue(ontologyService, projectData);
                     }
                 }
@@ -105,7 +105,7 @@ public static class ConnectorExtensions
     /// <returns></returns>
     public static bool IsConnected(this ConnectorDm c, ProjectDm project)
     {
-        return project.Connections.Any(connection => connection.FromConnector == c.Id || connection.ToConnector == c.Id);
+        return project.Connections.Any(connection => connection.FromConnector == c.Id.ToString() || connection.ToConnector == c.Id.ToString());
     }
 
     /// <summary>

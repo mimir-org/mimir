@@ -47,7 +47,7 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="typeId"></param>
     /// <returns>List of VersionCm</returns>
-    public async Task<IEnumerable<VersionCm>> GetAllVersions(string typeId)
+    public async Task<IEnumerable<VersionCm>> GetAllVersions(Guid typeId)
     {
         return await Task.Run(() => _versionRepository.GetAll()
             .Where(x => x.TypeId == typeId)
@@ -62,7 +62,7 @@ public class VersionService : IVersionService
     /// <param name="typeId"></param>
     /// <param name="version"></param>
     /// <returns>Project</returns>
-    public Task<ProjectDm> GetGetByVersion(string typeId, string version)
+    public Task<ProjectDm> GetGetByVersion(Guid typeId, string version)
     {
         var projectData = _versionRepository.GetAll().FirstOrDefault(x => x.TypeId == typeId && x.Ver == version);
         if (projectData?.Data == null)
@@ -77,7 +77,7 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Project</returns>
-    public async Task<ProjectDm> GetProject(int id)
+    public async Task<ProjectDm> GetProject(Guid id)
     {
         var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
 
@@ -126,7 +126,7 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task DeleteVersion(int id)
+    public async Task DeleteVersion(Guid id)
     {
         await _versionRepository.Delete(id);
         await _versionRepository.SaveAsync();

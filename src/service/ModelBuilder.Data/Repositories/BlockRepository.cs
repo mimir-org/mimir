@@ -7,6 +7,7 @@ using Mb.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Mimirorg.Common.Exceptions;
 using SqlBulkTools;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -99,9 +100,9 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
     /// </summary>
     /// <param name="id">Block id</param>
     /// <returns>Complete block</returns>
-    public Task<BlockDm> GetAsyncComplete(string id)
+    public Task<BlockDm> GetAsyncComplete(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(id))
+        if (id == Guid.Empty)
             throw new MimirorgNullReferenceException("The Id can't be null.");
 
         var block = FindBy(x => x.Id == id).FirstOrDefault();
