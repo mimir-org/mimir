@@ -152,13 +152,12 @@ public class ProjectService : IProjectService
         if (!validation.IsValid)
             throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-        if (projectAm.Id != null)
-        {
             var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
-            if (originalProject == null)
+        if (originalProject == null)
+            throw new MimirorgBadRequestException($"Could not find project to update. Project name: {projectAm.Name}, project id: {projectAm.Id}");
                 return await UpdateProject(projectAm, originalProject);
-        }
-        return Guid.Empty;
+
+       
     }
 
     /// <summary>
@@ -432,10 +431,15 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
+        try
+        {
+
         if (updatedAm == null || originalDm == null)
             throw new MimirorgNullReferenceException("updated or original project is null");
 
         var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
+
+        updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
 
         // Get create edit data
         var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
@@ -470,12 +474,19 @@ public class ProjectService : IProjectService
         await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
 
         //Send websocket data.
-        await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version);
+        await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version); //TODO Here
 
         //Get the updated project
         var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
 
         return updatedDm.Id;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>
