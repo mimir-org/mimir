@@ -157,7 +157,32 @@ public class ProjectService : IProjectService
             throw new MimirorgBadRequestException($"Could not find project to update. Project name: {projectAm.Name}, project id: {projectAm.Id}");
                 return await UpdateProject(projectAm, originalProject);
 
-       
+    }
+
+    /// <summary>
+    /// Create or update a new project
+    /// </summary>
+    /// <param name="projectAm">The project that should be created or updated</param>
+    /// <returns>A create project task</returns>
+    /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+    /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
+    public async Task<Guid> Update(ProjectAm projectAm)
+    {
+        if (projectAm == null)
+            throw new MimirorgNullReferenceException("The project that should be created is null.");
+
+        var validation = projectAm.ValidateObject();
+
+        if (!validation.IsValid)
+            throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
+
+        if (projectAm.Id != null)
+        {
+            var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+            if (originalProject != null)
+                return await UpdateProject(projectAm, originalProject);
+        }
+        return Guid.Empty;
     }
 
     /// <summary>
@@ -431,9 +456,6 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
-        try
-        {
-
         if (updatedAm == null || originalDm == null)
             throw new MimirorgNullReferenceException("updated or original project is null");
 
@@ -480,13 +502,6 @@ public class ProjectService : IProjectService
         var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
 
         return updatedDm.Id;
-
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
     }
 
     /// <summary>

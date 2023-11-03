@@ -149,7 +149,7 @@ public class ProjectFileService : IProjectFileService
 
         var exist = _projectService.Exist(project.Id);
 
-        if (exist)
+        if (!exist)
         {
             await _projectService.Create(project);
             return;

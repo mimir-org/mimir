@@ -77,6 +77,4 @@ namespace Mb.Core.Controllers.temp
             return obj;
         }
     }
-
-
 }

@@ -181,6 +181,35 @@ public class ProjectController : ControllerBase
     /// <param name="project"></param>
     /// <returns></returns>
     [HttpPut]
+    [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status201Created)] //TODO Change this to updated 200 perhaps?
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    //[Authorize(Policy = "Edit")]
+    public async Task<IActionResult> Update([FromBody] ProjectAm project)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        try
+        {
+            var projectCm = await _projectService.Update(project);
+            return StatusCode(201, projectCm);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+            return StatusCode(500, "Internal Server Error");
+        }
+    }
+
+    /// <summary>
+    /// Update a new empty project
+    /// </summary>
+    /// <param name="project"></param>
+    /// <returns></returns>
+    [HttpPut]
     [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
