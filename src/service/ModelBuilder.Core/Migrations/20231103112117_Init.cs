@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class updatedGuidAsId : Migration
-    {
+    public partial class Init : Migration
+    {   
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+            var nodeEdgeChildrenProc = @"
+               CREATE OR ALTER PROCEDURE dbo.GetProjectVersion @IsSubProject BIT
+               AS
+               BEGIN
+				SET NOCOUNT OFF;
+				
+				SELECT Project.Id, Project.Name, Project.Version, Project.Description, Version.Ver, Version.Data, Version.Type FROM Project 
+				LEFT JOIN Version ON Project.Id = Version.TypeId 
+				WHERE Project.SubProject = @IsSubProject AND (Version.Type = 'Project' OR Version.Type is NULL)					
+			END   
+           ";
+            migrationBuilder.Sql(nodeEdgeChildrenProc);
+
+
             migrationBuilder.CreateTable(
                 name: "Attribute",
                 columns: table => new
@@ -46,7 +61,7 @@ namespace Mb.Core.Migrations
                     LibraryType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PositionTree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PositionBlock = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ReferenceType = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReferenceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -149,6 +164,8 @@ namespace Mb.Core.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DROP PROCEDURE IF EXISTS dbo.GetProjectVersion");
+
             migrationBuilder.DropTable(
                 name: "Attribute");
 
@@ -167,5 +184,7 @@ namespace Mb.Core.Migrations
             migrationBuilder.DropTable(
                 name: "Version");
         }
+
+
     }
 }

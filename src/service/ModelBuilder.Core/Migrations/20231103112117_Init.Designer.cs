@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20231102121038_updatedGuidAsId")]
-    partial class updatedGuidAsId
+    [Migration("20231103112117_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,8 +151,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
-                    b.Property<Guid?>("ReferenceType")
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<string>("ReferenceType")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("ReferenceType");
 
                     b.Property<string>("Symbol")
