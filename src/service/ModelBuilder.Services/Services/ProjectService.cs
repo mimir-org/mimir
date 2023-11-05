@@ -152,10 +152,10 @@ public class ProjectService : IProjectService
         if (!validation.IsValid)
             throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
 
-            var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
+        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
         if (originalProject == null)
             throw new MimirorgBadRequestException($"Could not find project to update. Project name: {projectAm.Name}, project id: {projectAm.Id}");
-                return await UpdateProject(projectAm, originalProject);
+        return await UpdateProject(projectAm, originalProject);
 
     }
 
@@ -456,52 +456,71 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
-        if (updatedAm == null || originalDm == null)
-            throw new MimirorgNullReferenceException("updated or original project is null");
-
-        var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
-
-        updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
-
-        // Get create edit data
-        var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
-
-        // Resolve version changes
-        var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
-        updatedProject.UpdateVersion(projectVersionStatus);
-
-        // Resolve block versions
-        foreach (var updatedBlock in updatedProject.Blocks)
+        try
         {
-            var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
 
-            if (originalBlock == null) //TODO: New block
-                continue;
+            if (updatedAm == null || originalDm == null)
+                throw new MimirorgNullReferenceException("updated or original project is null");
 
-            var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
+            var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
 
-            if (blockVersionStatus != VersionStatus.NoChange)
+            updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
+
+            // Get create edit data
+            var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
+
+            // Resolve version changes
+            var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
+            updatedProject.UpdateVersion(projectVersionStatus);
+
+            var project = await _projectRepository.GetAsyncComplete(updatedProject.Id);//Only Want blocks here. Update method to return only blocks for this project /Main project
+            var blocksInProject = project.Blocks;
+
+            // Resolve block versions
+            foreach (var updatedBlock in updatedProject.Blocks)
             {
-                updatedBlock.Updated = DateTime.Now.ToUniversalTime();
-                updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-                updatedBlock.UpdateVersion(blockVersionStatus);
+                var blockFromDb = blocksInProject.Where(x => x.Id == updatedBlock.Id).FirstOrDefault();
+                var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
+
+                if (originalBlock == null && blockFromDb == null) //TODO: New block
+                {
+                    await _blockRepository.CreateAsync(updatedBlock);
+                    await _blockRepository.SaveAsync();
+                }
+                if (originalBlock != null)
+                {
+                    var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
+
+                    if (blockVersionStatus != VersionStatus.NoChange)
+                    {
+                        updatedBlock.Updated = DateTime.Now.ToUniversalTime();
+                        updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
+                        updatedBlock.UpdateVersion(blockVersionStatus);
+                    }
+                }
             }
+
+            // Save original project (if there is a version change)
+            if (projectVersionStatus != VersionStatus.NoChange)
+                await _versionService.CreateVersion(originalDm);
+
+            //Update
+            await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
+
+            //Send websocket data.
+            //await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version); //TODO Here
+
+            //Get the updated project
+            var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
+
+            return updatedDm.Id;
+
         }
+        catch (Exception ex)
+        {
 
-        // Save original project (if there is a version change)
-        if (projectVersionStatus != VersionStatus.NoChange)
-            await _versionService.CreateVersion(originalDm);
-
-        //Update
-        await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
-
-        //Send websocket data.
-        await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version); //TODO Here
-
-        //Get the updated project
-        var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
-
-        return updatedDm.Id;
+            throw;
+        }
     }
 
     /// <summary>
