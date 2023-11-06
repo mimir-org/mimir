@@ -4,29 +4,29 @@ updates:
   - package-ecosystem: "npm"
     directory: "/src/client"
     schedule:
-      interval: "daily"
-      time: "09:30"
-      timezone: "Europe/Oslo"
-    target-branch: "dev"
-    reviewers:
-      - "reliaboe"
-
-  - package-ecosystem: "nuget"
-    directory: "/src/service"
-    schedule:
-      interval: "daily"
+      interval: "weekly"
       time: "07:00"
       timezone: "Europe/Oslo"
     target-branch: "dev"
     reviewers:
-      - "reliaboe"
+      - "Bouvet-MatsAlmeland"
+
+  - package-ecosystem: "nuget"
+    directory: "/src/service"
+    schedule:
+      interval: "weekly"
+      time: "07:00"
+      timezone: "Europe/Oslo"
+    target-branch: "dev"
+    reviewers:
+      - "Bouvet-MatsAlmeland"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "09:30"
+      interval: "weekly"
+      time: "07:00"
       timezone: "Europe/Oslo"
     target-branch: "dev"
     reviewers:
-      - "reliaboe"
+      - "Bouvet-MatsAlmeland"
