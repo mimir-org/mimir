@@ -7,7 +7,7 @@ namespace Mb.Models.Application;
 
 #region ConnectionAm
 
-public  ConnectionAm : IValidatableObject
+public class ConnectionAm : IValidatableObject
 {
     [Required]
     public Guid Id { get; set; }
