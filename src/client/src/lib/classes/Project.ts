@@ -83,23 +83,23 @@ export class Project {
     this.blocks.push();
     this.connections = [];
 
-    const rootFunction = new Block(null, this.id, new Position(150, 5), new Position(0, 0), createdBy, this.id);
-    rootFunction.aspect = Aspect.Function;
-    rootFunction.name = "Function";
-    rootFunction.label = "Function";
-    this.blocks.push(rootFunction);
-
-    const rootProduct = new Block(null, this.id, new Position(600, 5), new Position(0, 0), createdBy, this.id);
-    rootProduct.aspect = Aspect.Product;
-    rootProduct.name = "Product";
-    rootProduct.label = "Product";
-    this.blocks.push(rootProduct);
-
-    const rootLocation = new Block(null, this.id, new Position(1050, 5), new Position(0, 0), createdBy, this.id);
-    rootLocation.aspect = Aspect.Location;
-    rootLocation.name = "Location";
-    rootLocation.label = "Location";
-    this.blocks.push(rootLocation);
+    // const rootFunction = new Block(null, this.id, new Position(150, 5), new Position(0, 0), createdBy, this.id);
+    // rootFunction.aspect = Aspect.Function;
+    // rootFunction.name = "Function";
+    // rootFunction.label = "Function";
+    // this.blocks.push(rootFunction);
+    //
+    // const rootProduct = new Block(null, this.id, new Position(600, 5), new Position(0, 0), createdBy, this.id);
+    // rootProduct.aspect = Aspect.Product;
+    // rootProduct.name = "Product";
+    // rootProduct.label = "Product";
+    // this.blocks.push(rootProduct);
+    //
+    // const rootLocation = new Block(null, this.id, new Position(1050, 5), new Position(0, 0), createdBy, this.id);
+    // rootLocation.aspect = Aspect.Location;
+    // rootLocation.name = "Location";
+    // rootLocation.label = "Location";
+    // this.blocks.push(rootLocation);
   }
 
   /**92

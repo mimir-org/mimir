@@ -381,13 +381,7 @@ public class ProjectService : IProjectService
         projectDm.Version = "1.0";
         projectDm.CreatedBy = _contextAccessor.GetName();
         projectDm.Created = DateTime.Now.ToUniversalTime();
-
-        foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root))
-        {
-            var blockId = _commonRepository.CreateIdAsIri(ServerEndpoint.Block, Guid.NewGuid().ToString());
-            block.LibraryType = blockId;
-        }
-
+        
         // projectDm.Blocks = new List<BlockDm>
         // {
         //     CreateInitBlock(Aspect.Function, projectDm.Id),
