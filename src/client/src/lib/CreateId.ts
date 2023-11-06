@@ -1,8 +1,7 @@
-import { createDomainId, lsReadValue } from "@mimirorg/component-library";
+import { v4 as uuidv4 } from "uuid";
 
 const CreateId = () => {
-  const domain = lsReadValue<string>("domain");
-  return createDomainId(domain);
+  return uuidv4();
 };
 
 export default CreateId;
