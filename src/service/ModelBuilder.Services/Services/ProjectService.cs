@@ -456,9 +456,6 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
-        try
-        {
-
             if (updatedAm == null || originalDm == null)
                 throw new MimirorgNullReferenceException("updated or original project is null");
 
@@ -512,15 +509,9 @@ public class ProjectService : IProjectService
             //Get the updated project
             var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
 
-            return updatedDm.Id;
-
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
+            return updatedDm.Id;    
     }
+
 
     /// <summary>
     /// Create init aspect blocks
@@ -532,8 +523,6 @@ public class ProjectService : IProjectService
     {
         if (projectId == Guid.Empty)
             throw new MimirorgNullReferenceException("projectId is null or empty");
-
-
 
         var blockId = Guid.NewGuid();
         var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";

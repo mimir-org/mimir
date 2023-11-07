@@ -6,12 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
-    {
+    public partial class Init : Migration    {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             var nodeEdgeChildrenProc = @"
                CREATE OR ALTER PROCEDURE dbo.GetProjectVersion @IsSubProject BIT
                AS
@@ -184,7 +182,5 @@ namespace Mb.Core.Migrations
             migrationBuilder.DropTable(
                 name: "Version");
         }
-
-
     }
 }
