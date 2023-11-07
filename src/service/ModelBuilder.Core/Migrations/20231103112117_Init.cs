@@ -10,6 +10,7 @@ namespace Mb.Core.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             var nodeEdgeChildrenProc = @"
                CREATE OR ALTER PROCEDURE dbo.GetProjectVersion @IsSubProject BIT
                AS
@@ -183,4 +184,6 @@ namespace Mb.Core.Migrations
                 name: "Version");
         }
     }
+
+
 }
