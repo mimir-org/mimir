@@ -8,7 +8,6 @@ namespace Mb.Models.Client
 {
     public class ApiResponse
     {
-
         public bool HasError { get; set; }
         public List<string> ErrorMessage { get; set; }
 
