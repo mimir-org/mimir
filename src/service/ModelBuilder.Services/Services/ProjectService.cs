@@ -472,22 +472,21 @@ public class ProjectService : IProjectService
             // Resolve version changes
             var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
             updatedProject.UpdateVersion(projectVersionStatus);
-
-            var project = await _projectRepository.GetAsyncComplete(updatedProject.Id);//Only Want blocks here. Update method to return only blocks for this project /Main project
-            var blocksInProject = project.Blocks;
+            
+            var blocks = _blockRepository.GetAll().ToList(); //Must have projectguid in as parameter
+            var blocksInProject = blocks.Where(x => x.Project == updatedProject.Id).ToList();
 
             // Resolve block versions
             foreach (var updatedBlock in updatedProject.Blocks)
             {
-                var blockFromDb = blocksInProject.Where(x => x.Id == updatedBlock.Id).FirstOrDefault();
                 var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
-
-                if (originalBlock == null && blockFromDb == null) //TODO: New block
+                var blockFromDb = blocksInProject.FirstOrDefault(x=>x.Id == updatedBlock.Id);
+                if (originalBlock == null || blockFromDb == null)
                 {
                     await _blockRepository.CreateAsync(updatedBlock);
                     await _blockRepository.SaveAsync();
                 }
-                if (originalBlock != null)
+                if (originalBlock != null || blockFromDb != null)
                 {
                     var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
 
