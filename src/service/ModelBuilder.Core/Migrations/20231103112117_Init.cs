@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration    {
+    public partial class Init : Migration
+    {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,7 +184,7 @@ namespace Mb.Core.Migrations
             migrationBuilder.DropTable(
                 name: "Version");
         }
+
+
     }
-
-
 }
