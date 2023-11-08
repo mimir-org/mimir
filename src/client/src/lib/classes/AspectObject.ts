@@ -17,6 +17,7 @@ import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
 import { AspectColor } from "./AspectColor";
 import { Theme } from "@mimirorg/component-library";
 import CreateId from "lib/CreateId";
+import GetDomain from "helpers/ReadFromLocalStorage";
 import { InfoException } from "lib/exceptions";
 import { ErrorException } from "lib";
 import { Connection } from "./Connection";
@@ -157,7 +158,7 @@ export class AspectObject {
     this.selected = false;
     this.blockSelected = false;
     this.hidden = false;
-    this.domain = this.id.split("_")[0].trim();
+    this.domain = GetDomain();
     this.createDefaultConnectors();
   }
 
