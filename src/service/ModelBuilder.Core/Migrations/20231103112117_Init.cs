@@ -7,7 +7,7 @@ namespace Mb.Core.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration
-    {   
+    {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
