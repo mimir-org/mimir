@@ -37,7 +37,6 @@ const BlockNode: FC<NodeProps<AspectObject>> = (props: NodeProps<AspectObject>) 
   const connectors = props.data.getBlockviewConnectors();
 
   if (!props.data) return null;
-  console.log(props.data.connectors.filter((x) => x instanceof ConnectorTerminal));
   return (
     <BoxWrapper isElectro={false}>
       <HandleComponent
