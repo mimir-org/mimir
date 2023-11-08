@@ -15,12 +15,11 @@ import {
   Position,
 } from ".";
 import { Connection as FlowConnection, Edge as FlowEdge, Node as FlowNode, XYPosition } from "react-flow-renderer";
-import { ConnectorDirection } from "../enums/Direction";
+import { ConnectorDirection, ViewType } from "../enums";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
-import { ProjectListItem } from "../interfaces/ProjectListItem";
+import { ProjectListItem } from "../interfaces";
 import { BlockLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Aspect } from "lib/enums";
-import { ViewType } from "../enums/ViewType";
 import { Theme } from "@mimirorg/component-library";
 import CreateId from "lib/CreateId";
 import { Handle } from "./Handle";

@@ -17,7 +17,7 @@ import { MenuItem } from "compLibrary/menu/overflow/OverflowItem";
 import { AspectColor } from "./AspectColor";
 import { Theme } from "@mimirorg/component-library";
 import CreateId from "lib/CreateId";
-import GetDomain from "helpers/ReadFromLocalStorage"
+import GetDomain from "helpers/ReadFromLocalStorage";
 import { InfoException } from "lib/exceptions";
 import { ErrorException } from "lib";
 import { Connection } from "./Connection";
