@@ -8,10 +8,11 @@ namespace Mb.Models.Data;
 
 #region ConnectorDm
 
-[Serializable]
-public class ConnectorDm : IEquatable<ConnectorDm>
+//[Serializable]
+public abstract class ConnectorDm : IEquatable<ConnectorDm>
 {
     public Guid Id { get; set; }
+    public string Discriminator { get; set; }
     public string Name { get; set; }
     public ConnectorDirection Direction { get; set; }
     public string Inside { get; set; }
@@ -60,10 +61,9 @@ public class ConnectorTerminalDm : ConnectorDm, IEquatable<ConnectorTerminalDm>
     public string ReferenceType { get; set; }
     public string Color { get; set; }
 
-    [NotMapped]
+    
     public ICollection<AttributeDm> Attributes { get; set; }
-
-    [NotMapped]
+        
     public string Discriminator { get; set; }
 
     public bool Equals(ConnectorTerminalDm other)

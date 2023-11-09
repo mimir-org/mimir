@@ -26,12 +26,8 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }
     public DateTime? Updated { get; set; }
-    public string Domain => Id.ToString().ResolveDomain();
-
-    [NotMapped]
+    public string Domain { get; set; }
     public List<BlockDm> Blocks { get; set; } = new();
-
-    [NotMapped]
     public List<ConnectionDm> Connections { get; set; } = new();
 
     #endregion

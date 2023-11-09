@@ -8,12 +8,12 @@ namespace Mb.Models.Application;
 
 #region ConnectorAm
 
-public class ConnectorAm : IValidatableObject
+public abstract class ConnectorAm : IValidatableObject
 {
     [Required]
     public Guid Id { get; set; }
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; }    
     [Required]
     public ConnectorDirection Direction { get; set; }
     [Required]

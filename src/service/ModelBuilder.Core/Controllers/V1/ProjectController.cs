@@ -152,7 +152,7 @@ public class ProjectController : ControllerBase
     /// <param name="project"></param>
     /// <returns></returns>
     [HttpPost]
-    [ProducesResponseType(typeof(ProjectCm), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -194,8 +194,17 @@ public class ProjectController : ControllerBase
 
         try
         {
+            if (project.Id == null) return BadRequest("No project must have an id");
+            var projectFromDb = await _projectService.GetById(project.Id.GetValueOrDefault());
+            if (projectFromDb == null) return BadRequest("No project with that id");
+
             var projectCm = await _projectService.Update(project);
             return StatusCode(200, new ApiResponse());
+        }
+        catch(MimirorgNotFoundException e)
+        {
+            _logger.LogError(e, $"MimirorgNotFoundException: {e.Message}, StackTrace: {e.StackTrace}, InnerException: {e.InnerException}");
+            return BadRequest(e.Message);
         }
         catch (Exception e)
         {

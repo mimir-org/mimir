@@ -71,16 +71,28 @@ public class ProjectService : IProjectService
     /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
     public async Task<ProjectCm> GetById(Guid id)
     {
-        if (id == Guid.Empty)
-            throw new MimirorgNotFoundException("Id can't be empty.");
+        try
+        {
 
-        //projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
-        //    ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
-        //    : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectId.ToString());
+            if (id == Guid.Empty)
+                throw new MimirorgNotFoundException("Id can't be empty.");
 
-        var project = await _projectRepository.GetAsyncComplete(id);
+            //projectDm.Id = _commonRepository.IsValidGuid(projectAm.Id)
+            //    ? _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectAm.Id)
+            //    : _commonRepository.CreateIdAsIri(ServerEndpoint.Project, projectId.ToString());
 
-        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectCm>(project);
+            var project = await _projectRepository.GetAsyncComplete(id);
+
+            var blocks = _mapper.Map<List<BlockCm>>(project.Blocks);
+
+            return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectCm>(project);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>
@@ -158,32 +170,6 @@ public class ProjectService : IProjectService
         return await UpdateProject(projectAm, originalProject);
 
     }
-
-    ///// <summary>
-    ///// Create or update a new project
-    ///// </summary>
-    ///// <param name="projectAm">The project that should be created or updated</param>
-    ///// <returns>A create project task</returns>
-    ///// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
-    ///// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    //public async Task<Guid> Update(ProjectAm projectAm)
-    //{
-    //    if (projectAm == null)
-    //        throw new MimirorgNullReferenceException("The project that should be created is null.");
-
-    //    var validation = projectAm.ValidateObject();
-
-    //    if (!validation.IsValid)
-    //        throw new MimirorgBadRequestException($"Validation failed! Unable to create project with name: {projectAm.Name}", validation);
-
-    //    if (projectAm.Id != null)
-    //    {
-    //        var originalProject = await _projectRepository.GetAsyncComplete(projectAm.Id);
-    //        if (originalProject != null)
-    //            return await UpdateProject(projectAm, originalProject);
-    //    }
-    //    return Guid.Empty;
-    //}
 
     /// <summary>
     /// Convert or inverse sub project
@@ -404,6 +390,8 @@ public class ProjectService : IProjectService
         try
         {
             //Guard check if guid format is correct on all guids
+            if (projectAm.Id != null) { throw new MimirorgBadRequestException("Id of the project to create must be null or empty Guid"); }
+            if (projectAm.Id != Guid.Empty) { throw new MimirorgBadRequestException("Id of the project to create must be null or empty Guid"); }
 
             var projectId = Guid.NewGuid();
 
@@ -426,6 +414,7 @@ public class ProjectService : IProjectService
                 var blockId = Guid.NewGuid(); //This should come from frontend
                 block.LibraryType = blockId;
                 block.Id = blockId;
+
             }
 
             await _projectRepository.CreateAsync(projectDm);
@@ -456,60 +445,60 @@ public class ProjectService : IProjectService
     /// <returns></returns>
     private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
     {
-            if (updatedAm == null || originalDm == null)
-                throw new MimirorgNullReferenceException("updated or original project is null");
+        if (updatedAm == null || originalDm == null)
+            throw new MimirorgNullReferenceException("updated or original project is null");
 
-            var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
+        var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
 
-            updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
+        updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
 
-            // Get create edit data
-            var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
+        // Get create edit data
+        var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
 
-            // Resolve version changes
-            var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
-            updatedProject.UpdateVersion(projectVersionStatus);
+        // Resolve version changes
+        var projectVersionStatus = originalDm.CalculateVersionStatus(updatedProject, projectEditData);
+        updatedProject.UpdateVersion(projectVersionStatus);
 
-            var blocks = _blockRepository.GetAll().ToList(); //Must have projectguid in as parameter
-            var blocksInProject = blocks.Where(x => x.Project == updatedProject.Id).ToList();
+        var blocks = _blockRepository.GetAll().ToList(); //Must have projectguid in as parameter
+        var blocksInProject = blocks.Where(x => x.Project == updatedProject.Id).ToList();
 
-            // Resolve block versions
-            foreach (var updatedBlock in updatedProject.Blocks)
+        // Resolve block versions
+        foreach (var updatedBlock in updatedProject.Blocks)
+        {
+            var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
+            var blockFromDb = blocksInProject.FirstOrDefault(x => x.Id == updatedBlock.Id);
+            if (originalBlock == null || blockFromDb == null)
             {
-                var originalBlock = originalDm.Blocks.FirstOrDefault(x => x.Id == updatedBlock.Id);
-                var blockFromDb = blocksInProject.FirstOrDefault(x => x.Id == updatedBlock.Id);
-                if (originalBlock == null || blockFromDb == null)
-                {
-                    await _blockRepository.CreateAsync(updatedBlock);
-                    await _blockRepository.SaveAsync();
-                }
-                if (originalBlock != null || blockFromDb != null)
-                {
-                    var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
+                await _blockRepository.CreateAsync(updatedBlock);
+                await _blockRepository.SaveAsync();
+            }
+            if (originalBlock != null || blockFromDb != null)
+            {
+                var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
 
-                    if (blockVersionStatus != VersionStatus.NoChange)
-                    {
-                        updatedBlock.Updated = DateTime.Now.ToUniversalTime();
-                        updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-                        updatedBlock.UpdateVersion(blockVersionStatus);
-                    }
+                if (blockVersionStatus != VersionStatus.NoChange)
+                {
+                    updatedBlock.Updated = DateTime.Now.ToUniversalTime();
+                    updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
+                    updatedBlock.UpdateVersion(blockVersionStatus);
                 }
             }
+        }
 
-            // Save original project (if there is a version change)
-            if (projectVersionStatus != VersionStatus.NoChange)
-                await _versionService.CreateVersion(originalDm);
+        // Save original project (if there is a version change)
+        if (projectVersionStatus != VersionStatus.NoChange)
+            await _versionService.CreateVersion(originalDm);
 
-            //Update
-            await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
+        //Update
+        await _projectRepository.UpdateProject(originalDm, updatedProject, projectEditData);
 
-            //Send websocket data.
-            //await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version); //TODO Here
+        //Send websocket data.
+        //await _cooperateService.SendDataUpdates(projectEditData, originalDm.Id, updatedProject.Version); //TODO Here
 
-            //Get the updated project
-            var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
+        //Get the updated project
+        var updatedDm = await _projectRepository.GetAsyncComplete(updatedProject.Id);
 
-            return updatedDm.Id;    
+        return updatedDm.Id;
     }
 
 

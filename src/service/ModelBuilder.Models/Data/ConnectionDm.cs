@@ -8,7 +8,7 @@ namespace Mb.Models.Data;
 #region ConnectionDm
 
 [Serializable]
-public class ConnectionDm : IEquatable<ConnectionDm>
+public abstract class ConnectionDm : IEquatable<ConnectionDm>
 {
     public Guid Id { get; set; }
     public string FromConnector { get; set; }
