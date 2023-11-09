@@ -1,15 +1,15 @@
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 import { TerminalsBox } from "components/flow/terminals/TerminalsMenuComponent.styled";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   isInput: boolean;
   connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
   isElectroView: boolean;
-  onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Block, isElectroView: boolean) => void;
   onBlur: () => void;
   onClickAddTerminal: (terminalId: string) => void;
   onClickRemoveTerminal: (terminalId: string) => void;

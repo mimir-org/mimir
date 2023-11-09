@@ -1,16 +1,16 @@
 import { Action, Dispatch } from "redux";
-import { AspectObject, Connection, Connector, ConnectorTerminal } from "lib";
+import { Block, Connection, Connector, ConnectorTerminal } from "lib";
 
 /**
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.
  */
-export type InspectorElement = AspectObject | Connection;
+export type InspectorElement = Block | Connection;
 
 /**
  * Union type of possible top elements chosen for terminals view in inspector, i.e. what element owns the terminals shown in terminals view.
  * In the case of InspectorElement which is Edge, the edge's transport/interface owns the terminals.
  */
-export type InspectorTerminalsElement = AspectObject;
+export type InspectorTerminalsElement = Block;
 
 /**
  * Union type of possible top elements chosen for parameters view in inspector, i.e. what element owns the attributes shown in parameters view.

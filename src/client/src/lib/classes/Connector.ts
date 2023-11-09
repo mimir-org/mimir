@@ -34,20 +34,20 @@ export abstract class Connector {
   public outside: string;
 
   @jsonMember(String)
-  public aspectObject: string;
+  public block: string;
 
   // Client members
   public hidden: boolean;
   public selected: boolean;
 
   // Constructor
-  public constructor(name: string, direction: ConnectorDirection, aspectObject?: string) {
+  public constructor(name: string, direction: ConnectorDirection, block?: string) {
     this.id = CreateId();
     this.name = name;
     this.direction = direction;
     this.inside = CreateId();
     this.outside = CreateId();
-    this.aspectObject = aspectObject == null ? null : aspectObject;
+    this.block = block == null ? null : block;
     this.hidden = false;
     this.selected = false;
   }

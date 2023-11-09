@@ -1,6 +1,6 @@
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 
-export const OnClickRelation = (node: AspectObject, edge: Connection, setSelectedNodes: (nodeIds: string[]) => void) => {
+export const OnClickRelation = (node: Block, edge: Connection, setSelectedNodes: (nodeIds: string[]) => void) => {
   // const toNode = edge.fromNode.id === node.id ? edge.toNode : edge.fromNode;
   // const selectedFlowNodeIds = [];
   // selectedFlowNodeIds.push(toNode?.id);
@@ -14,7 +14,7 @@ export const OnClickTransport = (edge: Connection, setSelectedEdges: (edgeIds: s
   setSelectedEdges(selectedFlowEdgeIds);
 };
 
-export const OnClickNode = (node: AspectObject, setSelectedNodes: (nodeIds: string[]) => void) => {
+export const OnClickNode = (node: Block, setSelectedNodes: (nodeIds: string[]) => void) => {
   const selectedFlowNodeIds = [];
   selectedFlowNodeIds.push(node?.id);
 

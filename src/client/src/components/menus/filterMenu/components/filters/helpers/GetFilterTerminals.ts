@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AspectObject, Connection, Connector, ConnectorTerminal } from "lib";
+import { Block, Connection, Connector, ConnectorTerminal } from "lib";
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
 
 /**
@@ -11,7 +11,7 @@ export const GetAllTerminals = (flowNodes: FlowNode[]) => {
   const terminals: Connector[] = [];
 
   flowNodes?.forEach((flowNode) => {
-    const node = flowNode.data as AspectObject;
+    const node = flowNode.data as Block;
     node.connectors?.forEach((c: Connector) => {
       if (c instanceof ConnectorTerminal) terminals.push(c);
     });
@@ -26,7 +26,7 @@ export const GetAllTerminals = (flowNodes: FlowNode[]) => {
  * @param nodes
  * @returns an object with two lists - one for edges and one for terminals.
  */
-export const GetActiveTerminals = (flowEdges: FlowEdge[], nodes: AspectObject[]) => {
+export const GetActiveTerminals = (flowEdges: FlowEdge[], nodes: Block[]) => {
   const activeEdges: Connection[] = [];
   const activeTerminals: Connector[] = [];
 
@@ -51,7 +51,7 @@ export const GetActiveTerminals = (flowEdges: FlowEdge[], nodes: AspectObject[])
  * @param nodes
  * @returns a list of inactive terminals.
  */
-export const GetInactiveTerminals = (nodes: AspectObject[]) => {
+export const GetInactiveTerminals = (nodes: Block[]) => {
   const terminals = [];
 
   nodes.forEach((n) => {

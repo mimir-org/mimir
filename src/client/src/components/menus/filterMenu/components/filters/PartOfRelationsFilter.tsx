@@ -3,11 +3,11 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
 import { GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
-import { AspectObject, Connection, Connector } from "lib";
+import { Block, Connection, Connector } from "lib";
 
 interface Props {
   edges: Connection[];
-  nodes: AspectObject[];
+  nodes: Block[];
   relations: Connector[];
   dispatch: Dispatch;
   visible: boolean;

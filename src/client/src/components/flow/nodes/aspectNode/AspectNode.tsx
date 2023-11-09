@@ -2,10 +2,10 @@ import { FC, memo } from "react";
 import { Handle, NodeProps, Position } from "react-flow-renderer";
 import { TreeHandleBox } from "./TreeHandleBox";
 import { AspectNodeBox } from "./AspectNode.styled";
-import { Aspect, AspectObject, Connector, ViewType } from "lib";
+import { Aspect, Block, Connector, ViewType } from "lib";
 import { FunctionIcon, LocationIcon, ProductIcon } from "@mimirorg/component-library";
 
-const AspectNode: FC<NodeProps<AspectObject>> = ({ data }) => {
+const AspectNode: FC<NodeProps<Block>> = ({ data }) => {
   const SetPos = (position: Position) => {
     if (position === Position.Top) return "-20px";
     if (position === Position.Bottom) return "54px";

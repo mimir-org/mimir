@@ -2,7 +2,7 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { Handle } from "./Handle";
-import { AspectObject, CreateId, ViewType } from "lib";
+import { Block, CreateId, ViewType } from "lib";
 import { ConnectorDirection } from "@mimirorg/typelibrary-types";
 import { Theme } from "@mimirorg/component-library";
 import { AspectColor } from "./AspectColor";
@@ -76,8 +76,8 @@ export abstract class Connection {
 
   public abstract toFlowEdge(
     viewType: ViewType,
-    source: AspectObject,
-    target: AspectObject,
+    source: Block,
+    target: Block,
     theme: Theme
   ): FlowEdge<Connection>[];
 }
@@ -88,7 +88,7 @@ export class ConnectionTerminal extends Connection {
     super(fromConnector, toConnector, project, mainProject);
   }
 
-  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+  public toFlowEdge(viewType: ViewType, source: Block, target: Block, theme: Theme): FlowEdge<Connection>[] {
     const fromConnector = source.getTerminal(this.fromConnector);
     this.aspectColor = new AspectColor();
     this.aspectColor.resolveColors(theme, source.aspect);
@@ -174,7 +174,7 @@ export class ConnectionFulfilledBy extends ConnectionRelation {
     super(fromConnector, toConnector, project, mainProject);
   }
 
-  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+  public toFlowEdge(viewType: ViewType, source: Block, target: Block, theme: Theme): FlowEdge<Connection>[] {
     this.aspectColor = new AspectColor();
     this.aspectColor.resolveColors(theme, source.aspect);
     this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
@@ -210,7 +210,7 @@ export class ConnectionHasLocation extends ConnectionRelation {
     super(fromConnector, toConnector, project, mainProject);
   }
 
-  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+  public toFlowEdge(viewType: ViewType, source: Block, target: Block, theme: Theme): FlowEdge<Connection>[] {
     this.aspectColor = new AspectColor();
     this.aspectColor.resolveColors(theme, source.aspect);
     this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);
@@ -247,7 +247,7 @@ export class ConnectionPartOf extends ConnectionRelation {
     super(fromConnector, toConnector, project, mainProject);
   }
 
-  public toFlowEdge(viewType: ViewType, source: AspectObject, target: AspectObject, theme: Theme): FlowEdge<Connection>[] {
+  public toFlowEdge(viewType: ViewType, source: Block, target: Block, theme: Theme): FlowEdge<Connection>[] {
     this.aspectColor = new AspectColor();
     this.aspectColor.resolveColors(theme, source.aspect);
     this.aspectColor.resolveFromToColors(theme, source.aspect, target.aspect);

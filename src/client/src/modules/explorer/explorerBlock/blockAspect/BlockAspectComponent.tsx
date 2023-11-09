@@ -6,19 +6,19 @@ import { ViewportData } from "../../../../models/project";
 import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { Divider } from "../../../../compLibrary/divider";
 import { OnBlockExplorerChange } from "./components/handlers/OnBlockExplorerChange";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
 interface Props {
   username: string;
-  node: AspectObject;
-  nodes: AspectObject[];
-  selectedBlockNode: AspectObject;
+  node: Block;
+  nodes: Block[];
+  selectedBlockNode: Block;
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
   isNodeLocking: boolean;
   isGlobalLocking: boolean;
-  setLockingNode: (node: AspectObject) => void;
+  setLockingNode: (node: Block) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
   viewportData: ViewportData;

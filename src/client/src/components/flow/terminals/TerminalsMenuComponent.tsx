@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 import { TerminalsMenuButton } from "./TerminalsMenuButton";
 import { TerminalsMenu } from "./TerminalsMenu";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   connectors: Connector[];
-  onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Block, isElectroView: boolean) => void;
   isInput: boolean;
   isElectroView: boolean;
   isParent?: boolean;

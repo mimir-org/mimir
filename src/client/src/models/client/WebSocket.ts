@@ -20,7 +20,7 @@ import { LockCm } from "../../lib/interfaces/LockCm";
 // } from "../../redux/store/project/actions";
 import { fetchAspectObjects, fetchSubProjects } from "store/reducers/libraryReducer";
 import { ProjectState } from "store/reducers/projectReducer";
-import { AspectObject, Connection, EntityType, Project } from "lib";
+import { Block, Connection, EntityType, Project } from "lib";
 
 let instance = null;
 
@@ -100,15 +100,15 @@ export class WebSocket {
   }
 
   private handleReceivedNodeData = (eventType: WorkerStatus, data: string) => {
-    const node = JSON.parse(data) as AspectObject;
+    const node = JSON.parse(data) as Block;
 
     if (eventType === WorkerStatus.Create) {
-      if (this._project.aspectObjects.some((x) => x.id === node.id)) return;
+      if (this._project.blocks.some((x) => x.id === node.id)) return;
 
       // this._dispatch(addNode(node));
     }
 
-    if (!this._project.aspectObjects.some((x) => x.id === node.id)) return;
+    if (!this._project.blocks.some((x) => x.id === node.id)) return;
     if (eventType === WorkerStatus.Delete) {
       // this._dispatch(deleteNode(node.id));
     }
@@ -138,7 +138,7 @@ export class WebSocket {
   private handleReceiveLockData = (_: WorkerStatus, data: string) => {
     const locks = JSON.parse(data) as LockCm[];
 
-    const nodeLocks = locks.filter((l) => l.type === EntityType.AspectObject);
+    const nodeLocks = locks.filter((l) => l.type === EntityType.Block);
     if (nodeLocks) {
       // if (nodeLocks.length > 1) this._dispatch(setLockedNodes(nodeLocks));
       // else if (nodeLocks.length === 1) this._dispatch(setLockedNode(nodeLocks[0]));

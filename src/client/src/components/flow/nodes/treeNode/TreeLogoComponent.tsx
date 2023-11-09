@@ -3,11 +3,11 @@ import { Symbol } from "compLibrary/symbol";
 import { Tooltip } from "compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "hooks/useIsOverflowing";
 import { useCompanySelector } from "hooks/useCompanySelector";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 import { Icon } from "@mimirorg/component-library";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
 }
 
 /**

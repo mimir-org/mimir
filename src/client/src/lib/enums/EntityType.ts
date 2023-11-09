@@ -1,5 +1,5 @@
 export enum EntityType {
-  AspectObject = 0,
+  Block = 0,
   Connection = 1,
   Attribute = 2,
 }
