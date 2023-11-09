@@ -40,7 +40,7 @@ const ProjectMenuComponent = ({ isSubProject, hasActiveProject, hasSelectedNodes
       <MenuElement
         text={TextResources.PROJECT_SAVE}
         icon={!hasActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
-        onClick={() => projectMenuAction(() => onOpenClick(DialogType.CreateProject))}
+        onClick={() => projectMenuAction(() => onOpenClick(DialogType.SaveProject))}
         disabled={!hasActiveProject}
       />
       <MenuElement

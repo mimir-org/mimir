@@ -19,12 +19,14 @@ import { CommonState, setDialogType, setViewType } from "store/reducers/commonRe
 import { DialogType, Position, Project, ViewType } from "lib";
 // import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
 import { Dispatch } from "redux";
-import { ProjectState, createProject } from "store/reducers/projectReducer";
+import {ProjectState, createProject, saveProjectInDb, updateProjectInDb} from "store/reducers/projectReducer";
 import { LibraryState } from "store/reducers/libraryReducer";
+import {SaveProjectDialog} from "../../dialogs/project/Save/SaveProjectDialog";
 
 interface Props {
   dispatch: Dispatch;
   projects: Project[];
+  project: Project;
   commonState: CommonState;
   libraryState: LibraryState;
   onCreateProject: (name: string, description: string) => void;
@@ -36,7 +38,7 @@ interface Props {
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-export const HomeDialogs = ({ dispatch, commonState, projects, libraryState, onCreateProject }: Props) => {
+export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryState, onCreateProject }: Props) => {
   // const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   // const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
   // const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
@@ -65,6 +67,14 @@ export const HomeDialogs = ({ dispatch, commonState, projects, libraryState, onC
   const onCreateClick = () => {
     console.log("onCreateClick");
   };
+
+  const onSaveProject = () => {
+    if(project.id === null) {
+      dispatch(saveProjectInDb);
+    }else{
+      dispatch(updateProjectInDb);
+    }
+  }
 
   const onImportProjectClick = () => {
     console.log("onImportProjectClick");
@@ -134,6 +144,22 @@ export const HomeDialogs = ({ dispatch, commonState, projects, libraryState, onC
         />
       )}
 
+      {commonState.dialog === DialogType.SaveProject && (
+          <SaveProjectDialog
+              onSaveProject={onSaveProject}
+              open={commonState.dialog === DialogType.SaveProject}
+              onExit={onExit}
+          />
+      )}
+
+      {commonState.dialog === DialogType.CloseProject && (
+          <CloseProjectDialog
+              onCloseProject={onCloseProject}
+              open={commonState.dialog === DialogType.CloseProject}
+              onExit={onExit}
+          />
+      )}
+
       {commonState.dialog === DialogType.ImportProject && (
         <ImportProjectDialog
           parsers={parsers}
@@ -143,13 +169,6 @@ export const HomeDialogs = ({ dispatch, commonState, projects, libraryState, onC
         />
       )}
 
-      {commonState.dialog === DialogType.CloseProject && (
-        <CloseProjectDialog
-          onCloseProject={onCloseProject}
-          open={commonState.dialog === DialogType.CloseProject}
-          onExit={onExit}
-        />
-      )}
 
       {commonState.dialog === DialogType.CreateSubProject && (
         <CreateSubProjectDialog

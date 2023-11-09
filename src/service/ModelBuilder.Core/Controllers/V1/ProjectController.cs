@@ -160,6 +160,7 @@ public class ProjectController : ControllerBase
     //[Authorize(Policy = "Edit")]
     public async Task<IActionResult> Create([FromBody] ProjectAm project)
     {
+        throw new Exception ("Test");
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
