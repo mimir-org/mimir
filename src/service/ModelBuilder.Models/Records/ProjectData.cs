@@ -47,12 +47,12 @@ public record ProjectData
     /// Deconstruct terminals
     /// </summary>
     /// <param name="project">The project to be deconstructed</param>
-    public Task DeconstructTerminals(ProjectDm project)
+    public Task DeconstructConnectors(ProjectDm project)
     {
         if (project == null)
             return Task.CompletedTask;
 
-        var blockTerminals = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
+        var blockTerminals = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectionDm>().ToList();
 
         var terminals = blockTerminals
             .ToList();

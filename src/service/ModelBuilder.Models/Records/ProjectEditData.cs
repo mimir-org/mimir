@@ -21,23 +21,23 @@ public record ProjectEditData
     public List<AttributeDm> AttributeUpdate { get; init; } = new();
     public List<AttributeDm> AttributeDelete { get; init; } = new();
 
-    public List<ConnectorRelationDm> RelationCreate { get; init; } = new();
-    public List<ConnectorRelationDm> RelationUpdate { get; init; } = new();
-    public List<ConnectorRelationDm> RelationDelete { get; init; } = new();
+    //public List<ConnectorRelationDm> RelationCreate { get; init; } = new();
+    //public List<ConnectorRelationDm> RelationUpdate { get; init; } = new();
+    //public List<ConnectorRelationDm> RelationDelete { get; init; } = new();
 
-    public List<ConnectorTerminalDm> TerminalCreate { get; init; } = new();
-    public List<ConnectorTerminalDm> TerminalUpdate { get; init; } = new();
-    public List<ConnectorTerminalDm> TerminalDelete { get; init; } = new();
+    //public List<ConnectorTerminalDm> TerminalCreate { get; init; } = new();
+    //public List<ConnectorTerminalDm> TerminalUpdate { get; init; } = new();
+    //public List<ConnectorTerminalDm> TerminalDelete { get; init; } = new();
 
     public List<ConnectionDm> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
     public List<BlockDm> BlockCreateAndDelete => BlockCreate.Union(BlockDelete).ToList();
     public List<AttributeDm> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
-    public List<ConnectorRelationDm> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
-    public List<ConnectorTerminalDm> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
+    //public List<ConnectorRelationDm> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
+    //public List<ConnectorTerminalDm> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
 
     public List<BlockDm> BlockUpdateInsert => BlockUpdate.Union(BlockCreate).ToList();
-    public List<ConnectorTerminalDm> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
-    public List<ConnectorRelationDm> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
+    //public List<ConnectorTerminalDm> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
+    //public List<ConnectorRelationDm> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
     public List<AttributeDm> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
     public List<ConnectionDm> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
 

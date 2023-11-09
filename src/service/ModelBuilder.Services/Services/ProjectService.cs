@@ -388,8 +388,7 @@ public class ProjectService : IProjectService
     private async Task<Guid> CreateProject(ProjectAm projectAm)
     {
         try
-        {
-            //Guard check if guid format is correct on all guids
+        {            
             if (projectAm.Id != null) { throw new MimirorgBadRequestException("Id of the project to create must be null or empty Guid"); }
             if (projectAm.Id != Guid.Empty) { throw new MimirorgBadRequestException("Id of the project to create must be null or empty Guid"); }
 
@@ -400,21 +399,14 @@ public class ProjectService : IProjectService
             foreach (var item in projectAm.Blocks)
             {
                 item.MainProject = projectId;
-                item.Project = projectId;
-            }
+                item.Project = projectId;            }
 
-            var projectDm = _mapper.Map<ProjectDm>(projectAm);
-
-            projectDm.Version = "1.0";
+            var projectDm = _mapper.Map<ProjectDm>(projectAm);            
             projectDm.CreatedBy = _contextAccessor.GetName();
-            projectDm.Created = DateTime.Now.ToUniversalTime();
 
             foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root || block.Id == Guid.Empty))
             {
-                var blockId = Guid.NewGuid(); //This should come from frontend
-                block.LibraryType = blockId;
-                block.Id = blockId;
-
+                block.LibraryType = block.Id;                
             }
 
             await _projectRepository.CreateAsync(projectDm);
@@ -425,8 +417,7 @@ public class ProjectService : IProjectService
 
             await _connectorRepository.CreateAsync(projectDm.Blocks.SelectMany(x => x.Connectors));
             await _blockRepository.SaveAsync();
-
-
+                        
             return projectId;
 
         }

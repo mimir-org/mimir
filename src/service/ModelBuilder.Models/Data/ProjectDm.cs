@@ -17,13 +17,13 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
 {
     #region Properties
 
-    public Guid Id { get; set; }
-    public string Version { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Version { get; set; } = "1.0";
     public string Name { get; set; }
     public string Description { get; set; }
     public bool SubProject { get; set; }
     public string CreatedBy { get; set; }
-    public DateTime Created { get; set; }
+    public DateTime Created { get; set; }= DateTime.Now.ToUniversalTime();
     public string UpdatedBy { get; set; }
     public DateTime? Updated { get; set; }
     public string Domain { get; set; }

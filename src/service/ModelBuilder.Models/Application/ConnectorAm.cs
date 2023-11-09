@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application;
 
-#region ConnectorAm
+//#region ConnectorAm
 
-public abstract class ConnectorAm : IValidatableObject
+public class ConnectorAm
 {
     [Required]
     public Guid Id { get; set; }
@@ -17,73 +18,72 @@ public abstract class ConnectorAm : IValidatableObject
     [Required]
     public ConnectorDirection Direction { get; set; }
     [Required]
-    public string Inside { get; set; }
+    public Guid Inside { get; set; }
     [Required]
-    public string Outside { get; set; }
+    public Guid Outside { get; set; }
     [Required]
     public Guid Block { get; set; }
-
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        return new List<ValidationResult>();
-    }
-}
-
-#endregion ConnectorAm
-
-#region ConnectorTerminalAm
-
-public class ConnectorTerminalAm : ConnectorAm, IValidatableObject
-{
     [Required]
-    public string Color { get; set; }
-    [Required]
-    public string TerminalType { get; set; }
-    public string TerminalParentType { get; set; }
-    public string ReferenceType { get; set; }
-    public ICollection<AttributeAm> Attributes { get; set; }
+    public RelationType Discriminator { get; set; } = RelationType.NotSet;
 
-    public new IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        var validations = new List<ValidationResult>();
-
-        if (Attributes != null)
-            validations.AddRange(Attributes.SelectMany(attributeAm => attributeAm.Validate(validationContext)));
-
-        return validations;
-    }
+    //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    //{
+    //    return new List<ValidationResult>();
+    //}
 }
 
-#endregion ConnectorTerminalAm
+//#endregion ConnectorAm
 
-#region ConnectorRelationAm
+//#region ConnectorTerminalAm
 
-public abstract class ConnectorRelationAm : ConnectorAm
-{
-}
+//public class ConnectorTerminalAm : ConnectorAm, IValidatableObject
+//{
+//    //[Required]
+//    //public string TerminalType { get; set; }    
+//    //public string ReferenceType { get; set; }
+//    //public ICollection<AttributeAm> Attributes { get; set; }
 
-#endregion ConnectorRelationAm
+//    //public new IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+//    //{
+//    //    var validations = new List<ValidationResult>();
 
-#region ConnectorFulfilledByAm
+//    //    if (Attributes != null)
+//    //        validations.AddRange(Attributes.SelectMany(attributeAm => attributeAm.Validate(validationContext)));
 
-public class ConnectorFulfilledByAm : ConnectorRelationAm
-{
-}
+//    //    return validations;
+//    //}
+//}
 
-#endregion ConnectorFulfilledByAm
+//#endregion ConnectorTerminalAm
 
-#region ConnectorHasLocationAm
+//#region ConnectorRelationAm
 
-public class ConnectorHasLocationAm : ConnectorRelationAm
-{
-}
+//public abstract class ConnectorRelationAm : ConnectorAm
+//{
+//}
 
-#endregion ConnectorHasLocationAm
+//#endregion ConnectorRelationAm
 
-#region ConnectorPartOfAm
+//#region ConnectorFulfilledByAm
 
-public class ConnectorPartOfAm : ConnectorRelationAm
-{
-}
+//public class ConnectorFulfilledByAm : ConnectorRelationAm
+//{
+//}
 
-#endregion ConnectorPartOfAm
+//#endregion ConnectorFulfilledByAm
+
+//#region ConnectorHasLocationAm
+
+//public class ConnectorHasLocationAm : ConnectorRelationAm
+//{
+//}
+
+//#endregion ConnectorHasLocationAm
+
+//#region ConnectorPartOfAm
+
+//public class ConnectorPartOfAm : ConnectorRelationAm
+//{
+//}
+
+//#endregion ConnectorPartOfAm

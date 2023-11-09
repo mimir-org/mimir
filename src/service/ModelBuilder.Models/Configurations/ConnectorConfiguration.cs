@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Configurations;
 
-#region ConnectorConfiguration
+//#region ConnectorConfiguration
 public class ConnectorConfiguration : IEntityTypeConfiguration<ConnectorDm>
 {
     public void Configure(EntityTypeBuilder<ConnectorDm> builder)
@@ -18,54 +18,53 @@ public class ConnectorConfiguration : IEntityTypeConfiguration<ConnectorDm>
         builder.Property(p => p.Inside).HasColumnName("Inside").IsRequired();
         builder.Property(p => p.Outside).HasColumnName("Outside").IsRequired();
         builder.Property(p => p.Block).HasColumnName("Block").IsRequired();
+        builder.Property(p => p.Discriminator).HasColumnName("Discriminator").IsRequired();
     }
 }
-#endregion ConnectorConfiguration
+//#endregion ConnectorConfiguration
 
-#region ConnectorTerminalConfiguration
-public class ConnectorTerminalConfiguration : IEntityTypeConfiguration<ConnectorTerminalDm>
-{
-    public void Configure(EntityTypeBuilder<ConnectorTerminalDm> builder)
-    {
-        builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired();
-        builder.Property(p => p.TerminalParentType).HasColumnName("TerminalParentType").IsRequired(false);
-        builder.Property(p => p.Color).HasColumnName("Color").IsRequired();
-    }
-}
-#endregion ConnectorTerminalConfiguration
+//#region ConnectorTerminalConfiguration
+//public class ConnectorTerminalConfiguration : IEntityTypeConfiguration<ConnectorDm>
+//{
+//    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
+//    {
+//        builder.Property(p => p.TerminalType).HasColumnName("TerminalType").IsRequired();
+//    }
+//}
+//#endregion ConnectorTerminalConfiguration
 
-#region ConnectorRelationConfiguration
-public class ConnectorRelationConfiguration : IEntityTypeConfiguration<ConnectorRelationDm>
-{
-    public void Configure(EntityTypeBuilder<ConnectorRelationDm> builder)
-    {
-    }
-}
-#endregion ConnectorRelationConfiguration
+//#region ConnectorRelationConfiguration
+//public class ConnectorRelationConfiguration : IEntityTypeConfiguration<ConnectorDm>
+//{
+//    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
+//    {
+//    }
+//}
+//#endregion ConnectorRelationConfiguration
 
-#region ConnectorFulfilledByConfiguration
-public class ConnectorFulfilledByConfiguration : IEntityTypeConfiguration<ConnectorFulfilledByDm>
-{
-    public void Configure(EntityTypeBuilder<ConnectorFulfilledByDm> builder)
-    {
-    }
-}
-#endregion ConnectorFulfilledByConfiguration
+//#region ConnectorFulfilledByConfiguration
+//public class ConnectorFulfilledByConfiguration : IEntityTypeConfiguration<ConnectorDm>
+//{
+//    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
+//    {
+//    }
+//}
+//#endregion ConnectorFulfilledByConfiguration
 
-#region ConnectorHasLocationConfiguration
-public class ConnectorHasLocationConfiguration : IEntityTypeConfiguration<ConnectorHasLocationDm>
-{
-    public void Configure(EntityTypeBuilder<ConnectorHasLocationDm> builder)
-    {
-    }
-}
-#endregion ConnectorHasLocationConfiguration
+//#region ConnectorHasLocationConfiguration
+//public class ConnectorHasLocationConfiguration : IEntityTypeConfiguration<ConnectorDm>
+//{
+//    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
+//    {
+//    }
+//}
+//#endregion ConnectorHasLocationConfiguration
 
-#region ConnectorPartOfConfiguration
-public class ConnectorPartOfConfiguration : IEntityTypeConfiguration<ConnectorPartOfDm>
-{
-    public void Configure(EntityTypeBuilder<ConnectorPartOfDm> builder)
-    {
-    }
-}
-#endregion ConnectorPartOfConfiguration
+//#region ConnectorPartOfConfiguration
+//public class ConnectorPartOfConfiguration : IEntityTypeConfiguration<ConnectorPartOfDm>
+//{
+//    public void Configure(EntityTypeBuilder<ConnectorPartOfDm> builder)
+//    {
+//    }
+//}
+//#endregion ConnectorPartOfConfiguration

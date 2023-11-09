@@ -3,6 +3,7 @@ using Mimirorg.TypeLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mb.Models.Application;
 
@@ -39,8 +40,9 @@ public class BlockAm : IValidatableObject
     public bool IsLocked { get; set; }
     public string IsLockedStatusBy { get; set; }
     public DateTime? IsLockedStatusDate { get; set; }
-
+    [NotMapped]
     public ICollection<ConnectorAm> Connectors { get; set; }
+    [NotMapped]
     public ICollection<AttributeAm> Attributes { get; set; }
 
     #region Validate

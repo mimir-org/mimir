@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Enums;
@@ -14,5 +15,8 @@ public enum RelationType
     PartOf = 2,
 
     [Display(Name = "FulfilledBy")]
-    FulfilledBy = 3
+    FulfilledBy = 3,
+
+    [Display(Name = "Terminal")]
+    Terminal = 4
 }
