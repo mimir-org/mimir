@@ -17,11 +17,11 @@ export const projectApi = {
     return serializer.parse(r.data);
   },
   async createProject(project: Project): Promise<string> {
-    const r = await client.post<string>(_basePath + "/create", project);
+    const r = await client.post(_basePath + "/create", project);
     return r.data;
   },
   async updateProject(project: Project): Promise<string>  {
-    const r = await client.post<string>(_basePath + "/update", project);
+    const r = await client.post(_basePath + "/update", project);
     return r.statusText;
   }
 };

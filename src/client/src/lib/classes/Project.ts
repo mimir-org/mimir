@@ -31,7 +31,7 @@ import { ErrorException } from "lib";
 export class Project {
   // Domain members
   @jsonMember(String)
-  public id: string;
+  public id: string | null;
 
   @jsonMember(String)
   public name: string;
@@ -68,9 +68,10 @@ export class Project {
    * @params name The name of the project.
    * @params createdBy The username/email of the creator.
    * @params description The project description. Default is null.
+   * @params id is initially set to null as this will be generated from backend on save.
    */
   public constructor(name: string, createdBy: string, description: string) {
-    this.id = CreateId();
+    this.id = null;
     this.name = name;
     this.version = "1.0";
     this.subProject = false;

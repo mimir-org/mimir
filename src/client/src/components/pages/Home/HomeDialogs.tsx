@@ -70,9 +70,9 @@ export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryS
 
   const onSaveProject = () => {
     if(project.id === null) {
-      dispatch(saveProjectInDb);
+      dispatch(saveProjectInDb({project}));
     }else{
-      dispatch(updateProjectInDb);
+      dispatch(updateProjectInDb({project}));
     }
   }
 

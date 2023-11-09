@@ -101,13 +101,13 @@ export const projectSlice = createSlice({
             state.project = clone(action.payload.project);
         },
         saveProjectInDb: (state, action: PayloadAction<saveProjectToDbAction>) => {
-            console.log(action.payload.project);
+            console.log("saveProjDb \n" + action.payload.project);
         },
         saveProjectDbFinished: (state, action: PayloadAction<saveProjectDbFinishedAction>) => {
             state.project.id = action.payload.guid;
         },
         updateProjectInDb: (state, action: PayloadAction<updateProjectDbAction>) => {
-            console.log(action.payload.project);
+            console.log("updateProjDB: \n" + action.payload.project);
         },
         updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbFinishedAction>) => {
             console.log(action.payload.status);
