@@ -2,7 +2,7 @@ import { EntityType, LockCm } from "lib";
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { InspectorElement } from "../../../types";
-import { AspectObject } from "../../../../../lib/classes/AspectObject";
+import { Block } from "../../../../../lib/classes/Block";
 import { Connection } from "../../../../../lib/classes/Connection";
 
 export const OnLockClick = (
@@ -29,10 +29,10 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
     isLocked,
     isLockedStatusBy: isLockedBy,
     isLockedStatusDate: new Date(),
-    type: element instanceof AspectObject ? EntityType.AspectObject : EntityType.Connection,
+    type: element instanceof Block ? EntityType.Block : EntityType.Connection,
   };
 
-  if (element instanceof AspectObject) {
+  if (element instanceof Block) {
     // TODO: Handle this
     // dispatch(setLockedNode(lockObj));
   }

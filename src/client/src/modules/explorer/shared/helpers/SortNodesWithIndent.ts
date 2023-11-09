@@ -1,8 +1,8 @@
 import red from "store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
-const SortNodesWithIndent = (nodes: AspectObject[]) => {
+const SortNodesWithIndent = (nodes: Block[]) => {
   InitialSortNodes(nodes);
   const buckets = GroupNodesByIndentLevel(nodes);
   return SortNodesByIndent(buckets);
@@ -12,7 +12,7 @@ const SortNodesWithIndent = (nodes: AspectObject[]) => {
  * Ensures nodes are sorted according to aspect. On a tie, aspect nodes are placed before non-aspect nodes.
  * @param nodes Nodes to sort.
  */
-export const InitialSortNodes = (nodes: AspectObject[]) => {
+export const InitialSortNodes = (nodes: Block[]) => {
   return nodes?.sort((a, b) => (IsFamily(a, b) ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
 };
 
@@ -21,8 +21,8 @@ export const InitialSortNodes = (nodes: AspectObject[]) => {
  * @param nodes Nodes to group.
  * @returns Map of indent levels and nodes with the corresponding indent level.
  */
-const GroupNodesByIndentLevel = (nodes: AspectObject[]): Map<number, AspectObject[]> => {
-  const buckets: Map<number, AspectObject[]> = new Map();
+const GroupNodesByIndentLevel = (nodes: Block[]): Map<number, Block[]> => {
+  const buckets: Map<number, Block[]> = new Map();
 
   for (const node of nodes) {
     const indent = SetIndentLevel(node, 0);
@@ -40,8 +40,8 @@ const GroupNodesByIndentLevel = (nodes: AspectObject[]): Map<number, AspectObjec
  * @param buckets Mapping between indent level and array of nodes with corresponding indent level.
  * @returns Array of Node and indent level, to be rendered by explorer module.
  */
-const SortNodesByIndent = (buckets: Map<number, AspectObject[]>) => {
-  let sortedNodedWithIndent: [AspectObject, number][] = [];
+const SortNodesByIndent = (buckets: Map<number, Block[]>) => {
+  let sortedNodedWithIndent: [Block, number][] = [];
 
   for (const indent of Array.from(buckets.keys())) {
     const bucket = buckets.get(indent);
@@ -65,7 +65,7 @@ const SortNodesByIndent = (buckets: Map<number, AspectObject[]>) => {
  * @param indent Indent level of node
  * @param sortedNodedWithIndent Current (partial) array of nodes with indent.
  */
-const AddNodeFromBucket = (node: AspectObject, indent: number, sortedNodedWithIndent: [AspectObject, number][]) => {
+const AddNodeFromBucket = (node: Block, indent: number, sortedNodedWithIndent: [Block, number][]) => {
   // for (let i = 0; i < sortedNodedWithIndent.length; i++) {
   //   const [otherNode] = sortedNodedWithIndent[i];
   //   if (IsParentOf(otherNode?.id, node?.id)) {
@@ -75,7 +75,7 @@ const AddNodeFromBucket = (node: AspectObject, indent: number, sortedNodedWithIn
   // }
 };
 
-const IsAspectNodeNum = (node: AspectObject) => (node.isRoot() ? 1 : 0);
+const IsAspectNodeNum = (node: Block) => (node.isRoot() ? 1 : 0);
 
 /**
  * Recursive function to give each node the correct level based on it's family tree.
@@ -83,7 +83,7 @@ const IsAspectNodeNum = (node: AspectObject) => (node.isRoot() ? 1 : 0);
  * @param count
  * @returns a number that defines the indent in the Explorer Module.
  */
-const SetIndentLevel = (node: AspectObject, count: number): number => {
+const SetIndentLevel = (node: Block, count: number): number => {
   // TODO: Fix this
   return 1;
 

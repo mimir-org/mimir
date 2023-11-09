@@ -1,7 +1,7 @@
-import { Connection, AspectObject } from ".";
+import { Connection, Block } from ".";
 
 export class Prepare {
   subProjectId: string;
-  nodes: AspectObject[];
+  nodes: Block[];
   edges: Connection[];
 }

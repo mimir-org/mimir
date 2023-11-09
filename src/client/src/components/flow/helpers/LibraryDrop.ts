@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 // import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../assets/size/Size";
 // import { IsOutputConnector, IsInputConnector, IsPartOfRelation } from "./Connectors";
-import { AspectObject, ConnectionPartOf, ConnectorDirection, Position, Project } from "lib";
+import { Block, ConnectionPartOf, ConnectorDirection, Position, Project } from "lib";
 import { ConnectorPartOf } from "../../../lib/classes/Connector";
 
 /**
@@ -13,7 +13,7 @@ import { ConnectorPartOf } from "../../../lib/classes/Connector";
  * @param project
  * @param dispatch
  */
-export function HandleCreatePartOfEdge(parentNode: AspectObject, childNode: AspectObject, project: Project, dispatch: Dispatch) {
+export function HandleCreatePartOfEdge(parentNode: Block, childNode: Block, project: Project, dispatch: Dispatch) {
   const parentConnector = parentNode.connectors?.find(
     (c) => c instanceof ConnectorPartOf && c.direction === ConnectorDirection.Output
   );
@@ -35,7 +35,7 @@ export function HandleCreatePartOfEdge(parentNode: AspectObject, childNode: Aspe
  * @param edges
  * @returns a Position object.
  */
-export function SetTreeNodePosition(parentNode: AspectObject, project: Project) {
+export function SetTreeNodePosition(parentNode: Block, project: Project) {
   const marginY = 220;
   const x = SetTreeNodeXPosition(parentNode, project);
   const y = parentNode.positionTree.posX + marginY;
@@ -52,7 +52,7 @@ export function SetTreeNodePosition(parentNode: AspectObject, project: Project) 
  * @param edges
  * @returns a value for the X position.
  */
-export function SetTreeNodeXPosition(parentNode: AspectObject, project: Project) {
+export function SetTreeNodeXPosition(parentNode: Block, project: Project) {
   const isAspect = parentNode.libraryType == null;
   const siblings = project.getSiblingAspectNodes(parentNode.id);
   const increaseX = siblings.length % 2 === 0;

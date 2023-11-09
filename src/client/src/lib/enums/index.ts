@@ -1,5 +1,5 @@
 export { ViewType } from "./ViewType";
-export { AspectObjectType } from "./AspectObjectType";
+export { BlockType } from "./BlockType";
 export { Aspect } from "./Aspect";
 export { ConnectorDirection } from "./Direction";
 export { EntityType } from "./EntityType";

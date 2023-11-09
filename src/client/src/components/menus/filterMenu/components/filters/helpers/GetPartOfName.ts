@@ -1,5 +1,5 @@
-import { Aspect, AspectObject, Connector } from "lib";
+import { Aspect, Block, Connector } from "lib";
 
-export const GetPartOfName = (conn: Connector, node: AspectObject) => {
+export const GetPartOfName = (conn: Connector, node: Block) => {
   return `${conn.name} ${Aspect[node.aspect]}`;
 };

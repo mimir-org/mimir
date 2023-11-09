@@ -1,8 +1,8 @@
 import store from "store";
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 
-export const GetMimirNodes = (): AspectObject[] => {
-  return store.getState().projectState?.project?.aspectObjects;
+export const GetMimirNodes = (): Block[] => {
+  return store.getState().projectState?.project?.blocks;
 };
 
 export const GetMimirEdges = (): Connection[] => {

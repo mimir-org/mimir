@@ -1,4 +1,4 @@
-export { AspectObject } from "./AspectObject";
+export { Block } from "./Block";
 export { Attribute } from "./Attribute";
 export {
   Connection,

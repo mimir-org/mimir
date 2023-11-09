@@ -3,7 +3,7 @@ import { Checkbox } from "compLibrary/input/checkbox/common/Checkbox";
 import { TerminalIcon } from "./TerminalIcon";
 import { AddTerminalComponent } from "./AddTerminalComponent";
 import { RemoveTerminalComponent } from "./RemoveTerminalComponent";
-import { AspectObject, Connector, ConnectorTerminal, ConnectorDirection } from "lib";
+import { Block, Connector, ConnectorTerminal, ConnectorDirection } from "lib";
 import {
   TerminalBox,
   TerminalElementBox,
@@ -14,9 +14,9 @@ import {
 interface Props {
   connector: Connector;
   isInput: boolean;
-  node: AspectObject;
+  node: Block;
   isElectroView: boolean;
-  onClick: (conn: Connector, isInput: boolean, node: AspectObject, isElectroView: boolean) => void;
+  onClick: (conn: Connector, isInput: boolean, node: Block, isElectroView: boolean) => void;
   onClickAddTerminal: (terminalId: string) => void;
   onClickRemoveTerminal: (terminalId: string) => void;
 }

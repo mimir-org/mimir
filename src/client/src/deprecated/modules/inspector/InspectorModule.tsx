@@ -1,6 +1,6 @@
 import { InspectorPanel } from "@mimirorg/component-library";
 import { useState } from "react";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 import { AdminTab } from "./tabs/AdminTab";
 import { AttributeTab } from "./tabs/AttributeTab";
 import { TerminalTab } from "./tabs/TerminalTab";
@@ -13,7 +13,7 @@ import { TerminalTab } from "./tabs/TerminalTab";
  */
 
 interface InspectorModuleProps {
-  selectedAspectObject: AspectObject | null;
+  selectedAspectObject: Block | null;
 }
 
 export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) => {
@@ -39,7 +39,7 @@ export const InspectorModule = ({ selectedAspectObject }: InspectorModuleProps) 
         isOpen={true}
         isLocked={false}
       >
-        {selectedTab === "admin" && selectedAspectObject && <AdminTab aspectObject={selectedAspectObject} />}
+        {selectedTab === "admin" && selectedAspectObject && <AdminTab block={selectedAspectObject} />}
         {selectedTab === "attribute" && <AttributeTab attributes={selectedAspectObject?.attributes ?? []} />}
         {selectedTab === "terminal" && <TerminalTab name={"Test name"} id={"12345"} description={"This is a description"} />}
       </InspectorPanel>

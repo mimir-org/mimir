@@ -21,7 +21,7 @@ export const BlockProjectComponent = () => {
   const projectState = useAppSelector(projectStateSelector);
   const commonState = useAppSelector<CommonState>(commonStateSelector);
   const project = projectState?.project;
-  const nodes = project?.aspectObjects;
+  const nodes = project?.blocks;
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {

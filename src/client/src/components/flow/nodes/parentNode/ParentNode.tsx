@@ -1,11 +1,11 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { AspectObject, ViewType } from "lib";
+import { Block, ViewType } from "lib";
 import { FlowNodeComponent, FlowConnector, FlowHandle } from "@mimirorg/component-library";
 import { companySelector, useAppSelector } from "store";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
-const ParentNode: FC<NodeProps<AspectObject>> = ({ data }) => {
+const ParentNode: FC<NodeProps<Block>> = ({ data }) => {
   const company = useAppSelector<MimirorgCompanyCm>(companySelector);
 
   const connectors = data.getTerminals();

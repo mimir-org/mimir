@@ -1,14 +1,14 @@
 import store from "store";
 import { BlockLibCm } from "@mimirorg/typelibrary-types";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
-type Item = AspectObject | BlockLibCm;
+type Item = Block | BlockLibCm;
 
 export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 
-export const IsDirectChild = (child: AspectObject, parent: AspectObject) => {
+export const IsDirectChild = (child: Block, parent: Block) => {
   // return child.parentNodeId === parent.id;
 };
 
@@ -26,6 +26,6 @@ export const GetParentNode = (childNodeId: string) => {
 };
 
 export const GetSelectedNode = () => {
-  const nodes = store.getState().projectState.project.aspectObjects;
+  const nodes = store.getState().projectState.project.blocks;
   return nodes.find((n) => n.selected);
 };

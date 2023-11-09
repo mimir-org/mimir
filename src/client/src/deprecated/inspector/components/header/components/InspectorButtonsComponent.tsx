@@ -14,11 +14,11 @@ import {
   InspectorButtonsToggleTitle,
   InspectorButtonsToggleContainer,
 } from "./InspectorButtonsComponent.styled";
-import { AspectObject, Connection, Project } from "lib";
+import { Block, Connection, Project } from "lib";
 import { Icon, ToogleDownIcon, ToogleUpIcon } from "@mimirorg/component-library";
 
 interface Props {
-  nodes: AspectObject[];
+  nodes: Block[];
   edges: Connection[];
   element: InspectorElement;
   username: string;
@@ -59,7 +59,7 @@ export const InspectorButtonsComponent = ({
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const deleteDisabled =
-    isLocked || (element instanceof AspectObject && element.isRoot()) || (isBlockView && element?.id === selectedBlockNode?.id);
+    isLocked || (element instanceof Block && element.isRoot()) || (isBlockView && element?.id === selectedBlockNode?.id);
 
   const isGlobalLocking = false; //useAppSelector(isProjectStateGloballyLockingSelector);
 

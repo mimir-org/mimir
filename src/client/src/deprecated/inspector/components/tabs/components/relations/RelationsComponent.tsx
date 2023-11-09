@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { OnClickRelation, OnClickTransport, OnClickNode, OnClickTerminal } from "./handlers/OnRelationsClick";
 
 import { useStoreApi } from "react-flow-renderer";
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 
 interface Props {
   element: InspectorElement;

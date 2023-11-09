@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { SymbolImage } from "compLibrary/symbol/Symbol.styled";
 import { Color } from "assets/color/Color";
 import { Size } from "assets/size/Size";
-import { Aspect, AspectObject } from "lib";
+import { Aspect, Block } from "lib";
 import { FontWeight } from "assets/font";
 
 interface NodeBoxProps {
-  node: AspectObject;
+  node: Block;
   colorMain: string;
   colorSelected: string;
   selected: boolean;

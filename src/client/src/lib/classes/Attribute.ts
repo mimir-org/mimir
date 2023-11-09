@@ -32,13 +32,13 @@ export class Attribute {
   public connectorTerminal: string | null;
 
   @jsonMember(String)
-  public aspectObject: string | null;
+  public block: string | null;
 
   public isLocked: boolean;
   public isLockedStatusBy: string | null;
   public isLockedStatusDate: Date | null;
 
-  public constructor(lib: AttributeLibCm, aspectObject?: string, connectorTerminal?: string) {
+  public constructor(lib: AttributeLibCm, block?: string, connectorTerminal?: string) {
     this.id = CreateId();
     this.name = lib?.name;
     this.value = null;
@@ -46,7 +46,7 @@ export class Attribute {
     this.unitSelected = lib?.attributeUnits?.find((x) => x.isDefault)?.unit?.id ?? null;
     this.units = lib?.attributeUnits?.map((x) => new Unit(x.unit)) ?? [];
     this.connectorTerminal = connectorTerminal == null ? null : connectorTerminal;
-    this.aspectObject = aspectObject == null ? null : aspectObject;
+    this.block = block == null ? null : block;
     this.isLocked = false;
     this.isLockedStatusBy = null;
     this.isLockedStatusDate = null;

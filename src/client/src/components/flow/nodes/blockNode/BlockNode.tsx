@@ -5,7 +5,7 @@ import { libraryStateSelector, projectSelector, useAppDispatch, useAppSelector }
 import { HandleComponent } from "./HandleComponent";
 import { BoxWrapper } from "./BlockNode.styled";
 import { BlockChildComponent } from "./BlockChildComponent";
-import { AspectObject, ConnectorDirection, ConnectorTerminal, Project } from "lib";
+import { Block, ConnectorDirection, ConnectorTerminal, Project } from "lib";
 import { LibraryState } from "store/reducers/libraryReducer";
 import { onTerminalAdd, onTerminalChecked, onTerminalRemove } from "components/handlers/ProjectHandlers";
 
@@ -15,7 +15,7 @@ import { onTerminalAdd, onTerminalChecked, onTerminalRemove } from "components/h
  * @param props the data for the node.
  * @returns a Mimir Node.
  */
-const BlockNode: FC<NodeProps<AspectObject>> = (props: NodeProps<AspectObject>) => {
+const BlockNode: FC<NodeProps<Block>> = (props: NodeProps<Block>) => {
   const dispatch = useAppDispatch();
   const libraryState = useAppSelector<LibraryState>(libraryStateSelector);
   const project = useAppSelector<Project>(projectSelector);

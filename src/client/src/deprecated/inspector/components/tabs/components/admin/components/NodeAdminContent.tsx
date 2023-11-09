@@ -7,12 +7,12 @@ import { FontSize } from "../../../../../../../assets/font";
 // import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
 import { useAppDispatch } from "store";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
-import { AspectObject, Project } from "lib";
+import { Block, Project } from "lib";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   project: Project;
 }
 
@@ -20,7 +20,7 @@ export const NodeAdminContent = ({ node, project }: Props) => {
   const dispatch = useAppDispatch();
   const [nodeLabel, setNodeLabel, debouncedNodeLabel] = useDebounceState("");
   // const onChange = <K extends keyof AspectObject>(key: K, value: AspectObject[K]) => dispatch(changeNodeValue(node.id, key, value));
-  const onChange = <K extends keyof AspectObject>(key: K, value: AspectObject[K]) => {
+  const onChange = <K extends keyof Block>(key: K, value: Block[K]) => {
     // TODO: Missing implementation
   };
 
