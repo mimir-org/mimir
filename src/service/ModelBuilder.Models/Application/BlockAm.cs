@@ -24,7 +24,7 @@ public class BlockAm : IValidatableObject
     public Guid? Project { get; set; }
 
     public Guid? MainProject { get; set; }
-    public Guid LibraryType { get; set; }
+    public string LibraryType { get; set; }
     [Required]
     public PositionAm PositionTree { get; set; }
     public PositionAm PositionBlock { get; set; }

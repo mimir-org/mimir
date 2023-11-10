@@ -24,7 +24,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
     public BlockType BlockType { get; set; }
     public Guid Project { get; set; }
     public Guid MainProject { get; set; }
-    public Guid LibraryType { get; set; }
+    public string LibraryType { get; set; }
     public string PositionTree { get; set; }
     public string PositionBlock { get; set; }
     public string ReferenceType { get; set; }

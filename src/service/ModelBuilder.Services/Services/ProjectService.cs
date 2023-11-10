@@ -424,7 +424,7 @@ public class ProjectService : IProjectService
             foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root || block.Id == Guid.Empty))
             {
                 var blockId = Guid.NewGuid(); //This should come from frontend
-                block.LibraryType = blockId;
+                //block.LibraryType = blockId;
                 block.Id = blockId;
             }
 
@@ -538,7 +538,7 @@ public class ProjectService : IProjectService
             BlockType = BlockType.Root,
             Project = projectId,
             MainProject = projectId,
-            LibraryType = blockId,
+            //LibraryType = blockId,
             PositionTree = JsonConvert.SerializeObject(new PositionDm
             {
                 PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
