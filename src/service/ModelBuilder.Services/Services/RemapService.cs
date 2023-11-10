@@ -35,7 +35,7 @@ public class RemapService : IRemapService
     /// <param name="original">Original Mimir project</param>
     /// <param name="updated">The updated Mimir project</param>
     /// <returns>Data object with information about what data should be edited</returns>
-    public async Task<ProjectEditData> CreateEditData(ProjectDm original, ProjectDm updated)
+    public async Task<ProjectEditData> CreateEditData(Project original, Project updated)
     {
         var originalProjectData = new ProjectData();
         var updatedProjectData = new ProjectData();
@@ -61,7 +61,7 @@ public class RemapService : IRemapService
     /// <param name="project">The project to deconstruct</param>
     /// <param name="data">Project Data object to fill with data</param>
     /// <returns>A task that updates project data</returns>
-    public async Task DeConstruct(ProjectDm project, ProjectData data)
+    public async Task DeConstruct(Project project, ProjectData data)
     {
         if (project == null || (project.Connections == null && project.Blocks == null))
             return;

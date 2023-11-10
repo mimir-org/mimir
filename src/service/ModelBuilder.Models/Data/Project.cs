@@ -13,15 +13,14 @@ using Mimirorg.TypeLibrary.Enums;
 namespace Mb.Models.Data;
 
 [Serializable]
-public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
+public class Project : IEquatable<Project>, IVersionable<Project>
 {
     #region Properties
 
     public Guid Id { get; set; }
     public string Version { get; set; }
     public string Name { get; set; }
-    public string Description { get; set; }
-    public bool SubProject { get; set; }
+    public string Description { get; set; }    
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }
@@ -29,16 +28,16 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     public string Domain => Id.ToString().ResolveDomain();
 
     [NotMapped]
-    public List<BlockDm> Blocks { get; set; } = new();
+    public List<Block> Blocks { get; set; } = new();
 
     [NotMapped]
-    public List<ConnectionDm> Connections { get; set; } = new();
+    public List<Connection> Connections { get; set; } = new();
 
     #endregion
 
     #region IEquatable
 
-    public bool Equals(ProjectDm other)
+    public bool Equals(Project other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -57,7 +56,7 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((ProjectDm) obj);
+        return obj.GetType() == GetType() && Equals((Project) obj);
     }
 
     public override int GetHashCode()
@@ -79,7 +78,7 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
 
     #region IVersionable
 
-    public Validation HasIllegalChanges(ProjectDm other)
+    public Validation HasIllegalChanges(Project other)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));
@@ -88,7 +87,7 @@ public class ProjectDm : IEquatable<ProjectDm>, IVersionable<ProjectDm>
         return validation;
     }
 
-    public VersionStatus CalculateVersionStatus(ProjectDm other, ProjectEditData editData)
+    public VersionStatus CalculateVersionStatus(Project other, ProjectEditData editData)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));

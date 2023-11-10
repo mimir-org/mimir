@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations;
 
-public class ProjectConfiguration : IEntityTypeConfiguration<ProjectDm>
+public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {
-    public void Configure(EntityTypeBuilder<ProjectDm> builder)
+    public void Configure(EntityTypeBuilder<Project> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Project");

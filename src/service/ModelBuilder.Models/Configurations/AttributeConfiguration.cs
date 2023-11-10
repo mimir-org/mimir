@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations;
 
-public class AttributeConfiguration : IEntityTypeConfiguration<AttributeDm>
+public class AttributeConfiguration : IEntityTypeConfiguration<Attribute>
 {
-    public void Configure(EntityTypeBuilder<AttributeDm> builder)
+    public void Configure(EntityTypeBuilder<Attribute> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Attribute");

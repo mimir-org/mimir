@@ -22,7 +22,7 @@ using System.Transactions;
 
 namespace Mb.Data.Repositories;
 
-public class ProjectRepository : GenericRepository<ModelBuilderDbContext, ProjectDm>, IProjectRepository
+public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Project>, IProjectRepository
 {
     private readonly IMapper _mapper;
     private readonly IBlockRepository _blockRepository;
@@ -52,7 +52,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    public async Task<ProjectDm> GetAsyncComplete(Guid? id)
+    public async Task<Project> GetAsyncComplete(Guid? id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNullReferenceException("The Id can't be null.");
@@ -67,7 +67,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    public Task<ProjectDm> GetProjectAsync(Guid? id)
+    public Task<Project> GetProjectAsync(Guid? id)
     {
         var project = FindBy(x => x.Id == id)?.FirstOrDefault();
 
@@ -117,14 +117,14 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// </summary>
     /// <param name="isSubProject">Get sub-projects or projects</param>
     /// <returns>A list of project version information</returns>
-    public async Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject)
+    public async Task<List<VersionData>> GetProjectVersions(bool isSubProject)
     {
         var procParams = new Dictionary<string, object>
         {
             {"@IsSubProject", isSubProject}
         };
 
-        var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionDataDm>("GetProjectVersion", procParams);
+        var subProjects = await _modelBuilderProcRepository.ExecuteStoredProc<VersionData>("GetProjectVersion", procParams);
         return subProjects;
     }
 
@@ -135,7 +135,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="updated"></param>
     /// <param name="data"></param>
     /// <returns>A project update task</returns>
-    public async Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data)
+    public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
     {
         if (original == null || updated == null || data == null)
             throw new MimirorgNullReferenceException(
@@ -148,7 +148,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
                 // Upsert
-                bulk.Setup<ProjectDm>()
+                bulk.Setup<Project>()
                     .ForObject(updated)
                     .WithTable("Project")
                     .AddColumn(x => x.Id)
@@ -178,7 +178,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 _blockRepository.BulkDelete(bulk, conn, data.BlockDelete);
 
                 //Delete connectors
-                var connectorsToDelete = new List<ConnectorDm>();
+                var connectorsToDelete = new List<Connector>();
                 var connectorTerminalDms = new List<ConnectorTerminalDm>();
                 var connectorPartOfDms = new List<ConnectorPartOfDm>();
                 var connectorFulfilledByDms = new List<ConnectorFulfilledByDm>();
@@ -229,7 +229,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="project">The project that should be created</param>
     /// <param name="data">Project data</param>
     /// <returns>A project create task</returns>
-    public Task CreateProject(ProjectDm project, ProjectData data)
+    public Task CreateProject(Project project, ProjectData data)
     {
         var bulk = new BulkOperations();
 
@@ -238,7 +238,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
                 // Upsert
-                bulk.Setup<ProjectDm>()
+                bulk.Setup<Project>()
                     .ForObject(project)
                     .WithTable("Project")
                     .AddColumn(x => x.Id)
@@ -272,7 +272,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="project">The project that should be deleted</param>
     /// <param name="data">Project data</param>
     /// <returns>A project delete task</returns>
-    public async Task DeleteProject(ProjectDm project, ProjectData data)
+    public async Task DeleteProject(Project project, ProjectData data)
     {
         var bulk = new BulkOperations();
 
@@ -284,8 +284,8 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
                 _blockRepository.BulkDelete(bulk, conn, data.Blocks);
 
-                bulk.Setup<ProjectDm>()
-                    .ForCollection(new List<ProjectDm> { project })
+                bulk.Setup<Project>()
+                    .ForCollection(new List<Project> { project })
                     .WithTable("Project")
                     .AddColumn(x => x.Id)
                     .BulkDelete()

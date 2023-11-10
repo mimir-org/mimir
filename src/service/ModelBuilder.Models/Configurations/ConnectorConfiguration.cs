@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 namespace Mb.Models.Configurations;
 
 #region ConnectorConfiguration
-public class ConnectorConfiguration : IEntityTypeConfiguration<ConnectorDm>
+public class ConnectorConfiguration : IEntityTypeConfiguration<Connector>
 {
-    public void Configure(EntityTypeBuilder<ConnectorDm> builder)
+    public void Configure(EntityTypeBuilder<Connector> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Connector");

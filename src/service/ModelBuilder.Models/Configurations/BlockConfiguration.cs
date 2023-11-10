@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations;
 
-public class BlockConfiguration : IEntityTypeConfiguration<BlockDm>
+public class BlockConfiguration : IEntityTypeConfiguration<Block>
 {
-    public void Configure(EntityTypeBuilder<BlockDm> builder)
+    public void Configure(EntityTypeBuilder<Block> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Block");

@@ -10,7 +10,7 @@ using SqlBulkTools;
 
 namespace Mb.Data.Repositories;
 
-public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, ConnectorDm>, IConnectorRepository
+public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Connector>, IConnectorRepository
 {
     private readonly IAttributeRepository _attributeRepository;
 
@@ -19,7 +19,7 @@ public class ConnectorRepository : GenericRepository<ModelBuilderDbContext, Conn
         _attributeRepository = attributeRepository;
     }
 
-    public void AttachWithAttributes(ICollection<ConnectorDm> entities, EntityState state)
+    public void AttachWithAttributes(ICollection<Connector> entities, EntityState state)
     {
         if (entities == null)
             return;

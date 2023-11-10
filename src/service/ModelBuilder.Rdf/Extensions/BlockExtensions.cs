@@ -20,7 +20,7 @@ public static class BlockExtensions
     /// <param name="project"></param>
     /// <param name="ontologyService"></param>
     /// <param name="projectData">Record of ICollections</param>
-    public static void AssertBlock(this BlockDm block, ProjectDm project, IOntologyService ontologyService, ProjectData projectData)
+    public static void AssertBlock(this Block block, Project project, IOntologyService ontologyService, ProjectData projectData)
     {
         var parentBlock = block.GetParent(project);
 
@@ -32,10 +32,10 @@ public static class BlockExtensions
 
         ontologyService.AssertBlock(block.Id.ToString(), Resources.RDS, block.RdsString(project), true);
         ontologyService.AssertBlock(block.Id.ToString(), Resources.MimirRds, block.Rds, true);
-        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosX}", Resources.Float));
-        ontologyService.AssertBlock(block.Id.ToString().ToString(), Resources.HasPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionTree).PosY}", Resources.Float));
-        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosX}", Resources.Float));
-        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<PositionDm>(block.PositionBlock).PosY}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<Position>(block.PositionTree).PosX}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString().ToString(), Resources.HasPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<Position>(block.PositionTree).PosY}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionX, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<Position>(block.PositionBlock).PosX}", Resources.Float));
+        ontologyService.AssertBlock(block.Id.ToString(), Resources.HasBlockPositionY, ontologyService.CreateLiteralBlock($"{JsonConvert.DeserializeObject<Position>(block.PositionBlock).PosY}", Resources.Float));
 
         ontologyService.AssertBlock(block.Id.ToString(), Resources.HasAspect, $"imf:{block.Aspect}");
         ontologyService.AssertBlock(block.Id.ToString(), Resources.Version, block.Version, true);
@@ -85,7 +85,7 @@ public static class BlockExtensions
     /// <param name="block"></param>
     /// <param name="project"></param>
     /// <returns></returns>
-    public static BlockDm GetParent(this BlockDm block, ProjectDm project)
+    public static Block GetParent(this Block block, Project project)
     {
         var connector = block.Connectors.OfType<ConnectorPartOfDm>().FirstOrDefault(x => x.Direction == ConnectorDirection.Input);
         if (connector == null)
@@ -103,7 +103,7 @@ public static class BlockExtensions
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     /// TODO: This is not correct. We have more values ex. ++ etc.
-    public static string RdsString(this BlockDm block, ProjectDm project)
+    public static string RdsString(this Block block, Project project)
     {
         if (block.BlockType == BlockType.Root)
         {
@@ -131,7 +131,7 @@ public static class BlockExtensions
     /// </summary>
     /// <param name="block"></param>
     /// <returns></returns>
-    public static string StrippedRds(this BlockDm block) => Regex.Replace(block.Rds, @"\d+", string.Empty);
+    public static string StrippedRds(this Block block) => Regex.Replace(block.Rds, @"\d+", string.Empty);
 
     /// <summary>
     /// Resolve aspect block and all references

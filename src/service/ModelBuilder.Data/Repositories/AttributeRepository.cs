@@ -5,11 +5,11 @@ using SqlBulkTools;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using AttributeDm = Mb.Models.Data.AttributeDm;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Data.Repositories;
 
-public class AttributeRepository : GenericRepository<ModelBuilderDbContext, AttributeDm>, IAttributeRepository
+public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attribute>, IAttributeRepository
 {
     public AttributeRepository(ModelBuilderDbContext dbContext) : base(dbContext)
     {
@@ -21,12 +21,12 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be upserted</param>
-    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
     {
         if (attributes == null || !attributes.Any())
             return;
 
-        bulk.Setup<AttributeDm>()
+        bulk.Setup<Attribute>()
             .ForCollection(attributes)
             .WithTable("Attribute")
             .AddColumn(x => x.Id)
@@ -50,12 +50,12 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be deleted</param>
-    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
     {
         if (attributes == null || !attributes.Any())
             return;
 
-        bulk.Setup<AttributeDm>()
+        bulk.Setup<Attribute>()
             .ForCollection(attributes)
             .WithTable("Attribute")
             .AddColumn(x => x.Id)
@@ -70,12 +70,12 @@ public class AttributeRepository : GenericRepository<ModelBuilderDbContext, Attr
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be inserted</param>
-    public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes)
+    public void BulkInsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
     {
         if (attributes == null || !attributes.Any())
             return;
 
-        bulk.Setup<AttributeDm>()
+        bulk.Setup<Attribute>()
             .ForCollection(attributes)
             .WithTable("Attribute")
             .AddColumn(x => x.Id)

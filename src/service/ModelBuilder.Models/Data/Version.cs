@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Data;
 
-public class VersionDm
+public class Version
 {
     [Required]
     public Guid Id { get; set; }

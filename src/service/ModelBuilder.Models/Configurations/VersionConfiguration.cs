@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations;
 
-public class VersionConfiguration : IEntityTypeConfiguration<VersionDm>
+public class VersionConfiguration : IEntityTypeConfiguration<Version>
 {
-    public void Configure(EntityTypeBuilder<VersionDm> builder)
+    public void Configure(EntityTypeBuilder<Version> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Version");

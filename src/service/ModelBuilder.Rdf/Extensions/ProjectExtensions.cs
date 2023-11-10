@@ -16,7 +16,7 @@ public static class ProjectExtensions
     /// <param name="project">Extended project</param>
     /// <param name="ontologyService">Ontology service</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-    public static void AssertGraph(this ProjectDm project, IOntologyService ontologyService)
+    public static void AssertGraph(this Project project, IOntologyService ontologyService)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");

@@ -56,7 +56,7 @@ public class CooperateService : ICooperateService
         await _webSocketRepository.SendProjectVersionData(version, workerStatus);
     }
 
-    public Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> blockMap, Guid projectId)
+    public Task SendBlockUpdates(IReadOnlyCollection<(Block block, WorkerStatus workerStatus)> blockMap, Guid projectId)
     {
         foreach (var tuple in blockMap)
         {
@@ -66,7 +66,7 @@ public class CooperateService : ICooperateService
         return Task.CompletedTask;
     }
 
-    public Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, Guid projectId)
+    public Task SendConnectionUpdates(IReadOnlyCollection<(Connection connection, WorkerStatus workerStatus)> connectionMap, Guid projectId)
     {
         foreach (var tuple in connectionMap)
         {
@@ -99,7 +99,7 @@ public class CooperateService : ICooperateService
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendBlockUpdates(List<BlockDm> blocks, WorkerStatus workerStatus, Guid projectId)
+    private Task SendBlockUpdates(List<Block> blocks, WorkerStatus workerStatus, Guid projectId)
     {
         if (blocks == null || projectId == Guid.Empty)
             return Task.CompletedTask;
@@ -119,7 +119,7 @@ public class CooperateService : ICooperateService
     /// <param name="workerStatus"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private Task SendConnectionUpdates(List<ConnectionDm> connections, WorkerStatus workerStatus, Guid projectId)
+    private Task SendConnectionUpdates(List<Connection> connections, WorkerStatus workerStatus, Guid projectId)
     {
         if (connections == null || projectId == Guid.Empty)
             return Task.CompletedTask;

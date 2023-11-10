@@ -10,7 +10,7 @@ public class BlockProfile : Profile
 {
     public BlockProfile()
     {
-        CreateMap<BlockAm, BlockDm>()
+        CreateMap<BlockAm, Block>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -37,7 +37,7 @@ public class BlockProfile : Profile
             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
-        CreateMap<BlockDm, BlockCm>()
+        CreateMap<Block, BlockCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -64,7 +64,7 @@ public class BlockProfile : Profile
             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
-        CreateMap<BlockDm, BlockAm>()
+        CreateMap<Block, BlockAm>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

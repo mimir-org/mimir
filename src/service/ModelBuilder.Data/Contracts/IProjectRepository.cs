@@ -9,21 +9,21 @@ using Mb.Models.Records;
 
 namespace Mb.Data.Contracts;
 
-public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, ProjectDm>
+public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, Project>
 {
     /// <summary>
     /// Get complete project
     /// </summary>
     /// <param name="id">Project id</param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetAsyncComplete(Guid? id);
+    Task<Project> GetAsyncComplete(Guid? id);
 
     /// <summary>
     /// Get complete project async not read from cache
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Complete project</returns>
-    Task<ProjectDm> GetProjectAsync(Guid? id);
+    Task<Project> GetProjectAsync(Guid? id);
 
     /// <summary>
     /// Get project list
@@ -39,7 +39,7 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// </summary>
     /// <param name="isSubProject">Get sub-projects or projects</param>
     /// <returns>A list of project version information</returns>
-    Task<List<VersionDataDm>> GetProjectVersions(bool isSubProject);
+    Task<List<VersionData>> GetProjectVersions(bool isSubProject);
 
     /// <summary>
     /// Update project
@@ -48,7 +48,7 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// <param name="updated"></param>
     /// <param name="data"></param>
     /// <returns>A project update task</returns>
-    Task UpdateProject(ProjectDm original, ProjectDm updated, ProjectEditData data);
+    Task UpdateProject(Project original, Project updated, ProjectEditData data);
 
     /// <summary>
     /// Create a project
@@ -56,7 +56,7 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// <param name="project">The project that should be created</param>
     /// <param name="data">Project data</param>
     /// <returns>A project create task</returns>
-    Task CreateProject(ProjectDm project, ProjectData data);
+    Task CreateProject(Project project, ProjectData data);
 
     /// <summary>
     /// Delete a project
@@ -64,5 +64,5 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// <param name="project">The project that should be deleted</param>
     /// <param name="data">Project data</param>
     /// <returns>A project delete task</returns>
-    Task DeleteProject(ProjectDm project, ProjectData data);
+    Task DeleteProject(Project project, ProjectData data);
 }

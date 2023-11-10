@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Contracts;
 
-public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContext, ConnectionDm>
+public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContext, Connection>
 {
-    IEnumerable<(ConnectionDm connection, WorkerStatus status)> UpdateInsert(ICollection<ConnectionDm> original, ProjectDm project,
+    IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, Project project,
         string invokedByDomain);
 
-    Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete, string projectId,
+    Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete, string projectId,
         string invokedByDomain);
 
     void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals);
@@ -33,5 +33,5 @@ public interface IConnectionRepository : IGenericRepository<ModelBuilderDbContex
     /// <param name="connectionId">The connection you want data from</param>
     /// <returns>A collection connected identity data</returns>
     /// <remarks>Get det connection identifier and all connected attributes from terminals</remarks>
-    Task<List<ObjectIdentityDm>> GetConnectionConnectedData(string connectionId);
+    Task<List<ObjectIdentity>> GetConnectionConnectedData(string connectionId);
 }

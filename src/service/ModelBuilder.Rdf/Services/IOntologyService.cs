@@ -8,7 +8,7 @@ namespace ModelBuilder.Rdf.Services;
 [Scope]
 public interface IOntologyService
 {
-    void BuildProject(ProjectDm project);
+    void BuildProject(Project project);
     ProjectAm BuildProject(IGraph rdf);
     byte[] GetBytes<T>() where T : IRdfWriter, new();
     void SetBaseUri(Uri uri);

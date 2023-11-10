@@ -5,7 +5,7 @@ using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
-using AttributeDm = Mb.Models.Data.AttributeDm;
+using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -20,7 +20,7 @@ public static class AttributeExtensions
     /// <param name="attribute">Attribute that should be asserted</param>
     /// <param name="parentIri">The ID of the parent</param>
     /// <param name="ontologyService">Ontology Service</param>
-    public static void AssertAttribute(this AttributeDm attribute, string parentIri, IOntologyService ontologyService)
+    public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
     {
         #region None Mimir specific data
 
@@ -58,7 +58,7 @@ public static class AttributeExtensions
     /// <param name="attribute">Attribute that should have asserted value</param>
     /// <param name="ontologyService">Ontology Service</param>
     /// <param name="projectData">Record of ICollections</param>
-    public static void AssertAttributeValue(this AttributeDm attribute, IOntologyService ontologyService, ProjectData projectData)
+    public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
     {
         if (string.IsNullOrEmpty(attribute?.Value))
             return;
@@ -82,7 +82,7 @@ public static class AttributeExtensions
     /// <param name="attribute">Attribute selected unit</param>
     /// <param name="projectData">Record of ICollections</param>
     /// <returns>The selected unit, if not it returns null</returns>
-    public static UnitLibCm GetSelectedUnit(this AttributeDm attribute, ProjectData projectData)
+    public static UnitLibCm GetSelectedUnit(this Attribute attribute, ProjectData projectData)
     {
         if (string.IsNullOrEmpty(attribute.UnitSelected) || !projectData.Units.Any())
             return null;
@@ -95,7 +95,7 @@ public static class AttributeExtensions
     /// </summary>
     /// <param name="attribute"></param>
     /// <returns>A list of allowed units</returns>
-    public static List<UnitLibCm> GetAllowedUnits(this AttributeDm attribute)
+    public static List<UnitLibCm> GetAllowedUnits(this Attribute attribute)
     {
         return string.IsNullOrWhiteSpace(attribute.Units) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.Units, DefaultSettings.SerializerSettingsNoTypeNameHandling);
     }
@@ -105,7 +105,7 @@ public static class AttributeExtensions
     /// </summary>
     /// <param name="attribute"></param>
     /// <returns>A datum iri</returns>
-    public static string IriDatum(this AttributeDm attribute)
+    public static string IriDatum(this Attribute attribute)
     {
         return attribute.Id.ToString().IriDatum();
     }
@@ -115,10 +115,10 @@ public static class AttributeExtensions
     /// </summary>
     /// <param name="attribute"></param>
     /// <returns>A AttributeDatumObject record</returns>
-    public static AttributeDatumObject AttributeDatumObject(this AttributeDm attribute)
+    public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
     {
         var rootIri = attribute.Id.ToString().RootIri();
-        var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<QualifierDm>>(attribute.Qualifiers);
+        var attributeQualifiers = JsonConvert.DeserializeObject<ICollection<Qualifier>>(attribute.Qualifiers);
         return new AttributeDatumObject
         {
             SpecifiedScope = $"{rootIri}/scope/{HttpUtility.UrlEncode(attributeQualifiers.FirstOrDefault(x => x.Name.ToLower().Equals("scope"))?.ToString())}",

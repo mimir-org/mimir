@@ -20,7 +20,7 @@ public static class ConnectorExtensions
     /// <param name="connection">Connected Mimir connection</param>
     /// <param name="flowDirection">Default flow direction. Used to define the default flow direction when connector is bi-directional</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public static void AssertConnector(this ConnectorDm connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, ConnectionDm connection, DefaultFlowDirection flowDirection)
+    public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, Connection connection, DefaultFlowDirection flowDirection)
     {
         ontologyService.AssertBlock(connector.Id.ToString(), Resources.Domain, connector.Id.ToString().ResolveDomain(), true);
         switch (connector)
@@ -92,7 +92,7 @@ public static class ConnectorExtensions
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
-    public static bool IsPartOf(this ConnectorDm c)
+    public static bool IsPartOf(this Connector c)
     {
         return c is ConnectorPartOfDm;
     }
@@ -103,7 +103,7 @@ public static class ConnectorExtensions
     /// <param name="c"></param>
     /// <param name="project"></param>
     /// <returns></returns>
-    public static bool IsConnected(this ConnectorDm c, ProjectDm project)
+    public static bool IsConnected(this Connector c, Project project)
     {
         return project.Connections.Any(connection => connection.FromConnector == c.Id.ToString() || connection.ToConnector == c.Id.ToString());
     }

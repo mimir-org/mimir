@@ -11,8 +11,8 @@ namespace Mb.Services.Contracts;
 public interface ICooperateService
 {
     Task SendDataUpdates(ProjectEditData editData, Guid projectId, string projectVersion);
-    Task SendBlockUpdates(IReadOnlyCollection<(BlockDm block, WorkerStatus workerStatus)> nodeMap, Guid projectId);
-    Task SendConnectionUpdates(IReadOnlyCollection<(ConnectionDm connection, WorkerStatus workerStatus)> connectionMap, Guid projectId);
+    Task SendBlockUpdates(IReadOnlyCollection<(Block block, WorkerStatus workerStatus)> nodeMap, Guid projectId);
+    Task SendConnectionUpdates(IReadOnlyCollection<(Connection connection, WorkerStatus workerStatus)> connectionMap, Guid projectId);
     Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, Guid projectId);
     Task SendRefreshLibData();
 }

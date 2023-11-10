@@ -27,13 +27,13 @@ public class WebSocketRepository : IWebSocketRepository
         await _hubContext.Clients.Group(version.ProjectId.ToString()).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
     }
 
-    public async Task SendBlockData(BlockDm block, Guid projectId, WorkerStatus workerStatus)
+    public async Task SendBlockData(Block block, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(block, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveBlockData, workerStatus, data);
     }
 
-    public async Task SendConnectionData(ConnectionDm connection, Guid projectId, WorkerStatus workerStatus)
+    public async Task SendConnectionData(Connection connection, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(connection, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);

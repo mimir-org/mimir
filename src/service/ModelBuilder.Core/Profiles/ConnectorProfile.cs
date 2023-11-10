@@ -11,7 +11,7 @@ public class ConnectorProfile : Profile
     {
         #region Connector
 
-        CreateMap<ConnectorAm, ConnectorDm>()
+        CreateMap<ConnectorAm, Connector>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
@@ -19,7 +19,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
             .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
-        CreateMap<ConnectorDm, ConnectorCm>()
+        CreateMap<Connector, ConnectorCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
@@ -28,7 +28,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block))
             .ForMember(dest => dest.Domain, opt => opt.Ignore());
 
-        CreateMap<ConnectorDm, ConnectorAm>()
+        CreateMap<Connector, ConnectorAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
@@ -47,7 +47,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorAm, ConnectorDm>();
+            .IncludeBase<ConnectorAm, Connector>();
 
         CreateMap<ConnectorTerminalDm, ConnectorTerminalCm>()
             .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
@@ -55,7 +55,7 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorDm, ConnectorCm>();
+            .IncludeBase<Connector, ConnectorCm>();
 
         CreateMap<ConnectorTerminalDm, ConnectorTerminalAm>()
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
@@ -64,20 +64,20 @@ public class ConnectorProfile : Profile
             .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorDm, ConnectorAm>();
+            .IncludeBase<Connector, ConnectorAm>();
 
         #endregion ConnectorTerminal
 
         #region ConnectorRelation
 
         CreateMap<ConnectorRelationAm, ConnectorRelationDm>()
-            .IncludeBase<ConnectorAm, ConnectorDm>();
+            .IncludeBase<ConnectorAm, Connector>();
 
         CreateMap<ConnectorRelationDm, ConnectorRelationCm>()
-            .IncludeBase<ConnectorDm, ConnectorCm>();
+            .IncludeBase<Connector, ConnectorCm>();
 
         CreateMap<ConnectorRelationDm, ConnectorRelationAm>()
-            .IncludeBase<ConnectorDm, ConnectorAm>();
+            .IncludeBase<Connector, ConnectorAm>();
 
         #endregion ConnectorRelation
 

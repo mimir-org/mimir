@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions;
 // ReSharper disable once IdentifierTypo
 public static class VersionableExtensions
 {
-    public static bool HasMajorChanges(this BlockDm block, ProjectEditData editData)
+    public static bool HasMajorChanges(this Block block, ProjectEditData editData)
     {
         if (editData == null)
             return false;
@@ -21,7 +21,7 @@ public static class VersionableExtensions
         return false;
     }
 
-    public static bool HasMinorChanges(this BlockDm block, ProjectEditData editData, BlockDm other)
+    public static bool HasMinorChanges(this Block block, ProjectEditData editData, Block other)
     {
         if (editData == null)
             return false;
@@ -43,7 +43,7 @@ public static class VersionableExtensions
         return false;
     }
 
-    public static bool HasMajorChanges(this ProjectDm project, ProjectEditData editData)
+    public static bool HasMajorChanges(this Project project, ProjectEditData editData)
     {
         if (editData == null)
             return false;
@@ -63,7 +63,7 @@ public static class VersionableExtensions
         return false;
     }
 
-    public static bool HasMinorChanges(this ProjectDm project, ProjectEditData editData, ProjectDm other)
+    public static bool HasMinorChanges(this Project project, ProjectEditData editData, Project other)
     {
         if (editData == null)
             return false;

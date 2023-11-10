@@ -13,40 +13,36 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Mb.Models.Data;
 
 [Serializable]
-public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
+public class Block : IEquatable<Block>
 {
-    public Guid Id { get; set; }
-    public string Version { get; set; }
+    public Guid Id { get; set; }    
     public string Name { get; set; }
-    public string Label { get; set; }
-    public string Description { get; set; }
+        public string Description { get; set; }
     public Aspect Aspect { get; set; }
     public BlockType BlockType { get; set; }
-    public Guid Project { get; set; }
-    public Guid MainProject { get; set; }
-    public Guid LibraryType { get; set; }
+    public Guid Project { get; set; }    
+    public Guid BlockTypeIri { get; set; }
     public string PositionTree { get; set; }
-    public string PositionBlock { get; set; }
-    public string ReferenceType { get; set; }
+    public string PositionBlock { get; set; }    
     public string CreatedBy { get; set; }
     public DateTime Created { get; set; }
     public string UpdatedBy { get; set; }
-    public DateTime? Updated { get; set; }
-    public string Rds { get; set; }
-    public string Symbol { get; set; }
-    public string Purpose { get; set; }
+    public DateTime? Updated { get; set; }    
+    public string SymbolId { get; set; }
+    public string PurposeId { get; set; }
     public bool IsLocked { get; set; }
     public string IsLockedStatusBy { get; set; }
     public DateTime? IsLockedStatusDate { get; set; }
+    public string Notation { get; set; }
 
     [NotMapped]
-    public List<ConnectorDm> Connectors { get; set; } = new();
+    public List<Connector> Connectors { get; set; } = new();
     [NotMapped]
-    public List<AttributeDm> Attributes { get; set; } = new();
+    public List<Attribute> Attributes { get; set; } = new();
 
     #region IEquatable
 
-    public bool Equals(BlockDm other)
+    public bool Equals(Block other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -76,7 +72,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((BlockDm) obj);
+        return obj.GetType() == GetType() && Equals((Block) obj);
     }
 
     public override int GetHashCode()
@@ -109,7 +105,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
 
     #region IVersionable
 
-    public Validation HasIllegalChanges(BlockDm other)
+    public Validation HasIllegalChanges(Block other)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));
@@ -118,7 +114,7 @@ public class BlockDm : IEquatable<BlockDm>, IVersionable<BlockDm>
         return validation;
     }
 
-    public VersionStatus CalculateVersionStatus(BlockDm other, ProjectEditData editData)
+    public VersionStatus CalculateVersionStatus(Block other, ProjectEditData editData)
     {
         if (other == null)
             throw new ArgumentNullException(nameof(other));

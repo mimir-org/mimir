@@ -45,7 +45,7 @@ public class SubProjectController : ControllerBase
     /// <param name="subProjectAm"></param>
     /// <returns></returns>
     [HttpPost("")]
-    [ProducesResponseType(typeof(ProjectDm), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -115,7 +115,7 @@ public class SubProjectController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ProjectDm), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

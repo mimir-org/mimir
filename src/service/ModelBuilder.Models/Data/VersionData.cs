@@ -2,7 +2,7 @@ using System;
 
 namespace Mb.Models.Data;
 
-public class VersionDataDm
+public class VersionData
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

@@ -10,7 +10,7 @@ public class Module
     /// <summary>
     /// Description of the module
     /// </summary>
-    public ModuleDescriptionDm ModuleDescription { get; set; }
+    public ModuleDescription ModuleDescription { get; set; }
 
     /// <summary>
     /// Module instance

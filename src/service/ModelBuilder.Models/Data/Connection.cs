@@ -8,7 +8,7 @@ namespace Mb.Models.Data;
 #region ConnectionDm
 
 [Serializable]
-public class ConnectionDm : IEquatable<ConnectionDm>
+public class Connection : IEquatable<Connection>
 {
     public Guid Id { get; set; }
     public string FromConnector { get; set; }
@@ -19,7 +19,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
     [NotMapped]
     public string Handles { get; set; }
 
-    public bool Equals(ConnectionDm other)
+    public bool Equals(Connection other)
     {
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -35,7 +35,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
     {
         if (obj is null) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj.GetType() == GetType() && Equals((ConnectionDm) obj);
+        return obj.GetType() == GetType() && Equals((Connection) obj);
     }
 
     public override int GetHashCode()
@@ -55,7 +55,7 @@ public class ConnectionDm : IEquatable<ConnectionDm>
 
 #region ConnectionTerminalDm
 
-public class ConnectionTerminalDm : ConnectionDm, IEquatable<ConnectionTerminalDm>
+public class ConnectionTerminalDm : Connection, IEquatable<ConnectionTerminalDm>
 {
     public string TerminalType { get; set; }
     public string TerminalParentType { get; set; }
@@ -95,7 +95,7 @@ public class ConnectionTerminalDm : ConnectionDm, IEquatable<ConnectionTerminalD
 
 #region ConnectionRelationDm
 
-public abstract class ConnectionRelationDm : ConnectionDm, IEquatable<ConnectionRelationDm>
+public abstract class ConnectionRelationDm : Connection, IEquatable<ConnectionRelationDm>
 {
     public bool Equals(ConnectionRelationDm other)
     {

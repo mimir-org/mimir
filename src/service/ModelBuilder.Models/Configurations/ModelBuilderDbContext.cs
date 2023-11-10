@@ -1,17 +1,17 @@
 using System;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using AttributeDm = Mb.Models.Data.AttributeDm;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Configurations;
 
 public class ModelBuilderDbContext : DbContext
 {
-    public virtual DbSet<ProjectDm> Projects { get; set; }
-    public virtual DbSet<BlockDm> Blocks { get; set; }
-    public virtual DbSet<ConnectionDm> Connections { get; set; }
-    public virtual DbSet<AttributeDm> Attributes { get; set; }
-    public virtual DbSet<ConnectorDm> Connectors { get; set; }
+    public virtual DbSet<Project> Projects { get; set; }
+    public virtual DbSet<Block> Blocks { get; set; }
+    public virtual DbSet<Connection> Connections { get; set; }
+    public virtual DbSet<Attribute> Attributes { get; set; }
+    public virtual DbSet<Connector> Connectors { get; set; }
 
     public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
     {

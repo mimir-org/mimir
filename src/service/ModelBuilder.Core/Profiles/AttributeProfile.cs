@@ -10,7 +10,7 @@ public class AttributeProfile : Profile
 {
     public AttributeProfile()
     {
-        CreateMap<AttributeAm, AttributeDm>()
+        CreateMap<AttributeAm, Attribute>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
@@ -21,7 +21,7 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
             .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
-        CreateMap<AttributeDm, AttributeCm>()
+        CreateMap<Attribute, AttributeCm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
@@ -32,7 +32,7 @@ public class AttributeProfile : Profile
             .ForMember(dest => dest.ConnectorTerminal, opt => opt.MapFrom(src => src.ConnectorTerminal))
             .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
 
-        CreateMap<AttributeDm, AttributeAm>()
+        CreateMap<Attribute, AttributeAm>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))

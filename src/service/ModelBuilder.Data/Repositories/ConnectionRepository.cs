@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Repositories;
 
-public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, ConnectionDm>, IConnectionRepository
+public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Connection>, IConnectionRepository
 {
     private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
@@ -21,7 +21,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
         _modelBuilderProcRepository = modelBuilderProcRepository;
     }
 
-    public IEnumerable<(ConnectionDm connection, WorkerStatus status)> UpdateInsert(ICollection<ConnectionDm> original, ProjectDm project,
+    public IEnumerable<(Connection connection, WorkerStatus status)> UpdateInsert(ICollection<Connection> original, Project project,
         string invokedByDomain)
     {
         if (project?.Connections == null || !project.Connections.Any() || original == null)
@@ -44,13 +44,13 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
         }
     }
 
-    public Task<IEnumerable<(ConnectionDm connection, WorkerStatus status)>> DeleteConnections(ICollection<ConnectionDm> delete,
+    public Task<IEnumerable<(Connection connection, WorkerStatus status)>> DeleteConnections(ICollection<Connection> delete,
         string projectId, string invokedByDomain)
     {
-        var returnValues = new List<(ConnectionDm connection, WorkerStatus status)>();
+        var returnValues = new List<(Connection connection, WorkerStatus status)>();
 
         if (delete == null || projectId == null || !delete.Any())
-            return Task.FromResult<IEnumerable<(ConnectionDm connection, WorkerStatus status)>>(returnValues);
+            return Task.FromResult<IEnumerable<(Connection connection, WorkerStatus status)>>(returnValues);
 
         foreach (var connection in delete)
         {
@@ -59,7 +59,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
             returnValues.Add((connection, WorkerStatus.Delete));
         }
 
-        return Task.FromResult<IEnumerable<(ConnectionDm connection, WorkerStatus status)>>(returnValues);
+        return Task.FromResult<IEnumerable<(Connection connection, WorkerStatus status)>>(returnValues);
     }
 
     public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectionTerminalDm> connectionTerminals)
@@ -212,7 +212,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
     /// <param name="connectionId">The connection you want data from</param>
     /// <returns>A collection connected identity data</returns>
     /// <remarks>Get det connection identifier and all connected attributes from terminals</remarks>
-    public async Task<List<ObjectIdentityDm>> GetConnectionConnectedData(string connectionId)
+    public async Task<List<ObjectIdentity>> GetConnectionConnectedData(string connectionId)
     {
         if (string.IsNullOrWhiteSpace(connectionId))
             return null;
@@ -223,7 +223,7 @@ public class ConnectionRepository : GenericRepository<ModelBuilderDbContext, Con
         };
 
         var attributes =
-            await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentityDm>("ConnectionLockData", procParams);
+            await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("ConnectionLockData", procParams);
         return attributes;
     }
 }

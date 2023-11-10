@@ -43,7 +43,7 @@ public class OntologyService : IOntologyService
     /// </summary>
     /// <param name="project"></param>
     /// <exception cref="ModelBuilderModuleException"></exception>
-    public void BuildProject(ProjectDm project)
+    public void BuildProject(Project project)
     {
         if (project == null)
             throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
@@ -379,7 +379,7 @@ public class OntologyService : IOntologyService
     /// </summary>
     /// <param name="project"></param>
     /// <param name="projectData">Record of ICollections</param>
-    private void BuildAspectBlocks(ProjectDm project, ProjectData projectData)
+    private void BuildAspectBlocks(Project project, ProjectData projectData)
     {
         if (project.Blocks == null || !project.Blocks.Any())
             return;
@@ -412,7 +412,7 @@ public class OntologyService : IOntologyService
     /// </summary>
     /// <param name="project"></param>
     /// <param name="projectData">Record of ICollections</param>
-    private void BuildConnections(ProjectDm project, ProjectData projectData)
+    private void BuildConnections(Project project, ProjectData projectData)
     {
         if (project.Connections == null || !project.Connections.Any())
             return;

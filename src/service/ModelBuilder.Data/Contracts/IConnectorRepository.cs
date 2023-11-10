@@ -8,9 +8,9 @@ using SqlBulkTools;
 
 namespace Mb.Data.Contracts;
 
-public interface IConnectorRepository : IGenericRepository<ModelBuilderDbContext, ConnectorDm>
+public interface IConnectorRepository : IGenericRepository<ModelBuilderDbContext, Connector>
 {
-    void AttachWithAttributes(ICollection<ConnectorDm> entities, EntityState state);
+    void AttachWithAttributes(ICollection<Connector> entities, EntityState state);
 
     void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminalDm> connectorTerminals);
     void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOfDm> connectorPartOf);

@@ -232,7 +232,7 @@ public class ProjectService : IProjectService
             _ = _remapService.Clone(projectAm);
 
             // Map data
-            var newSubProject = _mapper.Map<ProjectDm>(projectAm);
+            var newSubProject = _mapper.Map<Project>(projectAm);
 
             // Deconstruct project
             var projectData = new ProjectData();
@@ -346,7 +346,7 @@ public class ProjectService : IProjectService
         projectAm.SubProject = true;
 
         _ = _remapService.Clone(projectAm);
-        var newSubProject = _mapper.Map<ProjectDm>(projectAm);
+        var newSubProject = _mapper.Map<Project>(projectAm);
         var projectData = new ProjectData();
         await _remapService.DeConstruct(newSubProject, projectData);
         await _projectRepository.CreateProject(newSubProject, projectData);
@@ -358,7 +358,7 @@ public class ProjectService : IProjectService
         var rootBlocks = updatedProject.Blocks.Where(x => x.BlockType == BlockType.Root).Select(x => x.Id).ToList();
 
         // Position block
-        var rootOrigin = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<PositionDm>(x.PositionTree).PosY);
+        var rootOrigin = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<Position>(x.PositionTree).PosY);
 
         // Set block and connections project id to merge project, and calculate position
         updatedProject.Blocks = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).Select(x =>
@@ -371,8 +371,8 @@ public class ProjectService : IProjectService
         // Set root origin to center
         if (rootOrigin != null)
         {
-            JsonConvert.DeserializeObject<PositionDm>(rootOrigin.PositionTree).PosX = (int) prepare.DropPositionX;
-            JsonConvert.DeserializeObject<PositionDm>(rootOrigin.PositionTree).PosY = (int) prepare.DropPositionY;
+            JsonConvert.DeserializeObject<Position>(rootOrigin.PositionTree).PosX = (int) prepare.DropPositionX;
+            JsonConvert.DeserializeObject<Position>(rootOrigin.PositionTree).PosY = (int) prepare.DropPositionY;
         }
 
         // TODO: Resolve this
@@ -415,7 +415,7 @@ public class ProjectService : IProjectService
                 item.Project = projectId;
             }
 
-            var projectDm = _mapper.Map<ProjectDm>(projectAm);
+            var projectDm = _mapper.Map<Project>(projectAm);
 
             projectDm.Version = "1.0";
             projectDm.CreatedBy = _contextAccessor.GetName();
@@ -454,14 +454,14 @@ public class ProjectService : IProjectService
     /// <param name="updatedAm"></param>
     /// <param name="originalDm"></param>
     /// <returns></returns>
-    private async Task<Guid> UpdateProject(ProjectAm updatedAm, ProjectDm originalDm)
+    private async Task<Guid> UpdateProject(ProjectAm updatedAm, Project originalDm)
     {
             if (updatedAm == null || originalDm == null)
                 throw new MimirorgNullReferenceException("updated or original project is null");
 
-            var updatedProject = _mapper.Map<ProjectDm>(updatedAm);
+            var updatedProject = _mapper.Map<Project>(updatedAm);
 
-            updatedProject.Blocks = _mapper.Map<List<BlockDm>>(updatedAm.Blocks);
+            updatedProject.Blocks = _mapper.Map<List<Block>>(updatedAm.Blocks);
 
             // Get create edit data
             var projectEditData = await _remapService.CreateEditData(originalDm, updatedProject);
@@ -519,7 +519,7 @@ public class ProjectService : IProjectService
     /// <param name="aspect"></param>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    private BlockDm CreateInitBlock(Aspect aspect, Guid projectId)
+    private Block CreateInitBlock(Aspect aspect, Guid projectId)
     {
         if (projectId == Guid.Empty)
             throw new MimirorgNullReferenceException("projectId is null or empty");
@@ -527,7 +527,7 @@ public class ProjectService : IProjectService
         var blockId = Guid.NewGuid();
         var aspectName = aspect == Aspect.Function ? "Function" : aspect == Aspect.Product ? "Product" : "Location";
 
-        var block = new BlockDm
+        var block = new Block
         {
             Id = blockId,
             Version = "1.0",
@@ -539,7 +539,7 @@ public class ProjectService : IProjectService
             Project = projectId,
             MainProject = projectId,
             LibraryType = blockId,
-            PositionTree = JsonConvert.SerializeObject(new PositionDm
+            PositionTree = JsonConvert.SerializeObject(new Position
             {
                 PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
                 PosY = 5
@@ -555,8 +555,8 @@ public class ProjectService : IProjectService
             IsLocked = false,
             IsLockedStatusBy = null,
             IsLockedStatusDate = null,
-            Attributes = new List<AttributeDm>(),
-            Connectors = new List<ConnectorDm>
+            Attributes = new List<Models.Data.Attribute>(),
+            Connectors = new List<Connector>
             {
                 new ConnectorPartOfDm
                     {

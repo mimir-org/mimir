@@ -2,9 +2,10 @@ using System;
 
 namespace Mb.Models.Data;
 
-public class QualifierDm
+public class Unit
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public string Value { get; set; }
+    public string UnitType { get; set; }
+    public string Symbol { get; set; }
 }

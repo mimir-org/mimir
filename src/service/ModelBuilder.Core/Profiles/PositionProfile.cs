@@ -9,15 +9,15 @@ namespace Mb.Core.Profiles
     {
         public PositionProfile()
         {
-            CreateMap<PositionAm, PositionDm>()
+            CreateMap<PositionAm, Position>()
                 .ForMember(dest => dest.PosX, opt => opt.MapFrom(src => src.PosX))
                 .ForMember(dest => dest.PosY, opt => opt.MapFrom(src => src.PosY));
 
-            CreateMap<PositionDm, PositionCm>()
+            CreateMap<Position, PositionCm>()
                 .ForMember(dest => dest.PosX, opt => opt.MapFrom(src => src.PosX))
                 .ForMember(dest => dest.PosY, opt => opt.MapFrom(src => src.PosY));
 
-            CreateMap<PositionDm, PositionAm>()
+            CreateMap<Position, PositionAm>()
                 .ForMember(dest => dest.PosX, opt => opt.MapFrom(src => src.PosX))
                 .ForMember(dest => dest.PosY, opt => opt.MapFrom(src => src.PosY));
         }

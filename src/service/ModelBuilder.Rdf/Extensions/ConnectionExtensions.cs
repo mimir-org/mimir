@@ -14,7 +14,7 @@ public static class ConnectionExtensions
     /// <param name="connection">The connection to assert</param>
     /// <param name="ontologyService">Ontology Service</param>
     /// <param name="projectData">Record of ICollections</param>
-    public static void AssertConnection(this ConnectionDm connection, IOntologyService ontologyService, ProjectData projectData)
+    public static void AssertConnection(this Connection connection, IOntologyService ontologyService, ProjectData projectData)
     {
         // TODO: Resolve this later
         //if (connection.FromConnectorObject is ConnectorRelation and not ConnectorPartOf)

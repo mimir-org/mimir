@@ -15,7 +15,7 @@ public interface IRemapService
     /// <param name="original">Original Mimir project</param>
     /// <param name="updated">The updated Mimir project</param>
     /// <returns>Data object with information about what data should be edited</returns>
-    Task<ProjectEditData> CreateEditData(ProjectDm original, ProjectDm updated);
+    Task<ProjectEditData> CreateEditData(Project original, Project updated);
 
     /// <summary>
     /// Deconstruct a project to array of elements
@@ -23,7 +23,7 @@ public interface IRemapService
     /// <param name="project">The project to deconstruct</param>
     /// <param name="data">Project Data object to fill with data</param>
     /// <returns>A task that updates project data</returns>
-    Task DeConstruct(ProjectDm project, ProjectData data);
+    Task DeConstruct(Project project, ProjectData data);
 
     /// <summary>
     /// Remap a project

@@ -12,7 +12,7 @@ using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
-using Version = Mb.Models.Data.VersionDm;
+using Version = Mb.Models.Data.Version;
 using Mb.Models.Client;
 
 namespace Mb.Services.Services;
@@ -62,13 +62,13 @@ public class VersionService : IVersionService
     /// <param name="typeId"></param>
     /// <param name="version"></param>
     /// <returns>Project</returns>
-    public Task<ProjectDm> GetGetByVersion(Guid typeId, string version)
+    public Task<Project> GetGetByVersion(Guid typeId, string version)
     {
         var projectData = _versionRepository.GetAll().FirstOrDefault(x => x.TypeId == typeId && x.Ver == version);
         if (projectData?.Data == null)
             return null;
 
-        var project = JsonConvert.DeserializeObject<ProjectDm>(projectData.Data, DefaultSettings.SerializerSettings);
+        var project = JsonConvert.DeserializeObject<Project>(projectData.Data, DefaultSettings.SerializerSettings);
         return Task.FromResult(project);
     }
 
@@ -77,14 +77,14 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="id"></param>
     /// <returns>Project</returns>
-    public async Task<ProjectDm> GetProject(Guid id)
+    public async Task<Project> GetProject(Guid id)
     {
         var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
 
         if (data == null)
             throw new MimirorgInvalidOperationException("Version not found");
 
-        return JsonConvert.DeserializeObject<ProjectDm>(data);
+        return JsonConvert.DeserializeObject<Project>(data);
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="project"></param>
     /// <returns>VersionCm</returns>
-    public async Task<VersionCm> CreateVersion(ProjectDm project)
+    public async Task<VersionCm> CreateVersion(Project project)
     {
         if (project == null)
             throw new MimirorgInvalidOperationException("Can't save new project version. Project is null.");
@@ -103,7 +103,7 @@ public class VersionService : IVersionService
         var version = new Version
         {
             Ver = project.Version,
-            Type = nameof(ProjectDm),
+            Type = nameof(Project),
             TypeId = project.Id,
             Name = project.Name,
             Created = DateTime.Now.ToUniversalTime(),
