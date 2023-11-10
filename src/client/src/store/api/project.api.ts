@@ -16,12 +16,14 @@ export const projectApi = {
     const serializer = new TypedJSON(Project, typedJsonSetting());
     return serializer.parse(r.data);
   },
-  async createProject(project: Project): Promise<string> {
-    const r = await client.post(_basePath, project);
-    return r.data;
+  async createProject(project: Project): Promise<Project> {
+    const r = await client.post<Project>(_basePath, project);
+    const serializer = new TypedJSON(Project, typedJsonSetting());
+    return serializer.parse(r.data);
   },
-  async updateProject(project: Project): Promise<string>  {
+  async updateProject(project: Project): Promise<Project>  {
     const r = await client.put(_basePath, project);
-    return r.statusText;
+    const serializer = new TypedJSON(Project, typedJsonSetting());
+    return serializer.parse(r.data);
   }
 };

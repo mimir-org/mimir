@@ -8,8 +8,8 @@ import {
   saveProjectDbFinished,
   saveProjectToDbAction,
   updateProjectDbAction,
-  updateProjectInDb,
   updateProjectInDbFinished,
+  setApiError,
 } from "store/reducers/projectReducer";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
@@ -34,19 +34,18 @@ export function* getProjects(action: PayloadAction<FetchProjectsAction>) {
 
 export function* saveProject(action: PayloadAction<saveProjectToDbAction>) {
   try{
-    const response: string = yield call(projectApi.createProject, action.payload.project);
-    yield put(saveProjectDbFinished({guid: response}));
-  }
-  catch (error){
-    console.log(error);
+    const response: Project = yield call(projectApi.createProject, action.payload.project);
+    yield put(saveProjectDbFinished({project: response}));
+  }catch (error){
+    yield put(setApiError({error}))
   }
 }
 
 export function* updateProject(action: PayloadAction<updateProjectDbAction>) {
   try{
-    const response: string = yield call(projectApi.updateProject, action.payload.project);
-    yield put(updateProjectInDbFinished({status: response}));
+    const response: Project = yield call(projectApi.updateProject, action.payload.project);
+    yield put(updateProjectInDbFinished({project: response}));
   }catch (error) {
-    console.log(error);
+    yield put(setApiError({error}))
   }
 }

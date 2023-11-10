@@ -1,5 +1,6 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
 import {Project} from "lib";
+import {AxiosError} from "axios";
 
 // State definition
 /**
@@ -16,7 +17,7 @@ export interface ProjectState {
     isLocking: boolean;
     project: Project | null;
     projectList: Project[];
-    apiErrors: string[]
+    apiError: AxiosError[];
 }
 
 // Payload action
@@ -44,16 +45,12 @@ export interface saveProjectToDbAction {
     project: Project;
 }
 
-export interface saveProjectDbFinishedAction {
-    guid: string;
-}
-
 export interface updateProjectDbAction {
     project: Project;
 }
 
-export interface updateProjectDbFinishedAction {
-    status: string;
+export interface apiErrorAction {
+    error: AxiosError;
 }
 
 // Initial state
@@ -63,7 +60,7 @@ const initState: ProjectState = {
     isLocking: false,
     project: null,
     projectList: [],
-    apiErrors: []
+    apiError: [],
 };
 
 function clone<T>(instance: T): T {
@@ -101,18 +98,21 @@ export const projectSlice = createSlice({
             state.project = clone(action.payload.project);
         },
         saveProjectInDb: (state, action: PayloadAction<saveProjectToDbAction>) => {
-            console.log("saveProjDb \n" + action.payload.project);
+            state.creating = true;
         },
-        saveProjectDbFinished: (state, action: PayloadAction<saveProjectDbFinishedAction>) => {
-            state.project.id = action.payload.guid;
+        saveProjectDbFinished: (state, action: PayloadAction<saveProjectToDbAction>) => {
+            state.project.id = action.payload.project.id;
+            state.creating = false;
         },
         updateProjectInDb: (state, action: PayloadAction<updateProjectDbAction>) => {
-            console.log("updateProjDB: \n" + action.payload.project);
+            state.creating = true;
         },
-        updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbFinishedAction>) => {
-            console.log(action.payload.status);
+        updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbAction>) => {
+            state.creating = false;
+        },
+        setApiError: (state, action: PayloadAction<apiErrorAction>) => {
+            state.apiError.push(action.payload.error);
         }
-
     },
 });
 
@@ -126,7 +126,8 @@ export const {
     saveProjectInDb,
     saveProjectDbFinished,
     updateProjectInDb,
-    updateProjectInDbFinished
+    updateProjectInDbFinished,
+    setApiError
 } =
     projectSlice.actions;
 export default projectSlice.reducer;
