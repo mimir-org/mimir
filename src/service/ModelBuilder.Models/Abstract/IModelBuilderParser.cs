@@ -10,5 +10,5 @@ public interface IModelBuilderParser : IModuleInterface
     FileFormat GetFileFormat();
     Task<byte[]> SerializeProject(Project project);
     Task<Project> DeserializeProject(byte[] data);
-    Task<ProjectAm> DeserializeProjectAm(byte[] data);
+    Task<ProjectRequest> DeserializeProjectAm(byte[] data);
 }

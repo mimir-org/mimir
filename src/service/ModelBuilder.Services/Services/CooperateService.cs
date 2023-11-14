@@ -51,7 +51,7 @@ public class CooperateService : ICooperateService
         //));
     }
 
-    public async Task SendProjectVersionUpdate(ProjectVersionCm version, WorkerStatus workerStatus)
+    public async Task SendProjectVersionUpdate(ProjectVersionResponse version, WorkerStatus workerStatus)
     {
         await _webSocketRepository.SendProjectVersionData(version, workerStatus);
     }
@@ -76,7 +76,7 @@ public class CooperateService : ICooperateService
         return Task.CompletedTask;
     }
 
-    public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, Guid projectId)
+    public Task SendLockUpdates(List<LockResponse> lockCms, WorkerStatus workerStatus, Guid projectId)
     {
         _webSocketRepository.SendLockData(lockCms, projectId, workerStatus);
 

@@ -12,7 +12,8 @@ public class Attribute
     public string Units { get; set; }
     public string Qualifiers { get; set; }
     public string Terminal { get; set; }
-    public Guid? Block { get; set; }
+    public Guid? BlockId { get; set; }
+    public Guid? AttributePredicateId { get; set; }
 
 
 }

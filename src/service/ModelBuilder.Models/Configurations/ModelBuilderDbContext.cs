@@ -12,6 +12,7 @@ public class ModelBuilderDbContext : DbContext
     public virtual DbSet<Connection> Connections { get; set; }
     public virtual DbSet<Attribute> Attributes { get; set; }
     public virtual DbSet<Connector> Connectors { get; set; }
+    public virtual DbSet<Terminal> Terminals { get; set; }
 
     public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
     {
@@ -31,11 +32,11 @@ public class ModelBuilderDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ConnectionHasLocationConfiguration());
 
         modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorRelationConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorPartOfConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorFulfilledByConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorRelationConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorPartOfConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorFulfilledByConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         modelBuilder.ApplyConfiguration(new BlockConfiguration());

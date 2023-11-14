@@ -21,7 +21,7 @@ public class WebSocketRepository : IWebSocketRepository
         _hubContext = hubContext;
     }
 
-    public async Task SendProjectVersionData(ProjectVersionCm version, WorkerStatus workerStatus)
+    public async Task SendProjectVersionData(ProjectVersionResponse version, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(version, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         await _hubContext.Clients.Group(version.ProjectId.ToString()).SendAsync(WebSocketReceiver.ReceiveProjectVersionData, workerStatus, data);
@@ -39,7 +39,7 @@ public class WebSocketRepository : IWebSocketRepository
         await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveConnectionData, workerStatus, data);
     }
 
-    public async Task SendLockData(List<LockCm> lockCms, Guid projectId, WorkerStatus workerStatus)
+    public async Task SendLockData(List<LockResponse> lockCms, Guid projectId, WorkerStatus workerStatus)
     {
         var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettingsNoTypeNameHandling);
         await _hubContext.Clients.Group(projectId.ToString()).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);

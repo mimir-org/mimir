@@ -61,11 +61,11 @@ public class OntologyService : IOntologyService
     /// </summary>
     /// <param name="rdf"></param>
     /// <returns></returns>
-    public ProjectAm BuildProject(IGraph rdf)
+    public ProjectRequest BuildProject(IGraph rdf)
     {
         _ontologyRepository.LoadData(rdf);
 
-        var project = new ProjectAm();
+        var project = new ProjectRequest();
         project.ResolveProjectInformation(this);
 
         if (string.IsNullOrWhiteSpace(project.Id.ToString()))
@@ -345,8 +345,8 @@ public class OntologyService : IOntologyService
 
         var projectData = new ProjectData
         {
-            Connections = _mapper.Map<List<ConnectionAm>>(connections),
-            Blocks = _mapper.Map<List<BlockAm>>(blocks),
+            Connections = _mapper.Map<List<ConnectionRequest>>(connections),
+            Blocks = _mapper.Map<List<BlockRequest>>(blocks),
             Units = units,
             QuantityDatums = quantityDatums?.ToDictionary(x => x.Name, x => x)
         };

@@ -77,7 +77,7 @@ public class LockController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [Authorize(Policy = "Edit")]
-    public async Task<IActionResult> Lock([FromBody] LockAm lockAm)
+    public async Task<IActionResult> Lock([FromBody] LockRequest lockAm)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

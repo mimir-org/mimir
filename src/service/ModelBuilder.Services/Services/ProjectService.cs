@@ -69,7 +69,7 @@ public class ProjectService : IProjectService
     /// <param name="id"></param>
     /// <returns>The actual project as CM</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
-    public async Task<ProjectCm> GetById(Guid id)
+    public async Task<ProjectResponse> GetById(Guid id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be empty.");
@@ -80,7 +80,7 @@ public class ProjectService : IProjectService
 
         var project = await _projectRepository.GetAsyncComplete(id);
 
-        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectCm>(project);
+        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectResponse>(project);
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public class ProjectService : IProjectService
     /// <param name="id"></param>
     /// <returns>The actual project as AM</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
-    public async Task<ProjectAm> GetAmById(Guid id)
+    public async Task<ProjectRequest> GetAmById(Guid id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be null og empty.");
@@ -98,7 +98,7 @@ public class ProjectService : IProjectService
         var projectId = id;
         var project = await _projectRepository.GetAsyncComplete(projectId);
 
-        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectAm>(project);
+        return project == null ? throw new MimirorgNotFoundException($"Could not find project with id: {id}") : _mapper.Map<ProjectRequest>(project);
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class ProjectService : IProjectService
     /// <param name="from">From number</param>
     /// <param name="number">Number of items</param>
     /// <returns>A list project list items</returns>
-    public IEnumerable<ProjectCm> GetBySearch(string name, int from, int number)
+    public IEnumerable<ProjectResponse> GetBySearch(string name, int from, int number)
     {
         return _projectRepository.GetProjectList(name, from, number);
     }
@@ -121,7 +121,7 @@ public class ProjectService : IProjectService
     /// <returns>A create project task</returns>
     /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    public async Task<Guid> Create(ProjectAm projectAm)
+    public async Task<Guid> Create(ProjectRequest projectAm)
     {
         if (projectAm == null)
             throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -142,7 +142,7 @@ public class ProjectService : IProjectService
     /// <returns>A create project task</returns>
     /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
-    public async Task<Guid> Update(ProjectAm projectAm)
+    public async Task<Guid> Update(ProjectRequest projectAm)
     {
         if (projectAm == null)
             throw new MimirorgNullReferenceException("The project that should be created is null.");
@@ -202,7 +202,7 @@ public class ProjectService : IProjectService
     /// </summary>
     /// <param name="subProjectAm"></param>
     /// <returns></returns>
-    public async Task<ProjectCm> CreateSubProject(SubProjectAm subProjectAm)
+    public async Task<ProjectResponse> CreateSubProject(SubProjectRequest subProjectAm)
     {
         try
         {
@@ -221,7 +221,7 @@ public class ProjectService : IProjectService
             if (fromProject == null)
                 throw new MimirorgInvalidOperationException("The original project does not exist");
 
-            var projectAm = _mapper.Map<ProjectAm>(fromProject);
+            var projectAm = _mapper.Map<ProjectRequest>(fromProject);
 
             projectAm.Name = subProjectAm.Name;
             projectAm.Description = subProjectAm.Description;
@@ -322,7 +322,7 @@ public class ProjectService : IProjectService
     /// <param name="prepare"></param>
     /// <returns></returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the project is not found</exception>
-    public async Task<PrepareCm> PrepareForMerge(PrepareAm prepare)
+    public async Task<PrepareResponse> PrepareForMerge(PrepareRequest prepare)
     {
         if (prepare == null)
             throw new MimirorgNullReferenceException("PrepareAm is null");
@@ -338,7 +338,7 @@ public class ProjectService : IProjectService
         if (subProject == null)
             throw new MimirorgNotFoundException("There is no sub-project with current id and version");
 
-        var projectAm = _mapper.Map<ProjectAm>(subProject);
+        var projectAm = _mapper.Map<ProjectRequest>(subProject);
 
         // Save the project as a temporary project, the cleanup hosted service will remove this temp project later
         projectAm.Name = $"temp_{Guid.NewGuid()}_{projectAm.Name}";
@@ -355,7 +355,7 @@ public class ProjectService : IProjectService
         var updatedProject = await _projectRepository.GetAsyncComplete(newSubProject.Id);
 
         // Identify root blocks
-        var rootBlocks = updatedProject.Blocks.Where(x => x.BlockType == BlockType.Root).Select(x => x.Id).ToList();
+        var rootBlocks = updatedProject.Blocks.Where(x => x.BlockType == "Root").Select(x => x.Id).ToList();
 
         // Position block
         var rootOrigin = updatedProject.Blocks.Where(x => rootBlocks.All(y => y != x.Id)).MinBy(x => JsonConvert.DeserializeObject<Position>(x.PositionTree).PosY);
@@ -382,11 +382,11 @@ public class ProjectService : IProjectService
         //    return x;
         //}).ToList();
 
-        var prepareCm = new PrepareCm
+        var prepareCm = new PrepareResponse
         {
             SubProjectId = prepare.SubProject,
-            Blocks = _mapper.Map<List<BlockCm>>(updatedProject.Blocks),
-            Connections = _mapper.Map<List<ConnectionCm>>(updatedProject.Connections)
+            Blocks = _mapper.Map<List<BlockResponse>>(updatedProject.Blocks),
+            Connections = _mapper.Map<List<ConnectionResponse>>(updatedProject.Connections)
         };
 
         return prepareCm;
@@ -399,7 +399,7 @@ public class ProjectService : IProjectService
     /// </summary>
     /// <param name="projectAm"></param>
     /// <returns></returns>
-    private async Task<Guid> CreateProject(ProjectAm projectAm)
+    private async Task<Guid> CreateProject(ProjectRequest projectAm)
     {
         try
         {
@@ -421,10 +421,9 @@ public class ProjectService : IProjectService
             projectDm.CreatedBy = _contextAccessor.GetName();
             projectDm.Created = DateTime.Now.ToUniversalTime();
 
-            foreach (var block in projectDm.Blocks.Where(block => block.BlockType == BlockType.Root || block.Id == Guid.Empty))
+            foreach (var block in projectDm.Blocks.Where(block => block.BlockType == "Root" || block.Id == Guid.Empty))
             {
-                var blockId = Guid.NewGuid(); //This should come from frontend
-                block.LibraryType = blockId;
+                var blockId = Guid.NewGuid(); //This should come from frontend                
                 block.Id = blockId;
             }
 
@@ -454,7 +453,7 @@ public class ProjectService : IProjectService
     /// <param name="updatedAm"></param>
     /// <param name="originalDm"></param>
     /// <returns></returns>
-    private async Task<Guid> UpdateProject(ProjectAm updatedAm, Project originalDm)
+    private async Task<Guid> UpdateProject(ProjectRequest updatedAm, Project originalDm)
     {
             if (updatedAm == null || originalDm == null)
                 throw new MimirorgNullReferenceException("updated or original project is null");
@@ -482,18 +481,7 @@ public class ProjectService : IProjectService
                 {
                     await _blockRepository.CreateAsync(updatedBlock);
                     await _blockRepository.SaveAsync();
-                }
-                if (originalBlock != null || blockFromDb != null)
-                {
-                    var blockVersionStatus = originalBlock.CalculateVersionStatus(updatedBlock, projectEditData);
-
-                    if (blockVersionStatus != VersionStatus.NoChange)
-                    {
-                        updatedBlock.Updated = DateTime.Now.ToUniversalTime();
-                        updatedBlock.UpdatedBy = _contextAccessor.GetName() ?? "Unknown";
-                        updatedBlock.UpdateVersion(blockVersionStatus);
-                    }
-                }
+                }        
             }
 
             // Save original project (if there is a version change)
@@ -529,43 +517,34 @@ public class ProjectService : IProjectService
 
         var block = new Block
         {
-            Id = blockId,
-            Version = "1.0",
-            Name = aspectName,
-            Label = aspectName,
+            Id = blockId,       
+            Name = aspectName,      
             Description = $"The root {aspectName.ToLower()} block",
             Aspect = aspect,
-            BlockType = BlockType.Root,
-            Project = projectId,
-            MainProject = projectId,
-            LibraryType = blockId,
+            BlockType = "Root",       
             PositionTree = JsonConvert.SerializeObject(new Position
             {
                 PosX = aspect == Aspect.Function ? 150 : aspect == Aspect.Product ? 600 : 1050,
                 PosY = 5
-            }),
-            ReferenceType = blockId.ToString(),
+            }),   
             CreatedBy = _contextAccessor.GetName(),
             Created = DateTime.Now.ToUniversalTime(),
             UpdatedBy = null,
             Updated = null,
-            Rds = null,
-            Symbol = null,
-            Purpose = null,
             IsLocked = false,
             IsLockedStatusBy = null,
             IsLockedStatusDate = null,
             Attributes = new List<Models.Data.Attribute>(),
             Connectors = new List<Connector>
             {
-                new ConnectorPartOfDm
+                new Connector
                     {
                         Id = Guid.NewGuid(),
                         Name = "PartOf",
                         Inside = Guid.NewGuid().ToString(),
                         Outside = Guid.NewGuid().ToString(),
                         Direction = ConnectorDirection.Output,
-                        Block = blockId
+                        BlockId = blockId
                     }
             }
         };

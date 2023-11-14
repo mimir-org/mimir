@@ -32,7 +32,7 @@ public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, 
     /// <param name="from">Get project from</param>
     /// <param name="number">Get number of project</param>
     /// <returns>A list of project information</returns>
-    IEnumerable<ProjectCm> GetProjectList(string name, int from, int number);
+    IEnumerable<ProjectResponse> GetProjectList(string name, int from, int number);
 
     /// <summary>
     /// Get project version list

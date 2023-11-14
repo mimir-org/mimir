@@ -22,24 +22,27 @@ namespace Mb.Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mb.Models.Data.AttributeDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
+                    b.Property<Guid?>("AttributePredicateId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("AttributePredicateId");
+
                     b.Property<string>("AttributeType")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeType");
 
-                    b.Property<Guid?>("Block")
+                    b.Property<Guid?>("BlockId")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Block");
+                        .HasColumnName("BlockId");
 
-                    b.Property<string>("ConnectorTerminal")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ConnectorTerminal");
+                    b.Property<Guid?>("ConnectorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,9 +53,12 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Qualifiers");
 
-                    b.Property<string>("UnitSelected")
+                    b.Property<string>("Terminal")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("UnitSelected");
+                        .HasColumnName("TerminalId");
+
+                    b.Property<string>("UnitSelected")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Units")
                         .HasColumnType("nvarchar(max)")
@@ -64,10 +70,12 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConnectorId");
+
                     b.ToTable("Attribute", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.BlockDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Block", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,9 +87,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<int>("BlockType")
-                        .HasColumnType("int")
-                        .HasColumnName("BlockType");
+                    b.Property<string>("BlockType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("BlockTypeIri");
+
+                    b.Property<Guid>("BlockTypeIri")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
@@ -110,22 +122,14 @@ namespace Mb.Core.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("IsLockedStatusDate");
 
-                    b.Property<string>("Label")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Label");
-
-                    b.Property<Guid>("LibraryType")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LibraryType");
-
-                    b.Property<Guid>("MainProject")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("MainProject");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
+
+                    b.Property<string>("Notation")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Notation");
 
                     b.Property<string>("PositionBlock")
                         .HasColumnType("nvarchar(max)")
@@ -140,21 +144,14 @@ namespace Mb.Core.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Project");
 
-                    b.Property<string>("Purpose")
+                    b.Property<string>("PurposeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Purpose");
+                        .HasColumnName("PurposeId");
 
-                    b.Property<string>("Rds")
+                    b.Property<string>("SymbolId")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Rds");
-
-                    b.Property<string>("ReferenceType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ReferenceType");
-
-                    b.Property<string>("Symbol")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Symbol");
+                        .HasColumnName("SymbolId");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
@@ -164,19 +161,18 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UpdatedBy");
 
-                    b.Property<string>("Version")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Version");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Project");
 
-                    b.ToTable("Block", (string)null);
+                    b.ToTable("Block", null, t =>
+                        {
+                            t.Property("BlockTypeIri")
+                                .HasColumnName("BlockTypeIri1");
+                        });
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectionDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connection", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,55 +210,51 @@ namespace Mb.Core.Migrations
 
                     b.ToTable("Connection", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ConnectionDm");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Connection");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
-                    b.Property<Guid>("Block")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Block");
+                    b.Property<Guid>("BlockId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Direction")
-                        .HasColumnType("int")
-                        .HasColumnName("Direction");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Inside")
+                    b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Inside");
+                        .HasColumnName("Color");
+
+                    b.Property<int>("Direction")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Inside")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<string>("Outside")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Outside");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TerminalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TypeConnector")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Connector", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ConnectorDm");
-
-                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ProjectDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,10 +282,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(63)")
                         .HasColumnName("Name");
 
-                    b.Property<bool>("SubProject")
-                        .HasColumnType("bit")
-                        .HasColumnName("SubProject");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
@@ -314,7 +302,27 @@ namespace Mb.Core.Migrations
                     b.ToTable("Project", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.VersionDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Terminal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TerminalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Terminals");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Version", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -361,14 +369,14 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.ConnectionRelationDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectionDm");
+                    b.HasBaseType("Mb.Models.Data.Connection");
 
                     b.HasDiscriminator().HasValue("ConnectionRelationDm");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.ConnectionTerminalDm", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectionDm");
+                    b.HasBaseType("Mb.Models.Data.Connection");
 
                     b.Property<string>("TerminalParentType")
                         .HasColumnType("nvarchar(max)")
@@ -380,37 +388,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("TerminalType");
 
                     b.HasDiscriminator().HasValue("ConnectionTerminalDm");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.ConnectorRelationDm", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.ConnectorDm");
-
-                    b.HasDiscriminator().HasValue("ConnectorRelationDm");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.ConnectorTerminalDm", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.ConnectorDm");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Color");
-
-                    b.Property<string>("ReferenceType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TerminalParentType")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalParentType");
-
-                    b.Property<string>("TerminalType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalType");
-
-                    b.HasDiscriminator().HasValue("ConnectorTerminalDm");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.ConnectionFulfilledByDm", b =>
@@ -434,25 +411,16 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator().HasValue("ConnectionPartOfDm");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorFulfilledByDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
-
-                    b.HasDiscriminator().HasValue("ConnectorFulfilledByDm");
+                    b.HasOne("Mb.Models.Data.Connector", null)
+                        .WithMany("Attributes")
+                        .HasForeignKey("ConnectorId");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.ConnectorHasLocationDm", b =>
+            modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
-
-                    b.HasDiscriminator().HasValue("ConnectorHasLocationDm");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.ConnectorPartOfDm", b =>
-                {
-                    b.HasBaseType("Mb.Models.Data.ConnectorRelationDm");
-
-                    b.HasDiscriminator().HasValue("ConnectorPartOfDm");
+                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,7 +6,7 @@ namespace Mb.Models.Extensions;
 
 public static class BlockExtensions
 {
-    public static Block CalculatePosition(this Block current, Block rootOrigin, PrepareAm prepare)
+    public static Block CalculatePosition(this Block current, Block rootOrigin, PrepareRequest prepare)
     {
         if (current == null)
             return null;

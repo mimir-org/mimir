@@ -42,7 +42,6 @@ public class Project : IEquatable<Project>, IVersionable<Project>
         if (other is null) return false;
         if (ReferenceEquals(this, other)) return true;
         return Id == other.Id &&
-               SubProject == other.SubProject &&
                Version == other.Version &&
                Name == other.Name &&
                Description == other.Description &&
@@ -63,7 +62,7 @@ public class Project : IEquatable<Project>, IVersionable<Project>
     {
         var hashCode = new HashCode();
         hashCode.Add(Id);
-        hashCode.Add(SubProject);
+       
         hashCode.Add(Version);
         hashCode.Add(Name);
         hashCode.Add(Description);

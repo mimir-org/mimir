@@ -137,12 +137,12 @@ public static class AttributeExtensions
     /// <param name="iri"></param>
     /// <param name="block"></param>
     /// <param name="connectorTerminal"></param>
-    public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, Guid block, string connectorTerminal)
+    public static void ResolveAttribute(this AttributeRequest attribute, IOntologyService ontologyService, ProjectData projectData, string iri, Guid block, string connectorTerminal)
     {
         #region None Mimir specific data
 
         attribute.Block = block;
-        attribute.ConnectorTerminal = connectorTerminal;
+        attribute.Terminal = connectorTerminal;
 
         attribute.Name = ontologyService.GetValue(iri, Resources.Label);
         attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
@@ -150,7 +150,7 @@ public static class AttributeExtensions
 
         // TODO: This must be rewritten ************
         var adp = iri.AttributeDatumPredicate();
-        attribute.Qualifiers = new List<QualifierAm>
+        attribute.Qualifiers = new List<QualifierRequest>
         {
             new()
             {
@@ -194,7 +194,7 @@ public static class AttributeExtensions
         attribute.Units = allowedUnitBlocks.Select(x =>
         {
             var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
-            return new UnitAm
+            return new UnitRequest
             {
                 Name = value?[1].Trim()
             };

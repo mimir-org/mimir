@@ -79,8 +79,8 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
 
         foreach (var block in project.Blocks)
         {
-            block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Block == block.Id).ToList());
-            block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.Block == block.Id).ToList());
+            block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.BlockId == block.Id).ToList());
+            block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.BlockId == block.Id).ToList());
         }
 
         return Task.FromResult(project);
@@ -93,14 +93,14 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
     /// <param name="from">Get project from</param>
     /// <param name="number">Get number of project</param>
     /// <returns>A list of project information</returns>
-    public IEnumerable<ProjectCm> GetProjectList(string name, int from, int number)
+    public IEnumerable<ProjectResponse> GetProjectList(string name, int from, int number)
     {
         if (string.IsNullOrEmpty(name))
             return GetAll()
                 .OrderByDescending(x => x.Updated)
                 .Skip(from)
                 .Take(number)
-                .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
+                .ProjectTo<ProjectResponse>(_mapper.ConfigurationProvider)
                 .ToList();
 
         return GetAll()
@@ -108,7 +108,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             .OrderByDescending(x => x.Updated)
             .Skip(from)
             .Take(number)
-            .ProjectTo<ProjectCm>(_mapper.ConfigurationProvider)
+            .ProjectTo<ProjectResponse>(_mapper.ConfigurationProvider)
             .ToList();
     }
 
@@ -151,8 +151,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 bulk.Setup<Project>()
                     .ForObject(updated)
                     .WithTable("Project")
-                    .AddColumn(x => x.Id)
-                    .AddColumn(x => x.SubProject)
+                    .AddColumn(x => x.Id)         
                     .AddColumn(x => x.Version)
                     .AddColumn(x => x.Name)
                     .AddColumn(x => x.Description)
@@ -164,54 +163,17 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                     .MatchTargetOn(x => x.Id)
                     .Commit(conn);
 
-                _blockRepository.BulkUpsert(bulk, conn, data.BlockUpdateInsert);
-                _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
+                _blockRepository.BulkUpsert(bulk, conn, data.BlockUpdateInsert);                
                 _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
 
                 // Delete attributes
                 _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-
-                // Delete terminals
-                _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
-
+         
                 // Delete blocks
                 _blockRepository.BulkDelete(bulk, conn, data.BlockDelete);
 
-                //Delete connectors
-                var connectorsToDelete = new List<Connector>();
-                var connectorTerminalDms = new List<ConnectorTerminalDm>();
-                var connectorPartOfDms = new List<ConnectorPartOfDm>();
-                var connectorFulfilledByDms = new List<ConnectorFulfilledByDm>();
-                var connectorHasLocationDms = new List<ConnectorHasLocationDm>();
-
-                foreach (var item in data.BlockDelete)
-                    connectorsToDelete.AddRange(item.Connectors);
-
-                foreach (var connectorDm in connectorsToDelete)
-                {
-                    switch (connectorDm)
-                    {
-                        case ConnectorTerminalDm dm:
-                            connectorTerminalDms.Add(dm);
-                            break;
-                        case ConnectorPartOfDm dm:
-                            connectorPartOfDms.Add(dm);
-                            break;
-                        case ConnectorFulfilledByDm dm:
-                            connectorFulfilledByDms.Add(dm);
-                            break;
-                        case ConnectorHasLocationDm dm:
-                            connectorHasLocationDms.Add(dm);
-                            break;
-                    }
-                }
-
-                _connectorRepository.BulkDelete(bulk, conn, connectorTerminalDms);
-                _connectorRepository.BulkDelete(bulk, conn, connectorPartOfDms);
-                _connectorRepository.BulkDelete(bulk, conn, connectorFulfilledByDms);
-                _connectorRepository.BulkDelete(bulk, conn, connectorHasLocationDms);
-
-                //TODO: Delete connections
+                //Delete connectors                              
+                _connectorRepository.BulkDelete(bulk, conn, data.Connectors);
 
             }
 
@@ -241,8 +203,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                 bulk.Setup<Project>()
                     .ForObject(project)
                     .WithTable("Project")
-                    .AddColumn(x => x.Id)
-                    .AddColumn(x => x.SubProject)
+                    .AddColumn(x => x.Id)                    
                     .AddColumn(x => x.Version)
                     .AddColumn(x => x.Name)
                     .AddColumn(x => x.Description)
@@ -255,7 +216,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
                     .Commit(conn);
 
                 _blockRepository.BulkUpsert(bulk, conn, data.Blocks);
-                _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
+                _connectorRepository.BulkUpsert(bulk, conn, data.Connectors);
                 _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
             }
 
@@ -281,7 +242,7 @@ public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Projec
             using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
             {
                 _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
-                _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
+                _connectorRepository.BulkDelete(bulk, conn, data.Connectors);
                 _blockRepository.BulkDelete(bulk, conn, data.Blocks);
 
                 bulk.Setup<Project>()

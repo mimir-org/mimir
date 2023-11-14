@@ -13,5 +13,5 @@ public interface IBlockService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    Task<BlockCm> Get(Guid id);
+    Task<BlockResponse> Get(Guid id);
 }

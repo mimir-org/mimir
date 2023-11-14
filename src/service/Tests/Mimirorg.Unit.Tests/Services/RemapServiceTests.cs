@@ -53,7 +53,7 @@ public class RemapServiceTests : UnitTest<ModelBuilderCommonFixtures>
         };
 
         // block data
-        var blocks = new List<BlockAm>
+        var blocks = new List<BlockRequest>
         {
             new()
             {

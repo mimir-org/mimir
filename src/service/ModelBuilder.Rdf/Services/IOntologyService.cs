@@ -9,7 +9,7 @@ namespace ModelBuilder.Rdf.Services;
 public interface IOntologyService
 {
     void BuildProject(Project project);
-    ProjectAm BuildProject(IGraph rdf);
+    ProjectRequest BuildProject(IGraph rdf);
     byte[] GetBytes<T>() where T : IRdfWriter, new();
     void SetBaseUri(Uri uri);
     void AssertBlock(string subject, string predicate, string obj, bool isLiteral = false);

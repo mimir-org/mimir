@@ -12,10 +12,7 @@ public static class VersionableExtensions
         if (editData == null)
             return false;
 
-        if (editData.TerminalDelete.Any(x => x.Block == block.Id))
-            return true;
-
-        if (editData.RelationDelete.Any(x => x.Block == block.Id))
+        if (editData.RelationDelete.Any(x => x.BlockId == block.Id))
             return true;
 
         return false;
@@ -25,17 +22,13 @@ public static class VersionableExtensions
     {
         if (editData == null)
             return false;
-        if (editData.TerminalUpdate.Any(x => x.Block == block.Id) || editData.TerminalCreate.Any(x => x.Block == block.Id))
+        if (editData.RelationUpdate.Any(x => x.BlockId == block.Id) || editData.RelationCreate.Any(x => x.BlockId == block.Id))
             return true;
-        if (editData.RelationUpdate.Any(x => x.Block == block.Id) || editData.RelationCreate.Any(x => x.Block == block.Id))
-            return true;
-        if (editData.AttributeDelete.Any(x => x.Block == block.Id) || editData.AttributeUpdate.Any(x => x.Block == block.Id) || editData.AttributeCreate.Any(x => x.Block == block.Id))
+        if (editData.AttributeDelete.Any(x => x.BlockId == block.Id) || editData.AttributeUpdate.Any(x => x.BlockId == block.Id) || editData.AttributeCreate.Any(x => x.BlockId == block.Id))
             return true;
         if (block.Description != other.Description)
             return true;
         if (block.Name != other.Name)
-            return true;
-        if (block.Label != other.Label)
             return true;
         if (block.UpdatedBy != other.UpdatedBy)
             return true;
@@ -53,10 +46,7 @@ public static class VersionableExtensions
 
         if (editData.BlockDelete.Any())
             return true;
-
-        if (editData.TerminalDelete.Any())
-            return true;
-
+     
         if (editData.RelationDelete.Any())
             return true;
 
@@ -74,9 +64,6 @@ public static class VersionableExtensions
         if (editData.BlockUpdate.Any() || editData.BlockCreate.Any())
             return true;
 
-        if (editData.TerminalUpdate.Any() || editData.TerminalCreate.Any())
-            return true;
-
         if (editData.RelationUpdate.Any() || editData.RelationCreate.Any())
             return true;
 
@@ -87,9 +74,6 @@ public static class VersionableExtensions
             return true;
 
         if (project.Name != other.Name)
-            return true;
-
-        if (project.SubProject != other.SubProject)
             return true;
 
         if (project.CreatedBy != other.CreatedBy)

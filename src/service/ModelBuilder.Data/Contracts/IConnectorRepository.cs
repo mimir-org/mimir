@@ -12,13 +12,13 @@ public interface IConnectorRepository : IGenericRepository<ModelBuilderDbContext
 {
     void AttachWithAttributes(ICollection<Connector> entities, EntityState state);
 
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminalDm> connectorTerminals);
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOfDm> connectorPartOf);
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledByDm> connectorFulfilledBy);
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocationDm> connectorHasLocation);
+    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connector> connectorTerminals);
+    //void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connector> connectorPartOf);
+    //void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connector> connectorFulfilledBy);
+    //void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Connector> connectorHasLocation);
 
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorTerminalDm> connectorTerminals);
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorPartOfDm> connectorPartOf);
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorFulfilledByDm> connectorFulfilledBy);
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<ConnectorHasLocationDm> connectorHasLocations);
+    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connector> connectorTerminals);
+    //void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connector> connectorPartOf);
+    //void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connector> connectorFulfilledBy);
+    //void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Connector> connectorHasLocations);
 }

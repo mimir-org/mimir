@@ -9,15 +9,15 @@ namespace Mb.Core.Profiles
     {
         public HandleProfile()
         {
-            CreateMap<HandleAm, Handle>()
+            CreateMap<HandleRequest, Handle>()
                 .ForMember(dest => dest.PositionTree, opt => opt.MapFrom(src => src.PositionTree))
                 .ForMember(dest => dest.PositionBlock, opt => opt.MapFrom(src => src.PositionBlock));
 
-            CreateMap<Handle, HandleCm>()
+            CreateMap<Handle, HandleResponse>()
                 .ForMember(dest => dest.PositionTree, opt => opt.MapFrom(src => src.PositionTree))
                 .ForMember(dest => dest.PositionBlock, opt => opt.MapFrom(src => src.PositionBlock));
 
-            CreateMap<Handle, HandleAm>()
+            CreateMap<Handle, HandleRequest>()
                 .ForMember(dest => dest.PositionTree, opt => opt.MapFrom(src => src.PositionTree))
                 .ForMember(dest => dest.PositionBlock, opt => opt.MapFrom(src => src.PositionBlock));
         }

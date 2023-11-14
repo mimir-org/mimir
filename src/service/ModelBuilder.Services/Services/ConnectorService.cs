@@ -30,7 +30,7 @@ public class ConnectorService : IConnectorService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    public Task<ConnectorCm> Get(Guid id)
+    public Task<ConnectorResponse> Get(Guid id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be null og empty.");
@@ -40,6 +40,6 @@ public class ConnectorService : IConnectorService
         if (connector == null)
             throw new MimirorgNotFoundException($"Could not find connector with id: {id}");
 
-        return Task.FromResult(_mapper.Map<ConnectorCm>(connector));
+        return Task.FromResult(_mapper.Map<ConnectorResponse>(connector));
     }
 }

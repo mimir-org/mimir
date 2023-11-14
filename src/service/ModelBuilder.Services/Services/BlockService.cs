@@ -30,7 +30,7 @@ public class BlockService : IBlockService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    public async Task<BlockCm> Get(Guid id)
+    public async Task<BlockResponse> Get(Guid id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNotFoundException("Id can't be empty.");
@@ -41,6 +41,6 @@ public class BlockService : IBlockService
         if (block == null)
             throw new MimirorgNotFoundException($"Could not find block with id: {id}");
 
-        return _mapper.Map<BlockCm>(block);
+        return _mapper.Map<BlockResponse>(block);
     }
 }

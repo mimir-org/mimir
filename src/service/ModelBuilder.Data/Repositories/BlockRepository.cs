@@ -110,8 +110,8 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, Block>, 
         if (block == null)
             throw new MimirorgNotFoundException($"The block with id {id} can't be found.");
 
-        block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Block == id).ToList());
-        block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.Block == block.Id).ToList());
+        block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.BlockId == id).ToList());
+        block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.BlockId == block.Id).ToList());
 
         return Task.FromResult(block);
     }
@@ -130,12 +130,9 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, Block>, 
         bulk.Setup<Block>()
             .ForCollection(blocks)
             .WithTable("Block")
-            .AddColumn(x => x.Id)
-            .AddColumn(x => x.Rds)
-            .AddColumn(x => x.Description)
-            .AddColumn(x => x.ReferenceType)
-            .AddColumn(x => x.Name)
-            .AddColumn(x => x.Label)
+            .AddColumn(x => x.Id)     
+            .AddColumn(x => x.Description)           
+            .AddColumn(x => x.Name)   
             .AddColumn(x => x.PositionTree)
             .AddColumn(x => x.PositionBlock)
             .AddColumn(x => x.IsLocked)
@@ -144,14 +141,9 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, Block>, 
             .AddColumn(x => x.UpdatedBy)
             .AddColumn(x => x.Updated)
             .AddColumn(x => x.Created)
-            .AddColumn(x => x.CreatedBy)
-            .AddColumn(x => x.LibraryType)
-            .AddColumn(x => x.Version)
+            .AddColumn(x => x.CreatedBy)        
             .AddColumn(x => x.Aspect)
-            .AddColumn(x => x.BlockType)
-            .AddColumn(x => x.MainProject)
-            .AddColumn(x => x.Symbol)
-            .AddColumn(x => x.Purpose)
+            .AddColumn(x => x.BlockType)     
             .AddColumn(x => x.Project)
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)

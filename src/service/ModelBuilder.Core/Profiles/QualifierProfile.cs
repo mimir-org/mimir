@@ -9,17 +9,17 @@ public class QualifierProfile : Profile
 {
     public QualifierProfile()
     {
-        CreateMap<QualifierAm, Qualifier>()
+        CreateMap<QualifierRequest, Qualifier>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value));
 
-        CreateMap<Qualifier, QualifierCm>()
+        CreateMap<Qualifier, QualifierResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value));
 
-        CreateMap<Qualifier, QualifierAm>()
+        CreateMap<Qualifier, QualifierRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value));

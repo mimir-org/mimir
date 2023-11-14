@@ -39,7 +39,7 @@ public static class ConnectionExtensions
     /// <param name="relation">Relation connection data</param>
     /// <param name="projectData">Record of ICollections</param>
     /// <exception cref="InvalidDataException">Throws if blocks and connectors is not defined in RDF file</exception>
-    public static void ResolveConnection(this ConnectionAm connection, IOntologyService ontologyService, ProjectAm project, RelationConnector relation, ProjectData projectData)
+    public static void ResolveConnection(this ConnectionRequest connection, IOntologyService ontologyService, ProjectRequest project, RelationConnector relation, ProjectData projectData)
     {
         //var fromBlock = project.blocks?.FirstOrDefault(x => x.Id == relation.ParentIri);
         //var toBlock = project.blocks?.FirstOrDefault(x => x.Id == relation.ChildIri);

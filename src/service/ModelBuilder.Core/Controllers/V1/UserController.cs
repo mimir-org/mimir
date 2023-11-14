@@ -45,7 +45,7 @@ public class UserController : ControllerBase
         {
             var role = User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value.ResolveNameFromRoleClaim();
             var name = User.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
-            var user = new UserCm
+            var user = new UserResponse
             {
                 Name = name,
                 Email = User.Identity?.Name,

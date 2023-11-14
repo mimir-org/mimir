@@ -34,10 +34,10 @@ public class VersionService : IVersionService
     /// Returns a list with all versions
     /// </summary>
     /// <returns>List of VersionCm</returns>
-    public async Task<IEnumerable<VersionCm>> GetAllVersions()
+    public async Task<IEnumerable<VersionResponse>> GetAllVersions()
     {
         return await Task.Run(() => _versionRepository.GetAll()
-            .ProjectTo<VersionCm>(_mapper.ConfigurationProvider)
+            .ProjectTo<VersionResponse>(_mapper.ConfigurationProvider)
             .OrderBy(x => x.TypeId).ThenBy(y => y.Ver)
             .ToList());
     }
@@ -47,11 +47,11 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="typeId"></param>
     /// <returns>List of VersionCm</returns>
-    public async Task<IEnumerable<VersionCm>> GetAllVersions(Guid typeId)
+    public async Task<IEnumerable<VersionResponse>> GetAllVersions(Guid typeId)
     {
         return await Task.Run(() => _versionRepository.GetAll()
             .Where(x => x.TypeId == typeId)
-            .ProjectTo<VersionCm>(_mapper.ConfigurationProvider)
+            .ProjectTo<VersionResponse>(_mapper.ConfigurationProvider)
             .OrderBy(x => x.TypeId).ThenBy(y => y.Ver)
             .ToList());
     }
@@ -92,7 +92,7 @@ public class VersionService : IVersionService
     /// </summary>
     /// <param name="project"></param>
     /// <returns>VersionCm</returns>
-    public async Task<VersionCm> CreateVersion(Project project)
+    public async Task<VersionResponse> CreateVersion(Project project)
     {
         if (project == null)
             throw new MimirorgInvalidOperationException("Can't save new project version. Project is null.");
@@ -118,7 +118,7 @@ public class VersionService : IVersionService
             .FindBy(x => x.TypeId == project.Id && x.Ver == project.Version)
             .First());
 
-        return _mapper.Map<VersionCm>(version);
+        return _mapper.Map<VersionResponse>(version);
     }
 
     /// <summary>

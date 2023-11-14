@@ -6,19 +6,19 @@ namespace ModelBuilder.Unit.Tests.Models;
 
 public class ConnectorTests
 {
-    private readonly ConnectorTerminalAm _terminal;
+    private readonly ConnectorRequest _terminal;
 
     public ConnectorTests()
     {
-        _terminal = new ConnectorTerminalAm
+        _terminal = new ConnectorRequest
         {
             Id = Guid.NewGuid(),
             Name = "ConnectorTerminal",
             Attributes = null,
             Color = "#ffffff",
             Direction = ConnectorDirection.Input,
-            Block = Guid.Empty,
-            TerminalType = "https://rdf.runir.com/1234"
+            BlockId = Guid.Empty,
+            TerminalId = Guid.NewGuid()
         };
     }
 

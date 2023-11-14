@@ -15,17 +15,17 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     {
     }
 
-    private ProjectAm ValidProject()
+    private ProjectRequest ValidProject()
     {
-        return new ProjectAm
+        return new ProjectRequest
         {
             Id = ProjectGuid,
             SubProject = false,
             Name = "Dummy Project",
             Description = "Dummy Project",
-            Blocks = new List<BlockAm>
+            Blocks = new List<BlockRequest>
             {
-                new BlockAm
+                new BlockRequest
                 {
                     Name = "Dummy block A",
                     Description = "Dummy block A",
@@ -60,12 +60,12 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     BlockType = BlockType.Aspect,
                     Label = "Dummy block A",
                     LibraryType = new Guid ("71D39BB0C6EA6E996AEA7139BB1B3D91"),
-                    PositionTree = new PositionAm
+                    PositionTree = new PositionRequest
                     {
                         PosX = -99,
                         PosY = 213,
                     },
-                    PositionBlock = new PositionAm
+                    PositionBlock = new PositionRequest
                     {
                         PosX = 64,
                         PosY = -6
@@ -75,7 +75,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     ReferenceType = null,
                     Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                 },
-                new BlockAm
+                new BlockRequest
                 {
 
                     Name = "Dummy block B",
@@ -111,12 +111,12 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     BlockType = BlockType.Aspect,
                     Label = "Dummy block A",
                     LibraryType = new Guid("71D39BB0C6EA6E996AEA7139BB1B3D91"),
-                    PositionTree = new PositionAm
+                    PositionTree = new PositionRequest
                     {
                         PosX = -99,
                         PosY = 213,
                     },
-                    PositionBlock = new PositionAm
+                    PositionBlock = new PositionRequest
                     {
                         PosX = 64,
                         PosY = -6
@@ -127,9 +127,9 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
                     Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                 }
             },
-            Connections = new List<ConnectionAm>
+            Connections = new List<ConnectionRequest>
             {
-                new ConnectionAm
+                new ConnectionRequest
                 {
                     Id = new Guid("108097DF-0319-46F8-AAE0-46F894AF0252"),
                     Project = ProjectGuid,
@@ -145,7 +145,7 @@ public class ProjectTests : UnitTest<ModelBuilderCommonFixtures>
     public void Project_With_Duplicate_Blocks_Validate_Error()
     {
         var clone = ValidProject().DeepCopy();
-        clone.Blocks.Add(new BlockAm
+        clone.Blocks.Add(new BlockRequest
         {
             Id = new Guid("ID17de767c-3040-44a6-a8ad-f5bb300fc52e")
         });

@@ -43,7 +43,7 @@ public class VersionController : ControllerBase
     /// </summary>
     /// <returns>List of VersionCm</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<VersionCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<VersionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -73,7 +73,7 @@ public class VersionController : ControllerBase
     /// <param name="typeId"></param>
     /// <returns>List of VersionCm</returns>
     [HttpGet("{typeId}")]
-    [ProducesResponseType(typeof(IEnumerable<VersionCm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<VersionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

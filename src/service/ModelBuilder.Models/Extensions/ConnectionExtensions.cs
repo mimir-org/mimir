@@ -7,9 +7,9 @@ namespace Mb.Models.Extensions;
 
 public static class ConnectionExtensions
 {
-    public static List<ConnectionAm> GetParentlessConnectors(this ICollection<ConnectionAm> connections, ICollection<BlockAm> blocks)
+    public static List<ConnectionRequest> GetParentlessConnectors(this ICollection<ConnectionRequest> connections, ICollection<BlockRequest> blocks)
     {
-        var parentlessConnections = new List<ConnectionAm>();
+        var parentlessConnections = new List<ConnectionRequest>();
 
         if (connections == null || !connections.Any())
             return parentlessConnections;
@@ -32,9 +32,9 @@ public static class ConnectionExtensions
         return parentlessConnections;
     }
 
-    public static List<ConnectionAm> GetNotConnectedConnectors(this ICollection<ConnectionAm> connections, ICollection<BlockAm> blocks)
+    public static List<ConnectionRequest> GetNotConnectedConnectors(this ICollection<ConnectionRequest> connections, ICollection<BlockRequest> blocks)
     {
-        var notConnectedConnections = new List<ConnectionAm>();
+        var notConnectedConnections = new List<ConnectionRequest>();
 
         if (connections == null || !connections.Any())
             return notConnectedConnections;
