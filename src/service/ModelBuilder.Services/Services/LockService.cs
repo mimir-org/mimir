@@ -55,8 +55,8 @@ public class LockService : ILockService
         if (lockAm?.Id == Guid.Empty)
             throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
-        var lockDm = _mapper.Map<LockDm>(lockAm);
-        var lockDms = new List<LockDm> { lockDm };
+        var lockDm = _mapper.Map<Lock>(lockAm);
+        var lockDms = new List<Lock> { lockDm };
 
         if (!lockDms.Any())
             return;

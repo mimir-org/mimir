@@ -16,6 +16,6 @@ public enum RelationType
     [Display(Name = "FulfilledBy")]
     FulfilledBy = 3,
 
-    [Display(Name = "FulfilledBy")]
+    [Display(Name = "Terminal")]
     Terminal = 4
 }

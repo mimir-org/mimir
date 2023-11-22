@@ -6,8 +6,7 @@
   
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RootNamespace>Mb.Api</RootNamespace>
-    <UserSecretsId>600c472a-d748-4f46-bc8c-f5d5fde40a27</UserSecretsId>
+    <RootNamespace>Mb.Api</RootNamespace>    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

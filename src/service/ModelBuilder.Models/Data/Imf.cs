@@ -7,7 +7,7 @@ using Mimirorg.Common.Enums;
 
 namespace Mb.Models.Data
 {
-    public abstract class ImfType
+    public abstract class Imf
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public required string Name { get; set; }

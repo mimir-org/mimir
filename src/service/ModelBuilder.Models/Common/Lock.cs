@@ -2,7 +2,7 @@ using System;
 
 namespace Mb.Models.Common;
 
-public class LockDm
+public class Lock
 {
     public string Id { get; set; }
     public string ProjectId { get; set; }

@@ -48,5 +48,5 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="lockDms">The attributes to be updated</param>
-    void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
+    void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Lock> lockDms);
 }

@@ -12,21 +12,21 @@ public class LockProfile : Profile
 {
     public LockProfile(IHttpContextAccessor contextAccessor)
     {
-        CreateMap<LockRequest, LockDm>()
+        CreateMap<LockRequest, Lock>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
             .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
             .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(contextAccessor.GetName()) ? "Unknown" : contextAccessor.GetName()))
             .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => DateTime.Now.ToUniversalTime()));
 
-        CreateMap<LockDm, LockResponse>()
+        CreateMap<Lock, LockResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
             .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
             .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
             .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
 
-        CreateMap<LockDm, LockRequest>()
+        CreateMap<Lock, LockRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
             .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked));

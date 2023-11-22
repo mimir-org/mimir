@@ -176,12 +176,12 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, Block>, 
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="lockDms">The attributes to be updated</param>
-    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
+    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Lock> lockDms)
     {
         if (lockDms == null || !lockDms.Any())
             return;
 
-        bulk.Setup<LockDm>()
+        bulk.Setup<Lock>()
             .ForCollection(lockDms)
             .WithTable("Block")
             .AddColumn(x => x.Id)
