@@ -50,13 +50,13 @@ public class LockService : ILockService
     /// </summary>
     /// <param name="lockAm"></param>
     /// <returns></returns>
-    public async Task Lock(LockAm lockAm)
+    public async Task Lock(LockRequest lockAm)
     {
         if (lockAm?.Id == Guid.Empty)
             throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
-        var lockDm = _mapper.Map<LockDm>(lockAm);
-        var lockDms = new List<LockDm> { lockDm };
+        var lockDm = _mapper.Map<Lock>(lockAm);
+        var lockDms = new List<Lock> { lockDm };
 
         if (!lockDms.Any())
             return;
@@ -77,7 +77,7 @@ public class LockService : ILockService
         _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId.ToString(), null));
 
         //Send websocket updates to clients
-        var lockCms = _mapper.Map<List<LockCm>>(lockDms);
+        var lockCms = _mapper.Map<List<LockResponse>>(lockDms);
         await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockCms[0].ProjectId);
     }
 }

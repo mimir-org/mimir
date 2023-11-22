@@ -10,5 +10,5 @@ public interface IModuleInterface
 {
     void CreateModule(IServiceCollection services, IConfiguration configuration);
     ICollection<Profile> GetProfiles();
-    ModuleDescriptionDm GetModuleDescription();
+    ModuleDescription GetModuleDescription();
 }

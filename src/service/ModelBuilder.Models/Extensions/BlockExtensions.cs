@@ -6,7 +6,7 @@ namespace Mb.Models.Extensions;
 
 public static class BlockExtensions
 {
-    public static BlockDm CalculatePosition(this BlockDm current, BlockDm rootOrigin, PrepareAm prepare)
+    public static Block CalculatePosition(this Block current, Block rootOrigin, PrepareRequest prepare)
     {
         if (current == null)
             return null;
@@ -22,8 +22,8 @@ public static class BlockExtensions
             return current;
         }
 
-        var currentPosition = JsonConvert.DeserializeObject<PositionDm>(current.PositionTree);
-        var rootOriginPosition = JsonConvert.DeserializeObject<PositionDm>(current.PositionTree);
+        var currentPosition = JsonConvert.DeserializeObject<Position>(current.PositionTree);
+        var rootOriginPosition = JsonConvert.DeserializeObject<Position>(current.PositionTree);
 
         var diffX = currentPosition.PosX - rootOriginPosition.PosX;
         var diffY = currentPosition.PosY - rootOriginPosition.PosY;

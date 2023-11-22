@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Contracts;
 
-public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, BlockDm>
+public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Block>
 {
-    IEnumerable<(BlockDm block, WorkerStatus status)> UpdateInsert(ICollection<BlockDm> original, ProjectDm project,
+    IEnumerable<(Block block, WorkerStatus status)> UpdateInsert(ICollection<Block> original, Project project,
         string invokedByDomain);
 
-    IEnumerable<(BlockDm block, WorkerStatus status)> DeleteBlocks(ICollection<BlockDm> delete, string projectId,
+    IEnumerable<(Block block, WorkerStatus status)> DeleteBlocks(ICollection<Block> delete, string projectId,
         string invokedByDomain);
 
     /// <summary>
@@ -24,7 +24,7 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// </summary>
     /// <param name="id">Block id</param>
     /// <returns>Complete block</returns>
-    Task<BlockDm> GetAsyncComplete(Guid id);
+    Task<Block> GetAsyncComplete(Guid id);
 
     /// <summary>
     /// Bulk block update
@@ -32,7 +32,7 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn"></param>
     /// <param name="blocks">The blocks to be upserted</param>
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks);
+    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Block> blocks);
 
     /// <summary>
     /// Bulk delete blocks
@@ -40,7 +40,7 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="blocks">The blocks to be deleted</param>
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks);
+    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Block> blocks);
 
     /// <summary>
     /// Bulk connection update lock status
@@ -48,5 +48,5 @@ public interface IBlockRepository : IGenericRepository<ModelBuilderDbContext, Bl
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="lockDms">The attributes to be updated</param>
-    void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
+    void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Lock> lockDms);
 }

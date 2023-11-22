@@ -7,7 +7,7 @@ namespace Mb.Models.Extensions;
 
 public static class ValidationExtensions
 {
-    public static List<ValidationResult> Validate(this ICollection<BlockAm> blocks, ValidationContext validationContext)
+    public static List<ValidationResult> Validate(this ICollection<BlockRequest> blocks, ValidationContext validationContext)
     {
         var validations = new List<ValidationResult>();
 
@@ -28,7 +28,7 @@ public static class ValidationExtensions
         return validations;
     }
 
-    public static List<ValidationResult> Validate(this ICollection<ConnectionAm> connections, ValidationContext validationContext)
+    public static List<ValidationResult> Validate(this ICollection<ConnectionRequest> connections, ValidationContext validationContext)
     {
         var validations = new List<ValidationResult>();
 

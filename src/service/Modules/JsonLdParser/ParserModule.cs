@@ -39,30 +39,30 @@ public class ParserModule : IModelBuilderParser
         return new List<Profile>();
     }
 
-    public ModuleDescriptionDm GetModuleDescription()
+    public ModuleDescription GetModuleDescription()
     {
-        return new ModuleDescriptionDm
+        return new ModuleDescription
         {
             Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943"),
             Name = "Mimir IMF JSON-LD"
         };
     }
 
-    public Task<byte[]> SerializeProject(ProjectDm project)
+    public Task<byte[]> SerializeProject(Project project)
     {
         _ontologyService.BuildProject(project);
         var bytes = _ontologyService.GetBytes<ImfJsonLdWriter>();
         return Task.FromResult(bytes);
     }
 
-    public Task<ProjectDm> DeserializeProject(byte[] data)
+    public Task<Project> DeserializeProject(byte[] data)
     {
         var projectAm = DeserializeProjectAm(data);
-        var project = _mapper.Map<ProjectDm>(projectAm);
+        var project = _mapper.Map<Project>(projectAm);
         return Task.FromResult(project);
     }
 
-    public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+    public Task<ProjectRequest> DeserializeProjectAm(byte[] data)
     {
         var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
         var graph = LoadGraph(valueAsString);

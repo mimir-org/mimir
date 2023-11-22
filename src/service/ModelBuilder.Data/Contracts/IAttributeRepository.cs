@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace Mb.Data.Contracts;
 
-public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, AttributeDm>
+public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, Attribute>
 {
     /// <summary>
     /// Bulk attributes upsert
@@ -15,7 +15,7 @@ public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be upserted</param>
-    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
+    void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
 
     /// <summary>
     /// Bulk attributes delete
@@ -23,7 +23,7 @@ public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be upserted</param>
-    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
+    void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
 
     /// <summary>
     /// Bulk attributes insert
@@ -31,5 +31,5 @@ public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="attributes">The attributes to be inserted</param>
-    void BulkInsert(BulkOperations bulk, SqlConnection conn, List<AttributeDm> attributes);
+    void BulkInsert(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
 }

@@ -26,9 +26,9 @@ public class EventHubModule : IModelBuilderSyncService
 {
     private ServiceProvider? _provider;
 
-    public ModuleDescriptionDm GetModuleDescription()
+    public ModuleDescription GetModuleDescription()
     {
-        return new ModuleDescriptionDm
+        return new ModuleDescription
         {
             Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285"), //Why is this hardcoded? Test?
             Name = "Event Hub Module"

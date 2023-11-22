@@ -40,9 +40,9 @@ public class DefaultModelBuilderParser : IModelBuilderParser
         return null;
     }
 
-    public ModuleDescriptionDm GetModuleDescription()
+    public ModuleDescription GetModuleDescription()
     {
-        return new ModuleDescriptionDm
+        return new ModuleDescription
         {
             Id = new Guid("5BA4A44C-8E06-49ED-8EE4-CD88FDB78C67"),
             Name = "Mimir JSON"
@@ -58,25 +58,25 @@ public class DefaultModelBuilderParser : IModelBuilderParser
         };
     }
 
-    public Task<byte[]> SerializeProject(ProjectDm project)
+    public Task<byte[]> SerializeProject(Project project)
     {
-        var projectAm = _mapper.Map<ProjectAm>(project);
+        var projectAm = _mapper.Map<ProjectRequest>(project);
 
         var result = JsonConvert.SerializeObject(projectAm, _serializerSettings);
         return Task.FromResult(Encoding.UTF8.GetBytes(result));
     }
 
-    public Task<ProjectDm> DeserializeProject(byte[] data)
+    public Task<Project> DeserializeProject(byte[] data)
     {
         var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-        var project = JsonConvert.DeserializeObject<ProjectDm>(valueAsString, _serializerSettings);
+        var project = JsonConvert.DeserializeObject<Project>(valueAsString, _serializerSettings);
         return Task.FromResult(project);
     }
 
-    public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+    public Task<ProjectRequest> DeserializeProjectAm(byte[] data)
     {
         var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-        var project = JsonConvert.DeserializeObject<ProjectAm>(valueAsString, _serializerSettings);
+        var project = JsonConvert.DeserializeObject<ProjectRequest>(valueAsString, _serializerSettings);
         return Task.FromResult(project);
     }
 }

@@ -1,17 +1,18 @@
 using System;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
-using AttributeDm = Mb.Models.Data.AttributeDm;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Configurations;
 
 public class ModelBuilderDbContext : DbContext
 {
-    public virtual DbSet<ProjectDm> Projects { get; set; }
-    public virtual DbSet<BlockDm> Blocks { get; set; }
-    public virtual DbSet<ConnectionDm> Connections { get; set; }
-    public virtual DbSet<AttributeDm> Attributes { get; set; }
-    public virtual DbSet<ConnectorDm> Connectors { get; set; }
+    public virtual DbSet<Project> Projects { get; set; }
+    public virtual DbSet<Block> Blocks { get; set; }
+    public virtual DbSet<Connection> Connections { get; set; }
+    public virtual DbSet<Attribute> Attributes { get; set; }
+    public virtual DbSet<Connector> Connectors { get; set; }
+    public virtual DbSet<Terminal> Terminals { get; set; }
 
     public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
     {
@@ -31,11 +32,11 @@ public class ModelBuilderDbContext : DbContext
         modelBuilder.ApplyConfiguration(new ConnectionHasLocationConfiguration());
 
         modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorRelationConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorPartOfConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorFulfilledByConfiguration());
-        modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorTerminalConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorRelationConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorPartOfConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorFulfilledByConfiguration());
+        //modelBuilder.ApplyConfiguration(new ConnectorHasLocationConfiguration());
 
         modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         modelBuilder.ApplyConfiguration(new BlockConfiguration());

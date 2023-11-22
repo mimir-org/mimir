@@ -40,7 +40,7 @@ public class ConnectorController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ConnectorCm), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ConnectorResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -8,5 +8,5 @@ namespace Mb.Services.Contracts;
 public interface ILockService
 {
     IEnumerable<Guid> GetLockedBlocks();
-    Task Lock(LockAm lockAm);
+    Task Lock(LockRequest lockAm);
 }

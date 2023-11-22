@@ -43,7 +43,7 @@ public class ProjectFileService : IProjectFileService
     /// <exception cref="MimirorgInvalidOperationException"></exception>
     /// <exception cref="MimirorgBadRequestException"></exception>
     /// <exception cref="ModelBuilderModuleException"></exception>
-    public async Task<ProjectAm> ResolveProject(ProjectConvertCm projectFile)
+    public async Task<ProjectRequest> ResolveProject(ProjectConvertResponse projectFile)
     {
         if (projectFile == null)
             throw new MimirorgInvalidOperationException("ProjectFile is null");
@@ -82,7 +82,7 @@ public class ProjectFileService : IProjectFileService
         await using var stream = new MemoryStream();
         await file.CopyToAsync(stream, cancellationToken);
         var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-        await ImportProject(new ProjectConvertCm { ParserId = id, FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
+        await ImportProject(new ProjectConvertResponse { ParserId = id, FileContent = fileContent, Filename = file.FileName, FileFormat = fileFormat });
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public class ProjectFileService : IProjectFileService
     /// <returns></returns>
     /// <exception cref="MimirorgInvalidOperationException"></exception>
     /// <exception cref="MimirorgNullReferenceException"></exception>
-    public async Task<ProjectConvertCm> ConvertProject(ProjectConvertAm projectConverter)
+    public async Task<ProjectConvertResponse> ConvertProject(ProjectConvertRequest projectConverter)
     {
         if (projectConverter.ParserId == Guid.Empty)
         {
@@ -111,7 +111,7 @@ public class ProjectFileService : IProjectFileService
             throw new MimirorgNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
         var bytes = await par.SerializeProject(project);
-        var projectFile = new ProjectConvertCm
+        var projectFile = new ProjectConvertResponse
         {
             FileContent = Encoding.UTF8.GetString(bytes),
             ParserId = projectConverter.ParserId,
@@ -131,7 +131,7 @@ public class ProjectFileService : IProjectFileService
     /// <param name="projectFile"></param>
     /// <returns></returns>
     /// <exception cref="MimirorgInvalidOperationException"></exception>
-    private async Task ImportProject(ProjectConvertCm projectFile)
+    private async Task ImportProject(ProjectConvertResponse projectFile)
     {
         if (projectFile == null)
             throw new MimirorgInvalidOperationException("ProjectFile is null");

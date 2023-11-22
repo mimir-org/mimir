@@ -13,5 +13,5 @@ public interface IConnectorService
     /// <param name="id"></param>
     /// <returns>The block</returns>
     /// <exception cref="MimirorgNotFoundException">Throws if the block does not exist</exception>
-    Task<ConnectorCm> Get(Guid id);
+    Task<ConnectorResponse> Get(Guid id);
 }

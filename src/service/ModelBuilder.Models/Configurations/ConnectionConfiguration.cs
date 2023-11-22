@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Mb.Models.Configurations;
 
 #region ConnectionConfiguration
-public class ConnectionConfiguration : IEntityTypeConfiguration<ConnectionDm>
+public class ConnectionConfiguration : IEntityTypeConfiguration<Connection>
 {
-    public void Configure(EntityTypeBuilder<ConnectionDm> builder)
+    public void Configure(EntityTypeBuilder<Connection> builder)
     {
         builder.HasKey(x => x.Id);
         builder.ToTable("Connection");

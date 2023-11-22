@@ -7,20 +7,20 @@ namespace Mb.Models.Records;
 
 public record ProjectData
 {
-    public List<BlockDm> Blocks { get; init; } = new();
-    public List<ConnectionDm> Connections { get; init; } = new();
-    public List<AttributeDm> Attributes { get; init; } = new();
-    public List<ConnectorTerminalDm> Terminals { get; init; } = new();
-    public List<ConnectorRelationDm> Relations { get; init; } = new();
+    public List<Block> Blocks { get; init; } = new();
+    public List<Connection> Connections { get; init; } = new();
+    public List<Attribute> Attributes { get; init; } = new();
+    public List<Connector> Connectors { get; init; } = new();
+    //public List<ConnectorRelationDm> Relations { get; init; } = new();
 
     /// <summary>
     /// Deconstruct and flatten connections 
     /// </summary>
     /// <param name="project">Project to be deconstructed</param>
-    public Task DeconstructAttributes(ProjectDm project)
+    public Task DeconstructAttributes(Project project)
     {
         var blockAttributes = project.Blocks.Select(x => x.Attributes).SelectMany(y => y).ToList();
-        var connectorAttributes = project.Blocks.SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().SelectMany(y => y.Attributes).ToList();
+        var connectorAttributes = project.Blocks.SelectMany(x => x.Connectors).SelectMany(y => y.Attributes).ToList();
 
         var allAttributes = blockAttributes
             .Union(connectorAttributes)
@@ -34,7 +34,7 @@ public record ProjectData
     /// Deconstruct and flatten blocks
     /// </summary>
     /// <param name="project">Project to be deconstructed</param>
-    public Task DeconstructBlocks(ProjectDm project)
+    public Task DeconstructBlocks(Project project)
     {
         if (project?.Blocks == null || !project.Blocks.Any())
             return Task.CompletedTask;
@@ -43,44 +43,44 @@ public record ProjectData
         return Task.CompletedTask;
     }
 
-    /// <summary>
-    /// Deconstruct terminals
-    /// </summary>
-    /// <param name="project">The project to be deconstructed</param>
-    public Task DeconstructTerminals(ProjectDm project)
-    {
-        if (project == null)
-            return Task.CompletedTask;
+    ///// <summary>
+    ///// Deconstruct terminals
+    ///// </summary>
+    ///// <param name="project">The project to be deconstructed</param>
+    //public Task DeconstructTerminals(Project project)
+    //{
+    //    if (project == null)
+    //        return Task.CompletedTask;
 
-        var blockTerminals = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorTerminalDm>().ToList();
+    //    var blockTerminals = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).Where(x=>x.TypeConnector == Enums.RelationType.Terminal).ToList();
 
-        var terminals = blockTerminals
-            .ToList();
+    //    var terminals = blockTerminals
+    //        .ToList();
 
-        Terminals.AddRange(terminals);
-        return Task.CompletedTask;
-    }
+    //    Terminals.AddRange(terminals);
+    //    return Task.CompletedTask;
+    //}
 
-    /// <summary>
-    /// Deconstruct relations
-    /// </summary>
-    /// <param name="project">The project to be deconstructed</param>
-    public Task DeconstructRelations(ProjectDm project)
-    {
-        if (project == null)
-            return Task.CompletedTask;
+    ///// <summary>
+    ///// Deconstruct relations
+    ///// </summary>
+    ///// <param name="project">The project to be deconstructed</param>
+    //public Task DeconstructRelations(Project project)
+    //{
+    //    if (project == null)
+    //        return Task.CompletedTask;
 
-        var blockRelations = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
+    //    var blockRelations = project.Blocks.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<ConnectorRelationDm>().ToList();
 
-        Relations.AddRange(blockRelations);
-        return Task.CompletedTask;
-    }
+    //    Relations.AddRange(blockRelations);
+    //    return Task.CompletedTask;
+    //}
 
     /// <summary>
     /// Deconstruct and flatten connections
     /// </summary>
     /// <param name="project">The project to be deconstructed</param>
-    public Task DeconstructConnections(ProjectDm project)
+    public Task DeconstructConnections(Project project)
     {
         if (project.Connections == null || !project.Connections.Any())
             return Task.CompletedTask;

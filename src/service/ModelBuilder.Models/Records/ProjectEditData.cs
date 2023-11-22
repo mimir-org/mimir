@@ -3,43 +3,40 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 using Mimirorg.Common.Extensions;
-using AttributeDm = Mb.Models.Data.AttributeDm;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Records;
 
 public record ProjectEditData
 {
-    public List<BlockDm> BlockCreate { get; init; } = new();
-    public List<BlockDm> BlockUpdate { get; init; } = new();
-    public List<BlockDm> BlockDelete { get; init; } = new();
+    public List<Block> BlockCreate { get; init; } = new();
+    public List<Block> BlockUpdate { get; init; } = new();
+    public List<Block> BlockDelete { get; init; } = new();
 
-    public List<ConnectionDm> ConnectionCreate { get; init; } = new();
-    public List<ConnectionDm> ConnectionUpdate { get; init; } = new();
-    public List<ConnectionDm> ConnectionDelete { get; init; } = new();
+    public List<Connection> ConnectionCreate { get; init; } = new();
+    public List<Connection> ConnectionUpdate { get; init; } = new();
+    public List<Connection> ConnectionDelete { get; init; } = new();
 
-    public List<AttributeDm> AttributeCreate { get; init; } = new();
-    public List<AttributeDm> AttributeUpdate { get; init; } = new();
-    public List<AttributeDm> AttributeDelete { get; init; } = new();
+    public List<Attribute> AttributeCreate { get; init; } = new();
+    public List<Attribute> AttributeUpdate { get; init; } = new();
+    public List<Attribute> AttributeDelete { get; init; } = new();
 
-    public List<ConnectorRelationDm> RelationCreate { get; init; } = new();
-    public List<ConnectorRelationDm> RelationUpdate { get; init; } = new();
-    public List<ConnectorRelationDm> RelationDelete { get; init; } = new();
+    public List<Connector> RelationCreate { get; init; } = new();
+    public List<Connector> RelationUpdate { get; init; } = new();
+    public List<Connector> RelationDelete { get; init; } = new();
 
-    public List<ConnectorTerminalDm> TerminalCreate { get; init; } = new();
-    public List<ConnectorTerminalDm> TerminalUpdate { get; init; } = new();
-    public List<ConnectorTerminalDm> TerminalDelete { get; init; } = new();
+    public List<Connector> Connectors { get; init; } = new();
+    
 
-    public List<ConnectionDm> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
-    public List<BlockDm> BlockCreateAndDelete => BlockCreate.Union(BlockDelete).ToList();
-    public List<AttributeDm> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
-    public List<ConnectorRelationDm> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();
-    public List<ConnectorTerminalDm> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
+    public List<Connection> ConnectionCreateAndDelete => ConnectionCreate.Union(ConnectionDelete).ToList();
+    public List<Block> BlockCreateAndDelete => BlockCreate.Union(BlockDelete).ToList();
+    public List<Attribute> AttributeCreateAndDelete => AttributeCreate.Union(AttributeDelete).ToList();
+    public List<Connector> RelationCreateAndDelete => RelationCreate.Union(RelationDelete).ToList();    
 
-    public List<BlockDm> BlockUpdateInsert => BlockUpdate.Union(BlockCreate).ToList();
-    public List<ConnectorTerminalDm> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
-    public List<ConnectorRelationDm> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
-    public List<AttributeDm> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
-    public List<ConnectionDm> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
+    public List<Block> BlockUpdateInsert => BlockUpdate.Union(BlockCreate).ToList();    
+    public List<Connector> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
+    public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
+    public List<Connection> ConnectionUpdateInsert => ConnectionUpdate.Union(ConnectionCreate).ToList();
 
     public async Task ResolveEditData(ProjectData original, ProjectData updated)
     {
@@ -48,8 +45,8 @@ public record ProjectEditData
             Task.Run(() => ResolveConnections(original, updated)),
             Task.Run(() => ResolveBlocks(original, updated)),
             Task.Run(() => ResolveAttributes(original, updated)),
-            Task.Run(() => ResolveRelations(original, updated)),
-            Task.Run(() => ResolveTerminals(original, updated))
+            //Task.Run(() => ResolveRelations(original, updated)),
+            //Task.Run(() => ResolveTerminals(original, updated))
         };
 
         await Task.WhenAll(tasks);
@@ -144,57 +141,57 @@ public record ProjectEditData
 
     #region Relations
 
-    private async Task ResolveRelations(ProjectData original, ProjectData updated)
-    {
-        var tasks = new List<Task>
-        {
-            Task.Run(() => FindDeletedRelations(original, updated)),
-            Task.Run(() => FindCreatedRelations(original, updated))
-        };
-        await Task.WhenAll(tasks);
-        var dict = updated.Relations.ToDictionary(x => x.Id, x => x);
-        RelationUpdate.AddRange(original.Relations.Exclude(RelationCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
-    }
+    //private async Task ResolveRelations(ProjectData original, ProjectData updated)
+    //{
+    //    var tasks = new List<Task>
+    //    {
+    //        Task.Run(() => FindDeletedRelations(original, updated)),
+    //        Task.Run(() => FindCreatedRelations(original, updated))
+    //    };
+    //    await Task.WhenAll(tasks);
+    //    var dict = updated.Relations.ToDictionary(x => x.Id, x => x);
+    //    RelationUpdate.AddRange(original.Relations.Exclude(RelationCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
+    //}
 
-    private Task FindDeletedRelations(ProjectData original, ProjectData updated)
-    {
-        RelationDelete.AddRange(original.Relations.Exclude(updated.Relations, x => x.Id));
-        return Task.CompletedTask;
-    }
+    //private Task FindDeletedRelations(ProjectData original, ProjectData updated)
+    //{
+    //    RelationDelete.AddRange(original.Relations.Exclude(updated.Relations, x => x.Id));
+    //    return Task.CompletedTask;
+    //}
 
-    private Task FindCreatedRelations(ProjectData original, ProjectData updated)
-    {
-        RelationCreate.AddRange(updated.Relations.Exclude(original.Relations, x => x.Id));
-        return Task.CompletedTask;
-    }
+    //private Task FindCreatedRelations(ProjectData original, ProjectData updated)
+    //{
+    //    RelationCreate.AddRange(updated.Relations.Exclude(original.Relations, x => x.Id));
+    //    return Task.CompletedTask;
+    //}
 
-    #endregion
+    //#endregion
 
-    #region Terminals
+    //#region Terminals
 
-    private async Task ResolveTerminals(ProjectData original, ProjectData updated)
-    {
-        var tasks = new List<Task>
-        {
-            Task.Run(() => FindDeletedTerminals(original, updated)),
-            Task.Run(() => FindCreatedTerminals(original, updated))
-        };
-        await Task.WhenAll(tasks);
-        var dict = updated.Terminals.ToDictionary(x => x.Id, x => x);
-        TerminalUpdate.AddRange(original.Terminals.Exclude(TerminalCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
-    }
+    //private async Task ResolveTerminals(ProjectData original, ProjectData updated)
+    //{
+    //    var tasks = new List<Task>
+    //    {
+    //        Task.Run(() => FindDeletedTerminals(original, updated)),
+    //        Task.Run(() => FindCreatedTerminals(original, updated))
+    //    };
+    //    await Task.WhenAll(tasks);
+    //    var dict = updated.Terminals.ToDictionary(x => x.Id, x => x);
+    //    TerminalUpdate.AddRange(original.Terminals.Exclude(TerminalCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
+    //}
 
-    private Task FindDeletedTerminals(ProjectData original, ProjectData updated)
-    {
-        TerminalDelete.AddRange(original.Terminals.Exclude(updated.Terminals, x => x.Id));
-        return Task.CompletedTask;
-    }
+    //private Task FindDeletedTerminals(ProjectData original, ProjectData updated)
+    //{
+    //    TerminalDelete.AddRange(original.Terminals.Exclude(updated.Terminals, x => x.Id));
+    //    return Task.CompletedTask;
+    //}
 
-    private Task FindCreatedTerminals(ProjectData original, ProjectData updated)
-    {
-        TerminalCreate.AddRange(updated.Terminals.Exclude(original.Terminals, x => x.Id));
-        return Task.CompletedTask;
-    }
+    //private Task FindCreatedTerminals(ProjectData original, ProjectData updated)
+    //{
+    //    TerminalCreate.AddRange(updated.Terminals.Exclude(original.Terminals, x => x.Id));
+    //    return Task.CompletedTask;
+    //}
 
     #endregion
 }

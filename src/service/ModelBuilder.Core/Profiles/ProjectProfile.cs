@@ -10,11 +10,10 @@ public class ProjectProfile : Profile
 {
     public ProjectProfile()
     {
-        CreateMap<ProjectAm, ProjectDm>()
+        CreateMap<ProjectRequest, Project>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))            
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -23,11 +22,10 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-        CreateMap<ProjectDm, ProjectCm>()
+        CreateMap<Project, ProjectResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))            
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -36,11 +34,11 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-        CreateMap<ProjectDm, ProjectAm>()
+        CreateMap<Project, ProjectRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SubProject, opt => opt.MapFrom(src => src.SubProject))
+            
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
             .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -49,27 +47,5 @@ public class ProjectProfile : Profile
             .ForMember(dest => dest.Blocks, opt => opt.MapFrom(src => src.Blocks))
             .ForMember(dest => dest.Connections, opt => opt.MapFrom(src => src.Connections));
 
-        CreateMap<ProjectDm, LibrarySubProjectVersion>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
-
-        CreateMap<LibrarySubProjectVersion, ProjectDm>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version));
-
-        CreateMap<ProjectDm, LibrarySubProject>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.Versions, opt => opt.Ignore());
-
-        CreateMap<LibrarySubProject, ProjectDm>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
     }
 }

@@ -8,11 +8,11 @@ namespace Mb.Core.Controllers.temp
 {
     public class ProjectSearchResultCm
     {
-        public ICollection<ProjectCm> Projects { get; set; } = new List<ProjectCm>();
+        public ICollection<ProjectResponse> Projects { get; set; } = new List<ProjectResponse>();
 
         public void CreateDummyData()
         {
-            Projects.Add(new ProjectCm
+            Projects.Add(new ProjectResponse
             {
                 Id = "example.com_1234",
                 Description = "This is a description",
@@ -20,7 +20,7 @@ namespace Mb.Core.Controllers.temp
                 Updated = DateTime.Now.AddDays(-5),
                 UpdatedBy = "reidar-liabo@gmail.com",
                 Version = "1.0",
-                Connections = new List<ConnectionCm>(),
+                Connections = new List<ConnectionResponse>(),
                 Blocks = CreateDummyBlocks(),
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Liabø",
@@ -28,32 +28,32 @@ namespace Mb.Core.Controllers.temp
             });
         }
 
-        private ICollection<BlockCm> CreateDummyBlocks()
+        private ICollection<BlockResponse> CreateDummyBlocks()
         {
-            var obj = new List<BlockCm>();
+            var obj = new List<BlockResponse>();
 
-            obj.Add(new BlockCm
+            obj.Add(new BlockResponse
             {
                 Id = "example.com_3456",
                 Created = DateTime.Now,
                 CreatedBy = "Reidar Laibø",
                 Aspect = Aspect.Function,
                 BlockType = BlockType.Aspect,
-                Attributes = new List<AttributeCm>
+                Attributes = new List<AttributeResponse>
                 {
-                    new AttributeCm
+                    new AttributeResponse
                     {
                         Id = "example.com_hoig64tfd",
                         Name = "Test Attribute",
                         Block = "example.com_3456"
                     }
                 },
-                Connectors = new List<ConnectorCm>
+                Connectors = new List<ConnectorResponse>
                 {
                     new ConnectorPartOfCm
                     {
                         Id = "example.com_cp123",
-                        Block = "example.com_3456",
+                        BlockId = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fgerde-in",
@@ -62,12 +62,12 @@ namespace Mb.Core.Controllers.temp
                     new ConnectorTerminalCm()
                     {
                         Id = "example.com_cp234",
-                        Block = "example.com_3456",
+                        BlockId = "example.com_3456",
                         Name = "Part Of A",
                         Direction = ConnectorDirection.Output,
                         Inside = "example.com_fge2rde-in",
                         Outside = "example.com_fge2rde-out",
-                        Attributes = new List<AttributeCm>(),
+                        Attributes = new List<AttributeResponse>(),
                         Color = "#CCCCCC",
 
                     }

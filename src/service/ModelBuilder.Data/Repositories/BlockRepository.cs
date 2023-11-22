@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Mb.Data.Repositories;
 
-public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>, IBlockRepository
+public class BlockRepository : GenericRepository<ModelBuilderDbContext, Block>, IBlockRepository
 {
     private readonly IConnectorRepository _connectorRepository;
     private readonly IAttributeRepository _attributeRepository;
@@ -30,7 +30,7 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
         _modelBuilderProcRepository = modelBuilderProcRepository;
     }
 
-    public IEnumerable<(BlockDm block, WorkerStatus status)> UpdateInsert(ICollection<BlockDm> original, ProjectDm project,
+    public IEnumerable<(Block block, WorkerStatus status)> UpdateInsert(ICollection<Block> original, Project project,
         string invokedByDomain)
     {
         if (project?.Blocks == null || !project.Blocks.Any())
@@ -38,7 +38,7 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
 
         var newBlocks = original != null
             ? project.Blocks.Where(x => original.All(y => y.Id != x.Id)).ToList()
-            : new List<BlockDm>();
+            : new List<Block>();
 
         foreach (var block in project.Blocks)
         {
@@ -75,10 +75,10 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
         }
     }
 
-    public IEnumerable<(BlockDm block, WorkerStatus status)> DeleteBlocks(ICollection<BlockDm> delete, string projectId,
+    public IEnumerable<(Block block, WorkerStatus status)> DeleteBlocks(ICollection<Block> delete, string projectId,
         string invokedByDomain)
     {
-        var returnValues = new List<(BlockDm connection, WorkerStatus status)>();
+        var returnValues = new List<(Block connection, WorkerStatus status)>();
 
         if (delete == null || projectId == null || !delete.Any())
             return returnValues;
@@ -100,7 +100,7 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
     /// </summary>
     /// <param name="id">Block id</param>
     /// <returns>Complete block</returns>
-    public Task<BlockDm> GetAsyncComplete(Guid id)
+    public Task<Block> GetAsyncComplete(Guid id)
     {
         if (id == Guid.Empty)
             throw new MimirorgNullReferenceException("The Id can't be null.");
@@ -110,8 +110,8 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
         if (block == null)
             throw new MimirorgNotFoundException($"The block with id {id} can't be found.");
 
-        block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.Block == id).ToList());
-        block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.Block == block.Id).ToList());
+        block.Connectors.AddRange(_connectorRepository.GetAll().Where(x => x.BlockId == id).ToList());
+        block.Attributes.AddRange(_attributeRepository.GetAll().Where(x => x.BlockId == block.Id).ToList());
 
         return Task.FromResult(block);
     }
@@ -122,20 +122,17 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn"></param>
     /// <param name="blocks">The blocks to be upserted</param>
-    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks)
+    public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Block> blocks)
     {
         if (blocks == null || !blocks.Any())
             return;
 
-        bulk.Setup<BlockDm>()
+        bulk.Setup<Block>()
             .ForCollection(blocks)
             .WithTable("Block")
-            .AddColumn(x => x.Id)
-            .AddColumn(x => x.Rds)
-            .AddColumn(x => x.Description)
-            .AddColumn(x => x.ReferenceType)
-            .AddColumn(x => x.Name)
-            .AddColumn(x => x.Label)
+            .AddColumn(x => x.Id)     
+            .AddColumn(x => x.Description)           
+            .AddColumn(x => x.Name)   
             .AddColumn(x => x.PositionTree)
             .AddColumn(x => x.PositionBlock)
             .AddColumn(x => x.IsLocked)
@@ -144,14 +141,9 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
             .AddColumn(x => x.UpdatedBy)
             .AddColumn(x => x.Updated)
             .AddColumn(x => x.Created)
-            .AddColumn(x => x.CreatedBy)
-            .AddColumn(x => x.LibraryType)
-            .AddColumn(x => x.Version)
+            .AddColumn(x => x.CreatedBy)        
             .AddColumn(x => x.Aspect)
-            .AddColumn(x => x.BlockType)
-            .AddColumn(x => x.MainProject)
-            .AddColumn(x => x.Symbol)
-            .AddColumn(x => x.Purpose)
+            .AddColumn(x => x.BlockType)     
             .AddColumn(x => x.Project)
             .BulkInsertOrUpdate()
             .MatchTargetOn(x => x.Id)
@@ -164,12 +156,12 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="blocks">The blocks to be deleted</param>
-    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<BlockDm> blocks)
+    public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Block> blocks)
     {
         if (blocks == null || !blocks.Any())
             return;
 
-        bulk.Setup<BlockDm>()
+        bulk.Setup<Block>()
             .ForCollection(blocks)
             .WithTable("Block")
             .AddColumn(x => x.Id)
@@ -184,12 +176,12 @@ public class BlockRepository : GenericRepository<ModelBuilderDbContext, BlockDm>
     /// <param name="bulk">Bulk operations</param>
     /// <param name="conn">Sql Connection</param>
     /// <param name="lockDms">The attributes to be updated</param>
-    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
+    public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Lock> lockDms)
     {
         if (lockDms == null || !lockDms.Any())
             return;
 
-        bulk.Setup<LockDm>()
+        bulk.Setup<Lock>()
             .ForCollection(lockDms)
             .WithTable("Block")
             .AddColumn(x => x.Id)

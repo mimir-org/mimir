@@ -16,7 +16,7 @@ public static class ProjectExtensions
     /// <param name="project">Extended project</param>
     /// <param name="ontologyService">Ontology service</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-    public static void AssertGraph(this ProjectDm project, IOntologyService ontologyService)
+    public static void AssertGraph(this Project project, IOntologyService ontologyService)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -47,7 +47,7 @@ public static class ProjectExtensions
     /// <param name="ontologyService">Ontology service</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if project or ontology service is null</exception>
-    public static void ResolveProjectInformation(this ProjectAm project, IOntologyService ontologyService)
+    public static void ResolveProjectInformation(this ProjectRequest project, IOntologyService ontologyService)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -76,12 +76,12 @@ public static class ProjectExtensions
     /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
     /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
     /// <exception cref="MimirorgBadRequestException">Throws if missing root blocks in rdf file, or bad rdf declaration</exception>
-    public static void ResolveBlocks(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+    public static void ResolveBlocks(this ProjectRequest project, IOntologyService ontologyService, ProjectData projectData)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
 
-        project.Blocks = new List<BlockAm>();
+        project.Blocks = new List<BlockRequest>();
 
         // Resolve root blocks
         var rootBlocks = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
@@ -91,7 +91,7 @@ public static class ProjectExtensions
 
         foreach (var n in rootBlocks)
         {
-            var block = new BlockAm();
+            var block = new BlockRequest();
             block.ResolveBlock(ontologyService, n.ToString(), project.Id.ToString(), BlockType.Root, projectData);
             project.Blocks.Add(block);
         }
@@ -103,7 +103,7 @@ public static class ProjectExtensions
 
         foreach (var n in blocks)
         {
-            var block = new BlockAm();
+            var block = new BlockRequest();
             block.ResolveBlock(ontologyService, n.ToString(), project.Id.ToString(), BlockType.Aspect, projectData);
             project.Blocks.Add(block);
         }
@@ -116,7 +116,7 @@ public static class ProjectExtensions
     /// <param name="ontologyService">Ontology service</param>
     /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
     /// <exception cref="NullReferenceException">Throws if ontology service or project is null</exception>
-    public static void ResolveRelationConnections(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
+    public static void ResolveRelationConnections(this ProjectRequest project, IOntologyService ontologyService, ProjectData projectData)
     {
         if (project == null || ontologyService == null)
             throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -135,11 +135,11 @@ public static class ProjectExtensions
         var hasLocationRelations = ResolveRelations(RelationType.HasLocation, ontologyService);
 
         var relations = partOfRelations.Union(fullFilledByRelations).Union(hasLocationRelations).ToList();
-        project.Connections ??= new List<ConnectionAm>();
+        project.Connections ??= new List<ConnectionRequest>();
 
         foreach (var relation in relations)
         {
-            var connection = new ConnectionAm();
+            var connection = new ConnectionRequest();
             connection.ResolveConnection(ontologyService, project, relation, projectData);
             project.Connections.Add(connection);
         }

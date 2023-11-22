@@ -38,30 +38,30 @@ public class ParserModule : IModelBuilderParser
         return new List<Profile>();
     }
 
-    public ModuleDescriptionDm GetModuleDescription()
+    public ModuleDescription GetModuleDescription()
     {
-        return new ModuleDescriptionDm
+        return new ModuleDescription
         {
             Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581"),
             Name = "Mimir RDF N-Triples"
         };
     }
 
-    public Task<byte[]> SerializeProject(ProjectDm project)
+    public Task<byte[]> SerializeProject(Project project)
     {
         _ontologyService.BuildProject(project);
         var bytes = _ontologyService.GetBytes<NTriplesWriter>();
         return Task.FromResult(bytes);
     }
 
-    public Task<ProjectDm> DeserializeProject(byte[] data)
+    public Task<Project> DeserializeProject(byte[] data)
     {
         var projectAm = DeserializeProjectAm(data);
-        var project = _mapper.Map<ProjectDm>(projectAm);
+        var project = _mapper.Map<Project>(projectAm);
         return Task.FromResult(project);
     }
 
-    public Task<ProjectAm> DeserializeProjectAm(byte[] data)
+    public Task<ProjectRequest> DeserializeProjectAm(byte[] data)
     {
         var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
         IGraph graph = new Graph();

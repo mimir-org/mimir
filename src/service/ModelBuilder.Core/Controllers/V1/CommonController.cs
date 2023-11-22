@@ -98,7 +98,7 @@ public class CommonController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("parser")]
-    [ProducesResponseType(typeof(ICollection<ModuleDescriptionDm>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ICollection<ModuleDescription>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

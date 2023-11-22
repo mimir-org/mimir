@@ -6,7 +6,7 @@
   
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RootNamespace>Mb.Api</RootNamespace>
+    <RootNamespace>Mb.Api</RootNamespace>    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

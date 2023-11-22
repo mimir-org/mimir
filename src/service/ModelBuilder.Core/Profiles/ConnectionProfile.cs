@@ -12,7 +12,7 @@ public class ConnectionProfile : Profile
     {
         #region Connection
 
-        CreateMap<ConnectionAm, ConnectionDm>()
+        CreateMap<ConnectionRequest, Connection>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
             .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
@@ -20,21 +20,21 @@ public class ConnectionProfile : Profile
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
             .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.Handles)));
 
-        CreateMap<ConnectionDm, ConnectionCm>()
+        CreateMap<Connection, ConnectionResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
             .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
-            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleCm>(src.Handles)));
+            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleResponse>(src.Handles)));
 
-        CreateMap<ConnectionDm, ConnectionAm>()
+        CreateMap<Connection, ConnectionRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.FromConnector, opt => opt.MapFrom(src => src.FromConnector))
             .ForMember(dest => dest.ToConnector, opt => opt.MapFrom(src => src.ToConnector))
             .ForMember(dest => dest.MainProject, opt => opt.MapFrom(src => src.MainProject))
             .ForMember(dest => dest.Project, opt => opt.MapFrom(src => src.Project))
-            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleAm>(src.Handles)));
+            .ForMember(dest => dest.Handles, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<HandleRequest>(src.Handles)));
 
         #endregion Connection
 
@@ -43,30 +43,30 @@ public class ConnectionProfile : Profile
         CreateMap<ConnectionTerminalAm, ConnectionTerminalDm>()
             .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
             .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .IncludeBase<ConnectionAm, ConnectionDm>();
+            .IncludeBase<ConnectionRequest, Connection>();
 
         CreateMap<ConnectionTerminalDm, ConnectionTerminalCm>()
             .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
             .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .IncludeBase<ConnectionDm, ConnectionCm>();
+            .IncludeBase<Connection, ConnectionResponse>();
 
         CreateMap<ConnectionTerminalDm, ConnectionTerminalAm>()
             .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
             .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .IncludeBase<ConnectionDm, ConnectionAm>();
+            .IncludeBase<Connection, ConnectionRequest>();
 
         #endregion ConnectionTerminal
 
         #region ConnectionRelation
 
         CreateMap<ConnectionRelationAm, ConnectionRelationDm>()
-            .IncludeBase<ConnectionAm, ConnectionDm>();
+            .IncludeBase<ConnectionRequest, Connection>();
 
         CreateMap<ConnectionRelationDm, ConnectionRelationCm>()
-            .IncludeBase<ConnectionDm, ConnectionCm>();
+            .IncludeBase<Connection, ConnectionResponse>();
 
         CreateMap<ConnectionRelationDm, ConnectionRelationAm>()
-            .IncludeBase<ConnectionDm, ConnectionAm>();
+            .IncludeBase<Connection, ConnectionRequest>();
 
         #endregion ConnectionRelation
 

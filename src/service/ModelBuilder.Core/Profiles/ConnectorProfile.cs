@@ -9,115 +9,38 @@ public class ConnectorProfile : Profile
 {
     public ConnectorProfile()
     {
-        #region Connector
 
-        CreateMap<ConnectorAm, ConnectorDm>()
+        CreateMap<ConnectorRequest, Connector>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
+            .ForMember(dest => dest.BlockId, opt => opt.MapFrom(src => src.BlockId));
 
-        CreateMap<ConnectorDm, ConnectorCm>()
+        CreateMap<Connector, ConnectorResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block))
+            .ForMember(dest => dest.BlockId, opt => opt.MapFrom(src => src.BlockId))
             .ForMember(dest => dest.Domain, opt => opt.Ignore());
 
-        CreateMap<ConnectorDm, ConnectorAm>()
+        CreateMap<Connector, ConnectorRequest>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => src.Direction))
             .ForMember(dest => dest.Inside, opt => opt.MapFrom(src => src.Inside))
             .ForMember(dest => dest.Outside, opt => opt.MapFrom(src => src.Outside))
-            .ForMember(dest => dest.Block, opt => opt.MapFrom(src => src.Block));
+            .ForMember(dest => dest.BlockId, opt => opt.MapFrom(src => src.BlockId));
 
-        #endregion Connector
 
-        #region ConnectorTerminal
-
-        CreateMap<ConnectorTerminalAm, ConnectorTerminalDm>()
+        CreateMap<ConnectorRequest, Connector>()
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
+            .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
             .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorAm, ConnectorDm>();
-
-        CreateMap<ConnectorTerminalDm, ConnectorTerminalCm>()
-            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
-            .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-            .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorDm, ConnectorCm>();
-
-        CreateMap<ConnectorTerminalDm, ConnectorTerminalAm>()
-            .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-            .ForMember(dest => dest.TerminalType, opt => opt.MapFrom(src => src.TerminalType))
-            .ForMember(dest => dest.TerminalParentType, opt => opt.MapFrom(src => src.TerminalParentType))
-            .ForMember(dest => dest.ReferenceType, opt => opt.MapFrom(src => src.ReferenceType))
-            .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-            .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-            .IncludeBase<ConnectorDm, ConnectorAm>();
-
-        #endregion ConnectorTerminal
-
-        #region ConnectorRelation
-
-        CreateMap<ConnectorRelationAm, ConnectorRelationDm>()
-            .IncludeBase<ConnectorAm, ConnectorDm>();
-
-        CreateMap<ConnectorRelationDm, ConnectorRelationCm>()
-            .IncludeBase<ConnectorDm, ConnectorCm>();
-
-        CreateMap<ConnectorRelationDm, ConnectorRelationAm>()
-            .IncludeBase<ConnectorDm, ConnectorAm>();
-
-        #endregion ConnectorRelation
-
-        #region ConnectorFulfilledBy
-
-        CreateMap<ConnectorFulfilledByAm, ConnectorFulfilledByDm>()
-            .IncludeBase<ConnectorRelationAm, ConnectorRelationDm>();
-
-        CreateMap<ConnectorFulfilledByDm, ConnectorFulfilledByCm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationCm>();
-
-        CreateMap<ConnectorFulfilledByDm, ConnectorFulfilledByAm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationAm>();
-
-        #endregion ConnectorFulfilledBy
-
-        #region ConnectorHasLocation
-
-        CreateMap<ConnectorHasLocationAm, ConnectorHasLocationDm>()
-            .IncludeBase<ConnectorRelationAm, ConnectorRelationDm>();
-
-        CreateMap<ConnectorHasLocationDm, ConnectorHasLocationCm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationCm>();
-
-        CreateMap<ConnectorHasLocationDm, ConnectorHasLocationAm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationAm>();
-
-        #endregion ConnectorHasLocation
-
-        #region ConnectorPartOf
-
-        CreateMap<ConnectorPartOfAm, ConnectorPartOfDm>()
-            .IncludeBase<ConnectorRelationAm, ConnectorRelationDm>();
-
-        CreateMap<ConnectorPartOfDm, ConnectorPartOfCm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationCm>();
-
-        CreateMap<ConnectorPartOfDm, ConnectorPartOfAm>()
-            .IncludeBase<ConnectorRelationDm, ConnectorRelationAm>();
-
-        #endregion ConnectorPartOf
+            ;
     }
 }
