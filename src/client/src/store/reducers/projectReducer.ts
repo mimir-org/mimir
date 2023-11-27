@@ -14,7 +14,7 @@ import {ApiError} from "../../lib/interfaces/ApiError";
  */
 export interface ProjectState {
     fetching: string[];
-    saving: boolean;
+    saving: string[];
     isLocking: boolean;
     project: Project | null;
     projectList: Project[];
@@ -65,7 +65,7 @@ export interface apiErrorAction {
 // Initial state
 const initState: ProjectState = {
     fetching: [],
-    saving: false,
+    saving: [],
     isLocking: false,
     project: null,
     projectList: [],
@@ -107,23 +107,27 @@ export const projectSlice = createSlice({
             state.project = clone(action.payload.project);
         },
         saveProjectInDb: (state, action: PayloadAction<saveProjectToDbAction>) => {
-            state.saving = true;
+            state.saving.push(saveProjectInDb.type);
         },
         saveProjectDbFinished: (state, action: PayloadAction<saveProjectToDbFinishedAction>) => {
             state.project.id = action.payload.guid;
-            state.saving = false;
+            state.saving = state.saving.filter((elem) => elem !== saveProjectInDb.type);
         },
         updateProjectInDb: (state, action: PayloadAction<updateProjectDbAction>) => {
-            state.saving = true;
+            state.saving.push(saveProjectInDb.type);
         },
         updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbFinishedAction>) => {
-            state.saving = false;
+            state.saving = state.saving.filter((elem) => elem !== saveProjectInDb.type);
         },
         setProjectApiError: (state, action: PayloadAction<apiErrorAction>) => {
             state.projectApiError.push({id: CreateId(), error: action.payload.error});
         },
         deleteProjectApiError: (state, action: PayloadAction<string>) => {
             state.projectApiError = state.projectApiError.filter((error) => error.id !== action.payload);
+            // Deleting saving array when user acknowledges that there has been an error saving the project.
+            if(state.saving.length > 0) {
+                state.saving = [];
+            }
         }
     },
 });
