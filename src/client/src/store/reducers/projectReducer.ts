@@ -1,23 +1,24 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit";
-import {Project} from "lib";
-import {AxiosError} from "axios";
+import {CreateId, Project} from "lib";
+import {AxiosError, AxiosResponse} from "axios";
+import {ApiError} from "../../lib/interfaces/ApiError";
 
 // State definition
 /**
  * Project state
  * @property {string[]} fetching - List of fetching actions
- * @property {boolean} creating - Is creating project
+ * @property {boolean} saving - Is saving project
  * @property {boolean} isLocking - Is locking project
  * @property {Project} project - Project
  * @property {Project[]} projectList - List of projects
  */
 export interface ProjectState {
     fetching: string[];
-    creating: boolean;
+    saving: boolean;
     isLocking: boolean;
     project: Project | null;
     projectList: Project[];
-    apiError: AxiosError[];
+    projectApiError: ApiError[];
 }
 
 // Payload action
@@ -45,8 +46,16 @@ export interface saveProjectToDbAction {
     project: Project;
 }
 
+export interface saveProjectToDbFinishedAction {
+    guid: string;
+}
+
 export interface updateProjectDbAction {
     project: Project;
+}
+
+export interface updateProjectDbFinishedAction {
+    response: AxiosResponse;
 }
 
 export interface apiErrorAction {
@@ -56,11 +65,11 @@ export interface apiErrorAction {
 // Initial state
 const initState: ProjectState = {
     fetching: [],
-    creating: false,
+    saving: false,
     isLocking: false,
     project: null,
     projectList: [],
-    apiError: [],
+    projectApiError: [],
 };
 
 function clone<T>(instance: T): T {
@@ -98,20 +107,23 @@ export const projectSlice = createSlice({
             state.project = clone(action.payload.project);
         },
         saveProjectInDb: (state, action: PayloadAction<saveProjectToDbAction>) => {
-            state.creating = true;
+            state.saving = true;
         },
-        saveProjectDbFinished: (state, action: PayloadAction<saveProjectToDbAction>) => {
-            state.project.id = action.payload.project.id;
-            state.creating = false;
+        saveProjectDbFinished: (state, action: PayloadAction<saveProjectToDbFinishedAction>) => {
+            state.project.id = action.payload.guid;
+            state.saving = false;
         },
         updateProjectInDb: (state, action: PayloadAction<updateProjectDbAction>) => {
-            state.creating = true;
+            state.saving = true;
         },
-        updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbAction>) => {
-            state.creating = false;
+        updateProjectInDbFinished: (state, action: PayloadAction<updateProjectDbFinishedAction>) => {
+            state.saving = false;
         },
-        setApiError: (state, action: PayloadAction<apiErrorAction>) => {
-            state.apiError.push(action.payload.error);
+        setProjectApiError: (state, action: PayloadAction<apiErrorAction>) => {
+            state.projectApiError.push({id: CreateId(), error: action.payload.error});
+        },
+        deleteProjectApiError: (state, action: PayloadAction<string>) => {
+            state.projectApiError = state.projectApiError.filter((error) => error.id !== action.payload);
         }
     },
 });
@@ -127,7 +139,8 @@ export const {
     saveProjectDbFinished,
     updateProjectInDb,
     updateProjectInDbFinished,
-    setApiError
+    setProjectApiError,
+    deleteProjectApiError
 } =
     projectSlice.actions;
 export default projectSlice.reducer;

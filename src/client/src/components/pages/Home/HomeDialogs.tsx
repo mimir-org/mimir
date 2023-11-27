@@ -74,7 +74,8 @@ export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryS
     }else{
       dispatch(updateProjectInDb({project}));
     }
-  }
+    onExit();
+  };
 
   const onImportProjectClick = () => {
     console.log("onImportProjectClick");
