@@ -13,7 +13,7 @@ import {
 } from "store/reducers/projectReducer";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from "redux-saga/effects";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 export function* getProject(action: PayloadAction<FetchProjectAction>) {
   try {
@@ -34,19 +34,19 @@ export function* getProjects(action: PayloadAction<FetchProjectsAction>) {
 }
 
 export function* saveProject(action: PayloadAction<saveProjectToDbAction>) {
-  try{
+  try {
     const response: string = yield call(projectApi.createProject, action.payload.project);
-    yield put(saveProjectDbFinished({guid: response}));
-  }catch (error){
-    yield put(setProjectApiError({error}));
+    yield put(saveProjectDbFinished({ guid: response }));
+  } catch (error) {
+    yield put(setProjectApiError({ error }));
   }
 }
 
 export function* updateProject(action: PayloadAction<updateProjectDbAction>) {
-  try{
+  try {
     const response: AxiosResponse = yield call(projectApi.updateProject, action.payload.project);
-    yield put(updateProjectInDbFinished({response: response}));
-  }catch (error) {
-    yield put(setProjectApiError({error}));
+    yield put(updateProjectInDbFinished({ response: response }));
+  } catch (error) {
+    yield put(setProjectApiError({ error }));
   }
 }

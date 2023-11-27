@@ -60,11 +60,7 @@ export const AdminTab = ({ block }: AdminTabProps) => {
             <Text variant={"body-small"}>Label</Text>
             <Input defaultValue={block?.label} onChange={(e) => setLabelValue(e.target.value)} />
             <Text variant={"body-small"}>Description</Text>
-            <TextArea
-              height={120}
-              defaultValue={block?.description}
-              onChange={(e) => setDescriptionValue(e.target.value)}
-            />
+            <TextArea height={120} defaultValue={block?.description} onChange={(e) => setDescriptionValue(e.target.value)} />
           </span>
           {block?.label !== labelValue || block?.description !== descriptionValue ? (
             <Flexbox flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>

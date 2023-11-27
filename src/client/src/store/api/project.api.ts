@@ -1,8 +1,8 @@
-import {client} from "store/webclient";
-import {config, Project, ProjectSearchResult} from "lib";
-import {typedJsonSetting} from "store";
-import {TypedJSON} from "typedjson";
-import {AxiosResponse} from "axios";
+import { client } from "store/webclient";
+import { config, Project, ProjectSearchResult } from "lib";
+import { typedJsonSetting } from "store";
+import { TypedJSON } from "typedjson";
+import { AxiosResponse } from "axios";
 
 const _basePath = `${config.API_BASE_URL}project`;
 
@@ -21,7 +21,7 @@ export const projectApi = {
     const r = await client.post<string>(_basePath, project);
     return r.data;
   },
-  async updateProject(project: Project): Promise<AxiosResponse>  {
+  async updateProject(project: Project): Promise<AxiosResponse> {
     return await client.put(_basePath, project);
-  }
+  },
 };

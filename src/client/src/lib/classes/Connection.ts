@@ -74,12 +74,7 @@ export abstract class Connection {
     this.handles.push(handle);
   }
 
-  public abstract toFlowEdge(
-    viewType: ViewType,
-    source: Block,
-    target: Block,
-    theme: Theme
-  ): FlowEdge<Connection>[];
+  public abstract toFlowEdge(viewType: ViewType, source: Block, target: Block, theme: Theme): FlowEdge<Connection>[];
 }
 
 @jsonObject

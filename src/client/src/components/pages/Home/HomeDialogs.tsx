@@ -19,9 +19,9 @@ import { CommonState, setDialogType, setViewType } from "store/reducers/commonRe
 import { DialogType, Position, Project, ViewType } from "lib";
 // import { ConvertSubProjectMenu } from "./components/subMenus/convertSubProject/ConvertSubProjectMenu";
 import { Dispatch } from "redux";
-import {ProjectState, createProject, saveProjectInDb, updateProjectInDb} from "store/reducers/projectReducer";
+import { ProjectState, createProject, saveProjectInDb, updateProjectInDb } from "store/reducers/projectReducer";
 import { LibraryState } from "store/reducers/libraryReducer";
-import {SaveProjectDialog} from "../../dialogs/project/Save/SaveProjectDialog";
+import { SaveProjectDialog } from "../../dialogs/project/Save/SaveProjectDialog";
 
 interface Props {
   dispatch: Dispatch;
@@ -69,10 +69,10 @@ export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryS
   };
 
   const onSaveProject = () => {
-    if(project.id === null) {
-      dispatch(saveProjectInDb({project}));
-    }else{
-      dispatch(updateProjectInDb({project}));
+    if (project.id === null) {
+      dispatch(saveProjectInDb({ project }));
+    } else {
+      dispatch(updateProjectInDb({ project }));
     }
     onExit();
   };
@@ -146,19 +146,15 @@ export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryS
       )}
 
       {commonState.dialog === DialogType.SaveProject && (
-          <SaveProjectDialog
-              onSaveProject={onSaveProject}
-              open={commonState.dialog === DialogType.SaveProject}
-              onExit={onExit}
-          />
+        <SaveProjectDialog onSaveProject={onSaveProject} open={commonState.dialog === DialogType.SaveProject} onExit={onExit} />
       )}
 
       {commonState.dialog === DialogType.CloseProject && (
-          <CloseProjectDialog
-              onCloseProject={onCloseProject}
-              open={commonState.dialog === DialogType.CloseProject}
-              onExit={onExit}
-          />
+        <CloseProjectDialog
+          onCloseProject={onCloseProject}
+          open={commonState.dialog === DialogType.CloseProject}
+          onExit={onExit}
+        />
       )}
 
       {commonState.dialog === DialogType.ImportProject && (
@@ -169,7 +165,6 @@ export const HomeDialogs = ({ dispatch, commonState, projects, project, libraryS
           onExit={onExit}
         />
       )}
-
 
       {commonState.dialog === DialogType.CreateSubProject && (
         <CreateSubProjectDialog

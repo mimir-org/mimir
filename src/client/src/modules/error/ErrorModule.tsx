@@ -9,7 +9,7 @@ import { Modal } from "compLibrary/modal/Modal";
 import { Color } from "../../assets/color/Color";
 import { projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
-import {deleteProjectApiError} from "../../store/reducers/projectReducer";
+import { deleteProjectApiError } from "../../store/reducers/projectReducer";
 
 interface ErrorMessage {
   key: string;
@@ -46,8 +46,8 @@ const ErrorModule = () => {
   useEffect(() => {
     const errorList = [];
 
-    if (projectState.projectApiError) {
-      projectState.projectApiError.forEach((error) => {
+    if (projectState.apiErrors) {
+      projectState.apiErrors.forEach((error) => {
         if (error) errorList.push({ module: "Project", key: error.id, message: error.error.message });
       });
     }
@@ -72,7 +72,7 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [projectState.projectApiError]);
+  }, [projectState.apiErrors]);
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>

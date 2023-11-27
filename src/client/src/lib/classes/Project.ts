@@ -583,12 +583,7 @@ export class Project {
    * @params siblings All other siblings sending to flow.
    * @returns A collection of converted flow nodes.
    */
-  private toFlowParentConnectorTerminalNodes(
-    viewType: ViewType,
-    theme: Theme,
-    parent: Block,
-    siblings: Block[]
-  ): FlowNode[] {
+  private toFlowParentConnectorTerminalNodes(viewType: ViewType, theme: Theme, parent: Block, siblings: Block[]): FlowNode[] {
     if (viewType !== ViewType.Block || parent == null || parent.connectors == null) return [];
     const minMax = this.getMinMax(siblings);
 

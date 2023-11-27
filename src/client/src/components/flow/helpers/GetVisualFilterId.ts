@@ -5,11 +5,7 @@ import { Aspect, Block } from "lib";
 
 export type FilterType = "Category" | "Item";
 
-export const GetVisualFilterId = (
-  source: Block,
-  target: Block,
-  edgeType: EdgeType
-): Record<FilterType, string | null> => {
+export const GetVisualFilterId = (source: Block, target: Block, edgeType: EdgeType): Record<FilterType, string | null> => {
   const record: Record<FilterType, string> = {
     Category: null,
     Item: null,

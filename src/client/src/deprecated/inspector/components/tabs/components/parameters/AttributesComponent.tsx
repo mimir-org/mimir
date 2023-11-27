@@ -41,8 +41,7 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
 
   const handleAttributeChange = (attributeId: string, property: string, value: string) => {
     // Node attributes
-    if (attributesElem instanceof Block)
-      OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
+    if (attributesElem instanceof Block) OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
 
     // Node terminal attributes
     if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof Block) {
