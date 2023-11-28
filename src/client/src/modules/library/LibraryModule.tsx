@@ -68,7 +68,7 @@ export const LibraryModule = () => {
         aspectFilters={aspectFilters}
         selectedNode={null} // TODO: Fix this
         subProjects={libraryState.subProjects}
-        blocks={libraryState.aspectObjectTypes}
+        blocks={libraryState.blockTypes}
       />
     </AnimatedModule>
   );

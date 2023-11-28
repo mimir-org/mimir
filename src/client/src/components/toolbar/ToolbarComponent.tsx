@@ -86,10 +86,10 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
             onAdd={(id) =>
-              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.blockTypes, id, project, dispatch)
             }
             onRemove={(id) =>
-              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.blockTypes, id, project, dispatch)
             }
             items={leftMenuItems}
           />
@@ -99,10 +99,10 @@ export const ToolbarComponent = ({ isVisualFilterOpen }: Props) => {
             borderColor={"#FEF445"}
             onSelect={(id, checked) => onTerminalChecked(project, aspectObject.id, id, checked, dispatch)}
             onAdd={(id) =>
-              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+              onTerminalAdd(aspectObject.id, libraryState.terminalTypes, libraryState.blockTypes, id, project, dispatch)
             }
             onRemove={(id) =>
-              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.aspectObjectTypes, id, project, dispatch)
+              onTerminalRemove(aspectObject.id, libraryState.terminalTypes, libraryState.blockTypes, id, project, dispatch)
             }
             items={rightMenuItems}
           ></OverflowComponent>

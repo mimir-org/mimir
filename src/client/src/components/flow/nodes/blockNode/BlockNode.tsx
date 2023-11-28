@@ -23,11 +23,11 @@ const BlockNode: FC<NodeProps<Block>> = (props: NodeProps<Block>) => {
   const terminalTypes = libraryState.terminalTypes;
 
   const onClickAddTerminal = (terminalId: string) => {
-    onTerminalAdd(props.data.id, terminalTypes, libraryState.aspectObjectTypes, terminalId, project, dispatch);
+    onTerminalAdd(props.data.id, terminalTypes, libraryState.blockTypes, terminalId, project, dispatch);
   };
 
   const onClickRemoveTerminal = (terminalId: string) => {
-    onTerminalRemove(props.data.id, terminalTypes, libraryState.aspectObjectTypes, terminalId, project, dispatch);
+    onTerminalRemove(props.data.id, terminalTypes, libraryState.blockTypes, terminalId, project, dispatch);
   };
 
   const onClickTerminalChecked = (terminalId: string, checked: boolean) => {
