@@ -1,7 +1,7 @@
-import { AspectObject, Connection } from "lib";
+import { Block, Connection } from "lib";
 import * as Types from "./types";
 
-export function cooperateAddNode(node: AspectObject): Types.CooperateActionTypes {
+export function cooperateAddNode(node: Block): Types.CooperateActionTypes {
   return {
     type: Types.COOPERATE_ADD_NODE,
     payload: node,

@@ -4,10 +4,10 @@ import { LibNodeElement } from "./components/collections/components/nodeCollecti
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
 import { BlockLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect, AspectObject, LibrarySubProject } from "lib";
+import { Aspect, Block, LibrarySubProject } from "lib";
 
 interface Props {
-  aspectObjects: BlockLibCm[];
+  blocks: BlockLibCm[];
   libOpen: boolean;
   activeTab: LibraryTab;
   selectedLibNodes: BlockLibCm[];
@@ -18,7 +18,7 @@ interface Props {
   selectedLibNode: BlockLibCm | null;
   setSelectedLibNode: (value: BlockLibCm) => void;
   aspectFilters: Aspect[];
-  selectedNode: AspectObject;
+  selectedNode: Block;
   subProjects: LibrarySubProject[];
 }
 
@@ -28,7 +28,7 @@ interface Props {
  * @returns a component based on active tab
  */
 export const ModuleBody = ({
-  aspectObjects,
+  blocks,
   libOpen,
   activeTab,
   selectedLibNodes,
@@ -49,7 +49,7 @@ export const ModuleBody = ({
   return (
     <ModuleContent libOpen={libOpen}>
       {showCollections &&
-        aspectObjects?.map((node) => {
+        blocks?.map((node) => {
           return (
             <LibNodeElement
               key={node.id}

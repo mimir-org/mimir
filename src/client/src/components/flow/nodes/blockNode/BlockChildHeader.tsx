@@ -2,10 +2,10 @@ import { TerminalsMenuComponent } from "components/flow/terminals/TerminalsMenuC
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockNode.styled";
 import { Tooltip } from "compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "hooks/useIsOverflowing";
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   inputConnectors: Connector[];
   outputConnectors: Connector[];
   onClickTerminalChecked: (terminalId: string, checked: boolean) => void;

@@ -15,7 +15,7 @@ import {
   OnAddNodeTerminalAttribute,
 } from "../shared/components/parametersContent/handlers/OnChangeAttributeValue";
 import { OnLockParameter } from "../shared/components/parametersContent/handlers/OnLockParameter";
-import { AspectObject, Attribute, ConnectorTerminal } from "lib";
+import { Block, Attribute, ConnectorTerminal } from "lib";
 import { CommonState } from "store/reducers/commonReducer";
 
 interface Props {
@@ -41,11 +41,10 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
 
   const handleAttributeChange = (attributeId: string, property: string, value: string) => {
     // Node attributes
-    if (attributesElem instanceof AspectObject)
-      OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
+    if (attributesElem instanceof Block) OnChangeNodeAttributeValue(attributeId, attributesElem.id, property, value, dispatch);
 
     // Node terminal attributes
-    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof Block) {
       OnChangeNodeTerminalAttributeValue(attributeId, inspectorParentElem.id, attributesElem.id, property, value, dispatch);
     }
   };
@@ -53,10 +52,10 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   // Remove attribute
   const onRemoveAttribute = (attributeId: string) => {
     // Remove Node attribute
-    if (attributesElem instanceof AspectObject) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
+    if (attributesElem instanceof Block) OnRemoveNodeAttribute(attributeId, attributesElem.id, attributes, dispatch);
 
     // Remove Node terminal attribute
-    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof Block) {
       OnRemoveNodeTerminalAttribute(attributeId, inspectorParentElem.id, attributesElem.id, attributes, dispatch);
     }
   };
@@ -64,12 +63,12 @@ export const AttributesComponent = ({ attributesElem, inspectorParentElem, attri
   // Add attribute
   const onAddAttribute = (attributeTypeId: string) => {
     // Add node attribute
-    if (attributesElem instanceof AspectObject) {
+    if (attributesElem instanceof Block) {
       OnAddNodeAttribute(attributeTypeId, attributesElem.id, libraryState.attributeTypes, dispatch);
     }
 
     // Add Node terminal attribute
-    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof AspectObject) {
+    if (attributesElem instanceof ConnectorTerminal && inspectorParentElem instanceof Block) {
       OnAddNodeTerminalAttribute(
         attributeTypeId,
         inspectorParentElem.id,

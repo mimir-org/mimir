@@ -6,17 +6,17 @@ import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { TreeAspectElement } from "../../explorerTree/treeAspect/components/TreeAspectElement";
 import { OnTreeExplorerChange } from "../../explorerTree/treeAspect/handlers/OnTreeExplorerChange";
-import { AspectObject, Project } from "lib";
+import { Block, Project } from "lib";
 
 interface Props {
   username: string;
-  node: AspectObject;
+  node: Block;
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
   isNodeLocking: boolean;
   isGlobalLocking: boolean;
-  setLockingNode: (node: AspectObject) => void;
+  setLockingNode: (node: Block) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
   project: Project;

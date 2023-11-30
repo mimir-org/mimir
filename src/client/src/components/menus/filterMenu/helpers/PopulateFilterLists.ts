@@ -1,4 +1,4 @@
-import { AspectObject, Connection, ConnectorPartOf, ConnectorRelation, ConnectorTerminal } from "lib";
+import { Block, Connection, ConnectorPartOf, ConnectorRelation, ConnectorTerminal } from "lib";
 // import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTransportItem } from "../components/filters/helpers";
 
@@ -12,7 +12,7 @@ import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTran
  */
 const PopulateFilterLists = (
   edges: Connection[],
-  nodes: AspectObject[],
+  nodes: Block[],
   transportItems: ConnectorTerminal[],
   productAndLocationRelations: ConnectorRelation[],
   partOfItems: ConnectorPartOf[]

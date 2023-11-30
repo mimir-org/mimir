@@ -5,19 +5,19 @@ import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrappe
 import { Dispatch } from "redux";
 import { GetIndentLevel } from "../../../shared/helpers/";
 import { ViewportData } from "../../../../../models/project";
-import { AspectObject } from "lib";
+import { Block } from "lib";
 
 interface Props {
-  node: AspectObject;
-  nodes: AspectObject[];
-  selectedBlockNode: AspectObject;
+  node: Block;
+  nodes: Block[];
+  selectedBlockNode: Block;
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
   viewportData: ViewportData;
-  onChange: (node: AspectObject) => void;
+  onChange: (node: Block) => void;
 }
 
 /**

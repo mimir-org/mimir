@@ -5,7 +5,7 @@ import { BlockLibCm, TerminalLibCm, QuantityDatumLibCm, AttributeLibCm } from "@
 // State definition
 export interface LibraryState {
   fetching: string[];
-  aspectObjectTypes: BlockLibCm[] | null;
+  blockTypes: BlockLibCm[] | null;
   terminalTypes: TerminalLibCm[] | null;
   quantityDatumTypes: QuantityDatumLibCm[];
   attributeTypes: AttributeLibCm[];
@@ -36,7 +36,7 @@ export interface ActionFetchSubProjectsFinished {
 // Initial state
 const initState: LibraryState = {
   fetching: [],
-  aspectObjectTypes: [],
+  blockTypes: [],
   terminalTypes: [],
   quantityDatumTypes: [],
   attributeTypes: [],
@@ -49,11 +49,11 @@ export const librarySlize = createSlice({
   reducers: {
     fetchAspectObjects: (state) => {
       state.fetching.push(fetchAspectObjects.type);
-      state.aspectObjectTypes = [];
+      state.blockTypes = [];
     },
     fetchAspectObjectsFinished: (state, action: PayloadAction<ActionFetchAspectObjectsFinished>) => {
       state.fetching = state.fetching.filter((elem) => elem !== fetchAspectObjects.type);
-      state.aspectObjectTypes = action.payload.data;
+      state.blockTypes = action.payload.data;
     },
     fetchTerminals: (state) => {
       state.fetching.push(fetchTerminals.type);

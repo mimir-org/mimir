@@ -2,7 +2,7 @@
 import Config from "../../lib/Config";
 import { TextResources } from "../../assets/text/TextResources";
 import { IsFamily } from "../../helpers/Family";
-import { AspectObject, Connection, ConnectorPartOf, ConnectorDirection, Project } from "lib";
+import { Block, Connection, ConnectorPartOf, ConnectorDirection, Project } from "lib";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ const readFile = (event: any): Promise<any> => {
   });
 };
 
-export const GetFileData = async (event: any, project: Project): Promise<[AspectObject[], Connection[]]> => {
+export const GetFileData = async (event: any, project: Project): Promise<[Block[], Connection[]]> => {
   try {
     return [[], []];
     // let targetNodeId = event.target?.attributes["data-id"]?.value;

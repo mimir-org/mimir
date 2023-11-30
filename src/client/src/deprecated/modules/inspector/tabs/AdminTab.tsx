@@ -1,4 +1,4 @@
-import { AspectObject } from "../../../../lib";
+import { Block } from "../../../../lib";
 import { Button, Divider, Flexbox, Form, Input, Text, useMimirorgTheme } from "@mimirorg/component-library";
 import { TextArea } from "../../../../compLibrary/input/text";
 import { TabContainerWrapper } from "./TabContainerWrapper.styled";
@@ -9,18 +9,18 @@ import { useDispatch } from "react-redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 
 interface AdminTabProps {
-  aspectObject: AspectObject;
+  block: Block;
 }
-export const AdminTab = ({ aspectObject }: AdminTabProps) => {
-  const [labelValue, setLabelValue] = useState<string>(aspectObject?.label);
-  const [descriptionValue, setDescriptionValue] = useState<string>(aspectObject?.description);
+export const AdminTab = ({ block }: AdminTabProps) => {
+  const [labelValue, setLabelValue] = useState<string>(block?.label);
+  const [descriptionValue, setDescriptionValue] = useState<string>(block?.description);
   const theme = useMimirorgTheme();
   const dispatch = useDispatch();
   const projectState = useAppSelector<ProjectState>(projectStateSelector);
 
   const onSubmit = () => {
-    aspectObject.label = labelValue;
-    aspectObject.description = descriptionValue;
+    block.label = labelValue;
+    block.description = descriptionValue;
     dispatch(updateProject({ ...projectState }));
   };
 
@@ -31,42 +31,38 @@ export const AdminTab = ({ aspectObject }: AdminTabProps) => {
           <Flexbox flexDirection={"column"} gap={theme.spacing.l}>
             <span>
               <Text variant={"body-small"}>ID</Text>
-              <Text variant={"body-small"}>{aspectObject?.id}</Text>
+              <Text variant={"body-small"}>{block?.id}</Text>
             </span>
             <span>
               <Text variant={"body-small"}>RDS</Text>
-              <Text variant={"body-small"}>{aspectObject?.rds}</Text>
+              <Text variant={"body-small"}>{block?.rds}</Text>
             </span>
             <span>
               <Text variant={"body-small"}>Date created</Text>
-              <Text variant={"body-small"}>{aspectObject?.created?.toLocaleDateString()}</Text>
+              <Text variant={"body-small"}>{block?.created?.toLocaleDateString()}</Text>
             </span>
-            {aspectObject?.updated && (
+            {block?.updated && (
               <span>
                 <Text variant={"body-medium"}>Last updated</Text>
-                <Text variant={"body-small"}>{aspectObject?.updated?.toLocaleDateString()}</Text>
+                <Text variant={"body-small"}>{block?.updated?.toLocaleDateString()}</Text>
                 <Divider />
               </span>
             )}
-            {aspectObject?.updatedBy && (
+            {block?.updatedBy && (
               <span>
                 <Text variant={"body-small"}>Updated by</Text>
-                <Text variant={"body-small"}>{aspectObject?.updatedBy}</Text>
+                <Text variant={"body-small"}>{block?.updatedBy}</Text>
                 <Divider />
               </span>
             )}
           </Flexbox>
           <span>
             <Text variant={"body-small"}>Label</Text>
-            <Input defaultValue={aspectObject?.label} onChange={(e) => setLabelValue(e.target.value)} />
+            <Input defaultValue={block?.label} onChange={(e) => setLabelValue(e.target.value)} />
             <Text variant={"body-small"}>Description</Text>
-            <TextArea
-              height={120}
-              defaultValue={aspectObject?.description}
-              onChange={(e) => setDescriptionValue(e.target.value)}
-            />
+            <TextArea height={120} defaultValue={block?.description} onChange={(e) => setDescriptionValue(e.target.value)} />
           </span>
-          {aspectObject?.label !== labelValue || aspectObject?.description !== descriptionValue ? (
+          {block?.label !== labelValue || block?.description !== descriptionValue ? (
             <Flexbox flexDirection={"row"} justifyContent={"center"} alignItems={"center"}>
               <Button variant={"outlined"} onClick={onSubmit}>
                 {TextResources.SAVE}

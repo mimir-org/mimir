@@ -1,6 +1,6 @@
 import { InspectorElement } from "../../../types";
 import { Dispatch } from "redux";
-import { AspectObject, Connection, Project } from "lib";
+import { Block, Connection, Project } from "lib";
 import { onEdgesDelete, onNodesDelete } from "components/handlers/ProjectHandlers";
 
 /**
@@ -13,26 +13,26 @@ import { onEdgesDelete, onNodesDelete } from "components/handlers/ProjectHandler
  * @param inspectorRef
  */
 export const OnInspectorDeleteClick = (
-  nodes: AspectObject[],
+  nodes: Block[],
   edges: Connection[],
   element: InspectorElement,
   dispatch: Dispatch,
   project: Project,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  if (element instanceof AspectObject) return HandleInspectorNodeDelete(element, nodes, edges, inspectorRef, project, dispatch);
+  if (element instanceof Block) return HandleInspectorNodeDelete(element, nodes, edges, inspectorRef, project, dispatch);
   if (element instanceof Connection) return HandleInspectorEdgeDelete(element, nodes, edges, inspectorRef, project, dispatch);
 };
 
 function HandleInspectorNodeDelete(
-  node: AspectObject,
-  nodes: AspectObject[],
+  node: Block,
+  nodes: Block[],
   edges: Connection[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
   dispatch: Dispatch
 ) {
-  const nodesToDelete = [] as AspectObject[];
+  const nodesToDelete = [] as Block[];
 
   if (!node.isRoot() && !node.isLocked) {
     nodesToDelete.push(node);
@@ -44,7 +44,7 @@ function HandleInspectorNodeDelete(
 
 function HandleInspectorEdgeDelete(
   edge: Connection,
-  nodes: AspectObject[],
+  nodes: Block[],
   edges: Connection[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,

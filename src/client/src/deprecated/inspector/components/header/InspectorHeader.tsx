@@ -11,7 +11,7 @@ import {
   InspectorElement,
   OnToogleHandler,
 } from "../../types";
-import { AspectColor, AspectObject, Attribute, Connection, Project } from "lib";
+import { AspectColor, Block, Attribute, Connection, Project } from "lib";
 import { Theme, useMimirorgTheme } from "@mimirorg/component-library";
 
 interface Props {
@@ -71,7 +71,7 @@ export const InspectorHeader = ({
       )}
 
       <InspectorButtonsComponent
-        nodes={project?.aspectObjects}
+        nodes={project?.blocks}
         edges={project?.connections}
         element={element}
         username={username}

@@ -21,7 +21,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   const commonState = useAppSelector<CommonState>(commonStateSelector);
   const projectState = useAppSelector<ProjectState>(projectStateSelector);
   const project = projectState?.project;
-  const nodes = project?.aspectObjects;
+  const nodes = project?.blocks;
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   // const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());

@@ -1,9 +1,9 @@
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 import { GetMenuIcon } from "assets/icons/GetMenuIcon";
 import { TerminalsButtonBox } from "components/flow/terminals/TerminalsMenuComponent.styled";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   isParent: boolean;
   isInput?: boolean;
   showMenuButton: boolean;

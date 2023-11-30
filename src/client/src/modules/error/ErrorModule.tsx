@@ -9,6 +9,7 @@ import { Modal } from "compLibrary/modal/Modal";
 import { Color } from "../../assets/color/Color";
 import { projectStateSelector, useAppDispatch, useAppSelector } from "store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
+import { deleteProjectApiError } from "../../store/reducers/projectReducer";
 
 interface ErrorMessage {
   key: string;
@@ -33,7 +34,7 @@ const ErrorModule = () => {
     if (errors) {
       errors.forEach((error) => {
         if (error.key) {
-          // dispatch(deleteProjectError(error.key));
+          dispatch(deleteProjectApiError(error.key));
           // dispatch(deleteCommonError(error.key));
           // dispatch(deleteUserError(error.key));
         }
@@ -45,11 +46,11 @@ const ErrorModule = () => {
   useEffect(() => {
     const errorList = [];
 
-    // if (projectState.apiError) {
-    //   projectState.apiError.forEach((error) => {
-    //     if (error) errorList.push({ module: "Project", key: error.key, message: error.errorMessage, errorData: error.errorData });
-    //   });
-    // }
+    if (projectState.apiErrors) {
+      projectState.apiErrors.forEach((error) => {
+        if (error) errorList.push({ module: "Project", key: error.id, message: error.error.message });
+      });
+    }
 
     // if (libraryState.apiError) {
     //   libraryState.apiError.forEach((error) => {
@@ -71,7 +72,7 @@ const ErrorModule = () => {
 
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, []);
+  }, [projectState.apiErrors]);
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>

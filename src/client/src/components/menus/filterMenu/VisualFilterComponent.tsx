@@ -22,7 +22,7 @@ export const VisualFilterComponent = ({ filter, onFilterChange }: Props) => {
   const libOpen = false; //useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const projectSelector = useAppSelector<ProjectState>(projectStateSelector);
 
-  const nodes = projectSelector.project.aspectObjects; // useAppSelector(selectors.nodesSelector);
+  const nodes = projectSelector.project.blocks; // useAppSelector(selectors.nodesSelector);
   const edges = projectSelector.project.connections; //useAppSelector(selectors.edgesSelector);
 
   const transportTerminals = [] as ConnectorTerminal[];

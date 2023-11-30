@@ -3,11 +3,11 @@ import { Symbol } from "compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
 import { useCompanySelector } from "../../../../hooks/useCompanySelector";
-import { AspectObject, Connector } from "lib";
+import { Block, Connector } from "lib";
 import { Icon } from "@mimirorg/component-library";
 
 interface Props {
-  node: AspectObject;
+  node: Block;
   colorMain: string;
   colorSelected: string;
   isElectroView: boolean;
