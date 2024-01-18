@@ -28,7 +28,7 @@
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
     "styled-components": "^5.3.11",
-    "three": "^0.152.2",
+    "three": "^0.160.0",
     "typedjson": "^1.8.0",
     "use-file-picker": "^1.7.0",
     "uuid": "^9.0.1"
